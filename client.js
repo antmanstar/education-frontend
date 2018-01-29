@@ -10,7 +10,6 @@ app.use(morgan("dev"));
 app.use(compression());
 app.use(express.static(__dirname + "/node_modules"));
 app.use(express.static(__dirname + "/app"));
-
 app.use(express.static(__dirname + "/app", {
   maxage: '2h'
 }))

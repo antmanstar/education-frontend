@@ -3,7 +3,7 @@ angular.module('netbase')
 
     .factory('Forum', ['$http', function($http) {
 
-      var baseUrl = "http://api.universida.de/university";
+      var baseUrl = "https://api.universida.de/university";
 
       return {
 
@@ -41,9 +41,9 @@ angular.module('netbase')
 
     .factory('University', ['$http', function($http) {
 
-      //var baseUrl = "http://localhost:9003/university";
+      //var baseUrl = "https://localhost:9003/university";
 
-      var baseUrl = "http://api.universida.de/university"
+      var baseUrl = "https://api.universida.de/university"
 
       return {
 
@@ -202,7 +202,7 @@ angular.module('netbase')
 
     .factory('Students', ['$http', function($http) {
 
-      var baseUrl = "http://api.universida.de/accounts/students";
+      var baseUrl = "https://api.universida.de/accounts/students";
 
       return {
 
@@ -262,7 +262,7 @@ angular.module('netbase')
 
     .factory('Search', ['$http', function($http) {
 
-      var baseUrl = "http://api.universida.de/search";
+      var baseUrl = "https://api.universida.de/search";
 
       return {
 
@@ -280,7 +280,7 @@ angular.module('netbase')
 
     .factory('SocialMarketPlace', ['$http', '$localStorage', 'jwtHelper', function($http, $localStorage, jwtHelper) {
 
-      var baseUrl = "http://api.universida.de/listing";
+      var baseUrl = "https://api.universida.de/listing";
 
       return {
 
@@ -376,7 +376,7 @@ angular.module('netbase')
 
     .factory('FileUpload', ['$http', function($http) {
 
-      var baseUrl = "http://api.universida.de/images";
+      var baseUrl = "https://api.universida.de/images";
 
       return {
 
