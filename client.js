@@ -4,7 +4,7 @@ var morgan     = require("morgan");
 var compression = require('compression');
 var app        = express();
 
-var port = process.env.PORT || 3000;
+var port = 80;
 
 app.use(morgan("dev"));
 app.use(compression());
