@@ -1,0 +1,17 @@
+<div class="academia-content-mobile">
+
+  <div class="academia-content-mobile-academia-title">
+    <a ng-href="/a/{{university.url}}">{{university.name}}</a>
+  </div>
+  <!-- academia-content-mobile -->
+
+  <div class="academia-content-mobile-academia-stats">
+    {{university.members.length}} members
+  </div>
+  <!-- academia-content-mobile -->
+
+  <button class="academia-supportcol-button" ng-hide="userSubscribed(university.members)" ng-click="subscribe()">Subscribe</button>
+  <button class="academia-supportcol-button" ng-show="userSubscribed(university.members)" ng-click="subscribe()">Unsubscribe</button>
+
+</div>
+<!-- academia-content-mobile -->

@@ -1,0 +1,153 @@
+.profile {
+
+  font-family: 'Times New Roman', sans-serif;
+
+  margin-top: 82px;
+
+  padding-top: 10px;
+
+  height: calc(100vh - 82px);
+
+}
+
+.profile-info {
+
+  margin-bottom: 15px;
+
+}
+
+.profile-info-title {
+
+  text-transform: uppercase;
+  padding-bottom: 5px;
+
+  font-size: 1.1em;
+
+}
+
+.profile-info-text {
+
+  color: #868686;
+
+}
+
+.profile-info-experiences {
+
+}
+
+.profile-info-experiences-experience {
+
+  color: #868686;
+
+  margin-top: 10px;
+
+}
+
+.profile-info-experiences-experience-title {
+
+  font-size: 1.05em;
+  font-weight: bold;
+
+}
+
+.profile-info-experiences-experience-date {
+
+  font-size: 0.9em;
+  font-style: italic;
+
+}
+
+.profile-info-experiences-experience-description {
+
+  font-size: 0.85em;
+  color: #868686;
+
+}
+
+.profile-user-pic {
+
+  line-height: 50vh;
+  text-align: center;
+
+  border: 1px solid #cdcdcd;
+
+}
+
+.profile-user-name {
+
+  text-align: center;
+  font-size: 1.8em;
+
+  margin-top: 15px;
+
+}
+
+.profile-user-buttons {
+
+  text-align: center;
+  width: 100%;
+
+  padding-top: 25px;
+  padding-bottom: 25px;
+
+
+}
+
+.profile-user-buttons-button {
+
+  display: inline-block;
+  width: 50%;
+
+  float: left;
+
+  font-size: 1.2em;
+  text-decoration: underline;
+
+}
+
+.profile-info-skills {
+
+
+
+}
+
+.profile-info-skills-skill {
+
+  padding: 7px;
+  background: orange;
+  text-align: center;
+  color: white;
+
+}
+
+.profile-marketplace {
+
+
+}
+
+.profile-marketplace-title {
+
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.5em;
+
+}
+
+@media screen and (max-width: 768px) {
+
+  .profile-user-pic {
+
+    line-height: 30vh;
+
+  }
+
+}
+
+@media screen and (max-width: 468px) {
+
+  .profile-user-pic {
+
+    line-height: 30vh;
+
+  }
+
+}

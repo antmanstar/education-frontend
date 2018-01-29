@@ -1,0 +1,186 @@
+<div ng-include="'partials/header.html'" ng-controller="HeaderCtrl"></div>
+
+<div class="smp-product-locationbg" style='background-image: url({{university.backgroundImage}})'></div>
+
+<style>
+  .ngdialog-content {
+    overflow-y: hidden;
+  }
+</style>
+
+<script type="text/ng-template" id="templateId">
+  <div class="smp-product-images-popover">
+    <img src="{{pictureSelected}}" />
+  </div>
+  <button class="smp-product-images-popover-close" ng-click="closeThisDialog()">
+    <span class="glyphicon glyphicon-remove" />Close
+  </button>
+</script>
+
+<div class="container-fluid smp-product">
+
+  <div class="row">
+
+    <div class="col-xs-12 col-sm-12 col-md-4">
+
+      <div class="smp-product-images">
+
+        <div class="smp-product-images-main" style="background-image: url('{{pictureMain}}')"></div>
+        <!-- smp-product-images-main -->
+
+        <!-- fix scroll -->
+
+        <div class="smp-product-image-options">
+
+          <div class="smp-product-image-options-mini" ng-click="pictureSelect($index)" ng-repeat="l in listing.pictures" style="background-image: url('{{listing.pictures[$index].url}}')"></div>
+          <!-- smp-product-image-mini -->
+
+        </div>
+        <!-- smp-product-image-options -->
+
+      </div>
+      <!-- smp-product-images -->
+
+    </div>
+    <!-- col-xs-12 col-sm-4 -->
+
+    <div class="col-xs-12 col-sm-12 col-md-4">
+
+      <div class="smp-product-informations">
+
+        <div class="smp-product-informations-title">
+          {{listing.title}}
+        </div>
+        <!-- smp-product-informations-title -->
+
+        <div class="smp-product-informations-location">
+          <span class="glyphicon glyphicon-map-marker" /> {{university.name}}
+        </div>
+        <!-- smp-product-informations-title -->
+
+        <div class="smp-product-section">
+
+          <div class="smp-product-section-title">
+            About this ad
+          </div>
+          <!-- smp-product-section-title -->
+
+          <div class="smp-product-section-description">{{listing.description}}</div>
+          <!-- smp-product-section-description -->
+
+          <!--
+          <div class="smp-product-informations-attributes">
+
+          </div>
+          <! smp-product-informations-attributes -->
+
+        </div>
+        <!-- smp-product-section -->
+
+        <div class="smp-product-section">
+
+          <div class="smp-product-section-title">
+            Hashtags
+          </div>
+          <!-- smp-product-section-title -->
+
+          <div class="smp-product-section-description">
+
+            <div class="smp-product-hashtag" ng-repeat="tag in listing.hashtags">{{tag.text}}</div>
+
+          </div>
+          <!-- smp-product-section-description -->
+
+        </div>
+
+      </div>
+      <!-- smp-product-informations -->
+
+    </div>
+    <!-- col-xs-12 col-sm-12 col-md-4 -->
+
+    <div class="col-xs-12 col-sm-12 col-md-4">
+
+      <div class="smp-product-interaction">
+
+        <div class="smp-product-interaction-user">
+
+          <div class="smp-product-interaction-user-picture">
+            <img ng-show="student.imageUrl != undefined" src="{{student.imageUrl}}" />
+            <img ng-show="student.imageUrl == undefined" src="/img/user/user.png" />
+          </div>
+
+          <div class="smp-product-interaction-user-infos">
+
+            <div class="smp-product-interaction-user-infos-name">
+              {{student.name}}
+            </div>
+            <!-- smp-product-interaction-user-infos-name -->
+
+          </div>
+          <!-- smp-product-interaction-user-infos -->
+
+        </div>
+        <!-- smp-product-interaction-user -->
+
+        <div class="smp-product-interaction-pricing">
+
+          <div class="smp-product-interaction-pricing-title">
+            is asking
+          </div>
+          <!-- smp-product-interaction-pricing-title -->
+
+          <div class="smp-product-interaction-pricing-price">
+            ${{listing.price}}
+          </div>
+          <!-- smp-product-interaction-pricing-title -->
+
+        </div>
+        <!-- smp-product-interaction-pricing -->
+
+        <div class="smp-product-interaction-wants">
+
+          <div ng-show="listing.want.length > 1" class="smp-product-interaction-wants-title">
+            {{listing.want.length}} persons wants this product:
+          </div>
+
+          <div ng-show="listing.want.length == 1" class="smp-product-interaction-wants-title">
+            {{listing.want.length}} person wants this product:
+          </div>
+
+          <div class="smp-product-interaction-wants-accounts">
+            <accountsmpreview w="{{n}}" ng-repeat="n in listing.want"></accountsmpreview>
+          </div>
+
+        </div>
+        <!-- smp-product-interaction-wants -->
+
+        <button ng-click="want()" ng-hide="listingOwner || listingWants" class="smp-product-interaction-button button-want">
+          <span class="glyphicon glyphicon-ok"/> I WANT
+        </button>
+        <!-- smp-product-interaction-button -->
+
+        <button ng-click="want()" ng-show="listingWants && !listingOwner" class="smp-product-interaction-button button-want-dont">
+          <span class="glyphicon glyphicon-remove"/> DON'T WANT
+        </button>
+        <!-- smp-product-interaction-button -->
+
+        <button class="smp-product-interaction-button button-message" ng-hide="listingOwner">
+          <span class="glyphicon glyphicon-envelope"/> SEND A MESSAGE
+        </button>
+        <!-- smp-product-interaction-button -->
+
+        <button class="smp-product-interaction-button button-edit" ng-show="listingOwner">
+          <span class="glyphicon glyphicon-pencil"/> EDIT LISTING
+        </button>
+        <!-- smp-product-interaction-button -->
+
+      </div>
+      <!-- smp-product-interaction -->
+
+    </div>
+    <!-- col-xs-12 col-sm-12 col-md-4 -->
+
+  </div>
+
+</div>

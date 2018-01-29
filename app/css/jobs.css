@@ -1,0 +1,19 @@
+.explore-section-jobs-image {
+
+  height: 300px;
+
+  background-position: 50% 50%;
+  background-size: cover;
+
+}
+
+@media screen and (max-width: 767px) {
+
+  .explore-section-jobs-image {
+
+    margin-right: -15px;
+    margin-left: -15px;
+
+  }
+
+}

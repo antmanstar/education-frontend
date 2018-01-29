@@ -1,0 +1,54 @@
+<div ng-class="filterClass">
+
+  <div class="search-filters-col-group">
+
+    <div class="search-filters-col-title">Price</div>
+    <!-- search-filters-col-title -->
+
+    <div class="search-filters-col-group-price">
+
+      <div class="search-filters-col-group-price-title">
+        minimun price
+      </div>
+
+      <div class="search-filters-col-group-price-input">
+        $ <input type="text" />
+      </div>
+      <!-- search-filters-col-group-price-input -->
+
+      <div class="search-filters-col-group-price-title">
+        maximun price
+      </div>
+
+      <div class="search-filters-col-group-price-input">
+        $ <input type="text" />
+      </div>
+      <!-- search-filters-col-group-price-input -->
+
+    </div>
+    <!-- search-filters-col-group-price -->
+
+    <div class="search-filters-col-group-action">
+      <button>Filter</button>
+    </div>
+    <!-- -->
+
+  </div>
+  <!-- search-filters-col-group -->
+
+  <div class="search-filters-col-group" style="padding-b">
+
+    <div class="search-filters-col-title">Hashtags</div>
+    <!-- search-filters-col-title -->
+
+    <div class="search-filters-col-group-hashtags" ng-repeat="n in [1,2,3,4,5,6,7,8,10,11,12,13,14,15,16]">
+      <input type="checkbox" name="vehicle1" value="Bike">
+      #notebooks
+    </div>
+    <!-- search-filters-col-group-hashtags -->
+
+  </div>
+  <!-- search-filters-col-group -->
+
+</div>
+<!-- end search-filters-col  content-bar -->

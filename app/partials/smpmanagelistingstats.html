@@ -1,0 +1,69 @@
+<div ng-include="'partials/header.html'" ng-controller="HeaderCtrl"></div>
+
+<div class="dashboard container-fluid">
+
+  <div class="row">
+
+    <!-- dashboard menu -->
+    <div ng-include="'partials/dashboardmenu.html'" ng-controller="DashboardMenuCtrl"></div>
+
+    <div class="col-xs-12 col-sm-9 col-sm-offset-3 col-md-offset-3 col-lg-offset-2 col-lg-10 dashboard-content">
+
+      <div class="dashboard-content-title">
+        Manage listings <span><img src="/img/icon/smp.png"></span>
+      </div>
+      <!-- dashboard-content-title -->
+
+      <div class="post" ng-repeat="post in [1,2,3,4,5,6]">
+
+        <div class="post-image" style="background-image: url('https://www.laptopmag.com/images/uploads/4758/g/macbook-12inch-003.jpg')">
+        </div>
+
+        <div class="post-bottom post-bottom-smp">
+
+          <div class="post-bottom-smp-info">
+
+            <div class="post-bottom-smp-title">
+              Mac Book Pro
+            </div>
+
+            <div class="post-bottom-smp-price">
+              $985
+            </div>
+
+          </div>
+          <!-- post-bottom-smp-info -->
+
+          <div class="post-bottom-smp-user">
+            <img src="img/user/user.jpg" />
+          </div>
+          <!-- post-bottom-smp-user -->
+
+        </div>
+        <!-- post-bottom post-bottom-smp -->
+
+        <div class="post-actions">
+
+          <button class="post-actions-button">
+            Edit
+          </button>
+          <!-- end post-actions-button -->
+
+          <button class="post-actions-button">
+            Statistics
+          </button>
+          <!-- end post-actions-button -->
+
+        </div>
+        <!-- end post-actions -->
+
+      </div>
+      <!-- end post -->
+
+    </div>
+    <!-- col-sm-9 -->
+
+  </div>
+  <!-- end row -->
+
+</div>

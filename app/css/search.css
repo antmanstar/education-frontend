@@ -1,0 +1,185 @@
+.search {
+
+  margin-top: 116px;
+
+}
+
+/* navbar regular search */
+.content-search-regular {
+  margin-top: 77px;
+}
+
+/* navbar */
+#navbar-filter {
+
+  display: none;
+
+}
+
+/* search filters */
+
+.search-filter-show {
+
+  display: block;
+
+}
+
+.search-filters-col {
+
+}
+
+.search-filters-col-title {
+
+  font-weight: 500;
+  font-size: 1.2em;
+
+  margin-bottom: 25px;
+
+}
+
+.search-filters-col-group {
+
+  margin-bottom: 15px;
+
+}
+
+.search-filters-col-group-action {
+
+  text-align: right;
+
+}
+
+.search-filters-col-group-action button {
+
+  margin-top: 5px;
+  margin-bottom: 5px;
+
+  font-weight: bold;
+  color: #52bfea;
+
+  outline: none;
+
+  background-color: #fff;
+  border: none;
+
+}
+
+/* filter price */
+
+.search-filters-col-group-price-title {
+
+  margin-bottom: 5px;
+
+}
+
+.search-filters-col-group-price-input {
+
+  margin-bottom: 10px;
+
+}
+
+.search-filters-col-group-price-input input {
+
+  height: 35px;
+
+  margin-left: 5px;
+
+  outline: none;
+
+  border: none;
+  border-bottom: 3px solid #cdcdcd;
+
+}
+
+/* filter hashtag */
+
+.search-filters-col-group-hashtags {
+
+
+}
+
+.search-filters-col-group-hashtags input {
+
+  margin-right: 10px;
+
+}
+
+/* content-search-query-results */
+
+.content-search-query-results {
+
+  position: fixed;
+  z-index: 999;
+  background-color: #fff;
+
+  height: calc(100vh - 111px);
+  width: 100%;
+
+  padding-left: 25px;
+  padding-right: 25px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+
+  top: 0;
+
+  overflow-y: scroll
+
+}
+
+.content-search-query-results > .row > .content-page {
+
+  padding-left: 50px;
+  padding-right: 50px;
+
+}
+
+.content-search-query-results-title {
+
+  font-weight: bold;
+  font-size: 2em;
+
+  color: #2f4457;
+
+}
+
+.content-search-query-results-result {
+
+  font-size: 2.5em;
+
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+
+}
+
+.content-search-query-results-result .title {
+
+  font-size: 0.5em;
+  color: #2f4457;
+
+}
+
+@media screen and (max-width: 767px) {
+
+  #navbar-filter {
+
+    display: inline-block;
+
+  }
+
+  .content-search-regular {
+    margin-top: 68px;
+  }
+
+}
+
+@media screen and (max-width: 468px) {
+
+  .content-search-regular {
+
+    margin-top: 56px;
+
+  }
+
+}

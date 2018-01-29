@@ -1,0 +1,175 @@
+/* navbar */
+.navbar-index {
+
+  height: 125px;
+  position: relative;
+
+  padding-top: 25px;
+  padding-bottom: 25px;
+
+  width: 100%;
+
+}
+
+.navbar-index-logo {
+
+  text-align: center;
+  display: inline-block;
+
+  width: 100%;
+  line-height: 75px;
+
+}
+
+.navbar-index-menu {
+
+  display: inline-block;
+  float: right;
+
+}
+
+.navbar-index-logo img {
+
+  /*
+  height: 65px;
+  */
+  width: 100%;
+
+}
+
+/* index-explorer */
+.index-explorer {
+
+  width: 100%;
+
+  padding-top: 15vh;
+  padding-bottom: 35vh;
+
+  padding-left: 15vw;
+  padding-right: 15vw;
+
+}
+
+.index-explorer-title {
+
+  font-family: 'Roboto', sans-serif;
+  color: #ee5748;
+
+  font-size: 2em;
+
+  text-align: center;
+
+  margin-bottom: 30px;
+
+}
+
+.index-explore-search {
+
+  border: 1px solid #52bfea;
+
+}
+
+.index-explore-search input {
+
+  height: 44px;
+  border: 0;
+  width: calc(100% - 100px);
+  outline: none;
+
+}
+
+.index-explore-search button {
+
+  border: none;
+  height: 45px;
+  width: 100px;
+  float: right;
+  background-color: #52bfea;
+  color: white;
+  font-size: 1.35em;
+
+}
+
+/* index-links */
+.index-links {
+
+  text-align: center;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.5em;
+  font-weight: 300;
+
+  width: 100%;
+  min-height: 10vh;
+
+  padding-left: 10vw;
+  padding-right: 10vw;
+  padding-bottom: 10vw;
+
+}
+
+.index-links a {
+
+  text-decoration: underline;
+  color: #000;
+
+}
+
+/* min-width */
+@media screen and (min-width: 769px) {
+
+  .navbar-index-logo {
+
+    padding-left: 15vw;
+    padding-right: 15vw;
+
+  }
+
+  .navbar-index-logo img {
+
+    max-width: 475px;
+
+  }
+
+}
+
+@media screen and (max-width: 768px) {
+
+  .navbar-index-logo {
+
+    padding-left: 15vw;
+    padding-right: 15vw;
+
+  }
+
+  .index-explorer {
+
+    padding-top: 10vh;
+    padding-left: 5vw;
+    padding-right: 5vw;
+    padding-bottom: calc(40vh - 125px);
+
+  }
+
+  .index-explorer-title {
+
+    font-size: 1.7em;
+
+  }
+
+  .navbar-index-logo {
+
+
+  }
+
+  .navbar-index {
+
+
+  }
+
+  .index-links {
+
+
+
+  }
+
+}

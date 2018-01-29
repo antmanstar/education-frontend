@@ -1,0 +1,48 @@
+<div class="academia-content-forum-post" style="width: 100%; margin-bottom: 25px;">
+
+  <div style="margin-bottom: 15px;">
+
+    <div class="academia-content-forum-post-stats">
+
+      <div class="academia-content-forum-post-stats-votes">
+
+        <div ng-click="upvoteForumPostAnswer(answer._id)" class="academia-content-forum-post-stats-upvote">
+          <span class="glyphicon glyphicon-triangle-top" />
+        </div>
+
+        <div class="academia-content-forum-post-stats-votes-number">{{votesCount}}</div>
+
+        <div ng-click="downvoteForumPostAnswer(answer._id)" class="academia-content-forum-post-stats-downvote">
+          <span class="glyphicon glyphicon-triangle-bottom" />
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="academia-content-forum-post-info" style="display: table-cell;">
+
+      <div class="academia-content-forum-post-info-text" ng-bind-html="answer.text"></div>
+
+    </div>
+
+  </div>
+
+  <div class="academia-content-forum-post-answer">
+
+    <div class="academia-content-forum-post-answer-time">
+      <span am-time-ago="answer.createdAt | amFromUnix"></span>
+    </div>
+
+    <div class="academia-content-forum-post-answer-user-picture">
+      <img src="{{userImage}}" />
+    </div>
+
+    <div class="academia-content-forum-post-answer-user-name">
+      {{user.name}}
+    </div>
+
+  </div>
+
+</div>

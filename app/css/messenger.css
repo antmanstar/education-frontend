@@ -1,0 +1,329 @@
+.messenger {
+
+  font-family: 'Roboto', sans-serif;
+
+  margin-top: 77px;
+
+  height: calc(100vh - 77px);
+
+}
+
+/* content */
+
+.messenger-content {
+
+  height: calc(100vh - 82px);
+
+  padding-top: 40px;
+
+}
+
+.messenger-content-header {
+
+  text-align: center;
+
+  border-bottom: 1px solid #e3e3e3;
+
+  height: 40px;
+  line-height: 40px;
+
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+
+  background-color: #fff;
+
+}
+
+/* content-form */
+.messenger-content-forms {
+
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+
+  height: 55px;
+
+  border-top: 1px solid #e3e3e3;
+
+  display: table;
+  width: 100%;
+
+  background-color: white;
+
+}
+
+.messenger-content-forms-textarea {
+
+  display: table-cell;
+  width: calc(100% - 60px);
+
+}
+
+.messenger-content-forms-textarea textarea {
+
+  resize: none;
+  width: 100%;
+
+  border: none;
+  outline: none
+
+}
+
+.messenger-content-forms-send {
+
+  display: table-cell;
+  width: 60px;
+
+  text-align: center;
+  vertical-align: middle;
+
+  font-weight: bold;
+  color: #69d2e7;
+
+}
+
+.messenger-content-forms-send button {
+
+  background-color: transparent;
+  border: none;
+  outline: none;
+
+}
+
+/* chatarea */
+
+.messenger-content-chatarea {
+
+  margin-left: -15px;
+  margin-right: -15px;
+
+  overflow-y: scroll;
+  height: calc(100% - 55px);
+
+}
+
+.messenger-content-chatarea-message {
+
+  width: 100%;
+  float: left;
+
+  padding-bottom: 3px;
+  padding-top: 3px;
+
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+}
+
+.messenger-content-chatarea-message-fromuser {
+
+
+
+}
+
+.messenger-content-chatarea-message-fromuser .messenger-content-chatarea-message-user-picture {
+
+  float: right;
+
+}
+
+.messenger-content-chatarea-message-fromuser .messenger-content-chatarea-message-text {
+
+  float: right;
+
+  padding-left: 0px;
+  padding-right: 5px;
+
+}
+
+.messenger-content-chatarea-message-fromother {
+
+
+}
+
+.messenger-content-chatarea-message-user-picture {
+
+  display: inline-block;
+
+}
+
+.messenger-content-chatarea-message-user-picture img {
+
+  height: 30px;
+  width: 30px;
+
+}
+
+.messenger-content-chatarea-message-text {
+
+  padding-left: 5px;
+
+  display: inline-block;
+
+}
+
+/* menu */
+
+.messenger-menu {
+
+  padding-top: 10px;
+
+  position: fixed;
+
+  height: calc(100vh);
+
+  border-right: 1px solid #d0d0d0;
+
+}
+
+.messenger-menu-conversation {
+
+  height: calc(70px + 1em);
+
+  border-bottom: 1px solid #e3e3e3;
+
+  position: relative;
+
+}
+
+.messenger-menu-conversation-displayimage {
+
+  display: inline-block;
+  vertical-align: top;
+
+}
+
+.messenger-menu-conversation-displayimage img {
+
+  height: 50px;
+  width: 50px;
+
+}
+
+.messenger-menu-conversation-message {
+
+  display: inline-block;
+  padding-left: 10px;
+
+}
+
+.messenger-menu-conversation-message-user {
+
+  font-weight: 500;
+
+}
+
+.messenger-menu-conversation-message-text {
+
+  color: #7c7c7c;
+
+}
+
+.messenger-menu-conversation-notification {
+
+  text-align: center;
+  background-color: rgba(243, 134, 49, 0.45);
+
+  font-size: 0.9em;
+
+  color: rgb(243, 134, 49);
+
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+
+}
+
+.messenger-menu-mobile {
+
+  z-index: 9999;
+
+  width: 100%;
+
+}
+
+@media screen and (min-width: 768px) {
+
+}
+
+@media screen and (max-width: 767px) {
+
+  .messenger {
+
+    margin-top: 72px;
+
+  }
+
+  .messenger-content {
+
+    margin-top: 0px;
+    height: calc(100vh - 72px);
+
+  }
+
+  .messenger-menu {
+
+    display: none;
+
+  }
+
+  .messenger-content-forms {
+
+    position: fixed;
+
+  }
+
+  .messenger-content-header {
+
+    position: fixed;
+    top: 68px;
+
+  }
+
+  .messenger-menu-mobile {
+
+    display: block;
+
+  }
+
+}
+
+@media screen and (max-width: 468px) {
+
+  .messenger {
+
+    margin-top: 59px;
+
+  }
+
+  .messenger-content {
+
+    margin-top: 0px;
+    height: calc(100vh - 59px);
+
+  }
+
+  .messenger-menu {
+
+    display: none;
+
+  }
+
+  .messenger-content-header {
+
+    position: fixed;
+    top: 57px;
+
+  }
+
+  .messenger-menu-mobile {
+
+    display: block;
+
+  }
+
+}

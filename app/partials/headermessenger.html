@@ -1,0 +1,81 @@
+<div class="navbar-mobile-menu" ng-show="showMobileMenu">
+
+  <div class="navbar-mobile-menu-option navbar-mobile-menu-option-user">
+    <img src="img/user/user.jpg" />Marcelo Pio
+  </div>
+
+  <div class="navbar-mobile-menu-option navbar-mobile-menu-option-divisor">
+    Home
+  </div>
+
+  <div class="navbar-mobile-menu-option navbar-mobile-menu-option-divisor">
+    Dashboard
+  </div>
+
+  <div class="navbar-mobile-menu-option navbar-mobile-menu-option-divisor">
+    Social Marketplace
+  </div>
+
+  <div class="navbar-mobile-menu-option">
+    Jobs
+  </div>
+
+  <div class="navbar-mobile-menu-option">
+    Create an account
+  </div>
+
+  <div class="navbar-mobile-menu-option">
+    Login
+  </div>
+
+  <div class="navbar-mobile-menu-option navbar-mobile-menu-option-divisor" >
+    Download the App
+  </div>
+
+</div>
+
+<!-- navbar -->
+<div id="navbars-home" style="border-bottom: 1px solid #d0d0d0;">
+
+  <div class="navbar-home">
+
+    <div ng-click="displayMobileMenu()" style="display: inline-block;">
+
+      <div class="navbar-home-logo">
+
+        <a style="display: inline-block;"><img src="img/logo/logo.png" /></a>
+
+      </div>
+      <!-- navbar-home-logo -->
+
+      <div class="navbar-home-mobilearrow" ng-hide="showMobileMenu">
+        <span class="glyphicon glyphicon-chevron-down"></span>
+      </div>
+
+      <div class="navbar-home-mobilearrow" ng-show="showMobileMenu">
+        <span class="glyphicon glyphicon-chevron-up"></span>
+      </div>
+
+    </div>
+    <!-- -->
+
+    <div class="navbar-messenger-channels" ng-click="messengerMenu()">
+
+      <button><span class="glyphicon glyphicon-user" /></button>
+
+    </div>
+    <!-- avbar-messenger-channels -->
+
+    <div class="navbar-home-menuright">
+
+      <div class="navbar-home-menuright-option navbar-home-menuright-option-user">
+        <img src="img/user/user.jpg" />
+      </div>
+
+    </div>
+    <!-- -->
+
+  </div>
+
+</div>
+<!-- navbar-home -->

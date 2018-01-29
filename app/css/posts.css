@@ -1,0 +1,331 @@
+.post {
+
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-bottom: 15px;
+
+  display: inline-block;
+
+  vertical-align: top;
+
+  margin: 0 auto;
+
+}
+
+.post-image {
+
+  width: 100%;
+  height: 300px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+}
+
+.post-bottom {
+
+  height: 50px;
+  width: 100%;
+
+}
+
+.post-bottom-smp {
+
+  border-top: 3px solid #e7ae57;
+  padding: 5px;
+
+}
+
+.post-bottom-smp-info {
+
+  display: inline-block;
+  color: #7e7e7e;
+  font-family: 'Roboto', sans-serif;
+
+}
+
+.post-bottom-smp-title {
+
+  font-weight: bold;
+
+}
+
+.post-bottom-smp-price {
+
+}
+
+.post-bottom-smp-user {
+
+  display: inline-block;
+  float: right;
+
+}
+
+.post-bottom-smp-user img {
+
+  height: 30px;
+  border-radius: 40%;
+
+}
+
+/* post-job */
+.post-job {
+
+  border-top: 3px solid #69d2e7;
+
+}
+
+.post-top-text {
+
+  font-family: 'Roboto', sans-serif;
+
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  color: #8d8d8d;
+  background-color: #efefef;
+  text-transform: uppercase;
+
+}
+
+.post-top-text-jobs {
+    border-top: 3px solid #82d1c5;
+}
+
+.post-job-infos {
+
+  padding: 15px;
+
+  font-family: 'Roboto', sans-serif;
+
+  height: 252px;
+  background-color: white;
+
+}
+
+.post-job-infos-description {
+
+  font-size: 0.85em;
+  text-transform: uppercase;
+  text-align: center;
+
+}
+
+.post-job-infos-description-title {
+
+  font-size: 1.4em;
+  margin-bottom: 6px;
+
+}
+
+.post-job-infos-attributes {
+
+  padding-top: 15px;
+  padding-bottom: 10px;
+
+  height: 90px;
+
+}
+
+.post-job-infos-company {
+
+
+}
+
+.post-job-infos-company-logo {
+
+  height: 60px;
+  width: 60px;
+
+  display: inline-block;
+
+}
+
+.post-job-infos-company-logo img {
+
+  width: 100%;
+  height: 100%;
+
+}
+
+.post-job-infos-company-text {
+
+  display: inline-block;
+  padding-left: 15px;
+  padding-right: 15px;
+
+}
+
+.post-job-infos-company-text .name {
+
+  font-size: 1.2em;
+  color: #393939;
+
+}
+
+.post-job-infos-company-text .moreinfo {
+
+  color: #69d2e7;
+
+}
+
+.post-job-infos-attributes .attribute {
+
+  border: 1px solid #aaaaaa;
+  background-color: #efefef;
+
+  padding-left: 15px;
+  padding-right: 15px;
+
+  display: inline;
+
+}
+
+.post-job-infos-description-category {
+
+  color: #69d2e7;
+
+}
+
+.post-bottom button {
+
+  display: block;
+  border: none;
+  height: 100%;
+  float: left;
+
+  font-family: 'Roboto', sans-serif;
+
+  background-color: #e6e6e6;
+
+  text-align: center;
+
+  text-transform: uppercase;
+
+}
+
+.post-bottom button.save {
+
+  width: 25%;
+  font-size: 0.9em;
+  color: #676767;
+
+}
+
+.post-bottom button.share {
+
+  color: #676767;
+  width: 37%;
+  font-size: 0.9em;
+
+}
+
+.post-bottom button.action {
+
+  width: 38%;
+  color: white;
+
+}
+
+.post-bottom button.action-job {
+
+  background-color: #30b39f;
+
+}
+
+.post-actions {
+
+  border-top: 1px solid #d0d0d0;
+
+}
+
+.post-actions button {
+
+  width: 100%;
+  display: block;
+  float: left;
+  border: none;
+
+  padding-top: 5px;
+  padding-bottom: 5px;
+
+  background-color: transparent;
+
+  text-decoration: underline;
+
+}
+
+.post-actions button span {
+
+  margin-right: 5px;
+
+}
+
+.post-actions a {
+
+  width: 100%;
+  display: block;
+  float: left;
+  border: none;
+
+  padding-top: 5px;
+  padding-bottom: 5px;
+
+  background-color: transparent;
+
+  text-decoration: underline;
+
+  text-align: center;
+
+  color: #000;
+
+}
+
+.post-actions a span {
+
+  margin-right: 5px;
+
+}
+
+@media screen and (max-width: 750px) {
+
+  .post {
+
+    width: calc(100%);
+
+  }
+
+}
+
+/* Large devices (large desktops, 1200px and up) */
+@media screen and (min-width: 750px) {
+
+  .post {
+
+    width: calc(50% - 10px);
+
+  }
+
+}
+
+/* Large devices (large desktops, 1200px and up) */
+@media screen and (min-width: 750px) {
+
+  .post {
+
+    width: calc(50% - 10px);
+
+  }
+
+}
+
+/* Small devices (tablets, 768px and up) */
+@media screen and (min-width: 1170px) {
+
+  .post {
+
+    width: calc(33.3% - 10px);
+
+  }
+
+}

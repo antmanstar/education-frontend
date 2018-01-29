@@ -1,0 +1,79 @@
+<div class="navbar-mobile-menu" ng-show="showMobileMenu">
+
+    <div ng-show="logged" class="navbar-mobile-menu-option navbar-mobile-menu-option-user">
+      <img ng-src="{{userImage}}" />{{user.name}}
+    </div>
+
+    <div class="navbar-mobile-menu-option navbar-mobile-menu-option-divisor" ng-style="originalPath == '/home' && { 'font-weight': '400' }">
+      <a href="/home">Home</a>
+    </div>
+
+    <div class="navbar-mobile-menu-option navbar-mobile-menu-option-divisor" ng-style="originalPath.includes('dashboard') && { 'font-weight': '400' }">
+      <a href="/dashboard">Dashboard</a>
+    </div>
+
+    <div ng-show="originalPath.includes('dashboard')">
+
+      <div class="navbar-mobile-menu-block">
+
+        <div class="navbar-mobile-menu-option-list-title">
+          <!--<span><img src="/img/icon/product/smp.png"></span>-->Social Marketplace
+        </div>
+        <!-- end dashboard-menu-group-option -->
+
+        <div class="navbar-mobile-menu-option-list-item">
+          <a href="/dashboard/smp/create">Create listing</a>
+        </div>
+        <!-- end dashboard-menu-group-option-sub -->
+
+        <div class="navbar-mobile-menu-option-list-item">
+          <a href="/dashboard/smp/manage">Manage listings</a>
+        </div>
+        <!-- end dashboard-menu-group-option-sub -->
+
+        <div class="navbar-mobile-menu-option-list-item">
+          <a href="/dashboard/smp/iwant">I want</a>
+        </div>
+
+      </div>
+      <!-- end social marketplace block -->
+
+    </div>
+
+    <div class="navbar-mobile-menu-option navbar-mobile-menu-option-divisor" ng-style="originalPath.includes('universidades') && { 'font-weight': '400' }">
+      <a href="/home/universidades">Universidades</a>
+    </div>
+
+    <!--
+    <div class="navbar-mobile-menu-option">
+      <a href="/home/marketplace">Marketplace</a>
+    </div>
+    -->
+
+    <div ng-hide="logged">
+
+      <div class="navbar-mobile-menu-option navbar-mobile-menu-option-divisor">
+        <a href="/login">Create an account</a>
+      </div>
+
+      <div class="navbar-mobile-menu-option">
+        <a href="/login">Login</a>
+      </div>
+
+    </div>
+
+    <div ng-show="logged">
+
+      <div class="navbar-mobile-menu-option navbar-mobile-menu-option-divisor" ng-click="logout()">
+        <a>Logout</a>
+      </div>
+
+    </div>
+
+    <!--
+    <div class="navbar-mobile-menu-option navbar-mobile-menu-option-divisor" >
+      <a href="/home">Download the App</a>
+    </div>
+    -->
+
+</div>

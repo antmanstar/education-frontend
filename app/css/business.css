@@ -1,0 +1,44 @@
+/* business page */
+
+#business {
+
+  font-family: "Georgia", serif;
+
+}
+
+/* buttons */
+
+.business-button {
+
+  border: none;
+  padding-top: 10px;
+  padding-left: 30px;
+  padding-bottom: 10px;
+  padding-right: 30px;
+
+  text-transform: uppercase;
+
+}
+
+.business-button-contactus {
+
+  color: #2d4255;
+  background-color: #fff;
+  border: 1px solid #2d4255;
+
+}
+
+.business-button-getstarted {
+
+  color: #fff;
+  background-color: #2d4255;
+  border: 1px solid #2d4255;
+
+}
+
+/* */
+.business-page-first {
+
+  
+
+}

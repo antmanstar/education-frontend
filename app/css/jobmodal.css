@@ -1,0 +1,206 @@
+.ngdialog.ngdialog-theme-default {
+
+  padding-top: 10vh;
+  padding-bottom: 10vh;
+
+}
+
+.jobmodal > .ngdialog-content {
+
+  min-height: 80vh;
+  font-family: 'Roboto', sans-serif;
+
+}
+
+.jobmodal-column {
+
+  display: inline-block;
+
+  float: left;
+
+  padding: 15px;
+
+  overflow: auto;
+
+}
+
+.jobmodal-workplace {
+
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+
+}
+
+.jobmodal-proposal {
+
+
+}
+
+.jobmodal-proposal-company {
+
+
+}
+
+.jobmodal-proposal-company-info {
+
+  margin-bottom: 10px;
+
+}
+
+.jobmodal-proposal-company-name {
+
+  font-size: 3em;
+  line-height: 1em;
+  font-weight: bolder;
+
+  display: inline-block;
+
+}
+
+.jobmodal-proposal-company-logo {
+
+  float: right;
+  display: inline-block;
+
+}
+
+.jobmodal-proposal-company-logo img {
+
+  height: 50px;
+  width: 50px;
+
+}
+
+.jobmodal-proposal-company-position {
+
+  display: inline-block;
+
+}
+
+.jobmodal-proposal-company-location {
+
+  display: inline-block;
+  float: right;
+
+}
+
+.jobmodal-proposal-company-location span {
+
+  color: #e55642;
+  margin-right: 7px;
+
+}
+
+.jobmodal-proposal-text {
+
+  margin-top: 15px;
+  overflow-y: auto;
+
+}
+
+.jobmodal-proposal-text-title {
+
+  font-weight: bold;
+
+}
+
+.jobmodal-proposal-text-description {
+
+  font-weight: lighter;
+  color: #444;
+
+}
+
+.ngdialog.ngdialog-theme-default {
+
+  padding-top: 10vh;
+  padding-bottom: 10vh;
+
+}
+
+/* buttons */
+.jobmodel-mobile-buttons {
+
+  position: fixed;
+  display: none;
+  bottom: 0;
+
+  height: 50px;
+  width: 100%;
+
+}
+
+.jobmodel-mobile-buttons button {
+  outline: 0;
+  border: 0;
+  width: 25%;
+  height: 100%;
+  border-radius: 0px;
+  float: left;
+  background-color: #e6e6e6;
+  color: #676767;
+  font-size: 0.9em;
+  line-height: 1.3em;
+  border-top: 1px solid #d0cfcf;
+  text-transform: uppercase;
+}
+
+@media screen and (min-width: 768px) {
+
+  .jobmodal-column {
+    height: 100%;
+  }
+
+}
+
+@media screen and (max-width: 691px) {
+
+  .ngdialog-content {
+
+    padding-bottom: 50px;
+
+  }
+
+  .jobmodel-mobile-buttons {
+
+    display: block;
+
+    height: 50px;
+
+  }
+
+  .jobmodel-mobile-buttons button {
+
+    display: block;
+
+  }
+
+  .ngdialog-close {
+
+    display: none;
+
+  }
+
+  .ngdialog.ngdialog-theme-default {
+
+    padding-top: 0vh;
+    padding-bottom: 0vh;
+
+  }
+
+  .ngdialog.ngdialog-theme-default .ngdialog-content {
+
+    width: 100vw;
+    min-height: 100vh;
+    position: absolute;
+
+  }
+
+  .jobmodal-workplace {
+
+    height: 30vh;
+
+  }
+
+}

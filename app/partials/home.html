@@ -1,0 +1,107 @@
+<div ng-include="'partials/headerhome.html'"></div>
+
+<div class="content container-fluid">
+
+  <div class="row" style="position: relative;">
+
+    <div class="content-page content-page-home col-xs-12 col-sm-12">
+
+      <!-- UNIVERSIDADES -->
+
+      <div class="explore-section">
+
+        <div class="explore-section-title">
+          <div class="explore-section-title-text">UNIVERSIDADES</div>
+          <div class="explore-section-title-more"><a href="/home/universidades/">ver +</a></div>
+        </div>
+
+        <div class="explore-section-row">
+
+          <a style="color: #2c4255;" ng-repeat="university in universities" href="/a/{{university.url}}/forum" target="_blank">
+
+          <div class="explore-section-row-block" ng-style="$index === 3 && { 'padding-right' : '0px' }">
+
+            <div class="explore-section-row-block-image" style="background-image: url('http://{{university.backgroundImage}}') ">
+            </div>
+            <!-- end explore-section-row-block -->
+
+            <div class="explore-section-row-block-text">
+
+              <div class="explore-section-row-block-text-title">{{university.nameShort}}</div>
+              <!-- explore-section-row-block-text-title -->
+
+              <div class="explore-section-row-block-text-subtitle">{{university.name}}</div>
+              <!-- explore-section-row-block-text-subtitle -->
+
+            </div>
+            <!-- end explore-section-row-block -->
+
+          </div>
+          <!-- end explore-section-row-block -->
+
+          </a>
+
+        </div>
+        <!-- end explore-section-row -->
+
+      </div>
+      <!-- end explore-section -->
+
+      <!-- END UNIVERSIDADES -->
+
+      <!-- SOCIAL MARKETPLACE -->
+
+      <!--
+      <div class="explore-section">
+
+        <div class="explore-section-title">
+          <div class="explore-section-title-text">SOCIAL MARKETPLACE</div>
+          <div class="explore-section-title-more">ver +</div>
+        </div>
+
+        <div class="explore-section-row">
+
+          <div class="explore-section-row-block" ng-style="$index === 3 && { 'padding-right' : '0px' }" ng-repeat="n in [1,2,3,4]">
+
+            <div class="explore-section-row-block-image" style="background-image: url('https://www.laptopmag.com/images/uploads/4758/g/macbook-12inch-003.jpg') ">
+            </div>
+
+            <div class="post-bottom post-bottom-smp">
+
+              <div class="post-bottom-smp-info">
+
+                <div class="post-bottom-smp-title">
+                  Mac Book Pro
+                </div>
+
+                <div class="post-bottom-smp-price">
+                  $985
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+      -->
+
+      <!-- END SOCIAL MARKETPLACE -->
+
+    </div>
+    <!-- content-page col-xs-12 col-sm-12 -->
+
+    <!--
+    <div class="content-bar col-sm-3">
+
+    </div>
+    -->
+
+  </div>
+  <!-- row -->
+
+</div>
+<!-- container-fluid -->

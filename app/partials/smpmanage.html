@@ -1,0 +1,59 @@
+<div ng-include="'partials/header.html'" ng-controller="HeaderCtrl"></div>
+
+<div class="dashboard container-fluid">
+
+  <div class="row">
+
+    <!-- dashboard menu -->
+    <div ng-include="'partials/dashboardmenu.html'" ng-controller="DashboardMenuCtrl"></div>
+
+    <div class="col-xs-12 col-sm-9 col-sm-offset-3 col-md-offset-3 col-lg-offset-2 col-lg-10 dashboard-content">
+
+      <div class="dashboard-content-title">
+        Manage listings <span><img src="/img/icon/smp.png"></span>
+      </div>
+      <!-- dashboard-content-title -->
+
+      <div class="post" ng-repeat="listing in listings">
+
+        <div class="post-image" ng-show="listing.pictures.length > 0" style="background-image: url('{{listing.pictures[0].url}}')"></div>
+        <div class="post-image" ng-show="listing.pictures.length == 0" style="background-image: url('/img/misc/noimage.jpeg')"></div>
+
+        <div class="post-bottom post-bottom-smp">
+
+          <div class="post-bottom-smp-info">
+
+            <div class="post-bottom-smp-title">
+              {{listing.title}}
+            </div>
+
+            <div class="post-bottom-smp-price">
+              ${{listing.price}}
+            </div>
+
+          </div>
+          <!-- post-bottom-smp-info -->
+
+        </div>
+        <!-- post-bottom post-bottom-smp -->
+
+        <div class="post-actions">
+
+          <a class="post-actions-button" href="/dashboard/smp/manage/listing/{{listing._id}}/edit">
+            <span class="glyphicon glyphicon-pencil" />Edit
+          </a>
+          <!-- end post-actions-button -->
+
+        </div>
+        <!-- end post-actions -->
+
+      </div>
+      <!-- end post -->
+
+    </div>
+    <!-- col-sm-9 -->
+
+  </div>
+  <!-- end row -->
+
+</div>

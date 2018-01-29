@@ -1,0 +1,90 @@
+<div ng-include="'partials/headerhome.html'"></div>
+
+<div class="content container-fluid">
+
+  <div class="row" style="position: relative;">
+
+    <div class="content-page content-page-home col-xs-12 col-sm-12">
+
+      <!-- HASHTAGS -->
+
+      <div class="explore-section">
+
+        <div class="explore-section-title">
+          <div class="explore-section-title-text">HASHTAGS</div>
+          <div class="explore-section-title-more">ver +</div>
+        </div>
+
+        <div class="explore-section-hashtags">
+
+          <div class="explore-section-hashtags-hashtag" ng-repeat="n in [1,2,3,4,5,6]"><a href="/home/smp/hashtag/notebook">#notebook</a></div>
+          <!-- explore-section-hashtags -->
+
+        </div>
+        <!-- end explore-section-row -->
+
+      </div>
+      <!-- end explore-section -->
+
+      <!-- END HASHTAGS -->
+
+      <!-- SOCIAL MARKETPLACE -->
+
+      <div class="explore-section">
+
+        <div class="explore-section-title">
+          <div class="explore-section-title-text">LAST POSTS</div>
+          <div class="explore-section-title-more">ver +</div>
+        </div>
+
+      </div>
+      <!-- end explore-section -->
+
+      <a href="/smp/product" target="_blank">
+      <div class="post" ng-repeat="post in [1,2,3,4,5,6]">
+
+        <div class="post-image" style="background-image: url('https://www.laptopmag.com/images/uploads/4758/g/macbook-12inch-003.jpg')">
+        </div>
+
+        <div class="post-bottom post-bottom-smp">
+
+          <div class="post-bottom-smp-info">
+
+            <div class="post-bottom-smp-title">
+              Mac Book Pro
+            </div>
+
+            <div class="post-bottom-smp-price">
+              $985
+            </div>
+
+          </div>
+          <!-- post-bottom-smp-info -->
+
+          <div class="post-bottom-smp-user">
+            <img src="img/user/user.jpg" />
+          </div>
+          <!-- post-bottom-smp-user -->
+
+        </div>
+        <!-- post-bottom post-bottom-smp -->
+
+      </div>
+      <!-- end post -->
+      </a>
+
+
+    </div>
+    <!-- content-page col-xs-12 col-sm-12 -->
+
+    <!--
+    <div class="content-bar col-sm-3">
+
+    </div>
+    -->
+
+  </div>
+  <!-- row -->
+
+</div>
+<!-- container-fluid -->

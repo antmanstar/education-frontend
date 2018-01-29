@@ -1,0 +1,73 @@
+<div class="container-fluid account-loginregister-content">
+
+  <div class="row">
+
+    <!--
+    <div class="col-xs-12 col-sm-5 create-col" id="particle-canvas"></div>
+    -->
+
+    <nav class="navbar-index">
+
+        <div class="navbar-index-logo">
+
+          <a href="/"><img src="img/logo/logo.png" /></a>
+
+        </div>
+        <!-- navbar-index-logo -->
+
+        <!--
+        <div class="navbar-index-menu">
+          Marcelo Pio
+        </div>
+        -->
+
+    </nav>
+
+
+    <div class="col-xs-12 col-sm-12 login-col">
+
+      <div class="title">
+        log in
+      </div>
+      <!-- end title -->
+
+      <div class="account-loginregister-message" ng-show="loginMessageBox">
+        {{loginMessage}}
+      </div>
+      <!-- end account-loginregister-message -->
+
+      <form class="account-loginregister-content-form">
+
+        <input type="text" ng-model="loginEmail" placeholder="email"></input></br>
+        <input type="password" ng-model="loginPassword" placeholder="password"></input></br>
+        <span>reset password</span>
+        <button ng-click="login()">log in</button>
+
+      </form>
+
+      <div class="title">
+        create an account
+      </div>
+      <!-- end title -->
+
+      <div class="account-loginregister-message" ng-show="createMessageBox">
+        {{createMessage}}
+      </div>
+      <!-- end account-loginregister-message -->
+
+      <form class="account-loginregister-content-form">
+
+        <input type="text" ng-model="createName" placeholder="type your name"></input></br>
+        <input type="text" ng-model="createEmail" placeholder="email"></input></br>
+        <input type="password" ng-model="createPassword" placeholder="password"></input></br>
+        <input type="password" ng-model="createPasswordConfirm" placeholder="confirm password"></input></br>
+        <button ng-click="create()">sign up</button>
+
+      </form>
+
+    </div>
+
+  </div>
+
+</div>
+<!-- account-loginregister-content -->

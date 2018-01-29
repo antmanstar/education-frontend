@@ -1,0 +1,78 @@
+<div ng-include="'partials/header.html'" ng-controller="HeaderCtrl"></div>
+
+<div class="dashboard container-fluid">
+
+  <div class="row">
+
+    <!-- dashboard menu -->
+    <div ng-include="'partials/dashboardmenu.html'" ng-controller="DashboardMenuCtrl"></div>
+
+    <div class="col-xs-12 col-sm-9 col-sm-offset-3 col-md-offset-3 col-lg-offset-2 col-lg-10 dashboard-content">
+
+      <div class="dashboard-content-title">
+        My job listings <span><img src="/img/icon/jobs.png"></span>
+      </div>
+      <!-- dashboard-content-title -->
+
+      <div ng-click="clickToOpen()" class="post" ng-repeat="post in [1]">
+
+        <div class="post-top-text">
+          Pós-Graduação
+        </div>
+        <!-- end post-top-text -->
+
+        <div class="post-job-infos">
+
+          <div class="post-job-infos-description">
+
+            <div class="post-job-infos-description-title">
+              Software Engineering Associate
+            </div>
+            <!-- end post-job-infos-description-title -->
+
+            <div class="post-job-infos-description-category">
+              Information Services
+            </div>
+            <!-- post-job-infos-description-category -->
+
+          </div>
+          <!-- post-job-infos-description -->
+
+          <div class="post-job-infos-attributes">
+
+            <div class="attribute">Cupertino</div>
+            <div class="attribute">Cupertino</div>
+            <div class="attribute">Cupertino</div>
+            <div class="attribute">Cupertino</div>
+
+          </div>
+          <!-- -->
+
+          <div class="post-job-infos-company">
+
+            <div class="post-job-infos-company-logo"><img src="http://incitrio.com/wp-content/uploads/2015/01/Apple_gray_logo.png" /></div>
+            <div class="post-job-infos-company-text">
+              <div class="name">Apple</div>
+              <div class="moreinfo">Company Info</div>
+            </div>
+
+          </div>
+          <!-- end post-job-infos-attributes -->
+
+        </div>
+        <!-- end post-job-infos -->
+
+        <div class="post-bottom" style="overflow: auto;">
+
+          <button class="action action-job" style="background-color: #e76969; width: 100%;">Remove application</button>
+
+        </div>
+        <!-- end post-bottom -->
+
+      </div>
+      <!-- end post -->
+
+  </div>
+  <!-- end row -->
+
+</div>

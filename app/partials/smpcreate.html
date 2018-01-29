@@ -1,0 +1,170 @@
+<div ng-include="'partials/header.html'" ng-controller="HeaderCtrl"></div>
+
+<div class="dashboard container-fluid">
+
+  <div class="row">
+
+    <!-- dashboard menu -->
+    <div ng-include="'partials/dashboardmenu.html'" ng-controller="DashboardMenuCtrl"></div>
+
+    <div class="col-xs-12 col-sm-9 col-sm-offset-3 col-md-offset-3 col-lg-offset-2 col-lg-10 dashboard-content">
+
+      <div class="dashboard-content-title">
+        Create listing <span><img src="/img/icon/smp.png"></span>
+      </div>
+      <!-- dashboard-content-title -->
+
+      <div class="dashboard-input-group">
+
+        <div class="dashboard-input-group-title">
+          Title
+          <span ng-show="titleOk" class="glyphicon glyphicon-ok dashboard-input-group-title-verification-correct"></span>
+          <span ng-hide="titleOk" class="glyphicon glyphicon-remove dashboard-input-group-title-verification-error"></span>
+        </div>
+        <!-- dashboard-input-group-title -->
+
+        <div class="dashboard-input-text">
+          <input ng-model="title" type="text" placeholder="Write your listing title here" max-length="45" />
+        </div>
+        <!-- dashboard-input-text -->
+
+      </div>
+      <!-- dashboard-input-group -->
+
+      <div class="dashboard-input-group">
+
+        <div class="dashboard-input-group-title">
+          Pictures
+          <!--
+          <span class="glyphicon glyphicon-ok dashboard-input-group-title-verification-correct"></span>
+          <span class="glyphicon glyphicon-remove dashboard-input-group-title-verification-error"></span>
+          -->
+        </div>
+        <!-- dashboard-input-group-title -->
+
+        <div class="dashboard-input-picture-wrap" ng-repeat="f in filesListing">
+
+          <div class="dashboard-input-picture">
+            <span class="glyphicon glyphicon-paperclip" />
+            <img ng-src="{{f.path}}" />
+          </div>
+          <!-- dashboard-input-picture -->
+
+          <div class="dashboard-input-picture-info">
+
+            <div class="dashboard-input-picture-info-button" ng-click="removeImage($index)">
+              <span class="glyphicon glyphicon-remove" />Remove
+            </div>
+
+          </div>
+
+        </div>
+        <!-- dashboard-input-picture-wrap -->
+
+        <div class="dashboard-input-picture-wrap">
+
+          <div class="dashboard-input-picture">
+
+            <div ngf-drop ngf-select ng-model="files" class="drop-box"
+            ngf-drag-over-class="'dragover'" ngf-multiple="true" ngf-allow-dir="true"
+            accept="image/*,application/pdf"
+            ngf-pattern="'image/*,application/pdf'" id="imageUpload">
+
+              <span class="loading" ng-show="imageUploading"><img src="https://www.philau.edu/assets/images/loading.gif" /></span>
+              <span ng-hide="imageUploading" class="glyphicon glyphicon-paperclip" />
+
+          </div>
+
+          </div>
+          <!-- dashboard-input-picture -->
+
+        </div>
+        <!-- dashboard-input-picture-wrap -->
+
+      </div>
+      <!-- dashboard-input-group -->
+
+      <div class="dashboard-input-group">
+
+        <div class="dashboard-input-group-title">
+          Description
+          <span ng-show="descriptionOk" class="glyphicon glyphicon-ok dashboard-input-group-title-verification-correct"></span>
+          <span ng-hide="descriptionOk" class="glyphicon glyphicon-remove dashboard-input-group-title-verification-error"></span>
+        </div>
+        <!-- dashboard-input-group-title -->
+
+        <div class="dashboard-input-textarea">
+          <textarea ng-model="description" type="text" placeholder="Write your product description here." max-length="300" rows="6" />
+        </div>
+        <!-- dashboard-input-text -->
+
+      </div>
+      <!-- dashboard-input-group -->
+
+      <div class="dashboard-input-group">
+
+        <div class="dashboard-input-group-title">
+          Price
+          <span ng-show="priceOk" class="glyphicon glyphicon-ok dashboard-input-group-title-verification-correct"></span>
+          <span ng-hide="priceOk" class="glyphicon glyphicon-remove dashboard-input-group-title-verification-error"></span>
+        </div>
+        <!-- dashboard-input-group-title -->
+
+        <div class="dashboard-input-text dashboard-input-text-price">
+          <span>$</span><input ng-model="price" type="text" placeholder="Price" max-length="45" />
+        </div>
+        <!-- dashboard-input-text -->
+
+      </div>
+      <!-- dashboard-input-group -->
+
+      <div class="dashboard-input-group">
+
+        <div class="dashboard-input-group-title">
+          University
+          <span ng-show="universityOk" class="glyphicon glyphicon-ok dashboard-input-group-title-verification-correct"></span>
+          <span ng-hide="universityOk" class="glyphicon glyphicon-remove dashboard-input-group-title-verification-error"></span>
+        </div>
+        <!-- dashboard-input-group-title -->
+
+        <div class="dashboard-input-text">
+          <input ng-model="university" type="text" placeholder="Write university name" max-length="45" />
+        </div>
+        <!-- dashboard-input-text -->
+
+        <div class="dashboard-input-search-result" ng-click="selectUniversity(u)" ng-repeat="u in universitySearch | limitTo: 5">
+          {{u._source.name}}
+        </div>
+
+      </div>
+      <!-- dashboard-input-group -->
+
+      <div class="dashboard-input-group">
+
+        <div class="dashboard-input-group-title">
+          Hashtags
+        </div>
+        <!-- dashboard-input-group-title -->
+
+        <div class="dashboard-input-textarea">
+          <textarea ng-model="hashtag" placeholder="Write all hashtags here." max-length="300" rows="6" />
+        </div>
+        <!-- dashboard-input-text -->
+
+      </div>
+      <!-- dashboard-input-group -->
+
+      <div class="dashboard-input-group dashboard-input-group-button">
+
+        <button ng-click="createListing()" class="dashboard-input-button-action dashboard-input-button-action-orange">Post my listing!</button>
+
+      </div>
+      <!-- dashboard-input-group -->
+
+    </div>
+    <!-- col-sm-9 -->
+
+  </div>
+  <!-- end row -->
+
+</div>

@@ -1,0 +1,190 @@
+.university-block {
+
+  width: calc(25% - 10px);
+  display: inline-block;
+
+  margin-right: 10px;
+  margin-bottom: 10px;
+
+  cursor: pointer;
+
+}
+
+.university-block-image {
+
+  width: 100%;
+  height: 300px;
+
+  background-size: cover;
+  background-position: 50% 50%;
+
+  border-radius: 3px;
+
+}
+
+.university-block-image:hover {
+
+  -webkit-box-shadow: inset 0px 0px 40px 0px rgba(255,255,255,0.25);
+  -moz-box-shadow: inset 0px 0px 40px 0px rgba(255,255,255,0.25);
+  box-shadow: inset 0px 0px 40px 0px rgba(255,255,255,0.25);
+
+  transition: box-shadow 0.2s ease-in-out;
+
+}
+
+.university-block-text {
+
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+}
+
+.university-block-text-title {
+
+  font-size: 1.3em;
+  font-weight: 500;
+
+}
+
+.university-block-text-subtitle {
+
+  font-weight: 400;
+
+}
+
+/* feed block university */
+
+.university-feed-block-university {
+
+  text-align: left;
+  height: 30px;
+  line-height: 30px;
+
+  background-color: #f9f9f9;
+
+  margin-bottom: 15px;
+  margin-left: -15px;
+  margin-right: -15px;
+
+  padding-left: 15px;
+  padding-right: 15px;
+
+  font-weight: bold;
+
+}
+
+/* feed block actions */
+
+.university-feed-block-actions {
+
+  border-top: 1px solid #d4d4d4;
+  padding-top: 10px;
+  text-align: right;
+
+}
+
+.university-feed-block-actions button {
+
+  outline: none;
+  border: none;
+
+  color: #944398;
+
+  border-radius: 2px;
+
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 15px;
+  padding-right: 15px;
+
+  border: 1px solid #b753bc;
+
+  background-color: #e2bae4;
+
+}
+
+/* feed */
+.university-feed {
+
+  padding: 30px;
+
+}
+
+.university-feed-block {
+
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-bottom: 15px;
+
+  border: 1px solid #ececec;
+  border-radius: 5px;
+
+  background-color: #fff;
+
+  margin-bottom: 15px;
+
+}
+
+@media screen and (max-width: 992px) {
+
+  .content-page-home {
+
+    padding-left: 15px;
+    padding-right: 15px;
+
+  }
+
+  .university-block {
+
+    width: calc(33.33% - 10px);
+
+    margin-right: 10px;
+
+
+  }
+
+}
+
+@media screen and (max-width: 750px) {
+
+
+}
+
+@media screen and (max-width: 767px) {
+
+  /* explore-section */
+  .explore-section {
+    padding-top: 15px;
+  }
+
+  .university-block-text-subtitle {
+    display: none;
+  }
+
+  .university-block {
+
+    width: calc(50% - 10px);
+    display: inline-block;
+
+    margin-right: 10px;
+
+    cursor: pointer;
+
+  }
+
+  .explore-section-row-block-jobs {
+    width: calc(100% - 10px);
+  }
+
+}
+
+@media screen and (max-width: 468px) {
+
+  .university-block-image {
+
+    width: 100%;
+    height: 200px;
+
+  }
+
+}

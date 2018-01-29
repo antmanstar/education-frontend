@@ -1,0 +1,18 @@
+{
+  "name": "networkbasetest",
+  "version": "1.0.0",
+  "description": "",
+  "main": "client.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node client.js"
+  },
+  "author": "marcelopiomsf",
+  "license": "ISC",
+  "dependencies": {
+    "compression": "^1.6.2",
+    "express": "^4.15.3",
+    "morgan": "^1.8.2"
+  },
+  "engines" : { "node" : ">=6.10.2" }
+}

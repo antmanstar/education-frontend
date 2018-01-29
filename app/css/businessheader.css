@@ -1,0 +1,305 @@
+#navbars-business {
+
+  background-color: white;
+
+  -webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.2);
+  -moz-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.2);
+
+}
+
+.navbar-business {
+
+  padding-left: 15px;
+  padding-top: 15px;
+  padding-right: 15px;
+  padding-bottom: 5px;
+
+}
+
+.navbar-business-logo {
+
+  width: 180px;
+  display: inline-block;
+  margin-bottom: 15px;
+
+}
+
+.navbar-business-logo img {
+
+  width: 100%;
+
+}
+
+/* submenu */
+.navbar-business-submenu {
+
+  padding-left: 10px;
+  padding-right: 10px;
+
+  color: #2d4255;
+
+  font-family: "Georgia", serif;
+
+}
+
+.navbar-business-submenu-left {
+
+  display: inline-block;
+  float: left;
+
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+}
+
+.navbar-business-submenu-right {
+
+  display: inline-block;
+  float: right;
+
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+}
+
+.navbar-business-submenu-left-menu {
+
+  display: inline-block;
+  margin-right: 35px;
+
+}
+
+.navbar-business-submenu-left-menu span {
+
+  font-size: 0.8em;
+
+  margin-left: 10px;
+
+}
+
+.navbar-business-submenu-right-menu {
+
+  display: inline-block;
+  margin-left: 35px;
+
+}
+
+.navbar-business-submenu-right-menu span {
+
+  font-size: 0.8em;
+
+  margin-left: 10px;
+
+}
+
+/* navbar categories */
+
+.navbar-pages {
+
+  height: 35px;
+  border-bottom: 1px solid #d0d0d0;
+
+}
+
+.navbar-pages ul {
+
+  font-family: 'Georgia', serif;
+  font-weight: bold;
+  color: #555555;
+
+  margin-top: 0px;
+  margin-bottom: 0px;
+  height: 35px;
+  line-height: 31px;
+
+  overflow-x: scroll;
+  overflow-y: none;
+
+  white-space: nowrap;
+
+}
+
+.navbar-pages ul::-webkit-scrollbar {
+
+  padding-top: 5px;
+  display: none;
+
+}
+
+.navbar-pages ul::-moz-scrollbar {
+
+  display: none;
+
+}
+
+.navbar-pages li {
+
+  display: inline-block;
+  list-style: none;
+  padding-left: 25px;
+  padding-right: 25px;
+
+  vertical-align: top;
+
+  cursor: pointer;
+
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently */
+
+}
+
+.navbar-pages li:hover {
+
+  border-bottom: 3px solid #f6aba3;
+
+}
+
+.navbar-pages .active {
+
+  border-bottom: 3px solid #ee5748;
+
+}
+
+.navbar-mobile-menu {
+
+  background-color: white;
+  position: fixed;
+
+  width: 100%;
+  height: 100vh;
+
+  top: 50px;
+
+  z-index: 9999;
+
+  padding: 20px;
+
+  font-family: "Roboto", sans-serif;
+
+  overflow-y: scroll;
+
+}
+
+.navbar-mobile-menu-option {
+
+  font-size: 1.5em;
+  font-weight: lighter;
+
+  padding-top: 3vh;
+  padding-bottom: 3vh;
+
+}
+
+.navbar-mobile-menu-option a {
+
+  color: #000;
+
+}
+
+.navbar-mobile-menu-option-user img {
+
+  height: 35px;
+  border-radius: 40%;
+
+  margin-right: 15px;
+
+}
+
+.navbar-mobile-menu-option-divisor {
+
+  border-top: 1px solid #e0e4cc;
+
+}
+
+.navbar-business-mobilearrow {
+
+  display: none;
+  font-size: 0.8em;
+
+  color: #b9b9b9;
+
+}
+
+.navbar-business-menuright {
+
+  display: inline-block;
+  float: right;
+
+  font-family: 'Roboto', sans-serif;
+
+}
+
+.navbar-business-menuright-option {
+
+  display: inline-block;
+
+  text-decoration: none;
+
+  padding-left: 15px;
+  padding-right: 15px;
+
+  font-size: 1.2em;
+
+}
+
+.navbar-business-menuright-option a {
+
+  display: inline-block;
+
+  text-decoration: none;
+
+  color: #415466;
+
+}
+
+.navbar-business-menuright-option-user {
+
+
+}
+
+.navbar-business-menuright-option-user img {
+
+  border-radius: 40%;
+  height: 40px;
+
+}
+
+.dashboard-menu-group-option-sub a {
+
+  color: #000;
+
+}
+
+@media screen and (max-width: 468px) {
+
+  .navbar-business-logo {
+
+    /* width: 145px; */
+    width: calc(40vw - 10px);
+    padding-left: 10px;
+    padding-right: 10px;
+
+  }
+
+  .navbar-business {
+
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+
+  }
+
+  .navbar-business-search {
+
+    width: calc(60vw - 10px);
+    padding-left: 10px;
+    margin-right: 10px;
+
+  }
+
+}

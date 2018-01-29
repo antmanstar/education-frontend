@@ -1,0 +1,214 @@
+<div ng-include="'partials/headermobilemenu.html'"></div>
+
+<!-- navbar -->
+<div id="navbars-home">
+
+  <div class="navbar-home">
+
+    <div ng-click="displayMobileMenu()" style="display: inline-block;">
+
+      <div class="navbar-home-logo">
+
+        <a style="display: inline-block;"><img src="img/logo/logo.png" /></a>
+
+      </div>
+      <!-- navbar-home-logo -->
+
+      <div class="navbar-home-mobilearrow" ng-hide="showMobileMenu">
+        <span class="glyphicon glyphicon-chevron-down"></span>
+      </div>
+
+      <div class="navbar-home-mobilearrow" ng-show="showMobileMenu">
+        <span class="glyphicon glyphicon-chevron-up"></span>
+      </div>
+
+    </div>
+    <!-- -->
+
+    <div class="navbar-home-search">
+
+      <input type="text" ng-model="searchQuery" autoFocus></input>
+      <button style="border-radius: 0px; outline: 0;"><span class="glyphicon glyphicon-search"></span></button>
+
+    </div>
+    <!-- navbar-home-search -->
+
+    <div class="navbar-home-menuright">
+
+      <div ng-hide="logged" class="navbar-home-menuright-option" style="padding-top: 10px;">
+        <a href="/login">Login / Sign Up</a>
+      </div>
+
+      <div ng-show="logged" class="navbar-home-menuright-option" style="padding-top: 10px;">
+        <a href="/dashboard">Dashboard</a>
+      </div>
+
+      <div ng-show="logged" class="navbar-home-menuright-option navbar-home-menuright-option-user" ng-mouseleave="displayUserMenu = false" ng-init="displayUserMenu = false">
+
+        <img ng-mouseenter="displayUserMenu = true" src="img/user/user.png" />
+
+        <div class="wrapper">
+
+          <div class="navbar-home-menuright-menupop" ng-show="displayUserMenu">
+
+            <div class="navbar-home-menuright-menupop-option" ng-click="logout()">
+              Log out
+            </div>
+
+          </div>
+          <!-- navbar-home-menuright-option -->
+
+        </div>
+
+      </div>
+
+    </div>
+    <!-- end navbar-home-menuright -->
+
+  </div>
+
+  <div class="navbar-pages">
+
+    <ul>
+
+      <!-- just display in search -->
+
+      <!--<li id="navbar-filter" ng-click="filterMobile()"><span ng-class="filterGly" style="font-size: 0.7em; padding-right: 10px;" />Filters</li>-->
+      <li class="active">Todos</li>
+      <!--<li>Marketplace</li>-->
+
+    </ul>
+    <!-- ul -->
+
+  </div>
+  <!-- navbar-pages -->
+
+</div>
+<!-- navbar-home -->
+
+<div class="content content-search-query-results" ng-show="searchSuggestions">
+
+    <div class="content-search-query-results-result">
+      <div class="title">You're searching:</div>
+      <a href="/search?query={{searchQuery}}&result=true">{{searchQuery}}</a>
+    </div>
+
+    <div class="content-search-query-results-title">
+      Search Suggestion
+    </div>
+
+    <div class="content-search-query-results-result" ng-repeat="result in results">
+
+      <a ng-show='result._index == "university"' href="/a/{{result._source.url}}/forum">{{result._source.name}}</a>
+
+    </div>
+
+</div>
+<!-- content-search-query-results-->
+
+<div class="content container-fluid">
+
+  <div class="row" style="position: relative;">
+
+    <div class="content-page col-xs-12 col-sm-9">
+
+      <div ng-click="clickToOpen()" class="post" ng-repeat="post in []">
+
+        <div class="post-top-text">
+          Pós-Graduação
+        </div>
+        <!-- end post-top-text -->
+
+        <div class="post-job-infos">
+
+          <div class="post-job-infos-description">
+
+            <div class="post-job-infos-description-title">
+              Software Engineering Associate
+            </div>
+            <!-- end post-job-infos-description-title -->
+
+            <div class="post-job-infos-description-category">
+              Information Services
+            </div>
+            <!-- post-job-infos-description-category -->
+
+          </div>
+          <!-- post-job-infos-description -->
+
+          <div class="post-job-infos-attributes">
+
+            <div class="attribute">Cupertino</div>
+            <div class="attribute">Cupertino</div>
+            <div class="attribute">Cupertino</div>
+            <div class="attribute">Cupertino</div>
+
+          </div>
+          <!-- -->
+
+          <div class="post-job-infos-company">
+
+            <div class="post-job-infos-company-logo"><img src="http://incitrio.com/wp-content/uploads/2015/01/Apple_gray_logo.png" /></div>
+            <div class="post-job-infos-company-text">
+              <div class="name">Apple</div>
+              <div class="moreinfo">Company Info</div>
+            </div>
+
+          </div>
+          <!-- end post-job-infos-attributes -->
+
+        </div>
+        <!-- end post-job-infos -->
+
+        <div class="post-bottom" style="overflow: auto;">
+
+          <button class="save"><span class="glyphicon glyphicon-star" aria-hidden="true" /></br>Salvar</button>
+          <button class="share"><span class="glyphicon glyphicon-share-alt" aria-hidden="true" /></br>Compartilhar</button>
+          <button class="action action-job">Aplicar</button>
+
+        </div>
+        <!-- end post-bottom -->
+
+      </div>
+      <!-- end post -->
+
+      <a href="/smp/product" target="_blank">
+      <div class="post" ng-repeat="post in []">
+
+        <div class="post-image" style="background-image: url('https://www.laptopmag.com/images/uploads/4758/g/macbook-12inch-003.jpg')">
+        </div>
+
+        <div class="post-bottom post-bottom-smp">
+
+          <div class="post-bottom-smp-info">
+
+            <div class="post-bottom-smp-title">
+              Mac Book Pro
+            </div>
+
+            <div class="post-bottom-smp-price">
+              $985
+            </div>
+
+          </div>
+          <!-- post-bottom-smp-info -->
+
+          <div class="post-bottom-smp-user">
+            <img src="img/user/user.jpg" />
+          </div>
+          <!-- post-bottom-smp-user -->
+
+        </div>
+        <!-- post-bottom post-bottom-smp -->
+
+      </div>
+      <!-- end post -->
+      </a>
+
+    </div>
+
+  </div>
+  <!-- row -->
+
+</div>
+<!-- container-fluid -->

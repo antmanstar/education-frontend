@@ -1,0 +1,200 @@
+<div class="navbar-mobile-menu" ng-show="showMobileMenu">
+
+  <div class="navbar-mobile-menu-option navbar-mobile-menu-option-user">
+    <img src="img/user/user.jpg" />Marcelo Pio
+  </div>
+
+  <div class="navbar-mobile-menu-option navbar-mobile-menu-option-divisor">
+    Home
+  </div>
+
+  <div class="navbar-mobile-menu-option navbar-mobile-menu-option-divisor">
+    Dashboard
+  </div>
+
+  <div class="navbar-mobile-menu-option navbar-mobile-menu-option-divisor">
+    Social Marketplace
+  </div>
+
+  <div class="navbar-mobile-menu-option">
+    Jobs
+  </div>
+
+  <div class="navbar-mobile-menu-option">
+    Create an account
+  </div>
+
+  <div class="navbar-mobile-menu-option">
+    Login
+  </div>
+
+  <div class="navbar-mobile-menu-option navbar-mobile-menu-option-divisor" >
+    Download the App
+  </div>
+
+</div>
+
+<!-- navbar -->
+<div id="navbars-home">
+
+  <div class="navbar-home">
+
+    <div ng-click="displayMobileMenu()" style="display: inline-block;">
+
+      <div class="navbar-home-logo">
+
+        <a style="display: inline-block;"><img src="img/logo/logo.png" /></a>
+
+      </div>
+      <!-- navbar-home-logo -->
+
+      <div class="navbar-home-mobilearrow" ng-hide="showMobileMenu">
+        <span class="glyphicon glyphicon-chevron-down"></span>
+      </div>
+
+      <div class="navbar-home-mobilearrow" ng-show="showMobileMenu">
+        <span class="glyphicon glyphicon-chevron-up"></span>
+      </div>
+
+    </div>
+    <!-- -->
+
+    <div class="navbar-home-search">
+
+      <input type="text"></input>
+      <button><span class="glyphicon glyphicon-search"></span></button>
+
+    </div>
+    <!-- navbar-home-search -->
+
+    <div class="navbar-home-menuright">
+
+      <div class="navbar-home-menuright-option" style="padding-top: 10px;">
+        <a href="/dashboard">Dashboard</a>
+      </div>
+
+      <div class="navbar-home-menuright-option navbar-home-menuright-option-user">
+        <img src="img/user/user.jpg" />
+      </div>
+
+    </div>
+    <!-- -->
+
+  </div>
+
+  <div class="navbar-pages">
+
+    <ul>
+
+      <li>Home</li>
+      <li>Academia</li>
+      <li>Social Marketplace</li>
+      <li class="active">Empregos</li>
+      <li>Chat</li>
+
+    </ul>
+    <!-- ul -->
+
+  </div>
+  <!-- navbar-pages -->
+
+</div>
+<!-- navbar-home -->
+
+<div class="content container-fluid">
+
+  <div class="row" style="position: relative;">
+
+    <div class="content-page content-page-home col-xs-12 col-sm-12">
+
+      <!-- SOCIAL MARKETPLACE -->
+
+      <div class="explore-section">
+
+        <div class="explore-section-title">
+          <div class="explore-section-title-text">Computer Science</div>
+          <div class="explore-section-title-more">total: 6</div>
+        </div>
+
+        <div class="explore-section-jobs-image" style="background-image: url('https://edge.alluremedia.com.au/uploads/businessinsider/2015/02/people-working-3-1.jpg') ">>
+
+        </div>
+        <!-- explore-section-jobs-image -->
+
+      </div>
+      <!-- end explore-section -->
+
+      <div class="post" ng-click="jobListingOpen()" ng-repeat="n in [1,2,3,4,5,6]">
+
+        <div class="post-top-text">
+          Pós-Graduação
+        </div>
+        <!-- end post-top-text -->
+
+        <div class="post-job-infos">
+
+          <div class="post-job-infos-description">
+
+            <div class="post-job-infos-description-title">
+              Software Engineering Associate
+            </div>
+            <!-- end post-job-infos-description-title -->
+
+            <div class="post-job-infos-description-category">
+              Information Services
+            </div>
+            <!-- post-job-infos-description-category -->
+
+          </div>
+          <!-- post-job-infos-description -->
+
+          <div class="post-job-infos-attributes">
+
+            <div class="attribute">Cupertino</div>
+            <div class="attribute">Cupertino</div>
+            <div class="attribute">Cupertino</div>
+            <div class="attribute">Cupertino</div>
+
+          </div>
+          <!-- -->
+
+          <div class="post-job-infos-company">
+
+            <div class="post-job-infos-company-logo"><img src="http://incitrio.com/wp-content/uploads/2015/01/Apple_gray_logo.png" /></div>
+            <div class="post-job-infos-company-text">
+              <div class="name">Apple</div>
+              <div class="moreinfo">Company Info</div>
+            </div>
+
+          </div>
+          <!-- end post-job-infos-attributes -->
+
+        </div>
+        <!-- end post-job-infos -->
+
+        <div class="post-bottom" style="overflow: auto;">
+
+          <button class="save"><span class="glyphicon glyphicon-star" aria-hidden="true" /></br>Salvar</button>
+          <button class="share"><span class="glyphicon glyphicon-share-alt" aria-hidden="true" /></br>Compartilhar</button>
+          <button class="action action-job">Aplicar</button>
+
+        </div>
+        <!-- end post-bottom -->
+
+      </div>
+      <!-- end post -->
+
+    </div>
+    <!-- content-page col-xs-12 col-sm-12 -->
+
+    <!--
+    <div class="content-bar col-sm-3">
+
+    </div>
+    -->
+
+  </div>
+  <!-- row -->
+
+</div>
+<!-- container-fluid -->

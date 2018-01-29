@@ -1,0 +1,113 @@
+<div ng-controller="HeaderCtrl">
+
+<div ng-include="'partials/headermobilemenu.html'"></div>
+
+<!-- navbar -->
+<div id="navbars-home">
+
+  <div class="navbar-home">
+
+    <div ng-click="displayMobileMenu()" style="display: inline-block;">
+
+      <div class="navbar-home-logo">
+
+        <a style="display: inline-block;"><img src="img/logo/logo.png" /></a>
+
+      </div>
+      <!-- navbar-home-logo -->
+
+      <div class="navbar-home-mobilearrow" ng-hide="showMobileMenu">
+        <span class="glyphicon glyphicon-chevron-down"></span>
+      </div>
+
+      <div class="navbar-home-mobilearrow" ng-show="showMobileMenu">
+        <span class="glyphicon glyphicon-chevron-up"></span>
+      </div>
+
+    </div>
+    <!-- -->
+
+    <div class="navbar-home-search">
+
+      <input type="text" ng-model="searchQuery"></input>
+      <button ng-click="search()"><span class="glyphicon glyphicon-search"></span></button>
+
+    </div>
+    <!-- navbar-home-search -->
+
+    <div class="navbar-home-menuright">
+
+      <div ng-hide="logged" class="navbar-home-menuright-option" style="padding-top: 10px;">
+        <a href="/login">Login / Sign Up</a>
+      </div>
+
+      <div ng-show="logged" class="navbar-home-menuright-option" style="padding-top: 10px;">
+        <a href="/dashboard">Dashboard</a>
+      </div>
+
+      <div ng-show="logged" class="navbar-home-menuright-option navbar-home-menuright-option-user" ng-mouseleave="displayUserMenu = false" ng-init="displayUserMenu = false">
+
+        <img ng-mouseenter="displayUserMenu = true" ng-src="{{userImage}}" />
+
+        <div class="wrapper">
+
+          <div class="navbar-home-menuright-menupop" ng-show="displayUserMenu">
+
+            <div class="navbar-home-menuright-menupop-option" ng-click="logout()">
+              Log out
+            </div>
+
+          </div>
+          <!-- navbar-home-menuright-option -->
+
+        </div>
+
+      </div>
+
+    </div>
+    <!-- end navbar-home-menuright -->
+
+  </div>
+
+  <div class="navbar-pages">
+
+    <ul>
+
+      <a href="/home"><li ng-class="{'active': originalPath == '/home' || originalPath == '/home/'}">Home</li></a>
+      <a href="/home/universidades"><li ng-class="{'active': originalPath == '/home/universidades/' || originalPath == '/home/universidades'}">Universidades</li></a>
+      <!--<a href="/home/smp"><li ng-class="{'active': originalPath == '/home/smp' || originalPath == '/home/smp/' }">Marketplace</li></a>-->
+      <!--
+      <li>Empregos</li>
+      <li>Chat</li>
+      -->
+
+    </ul>
+    <!-- ul -->
+
+  </div>
+  <!-- navbar-pages -->
+
+</div>
+<!-- navbar-home -->
+
+<div class="content content-search-query-results" ng-show="searchSuggestions">
+
+    <div class="content-search-query-results-result">
+      <div class="title">You're searching:</div>
+      <a href="/search?query={{searchQuery}}&result=true">{{searchQuery}}</a>
+    </div>
+
+    <div class="content-search-query-results-title">
+      Search Suggestion
+    </div>
+
+    <div class="content-search-query-results-result" ng-repeat="result in results">
+
+      <a ng-show='result._index == "university"' href="/a/{{result._source.url}}/forum">{{result._source.name}}</a>
+
+    </div>
+
+</div>
+<!-- content-search-query-results-->
+
+</div>

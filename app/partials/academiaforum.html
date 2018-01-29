@@ -1,0 +1,42 @@
+<div ng-include="'partials/header.html'" ng-controller="HeaderCtrl"></div>
+
+<div class="academia container-fluid">
+
+  <div class="row academia-coverimage" style="background-image: url('http://{{university.backgroundImage}}')"></div>
+  <!-- end academia-coverimage -->
+
+  <div class="row">
+
+    <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9 academia-content">
+
+      <div ng-include="'partials/academiastatsmobile.html'" ng-controller="AcademiaStatusCtrl"></div>
+
+      <div ng-include="'partials/academiacontentmenu.html'" ng-controller="AcademiaMenu"></div>
+
+      <div class="academia-content-forum">
+
+        <div ng-show="forumPosts.length == 0">
+          No forum posts yet.
+        </div>
+
+        <div ng-show="forumPosts.length > 0">
+
+          <forumpost ng-repeat="post in forumPosts | orderBy:'-votesCount'" p="{{post}}"></forumpost>
+
+        </div>
+        <!-- forumPosts.length > 0 -->
+
+      </div>
+      <!-- academia-content-forum-->
+
+    </div>
+    <!-- end col-xs-12 -->
+
+    <div ng-include="'partials/academiarightcolumn.html'" ng-controller="AcademiaStatusCtrl"></div>
+
+    <div ng-include="'partials/academiafootermobile.html'" ng-controller="AcademiaMenu"></div>
+
+  </div>
+  <!-- end row -->
+
+</div>

@@ -1,0 +1,40 @@
+<div class="academia-content-forum-post">
+
+<div class="academia-content-forum-post-stats">
+
+  <div class="academia-content-forum-post-stats-ranking">{{$index + 1}}</div>
+
+  <div class="academia-content-forum-post-stats-votes">
+
+    <div ng-click="upvoteForumPost(post)" class="academia-content-forum-post-stats-upvote">
+      <span class="glyphicon glyphicon-triangle-top" />
+    </div>
+
+    <div class="academia-content-forum-post-stats-votes-number">{{post.votesCount}}</div>
+
+    <div ng-click="downvoteForumPost(post._id)" class="academia-content-forum-post-stats-downvote">
+      <span class="glyphicon glyphicon-triangle-bottom" />
+    </div>
+
+  </div>
+
+</div>
+
+<div class="academia-content-forum-post-info">
+
+  <div class="academia-content-forum-post-info-title">
+
+    <a href="/a/{{university.url}}/forum/post/id/{{post._id}}" target="_blank">{{post.title}}</a>
+
+  </div>
+
+  <div class="academia-content-forum-post-info-stats">postado faz <span am-time-ago="post.createdAt | amFromUnix"></span></div>
+
+  <div class="academia-content-forum-post-info-actions">
+
+    <a class="action" href="/a/{{university.url}}/forum/post/id/{{post._id}}" target="_blank">{{post.answers.length}} respostas</a>
+    <!--<a class="action">report</a></div>-->
+
+</div>
+
+</div>
