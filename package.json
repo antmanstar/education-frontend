@@ -12,6 +12,7 @@
   "dependencies": {
     "compression": "^1.6.2",
     "express": "^4.15.3",
+    "express-https-redirect": "^1.0.0",
     "morgan": "^1.8.2"
   },
   "engines": {
