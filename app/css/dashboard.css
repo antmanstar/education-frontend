@@ -1,9 +1,85 @@
 .dashboard {
 
-  font-family: 'Roboto', sans-serif;
+}
 
-  margin-top: 77px;
+/* dashboard accordion */
+.dashboard-accordion {
 
+  border-radius: 5px;
+  border: 1px solid #d0d0d0;
+
+}
+
+.dashboard-accordion .top {
+  height: 50px;
+  background-color: #ebebeb;
+  line-height: 50px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.dashboard-accordion .content {
+  padding: 15px;
+}
+
+/* dashboard-infobox */
+
+.dashboard-infobox {
+
+  border-radius: 5px;
+  border: 1px solid #d0d0d0;
+
+  padding: 15px;
+
+}
+
+.dashboard-infobox .info {
+
+  padding-bottom: 10px;
+
+}
+
+.dashboard-infobox .line .info {
+
+  display: inline-block;
+
+}
+
+.dashboard-infobox .info > .headline-sub-three {
+
+  padding: 0;
+  padding-bottom: 5px;
+
+}
+
+.dashboard-infobox .info > .text {
+
+  padding: 0;
+  font-size: 1.2em;
+
+}
+
+/* dashboard-status */
+
+.dashboard-status-box {
+  height: 130px;
+  padding: 15px;
+  -webkit-box-shadow: 0px 2px 3px 1px rgba(196,196,196,0.44);
+  -moz-box-shadow: 0px 2px 3px 1px rgba(196,196,196,0.44);
+  box-shadow: 0px 2px 3px 1px rgba(196,196,196,0.44);
+  margin-bottom: 15px;
+}
+
+.dashboard-status-box .stats {
+
+  font-size: 2.5em;
+  float: right;
+
+}
+
+.dashboard-status-box span a {
+  color: #52bfea;
+  text-transform: uppercase;
 }
 
 .dashboard-menu {
@@ -15,6 +91,10 @@
   height: calc(100vh);
 
   border-right: 1px solid #d0d0d0;
+
+  -webkit-box-shadow: 2px 0px 3px 0px rgba(196,196,196,0.24);
+  -moz-box-shadow: 2px 0px 3px 0px rgba(196,196,196,0.24);
+  box-shadow: 2px 0px 3px 0px rgba(196,196,196,0.24);
 
   background-color: #fff;
 
@@ -29,7 +109,7 @@
 .dashboard-menu-group-option {
 
   line-height: 1.8em;
-  font-weight: 500;
+  font-weight: 600;
 
 }
 
@@ -45,7 +125,7 @@
   font-weight: 400;
   font-size: 1em;
 
-  padding-left: 3em;
+  padding-left: 1.5em;
   padding-top: 0.5em;
   padding-bottom: 0.5em;
 
@@ -71,14 +151,23 @@
 
 .dashboard-content {
 
-  padding: 20px;
+  padding-right: 20px;
+  padding-left: 20px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+
   font-family: 'Roboto', sans-serif;
 
 }
 
-.dashboard-content-title {
+@media screen and (max-width: 768px) {
+  .dashboard-content {
+    top: 66px;
+  }
+}
 
-  font-size: 2em;
+
+.dashboard-content-title {
 
   margin-bottom: 30px;
 

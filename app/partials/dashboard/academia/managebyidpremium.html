@@ -1,0 +1,103 @@
+<div ng-include="'partials/headerhome.html'"></div>
+
+<div class="container-fluid">
+
+  <div class="row">
+
+    <!-- dashboard menu -->
+    <div ng-include="'partials/dashboardmenu.html'" ng-controller="DashboardMenuCtrl"></div>
+
+    <div class="col-xs-12 col-sm-9 col-md-9 col-lg-10 col-sm-offset-3 col-md-offset-3 col-lg-offset-2 col-lg-10 dashboard-content">
+
+      <ul class="breadcrumb">
+        <li><a href="/dashboard/a/manage">Manage my Colleges</a></li>
+        <li><a href="/dashboard/a/manage/id/{{university._id}}">{{university.name}}</a></li>
+        <li><a href="/dashboard/a/manage/id/{{university._id}}/premium">Premium Subscriptions</a></li>
+      </ul>
+
+      <div class="dashboard-content-title">
+        <h3>Premium Subscriptions</h3>
+      </div>
+
+      <table style="width:100%">
+
+        <tr style="background-color: #f3f3f3;">
+          <th>Premium</th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+
+        <tr academiadashboardplanrow ng-repeat="plan in university.plans"></tr>
+
+      </table>
+      <!-- end table -->
+
+      <div class="dashboard-content-title">
+        <h3>Create plan</h3>
+      </div>
+
+      <div class="row">
+
+        <div class="col-xs-12 col-sm-12">
+
+          <div class="alert bg-primary-red" ng-show="error.exists">{{displayError(error.text)}}</div>
+          <div class="alert bg-primary-green" ng-show="success">Success updating your College.</div>
+
+          <div class="form">
+
+            <div class="form-group">
+              <label>Name of your Plan</label>
+              <input ng-model="name" placeholder="Plan name" type="text" />
+            </div>
+            <!-- end form group -->
+
+            <div class="form-group">
+              <label>Amount</label>
+              <input ng-model="amount" placeholder="$10.50" type="text" />
+            </div>
+            <!-- end form group -->
+
+            <div class="form-group">
+              <label>Interval Count</label>
+              <input ng-model="intervalCount" placeholder="Interval between billings" type="text" />
+            </div>
+            <!-- end form group -->
+
+            <div class="form-group">
+              <label>Interval Period</label>
+              <select ng-model="interval">
+                <option value="year">Year</option>
+                <option value="month">Month</option>
+                <option value="week">Week</option>
+                <option value="day">Day</option>
+              </select>
+            </div>
+            <!-- end form group -->
+
+            <div class="form-group">
+              <label>Numbers of trial days</label>
+              <input ng-model="trialPeriodDays" placeholder="Number of trial days. Leave empty if no trial period." type="text" />
+            </div>
+            <!-- end form group -->
+
+            <div style="margin-top: 15px;">
+              <button ng-click="createPlan()" class="btn btn-green">Create a new plan</button>
+            </div>
+
+          </div>
+          <!-- end form -->
+
+        </div>
+        <!-- end col-xs-12 col-sm-6 -->
+
+      </div>
+      <!-- end row -->
+
+    </div>
+    <!-- end dashboard-content -->
+
+  </div>
+  <!-- end row -->
+
+</div>

@@ -1,0 +1,26 @@
+<div ng-include="'partials/headerhome.html'"></div>
+
+<div class="container-fluid container-home">
+
+  <div class="headline-container">Explore communites</div>
+
+  <div class="section-cards">
+
+    <a style="color: #2c4255;" ng-repeat="university in universities" href="/a/{{university.url}}/forum" target="_blank">
+      <div class="card">
+
+        <div class="picture" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
+        <div class="picture" ng-if="university.backgroundImage == undefined"  style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
+
+        <div class="title">{{university.name}}</div>
+        <div class="description">Uma metologia de treinamento que tem como principal característica a realização de exercícios que utilizam somente o peso corporal.</div>
+
+      </div>
+      <!-- end card -->
+    </a>
+
+  </div>
+  <!-- end section-cards -->
+
+</div>
+<!-- container-fluid container-full -->

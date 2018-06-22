@@ -1,0 +1,131 @@
+<div ng-include="'partials/headerhome.html'"></div>
+
+<div class="container-fluid">
+
+  <div class="row academia-coverimage" style="background-image: url('http://{{university.backgroundImage}}')"></div>
+
+  <div class="row">
+
+    <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9 academia-content">
+
+      <div academiastatus university="{{university}}"></div>
+
+      <div class="academia-content-forum">
+
+        <div class="academia-content-forum-post">
+
+          <div class="academia-content-forum-post-stats">
+
+            <div class="academia-content-forum-post-stats-votes">
+
+              <div ng-click="upvoteForumPost()" class="academia-content-forum-post-stats-upvote">
+                <span class="glyphicon glyphicon-triangle-top" />
+              </div>
+              <!-- academia-content-forum-post-stats-ranking-votes -->
+
+              <div class="academia-content-forum-post-stats-votes-number">{{votesCount}}</div>
+              <!-- academia-content-forum-post-stats-ranking-votes -->
+
+              <div ng-click="downvoteForumPost()" class="academia-content-forum-post-stats-downvote">
+                <span class="glyphicon glyphicon-triangle-bottom" />
+              </div>
+              <!-- academia-content-forum-post-stats-ranking-votes -->
+
+            </div>
+            <!-- academia-content-forum-post-stats-ranking-votes -->
+
+          </div>
+          <!-- academia-content-forum-post-stats -->
+
+          <div class="academia-content-forum-post-info">
+
+            <div class="academia-content-forum-post-info-title">
+              {{forumPost.title}}
+            </div>
+            <!-- academia-content-forum-post-info -->
+
+            <div class="academia-content-forum-post-info-stats">
+              postado faz <span am-time-ago="forumPost.createdAt | amFromUnix"></span>
+            </div>
+            <!-- academia-content-forum-post-info -->
+
+            <div class="academia-content-forum-post-info-text" ng-bind-html="forumPost.text"></div>
+            <!-- academia-content-forum-post-info -->
+
+            <div class="academia-content-forum-post-info-actions">
+              <a class="action">{{forumPost.answers.length}} answers</a>
+              <!--
+              <a class="action">report</a>
+              -->
+            </div>
+            <!-- academia-content-forum-post-info -->
+
+          </div>
+          <!-- academia-content-forum-post-info -->
+
+        </div>
+        <!-- academia-content-forum-post -->
+
+        <div class="academia-content-forum-answers" ng-show="forumPost.answers.length > 0">
+          {{forumPost.answers.length}} Answers
+        </div>
+        <!-- academia-content-forum-answers -->
+
+        <forumpostanswer p="{{forumPost._id}}" u="{{forumPost.universityId}}" ng-show="forumPost.answers.length > 0" a="{{answer}}" ng-repeat="answer in forumPost.answers | orderBy:'-votesCount'"></forumpostanswer>
+
+      </div>
+      <!-- academia-content-forum-->
+
+      <div class="academia-content-forum-answer">
+
+        <div class="academia-content-forum-answer-title">
+          Your Answer
+        </div>
+        <!-- academia-content-forum-answer-title -->
+
+        <div class="academia-content-forum-answer-box">
+
+          <style>
+          .ta-toolbar {
+            background-color: #f0f0f0;
+            padding-bottom: 5px;
+            padding-top: 5px;
+          }
+          </style>
+
+          <trix-editor angular-trix ng-model="answer"></trix-editor>
+
+        </div>
+        <!-- academia-content-forum-answer-box -->
+
+        <div class="academia-content-forum-answer-action">
+          <button class="btn btn-blue" ng-click="createAnswerPost()">Post your answer</button>
+        </div>
+        <!-- academia-content-forum-answer -->
+
+      </div>
+      <!-- academia-content-forum-answer -->
+
+    </div>
+    <!-- end col-xs-12 -->
+
+    <div academiarightcolumn university="{{university}}"></div>
+
+  </div>
+  <!-- end row -->
+
+  <div class="academia-footer">
+
+    <ul style="width: 100vw">
+
+      <li style="width: 50%;"><a href="/a/{{universityUrl}}/forum" ng-class="forumClass">Forum</a></li>
+      <!--<li>Chat</li>-->
+      <li style="width: 50%;"><a href="/a/{{universityUrl}}/marketplace" ng-class="smpClass">Marketplace</a></li>
+      <!--<li><a href="/a/{{universityUrl}}/jobs" ng-class="jobsClass">Jobs</a></li>-->
+
+    </ul>
+    <!-- ul -->
+
+  </div>
+
+</div>

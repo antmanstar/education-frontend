@@ -1,0 +1,54 @@
+<div ng-include="'partials/headerhome.html'"></div>
+
+<div class="container-fluid container-full">
+
+  <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
+  <div class="row academia-coverimage" ng-if="university.backgroundImage == undefined"  style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
+
+  <div class="row">
+
+    <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9 academia-content">
+
+      <div academiastatus university="{{university}}"></div>
+
+      <div class="academia-content-forum">
+
+        <div ng-show="forumPosts.length == 0">
+          No forum posts yet.
+        </div>
+
+        <div ng-show="forumPosts.length > 0">
+
+          <forumpost ng-repeat="post in forumPosts | orderBy:'-votesCount'" p="{{post}}"></forumpost>
+
+        </div>
+        <!-- forumPosts.length > 0 -->
+
+      </div>
+      <!-- academia-content-forum-->
+
+    </div>
+    <!-- end col-xs-12 -->
+
+    <div academiarightcolumn university="{{university}}"></div>
+
+    <div class="academia-footer">
+
+      <ul style="width: 100vw">
+
+        <li style="width: 50%;"><a href="/a/{{universityUrl}}/forum" ng-class="forumClass">Forum</a></li>
+        <!--<li>Chat</li>-->
+        <li style="width: 50%;"><a href="/a/{{universityUrl}}/marketplace" ng-class="smpClass">Marketplace</a></li>
+        <!--<li><a href="/a/{{universityUrl}}/jobs" ng-class="jobsClass">Jobs</a></li>-->
+
+      </ul>
+      <!-- ul -->
+
+    </div>
+    <!-- academia-footer -->
+
+  </div>
+  <!-- end row -->
+
+</div>
+<!-- container-full -->

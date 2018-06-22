@@ -1,0 +1,109 @@
+<div class="container-fluid modal-accounts">
+
+  <div class="row" ng-show="page == 'information'">
+
+    <div class="col-xs-12">
+
+      <div class="headline-sub-one" style="margin-bottom: 30px;">{{information.title}}</div>
+
+      <p>{{information.text}}</p>
+
+    </div>
+    <!-- end col-xs-12 -->
+
+    <div class="form" style="position: absolute; bottom: 0; left: 0; width: 100%; padding-left: 15px; padding-right: 15px;">
+
+      <button ng-click="informationAction()" class="btn btn-bluebase"><b>Ok</b></button>
+
+    </div>
+    <!-- end form -->
+
+  </div>
+  <!-- end row -->
+
+  <div class="row" ng-show="page == 'cardAdd'">
+
+    <div class="col-xs-12">
+
+      <div class="headline-sub-one" style="margin-bottom: 30px;">Add a card</div>
+
+      <div class="alert bg-primary-red" ng-show="validationError != undefined">{{validationError}}</div>
+
+      <form ng-model="form">
+
+        <div class="form-group">
+          <label>Name on Card</label>
+          <input ng-model="cardName" placeholder="Type name on card here" type="text" />
+        </div>
+        <!-- end form group -->
+
+        <div class="form-group">
+          <label>Card</label>
+          <stripe-element instance="card"></stripe-element>
+        </div>
+        <!-- end form group -->
+
+      </form>
+
+    </div>
+    <!-- end col-xs-12 -->
+
+    <div class="form" style="position: absolute; bottom: 0; left: 0; width: 100%; padding-left: 15px; padding-right: 15px;">
+
+      <button ng-click="cardAdd()" class="btn btn-green"><b ng-hide="loading">Add card</b><img style="width: 30px;" ng-show="loading" src="img/misc/loading.gif" /></button>
+
+    </div>
+    <!-- end form -->
+
+  </div>
+  <!-- end row -->
+
+  <div class="row" ng-show="page == 'order'">
+
+    <div class="col-xs-12">
+
+      <div class="headline-sub-one">Confirm your order</div>
+
+      <div style="padding-top: 15px;">
+
+        <label style="padding-bottom: 15px;">Your order</label>
+
+        <p>1x Monthly Subscription <span style="float: right;">$14/mo</span></p>
+
+      </div>
+
+      <div class="form">
+
+        <div class="form-group">
+
+          <label style="padding-bottom: 15px;">Credit or debit card</label>
+
+          <select>
+            <option>0485 - Mastercard</option>
+          </select>
+
+          <div style="margin-top: 15px;">
+            <p class="text-color-primary-blue" ng-click="goToPage('cardAdd')">+ add new card</p>
+          </div>
+
+        </div>
+        <!-- end form -->
+
+      </div>
+      <!-- end form -->
+
+    </div>
+    <!-- end col-xs-12 -->
+
+    <div class="form" style="position: absolute; bottom: 0; left: 0; width: 100%; padding-left: 15px; padding-right: 15px;">
+
+      <button ng-click="confirmOrder()" class="btn btn-green"><b ng-hide="loading">Confirm</b><img style="width: 30px;" ng-show="loading" src="img/misc/loading.gif" /></button>
+
+    </div>
+    <!-- end form -->
+
+  </div>
+  <!-- end row -->
+
+</div>
+<!-- end container-fluid -->

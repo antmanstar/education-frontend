@@ -1,0 +1,38 @@
+<div ng-include="'partials/headerhome.html'"></div>
+
+<div class="container-fluid">
+
+  <div class="row">
+
+    <!-- dashboard menu -->
+    <div ng-include="'partials/dashboardmenu.html'" ng-controller="DashboardMenuCtrl"></div>
+
+    <div class="col-xs-12 col-sm-9 col-md-9 col-lg-10 col-sm-offset-3 col-md-offset-3 col-lg-offset-2 col-lg-10 dashboard-content">
+
+      <div class="dashboard-content-title">
+        <h3>Subscribed Colleges</h3>
+      </div>
+
+      <div class="section-cards dashboard-cards">
+
+        <a style="color: #2c4255;" ng-repeat="university in [{ name : 'Hacker How' },{ name : 'Hacker How' },{ name : 'Hacker How' },{ name : 'Hacker How' },{ name : 'Hacker How' },{ name : 'Hacker How' }]" href="/a/{{university.url}}/forum" target="_blank">
+          <div class="card">
+
+            <div class="picture" style="background-image: url('http://i.ytimg.com/vi/TInfxe7c7yA/maxresdefault.jpg')"></div>
+            <div class="title">{{university.name}}</div>
+            <div class="description">Uma metologia de treinamento que tem como principal característica a realização de exercícios que utilizam somente o peso corporal.</div>
+
+          </div>
+          <!-- end card -->
+        </a>
+
+      </div>
+      <!-- end section-cards -->
+
+    </div>
+    <!-- col-sm-9 -->
+
+  </div>
+  <!-- end row -->
+
+</div>

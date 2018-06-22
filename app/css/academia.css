@@ -422,6 +422,7 @@
 
 .academia-content-forum-answer {
 
+  padding-bottom: 60px;
 
 }
 
@@ -502,28 +503,6 @@
 
 }
 
-.academia-content-forum-answer-action button {
-
-  border: none;
-  outline: none;
-
-  border-radius: 2px;
-
-  padding-left: 20px;
-  padding-right: 20px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-
-  font-size: 1em;
-
-  color: #fff;
-
-  background-color: #3e8ae8;
-
-  border: 1px solid #397cd0;
-
-}
-
 /* footer */
 
 .academia-footer {
@@ -531,6 +510,7 @@
   display: none;
 
   bottom: 0;
+  left: 0;
   height: 50px;
 
   position: fixed;

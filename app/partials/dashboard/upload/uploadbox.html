@@ -1,0 +1,41 @@
+<div>
+
+  <div class="dashboard-input-picture-wrap" ng-repeat="f in filesListing">
+
+    <div class="dashboard-input-picture" style="background-image: url('{{f}}'); background-position: 50% 50%; background-size: cover; width: 100%;">
+
+    </div>
+    <!-- dashboard-input-picture -->
+
+    <div class="dashboard-input-picture-info">
+
+      <div class="dashboard-input-picture-info-button" ng-click="remove()">
+        <span class="glyphicon glyphicon-remove" />Remove
+      </div>
+
+    </div>
+
+  </div>
+  <!-- dashboard-input-picture-wrap -->
+
+  <div class="dashboard-input-picture-wrap" ng-show="uploadDisplay">
+
+    <div class="dashboard-input-picture">
+
+      <div ngf-drop ngf-select ng-model="files" class="drop-box"
+      ngf-drag-over-class="'dragover'" ngf-multiple="true" ngf-allow-dir="true"
+      accept="image/*,application/pdf"
+      ngf-pattern="'image/*,application/pdf'" id="imageUpload">
+
+        <span class="loading" ng-show="imageUploading"><img src="https://www.philau.edu/assets/images/loading.gif" /></span>
+        <span ng-hide="imageUploading" class="glyphicon glyphicon-paperclip" />
+
+    </div>
+
+    </div>
+    <!-- dashboard-input-picture -->
+
+  </div>
+  <!-- dashboard-input-picture-wrap -->
+
+</div>

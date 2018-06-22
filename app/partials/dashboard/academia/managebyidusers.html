@@ -1,0 +1,57 @@
+<div ng-include="'partials/headerhome.html'"></div>
+
+<div class="container-fluid">
+
+  <div class="row">
+
+    <!-- dashboard menu -->
+    <div ng-include="'partials/dashboardmenu.html'" ng-controller="DashboardMenuCtrl"></div>
+
+    <div class="col-xs-12 col-sm-9 col-md-9 col-lg-10 col-sm-offset-3 col-md-offset-3 col-lg-offset-2 col-lg-10 dashboard-content">
+
+      <ul class="breadcrumb">
+        <li><a href="/dashboard/a/manage">Manage my Colleges</a></li>
+        <li><a href="/dashboard/a/manage/id/{{university._id}}">{{university.name}}</a></li>
+        <li><a href="/dashboard/a/manage/id/{{university._id}}/users">All Users</a></li>
+      </ul>
+
+      <div class="dashboard-content-title">
+        <h3>Hacker How users</h3>
+      </div>
+
+      <div>
+
+        <div class="form">
+
+          <div class="form-group search-box">
+
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Search user by name" />
+
+          </div>
+          <!-- end form-group -->
+
+        </div>
+        <!-- end form -->
+
+      </div>
+
+      <table style="width:100%">
+
+        <tr style="background-color: #f3f3f3;">
+          <th>Name</th>
+          <th>Username</th>
+          <th></th>
+        </tr>
+
+        <tr academiadashboarduserrow u="{{university}}" m="{{m}}" ng-repeat="m in university.members"></tr>
+
+      </table>
+
+    </div>
+    <!-- end dashboard-content -->
+
+  </div>
+  <!-- end row -->
+
+</div>

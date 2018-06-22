@@ -1,0 +1,61 @@
+<div ng-include="'partials/headerhome.html'"></div>
+
+<div class="container-fluid">
+
+  <div class="row">
+
+    <!-- dashboard menu -->
+    <div ng-include="'partials/dashboardmenu.html'" ng-controller="DashboardMenuCtrl"></div>
+
+    <div class="col-xs-12 col-sm-9 col-md-9 col-lg-10 col-sm-offset-3 col-md-offset-3 col-lg-offset-2 col-lg-10 dashboard-content">
+
+      <ul class="breadcrumb">
+        <li><a href="/dashboard/a/manage">Manage my Colleges</a></li>
+        <li><a href="/dashboard/a/manage/id/{{university._id}}">{{university.name}}</a></li>
+        <li><a href="/dashboard/a/manage/id/{{university._id}}/sales">Sales Statistics</a></li>
+      </ul>
+
+      <div class="dashboard-content-title">
+        <h3>Sales Statistics</h3>
+      </div>
+
+      <div class="row">
+
+        <div class="col-xs-12 col-sm-12">
+
+          <div>
+            <canvas id="line" height="100" class="chart chart-line" chart-data="data" chart-labels="labels" chart-series="series" chart-options="options" chart-dataset-override="datasetOverride" chart-click="onClick"></canvas>
+          </div>
+          <!-- end max-height -->
+
+        </div>
+        <!-- end col-xs-12 col-sm-6 -->
+
+      </div>
+      <!-- end row -->
+
+      <div class="dashboard-content-title">
+        <h3>Sales per Month</h3>
+      </div>
+
+      <table style="width:100%">
+
+        <tr style="background-color: #f3f3f3;">
+          <th>Month</th>
+          <th>Orders</th>
+          <th>Total Sales</th>
+          <th></th>
+        </tr>
+
+        <tr academiadashboardsalesrow labels="{{labels}}" series="{{series}}" data="{{data}}"></tr>
+
+      </table>
+      <!-- end table -->
+
+    </div>
+    <!-- end dashboard-content -->
+
+  </div>
+  <!-- end row -->
+
+</div>

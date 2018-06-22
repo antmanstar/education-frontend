@@ -1,0 +1,67 @@
+<div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 academia-supportcol">
+
+  <div class="academia-supportcol-title">
+    <a href="/a/{{university.url}}/">{{university.name}}</a>
+  </div>
+  <!-- end academia-supportcol-title -->
+
+  <div class="academia-supportcol-stats">
+
+    <div class="academia-supportcol-stats-stat">
+      {{university.members.length}} members
+    </div>
+
+    <!--
+
+    <div class="academia-supportcol-stats-stat">
+      10 users online
+    </div>
+
+    -->
+
+    <button class="academia-supportcol-button" ng-hide="userSubscribed(university.members)" ng-click="subscribe()">Subscribe</button>
+    <button class="academia-supportcol-button" ng-show="userSubscribed(university.members)" ng-click="subscribe()">Unsubscribe</button>
+
+  </div>
+
+  <!-- end academia-supportcol-stats -->
+
+  <div class="academia-supportcol-info">
+
+    <div class="academia-supportcol-info-title">
+      about
+    </div>
+    <!-- end academia-supportcol-info-title -->
+
+    <div class="academia-supportcol-info-text">
+      {{university.about}}
+    </div>
+    <!-- end academia-supportcol-info-title -->
+
+  </div>
+  <!-- end academia-supportcol-info -->
+
+  <!--
+  <div class="academia-supportcol-info">
+
+    <div class="academia-supportcol-info-title">
+      moderators
+    </div>
+
+    <div class="academia-supportcol-info-user">
+
+      <div class="academia-supportcol-info-user-img">
+        <img src="/img/user/user.jpg" />
+      </div>
+
+      <div class="academia-supportcol-info-user-text">
+        Marcelo Pio
+      </div>
+
+    </div>
+
+  </div>
+  -->
+
+</div>
+<!-- end col-xs-12 -->

@@ -1,0 +1,144 @@
+<div ng-include="'partials/headerhome.html'"></div>
+
+<div class="container-fluid">
+
+  <div class="row">
+
+    <!-- dashboard menu -->
+    <div ng-include="'partials/dashboardmenu.html'" ng-controller="DashboardMenuCtrl"></div>
+
+    <!-- step 1 -->
+    <div ng-show="step == 1" class="col-xs-12 col-sm-9 col-md-9 col-lg-10 col-sm-offset-3 col-md-offset-3 col-lg-offset-2 col-lg-10 dashboard-content">
+
+      <div style="text-align: center;">
+        <div class="headline-display" style="padding-bottom: 10px; text-align: center;">Create your own college</div>
+        <div class="headline-sub-two">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse viverra dolor leo, sit amet malesuada justo ullamcorper a. Donec maximus venenatis lacinia. In a nibh tincidunt diam dictum tincidunt at sit amet lectus. Proin in nibh posuere, cursus dui sit amet, eleifend urna. Suspendisse lobortis tortor vel ipsum faucibus, ac tincidunt nisl ornare. Vestibulum at nunc lacinia, egestas nulla in, laoreet ligula. Ut porttitor ex quis dapibus volutpat. Aliquam mattis pharetra risus, id viverra purus placerat vitae. Nam purus tellus, convallis pharetra urna eget, luctus vestibulum enim. Maecenas dignissim orci in consectetur efficitur.</div>
+        <div style="margin-top: 15px;">
+          <button ng-click="move(1)" class="btn btn-green">Start!</button>
+        </div>
+      </div>
+
+    </div>
+    <!-- step 1 -->
+
+    <!-- step 2 -->
+    <div ng-show="step == 2" class="col-xs-12 col-sm-9 col-md-9 col-lg-10 col-sm-offset-3 col-md-offset-3 col-lg-offset-2 col-lg-10 dashboard-content">
+
+      <div style="text-align: left;">
+
+        <div class="headline-main" style="padding-bottom: 20px; padding-top: 20px; text-align: center;">Create your own college</div>
+        <p style="padding-bottom: 20px; padding-top: 0px;">To create your College, fill all informations below.</p>
+
+        <div class="alert bg-primary-red" ng-show="error.exists">{{displayError(error.text)}}</div>
+
+        <div class="form">
+
+          <div class="form-group">
+            <label>Name of your College</label>
+            <input ng-model="name" placeholder="Write your College name here" type="text" />
+          </div>
+          <!-- end form group -->
+
+          <div class="form-group">
+            <label>About</label>
+            <input ng-model="about" placeholder="Write a short description about your College" type="text" />
+          </div>
+          <!-- end form group -->
+
+          <div class="form-group">
+            <label>Language</label>
+            <select ng-model="language">
+              <option value="EN">English</option>
+              <option value="PT">Portuguese</option>
+            </select>
+          </div>
+          <!-- end form group -->
+
+          <div class="form-group">
+            <label>URL</label>
+            <input ng-model="url" placeholder="Type the URL of your College. Example: college.digital/<your url>" type="Text" />
+          </div>
+          <!-- end form group -->
+
+        </div>
+        <!-- end form -->
+
+        <div class="row">
+
+          <div class="col-xs-12 col-sm-6" style="margin-top: 15px;">
+            <button ng-click="move(-1)" class="btn-two btn-two-yellow">Back</button>
+          </div>
+
+          <div class="col-xs-12 col-sm-6" style="margin-top: 15px;">
+            <button ng-click="move(1)" class="btn btn-bluebase">Next</button>
+          </div>
+
+        </div>
+        <!-- end row -->
+
+      </div>
+
+    </div>
+    <!-- step 2 -->
+
+    <div ng-show="step == 3" class="col-xs-12 col-sm-9 col-md-9 col-lg-10 col-sm-offset-3 col-md-offset-3 col-lg-offset-2 col-lg-10 dashboard-content">
+
+      <div class="headline-main" style="padding-bottom: 20px; padding-top: 20px; text-align: center;">Create your own college</div>
+      <p style="padding-bottom: 20px; padding-top: 0px;">Preview</p>
+
+      <div class="form-group">
+        <label>Name</label>
+        <div class="headline-display" style="padding-top: 0; padding-bottom: 0;">{{name}}</div>
+      </div>
+
+      <div class="form-group">
+
+        <label>Background Image</label>
+
+        <div uploadbox></div>
+
+        <style>
+
+          .dashboard-input-picture-wrap {
+            width: 100%;
+          }
+
+          .dashboard-input-picture {
+            width: 100%;
+          }
+
+        </style>
+
+      </div>
+      <!-- end form-group -->
+
+      <div class="form-group">
+        <label>About</label>
+        <div class="headline-sub-two" style="padding-top: 0; padding-bottom: 0;">{{about}}</div>
+      </div>
+
+      <div class="form-group">
+        <label>URL</label>
+        <div class="headline-sub-two" style="padding-top: 0; padding-bottom: 0;">college.digital/a/{{url}}</div>
+      </div>
+
+      <div class="row">
+
+        <div class="col-xs-12 col-sm-6" style="margin-top: 15px;">
+          <button ng-click="move(-1)" class="btn-two btn-two-yellow">Back</button>
+        </div>
+
+        <div class="col-xs-12 col-sm-6" style="margin-top: 15px;">
+          <button ng-click="create()" class="btn btn-green">Create</button>
+        </div>
+
+      </div>
+      <!-- end row -->
+
+    </div>
+    <!-- step 3 -->
+
+  </div>
+  <!-- end row -->
+
+</div>

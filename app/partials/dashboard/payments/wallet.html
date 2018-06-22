@@ -1,0 +1,100 @@
+<div ng-include="'partials/headerhome.html'"></div>
+
+<div class="container-fluid">
+
+  <div class="row">
+
+    <!-- dashboard menu -->
+    <div ng-include="'partials/dashboardmenu.html'" ng-controller="DashboardMenuCtrl"></div>
+
+    <div class="col-xs-12 col-sm-9 col-md-9 col-lg-10 col-sm-offset-3 col-md-offset-3 col-lg-offset-2 col-lg-10 dashboard-content">
+
+      <ul class="breadcrumb">
+        <li><a href="#">Payments</a></li>
+        <li><a href="/dashboard/payments/wallet">Your Wallet</a></li>
+      </ul>
+
+      <div class="dashboard-content-title">
+        <h3>Your default purchase preference</h3>
+      </div>
+
+      <div class="dashboard-infobox">
+
+        <div class="line">
+
+          <div class="info" style="float: right;">
+            <div class="text" style="font-size: 0.9em;">Your default is used for 1-Click purchasing</div>
+          </div>
+          <!-- end info -->
+
+          <div class="info">
+            <div class="headline-sub-three">Address</div>
+            <div class="text">Marcelo Pio Monteiro da Silva Filho</div>
+          </div>
+          <!-- end info -->
+
+        </div>
+        <!-- end line -->
+
+        <div class="line">
+
+          <div class="info" style="margin-right: 30px;">
+            <div class="headline-sub-three">Name</div>
+            <div class="text">Marcelo Pio Monteiro da Silva Filho</div>
+          </div>
+          <!-- end info -->
+
+          <div class="info">
+            <div class="headline-sub-three">Payment Method</div>
+            <div class="text">Marcelo Pio Monteiro da Silva Filho</div>
+          </div>
+          <!-- end info -->
+
+        </div>
+        <!-- end line -->
+
+      </div>
+      <!-- default payment -->
+
+      <div class="row" style="margin-top: 15px;">
+
+        <div class="col-xs-12 col-sm-12 col-md-12">
+
+          <div class="dashboard-content-title">
+            <h3 style="display: inline-block;">Your credit and debit cards</h3>
+          </div>
+
+          <div class="dashboard-accordion">
+
+            <div class="top">
+              VISA / Visa ending in 7437 / Expires
+            </div>
+            <!-- end top -->
+
+            <div class="content">
+
+              Name on card: Marcelo Pio
+
+              <button>Delete</button>
+
+            </div>
+            <!-- end content -->
+
+          </div>
+          <!-- end dashboard-accordion -->
+
+          <button ng-click="addCard()" style="width: 200px; display: inline-block;" class="btn btn-yellow">Add a card</button>
+
+        </div>
+        <!-- end col-xs-12 col-sm-3 col-md-3 -->
+
+      </div>
+      <!-- end row -->
+
+    </div>
+    <!-- col-sm-9 -->
+
+  </div>
+  <!-- end row -->
+
+</div>

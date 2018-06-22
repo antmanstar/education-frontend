@@ -5,12 +5,18 @@ angular.module('netbase', ['ngStorage',
     'pascalprecht.translate',
     'ngDialog',
     'angular-jwt',
-    'textAngular',
+    'angularTrix',
     'ngFileUpload',
     'ngDialog',
-    'angularMoment'
+    'angularMoment',
+    'angularjs-stripe-elements',
+    'chart.js'
 ])
-.config(['$translateProvider', '$localStorageProvider', function ($translateProvider, $localStorageProvider) {
+.config(['$translateProvider', '$localStorageProvider', 'StripeElementsProvider', function ($translateProvider, $localStorageProvider, StripeElementsProvider) {
+
+  let stripeKey = "pk_test_2XclbP1INDqkspKrbRn6oBZR";
+
+  StripeElementsProvider.setAPIKey(stripeKey);
 
   $translateProvider.translations('en', {
     HOME_TITLE: 'YOUR CAMPUS ONLINE',
@@ -45,10 +51,11 @@ angular.module('netbase', ['ngStorage',
     $localStorage.indexVisited = false;
   }
 
+  $rootScope.logged = $localStorage.logged;
+
   $rootScope.logout = function() {
 
-    console.log("log out");
-
+    $rootScope.logged = false;
     $localStorage.logged = false;
     $localStorage.token = undefined;
 
@@ -84,36 +91,32 @@ angular.module('netbase', ['ngStorage',
    };
 
     $routeProvider.
-        when('/', {
-            templateUrl: 'partials/index.html',
-            controller: 'IndexCtrl',
-        })
-        .when('/a/:academiaName/', {
-            templateUrl: 'partials/academia.html',
+        when('/a/:academiaName/', {
+            templateUrl: 'partials/academia/academia.html',
             controller: 'AcademiaCtrl',
         })
         .when('/a/:academiaName/forum', {
-            templateUrl: 'partials/academiaforum.html',
+            templateUrl: 'partials/academia/academiaforum.html',
             controller: 'AcademiaForumCtrl',
         })
         .when('/a/:academiaName/forum/post/create', {
-            templateUrl: 'partials/academiaforumpostcreate.html',
+            templateUrl: 'partials/academia/academiaforumpostcreate.html',
             controller: 'AcademiaForumPostCreateCtrl',
         })
         .when('/a/:academiaName/forum/post/id/:postId', {
-            templateUrl: 'partials/academiaforumpost.html',
+            templateUrl: 'partials/academia/academiaforumpost.html',
             controller: 'AcademiaForumPostCtrl',
         })
         .when('/a/:academiaName/chat', {
-            templateUrl: 'partials/academiachat.html',
+            templateUrl: 'partials/academia/academiachat.html',
             controller: 'AcademiaChatCtrl',
         })
         .when('/a/:academiaName/marketplace', {
-            templateUrl: 'partials/academiasmp.html',
+            templateUrl: 'partials/academia/academiasmp.html',
             controller: 'AcademiaSmpCtrl',
         })
         .when('/a/:academiaName/jobs', {
-            templateUrl: 'partials/academiajobs.html',
+            templateUrl: 'partials/academia/academiajobs.html',
             controller: 'AcademiaJobsCtrl',
         })
         .when('/profile', {
@@ -124,7 +127,7 @@ angular.module('netbase', ['ngStorage',
             templateUrl: 'partials/account.html',
             controller: 'AccountCtrl',
         })
-        .when('/registrar', {
+        .when('/signup', {
             templateUrl: 'partials/account.html',
             controller: 'AccountCtrl',
         })
@@ -159,6 +162,51 @@ angular.module('netbase', ['ngStorage',
             controller: 'DashboardUniversityFeedCtrl',
             resolve: auth
         })
+        .when('/dashboard/a/subscribed', {
+            templateUrl: 'partials/dashboard/academia/subscribed.html',
+            controller: 'DashboardAcademiaSubscribedCtrl',
+            resolve: auth
+        })
+        .when('/dashboard/a/premium', {
+            templateUrl: 'partials/dashboard/academia/premium.html',
+            controller: 'DashboardAcademiaPremiumCtrl',
+            resolve: auth
+        })
+        .when('/dashboard/a/create', {
+            templateUrl: 'partials/dashboard/academia/create.html',
+            controller: 'DashboardAcademiaCreateCtrl',
+            resolve: auth
+        })
+        .when('/dashboard/a/manage', {
+            templateUrl: 'partials/dashboard/academia/manage.html',
+            controller: 'DashboardAcademiaManageCtrl',
+            resolve: auth
+        })
+        .when('/dashboard/a/manage/id/:id', {
+            templateUrl: 'partials/dashboard/academia/managebyid.html',
+            controller: 'DashboardAcademiaManageByIdCtrl',
+            resolve: auth
+        })
+        .when('/dashboard/a/manage/id/:id/sales', {
+            templateUrl: 'partials/dashboard/academia/managebyidsales.html',
+            controller: 'DashboardAcademiaManageByIdSalesCtrl',
+            resolve: auth
+        })
+        .when('/dashboard/a/manage/id/:id/premium', {
+            templateUrl: 'partials/dashboard/academia/managebyidpremium.html',
+            controller: 'DashboardAcademiaManageByIdPremiumCtrl',
+            resolve: auth
+        })
+        .when('/dashboard/a/manage/id/:id/users', {
+            templateUrl: 'partials/dashboard/academia/managebyidusers.html',
+            controller: 'DashboardAcademiaManageByIdUsersCtrl',
+            resolve: auth
+        })
+        .when('/dashboard/a/manage/id/:id/users/id/:userId', {
+            templateUrl: 'partials/dashboard/academia/managebyidusersbyid.html',
+            controller: 'DashboardAcademiaManageByIdUsersByIdCtrl',
+            resolve: auth
+        })
         .when('/dashboard/smp/create', {
             templateUrl: 'partials/smpcreate.html',
             controller: 'DashboardSmpCreateCtrl',
@@ -189,45 +237,41 @@ angular.module('netbase', ['ngStorage',
             controller: 'DashboardJobsManageMyListingsCtrl',
             resolve: auth
         })
+        .when('/dashboard/payments/wallet', {
+            templateUrl: 'partials/dashboard/payments/wallet.html',
+            controller: 'DashboardPaymentsWalletCtrl',
+            resolve: auth
+        })
         .when('/search', {
             templateUrl: 'partials/search.html',
             controller: 'SearchCtrl',
         })
         .when('/home', {
-            templateUrl: 'partials/home.html',
+            templateUrl: 'partials/home/home.html',
             controller: 'HomeCtrl',
         })
         .when('/home/empregos/', {
-            templateUrl: 'partials/homejobs.html',
+            templateUrl: 'partials/home/homejobs.html',
             controller: 'HomeJobsCtrl',
         })
         .when('/home/empregos/categoria/:nome', {
-            templateUrl: 'partials/homejobscategory.html',
+            templateUrl: 'partials/home/homejobscategory.html',
             controller: 'HomeJobsCategoryCtrl',
         })
-        .when('/home/universidades/', {
-            templateUrl: 'partials/homeuniversidades.html',
+        .when('/home/colleges/', {
+            templateUrl: 'partials/home/homeuniversidades.html',
             controller: 'HomeUniversidadesCtrl',
         })
         .when('/home/smp', {
-            templateUrl: 'partials/homesocialmarketplace.html',
+            templateUrl: 'partials/home/homesocialmarketplace.html',
             controller: 'HomeSocialMarketPlaceCtrl',
         })
         .when('/home/smp/hashtag/:hash', {
-            templateUrl: 'partials/homesocialmarketplacehashtag.html',
+            templateUrl: 'partials/home/homesocialmarketplacehashtag.html',
             controller: 'HomeSocialMarketPlaceHashTagCtrl',
         })
-        .when('/business', {
-            templateUrl: 'partials/businessindex.html',
-            controller: 'BusinessIndexCtrl',
-        })
-        .when('/business/signin', {
-            templateUrl: 'partials/businesssignin.html',
-            controller: 'BusinessSigninCtrl',
-        })
-        .when('/business/register', {
-            templateUrl: 'partials/businessregister.html',
-            controller: 'BusinessRegisterCtrl',
+        .otherwise({
+          redirectTo: '/home'
         });
 
         if(window.history && window.history.pushState){
