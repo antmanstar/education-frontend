@@ -1,8 +1,10 @@
 <div ng-include="'partials/headerhome.html'"></div>
 
-<div class="container-fluid">
+<div class="container-fluid container-full">
 
-  <div class="row academia-coverimage" style="background-image: url('http://{{university.backgroundImage}}')"></div>
+  <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
+  <div class="row academia-coverimage" ng-if="university.backgroundImage == undefined"  style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
+  <!-- end academia-coverimage -->
 
   <div class="row">
 
@@ -49,15 +51,7 @@
             </div>
             <!-- academia-content-forum-post-info -->
 
-            <div class="academia-content-forum-post-info-text" ng-bind-html="forumPost.text"></div>
-            <!-- academia-content-forum-post-info -->
-
-            <div class="academia-content-forum-post-info-actions">
-              <a class="action">{{forumPost.answers.length}} answers</a>
-              <!--
-              <a class="action">report</a>
-              -->
-            </div>
+            <div class="academia-content-forum-post-info-text text" ng-bind-html="forumPost.text"></div>
             <!-- academia-content-forum-post-info -->
 
           </div>
@@ -118,9 +112,9 @@
 
     <ul style="width: 100vw">
 
-      <li style="width: 50%;"><a href="/a/{{universityUrl}}/forum" ng-class="forumClass">Forum</a></li>
+      <li style="width: 100%;"><a href="/a/{{universityUrl}}/forum" ng-class="forumClass">Forum</a></li>
       <!--<li>Chat</li>-->
-      <li style="width: 50%;"><a href="/a/{{universityUrl}}/marketplace" ng-class="smpClass">Marketplace</a></li>
+      <!--<li style="width: 50%;"><a href="/a/{{universityUrl}}/marketplace" ng-class="smpClass">Marketplace</a></li>-->
       <!--<li><a href="/a/{{universityUrl}}/jobs" ng-class="jobsClass">Jobs</a></li>-->
 
     </ul>

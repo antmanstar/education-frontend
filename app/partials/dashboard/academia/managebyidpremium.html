@@ -22,13 +22,14 @@
       <table style="width:100%">
 
         <tr style="background-color: #f3f3f3;">
-          <th>Premium</th>
-          <th></th>
-          <th></th>
+          <th>Plan Name</th>
+          <th>Amount</th>
+          <th>Billing Cycle</th>
+          <th>Active</th>
           <th></th>
         </tr>
 
-        <tr academiadashboardplanrow ng-repeat="plan in university.plans"></tr>
+        <tr academiadashboardplanrow p="{{plan}}" ng-repeat="plan in university.plans"></tr>
 
       </table>
       <!-- end table -->
@@ -54,13 +55,17 @@
 
             <div class="form-group">
               <label>Amount</label>
-              <input ng-model="amount" placeholder="$10.50" type="text" />
+              <div style="position: relative;">
+                <b ng-if="university.language == 'PT'" style="position: absolute; left: 0; top: 12px; width: 40px; text-align: center;">R$</b>
+                <b ng-if="university.language == 'EN'" style="position: absolute; left: 0; top: 12px; width: 40px; text-align: center;">$</b>
+                <input style="padding-left: 40px; display: inline-block;" ng-model="amount" placeholder="Interval between billings" format="currency" type="text" />
+              </div>
             </div>
             <!-- end form group -->
 
             <div class="form-group">
               <label>Interval Count</label>
-              <input ng-model="intervalCount" placeholder="Interval between billings" type="text" />
+              <input ng-model="intervalCount" placeholder="Period between billing period" type="text" />
             </div>
             <!-- end form group -->
 

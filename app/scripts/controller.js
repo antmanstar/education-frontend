@@ -24,9 +24,12 @@ angular.module('netbase')
         let success = res.data.success;
         let token = res.data.token;
 
+        console.log(res);
+
         if (success) {
 
           $localStorage.token = token;
+          console.log($localStorage.token);
           $localStorage.logged = true;
           $rootScope.logged = true;
 
@@ -301,103 +304,6 @@ angular.module('netbase')
 
 }])
 
-.controller('AcademiaForumPostCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Forum', function($rootScope, $scope, $location, $route, University, Forum) {
-
-  let universityUrl = $route.current.params.academiaName;
-  let postId = $route.current.params.postId;
-  let university;
-
-  /* load information */
-
-  University.getUniversity(universityUrl).then(function(res) {
-
-    $scope.university = res.data.data;
-    university = res.data.data;
-
-    Forum.getForumPostById(postId, university._id).then(function(res) {
-
-      let status = res.data.status;
-      let data = res.data.data;
-      let success = res.data.success;
-
-      console.log("response data: ");
-      console.log(data);
-
-      $scope.forumPost = data;
-      $scope.votesCount = data.votesCount;
-
-      console.log("forum post: ")
-      console.log($scope.forumPost);
-
-    });
-
-  });
-
-  /* votes */
-
-  $scope.votesCount = 0;
-
-  $scope.createAnswerPost = function() {
-
-    var data = { text : $scope.answer };
-
-    console.log("casinoooo");
-
-    console.log("post id : " + postId);
-    console.log("university id: " + university._id);
-
-    Forum.postAnswerByForumPostId(postId, university._id, data).then(function(res) {
-
-      let status = res.data.status;
-      let data = res.data.data;
-      let success = res.data.success;
-
-      console.log("ressponse: ");
-      console.log(data);
-
-      if (success) {
-
-        console.log("answer created with success");
-        console.log(data);
-        data.votesCount = 0;
-        data.createdAt = Math.round((new Date()).getTime() / 1000);
-        $scope.forumPost.answers.push(data);
-
-      }
-
-    });
-
-  };
-
-  $scope.upvoteForumPost = function() {
-
-    console.log("post id: ")
-    console.log(postId);
-
-    University.upvoteForumPost($scope.university._id, postId).then(function(res) {
-
-      if (res.data.success) {
-        $scope.votesCount += 1;
-      }
-
-    });
-
-  };
-
-  $scope.downvoteForumPost = function() {
-
-    University.downvoteForumPost($scope.university._id, postId).then(function(res) {
-
-      if (res.data.success) {
-        $scope.votesCount -= 1;
-      }
-
-    });
-
-  };
-
-}])
-
 .controller('AcademiaChatCtrl', ['$rootScope', '$scope', '$location' , function($rootScope, $scope, $location) {
 
 
@@ -485,54 +391,6 @@ angular.module('netbase')
 
   $scope.clickToOpen = function () {
     ngDialog.open({ template: 'partials/jobmodal.html', className: 'ngdialog-theme-default jobmodal' });
-  };
-
-}])
-
-.controller('AcademiaForumPostCreateCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', function($rootScope, $scope, $location, $route, University) {
-
-  let universityUrl = $route.current.params.academiaName;
-  let university;
-
-  /* load information */
-
-  University.getUniversity(universityUrl).then(function(res) {
-
-    $scope.university = res.data.data;
-    university = res.data.data;
-
-  });
-
-  /* create forum post by id */
-
-  $scope.createForumPost = function() {
-
-    var data = {
-      text : $scope.text,
-      title : $scope.title
-    };
-
-    University.createForumPost(university._id, data).then(function(res) {
-
-      let status = res.data.status;
-      let data = res.data.data;
-      let success = res.data.success;
-
-      if (success) {
-
-        $location.path('/a/' + university.url + '/forum/post/id/' + data._id)
-        window.scrollTo(0, 0);
-
-      } else {
-
-        console.log("error: ");
-        console.log(data);
-        console.log(status);
-
-      }
-
-    });
-
   };
 
 }])
@@ -752,6 +610,7 @@ angular.module('netbase')
 
       let data = res.data.data;
 
+      $rootScope.user = data;
       $scope.user = data;
 
       if (data.imageUrl != undefined && data.imageUrl != null) {
@@ -1874,6 +1733,12 @@ angular.module('netbase')
 
     }
   }
+}])
+
+.filter('to_trusted', ['$sce', function($sce){
+  return function(text) {
+    return $sce.trustAsHtml(text);
+  };
 }])
 
 .directive('autoFocus', function($timeout) {

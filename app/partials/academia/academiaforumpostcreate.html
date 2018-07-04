@@ -1,8 +1,9 @@
 <div ng-include="'partials/headerhome.html'"></div>
 
-<div class="container-fluid">
+<div class="container-fluid container-full">
 
-  <div class="row academia-coverimage" style="background-image: url('http://{{university.backgroundImage}}')"></div>
+  <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
+  <div class="row academia-coverimage" ng-if="university.backgroundImage == undefined"  style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
   <!-- end academia-coverimage -->
 
   <div class="row">
@@ -13,25 +14,28 @@
 
       <div class="academia-content-forum-answer">
 
-        <div class="academia-content-forum-answer-title" style="border-top: none; padding-top: 0; margin-top: 0;">
-          Create a post
-        </div>
-        <!-- academia-content-forum-answer-title -->
-
         <style>
         .ta-toolbar {
           background-color: #f0f0f0;
           padding-bottom: 5px;
           padding-top: 5px;
         }
+
+        .yt {
+          background-image: url("http://www.iconhot.com/icon/png/token/256/video-camera-5.png") !important;
+          background-size: 100% !important;
+          background-position: center !important;
+        }
+
         </style>
 
         <input class="academia-content-forum-post-create-title" placeholder="Escreva aqui título da sua postagem" ng-model="title"></input>
 
-        <text-angular ng-model="text"></text-angular>
+        <trix-toolbar id="my_toolbar"></trix-toolbar>
+        <trix-editor angular-trix toolbar="my_toolbar" ng-model="text" trix-change="trixChange(e, editor);" trix-initialize="trixInitialize(e, editor);"></trix-editor>
 
         <div class="academia-content-forum-answer-action" style="margin-top: 15px;">
-          <button ng-click="createForumPost()">Create a post</button>
+          <button class="btn btn-bluebase" ng-click="createForumPost()">Create a post</button>
         </div>
         <!-- academia-content-forum-answer -->
 

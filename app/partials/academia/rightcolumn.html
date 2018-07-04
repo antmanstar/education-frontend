@@ -8,7 +8,7 @@
   <div class="academia-supportcol-stats">
 
     <div class="academia-supportcol-stats-stat">
-      {{university.members.length}} members
+      {{ (university.members | filter : { 'unsubscribed' : 'false' }).length }} members
     </div>
 
     <!--
@@ -19,8 +19,9 @@
 
     -->
 
-    <button class="academia-supportcol-button" ng-hide="userSubscribed(university.members)" ng-click="subscribe()">Subscribe</button>
-    <button class="academia-supportcol-button" ng-show="userSubscribed(university.members)" ng-click="subscribe()">Unsubscribe</button>
+    <a href="/a/{{university.url}}/forum/post/create"><button class="academia-supportcol-button bg-base">Criar postagem</button></a>
+    <button class="academia-supportcol-button" ng-hide="userSubscribed(university.members)" ng-click="subscribe()">Inscrever</button>
+    <button class="academia-supportcol-button" ng-show="userSubscribed(university.members)" ng-click="subscribe()">Desinscrever</button>
 
   </div>
 
@@ -29,12 +30,12 @@
   <div class="academia-supportcol-info">
 
     <div class="academia-supportcol-info-title">
-      about
+      sobre
     </div>
     <!-- end academia-supportcol-info-title -->
 
     <div class="academia-supportcol-info-text">
-      A place to share information, ask questions, give advice and discuss about {{university.name}}.
+      {{university.about}}
     </div>
     <!-- end academia-supportcol-info-title -->
 
@@ -44,11 +45,11 @@
   <div class="academia-supportcol-info">
 
     <div class="academia-supportcol-info-title">
-      premium membership
+      membro premium
     </div>
     <!-- end academia-supportcol-info-title -->
 
-    <button class="academia-supportcol-button" ng-click="premium()">Get premium</button>
+    <button class="academia-supportcol-button" ng-click="premium()">Assinar premium</button>
 
   </div>
   <!-- end academia-supportcol-info -->

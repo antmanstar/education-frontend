@@ -61,27 +61,27 @@ a:hover {
 
 /* Background */
 .bg-base {
-  background-color: #2d4255;
+  background-color: #2d4255 !important;
 }
 
 .bg-greylight {
-  background-color: #f5f5f5;
+  background-color: #f5f5f5 !important;
 }
 
 .bg-primary-blue {
-  background-color: #52bfea;
+  background-color: #52bfea !important;
 }
 
 .bg-primary-red {
-  background-color: #ee5748;
+  background-color: #ee5748 !important;
 }
 
 .bg-primary-yellow {
-  background-color: #fab60f;
+  background-color: #fab60f !important;
 }
 
 .bg-primary-green {
-  background-color: #30B39f;
+  background-color: #30B39f !important; 
 }
 
 /* Font Colors */
@@ -667,5 +667,61 @@ ul.breadcrumb li a:hover {
 
   color: #fff;
   border: unset;
+
+}
+
+/* video preview */
+.video-preview {
+  height: 120px;
+  background-color: #e9ebee;
+  border: 1px solid #d1d1d2;
+}
+
+.video-preview.dialog {
+  height: 120px;
+
+}
+
+.video-preview.dialog .img {
+  display: inline-block;
+}
+
+.video-preview .text {
+  width: 70%;
+  display: inline-block;
+  padding: 15px;
+}
+
+.video-preview.dialog .img {
+
+  width: 120px;
+  height: 120px;
+  vertical-align: top;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+
+}
+
+.video-preview.dialog .text {
+
+  width: calc(100% - 125px);
+  height: 100%;
+  vertical-align: top;
+
+}
+
+.video-preview.dialog .text .title {
+
+  font-size: 1em;
+  font-weight: bold;
+
+}
+
+.video-preview.dialog .text .source {
+
+  font-size: 0.7em;
+  font-weight: light;
 
 }

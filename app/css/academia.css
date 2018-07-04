@@ -6,6 +6,39 @@
 
 }
 
+.academia-content-forum-post-info-text.text {
+
+  border: 1px solid #2d4255;
+  border-radius: 5px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+
+  padding: 10px;
+
+  width: 100%;
+
+}
+
+.academia-content-forum-post-info-text figure iframe {
+  width: 100%;
+}
+
+@media only screen and (min-width: 992px) {
+
+  .academia-content-forum-post-info-text figure iframe {
+    height: 500px;
+  }
+
+}
+
+@media only screen and (max-width: 768px) {
+
+  .academia-content-forum-post-info-text figure iframe {
+    height: 300px;
+  }
+
+}
+
 .academia-coverimage {
 
   height: 200px;
@@ -144,7 +177,7 @@
 .academia-content-forum-post-info {
 
   width: 100%;
-  display: inline-block;
+  display: table-cell;
   vertical-align: top;
 
 }

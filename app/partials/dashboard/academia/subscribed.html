@@ -15,19 +15,10 @@
 
       <div class="section-cards dashboard-cards">
 
-        <a style="color: #2c4255;" ng-repeat="university in [{ name : 'Hacker How' },{ name : 'Hacker How' },{ name : 'Hacker How' },{ name : 'Hacker How' },{ name : 'Hacker How' },{ name : 'Hacker How' }]" href="/a/{{university.url}}/forum" target="_blank">
-          <div class="card">
-
-            <div class="picture" style="background-image: url('http://i.ytimg.com/vi/TInfxe7c7yA/maxresdefault.jpg')"></div>
-            <div class="title">{{university.name}}</div>
-            <div class="description">Uma metologia de treinamento que tem como principal característica a realização de exercícios que utilizam somente o peso corporal.</div>
-
-          </div>
-          <!-- end card -->
-        </a>
+        <div uid="{{u.universityId}}" academiadashboardcard ng-repeat="u in student.universitiesSubscribed"></div>
 
       </div>
-      <!-- end section-cards -->
+      <!-- dashboard-cards -->
 
     </div>
     <!-- col-sm-9 -->

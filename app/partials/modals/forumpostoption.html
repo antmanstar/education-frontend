@@ -1,0 +1,51 @@
+<div class="container-fluid modal-accounts">
+
+  <div class="row">
+
+    <div class="col-xs-12">
+
+      <div class="headline-sub-one">Add YouTube video</div>
+
+      <div class="form">
+
+        <div class="form-group">
+          <i class="fab fa-youtube"></i>
+          <input ng-model="youtubeLink" placeholder="YouTube Link" type="text" />
+        </div>
+        <!-- end form group -->
+
+      </div>
+      <!-- end form -->
+
+      <!--
+      <div class="video-preview dialog">
+
+        <div class="img" style="background-image: url('{{previewImage}}')">
+
+        </div>
+
+        <div class="text">
+          <div class="source">YOUTUBE.COM</div>
+          <div class="title">Os 3 movimentos de Calistenia 100% INICIANTES</div>
+        </div>
+
+      </div>
+      -->
+
+      <iframe width="420" height="250px" ng-src="{{ytiFrameSCE}}" frameborder="0" allowfullscreen></iframe>
+
+    </div>
+    <!-- end col-xs-12 -->
+
+    <div class="form" style="position: absolute; bottom: 0; left: 0; width: 100%; padding-left: 15px; padding-right: 15px;">
+
+      <button ng-click="addVideo()" class="btn btn-green">Add video</button>
+
+    </div>
+    <!-- end form -->
+
+  </div>
+  <!-- end row -->
+
+</div>
+<!-- end container-fluid -->

@@ -5,7 +5,7 @@
     <div class="navbar-top">
 
         <div class="brand">
-          <img id="logo" src="img/college.png" />
+          <img id="logo" src="img/logo/universidade.png" />
           <img id="logoIcon" src="img/icon.png" />
           <span><i class="fas fa-angle-down"></i></span>
         </div>
@@ -19,7 +19,7 @@
             <div ng-hide="logged" ng-click="signup()">Sign Up</div>
 
             <div id="profileMenu" ng-show="logged" class="profile">
-              <span><i class="fas fa-user-circle" style="padding-right: 2px;"></i></span> Marcelo Pio <span><i class="fas fa-angle-down" style="padding-left: 3px;"></i></span>
+              <span><i class="fas fa-user-circle" style="padding-right: 2px;"></i></span> {{user.name}} <span><i class="fas fa-angle-down" style="padding-left: 3px;"></i></span>
               <div class="profile-expanded">
                 <div><a href="/dashboard">Dashboard</a></div>
                 <div><a href="#">Edit Profile</a></div>
@@ -35,7 +35,7 @@
           <div class="search">
 
             <div id="searchBox" class="form-group">
-              <input placeholder="Start typing to search..." type="text">
+              <input placeholder="Pesquise universidades..." type="text">
               <span><i class="fas fa-search"></i></span>
             </div>
             <!-- end form group -->
@@ -52,8 +52,8 @@
       <div class="navbar-slider" ng-show="homeCheck()">
 
         <div class="option unselectable" ng-class="{'active': originalPath == '/home' || originalPath == '/home/'}"><a href="/home">Home</a></div>
-        <div class="option unselectable" ng-class="{'active': originalPath == '/home/colleges' || originalPath == '/home/colleges/'}"><a href="/home/colleges">Colleges</a></div>
-        <div class="option unselectable" ng-class="{'active': originalPath == '/home/smp' || originalPath == '/home/smp/'}"><a href="/home/smp">Marketplace</a></div>
+        <!--<div class="option unselectable" ng-class="{'active': originalPath == '/home/colleges' || originalPath == '/home/colleges/'}"><a href="/home/colleges">Colleges</a></div>-->
+        <!--<div class="option unselectable" ng-class="{'active': originalPath == '/home/smp' || originalPath == '/home/smp/'}"><a href="/home/smp">Marketplace</a></div>-->
 
       </div>
       <!-- end navbar-slider -->
@@ -62,8 +62,8 @@
 
         <div class="menu">
           <div class="option unselectable" ng-class="{'active': originalPath == '/home' || originalPath == '/home/'}"><a href="/home">Home</a></div>
-          <div class="option unselectable" ng-class="{'active': originalPath == '/home/colleges' || originalPath == '/home/colleges/'}"><a href="/home/colleges">Colleges</a></div>
-          <div class="option unselectable" ng-class="{'active': originalPath == '/home/smp' || originalPath == '/home/smp/'}"><a href="/home/smp">Marketplace</a></div>
+          <!--<div class="option unselectable" ng-class="{'active': originalPath == '/home/colleges' || originalPath == '/home/colleges/'}"><a href="/home/colleges">Colleges</a></div>-->
+          <!--<div class="option unselectable" ng-class="{'active': originalPath == '/home/smp' || originalPath == '/home/smp/'}"><a href="/home/smp">Marketplace</a></div>-->
         </div>
         <!-- end menu -->
 
@@ -75,7 +75,7 @@
         <!-- end menu -->
 
         <div class="profile" ng-show="logged">
-          <div class="header"><span><i class="fas fa-user-circle"></i></span> Marcelo Pio</div>
+          <div class="header"><span><i class="fas fa-user-circle"></i></span> {{user.name}}</div>
           <div class="menu">
             <div class="option">My profile</div>
             <div class="option">My courses</div>

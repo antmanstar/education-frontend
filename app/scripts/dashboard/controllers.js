@@ -4,7 +4,7 @@ angular.module('netbase')
 
 .controller('DashboardAcademiaCreateCtrl', ['$rootScope', '$scope', '$location', '$route', 'University' , function($rootScope, $scope, $location, $route, University) {
 
-  $scope.step = 3;
+  $scope.step = 1;
 
   /* step 1 */
   $scope.move = function(value) {
@@ -193,7 +193,9 @@ angular.module('netbase')
 
   /* get universities */
 
-  University.getUniversityById(universityId).success(function(res) {
+  let getUniversity = University.getUniversityById(universityId);
+
+  getUniversity.success(function(res) {
 
     if (res.success) {
 
@@ -204,7 +206,6 @@ angular.module('netbase')
     }
 
   });
-
 
   /* functions */
 
@@ -217,14 +218,13 @@ angular.module('netbase')
       intervalCount : $scope.intervalCount
     };
 
-    console.log("creating this plan: ")
-    console.log(data);
-
     if ($scope.trialPeriodDays != undefined) {
       data.trialPeriodDays = $scope.trialPeriodDays;
     }
 
     // interval != "day" && interval != "week" && interval != "month" && interval != "year"
+
+    console.log(data);
 
     University.createPlan(universityId, data).success(function(res) {
 
@@ -233,6 +233,7 @@ angular.module('netbase')
       if (res.success) {
 
         console.log(res);
+        $route.reload();
 
       }
 
@@ -240,17 +241,13 @@ angular.module('netbase')
 
   }
 
-  $scope.getStudentById = function() {
+  /* close dialog */
 
-    Students.getStudentById(id).success(function(res) {
+  $rootScope.$on('ngDialog.closed', function (e, $dialog) {
 
-      if (res.success) {
+    $route.reload();
 
-      }
-
-    });
-
-  }
+  });
 
 }])
 
@@ -385,17 +382,65 @@ angular.module('netbase')
 
 }])
 
-.controller('DashboardAcademiaSubscribedCtrl', ['$rootScope', '$scope', '$location', '$route', 'University' , function($rootScope, $scope, $location, $route, University) {
+.controller('DashboardAcademiaSubscribedCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'jwtHelper', '$localStorage', 'Students', function($rootScope, $scope, $location, $route, University, jwtHelper, $localStorage, Students) {
 
-  console.log("on")
+  let studentId;
+
+  /* Get student from token */
+  if ($localStorage.token != undefined && $localStorage.token != null) {
+    studentId = jwtHelper.decodeToken($localStorage.token)._id;
+  } else {
+    //$location.path("/")
+  }
+
+  /* Get student on back-end */
+  Students.getStudentById(studentId).success(function(res) {
+
+    let success = res.success;
+    let student = res.data;
+
+    if (success) {
+
+      $scope.student = student;
+
+    } else {
+
+
+    }
+
+  });
 
 }])
 
-.controller('DashboardAcademiaPremiumCtrl', ['$rootScope', '$scope', '$location', '$route', 'University' , function($rootScope, $scope, $location, $route, University) {
+.controller('DashboardAcademiaPremiumCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'jwtHelper', '$localStorage', 'Students', function($rootScope, $scope, $location, $route, University, jwtHelper, $localStorage, Students) {
 
-  console.log("on")
+  let studentId;
 
-  console.log("load account.subscriptions")
+  /* Get student from token */
+  if ($localStorage.token != undefined && $localStorage.token != null) {
+    studentId = jwtHelper.decodeToken($localStorage.token)._id;
+  } else {
+    //$location.path("/")
+  }
+
+  /* Get student on back-end */
+  Students.getStudentById(studentId).success(function(res) {
+
+    let success = res.success;
+    let student = res.data;
+
+    console.log(res);
+
+    if (success) {
+
+      $scope.student = student;
+
+    } else {
+
+
+    }
+
+  });
 
   $scope.managePremium = function (subscriptionId) {
     ngDialog.open({ template: 'partials/modals/premium.html', controller: 'DashboardAcademiaSubscriptionModalCtrl', className: 'ngdialog-theme-default', data : { subscriptionId : subscriptionId } });
@@ -405,11 +450,68 @@ angular.module('netbase')
 
 .controller('DashboardAcademiaSubscriptionModalCtrl', ['$rootScope', '$scope', '$location', '$route', 'University' , function($rootScope, $scope, $location, $route, University) {
 
-
   $scope.subscriptionId = $scope.ngDialogData.subscriptionId;
 
 }])
 
+.controller('DashboardAcademiaPlanManageCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', '$routeParams' , function($rootScope, $scope, $location, $route, University, $routeParams) {
+
+  let plan = $scope.ngDialogData.plan;
+  let universityId = $routeParams.id;
+
+  $scope.active = String(plan.active);
+
+  if (plan.trialPeriodDays == null) {
+    $scope.trialPeriodDays = 0;
+  } else {
+    $scope.trialPeriodDays = String(plan.trialPeriodDays);
+  }
+
+  let data = { docId : plan._id , stripeId : plan.stripeId, active : String(plan.active) };
+  $scope.data = data;
+
+  $scope.plan = plan;
+
+  $scope.success = false;
+
+  $scope.update = function() {
+
+    let update = false;
+
+    let status = $scope.data.active;
+
+    if (plan.trialPeriodDays == null && $scope.trialPeriodDays != 0) {
+      data.trialPeriodDays = $scope.trialPeriodDays;
+      update = true;
+    }
+
+    if (plan.active != status) {
+      data.active = $scope.data.active;
+      update = true;
+    }
+
+    if (update) {
+
+      University.updatePlan(universityId, data).success(function(res) {
+
+        console.log(res);
+
+        if (res.success) {
+
+          $scope.success = true;
+
+        } else {
+
+        }
+
+      });
+      // end updatePlan
+
+    }
+
+  }
+
+}])
 
 .directive('uploadbox', ['Students', '$location', '$localStorage', '$timeout', 'Uploads', function(Students, $location, $localStorage, $timeout, Uploads) {
 
@@ -560,7 +662,34 @@ angular.module('netbase')
 
 }])
 
-.directive('academiadashboardplanrow', ['Students', '$location', '$localStorage', function(Students, $location, $localStorage) {
+.directive('academiadashboardcard', ['$location', 'University', function($location, University) {
+
+  return {
+    restrict: 'A',
+    templateUrl : '../../partials/dashboard/academia/academiacard.html',
+    replace : true,
+    scope : true,
+    link : function(scope, element, attr) {
+
+      let universityId = attr.uid;
+
+      University.getUniversityById(universityId).success(function(res) {
+
+        if (res.success) {
+
+          scope.university = res.data;
+
+        }
+
+      });
+
+    }
+
+  }
+
+}])
+
+.directive('academiadashboardplanrow', ['Students', '$location', '$localStorage', 'ngDialog', function(Students, $location, $localStorage, ngDialog) {
 
   return {
     restrict: 'A',
@@ -569,14 +698,48 @@ angular.module('netbase')
     scope : true,
     link : function(scope, element, attr) {
 
-      //let plan = JSON.parse(attr.m);
-      //let university = JSON.parse(attr.u);
+      let plan = JSON.parse(attr.p);
 
+      scope.plan = plan;
 
+      console.log("plan: ")
+      console.log(plan);
+
+      scope.managePremium = function (subscriptionId) {
+
+        ngDialog.open({ template: 'partials/modals/planmanage.html',
+                        controller: 'DashboardAcademiaPlanManageCtrl',
+                        className: 'ngdialog-theme-default',
+                        data : { plan : plan } });
+
+      };
 
     }
+
   }
 
 }])
 
-;
+.directive('format', ['$filter', function ($filter) {
+    return {
+        require: '?ngModel',
+        link: function (scope, elem, attrs, ctrl) {
+            if (!ctrl) return;
+
+            ctrl.$formatters.unshift(function (a) {
+              return $filter(attrs.format)(ctrl.$modelValue)
+            });
+
+            elem.bind('blur', function(event) {
+                var plainNumber = elem.val().replace(/[^\d|\-+|\.+]/g, '');
+                elem.val($filter(attrs.format)(plainNumber).replace("$", ""));
+
+                let amount = $filter(attrs.format)(plainNumber).replace("$", "");
+                console.log(amount)
+                elem.val(amount);
+                scope.amount = amount;
+
+            });
+        }
+    };
+}]);

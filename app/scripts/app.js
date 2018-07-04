@@ -78,10 +78,8 @@ angular.module('netbase', ['ngStorage',
 
           let logged = $localStorage.logged;
 
-          console.log("deffeeered ")
-
           if (!logged) {
-             $location.path('/login');
+             $location.path('/');
           }
 
           return deferred.promise;
@@ -291,12 +289,6 @@ angular.module('netbase', ['ngStorage',
                       config.headers['x-access-token'] = $localStorage.token;
                   }
                   return config;
-              },
-              'responseError': function(response) {
-                  if(response.status === 401 || response.status === 403) {
-                      $location.path('/login');
-                  }
-                  return $q.reject(response);
               }
           }
 

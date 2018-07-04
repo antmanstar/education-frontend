@@ -3,7 +3,7 @@ angular.module('netbase')
 
     .factory('Forum', ['$http', function($http) {
 
-      var baseUrl = "http://104.196.188.196:9003/university";
+      var baseUrl = "http://35.229.52.103:9003/university";
       //var baseUrl = "https://api.universida.de/university";
 
       return {
@@ -42,7 +42,7 @@ angular.module('netbase')
 
     .factory('University', ['$http', function($http) {
 
-      var baseUrl = "http://104.196.188.196:9003/university";
+      var baseUrl = "http://35.229.52.103:9003/university";
 
       //var baseUrl = "https://api.universida.de/university"
 
@@ -283,18 +283,72 @@ angular.module('netbase')
                 'Content-Type': 'application/x-www-form-urlencoded'
             }});
 
+        },
+
+        updatePlan: function(universityId, data) {
+
+          var url = '/id/' + universityId + '/premium/plan/' + data.stripeId;
+
+          return $http({
+            method: 'PUT',
+            data : data,
+            url: baseUrl + url,
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }});
+
         }
 
       }
 
     }])
 
-    .factory('Students', ['$http', function($http) {
+    .factory('Students', ['$http', '$localStorage', function($http, $localStorage) {
 
       //var baseUrl = "https://api.universida.de/accounts/students";
-      var baseUrl = "http://104.196.188.196:9000/accounts/students";
+      var baseUrl = "http://35.229.52.103:9000/accounts/students";
 
       return {
+
+        getCards: function(userId) {
+
+          var url = '/id/' + userId + "/cards";
+
+          return $http({
+            method: 'GET',
+            url: baseUrl + url,
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'x-access-token': $localStorage.token
+            }});
+
+        },
+
+        postCards: function(userId, data) {
+
+          var url = '/id/' + userId + "/cards";
+
+          return $http({
+            method: 'POST',
+            url: baseUrl + url,
+            data : data,
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }});
+
+        },
 
         login: function(data) {
 
@@ -354,7 +408,7 @@ angular.module('netbase')
 
       //var baseUrl = "https://api.universida.de/search";
 
-      var baseUrl = "http://104.196.188.196:9004/search";
+      var baseUrl = "http://35.229.52.103:9004/search";
 
       return {
 
@@ -370,11 +424,38 @@ angular.module('netbase')
 
     }])
 
+    .factory('Videos', ['$http', function($http) {
+
+      //var baseUrl = "https://api.universida.de/search";
+
+      var baseUrl = "http://35.229.52.103:9004/search";
+
+      return {
+
+        parse: function(youtubeId, type) {
+
+          if (type == 'yt') {
+
+            var ytApiKey = "AIzaSyBO5oxAd6H-Au_lPyQiV2QU-7vCL_Li3GY";
+            var url = "https://www.googleapis.com/youtube/v3/videos?part=snippet&id=" + youtubeId + "&key=" + ytApiKey
+
+          }
+
+          console.log(url)
+
+          return $http.get(url);
+
+        }
+
+      }
+
+    }])
+
     .factory('SocialMarketPlace', ['$http', '$localStorage', 'jwtHelper', function($http, $localStorage, jwtHelper) {
 
       //var baseUrl = "https://api.universida.de/listing";
 
-      var baseUrl = "http://104.196.188.196:9005/listing";
+      var baseUrl = "http://35.229.52.103:9005/listing";
 
       return {
 
@@ -470,7 +551,7 @@ angular.module('netbase')
 
     .factory('Uploads', ['$http', function($http) {
 
-      var baseUrl = "http://104.196.188.196:9006/images/college";
+      var baseUrl = "http://35.229.52.103:9007/images/college";
 
       return {
 
@@ -499,6 +580,26 @@ angular.module('netbase')
         getId : function() {
 
           return jwtHelper.decodeToken($localStorage.token)._id;
+
+        }
+
+      }
+
+    }])
+
+    .factory('Payments', ['$http', function($http) {
+
+      //var baseUrl = "https://api.universida.de/search";
+
+      var baseUrl = "http://35.229.52.103:9004/search";
+
+      return {
+
+        all: function(query) {
+
+          var url = '/all?q=' + query;
+
+          return $http.get(baseUrl + url);
 
         }
 

@@ -57,13 +57,21 @@ nav .navbar-top .menu-right {
   float: right;
   display: inline-block;
   line-height: 34px;
-  width: calc(100% - 160px);
+  width: calc(100% - 188px);
+}
+
+@media screen and (max-width: 768px) {
+
+  nav .navbar-top .menu-right {
+    width: calc(100% - 207px);
+  }
+
 }
 
 @media screen and (max-width: 768px) {
 
   nav .navbar-top .menu-right.expand {
-    width: calc(92vw - 65px);
+    width: calc(92vw - 63px);
   }
 
   nav .navbar-top .menu-right .search {
@@ -218,6 +226,14 @@ nav .navbar-slider .option:hover {
 
   padding-top: 15px;
   padding-bottom: 15px;
+
+}
+
+@media screen and (min-width: 768px) {
+
+  .navbar-mobile {
+    display: none !important;
+  }
 
 }
 

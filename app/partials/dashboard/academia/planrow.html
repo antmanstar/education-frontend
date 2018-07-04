@@ -1,6 +1,8 @@
 <tr>
-  <td>Plan Name</td>
-  <td>Interval</td>
-  <td>Amount</td>
-  <td style="text-align: right;"><button class="btn-two btn-two-blue btn-small">Manage</button></td>
+  <td>{{plan.name}}</td>
+  <td>$ {{plan.amount}}</td>
+  <td>{{plan.intervalCount}} {{plan.interval}}</td>
+  <td ng-if="plan.active">Yes</td>
+  <td ng-if="!plan.active">No</td>
+  <td style="text-align: right;"><button ng-click="managePremium()" class="btn-two btn-two-blue btn-small">Manage</button></td>
 </tr>

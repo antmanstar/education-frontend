@@ -15,6 +15,33 @@ angular.module('netbase')
   $scope.page = $scope.ngDialogData.page;
   $scope.flow = $scope.ngDialogData.flow;
 
+  let userId = $rootScope.user._id;
+
+  /* Get Cards */
+
+  $scope.initOrder = function() {
+
+    Students.getCards(userId).success(function(res) {
+
+      if (res.success) {
+
+        $scope.cards = res.data;
+        console.log(res.data)
+
+      } else {
+
+      }
+
+    });
+
+  }
+
+  if ($scope.flow == "order") {
+
+    $scope.initOrder();
+
+  }
+
   /* information */
 
   $scope.information = {
@@ -27,7 +54,11 @@ angular.module('netbase')
   $scope.goToPage = function(page, data) {
 
     $scope.page = page;
-    $scope.$apply();
+
+    if (page = "order") {
+
+    }
+    //$scope.$apply();
 
   }
 
@@ -94,29 +125,43 @@ angular.module('netbase')
 
       StripeElements.createToken(card, additionalData).then(function(result) {
 
-        console.log(result)
-
         if (result.token) {
 
           // example.querySelector('.token').innerText = result.token.id;
           // example.classList.add('submitted');
 
-          if ($scope.flow == "addCard") {
+          // Send card to API, then use routes below
 
-            $scope.information.title = "Card added";
-            $scope.information.text = "Your card was added with success on your account. You can start using right now.";
-            $scope.goToPage("information");
+          let data = { source : result.token.id };
 
-          }
+          Students.postCards(userId, data).success(function(res) {
 
-          if ($scope.flow == "order") {
+            console.log(res);
 
-            $scope.goToPage("order");
+            if (res.success) {
 
-          }
+              if ($scope.flow == "addCard") {
 
+                $scope.information.title = "Card added";
+                $scope.information.text = "Your card was added with success on your account. You can start using right now.";
+                $scope.goToPage("information");
 
-          $scope.loading = false;
+              }
+
+              if ($scope.flow == "order") {
+
+                $scope.goToPage("order");
+
+              }
+
+              $scope.loading = false;
+
+            } else {
+
+            }
+
+          });
+          // end student post card
 
         } else {
 
