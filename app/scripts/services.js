@@ -3,7 +3,7 @@ angular.module('netbase')
   //35.229.52.103
     .factory('Forum', ['$http', function($http) {
 
-      var baseUrl = "http://35.229.52.103:9003/university";
+      var baseUrl = "https://network-university-prod.herokuapp.com/university";
       //var baseUrl = "https://api.universida.de/university";
 
       return {
@@ -42,7 +42,7 @@ angular.module('netbase')
 
     .factory('University', ['$http', function($http) {
 
-      var baseUrl = "http://35.229.52.103:9003/university";
+      var baseUrl = "https://network-university-prod.herokuapp.com/university";
 
       //var baseUrl = "https://api.universida.de/university"
 
@@ -332,7 +332,7 @@ angular.module('netbase')
     .factory('Students', ['$http', '$localStorage', function($http, $localStorage) {
 
       //var baseUrl = "https://api.universida.de/accounts/students";
-      var baseUrl = "http://35.229.52.103:9000/accounts/students";
+      var baseUrl = "https://network-accounts-prod.herokuapp.com/accounts/students";
 
       return {
 
@@ -427,8 +427,7 @@ angular.module('netbase')
     .factory('Search', ['$http', function($http) {
 
       //var baseUrl = "https://api.universida.de/search";
-
-      var baseUrl = "http://35.229.52.103:9004/search";
+      var baseUrl = "https://network-search-prod.herokuapp.com/search";
 
       return {
 
@@ -474,8 +473,7 @@ angular.module('netbase')
     .factory('SocialMarketPlace', ['$http', '$localStorage', 'jwtHelper', function($http, $localStorage, jwtHelper) {
 
       //var baseUrl = "https://api.universida.de/listing";
-
-      var baseUrl = "http://35.229.52.103:9005/listing";
+      var baseUrl = "https://network-socialmarketplace-prod.herokuapp.com/listing";
 
       return {
 
@@ -611,7 +609,7 @@ angular.module('netbase')
 
       //var baseUrl = "https://api.universida.de/search";
 
-      var baseUrl = "http://35.229.52.103:9004/search";
+      var baseUrl = "https://network-payments-prod.herokuapp.com";
 
       return {
 
