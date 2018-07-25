@@ -10,6 +10,43 @@ trix-editor {
   min-height: 200px;
 }
 
+trix-editor .attachment .remove {
+  display: none !important;
+}
+
+.trix-pic {
+  height: 300px;
+  width: 300px;
+}
+
+.ta-toolbar {
+  background-color: #f0f0f0;
+  padding-bottom: 5px;
+  padding-top: 5px;
+}
+
+.trix-icon {
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+}
+
+.sound {
+  background-size: 50% !important;
+  background-image: url("http://files.softicons.com/download/toolbar-icons/free-sound-icons-by-design-bolts/png/256x256/Volume-1.png") !important;
+}
+
+.yt {
+  background-size: 100% !important;
+  background-image: url("http://www.iconhot.com/icon/png/token/256/video-camera-5.png") !important;
+}
+
+.pic {
+  background-size: 70% !important;
+  background-image: url("http://cdn4.iconfinder.com/data/icons/ionicons/512/icon-image-128.png") !important;
+}
+
+/* *.
+
 a {
   color: #2d4255;
   text-decoration: none;
@@ -198,6 +235,12 @@ p {
 }
 
 /* Buttons */
+
+.btn-clean {
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
 
 /* btn one */
 

@@ -10,7 +10,8 @@ angular.module('netbase', ['ngStorage',
     'ngDialog',
     'angularMoment',
     'angularjs-stripe-elements',
-    'chart.js'
+    'chart.js',
+    'dibari.angular-ellipsis'
 ])
 .config(['$translateProvider', '$localStorageProvider', 'StripeElementsProvider', function ($translateProvider, $localStorageProvider, StripeElementsProvider) {
 
@@ -104,6 +105,11 @@ angular.module('netbase', ['ngStorage',
         .when('/a/:academiaName/forum/post/id/:postId', {
             templateUrl: 'partials/academia/academiaforumpost.html',
             controller: 'AcademiaForumPostCtrl',
+        })
+        .when('/a/:academiaName/forum/post/id/:postId/update', {
+            templateUrl: 'partials/academia/academiaforumpostupdate.html',
+            controller: 'AcademiaForumPostUpdateCtrl',
+            resolve: auth
         })
         .when('/a/:academiaName/chat', {
             templateUrl: 'partials/academia/academiachat.html',

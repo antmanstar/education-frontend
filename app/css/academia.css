@@ -1,3 +1,24 @@
+/* premium content - create */
+
+.academia-content-forum-post-create-premium {
+
+  padding-top: 15px;
+  padding-bottom: 15px;
+
+}
+
+.academia-content-forum-post-create-premium .form-group {
+
+  margin-top: 15px;
+
+}
+
+.premium-alert {
+  text-align: center;
+}
+
+/* */
+
 .academia {
 
   margin-top: 77px;
@@ -198,6 +219,12 @@
 
   font-size: 0.7em;
   color: #797979;
+
+}
+
+.academia-content-forum-post-info-manage {
+
+  text-align: right;
 
 }
 

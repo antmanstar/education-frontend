@@ -1651,6 +1651,8 @@ angular.module('netbase')
 
         University.upvoteForumPostAnswer(universityId, postId, answer._id).then(function(res) {
 
+          console.log(res);
+
           if (res.data.success) {
             scope.votesCount += 1;
           }

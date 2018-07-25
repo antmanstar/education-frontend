@@ -1,6 +1,6 @@
 'use strict';
 angular.module('netbase')
-
+  //35.229.52.103
     .factory('Forum', ['$http', function($http) {
 
       var baseUrl = "http://35.229.52.103:9003/university";
@@ -155,6 +155,26 @@ angular.module('netbase')
 
           return $http({
             method: 'POST',
+            data: data,
+            url: baseUrl + url,
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }});
+
+        },
+
+        updateForumPost: function(universityId, postId, data) {
+
+          var url = '/id/' + universityId + '/forum/post/id/' + postId;
+
+          return $http({
+            method: 'PUT',
             data: data,
             url: baseUrl + url,
             transformRequest: function(obj) {

@@ -4,13 +4,13 @@
 
     <div class="col-xs-12">
 
-      <div class="headline-sub-one">Add YouTube video</div>
+      <div class="headline-sub-one">{{title}}</div>
 
       <div class="form">
 
         <div class="form-group">
-          <i class="fab fa-youtube"></i>
-          <input ng-model="youtubeLink" placeholder="YouTube Link" type="text" />
+          <i ng-class="form.iconClass"></i>
+          <input ng-model="link" placeholder="{{form.placeholder}}" type="text" />
         </div>
         <!-- end form group -->
 
@@ -32,14 +32,24 @@
       </div>
       -->
 
-      <iframe width="420" height="250px" ng-src="{{ytiFrameSCE}}" frameborder="0" allowfullscreen></iframe>
+      <div class="width: 100%;" ng-show="type == 'sound'">
+        <div ng-bind-html="soundCloudIframe"></div>
+      </div>
+
+      <div class="width: 100%;" ng-show="type == 'pic'">
+        <img src="{{imageLink}}" width: "100%" height: "250px" />
+      </div>
+
+      <div class="width: 100%;" ng-show="type == 'video'">
+        <iframe width="100%" height="250px" ng-src="{{ytiFrameSCE}}" frameborder="0" allowfullscreen></iframe>
+      </div>
 
     </div>
     <!-- end col-xs-12 -->
 
     <div class="form" style="position: absolute; bottom: 0; left: 0; width: 100%; padding-left: 15px; padding-right: 15px;">
 
-      <button ng-click="addVideo()" class="btn btn-green">Add video</button>
+      <button ng-click="add()" class="btn btn-green">{{form.button}}</button>
 
     </div>
     <!-- end form -->

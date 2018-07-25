@@ -51,8 +51,24 @@
             </div>
             <!-- academia-content-forum-post-info -->
 
-            <div class="academia-content-forum-post-info-text text" ng-bind-html="forumPost.text"></div>
+            <div class="academia-content-forum-post-info-text text" ng-hide="getPremium" ng-bind-html="forumPost.text"></div>
             <!-- academia-content-forum-post-info -->
+
+            <div class="academia-content-forum-post-info-text text premium-alert" ng-show="getPremium">
+
+              <h3>🚀 Seja assinante premium! 🚀</h3>
+
+              <div style="margin-top: 15px; margin-bottom: 15px;">
+                <h4>Assine todo o conteúdo exclusivo {{university.name}}</h4>
+              </div>
+
+              <button class="btn btn-green" ng-click="premium()">Assinar agora!</button>
+
+            </div>
+
+            <div class="academia-content-forum-post-info-manage" ng-show="user._id == forumPost.accountId && user._id.length > 0">
+              <button ng-click="updateForumPost()" class="btn-clean"><span class="glyphicon glyphicon glyphicon-pencil" style="padding-right: 5px;" /> Edit</button>
+            </div>
 
           </div>
           <!-- academia-content-forum-post-info -->
@@ -114,7 +130,7 @@
     <ul style="width: 100vw">
 
       <li style="width: 100%;"><a href="/a/{{universityUrl}}/forum" ng-class="forumClass">Forum</a></li>
-  
+
     </ul>
 
   </div>

@@ -13,7 +13,7 @@
         <div class="picture" ng-if="university.backgroundImage == undefined"  style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
 
         <div class="title">{{university.name}}</div>
-        <div class="description">{{university.about}}</div>
+        <div class="description" data-ellipsis data-ng-bind="university.about"></div>
 
       </div>
       <!-- end card -->

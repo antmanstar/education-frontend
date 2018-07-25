@@ -116,4 +116,7 @@
   display: inline-block;
   word-wrap: break-word;
   white-space: pre-wrap;
+  height: 145px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

@@ -67,8 +67,6 @@ angular.module('netbase')
 
 .controller('AcademiaChatCtrl', ['$rootScope', '$scope', '$location' , function($rootScope, $scope, $location) {
 
-
-
 }])
 
 .controller('AcademiaMenu', ['$rootScope', '$scope', '$location', '$route', 'University' , function($rootScope, $scope, $location, $route, University) {
@@ -127,7 +125,7 @@ angular.module('netbase')
 
 }])
 
-.controller('AcademiaForumPostCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Forum', '$sce', function($rootScope, $scope, $location, $route, University, Forum, $sce) {
+.controller('AcademiaForumPostCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Forum', '$sce', '$localStorage', 'ngDialog', 'jwtHelper', function($rootScope, $scope, $location, $route, University, Forum, $sce, $localStorage, ngDialog, jwtHelper) {
 
   let universityUrl = $route.current.params.academiaName;
   let postId = $route.current.params.postId;
@@ -146,18 +144,53 @@ angular.module('netbase')
       let data = res.data.data;
       let success = res.data.success;
 
-      $scope.forumPost = data;
-      $scope.votesCount = data.votesCount;
+      if (status != 90010) {
 
-      $scope.forumPost.text = $sce.trustAsHtml($scope.forumPost.text);
+        $scope.forumPost = data;
+        $scope.votesCount = data.votesCount;
+
+        $scope.forumPost.text = $sce.trustAsHtml($scope.forumPost.text);
+
+      } else {
+
+        // Premium content
+        $scope.getPremium = true;
+        $scope.forumPost = data;
+
+      }
+
 
     });
 
   });
 
+  /* premium */
+  let studentId;
+
+  if ($localStorage.token != undefined && $localStorage.token != null) {
+    studentId = jwtHelper.decodeToken($localStorage.token)._id;
+  }
+
+  $scope.premium = function () {
+
+    //check if logged before
+    if ($localStorage.token != undefined && $localStorage.token != null) {
+      ngDialog.open({ template: 'partials/modals/payments.html', controller: 'PaymentsCtrl', className: 'ngdialog-theme-default', data : { flow : "order", page : "order" } });
+    } else {
+      ngDialog.open({ template: 'partials/modals/login.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
+    }
+
+  }
+
   /* votes */
 
   $scope.votesCount = 0;
+
+  $scope.updateForumPost = function() {
+
+    $location.path("/a/" + universityUrl + "/forum/post/id/" + postId + "/update")
+
+  }
 
   $scope.createAnswerPost = function() {
 
@@ -226,34 +259,108 @@ angular.module('netbase')
 
 .controller('AcademiaForumPostCreateOptionCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'ngDialog', 'Videos', '$sce', function($rootScope, $scope, $location, $route, University, ngDialog, Videos, $sce) {
 
-  $scope.youtubeLink = "https://www.youtube.com/watch?v=WoiZ9PiPXyM";
+  $scope.youtubeLink = "";
+  $scope.title = "";
+  $scope.form = { iconClass : "", placeholder : "" };
 
-  $scope.addVideo = function() {
+  let type = $scope.ngDialogData.type;
+  $scope.type = type;
 
-    let iframe = "<iframe src='" + $scope.ytiFrame + "' frameborder='0' allowfullscreen></iframe>"
+  if (type == "sound") {
 
-    let attachment = new Trix.Attachment({content: iframe})
-    $rootScope.trix.insertAttachment(attachment)
+    $scope.title = "Add SoundCloud embed";
+    $scope.form.iconClass = "fab fa-soundcloud";
+    $scope.form.placeholder = "SoundCloud embed link";
+    $scope.form.button = "Add SoundCloud embed";
 
-    ngDialog.close();
+    $scope.imagePush = "";
+
+    $scope.$watch('link', function() {
+
+      let link = $scope.link;
+
+      $scope.soundCloudIframe = $sce.trustAsHtml(link);
+
+    }, true);
+
+    $scope.add = function() {
+
+      let embed = $scope.link;
+
+      let attachment = new Trix.Attachment({content: embed})
+      $rootScope.trix.insertAttachment(attachment)
+
+      ngDialog.close();
+
+    }
 
   }
 
-  $scope.$watch('youtubeLink', function() {
+  if (type == "pic") {
 
-    let link = $scope.youtubeLink;
-    let youtubeId = link.split('=').pop();
-    let previewImage = 'http://img.youtube.com/vi/' + youtubeId + '/0.jpg';
+    $scope.title = "Add Picture";
+    $scope.form.iconClass = "glyphicon glyphicon-picture";
+    $scope.form.placeholder = "Image link";
+    $scope.form.button = "Add image";
 
-    $scope.previewImage = previewImage;
-    $scope.youtubeId = youtubeId;
+    $scope.imagePush = "";
 
-    if (link.search("youtube.com") != -1) {
-      $scope.ytiFrame = "https://www.youtube.com/embed/" + youtubeId;
-      $scope.ytiFrameSCE = $sce.trustAsResourceUrl("https://www.youtube.com/embed/" + youtubeId);
+    $scope.$watch('link', function() {
+
+      let link = $scope.link;
+
+    }, true);
+
+    $scope.add = function() {
+
+      let image = "<img class='trix-pic' src='" + $scope.imageLink + "' />"
+
+      console.log(image);
+
+      let attachment = new Trix.Attachment({content: image})
+      $rootScope.trix.insertAttachment(attachment)
+
+      ngDialog.close();
+
     }
 
-  }, true);
+  }
+
+  if (type == "video") {
+
+    $scope.title = "Add YouTube video";
+    $scope.form.iconClass = "fab fa-youtube";
+    $scope.form.placeholder = "YouTube Link";
+    $scope.form.button = "Add video";
+
+    $scope.add = function() {
+
+      let iframe = "<iframe src='" + $scope.ytiFrame + "' frameborder='0' allowfullscreen></iframe>"
+
+      let attachment = new Trix.Attachment({content: iframe})
+      $rootScope.trix.insertAttachment(attachment)
+
+      ngDialog.close();
+
+    }
+
+    $scope.$watch('link', function() {
+
+      let link = $scope.link;
+      let youtubeId = link.split('=').pop();
+      let previewImage = 'http://img.youtube.com/vi/' + youtubeId + '/0.jpg';
+
+      $scope.previewImage = previewImage;
+      $scope.youtubeId = youtubeId;
+
+      if (link.search("youtube.com") != -1) {
+        $scope.ytiFrame = "https://www.youtube.com/embed/" + youtubeId;
+        $scope.ytiFrameSCE = $sce.trustAsResourceUrl("https://www.youtube.com/embed/" + youtubeId);
+      }
+
+    }, true);
+
+  }
 
 }])
 
@@ -271,7 +378,105 @@ angular.module('netbase')
 
   });
 
-  ngDialog.open({ template: 'partials/modals/forumpostoption.html', controller: "AcademiaForumPostCreateOptionCtrl", className: 'ngdialog-theme-default' });
+  /* edit editor */
+  $scope.trixInitialize = function(e, editor) {
+
+	   var document = editor.getDocument()
+     $rootScope.trix = editor;
+
+     $(".block_tools").append('<button class="trix-icon yt" type="button" data-attribute="video" id="videoAppend"><i class="fab fa-youtube"></i></button>');
+
+     $(".block_tools").append('<button class="trix-icon pic" type="button" data-attribute="pic" id="picAppend"><i class="glyphicon glyphicon-picture"></i></button>');
+
+     $(".block_tools").append('<button class="trix-icon sound" type="button" data-attribute="sound" id="soundAppend"><i class="glyphicon glyphicon-picture"></i></button>');
+
+     $("#soundAppend").click(function() {
+       ngDialog.open({ template: 'partials/modals/forumpostoption.html', data : { type : "sound" }, controller: "AcademiaForumPostCreateOptionCtrl", className: 'ngdialog-theme-default' });
+     });
+
+     $("#picAppend").click(function() {
+       ngDialog.open({ template: 'partials/modals/forumpostoption.html', data : { type : "pic" }, controller: "AcademiaForumPostCreateOptionCtrl", className: 'ngdialog-theme-default' });
+     });
+
+     $("#videoAppend").click(function() {
+       ngDialog.open({ template: 'partials/modals/forumpostoption.html', data : { type : "video" }, controller: "AcademiaForumPostCreateOptionCtrl", className: 'ngdialog-theme-default' });
+     });
+
+  }
+
+  /* create forum post by id */
+
+  $scope.premium = { value : "0" };
+
+  $scope.createForumPost = function() {
+
+    var data = {
+      text : $scope.text,
+      title : $scope.title,
+      premium : $scope.premium.value
+    };
+
+    console.log(data);
+
+    University.createForumPost(university._id, data).then(function(res) {
+
+      let status = res.data.status;
+      let data = res.data.data;
+      let success = res.data.success;
+
+      if (success) {
+
+        $location.path('/a/' + university.url + '/forum/post/id/' + data._id)
+        window.scrollTo(0, 0);
+
+      }
+
+    });
+
+  };
+
+}])
+
+.controller('AcademiaForumPostUpdateCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'ngDialog', 'Forum', function($rootScope, $scope, $location, $route, University, ngDialog, Forum) {
+
+  let universityUrl = $route.current.params.academiaName;
+  let postId = $route.current.params.postId;
+  let university;
+
+  /* load information */
+
+  University.getUniversity(universityUrl).then(function(res) {
+
+    $scope.university = res.data.data;
+    university = res.data.data;
+
+    Forum.getForumPostById(postId, university._id).then(function(res) {
+
+      let status = res.data.status;
+      let data = res.data.data;
+      let success = res.data.success;
+
+      $scope.forumPost = data;
+
+      console.log($scope.forumPost)
+
+      $scope.title = $scope.forumPost.title;
+      $scope.text = $scope.forumPost.text;
+
+      if ($scope.forumPost.premium == false) {
+        $scope.premium = { value : 0 };
+      } else if ($scope.forumPost.premium == true) {
+        $scope.premium = { value : 1 };
+      } else {
+
+      }
+
+    });
+
+  });
+
+  /* load forum post */
+
 
   /* edit editor */
   $scope.trixInitialize = function(e, editor) {
@@ -297,17 +502,17 @@ angular.module('netbase')
 
   /* create forum post by id */
 
-  $scope.createForumPost = function() {
+  $scope.updateForumPost = function() {
 
     var data = {
       text : $scope.text,
-      title : $scope.title
+      title : $scope.title,
+      premium : $scope.premium.value
     };
 
     /* find youtube video and turn into iframe */
 
-
-    University.createForumPost(university._id, data).then(function(res) {
+    University.updateForumPost(university._id, postId, data).then(function(res) {
 
       let status = res.data.status;
       let data = res.data.data;
@@ -317,12 +522,6 @@ angular.module('netbase')
 
         $location.path('/a/' + university.url + '/forum/post/id/' + data._id)
         window.scrollTo(0, 0);
-
-      } else {
-
-        console.log("error: ");
-        console.log(data);
-        console.log(status);
 
       }
 
