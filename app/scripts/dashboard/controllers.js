@@ -135,17 +135,29 @@ angular.module('netbase')
   let universityId = $route.current.params.id;
   $scope.success = false;
 
-  University.getUniversityById(universityId).success(function(res) {
+  $scope.premiumMembers = 0;
 
-    console.log(res);
+  University.getUniversityById(universityId).success(function(res) {
 
     if (res.success) {
 
       $scope.university = res.data;
 
+      for (let idx = 0; idx < $scope.university.members.length; idx++) {
+
+        let member = $scope.university.members[idx];
+
+        if (member.privilege == 10) {
+          $scope.premiumMembers += 1;
+        }
+
+      }
+
     }
 
   });
+
+
 
   $scope.update = function() {
 
@@ -291,6 +303,30 @@ angular.module('netbase')
   let universityId = $scope.universityId = $route.current.params.id;
   $scope.university = $localStorage.universityUserManage;
 
+  $scope.privilege;
+
+  console.log($scope.university)
+
+  /* university.members */
+  University.getUniversityById(universityId).success(function(resUniversity) {
+
+    if (resUniversity.success) {
+
+      $scope.university = resUniversity.data;
+
+      $scope.university.members.forEach(function(e, idx, a) {
+
+        if (studentId == e.accountId) {
+          $scope.privilege = e.privilege;
+        }
+
+      });
+      //END $scope.university.members.forEach
+
+    }
+
+  });
+
   Students.getStudentById(studentId).success(function(res) {
 
     if (res.success) {
@@ -298,6 +334,7 @@ angular.module('netbase')
       $scope.student = res.data;
 
     }
+    //end Students.getStudentById -> res.success
 
   });
 
@@ -330,36 +367,20 @@ angular.module('netbase')
 
 /* end manage */
 
-.controller('DashboardAcademiaManageByIdSalesCtrl', ['$rootScope', '$scope', '$location', '$route', 'University' , function($rootScope, $scope, $location, $route, University) {
-
-  console.log("on")
-
-  let universityId = $route.current.params.id;
-
-  University.getUniversityById(universityId).success(function(res) {
-
-    console.log(res);
-
-    if (res.success) {
-
-      $scope.university = res.data;
-
-    }
-
-  });
+.controller('DashboardAcademiaManageByIdSalesCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Sales', function($rootScope, $scope, $location, $route, University, Sales) {
 
   /* chart */
 
-  $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
-  $scope.series = ['Series A', 'Series B'];
-  $scope.data = [
-    [65, 59, 80, 81, 56, 55, 40],
-    [28, 48, 40, 19, 86, 27, 90]
+  $scope.labels = ["January", "February", "March", "April", "May", "June", "July", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+
+  $scope.chartData = [
+    0,0,0,0,0,0,0,0,0,0,0,0
   ];
 
-  $scope.onClick = function (points, evt) {
-    console.log(points, evt);
-  };
+  $scope.tableData = [
+    [0, []],[0, []],[0, []],[0, []],[0, []],[0, []],[0, []],[0, []],[0, []],[0, []],[0, []],[0, []]
+  ];
+
   $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }, { yAxisID: 'y-axis-2' }];
   $scope.options = {
     scales: {
@@ -368,17 +389,178 @@ angular.module('netbase')
           id: 'y-axis-1',
           type: 'linear',
           display: true,
-          position: 'left'
-        },
-        {
-          id: 'y-axis-2',
-          type: 'linear',
-          display: true,
-          position: 'right'
+          position: 'left',
+          ticks: {
+                 beginAtZero: true,
+                 userCallback: function(label, index, labels) {
+                     // when the floored value is the same as the value we have a whole number
+                     if (Math.floor(label) === label) {
+                         return label;
+                     }
+                 }
+          }
         }
       ]
     }
   };
+
+  /* fill data */
+
+  let universityId = $route.current.params.id;
+
+  University.getUniversityById(universityId).success(function(res) {
+
+    if (res.success) {
+
+      $scope.university = res.data;
+
+      Sales.reports($scope.university._id).success(function(res) {
+
+        let report = res.data;
+
+        report.forEach(function(e, idx, a) {
+
+          // 1 - append on chart data
+          $scope.chartData[e.month + 1] += (e.amount / 100);
+
+          $scope.tableData[e.month + 1][0] += e.amount;
+          $scope.tableData[e.month + 1][1].push(e);
+
+          console.log($scope.chartData[e.month])
+
+        });
+        //end report.forEach
+
+      });
+      //end Sales.report
+
+    }
+
+  });
+
+  $scope.convertToDecimal = function(num) {
+
+    num = String(num);
+
+    if (num == 0) {
+      return "0";
+    } else if (num.length > 3) {
+      return num.substring(0, num.length - 2) + "." + num.substring(num.length - 2, num.length);
+    } else {
+      return num.substring(0, num.length - 2) + "." + num.substring(num.length - 2, num.length);
+    }
+
+  }
+
+  $scope.statusByDate = function(y, m) {
+
+    console.log("status")
+
+    $location.path('/dashboard/a/manage/id/' + universityId + "/sales/y/" + y + "/m/" + m);
+
+  }
+
+}])
+
+.controller('DashboardAcademiaManageByIdSalesDatesCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Sales', function($rootScope, $scope, $location, $route, University, Sales) {
+
+  /* chart */
+
+  $scope.labels = ["January", "February", "March", "April", "May", "June", "July", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+
+  $scope.chartData = [
+    0,0,0,0,0,0,0,0,0,0,0,0
+  ];
+
+  $scope.tableData = [
+    [0, []],[0, []],[0, []],[0, []],[0, []],[0, []],[0, []],[0, []],[0, []],[0, []],[0, []],[0, []]
+  ];
+
+  $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }, { yAxisID: 'y-axis-2' }];
+  $scope.options = {
+    scales: {
+      yAxes: [
+        {
+          id: 'y-axis-1',
+          type: 'linear',
+          display: true,
+          position: 'left',
+          ticks: {
+                 beginAtZero: true,
+                 userCallback: function(label, index, labels) {
+                     // when the floored value is the same as the value we have a whole number
+                     if (Math.floor(label) === label) {
+                         return label;
+                     }
+                 }
+          }
+        }
+      ]
+    }
+  };
+
+  /* fill data */
+
+  let universityId = $route.current.params.id;
+  let year = $route.current.params.y;
+  let month = $route.current.params.m;
+  //let day = $route.current.params.d;
+
+  $scope.month = month;
+
+  Sales.reportsByDate(universityId, year, month).success(function(res) {
+
+    console.log(res);
+
+    if (res.success) {
+
+    }
+
+  });
+
+  University.getUniversityById(universityId).success(function(res) {
+
+    if (res.success) {
+
+      $scope.university = res.data;
+
+      Sales.reports($scope.university._id).success(function(res) {
+
+        let report = res.data;
+
+        report.forEach(function(e, idx, a) {
+
+          // 1 - append on chart data
+          $scope.chartData[e.month + 1] += (e.amount / 100);
+
+          $scope.tableData[e.month + 1][0] += e.amount;
+          $scope.tableData[e.month + 1][1].push(e);
+
+          console.log($scope.chartData[e.month])
+
+        });
+        //end report.forEach
+
+      });
+      //end Sales.report
+
+    }
+
+  });
+
+  $scope.convertToDecimal = function(num) {
+
+    num = String(num);
+
+    if (num == 0) {
+      return "0";
+    } else if (num.length > 3) {
+      return num.substring(0, num.length - 2) + "." + num.substring(num.length - 2, num.length);
+    } else {
+      return num.substring(0, num.length - 2) + "." + num.substring(num.length - 2, num.length);
+    }
+
+  }
 
 }])
 
@@ -644,6 +826,8 @@ angular.module('netbase')
       let series = JSON.parse(attr.series);
       let data = JSON.parse(attr.data);
 
+      console.log(attr.data)
+
       scope.labels = labels;
       scope.series = series;
       scope.data = data;
@@ -702,8 +886,7 @@ angular.module('netbase')
 
       scope.plan = plan;
 
-      console.log("plan: ")
-      console.log(plan);
+      scope.plan.amount = scope.plan.amount.substr(0, scope.plan.amount.length - 2) + "." + scope.plan.amount.substr(scope.plan.amount.length - 2, scope.plan.amount.length);
 
       scope.managePremium = function (subscriptionId) {
 

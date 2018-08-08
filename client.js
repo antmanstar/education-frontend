@@ -9,7 +9,7 @@ var port = 8080;
 
 app.use(morgan("dev"));
 app.use(compression());
-app.use('*', httpsRedirect(true));
+//app.use('*', httpsRedirect(true));
 app.use(express.static(__dirname + "/node_modules"));
 app.use(express.static(__dirname + "/app"));
 app.use(express.static(__dirname + "/app", {

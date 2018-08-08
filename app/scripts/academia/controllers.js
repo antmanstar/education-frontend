@@ -18,12 +18,33 @@ angular.module('netbase')
 
 }])
 
+.controller('AcademiaPlanPurchaseCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', '$filter', 'ngDialog' , function($rootScope, $scope, $location, $route, University, $filter, ngDialog) {
+
+  $scope.university = $scope.ngDialogData.university;
+
+  $scope.planAmount = function(amount) {
+    return amount.substr(0, amount.length - 2) + "." + amount.substr(amount.length - 2, amount.length);
+  }
+
+  $scope.subscribe = function(plan) {
+    ngDialog.open({ template: 'partials/modals/payments.html', controller: 'PaymentsCtrl', className: 'ngdialog-theme-default', data : { flow : "order", page : "order", plan : plan, university : $scope.university } });
+  }
+
+
+}])
+
 .controller('AcademiaForumCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', '$timeout' , function($rootScope, $scope, $location, $route, University, $timeout) {
 
   let universityUrl = $route.current.params.academiaName;
 
   /* forum posts */
   $scope.forumPosts = [];
+  $scope.page = 1;
+  $scope.pages = 1;
+
+  if ($location.search().page != undefined) {
+    $scope.page = $location.search().page;
+  }
 
   /* get university informations */
 
@@ -38,11 +59,14 @@ angular.module('netbase')
 
       console.log(university);
 
-      University.getUniversityForumPosts(university._id).then(function(res) {
+      University.getUniversityForumPosts(university._id, $scope.page).then(function(res) {
 
-        let forumPostsRequested = res.data.data;
+        let forumPostsRequested = res.data.data.docs;
+        $scope.page = Number(res.data.data.page);
+        $scope.pages = res.data.data.pages;
         $scope.forumPosts = $scope.forumPosts.concat(forumPostsRequested);
 
+        console.log(res.data.data);
 
       }).catch(function(e) {
 
@@ -62,6 +86,123 @@ angular.module('netbase')
 
   /* get all forum posts */
 
+  $scope.range = function(min, max, step) {
+    step = step || 1;
+    var input = [];
+    for (var i = min; i <= max; i += step) {
+        input.push(i);
+    }
+    return input;
+  };
+
+}])
+
+.controller('AcademiaForumCategoryByIdCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', '$timeout', 'Forum', function($rootScope, $scope, $location, $route, University, $timeout, Forum) {
+
+  let universityUrl = $route.current.params.academiaName;
+  let categoryId = $route.current.params.categoryId;
+
+  /* forum posts */
+  $scope.forumPosts = [];
+  $scope.page = 1;
+  $scope.pages = 1;
+
+  console.log($location.search().page)
+
+  if ($location.search().page != undefined) {
+    $scope.page = $location.search().page;
+  }
+
+  $scope.categoryId = categoryId;
+
+  /* get university informations */
+  University.getUniversity(universityUrl).then(function(res) {
+
+    let success = res.data.success;
+    let university = res.data.data;
+
+    if (success) {
+
+      $scope.university = university;
+
+      Forum.getForumPostsByCategoryId(university._id, categoryId, $scope.page).success(function(res) {
+
+        if (res.success) {
+
+          let forumPostsRequested = res.data.docs;
+          $scope.page = Number(res.data.page);
+          $scope.pages = res.data.pages;
+          $scope.forumPosts = $scope.forumPosts.concat(forumPostsRequested);
+
+        }
+
+      });
+
+      //END Forum.getCategoriesByUniversityId
+
+    } else {
+
+      console.log("error while loading university")
+
+    }
+
+
+  });
+
+  /* get all forum posts */
+
+  $scope.range = function(min, max, step) {
+    step = step || 1;
+    var input = [];
+    for (var i = min; i <= max; i += step) {
+        input.push(i);
+    }
+    return input;
+  };
+
+}])
+
+.controller('AcademiaForumCategoryAllCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', '$timeout', 'Forum', function($rootScope, $scope, $location, $route, University, $timeout, Forum) {
+
+  let universityUrl = $route.current.params.academiaName;
+
+  /* forum posts */
+  $scope.forumPosts = [];
+
+  /* get university informations */
+
+  University.getUniversity(universityUrl).then(function(res) {
+
+    let success = res.data.success;
+    let university = res.data.data;
+
+    if (success) {
+
+      $scope.university = university;
+
+      Forum.getCategoriesByUniversityId($scope.university._id).success(function(resCategory) {
+
+        console.log(resCategory)
+
+        if (resCategory.success) {
+
+          $scope.categories = resCategory.data;
+
+        }
+
+      });
+      //END Forum.getCategoriesByUniversityId
+
+    } else {
+
+      console.log("error while loading university")
+
+    }
+
+
+  });
+
+  /* get all forum posts */
 
 }])
 
@@ -125,6 +266,48 @@ angular.module('netbase')
 
 }])
 
+.controller('AcademiaForumCategoryCreateCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Forum', '$sce', '$localStorage', 'ngDialog', 'jwtHelper', function($rootScope, $scope, $location, $route, University, Forum, $sce, $localStorage, ngDialog, jwtHelper) {
+
+  let universityUrl = $route.current.params.academiaName;
+
+  let university;
+
+  University.getUniversity(universityUrl).then(function(res) {
+
+    $scope.university = res.data.data;
+    university = res.data.data;
+
+    console.log(university);
+
+  });
+  // END getUniversity
+
+  $scope.privilege = {
+    value : 0
+  };
+
+  $scope.createCategory = function() {
+
+    let data = {
+      title : $scope.title,
+      description : $scope.description,
+      privilegeMin : $scope.privilege.value
+    }
+
+    Forum.createCategory(university._id, data).success(function(res) {
+
+      if (res.success) {
+
+        $location.path("/a/" + university.url + "/forum/category/id/" + res.data._id)
+
+      }
+
+    });
+
+  }
+
+}])
+
 .controller('AcademiaForumPostCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Forum', '$sce', '$localStorage', 'ngDialog', 'jwtHelper', function($rootScope, $scope, $location, $route, University, Forum, $sce, $localStorage, ngDialog, jwtHelper) {
 
   let universityUrl = $route.current.params.academiaName;
@@ -143,6 +326,8 @@ angular.module('netbase')
       let status = res.data.status;
       let data = res.data.data;
       let success = res.data.success;
+
+      console.log(res)
 
       if (status != 90010) {
 
@@ -175,7 +360,10 @@ angular.module('netbase')
 
     //check if logged before
     if ($localStorage.token != undefined && $localStorage.token != null) {
-      ngDialog.open({ template: 'partials/modals/payments.html', controller: 'PaymentsCtrl', className: 'ngdialog-theme-default', data : { flow : "order", page : "order" } });
+
+      //ngDialog.open({ template: 'partials/modals/payments.html', controller: 'PaymentsCtrl', className: 'ngdialog-theme-default', data : { flow : "order", page : "order" } });
+      ngDialog.open({ template: 'partials/modals/planbuy.html', controller: 'AcademiaPlanPurchaseCtrl', className: 'ngdialog-theme-default', data : { university : $scope.university } });
+
     } else {
       ngDialog.open({ template: 'partials/modals/login.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
     }
@@ -364,10 +552,19 @@ angular.module('netbase')
 
 }])
 
-.controller('AcademiaForumPostCreateCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'ngDialog', function($rootScope, $scope, $location, $route, University, ngDialog) {
+.controller('AcademiaForumPostCreateCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'ngDialog', 'Forum', function($rootScope, $scope, $location, $route, University, ngDialog, Forum) {
 
   let universityUrl = $route.current.params.academiaName;
   let university;
+
+  console.log("look it ")
+  console.log($location.search());
+
+  if ($location.search().categoryId != undefined) {
+    $scope.categoryForum = { _id : $location.search().categoryId };
+  } else {
+    $scope.categoryForum = { _id : undefined };
+  }
 
   /* load information */
 
@@ -375,6 +572,19 @@ angular.module('netbase')
 
     $scope.university = res.data.data;
     university = res.data.data;
+
+    Forum.getCategoriesByUniversityId($scope.university._id).success(function(resCategory) {
+
+      console.log(resCategory)
+
+      if (resCategory.success) {
+
+        $scope.categories = resCategory.data;
+
+      }
+
+    });
+    //END Forum.getCategoriesByUniversityId
 
   });
 
@@ -408,12 +618,14 @@ angular.module('netbase')
 
   $scope.premium = { value : "0" };
 
+
   $scope.createForumPost = function() {
 
     var data = {
       text : $scope.text,
       title : $scope.title,
-      premium : $scope.premium.value
+      premium : $scope.premium.value,
+      categoryId : $scope.categoryForum._id
     };
 
     console.log(data);
@@ -556,6 +768,8 @@ angular.module('netbase')
       if (controllerActive == "AcademiaForumCtrl" || controllerActive == "AcademiaForumPostCreateCtrl" || controllerActive == "AcademiaForumPostCtrl") {
         scope.forumClass = "active";
         scope.actionPostButton = true;
+      } else if (controllerActive == "AcademiaForumCategoryByIdCtrl" || controllerActive == "AcademiaForumCategoryAllCtrl") {
+        scope.categoryClass = "active";
       } else if (controllerActive == "AcademiaSmpCtrl") {
         scope.actionPostButton = true;
         scope.smpClass = "active";
@@ -637,10 +851,37 @@ angular.module('netbase')
 
       let university;
 
+      let studentId;
+
+      if ($localStorage.token != undefined && $localStorage.token != null) {
+        studentId = jwtHelper.decodeToken($localStorage.token)._id;
+        console.log(studentId)
+      }
+
+      scope.studentIsPremium = false;
+      scope.studentIsAdmin = false;
+
       attr.$observe('university', function(value) {
+
         if (value) {
 
           university = JSON.parse(value);
+
+          /* check if student is a premium member */
+          for (let idx = 0; idx < university.members.length; idx++) {
+
+            var member = university.members[idx];
+
+            if (studentId != undefined && member.accountId == studentId && member.privilege == 10) {
+              scope.studentIsPremium = true;
+            }
+
+            if (studentId != undefined && member.accountId == studentId && member.privilege == 99) {
+              console.log("é 99")
+              scope.studentIsAdmin = true;
+            }
+
+          }
 
           function userMembersLocation(array) {
 
@@ -665,19 +906,17 @@ angular.module('netbase')
           };
 
         }
+
       });
-
-      let studentId;
-
-      if ($localStorage.token != undefined && $localStorage.token != null) {
-        studentId = jwtHelper.decodeToken($localStorage.token)._id;
-      }
 
       scope.premium = function () {
 
         //check if logged before
         if ($localStorage.token != undefined && $localStorage.token != null) {
-          ngDialog.open({ template: 'partials/modals/payments.html', controller: 'PaymentsCtrl', className: 'ngdialog-theme-default', data : { flow : "order", page : "order" } });
+
+          //ngDialog.open({ template: 'partials/modals/payments.html', controller: 'PaymentsCtrl', className: 'ngdialog-theme-default', data : { flow : "order", page : "order" } });
+          ngDialog.open({ template: 'partials/modals/planbuy.html', controller: 'AcademiaPlanPurchaseCtrl', className: 'ngdialog-theme-default ngdialog-plans', data : { university : university } });
+
         } else {
           ngDialog.open({ template: 'partials/modals/login.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
         }
@@ -706,9 +945,6 @@ angular.module('netbase')
 
       };
 
-      scope.createPost = function() {
-        $
-      }
 
       scope.subscribe = function() {
 

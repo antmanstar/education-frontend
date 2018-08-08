@@ -13,8 +13,18 @@
 
       <div class="academia-content-forum">
 
-        <div ng-show="forumPosts.length == 0">
-          No forum posts yet.
+        <div class="academia-category" ng-repeat="category in categories">
+
+          <div class="texts">
+            <div class="title"><div class="icon"><i class="fas fa-newspaper"></i><a href="/a/{{university.url}}/forum/category/id/{{category._id}}"></div>{{category.title}}</a></div>
+            <div class="description">{{category.description}}</div>
+          </div>
+
+        </div>
+        <!-- end academia-category -->
+
+        <div ng-show="categories.length == 0">
+          Nenhuma categoria cadastrada
         </div>
 
         <div ng-show="forumPosts.length > 0">
@@ -26,14 +36,6 @@
 
       </div>
       <!-- academia-content-forum-->
-
-      <div>
-        <ul class="pagination" ng-if="pages > 1">
-          <li class="page-item" ng-if="page != 1"><a class="page-link" href="/a/{{university.url}}/forum?page={{page - 1}}">Voltar</a></li>
-          <li class="page-item" ng-repeat="p in range(1, pages)"><a class="page-link" ng-style="p == page && {'font-weight':'bold'}" href="/a/{{university.url}}/forum?page={{p}}">{{p}}</a></li>
-          <li class="page-item"><a class="page-link" href="/a/{{university.url}}/forum?page={{page + 1}}">Próximo</a></li>
-        </ul>
-      </div>
 
     </div>
     <!-- end col-xs-12 -->

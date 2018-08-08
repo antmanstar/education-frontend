@@ -66,9 +66,17 @@
 
       <div style="padding-top: 15px;">
 
-        <label style="padding-bottom: 15px;">Seu pedido</label>
+        <div>
+          <label style="padding-bottom: 15px;">Seu pedido</label>
+        </div>
 
-        <p>1x Assinatura Mensal <span style="float: right;">R$9.99/mês</span></p>
+        <div>
+          Assinatura {{plan.name}}
+          <div style="float: right;">
+            <div style="display: inline-block;" ng-if="plan.currency == 'brl'">R$</div> <div style="display: inline-block" ng-if="plan.currency == 'usd'">$</div> <div style="display: inline-block">{{planAmount(plan.amount)}}</div>
+          </div>
+
+        </div>
 
       </div>
 
@@ -78,7 +86,7 @@
 
           <label style="padding-bottom: 15px;">Cartão de crédito ou débito</label>
 
-          <select ng-model="ae">
+          <select ng-model="ae" ng-show="cards.sources.data.length > 0 ">
             <option ng-repeat="card in cards.sources.data" ng-selected="card.id == cards.default_source" value="{{card.id}}">{{card.brand}} - {{card.last4}}</option>
           </select>
 

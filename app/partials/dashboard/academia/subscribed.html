@@ -7,11 +7,13 @@
     <!-- dashboard menu -->
     <div ng-include="'partials/dashboardmenu.html'" ng-controller="DashboardMenuCtrl"></div>
 
-    <div class="col-xs-12 col-sm-9 col-md-9 col-lg-10 col-sm-offset-3 col-md-offset-3 col-lg-offset-2 col-lg-10 dashboard-content">
+    <div class="col-xs-12 col-sm-9 col-md-9 col-lg-10 dashboard-content">
 
       <div class="dashboard-content-title">
-        <h3>Subscribed Colleges</h3>
+        <h3>Universidades registradas</h3>
       </div>
+
+      <p ng-if="student.universitiesSubscribed.length == 0">Nenhuma universidade registrada</p>
 
       <div class="section-cards dashboard-cards">
 

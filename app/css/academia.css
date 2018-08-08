@@ -134,6 +134,33 @@
 
 }
 
+/* forum category */
+.academia-category {
+  margin-bottom: 15px;
+}
+
+.academia-category > .texts > .title > .icon {
+  display: inline-block;
+  vertical-align: top;
+  font-size: 1em;
+  padding-right: 15px;
+}
+
+.academia-category > .texts {
+  display: inline-block;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.academia-category > .texts > .title {
+  display: block;
+  font-size: 2.4em;
+}
+
+.academia-category > .texts > .description {
+  display: block;
+}
+
 /* forum */
 
 .academia-content-forum {
@@ -381,6 +408,12 @@
 
 }
 
+.academia-supportcol button {
+
+  outline: none;
+
+}
+
 .academia-supportcol-title {
 
   font-family: 'Georgia', serif;
@@ -612,12 +645,13 @@
   cursor: pointer;
   user-select: none;
 
-  line-height: 50px;
-
   box-sizing: border-box;
 
   min-width: 25vw;
   text-align: center;
+
+  padding-top: 7px;
+  height: 50px;
 
   padding-left: 15px;
   padding-right: 15px;
@@ -684,6 +718,7 @@
   .academia-content {
 
     padding: 15px;
+    padding-bottom: 50px;
 
   }
 
@@ -707,7 +742,7 @@
 
   .academia-content-navigation {
 
-    display: none;
+    /* display: none; */
 
   }
 

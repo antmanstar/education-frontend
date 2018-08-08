@@ -7,15 +7,16 @@
     <!-- dashboard menu -->
     <div ng-include="'partials/dashboardmenu.html'" ng-controller="DashboardMenuCtrl"></div>
 
-    <div class="col-xs-12 col-sm-9 col-md-9 col-lg-10 col-sm-offset-3 col-md-offset-3 col-lg-offset-2 col-lg-10 dashboard-content">
+    <div class="col-xs-12 col-sm-9 col-md-9 col-lg-10 dashboard-content">
 
       <ul class="breadcrumb">
-        <li><a href="/dashboard/a/manage">Manage my Colleges</a></li>
+        <li><a href="#">Reitoria</a></li>
+        <li><a href="/dashboard/a/manage">Administrar Universidades</a></li>
         <li><a href="/dashboard/a/manage/id/{{university._id}}">{{university.name}}</a></li>
       </ul>
 
       <div class="dashboard-content-title">
-        <h3>{{university.name}} statistics</h3>
+        <h3>{{university.name}} estatísticas</h3>
       </div>
 
       <div class="row">
@@ -23,7 +24,17 @@
         <div class="col-xs-12 col-sm-6">
 
           <div class="dashboard-status-box">
-            <span><i class="fas fa-user-tag"></i><h4>Paid Users</h4><a href="#">View all</a></span>
+            <span><i class="fas fa-user-tag"></i><h4>Usuários pagos</h4><!--<a href="#">View all</a>--></span>
+            <div class="stats">{{premiumMembers}}</div>
+          </div>
+
+        </div>
+        <!-- end col-xs-12 col-sm-6 -->
+
+        <div class="col-xs-12 col-sm-6">
+
+          <div class="dashboard-status-box">
+            <span><i class="fas fa-users"></i><h4>Usuários</h4><a href="/dashboard/a/manage/id/{{university._id}}/users">VER TODOS</a></span>
             <div class="stats">{{university.members.length}}</div>
           </div>
 
@@ -33,17 +44,7 @@
         <div class="col-xs-12 col-sm-6">
 
           <div class="dashboard-status-box">
-            <span><i class="fas fa-users"></i><h4>Users</h4><a href="/dashboard/a/manage/id/{{university._id}}/users">View all</a></span>
-            <div class="stats">{{university.members.length}}</div>
-          </div>
-
-        </div>
-        <!-- end col-xs-12 col-sm-6 -->
-
-        <div class="col-xs-12 col-sm-6">
-
-          <div class="dashboard-status-box">
-            <span><i class="fas fa-tags"></i><h4>Premium Subscriptions</h4><a href="/dashboard/a/manage/id/{{university._id}}/premium">Manage</a></span>
+            <span><i class="fas fa-tags"></i><h4>Assinaturas Premium</h4><a href="/dashboard/a/manage/id/{{university._id}}/premium">ADMINISTRAR</a></span>
             <div class="stats"></div>
           </div>
 
@@ -53,7 +54,7 @@
         <div class="col-xs-12 col-sm-6">
 
           <div class="dashboard-status-box">
-            <span><i class="fas fa-chart-bar"></i><h4>Sales Statistics</h4><a href="/dashboard/a/manage/id/{{university._id}}/sales">View All</a></span>
+            <span><i class="fas fa-chart-bar"></i><h4>Vendas</h4><a href="/dashboard/a/manage/id/{{university._id}}/sales">VER TODAS</a></span>
             <div class="stats"></div>
           </div>
 
@@ -64,7 +65,7 @@
       <!-- end row -->
 
       <div class="dashboard-content-title">
-        <h3>Update informations</h3>
+        <h3>Atualizar Informações</h3>
       </div>
 
       <div class="row">
@@ -72,30 +73,30 @@
         <div class="col-xs-12 col-sm-12">
 
           <div class="alert bg-primary-red" ng-show="error.exists">{{displayError(error.text)}}</div>
-          <div class="alert bg-primary-green" ng-show="success">Success updating your College.</div>
+          <div class="alert bg-primary-green" ng-show="success">Sucesso ao atualizar a sua Universidade.</div>
 
           <div class="form">
 
             <div class="form-group">
-              <label>Name of your College</label>
+              <label>Nome da sua Universidade</label>
               <input ng-model="name" placeholder="{{university.name}}" type="text" />
             </div>
             <!-- end form group -->
 
             <div class="form-group">
-              <label>About</label>
+              <label>Sobre</label>
               <input ng-model="about" placeholder="{{university.about}}" type="text" />
             </div>
             <!-- end form group -->
 
             <div class="form-group">
               <label>URL</label>
-              <input ng-model="url" placeholder="college.digital/a/{{university.url}}" type="Text" />
+              <input ng-model="url" placeholder="{{university.url}}" type="Text" />
             </div>
             <!-- end form group -->
 
             <div style="margin-top: 15px;">
-              <button ng-click="update()" class="btn btn-green">Update your College</button>
+              <button ng-click="update()" class="btn btn-green">Atualizar Universidade</button>
             </div>
 
           </div>

@@ -1,6 +1,6 @@
 <tr>
   <td>{{plan.name}}</td>
-  <td>$ {{plan.amount}}</td>
+  <td> <div style="display: inline-block" ng-if="plan.currency == 'brl'">R$</div> <div style="display: inline-block" ng-if="plan.currency == 'usd'">$</div> {{plan.amount}}</td>
   <td>{{plan.intervalCount}} {{plan.interval}}</td>
   <td ng-if="plan.active">Yes</td>
   <td ng-if="!plan.active">No</td>

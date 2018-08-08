@@ -4,7 +4,7 @@
 
 angular.module('netbase')
 
-.controller('PaymentsCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'StripeElements', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, StripeElements) {
+.controller('PaymentsCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'StripeElements', 'Payments', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, StripeElements, Payments) {
 
   /* FLOWS:
     -> addCard
@@ -14,8 +14,15 @@ angular.module('netbase')
 
   $scope.page = $scope.ngDialogData.page;
   $scope.flow = $scope.ngDialogData.flow;
+  $scope.plan = $scope.ngDialogData.plan;
+  $scope.university = $scope.ngDialogData.university;
 
   let userId = $rootScope.user._id;
+
+  /* plan amount */
+  $scope.planAmount = function(amount) {
+    return amount.substr(0, amount.length - 2) + "." + amount.substr(amount.length - 2, amount.length);
+  }
 
   /* Get Cards */
 
@@ -101,12 +108,43 @@ angular.module('netbase')
 
   }
 
+  console.log($scope.plan)
+  console.log($scope.university)
+
   $scope.confirmOrder = function() {
 
     $scope.loading = true;
 
-    //if (success) { $scope.loading = false; }
+    let payload = {
+      universityId : $scope.university._id,
+      currency : $scope.plan.currency,
+      planId : $scope.plan.stripeId
+    };
 
+    Payments.subscription(payload).then(function(res) {
+
+      let success = res.data.success;
+      let university = res.data.data;
+
+      console.log(res);
+
+      if (success) {
+
+        // Move to success page0
+        $scope.page = "information";
+        $scope.information = {
+          title : "Ordem completa",
+          text : "Parabens, você completou a sua compra."
+        };
+
+      }
+
+    });
+
+  }
+
+  $scope.informationAction = function() {
+    ngDialog.closeAll();
   }
 
   $scope.cardAdd = function() {

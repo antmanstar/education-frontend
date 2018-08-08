@@ -16,13 +16,13 @@
 
             <div ng-hide="logged" ng-click="login()">Login</div>
 
-            <div ng-hide="logged" ng-click="signup()">Sign Up</div>
+            <div ng-hide="logged" ng-click="signup()">Registrar</div>
 
             <div id="profileMenu" ng-show="logged" class="profile">
               <span><i class="fas fa-user-circle" style="padding-right: 2px;"></i></span> {{user.name}} <span><i class="fas fa-angle-down" style="padding-left: 3px;"></i></span>
               <div class="profile-expanded">
                 <div><a href="/dashboard">Dashboard</a></div>
-                <div><a href="#">Edit Profile</a></div>
+                <!-- <div><a href="#">Edit Profile</a></div>-->
                 <div ng-click="logout()"><a>Logout</a></div>
               </div>
               <!-- end profile expanded -->
@@ -62,6 +62,7 @@
 
         <div class="menu">
           <div class="option unselectable" ng-class="{'active': originalPath == '/home' || originalPath == '/home/'}"><a href="/home">Home</a></div>
+          <div class="option unselectable" ng-show="logged"><a href="/dashboard">Dashboard</a></div>
           <!--<div class="option unselectable" ng-class="{'active': originalPath == '/home/colleges' || originalPath == '/home/colleges/'}"><a href="/home/colleges">Colleges</a></div>-->
           <!--<div class="option unselectable" ng-class="{'active': originalPath == '/home/smp' || originalPath == '/home/smp/'}"><a href="/home/smp">Marketplace</a></div>-->
         </div>
@@ -70,16 +71,14 @@
         <div class="menu" ng-hide="logged">
           <div class="header" style="border-top: 2px solid #2d4255; margin-left: 25px; margin-right: 25px; padding-bottom: 15px;"></div>
           <div class="option unselectable" ng-hide="logged" ng-click="login()">Login</div>
-          <div class="option unselectable" ng-hide="logged" ng-click="signup()">Sign Up</div>
+          <div class="option unselectable" ng-hide="logged" ng-click="signup()">Criar conta</div>
         </div>
         <!-- end menu -->
 
         <div class="profile" ng-show="logged">
           <div class="header"><span><i class="fas fa-user-circle"></i></span> {{user.name}}</div>
           <div class="menu">
-            <div class="option">My profile</div>
-            <div class="option">My courses</div>
-            <div class="option">Account setings</div>
+            <!-- <<div class="option">Editar perfil</div> -->
             <div class="option" ng-click="logout()">Logout</div>
           </div>
           <!-- end menu -->

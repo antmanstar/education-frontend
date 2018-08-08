@@ -20,6 +20,7 @@
     -->
 
     <a href="/a/{{university.url}}/forum/post/create"><button class="academia-supportcol-button bg-base">Criar postagem</button></a>
+    <a href="/a/{{university.url}}/forum/category/create" ng-if="studentIsAdmin == true"><button class="academia-supportcol-button bg-base">Criar categoria</button></a>
     <button class="academia-supportcol-button" ng-hide="userSubscribed(university.members)" ng-click="subscribe()">Inscrever</button>
     <button class="academia-supportcol-button" ng-show="userSubscribed(university.members)" ng-click="subscribe()">Desinscrever</button>
 
@@ -42,17 +43,53 @@
   </div>
   <!-- end academia-supportcol-info -->
 
-  <div class="academia-supportcol-info">
+  <div class="academia-supportcol-info" ng-if="university.plans.length > 0">
 
     <div class="academia-supportcol-info-title">
       membro premium
     </div>
     <!-- end academia-supportcol-info-title -->
 
-    <button class="academia-supportcol-button" ng-click="premium()">Assinar premium</button>
+    <p ng-show="studentIsPremium">Você é membro premium!</p>
+    <button ng-show="studentIsPremium" class="academia-supportcol-button" ng-click="premium()">Ver planos</button>
+    <button ng-hide="studentIsPremium" class="academia-supportcol-button" ng-click="premium()">Assinar premium</button>
 
   </div>
   <!-- end academia-supportcol-info -->
 
 </div>
 <!-- end col-xs-12 -->
+
+<div class="academia-footer">
+
+  <ul style="width: 100vw">
+
+    <li style="width: 25%;">
+      <a href="/a/{{university.url}}/forum" ng-class="forumClass">
+        <i class="far fa-newspaper"></i>
+        <div style="font-size: 0.85em;">Forum</div>
+      </a>
+    </li>
+
+    <li style="width: 25%;">
+      <a href="/a/{{university.url}}/forum/post/create">
+        <i class="fas fa-pen-square"></i>
+        <div style="font-size: 0.85em;">Escrever</div>
+      </a>
+    </li>
+
+    <li style="width: 25%;">
+      <a href="/a/{{university.url}}/forum/category/all" ng-class="forumClass">
+        <i class="fas fa-graduation-cap"></i>
+        <div style="font-size: 0.85em;">Categorias</div>
+      </a>
+    </li>
+
+    <li style="width: 25%;" ng-click="premium()">
+      <i class="fas fa-star"></i>
+      <div style="font-size: 0.85em;">Premium</div>
+    </li>
+
+  </ul>
+
+</div>

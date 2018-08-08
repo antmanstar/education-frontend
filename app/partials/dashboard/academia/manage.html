@@ -7,15 +7,15 @@
     <!-- dashboard menu -->
     <div ng-include="'partials/dashboardmenu.html'" ng-controller="DashboardMenuCtrl"></div>
 
-    <div class="col-xs-12 col-sm-9 col-md-9 col-lg-10 col-sm-offset-3 col-md-offset-3 col-lg-offset-2 col-lg-10 dashboard-content">
+    <div class="col-xs-12 col-sm-9 col-md-9 col-lg-10 dashboard-content">
 
       <ul class="breadcrumb">
-        <li><a href="#">College</a></li>
-        <li><a href="/dashboard/a/manage">Manage my Colleges</a></li>
+        <li><a href="#">Reitoria</a></li>
+        <li><a href="/dashboard/a/manage">Administrar Universidades</a></li>
       </ul>
 
       <div class="dashboard-content-title">
-        <h3>Manage my Colleges</h3>
+        <h3>Administrar Universidades</h3>
       </div>
 
       <div class="section-cards dashboard-cards">
@@ -27,7 +27,7 @@
 
           <div class="title">{{university.name}}</div>
           <div class="description">{{university.about}}</div>
-          <button ng-click="manage(university._id)" style="margin-top: 15px;" class="btn btn-green">Manage</button>
+          <button ng-click="manage(university._id)" style="margin-top: 15px;" class="btn btn-green">Administrar</button>
 
         </div>
           <!-- end card -->

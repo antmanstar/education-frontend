@@ -1,0 +1,31 @@
+<div class="container-fluid modal-accounts">
+
+  <div class="row">
+
+    <div class="col-xs-12">
+
+      <div class="headline-sub-one">Resetar senha</div>
+
+      <div ng-show="resetPasswordSuccess" style="margin-top: 25px;" class="alert bg-primary-green">Foi enviado um email com a segunta etapa do procedimento.</div>
+
+      <div class="form" ng-hide="resetPasswordSuccess">
+
+        <div class="form-group">
+          <i class="fas fa-envelope"></i>
+          <input ng-model="resetpasswordEmail" placeholder="Email" type="text" />
+        </div>
+        <!-- end form group -->
+
+        <button ng-click="resetPasswordStepOne()" class="btn btn-bluebase">Resetar senha</button>
+
+      </div>
+      <!-- end form -->
+
+    </div>
+    <!-- end col-xs-12 -->
+
+  </div>
+  <!-- end row -->
+
+</div>
+<!-- end container-fluid -->

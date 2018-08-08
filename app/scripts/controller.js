@@ -10,6 +10,31 @@ angular.module('netbase')
   $scope.loginMessageBox = false;
   $scope.createMessageBox = false;
 
+  $scope.resetPasswordSuccess = false;
+
+  $scope.forgotPassword = function() {
+
+    ngDialog.open({ template: 'partials/modals/resetone.html', className: 'ngdialog-theme-default', controller: 'AccountCtrl' });
+
+  }
+
+  $scope.resetPasswordStepOne = function() {
+
+    let payload = {email: $scope.resetpasswordEmail, type: "student"}
+
+    Students.resetPasswordStepOne(payload).success(function(res) {
+
+      if (res.success) {
+
+        $location.path('/reset/password?tokenOne=' + res.tokenOne + '&email=' + $scope.resetpasswordEmail);
+        $scope.resetPasswordSuccess = true;
+
+      }
+
+    });
+
+  }
+
   $scope.login = function() {
 
     let login = {
@@ -276,9 +301,61 @@ angular.module('netbase')
 
 /* reset */
 
-.controller('ResetPasswordCtrl', ['$rootScope', '$scope', '$location' , function($rootScope, $scope, $location) {
+.controller('ResetPasswordCtrl', ['$rootScope', '$scope', '$location', 'Students' , function($rootScope, $scope, $location, Students) {
 
+  let tokenOne = $location.search().tokenOne;
+  let email = $location.search().email;
 
+  let tokenTwo;
+
+  $scope.flowSuccess = false;
+
+  if (tokenOne != undefined && email != undefined) {
+
+    let payload = { tokenOne: tokenOne, email : email, type : "student" };
+
+    // Start Step 2
+    Students.resetPasswordStepTwo(payload).success(function(res) {
+
+      console.log("response step 2: ")
+      console.log(res);
+      if (res.success) {
+        tokenTwo = res.tokenTwo;
+      }
+
+    })
+
+  } else {
+
+    // Display error message
+    //$location.path("/");
+
+  }
+
+  $scope.stepThree = function() {
+
+    let payload = {
+            newpassword: $scope.password,
+            tokenTwo: tokenTwo,
+            type: "student"
+          };
+
+    // Start Step 2
+    Students.resetPasswordStepThree(payload).success(function(res) {
+
+      console.log("response step 3: ")
+      console.log(res);
+      if (res.success) {
+        $scope.flowSuccess = true;
+      } else {
+
+      }
+
+    });
+    //END resetPasswordStepThree
+
+  }
+  //END stepThree
 
 }])
 

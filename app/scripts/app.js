@@ -98,6 +98,18 @@ angular.module('netbase', ['ngStorage',
             templateUrl: 'partials/academia/academiaforum.html',
             controller: 'AcademiaForumCtrl',
         })
+        .when('/a/:academiaName/forum/category/all', {
+            templateUrl: 'partials/academia/academiaforumcategoryall.html',
+            controller: 'AcademiaForumCategoryAllCtrl',
+        })
+        .when('/a/:academiaName/forum/category/id/:categoryId', {
+            templateUrl: 'partials/academia/academiaforumcategorybyid.html',
+            controller: 'AcademiaForumCategoryByIdCtrl',
+        })
+        .when('/a/:academiaName/forum/category/create', {
+            templateUrl: 'partials/academia/academiaforumcategorycreate.html',
+            controller: 'AcademiaForumCategoryCreateCtrl',
+        })
         .when('/a/:academiaName/forum/post/create', {
             templateUrl: 'partials/academia/academiaforumpostcreate.html',
             controller: 'AcademiaForumPostCreateCtrl',
@@ -194,6 +206,11 @@ angular.module('netbase', ['ngStorage',
         .when('/dashboard/a/manage/id/:id/sales', {
             templateUrl: 'partials/dashboard/academia/managebyidsales.html',
             controller: 'DashboardAcademiaManageByIdSalesCtrl',
+            resolve: auth
+        })
+        .when('/dashboard/a/manage/id/:id/sales/y/:y/m/:m/', {
+            templateUrl: 'partials/dashboard/academia/managebyidsalesdates.html',
+            controller: 'DashboardAcademiaManageByIdSalesDatesCtrl',
             resolve: auth
         })
         .when('/dashboard/a/manage/id/:id/premium', {

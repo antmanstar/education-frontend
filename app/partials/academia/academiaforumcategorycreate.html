@@ -10,47 +10,33 @@
 
     <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9 academia-content">
 
-      <div class="academia-content-navigation">
-
-        <div class="academia-content-navigation-option">Criar postagem</div>
-
-      </div>
-      <!-- academia-content-navigation -->
+      <div academiastatus university="{{university}}"></div>
 
       <div class="academia-content-forum-answer">
 
-        <input class="academia-content-forum-post-create-title" placeholder="Escreva aqui título da sua postagem" ng-model="title"></input>
+        <label>Titulo da categoria</label></br>
+        <input class="academia-content-forum-post-create-title" placeholder="Escreva aqui título da categoria" ng-model="title"></input>
 
-        <trix-toolbar id="my_toolbar"></trix-toolbar>
-        <trix-editor angular-trix toolbar="my_toolbar" ng-model="text" trix-change="trixChange(e, editor);" trix-initialize="trixInitialize(e, editor);"></trix-editor>
-
-        <div class="academia-content-forum-post-create-premium">
-
-          <b>Categoria do Post</b>
-
-          <div class="form-group">
-            <select ng-model="categoryForum._id">
-              <option ng-repeat="category in categories" ng-selected="category._id == categoryForum._id" value="{{category._id}}" ng-selected="">{{category.title}}</option>
-            </select>
-          </div>
-
-        </div>
+        <label>Descrição da categoria</label></br>
+        <textarea style="height: unset" class="academia-content-forum-post-create-title" placeholder="Escreva aqui a descrição da categoria" ng-model="description"></textarea>
 
         <div class="academia-content-forum-post-create-premium">
 
-          <b>Este conteúdo é exclusivo para assinantes premium?</b>
+          <b>A partir de qual membro esta categoria pode ser acessada?</b>
 
           <div class="form-group">
-            <select ng-model="premium.value">
-              <option value="0" ng-selected="true">Não</option>
-              <option value="1">Sim</option>
+            <select ng-model="privilege.value">
+              <option value="0" ng-selected="true">Estudante</option>
+              <option value="10">Premium</option>
+              <option value="50">Equipe</option>
+              <option value="99">Administrador</option>
             </select>
           </div>
 
         </div>
 
         <div class="academia-content-forum-answer-action" style="margin-top: 15px;">
-          <button class="btn btn-bluebase" ng-click="createForumPost()">Create a post</button>
+          <button class="btn btn-bluebase" ng-click="createCategory()">Criar categoria</button>
         </div>
         <!-- academia-content-forum-answer -->
 

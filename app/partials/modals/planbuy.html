@@ -1,0 +1,63 @@
+<div class="container-fluid modal-accounts">
+
+  <div class="row">
+
+    <div class="col-xs-12">
+
+      <div class="headline-sub-one" style="margin-bottom: 30px; text-align: center;">Membro Premium</div>
+
+      <div style="margin-bottom: 50px; text-align: center;">
+        <h4>Acesse todo o conteúdo do {{university.name}}</h4>
+      </div>
+
+    </div>
+    <!-- end col-xs-12 -->
+
+  </div>
+  <!-- end row -->
+
+  <div class="row">
+
+    <div class="col-xs-12" ng-class="plans.length == 1 ? 'col-sm-12' : (plans.length == 2) ? 'col-sm-6' : 'col-sm-4'" ng-repeat="plan in (plans = (university.plans | filter : { active : true } ))">
+
+      <div class="plan">
+
+        <div class="texts">
+
+          <div class="name">
+            {{plan.name}}
+          </div>
+
+          <div class="price">
+            <div style="display: inline-block" ng-if="plan.currency == 'brl'">R$</div> <div style="display: inline-block" ng-if="plan.currency == 'usd'">$</div> <div class="amount">{{planAmount(plan.amount)}}</div>
+          </div>
+
+        </div>
+        <!-- end texts -->
+
+        <div class="action">
+          <button ng-click="subscribe(plan)" class="btn btn-bluebase">Assinar plano</button>
+        </div>
+        <!-- end action -->
+
+      </div>
+      <!-- end plan -->
+
+    </div>
+    <!-- end col-sm-4 -->
+
+  </div>
+  <!-- end row plan -->
+
+  <div class="row">
+
+    <div class="col-xs-12" style="padding-top: 15px; padding-bottom: 15px; text-align: center;">
+      <i class="fas fa-lock" style="padding-right: 5px;"></i> Compra 100% segura
+    </div>
+    <!-- end col-xs-12 -->
+
+  </div>
+  <!-- end row -->
+
+</div>
+<!-- end container-fluid -->

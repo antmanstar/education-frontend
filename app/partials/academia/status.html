@@ -11,8 +11,8 @@
   </div>
   <!-- academia-content-mobile -->
 
-  <button class="academia-supportcol-button" ng-hide="userSubscribed(university.members)" ng-click="subscribe()">Subscribe</button>
-  <button class="academia-supportcol-button" ng-show="userSubscribed(university.members)" ng-click="subscribe()">Unsubscribe</button>
+  <button class="academia-supportcol-button" ng-hide="userSubscribed(university.members)" ng-click="subscribe()">Inscrever</button>
+  <button class="academia-supportcol-button" ng-show="userSubscribed(university.members)" ng-click="subscribe()">Desinscrever</button>
 
 </div>
 <!-- academia-content-mobile -->
@@ -20,10 +20,10 @@
 <div class="academia-content-navigation">
 
   <div class="academia-content-navigation-option"><a href="/a/{{university.url}}/forum" ng-class="forumClass">forum</a></div>
+  <div class="academia-content-navigation-option">/ <a href="/a/{{university.url}}/forum/category/all" ng-class="categoryClass">categorias</a></div>
   <!-- <div class="academia-content-navigation-option">/ <a href="/messenger" target="_blank">chat</a> /</div> -->
   <!--<div class="academia-content-navigation-option">/ <a href="/a/{{university.url}}/marketplace" ng-class="smpClass">marketplace</a> /</div>-->
   <!-- <div class="academia-content-navigation-option"><a href="/a/{{universityUrl}}/jobs" ng-class="jobsClass">jobs</a> /</div> -->
-  <div class="academia-content-navigation-option" ng-show="controllerActive == 'AcademiaForumPostCreateCtrl'"> / Create a post</div>
 
 </div>
 <!-- academia-content-navigation -->

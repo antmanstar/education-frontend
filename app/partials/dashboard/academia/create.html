@@ -8,7 +8,7 @@
     <div ng-include="'partials/dashboardmenu.html'" ng-controller="DashboardMenuCtrl"></div>
 
     <!-- step 1 -->
-    <div ng-show="step == 1" class="col-xs-12 col-sm-9 col-md-9 col-lg-10 col-sm-offset-3 col-md-offset-3 col-lg-offset-2 col-lg-10 dashboard-content">
+    <div ng-show="step == 1" class="col-xs-12 col-sm-9 col-md-9 col-lg-10 col-lg-10 dashboard-content">
 
       <div style="text-align: center;">
         <div class="headline-display" style="padding-bottom: 10px; text-align: center;">Crie a sua Universidade</div>
@@ -22,41 +22,42 @@
     <!-- step 1 -->
 
     <!-- step 2 -->
-    <div ng-show="step == 2" class="col-xs-12 col-sm-9 col-md-9 col-lg-10 col-sm-offset-3 col-md-offset-3 col-lg-offset-2 col-lg-10 dashboard-content">
+    <div ng-show="step == 2" class="col-xs-12 col-sm-9 col-md-9 col-lg-10 col-lg-10 dashboard-content">
 
       <div style="text-align: left;">
 
-        <div class="headline-main" style="padding-bottom: 20px; padding-top: 20px; text-align: center;">Create your own college</div>
-        <p style="padding-bottom: 20px; padding-top: 0px;">To create your College, fill all informations below.</p>
+        <div class="headline-main" style="padding-bottom: 20px; padding-top: 20px; text-align: center;">Crie a sua Universidade</div>
+
+        <!--<p style="padding-bottom: 20px; padding-top: 0px;">To create your College, fill all informations below.</p>-->
 
         <div class="alert bg-primary-red" ng-show="error.exists">{{displayError(error.text)}}</div>
 
         <div class="form">
 
           <div class="form-group">
-            <label>Name of your College</label>
-            <input ng-model="name" placeholder="Write your College name here" type="text" />
+            <label>Nome da Universidade</label>
+            <input ng-model="name" placeholder="Escreva aqui o nome da sua Universidade" type="text" />
           </div>
           <!-- end form group -->
 
           <div class="form-group">
-            <label>About</label>
-            <input ng-model="about" placeholder="Write a short description about your College" type="text" />
+            <label>Sobre</label>
+            <input ng-model="about" placeholder="Escreva uma descrição sobre a sua Universidade" type="text" />
           </div>
           <!-- end form group -->
 
           <div class="form-group">
             <label>Language</label>
             <select ng-model="language">
-              <option value="EN">English</option>
-              <option value="PT">Portuguese</option>
+              <option value="PT" selected>Portuguese</option>
+              <option value="EN">Inglês</option>
             </select>
           </div>
           <!-- end form group -->
 
           <div class="form-group">
             <label>URL</label>
-            <input ng-model="url" placeholder="Type the URL of your College. Example: universida.de/<your url>" type="Text" />
+            <input ng-model="url" placeholder="URL da sua Universidade. Exemplo: universida.de/a/<url>" type="Text" />
           </div>
           <!-- end form group -->
 
@@ -66,11 +67,11 @@
         <div class="row">
 
           <div class="col-xs-12 col-sm-6" style="margin-top: 15px;">
-            <button ng-click="move(-1)" class="btn-two btn-two-yellow">Back</button>
+            <button ng-click="move(-1)" class="btn-two btn-two-yellow">Voltar</button>
           </div>
 
           <div class="col-xs-12 col-sm-6" style="margin-top: 15px;">
-            <button ng-click="move(1)" class="btn btn-bluebase">Next</button>
+            <button ng-click="move(1)" class="btn btn-bluebase">Próximo</button>
           </div>
 
         </div>
@@ -81,10 +82,10 @@
     </div>
     <!-- step 2 -->
 
-    <div ng-show="step == 3" class="col-xs-12 col-sm-9 col-md-9 col-lg-10 col-sm-offset-3 col-md-offset-3 col-lg-offset-2 col-lg-10 dashboard-content">
+    <div ng-show="step == 3" class="col-xs-12 col-sm-9 col-md-9 col-lg-10 col-lg-10 dashboard-content">
 
       <div class="headline-main" style="padding-bottom: 20px; padding-top: 20px; text-align: center;">Create your own college</div>
-      <p style="padding-bottom: 20px; padding-top: 0px;">Preview</p>
+      <p style="padding-bottom: 20px; padding-top: 0px;">Prever</p>
 
       <div class="form-group">
         <label>Name</label>
@@ -127,11 +128,11 @@
       <div class="row">
 
         <div class="col-xs-12 col-sm-6" style="margin-top: 15px;">
-          <button ng-click="move(-1)" class="btn-two btn-two-yellow">Back</button>
+          <button ng-click="move(-1)" class="btn-two btn-two-yellow">Voltar</button>
         </div>
 
         <div class="col-xs-12 col-sm-6" style="margin-top: 15px;">
-          <button ng-click="create()" class="btn btn-green">Create</button>
+          <button ng-click="create()" class="btn btn-green">Criar</button>
         </div>
 
       </div>

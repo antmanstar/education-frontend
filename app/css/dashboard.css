@@ -88,7 +88,9 @@
 
   padding-top: 10px;
 
-  position: fixed;
+  position: relative;
+
+  /*
 
   height: calc(100vh);
 
@@ -97,7 +99,7 @@
   -webkit-box-shadow: 2px 0px 3px 0px rgba(196,196,196,0.24);
   -moz-box-shadow: 2px 0px 3px 0px rgba(196,196,196,0.24);
   box-shadow: 2px 0px 3px 0px rgba(196,196,196,0.24);
-
+  */
   background-color: #fff;
 
 }
@@ -152,6 +154,9 @@
 }
 
 .dashboard-content {
+
+  border-left: 1px solid #cdcdcd;
+  min-height: 100vh;
 
   padding-right: 20px;
   padding-left: 20px;

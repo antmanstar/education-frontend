@@ -10,41 +10,21 @@
     <div class="col-xs-12 col-sm-9 col-md-9 col-lg-10 dashboard-content">
 
       <ul class="breadcrumb">
-        <li><a href="#">Reitoria</a></li>
-        <li><a href="/dashboard/a/manage">Administrar Universidades</a></li>
+        <li><a href="/dashboard/a/manage">Manage my Colleges</a></li>
         <li><a href="/dashboard/a/manage/id/{{university._id}}">{{university.name}}</a></li>
-        <li><a href="/dashboard/a/manage/id/{{university._id}}/sales">Vendas</a></li>
+        <li><a href="/dashboard/a/manage/id/{{university._id}}/sales">Sales Statistics</a></li>
       </ul>
 
       <div class="dashboard-content-title">
-        <h3>Vendas</h3>
-      </div>
-
-      <div class="row">
-
-        <div class="col-xs-12 col-sm-12">
-
-          <div>
-            <canvas id="line" height="100" class="chart chart-line" chart-data="chartData" chart-labels="labels" chart-series="series" chart-options="options" chart-dataset-override="datasetOverride"></canvas>
-          </div>
-          <!-- end max-height -->
-
-        </div>
-        <!-- end col-xs-12 col-sm-6 -->
-
-      </div>
-      <!-- end row -->
-
-      <div class="dashboard-content-title">
-        <h3>Vendas por mês</h3>
+        <h3>Sales on month {{month}}</h3>
       </div>
 
       <table style="width:100%">
 
         <tr style="background-color: #f3f3f3;">
-          <th>Mês</th>
-          <th>Pedidos</th>
-          <th>Faturamento</th>
+          <th>Product</th>
+          <th>Orders</th>
+          <th>Total Sales</th>
           <th></th>
         </tr>
 
@@ -52,9 +32,8 @@
           <td>{{l}}</td>
           <td>{{tableData[$index][1].length}}</td>
           <td><div style="display: inline-block;" ng-if="university.language == 'EN'">$</div><div style="display: inline-block;" ng-if="university.language == 'PT'">R$</div> {{ convertToDecimal(tableData[$index][0]) }}</td>
-          <td style="text-align: right;"><button ng-click="statusByDate(2018 ,$index + 1)" class="btn-two btn-two-blue btn-small">Ver</button></td>
+          <td style="text-align: right;"><button class="btn-two btn-two-blue btn-small">View</button></td>
         </tr>
-
 
       </table>
       <!-- end table -->

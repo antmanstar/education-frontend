@@ -4,6 +4,10 @@ nav {
   z-index: 999;
 }
 
+.navbar-mobile .menu a {
+  color: #000 !important;
+}
+
 @media screen and (max-width: 768px) {
   nav {
     position: fixed;
@@ -71,7 +75,7 @@ nav .navbar-top .menu-right {
 @media screen and (max-width: 768px) {
 
   nav .navbar-top .menu-right.expand {
-    width: calc(92vw - 63px);
+    width: calc(92vw - 79px);
   }
 
   nav .navbar-top .menu-right .search {

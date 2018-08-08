@@ -5,12 +5,21 @@ angular.module('netbase')
 
       var baseUrl = "https://network-university-prod.herokuapp.com/university";
       //var baseUrl = "https://api.universida.de/university";
+      //var baseUrl = "http://192.168.1.7:9003/university";
 
       return {
 
         getForumPostById: function(id, universityId) {
 
           var url = '/id/' + universityId + '/forum/post/id/' + id;
+
+          return $http.get(baseUrl + url);
+
+        },
+
+        getForumPostsByCategoryId : function(id, categoryId, page) {
+
+          var url = '/id/' + id + '/categories/id/' + categoryId + '/posts' + "?page=" + page;
 
           return $http.get(baseUrl + url);
 
@@ -34,6 +43,34 @@ angular.module('netbase')
                 'Content-Type': 'application/x-www-form-urlencoded'
             }});
 
+        },
+
+        getCategoriesByUniversityId: function(universityId, data) {
+
+          var url = '/id/' + universityId + '/categories';
+
+          return $http.get(baseUrl + url);
+
+        },
+
+        createCategory: function(universityId, data) {
+
+          var url = '/id/' + universityId + '/category/';
+
+          return $http({
+            method: 'POST',
+            url: baseUrl + url,
+            data : data,
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }});
+
         }
 
       }
@@ -43,8 +80,8 @@ angular.module('netbase')
     .factory('University', ['$http', function($http) {
 
       var baseUrl = "https://network-university-prod.herokuapp.com/university";
-
-      //var baseUrl = "https://api.universida.de/university"
+      //var baseUrl = "https://api.universida.de/university";
+      //var baseUrl = "http://192.168.1.7:9003/university";
 
       return {
 
@@ -128,9 +165,9 @@ angular.module('netbase')
 
         },
 
-        getUniversityForumPosts: function(universityId) {
+        getUniversityForumPosts: function(universityId, page) {
 
-          var url = "/id/" + universityId + "/forum";
+          var url = "/id/" + universityId + "/forum" + "?page=" + page;
 
           return $http.get(baseUrl + url);
 
@@ -333,6 +370,7 @@ angular.module('netbase')
 
       //var baseUrl = "https://api.universida.de/accounts/students";
       var baseUrl = "https://network-accounts-prod.herokuapp.com/accounts/students";
+      //var baseUrl = "http://192.168.1.7:9000/accounts/students";
 
       return {
 
@@ -346,6 +384,66 @@ angular.module('netbase')
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
                 'x-access-token': $localStorage.token
+            }});
+
+        },
+
+        resetPasswordStepThree: function(data) {
+
+          let url = "/forgot/newpassword/token";
+
+          return $http({
+            method: 'PUT',
+            url: baseUrl + url,
+            data : data,
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }});
+
+        },
+
+        resetPasswordStepOne: function(data) {
+
+          let url = "/forgot";
+
+          return $http({
+            method: 'POST',
+            url: baseUrl + url,
+            data : data,
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }});
+
+        },
+
+        resetPasswordStepTwo: function(data) {
+
+          let url = "/forgot/newpassword";
+
+          return $http({
+            method: 'PUT',
+            url: baseUrl + url,
+            data : data,
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
             }});
 
         },
@@ -610,12 +708,54 @@ angular.module('netbase')
       //var baseUrl = "https://api.universida.de/search";
 
       var baseUrl = "https://network-payments-prod.herokuapp.com";
+      //var baseUrl = "http://192.168.1.7:9004";
 
       return {
 
-        all: function(query) {
+        subscription: function(data) {
 
-          var url = '/all?q=' + query;
+          var url = '/payments/subscription';
+
+          return $http({
+            method: 'POST',
+            url: baseUrl + url,
+            data : data,
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }});
+
+        }
+
+      }
+
+    }])
+
+    .factory('Sales', ['$http', function($http) {
+
+      //var baseUrl = "https://api.universida.de/search";
+
+      var baseUrl = "https://network-payments-prod.herokuapp.com";
+      //var baseUrl = "http://192.168.1.7:9004";
+
+      return {
+
+        reports: function(id) {
+
+          var url = '/payments/sales/universityid/' + id;
+
+          return $http.get(baseUrl + url);
+
+        },
+
+        reportsByDate: function(id, y, m, d) {
+
+          var url = '/payments/sales/universityid/' + id + "/year/" + y + "/month/" + m + "/day/" + d;
 
           return $http.get(baseUrl + url);
 
