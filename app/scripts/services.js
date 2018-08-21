@@ -4,9 +4,9 @@ angular.module('netbase')
 
     .factory('Playlist', ['$http', function($http) {
 
-      //var baseUrl = "https://network-university-prod.herokuapp.com/university";
+      var baseUrl = "https://network-university-prod.herokuapp.com/university";
       //var baseUrl = "https://api.universida.de/university";
-      var baseUrl = "http://192.168.1.7:9003/university";
+      //var baseUrl = "http://192.168.1.7:9003/university";
       /*
 
       router.get('/id/:id/playlist', university_controller.getAllPlaylistByUniversityId)
@@ -59,9 +59,9 @@ angular.module('netbase')
 
     .factory('Forum', ['$http', function($http) {
 
-      //var baseUrl = "https://network-university-prod.herokuapp.com/university";
+      var baseUrl = "https://network-university-prod.herokuapp.com/university";
       //var baseUrl = "https://api.universida.de/university";
-      var baseUrl = "http://192.168.1.7:9003/university";
+      //var baseUrl = "http://192.168.1.7:9003/university";
 
       return {
 
@@ -135,9 +135,9 @@ angular.module('netbase')
 
     .factory('University', ['$http', function($http) {
 
-      //var baseUrl = "https://network-university-prod.herokuapp.com/university";
+      var baseUrl = "https://network-university-prod.herokuapp.com/university";
       //var baseUrl = "https://api.universida.de/university";
-      var baseUrl = "http://192.168.1.7:9003/university";
+      //var baseUrl = "http://192.168.1.7:9003/university";
 
       return {
 
@@ -425,8 +425,8 @@ angular.module('netbase')
     .factory('Students', ['$http', '$localStorage', function($http, $localStorage) {
 
       //var baseUrl = "https://api.universida.de/accounts/students";
-      //var baseUrl = "https://network-accounts-prod.herokuapp.com/accounts/students";
-      var baseUrl = "http://192.168.1.7:9000/accounts/students";
+      var baseUrl = "https://network-accounts-prod.herokuapp.com/accounts/students";
+      //var baseUrl = "http://192.168.1.7:9000/accounts/students";
 
       return {
 
@@ -599,7 +599,8 @@ angular.module('netbase')
 
     .factory('Videos', ['$http', function($http) {
 
-      var baseUrl = "http://192.168.1.7:9003/university";
+      var baseUrl = "https://network-university-prod.herokuapp.com/university";
+      //var baseUrl = "http://192.168.1.7:9003/university";
 
       return {
 
