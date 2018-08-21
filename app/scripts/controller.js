@@ -1694,6 +1694,9 @@ angular.module('netbase')
       let postId = attr.p;
       let universityId = attr.u;
 
+      console.log("answer: ")
+      console.log(answer);
+
       scope.answer = answer;
 
       let studentId = answer.accountId;

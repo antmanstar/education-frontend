@@ -11,7 +11,8 @@ angular.module('netbase', ['ngStorage',
     'angularMoment',
     'angularjs-stripe-elements',
     'chart.js',
-    'dibari.angular-ellipsis'
+    'dibari.angular-ellipsis',
+    'ngSanitize'
 ])
 .config(['$translateProvider', '$localStorageProvider', 'StripeElementsProvider', function ($translateProvider, $localStorageProvider, StripeElementsProvider) {
 
@@ -90,13 +91,33 @@ angular.module('netbase', ['ngStorage',
    };
 
     $routeProvider.
-        when('/a/:academiaName/', {
+        when('/p/create', {
+            templateUrl: 'partials/playlist/create.html',
+            controller: 'PlaylistCreateCtrl',
+        })
+        .when('/v/id/:videoId', {
+            templateUrl: 'partials/video/videowatch.html',
+            controller: 'VideoWatchCtrl',
+        })
+        .when('/v/create', {
+            templateUrl: 'partials/video/create.html',
+            controller: 'VideoCreateCtrl',
+        })
+        .when('/a/:academiaName/', {
             templateUrl: 'partials/academia/academia.html',
             controller: 'AcademiaCtrl',
         })
         .when('/a/:academiaName/forum', {
             templateUrl: 'partials/academia/academiaforum.html',
             controller: 'AcademiaForumCtrl',
+        })
+        .when('/a/:academiaName/playlist/all', {
+            templateUrl: 'partials/academia/academiaplaylist.html',
+            controller: 'AcademiaPlaylistsCtrl',
+        })
+        .when('/a/:academiaName/playlist/id/:playlistId', {
+            templateUrl: 'partials/academia/academiaplaylistbyid.html',
+            controller: 'AcademiaPlaylistsByIdCtrl',
         })
         .when('/a/:academiaName/forum/category/all', {
             templateUrl: 'partials/academia/academiaforumcategoryall.html',

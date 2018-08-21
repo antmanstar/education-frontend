@@ -1,11 +1,67 @@
 'use strict';
 angular.module('netbase')
   //35.229.52.103
+
+    .factory('Playlist', ['$http', function($http) {
+
+      //var baseUrl = "https://network-university-prod.herokuapp.com/university";
+      //var baseUrl = "https://api.universida.de/university";
+      var baseUrl = "http://192.168.1.7:9003/university";
+      /*
+
+      router.get('/id/:id/playlist', university_controller.getAllPlaylistByUniversityId)
+
+      router.get('/playlist/id/:id', university_controller.getPlaylistById)
+
+      */
+
+      return {
+
+        getPlaylistById: function(playlistId) {
+
+          var url = '/playlist/id/' + playlistId;
+
+          return $http.get(baseUrl + url);
+
+        },
+
+        getAllPlaylistByUniversityId: function(universityId) {
+
+          var url = '/id/' + universityId + '/playlist/';
+
+          return $http.get(baseUrl + url);
+
+        },
+
+        create: function(data) {
+
+          var url = '/playlist';
+
+          return $http({
+            method: 'POST',
+            data : data,
+            url: baseUrl + url,
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }});
+
+        }
+
+      }
+
+    }])
+
     .factory('Forum', ['$http', function($http) {
 
-      var baseUrl = "https://network-university-prod.herokuapp.com/university";
+      //var baseUrl = "https://network-university-prod.herokuapp.com/university";
       //var baseUrl = "https://api.universida.de/university";
-      //var baseUrl = "http://192.168.1.7:9003/university";
+      var baseUrl = "http://192.168.1.7:9003/university";
 
       return {
 
@@ -25,9 +81,9 @@ angular.module('netbase')
 
         },
 
-        postAnswerByForumPostId: function(id, universityId, answer) {
+        postAnswerByForumPostId: function(id, answer) {
 
-          var url = '/id/' + universityId + '/forum/post/id/' + id + "/answer";
+          var url = '/forum/post/id/' + id + "/answer";
 
           return $http({
             method: 'POST',
@@ -79,9 +135,9 @@ angular.module('netbase')
 
     .factory('University', ['$http', function($http) {
 
-      var baseUrl = "https://network-university-prod.herokuapp.com/university";
+      //var baseUrl = "https://network-university-prod.herokuapp.com/university";
       //var baseUrl = "https://api.universida.de/university";
-      //var baseUrl = "http://192.168.1.7:9003/university";
+      var baseUrl = "http://192.168.1.7:9003/university";
 
       return {
 
@@ -369,8 +425,8 @@ angular.module('netbase')
     .factory('Students', ['$http', '$localStorage', function($http, $localStorage) {
 
       //var baseUrl = "https://api.universida.de/accounts/students";
-      var baseUrl = "https://network-accounts-prod.herokuapp.com/accounts/students";
-      //var baseUrl = "http://192.168.1.7:9000/accounts/students";
+      //var baseUrl = "https://network-accounts-prod.herokuapp.com/accounts/students";
+      var baseUrl = "http://192.168.1.7:9000/accounts/students";
 
       return {
 
@@ -543,11 +599,57 @@ angular.module('netbase')
 
     .factory('Videos', ['$http', function($http) {
 
-      //var baseUrl = "https://api.universida.de/search";
-
-      var baseUrl = "http://35.229.52.103:9004/search";
+      var baseUrl = "http://192.168.1.7:9003/university";
 
       return {
+
+        progress: function(payload, videoid) {
+
+          var url = '/video/id/' + videoid + "/progress";
+
+          return $http({
+            method: 'PUT',
+            url: baseUrl + url,
+            data : payload,
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }});
+
+        },
+
+        getById: function(id) {
+
+          var url = "/video/id/" + id;
+
+          return $http.get(baseUrl + url);
+
+        },
+
+        create: function(payload) {
+
+          var url = '/video';
+
+          return $http({
+            method: 'POST',
+            url: baseUrl + url,
+            data : payload,
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }});
+
+        },
 
         parse: function(youtubeId, type) {
 

@@ -1,0 +1,45 @@
+<div ng-include="'partials/headerhome.html'"></div>
+
+<div class="container-fluid container-full">
+
+  <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
+  <div class="row academia-coverimage" ng-if="university.backgroundImage == undefined"  style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
+
+  <div class="row">
+
+    <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9 academia-content">
+
+      <div academiastatus university="{{university}}"></div>
+
+      <div class="academia-content-forum">
+
+        <h3>{{playlist.title}}</h3>
+
+        <div ng-show="playlist.videos.length == 0">
+          Nenhuma playlist cadastrada
+        </div>
+
+        <div ng-show="playlist.videos.length > 0">
+
+          <div ng-repeat="video in playlist.videos">
+
+            <videorow videoid="{{video.videoId}}"></videorow>
+
+          </div>
+
+        </div>
+        <!-- forumPosts.length > 0 -->
+
+      </div>
+      <!-- academia-content-forum-->
+
+    </div>
+    <!-- end col-xs-12 -->
+
+    <div academiarightcolumn university="{{university}}"></div>
+
+  </div>
+  <!-- end row -->
+
+</div>
+<!-- container-full -->

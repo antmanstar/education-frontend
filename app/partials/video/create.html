@@ -1,0 +1,145 @@
+<div ng-include="'partials/headerhome.html'"></div>
+
+<script type="text/javascript">
+// Initialize instances:
+var socket = io.connect("http://localhost:9999");
+var siofu = new SocketIOFileUpload(socket);
+
+siofu.listenOnDrop(document.getElementById("file_drop"));
+
+// Do something on upload progress:
+siofu.addEventListener("progress", function(event){
+  var percent = event.bytesLoaded / event.file.size * 100;
+  console.log("File is", percent.toFixed(2), "percent loaded");
+  $("#file_drop").html("Upload: " + percent.toFixed(2) + "%");
+});
+
+// Do something when a file is uploaded:
+siofu.addEventListener("complete", function(event){
+    console.log(event.success);
+    console.log(event.file);
+    console.log(event)
+});
+
+socket.on("videopath", function(a) {
+  $("#file").attr("value", a);
+  console.log(a)
+})
+
+</script>
+
+
+<div class="container-fluid container-full">
+
+  <div class="row">
+
+    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 academia-content">
+
+      <div style="font-size: 2em; padding-bottom: 30px; text-align: right;">Criar video</div>
+
+      <button ng-click="createVideo()" class="btn btn-green">Criar</button>
+
+    </div>
+    <!-- end col-xs-12 col-sm-4 -->
+
+    <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9 academia-content">
+
+      <!--
+      <div class="academia-content-navigation">
+
+        <div class="academia-content-navigation-option">Criar video</div>
+
+      </div>
+      <!-- academia-content-navigation -->
+
+      <input class="academia-content-forum-post-create-title" placeholder="Escreva aqui título do video" ng-model="title"></input>
+
+      <div>
+
+        <input type="hidden" id="file" ng-model="file">
+        <div id="file_drop" dropzone="copy" title="drop files for upload" class="file-drop-area">Arraste o arquivo do vídeo aqui</div>
+        <!-- end file-drop-area -->
+
+      </div>
+
+      <div class="academia-content-forum-answer">
+
+        <div class="academia-content-forum-post-create-premium">
+
+          <b>Descrição do Video</b>
+
+          <div class="form-group">
+            <trix-toolbar id="my_toolbar"></trix-toolbar>
+            <trix-editor angular-trix toolbar="my_toolbar" ng-model="description" trix-change="trixChange(e, editor);" trix-initialize="trixInitialize(e, editor);"></trix-editor>
+          </div>
+
+        </div>
+        <!-- academia-content-forum-post-create-premium -->
+
+        <div class="academia-content-forum-post-create-premium" ng-if="playlists.length > 0">
+
+          <b>Playlist do video</b>
+
+          <div class="form-group">
+            <select ng-model="playlistSelect._id">
+              <option ng-repeat="playlist in playlists" value="{{playlist._id}}" ng-selected="">{{playlist.title}}</option>
+            </select>
+          </div>
+
+        </div>
+
+        <div class="academia-content-forum-post-create-premium">
+
+          <b>A partir de qual membro esta categoria pode ser acessada?</b>
+
+          <div class="form-group">
+            <select ng-model="privilege.value">
+              <option value="0" ng-selected="true">Estudante</option>
+              <option value="10">Premium</option>
+              <option value="50">Equipe</option>
+              <option value="99">Administrador</option>
+            </select>
+          </div>
+
+        </div>
+
+        <div class="academia-content-forum-post-create-premium">
+
+          <b>Este conteúdo é exclusivo para assinantes premium?</b>
+
+          <div class="form-group">
+            <select ng-model="premium.value">
+              <option value="0" ng-selected="true">Não</option>
+              <option value="1">Sim</option>
+            </select>
+          </div>
+
+        </div>
+
+        <div class="academia-content-forum-answer-action" style="margin-top: 15px;">
+          <button class="btn btn-bluebase" ng-click="createForumPost()">Create a post</button>
+        </div>
+        <!-- academia-content-forum-answer -->
+
+      </div>
+      <!-- academia-content-forum-answer -->
+
+    </div>
+    <!-- end col-xs-12 -->
+
+  </div>
+  <!-- end row -->
+
+  <!--
+  <div class="academia-footer">
+
+    <ul style="width: 100vw">
+
+      <li style="width: 100%;"><a href="/a/{{universityUrl}}/forum" ng-class="forumClass">Forum</a></li>
+
+    </ul>
+
+  </div>
+  -->
+
+</div>

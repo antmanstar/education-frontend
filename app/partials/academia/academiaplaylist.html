@@ -1,0 +1,49 @@
+<div ng-include="'partials/headerhome.html'"></div>
+
+<div class="container-fluid container-full">
+
+  <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
+  <div class="row academia-coverimage" ng-if="university.backgroundImage == undefined"  style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
+
+  <div class="row">
+
+    <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9 academia-content">
+
+      <div academiastatus university="{{university}}"></div>
+
+      <div class="academia-content-forum">
+
+        <div class="academia-category" ng-repeat="playlist in playlists">
+
+          <div class="texts">
+            <div class="title"><div class="icon"><i class="fas fa-newspaper"></i><a href="/a/{{university.url}}/playlist/id/{{playlist._id}}"></div>{{playlist.title}}</a></div>
+            <div class="description">{{playlist.description}}</div>
+          </div>
+
+        </div>
+        <!-- end academia-category -->
+
+        <div ng-show="categories.length == 0">
+          Nenhuma playlist cadastrada
+        </div>
+
+        <div ng-show="forumPosts.length > 0">
+
+          <forumpost ng-repeat="post in forumPosts | orderBy:'-votesCount'" p="{{post}}"></forumpost>
+
+        </div>
+        <!-- forumPosts.length > 0 -->
+
+      </div>
+      <!-- academia-content-forum-->
+
+    </div>
+    <!-- end col-xs-12 -->
+
+    <div academiarightcolumn university="{{university}}"></div>
+
+  </div>
+  <!-- end row -->
+
+</div>
+<!-- container-full -->

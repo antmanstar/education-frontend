@@ -18,6 +18,48 @@ angular.module('netbase')
 
 }])
 
+.controller('AcademiaPlaylistsByIdCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Playlist', 'Videos', function($rootScope, $scope, $location, $route, University, Playlist, Videos) {
+
+  let universityUrl = $route.current.params.academiaName;
+  let playlistId = $route.current.params.playlistId;
+
+  University.getUniversity(universityUrl).then(function(res) {
+
+    $scope.university = res.data.data;
+
+    Playlist.getPlaylistById(playlistId).success(function(res) {
+
+      console.log(res);
+
+      $scope.playlist = res.data;
+
+    });
+
+  });
+
+
+}])
+
+.controller('AcademiaPlaylistsCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Playlist', function($rootScope, $scope, $location, $route, University, Playlist) {
+
+  let universityUrl = $route.current.params.academiaName;
+
+  University.getUniversity(universityUrl).then(function(res) {
+
+    $scope.university = res.data.data;
+
+    Playlist.getAllPlaylistByUniversityId($scope.university._id).success(function(res) {
+
+      console.log(res);
+
+      $scope.playlists = res.data;
+
+    });
+
+  });
+
+}])
+
 .controller('AcademiaPlanPurchaseCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', '$filter', 'ngDialog' , function($rootScope, $scope, $location, $route, University, $filter, ngDialog) {
 
   $scope.university = $scope.ngDialogData.university;
@@ -384,7 +426,7 @@ angular.module('netbase')
 
     var data = { text : $scope.answer };
 
-    Forum.postAnswerByForumPostId(postId, university._id, data).then(function(res) {
+    Forum.postAnswerByForumPostId(postId, data).then(function(res) {
 
       let status = res.data.status;
       let data = res.data.data;
@@ -971,6 +1013,29 @@ angular.module('netbase')
 
     }
     // end link
+  }
+}])
+
+.directive('videorow', ['Videos', '$rootScope', function(Videos, $rootScope) {
+  return {
+    restrict: 'E',
+    templateUrl: '../partials/academia/videorow.html',
+    replace: true,
+    scope: true,
+    link: function(scope, element, attr) {
+
+      let videoId = attr.videoid;
+
+      Videos.getById(videoId).success(function(res) {
+
+        console.log(res);
+        scope.video = res.data;
+
+      });
+
+      console.log(videoId)
+
+    }
   }
 }])
 
