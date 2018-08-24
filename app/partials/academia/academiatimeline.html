@@ -13,22 +13,27 @@
 
       <div class="academia-content-forum">
 
-        <div class="academia-category" ng-repeat="playlist in playlists">
+        <div ng-show="forumPosts.length == 0">
+          No forum posts yet.
+        </div>
 
-          <div class="texts">
-            <div class="title"><div class="icon"><i class="fas fa-newspaper"></i><a href="/a/{{university.url}}/playlist/id/{{playlist._id}}"></div>{{playlist.title}}</a></div>
-            <div class="description">{{playlist.description}}</div>
-          </div>
+        <div ng-show="forumPosts.length > 0">
+
+          <timelinepost p="{{post}}" u="{{university}}" ng-repeat="post in forumPosts"></timelinepost>
 
         </div>
-        <!-- end academia-category -->
-
-        <div ng-show="playlists.length == 0">
-          Nenhuma playlist cadastrada
-        </div>
+        <!-- forumPosts.length > 0 -->
 
       </div>
       <!-- academia-content-forum-->
+
+      <div>
+        <ul class="pagination" ng-if="pages > 1">
+          <li class="page-item" ng-if="page != 1"><a class="page-link" href="/a/{{university.url}}/forum?page={{page - 1}}">Voltar</a></li>
+          <li class="page-item" ng-repeat="p in range(1, pages)"><a class="page-link" ng-style="p == page && {'font-weight':'bold'}" href="/a/{{university.url}}/forum?page={{p}}">{{p}}</a></li>
+          <li class="page-item"><a class="page-link" href="/a/{{university.url}}/forum?page={{page + 1}}">Próximo</a></li>
+        </ul>
+      </div>
 
     </div>
     <!-- end col-xs-12 -->

@@ -17,6 +17,69 @@
   text-align: center;
 }
 
+/* timeline */
+
+.timeline-post {
+  padding-bottom: 35px;
+}
+
+.timeline-post .top .user-image {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.timeline-post .top .user-image img {
+  height: 60px;
+  width: 60px;
+  border-radius: 50%;
+}
+
+.timeline-post .top .texts {
+  display: inline-block;
+  padding-left: 15px;
+  padding-right: 15px;
+  height: 60px;
+}
+
+.timeline-post .top .texts .name {
+  font-size: 1.5em;
+  font-weight: 500;
+}
+
+.timeline-post .top .texts .date {
+  font-weight: bold;
+  color: #6f6f6f;
+}
+
+.timeline-post .content .text iframe {
+  width: 100%;
+  height: 300px;
+  max-width: 650px;
+}
+
+.timeline-post .content {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.timeline-post .content .title {
+  font-size: 1.6em;
+  font-weight: bold;
+}
+
+.timeline-post .content .text {
+  font-size: 1.2em;
+  line-height: 1.7em;
+}
+
+.timeline-post .more {
+  text-align: center;
+  height: 1.5em;
+  font-weight: bold;
+  line-height: 1.5em;
+  font-size: 1.2em;
+}
+
 /* */
 
 .academia {

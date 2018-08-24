@@ -1,0 +1,19 @@
+<div class="timeline-post" ng-repeat="post in forumPosts">
+
+  <div class="top">
+    <div class="user-image"><img src="{{student.imageUrl}}" /></div>
+    <div class="texts">
+      <div class="name">{{student.name}}</div>
+      <div class="date">{{post.createdAt  | amFromUnix | amDateFormat:'dddd, MMMM Do YYYY, h:mm:ss a' }}</div>
+    </div>
+  </div>
+  <!-- end top -->
+
+  <div class="content">
+    <div class="title">{{post.title}}</div>
+    <div class="text" ng-bind-html="textFilter(post.text) "></div>
+  </div>
+
+  <div class="more"><a href="/a/{{university.url}}/forum/post/id/{{post._id}}">CONTINUAR LENDO</a></div>
+
+</div>

@@ -65,6 +65,14 @@ angular.module('netbase')
 
       return {
 
+        getAllOwnerForumPost: function(universityUrl) {
+
+          var url = '/url/' + universityUrl + '/forum/owner';
+
+          return $http.get(baseUrl + url);
+
+        },
+
         getForumPostById: function(id, universityId) {
 
           var url = '/id/' + universityId + '/forum/post/id/' + id;

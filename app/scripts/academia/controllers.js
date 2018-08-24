@@ -14,7 +14,36 @@ angular.module('netbase')
 
   });
 
-  $location.path("/a/" + universityUrl + "/forum");
+  $location.path("/a/" + universityUrl + "/timeline");
+
+}])
+
+.controller('AcademiaTimelineCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Forum', '$sce', '$filter' , function($rootScope, $scope, $location, $route, University, Forum, $sce, $filter) {
+
+  let universityUrl = $route.current.params.academiaName;
+
+  University.getUniversity(universityUrl).then(function(res) {
+
+    $scope.university = res.data.data;
+
+  });
+
+  Forum.getAllOwnerForumPost(universityUrl).then(function(res) {
+
+    console.log(res.data.data.docs)
+    $scope.forumPosts = res.data.data.docs;
+
+  });
+
+  $scope.textFilter = function(text) {
+
+    if (text.indexOf("iframe") != -1) {
+      return $sce.trustAsHtml(text)
+    } else {
+      return $filter('limitHtml')(text, 350, '...')
+    }
+
+  }
 
 }])
 
@@ -262,6 +291,7 @@ angular.module('netbase')
   $scope.universityUrl = universityUrl
   $scope.controllerActive = controllerActive;
   $scope.forumClass = "";
+  $scope.timelineClass = "";
   $scope.smpClass = "";
   $scope.jobsClass = "";
   $scope.actionPostButton = false;
@@ -272,6 +302,10 @@ angular.module('netbase')
     $scope.forumClass = "active";
     $scope.actionPostButton = true;
     $scope.buttonActionUrl = "/a/" + universityUrl + "/forum/create";
+  } else if (controllerActive == "AcademiaTimelineCtrl") {
+    $scope.timelineClass = "active";
+    $scope.actionPostButton = true;
+    $scope.buttonActionUrl = "/a/" + universityUrl + "/forum";
   } else if (controllerActive == "AcademiaSmpCtrl") {
     $scope.actionPostButton = true;
     $scope.smpClass = "active";
@@ -803,6 +837,7 @@ angular.module('netbase')
       scope.forumClass = "";
       scope.smpClass = "";
       scope.jobsClass = "";
+      scope.timelineClass = "";
       scope.actionPostButton = false;
 
       scope.buttonActionUrl = "";
@@ -810,6 +845,8 @@ angular.module('netbase')
       if (controllerActive == "AcademiaForumCtrl" || controllerActive == "AcademiaForumPostCreateCtrl" || controllerActive == "AcademiaForumPostCtrl") {
         scope.forumClass = "active";
         scope.actionPostButton = true;
+      } else if (controllerActive == "AcademiaTimelineCtrl") {
+        scope.timelineClass = "active";
       } else if (controllerActive == "AcademiaForumCategoryByIdCtrl" || controllerActive == "AcademiaForumCategoryAllCtrl") {
         scope.categoryClass = "active";
       } else if (controllerActive == "AcademiaSmpCtrl") {
@@ -1096,5 +1133,114 @@ angular.module('netbase')
     }
   }
 }])
+
+.directive('timelinepost', ['University', '$rootScope', 'Students', function(University, $rootScope, Students) {
+  return {
+    restrict: 'E',
+    templateUrl: '../partials/academia/timelinepost.html',
+    replace: true,
+    scope: true,
+    link: function(scope, element, attr) {
+
+      let post = JSON.parse(attr.p);
+      let university = JSON.parse(attr.u)
+
+      scope.post = post;
+      console.log(post)
+
+      scope.university = university;
+
+      Students.getStudentById(post.accountId).then(function(res) {
+
+        console.log("student: ")
+        console.log(res)
+        scope.student = res.data.data;
+        console.log(scope.student)
+
+      })
+
+    }
+  }
+}])
+
+.filter('limitHtml', function() {
+        return function(text, limit, ellipsis) {
+            var _getClosedTagsString = function(_tagArray) {
+                var _returnArray = [],
+                _getTagType = function(_string) {
+                    return _string.replace(/<[\/]?([^>]*)>/,"$1");
+                };
+
+                angular.forEach(_tagArray,function(_tag,_i) {
+                    if(/<\//.test(_tag)) {
+                        if(_i === 0) {
+                            _returnArray.push(_tag);
+                        } else if(_getTagType(_tag) !== _getTagType(_tagArray[_i - 1])) {
+                            _returnArray.push(_tag);
+                        }
+                    }
+                });
+                return _returnArray.join('');
+            },
+            _countNonHtmlCharToLimit = function(_text,_limit) {
+                var _isMarkup = false,
+                _isSpecialChar = false,
+                _break = false,
+                _underLimit = false,
+                _totalText = 0,
+                _totalChar = 0,
+                _element,
+                _return = {
+                    textCounter   : 0,
+                    offsetCounter : 0,
+                    setEllipsis   : false,
+                    overElementArray : []
+                };
+                angular.forEach(_text,function(_c) {
+                    _underLimit = _return.textCounter < _limit;
+                    if(_c === '<' && !_isMarkup && !_isSpecialChar) {
+                        (!_underLimit) && (_element = '<');
+                        _isMarkup = true;
+                    } else if(_c === '&' && !_isMarkup && !_isSpecialChar) {
+                        _isSpecialChar = true;
+                    } else if(_isMarkup) {
+                        //tracking html elements that are beyond the text limit
+                        (!_underLimit) && (_element = _element + _c);
+                        if(_c === '>') {
+                            //push element in array if it is complete, and we are
+                            //beyond text limit, to close any html that is unclosed
+                            (!_underLimit) && (_return.overElementArray.push(_element));
+                            _break = true;
+                            _isMarkup = false;
+                        }
+                    } else if(_c === ';' && _isSpecialChar) {
+                        _isSpecialChar = false;
+                        //count as one character
+                        _return.textCounter++;
+                        _break = true;
+                    }
+
+                    if(_underLimit) {
+                        if(!_isMarkup && !_isSpecialChar && !_break) {
+                            //counting number of characters in non html string
+                            _return.textCounter++;
+                        }
+                        _return.offsetCounter++;
+                    } else {
+                        _return.setEllipsis = true
+                    }
+                    _break = false;
+
+                });
+
+                //returns offset within html of number of non html characters found
+                return _return;
+            },
+            _charToLimitOutput = _countNonHtmlCharToLimit(text.toString(),limit);
+
+            return text.toString().substr(0, _charToLimitOutput.offsetCounter) +
+                ellipsis + _getClosedTagsString(_charToLimitOutput.overElementArray);
+        }
+    })
 
 .filter('unsafe', function($sce) { return $sce.trustAsHtml; });
