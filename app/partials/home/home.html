@@ -6,13 +6,13 @@
 
   <div class="section-cards">
 
-    <a style="color: #2c4255;" ng-repeat="university in universities" href="/a/{{university.url}}/forum" target="_blank">
+    <a style="color: #2c4255;" ng-repeat="university in universities | orderBy:'-highlight'" href="/a/{{university.url}}/forum" target="_blank">
       <div class="card">
 
         <div class="picture" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
         <div class="picture" ng-if="university.backgroundImage == undefined"  style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
 
-        <div class="title">{{university.name}}</div>
+        <div class="title">{{university.createdAt}}{{university.name}}</div>
         <div class="description" data-ellipsis data-ng-bind="university.about"></div>
 
       </div>

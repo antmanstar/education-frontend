@@ -2,8 +2,13 @@
 
 <script type="text/javascript">
 // Initialize instances:
-var socket = io.connect("http://localhost:9999");
+var socket = io.connect("http://35.196.23.69:8080");
 var siofu = new SocketIOFileUpload(socket);
+
+let filesCount = 0;
+
+let progressCloud = 0;
+var progressPercent = 0;
 
 siofu.listenOnDrop(document.getElementById("file_drop"));
 
@@ -11,7 +16,42 @@ siofu.listenOnDrop(document.getElementById("file_drop"));
 siofu.addEventListener("progress", function(event){
   var percent = event.bytesLoaded / event.file.size * 100;
   console.log("File is", percent.toFixed(2), "percent loaded");
+
   $("#file_drop").html("Upload: " + percent.toFixed(2) + "%");
+
+  if (percent.toFixed(2) == 100) {
+    $("#file_drop").html("<b>Iniciando o processamento do vídeo</b>");
+  }
+
+});
+
+socket.on("progressCloud", function(a){
+  console.log("cloud progress: ")
+  console.log(a)
+  progressCloud = progressCloud + 1;
+  progressPercent = (progressCloud / filesCount) * 100;
+
+  console.log("process cloud is: " + progressCloud)
+  console.log("process percent is: " + progressPercent)
+
+  $("#file_drop").html("Processando o vídeo: " + progressPercent.toFixed(2) + "%");
+});
+
+socket.on("status", function(a){
+  console.log("status: ")
+  console.log(a)
+  if (a == 1) {
+
+  }
+  if (a == 2) {
+    $("#file_drop").html("<b>Upload completo!</b>");
+  }
+});
+
+socket.on("files", function(a){
+  console.log("files: ")
+  console.log(a)
+  filesCount = a;
 });
 
 // Do something when a file is uploaded:
@@ -52,15 +92,20 @@ socket.on("videopath", function(a) {
       </div>
       <!-- academia-content-navigation -->
 
+      <div class="alert bg-primary-red" ng-show="errorDisplay">
+        <p ng-repeat="m in errorMessages">{{m}}<p>
+      </div>
+
       <input class="academia-content-forum-post-create-title" placeholder="Escreva aqui título do video" ng-model="title"></input>
 
       <div>
 
         <input type="hidden" id="file" ng-model="file">
-        <div id="file_drop" dropzone="copy" title="drop files for upload" class="file-drop-area">Arraste o arquivo do vídeo aqui</div>
+        <div id="file_drop" dropzone="copy" title="drop files for upload" class="file-drop-area"><b>Para iniciar o upload,</b> arraste o arquivo do vídeo aqui</div>
         <!-- end file-drop-area -->
 
       </div>
+      <!-- end file -->
 
       <div class="academia-content-forum-answer">
 
@@ -115,11 +160,7 @@ socket.on("videopath", function(a) {
           </div>
 
         </div>
-
-        <div class="academia-content-forum-answer-action" style="margin-top: 15px;">
-          <button class="btn btn-bluebase" ng-click="createForumPost()">Create a post</button>
-        </div>
-        <!-- academia-content-forum-answer -->
+        <!-- end academia-content-forum-post-create-premium -->
 
       </div>
       <!-- academia-content-forum-answer -->

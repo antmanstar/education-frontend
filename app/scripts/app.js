@@ -12,13 +12,17 @@ angular.module('netbase', ['ngStorage',
     'angularjs-stripe-elements',
     'chart.js',
     'dibari.angular-ellipsis',
-    'ngSanitize'
+    'ngSanitize',
+    'ngMeta'
 ])
-.config(['$translateProvider', '$localStorageProvider', 'StripeElementsProvider', function ($translateProvider, $localStorageProvider, StripeElementsProvider) {
+.config(['$translateProvider', '$localStorageProvider', 'StripeElementsProvider', 'ngMetaProvider', function ($translateProvider, $localStorageProvider, StripeElementsProvider, ngMetaProvider) {
 
   let stripeKey = "pk_test_2XclbP1INDqkspKrbRn6oBZR";
 
   StripeElementsProvider.setAPIKey(stripeKey);
+
+  ngMetaProvider.setDefaultTitle('Universidade');
+  ngMetaProvider.setDefaultTitleSuffix(' | Universidade');
 
   $translateProvider.translations('en', {
     HOME_TITLE: 'YOUR CAMPUS ONLINE',
@@ -46,7 +50,7 @@ angular.module('netbase', ['ngStorage',
 
 }])
 
-.run(function($rootScope, $location, $localStorage, $http, $route, $translate) {
+.run(function($rootScope, $location, $localStorage, $http, $route, $translate, ngMeta) {
 
   // Sees Index page just one time
   if ($localStorage.indexVisited == undefined) {
@@ -63,6 +67,8 @@ angular.module('netbase', ['ngStorage',
 
     $location.path('/home');
     $route.reload();
+
+    ngMeta.init();
 
   };
 

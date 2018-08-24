@@ -6,7 +6,7 @@ angular.module('netbase')
 
       var baseUrl = "https://network-university-prod.herokuapp.com/university";
       //var baseUrl = "https://api.universida.de/university";
-      //var baseUrl = "http://192.168.1.7:9003/university";
+      //var baseUrl = "http://localhost:9003/university";
       /*
 
       router.get('/id/:id/playlist', university_controller.getAllPlaylistByUniversityId)
@@ -61,7 +61,7 @@ angular.module('netbase')
 
       var baseUrl = "https://network-university-prod.herokuapp.com/university";
       //var baseUrl = "https://api.universida.de/university";
-      //var baseUrl = "http://192.168.1.7:9003/university";
+      //var baseUrl = "http://localhost:9003/university";
 
       return {
 
@@ -137,7 +137,7 @@ angular.module('netbase')
 
       var baseUrl = "https://network-university-prod.herokuapp.com/university";
       //var baseUrl = "https://api.universida.de/university";
-      //var baseUrl = "http://192.168.1.7:9003/university";
+      //var baseUrl = "http://localhost:9003/university";
 
       return {
 
@@ -426,7 +426,7 @@ angular.module('netbase')
 
       //var baseUrl = "https://api.universida.de/accounts/students";
       var baseUrl = "https://network-accounts-prod.herokuapp.com/accounts/students";
-      //var baseUrl = "http://192.168.1.7:9000/accounts/students";
+      //var baseUrl = "http://localhost:9000/accounts/students";
 
       return {
 
@@ -600,7 +600,7 @@ angular.module('netbase')
     .factory('Videos', ['$http', function($http) {
 
       var baseUrl = "https://network-university-prod.herokuapp.com/university";
-      //var baseUrl = "http://192.168.1.7:9003/university";
+      //var baseUrl = "http://localhost:9003/university";
 
       return {
 
@@ -811,7 +811,7 @@ angular.module('netbase')
       //var baseUrl = "https://api.universida.de/search";
 
       var baseUrl = "https://network-payments-prod.herokuapp.com";
-      //var baseUrl = "http://192.168.1.7:9004";
+      //var baseUrl = "http://localhost:9004";
 
       return {
 
@@ -844,7 +844,7 @@ angular.module('netbase')
       //var baseUrl = "https://api.universida.de/search";
 
       var baseUrl = "https://network-payments-prod.herokuapp.com";
-      //var baseUrl = "http://192.168.1.7:9004";
+      //var baseUrl = "http://localhost:9004";
 
       return {
 

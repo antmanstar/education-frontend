@@ -141,17 +141,23 @@ angular.module('netbase')
 
   $scope.privilege = { value : 0 };
   $scope.premium = { value : 0 };
+  $scope.errorDisplay = false;
+  $scope.errorMessages = [];
 
   /* */
 
   $scope.createVideo = function() {
+
+    let file = $("#file").attr("value");
+
+    let upload = true;
 
     let payload = {
 
       playlistId : $scope.playlistSelect._id,
       title : $scope.title,
       description : $scope.description,
-      file : $("#file").attr("value"),
+      file : file,
       permissionMin : $scope.privilege.value,
       universityId : universityId._id,
       premium : $scope.premium.value
@@ -160,12 +166,47 @@ angular.module('netbase')
     console.log("send")
     console.log(payload)
 
+    if (payload.file == undefined) {
+      $scope.errorMessages.push("O upload do vídeo precisa estar completo.");
+      upload = false;
+    }
+
+    if (payload.title == undefined || payload.title.length == 0) {
+      $scope.errorMessages.push("Escreva um título para o vídeo.");
+      upload = false;
+    }
+
+    if (payload.description == undefined || payload.title.description == 0) {
+      $scope.errorMessages.push("Escreva uma descricao para o vídeo.");
+      upload = false;
+    }
+
+    if (payload.universityId == undefined || payload.title.universityId == 0) {
+      $scope.errorMessages.push("O video deve ser criado dentro da página de uma universidade.");
+      upload = false;
+    }
+
+    console.log(payload);
+
+    if (upload) {
+      Videos.create(payload).success(function(res) {
+
+        console.log(res);
+        $location.path("/v/id/" + res.data._id)
+
+      });
+    } else {
+      $scope.errorDisplay = true;
+    }
+
+    /*
     Videos.create(payload).success(function(res) {
 
       console.log(res);
       $location.path("/v/id/" + res.data._id)
 
     });
+    */
 
   }
 
@@ -197,6 +238,29 @@ angular.module('netbase')
     Playlist.create(payload).success(function(res) {
 
       console.log(res);
+      let success = res.success;
+      let data = res.data;
+
+      if (res.success) {
+
+        console.log("university id: ")
+        console.log(payload.universityId)
+
+        University.getUniversityById(payload.universityId).success(function(res) {
+
+          console.log(res)
+
+          let university = res.data;
+
+          let playlistUrl = "/a/" + university.url + "/playlist/id/" + data._id;
+
+          $location.path(playlistUrl);
+
+        });
+
+      } else {
+
+      }
 
     });
 
