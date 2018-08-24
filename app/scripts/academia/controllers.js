@@ -883,7 +883,7 @@ angular.module('netbase')
   }
 }])
 
-.directive('academiarightcolumn', ['University', '$localStorage', '$route', 'jwtHelper', 'ngDialog', 'ngMeta', function(University, $localStorage, $route, jwtHelper, ngDialog, ngMeta) {
+.directive('academiarightcolumn', ['University', '$localStorage', '$route', 'jwtHelper', 'ngDialog', function(University, $localStorage, $route, jwtHelper, ngDialog) {
   return {
     restrict: 'EA',
     templateUrl: '../partials/academia/rightcolumn.html',
@@ -908,10 +908,6 @@ angular.module('netbase')
         if (value) {
 
           university = JSON.parse(value);
-
-          /* meta tags */
-          ngMeta.setTitle(university.name);
-          ngMeta.setTag('image', university.backgroundImage);
 
           /* check if student is a premium member */
           for (let idx = 0; idx < university.members.length; idx++) {
