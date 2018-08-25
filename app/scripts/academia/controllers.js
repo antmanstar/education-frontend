@@ -30,19 +30,13 @@ angular.module('netbase')
 
 }])
 
-.controller('AcademiaTimelineCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Forum', '$sce', '$filter', 'ngMeta' , function($rootScope, $scope, $location, $route, University, Forum, $sce, $filter, ngMeta) {
+.controller('AcademiaTimelineCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Forum', '$sce', '$filter' , function($rootScope, $scope, $location, $route, University, Forum, $sce, $filter) {
 
   let universityUrl = $route.current.params.academiaName;
-
-  console.log("aeee")
-  ngMeta.setTitle("aeee");
 
   University.getUniversity(universityUrl).then(function(res) {
 
     $scope.university = res.data.data;
-
-    // Meta
-    ngMeta.setTitle($scope.university.name);
 
   });
 

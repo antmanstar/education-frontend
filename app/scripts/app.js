@@ -12,8 +12,7 @@ angular.module('netbase', ['ngStorage',
     'angularjs-stripe-elements',
     'chart.js',
     'dibari.angular-ellipsis',
-    'ngSanitize',
-    'ngMeta'
+    'ngSanitize'
 ])
 .config(['$translateProvider', '$localStorageProvider', 'StripeElementsProvider', function ($translateProvider, $localStorageProvider, StripeElementsProvider) {
 
@@ -47,7 +46,7 @@ angular.module('netbase', ['ngStorage',
 
 }])
 
-.config(['$routeProvider', '$httpProvider', '$locationProvider', 'ngMetaProvider', function ($routeProvider, $httpProvider, $locationProvider, ngMetaProvider) {
+.config(['$routeProvider', '$httpProvider', '$locationProvider', function ($routeProvider, $httpProvider, $locationProvider) {
 
     let auth = {
 
@@ -69,10 +68,6 @@ angular.module('netbase', ['ngStorage',
 
    };
 //AcademiaCursosCtrl
-   /* ngMetaProvider */
-   ngMetaProvider.useTitleSuffix(true);
-   ngMetaProvider.setDefaultTitle('Universidade');
-   ngMetaProvider.setDefaultTitleSuffix(' | Universidade');
 
     $routeProvider.
         when('/p/create', {
@@ -351,7 +346,5 @@ angular.module('netbase', ['ngStorage',
     $route.reload();
 
   };
-
-  ngMeta.init();
 
 });
