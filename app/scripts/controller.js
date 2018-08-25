@@ -60,6 +60,7 @@ angular.module('netbase')
 
           $rootScope.$applyAsync();
           ngDialog.close();
+          $route.reload();
 
         } else {
 

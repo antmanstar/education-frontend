@@ -125,7 +125,7 @@
 
 .academia-coverimage {
 
-  height: 200px;
+  height: 240px;
 
   content: '';
 
@@ -199,7 +199,7 @@
 
 /* forum category */
 .academia-category {
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
 .academia-category > .texts > .title > .icon {
@@ -793,7 +793,7 @@
 
   .academia-coverimage {
 
-    height: 100px;
+    height: 170px;
 
   }
 

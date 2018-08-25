@@ -6,7 +6,7 @@ angular.module('netbase')
 
 .filter('unsafe', function($sce) { return $sce.trustAsHtml; })
 
-.controller('VideoWatchCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Videos', '$sce', '$localStorage', 'User', 'Forum' , function($rootScope, $scope, $location, $route, University, Videos, $sce, $localStorage, User, Forum) {
+.controller('VideoWatchCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Videos', '$sce', '$localStorage', 'User', 'Forum', 'Students' , function($rootScope, $scope, $location, $route, University, Videos, $sce, $localStorage, User, Forum, Students) {
 
   let videoId = $route.current.params.videoId;
 
@@ -33,7 +33,7 @@ angular.module('netbase')
       if(Hls.isSupported()) {
         var hls = new Hls();
         hls.loadSource($scope.video.file);
-        hls.attachMedia(video);
+        hls.attachMedia(player);
       }
 
       $scope.video.file = $sce.trustAsResourceUrl($scope.video.file);
@@ -41,6 +41,16 @@ angular.module('netbase')
       /* video progress */
 
       //ng-src="{{video.file}}"
+
+      /* Load channel owner */
+      Students.getStudentById($scope.video.accountId).success(function(res) {
+
+        console.log("student: ")
+        console.log(res);
+        $scope.student = res.data;
+
+      });
+      /* */
 
       viewers = $scope.video.viewers;
 

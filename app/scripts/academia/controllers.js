@@ -4,6 +4,18 @@
 
 angular.module('netbase')
 
+.controller('AcademiaCoursesCtrl', ['$rootScope', '$scope', '$location', '$route', 'University' , function($rootScope, $scope, $location, $route, University) {
+
+  let universityUrl = $route.current.params.academiaName;
+
+  University.getUniversity(universityUrl).then(function(res) {
+
+    $scope.university = res.data.data;
+
+  });
+
+}])
+
 .controller('AcademiaCtrl', ['$rootScope', '$scope', '$location', '$route', 'University' , function($rootScope, $scope, $location, $route, University) {
 
   let universityUrl = $route.current.params.academiaName;
@@ -18,13 +30,19 @@ angular.module('netbase')
 
 }])
 
-.controller('AcademiaTimelineCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Forum', '$sce', '$filter' , function($rootScope, $scope, $location, $route, University, Forum, $sce, $filter) {
+.controller('AcademiaTimelineCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Forum', '$sce', '$filter', 'ngMeta' , function($rootScope, $scope, $location, $route, University, Forum, $sce, $filter, ngMeta) {
 
   let universityUrl = $route.current.params.academiaName;
+
+  console.log("aeee")
+  ngMeta.setTitle("aeee");
 
   University.getUniversity(universityUrl).then(function(res) {
 
     $scope.university = res.data.data;
+
+    // Meta
+    ngMeta.setTitle($scope.university.name);
 
   });
 
@@ -89,7 +107,7 @@ angular.module('netbase')
 
 }])
 
-.controller('AcademiaPlanPurchaseCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', '$filter', 'ngDialog' , function($rootScope, $scope, $location, $route, University, $filter, ngDialog) {
+.controller('AcademiaPlanPurchaseCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', '$filter', 'ngDialog', '$localStorage' , function($rootScope, $scope, $location, $route, University, $filter, ngDialog, $localStorage) {
 
   $scope.university = $scope.ngDialogData.university;
 
@@ -98,7 +116,16 @@ angular.module('netbase')
   }
 
   $scope.subscribe = function(plan) {
-    ngDialog.open({ template: 'partials/modals/payments.html', controller: 'PaymentsCtrl', className: 'ngdialog-theme-default', data : { flow : "order", page : "order", plan : plan, university : $scope.university } });
+
+    console.log("subscribe button press: ")
+    console.log($localStorage.token)
+
+    if ($localStorage.token != undefined || $localStorage.token != null) {
+      ngDialog.open({ template: 'partials/modals/payments.html', controller: 'PaymentsCtrl', className: 'ngdialog-theme-default', data : { flow : "order", page : "order", plan : plan, university : $scope.university } });
+    } else {
+      ngDialog.open({ template: 'partials/modals/login.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
+    }
+
   }
 
 
@@ -460,21 +487,26 @@ angular.module('netbase')
 
     var data = { text : $scope.answer };
 
-    Forum.postAnswerByForumPostId(postId, data).then(function(res) {
+    if ($localStorage.token != undefined || $localStorage.token != null) {
+      Forum.postAnswerByForumPostId(postId, data).then(function(res) {
 
-      let status = res.data.status;
-      let data = res.data.data;
-      let success = res.data.success;
+        let status = res.data.status;
+        let data = res.data.data;
+        let success = res.data.success;
 
-      if (success) {
+        if (success) {
 
-        data.votesCount = 0;
-        data.createdAt = Math.round((new Date()).getTime() / 1000);
-        $scope.forumPost.answers.push(data);
+          data.votesCount = 0;
+          data.createdAt = Math.round((new Date()).getTime() / 1000);
+          $scope.forumPost.answers.push(data);
 
-      }
+        }
 
-    });
+      });
+    } else {
+      ngDialog.open({ template: 'partials/modals/login.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
+    }
+
 
   };
 
@@ -838,6 +870,8 @@ angular.module('netbase')
       scope.smpClass = "";
       scope.jobsClass = "";
       scope.timelineClass = "";
+      scope.playlistClass = "";
+      scope.cursosClass = "";
       scope.actionPostButton = false;
 
       scope.buttonActionUrl = "";
@@ -847,6 +881,10 @@ angular.module('netbase')
         scope.actionPostButton = true;
       } else if (controllerActive == "AcademiaTimelineCtrl") {
         scope.timelineClass = "active";
+      } else if (controllerActive == "AcademiaCoursesCtrl") {
+        scope.cursosClass = "active";
+      } else if (controllerActive == "AcademiaPlaylistsByIdCtrl" || controllerActive == "AcademiaPlaylistsCtrl") {
+        scope.playlistClass = "active";
       } else if (controllerActive == "AcademiaForumCategoryByIdCtrl" || controllerActive == "AcademiaForumCategoryAllCtrl") {
         scope.categoryClass = "active";
       } else if (controllerActive == "AcademiaSmpCtrl") {
@@ -863,6 +901,8 @@ angular.module('netbase')
         if (value) {
 
           university = JSON.parse(value);
+
+          // ngMeta.setTitle(university.name);
 
           function userMembersLocation(array) {
 
@@ -990,15 +1030,10 @@ angular.module('netbase')
 
       scope.premium = function () {
 
-        //check if logged before
-        if ($localStorage.token != undefined && $localStorage.token != null) {
+        console.log("press premium")
+        console.log($localStorage.token)
 
-          //ngDialog.open({ template: 'partials/modals/payments.html', controller: 'PaymentsCtrl', className: 'ngdialog-theme-default', data : { flow : "order", page : "order" } });
-          ngDialog.open({ template: 'partials/modals/planbuy.html', controller: 'AcademiaPlanPurchaseCtrl', className: 'ngdialog-theme-default ngdialog-plans', data : { university : university } });
-
-        } else {
-          ngDialog.open({ template: 'partials/modals/login.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
-        }
+        ngDialog.open({ template: 'partials/modals/planbuy.html', controller: 'AcademiaPlanPurchaseCtrl', className: 'ngdialog-theme-default ngdialog-plans', data : { university : university } });
 
       }
 
@@ -1053,24 +1088,46 @@ angular.module('netbase')
   }
 }])
 
-.directive('videorow', ['Videos', '$rootScope', function(Videos, $rootScope) {
+.directive('videorow', ['Videos', '$rootScope', '$sce', function(Videos, $rootScope, $sce) {
   return {
     restrict: 'E',
     templateUrl: '../partials/academia/videorow.html',
-    replace: true,
+    replace: false,
     scope: true,
     link: function(scope, element, attr) {
 
       let videoId = attr.videoid;
 
+      let logged = $rootScope.logged;
+
       Videos.getById(videoId).success(function(res) {
 
         console.log(res);
-        scope.video = res.data;
+
+        let status = res.status;
+
+        if (status == 90010) {
+
+          $location.path('/home');
+
+        } else {
+
+          scope.video = res.data;
+
+          let player = angular.element(element.find("video")[0]).get(0);
+
+          if(Hls.isSupported()) {
+            var hls = new Hls();
+            hls.loadSource(scope.video.file);
+            hls.attachMedia(player);
+          }
+
+          scope.video.file = $sce.trustAsResourceUrl(scope.video.file);
+
+        }
 
       });
-
-      console.log(videoId)
+      //END Videos.getById
 
     }
   }

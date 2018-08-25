@@ -11,23 +11,9 @@
 
       <div academiastatus university="{{university}}"></div>
 
-      <div class="academia-content-forum">
-
-        <div class="academia-category" ng-repeat="playlist in playlists">
-
-          <div class="texts">
-            <div class="title"><div class="icon" style="padding-right: 30px;"><i class="fa fa-video-camera"></i><a href="/a/{{university.url}}/playlist/id/{{playlist._id}}"></div>{{playlist.title}}</a></div>
-          </div>
-
-        </div>
-        <!-- end academia-category -->
-
-        <div ng-show="playlists.length == 0">
-          Nenhuma playlist cadastrada
-        </div>
-
+      <div style="margin-top: 30px;">
+        Nenhum curso cadastrado
       </div>
-      <!-- academia-content-forum-->
 
     </div>
     <!-- end col-xs-12 -->

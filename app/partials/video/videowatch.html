@@ -10,36 +10,40 @@
 
   <div class="row">
 
-    <div class="col-xs-12 col-sm-7">
+    <div class="col-xs-12 col-sm-12">
 
       <div class="video-title">{{video.title}}</div>
 
       <div class="video-author">
-        <div class="pic"><img src="https://i.vimeocdn.com/portrait/17109884_150x150.webp" /></div>
-        <div class="name">Samba Team</div>
+        <div class="pic"><img src="{{student.imageUrl}}" /></div>
+        <div class="name">{{student.name}}</div>
       </div>
 
       <div class="video-description">
-        <div class="title">Description</div>
+        <div class="title">Descrição</div>
         <div class="text" ng-bind-html="video.description"></div>
       </div>
       <!-- -->
 
+      <!--
       <div class="video-forum">
 
         <div class="title">Forum</div>
 
+        {{forumPost}}
+        {{forumPost.answers.length}}
+        <p ng-show="forumPost.answers.length == 0">Nenhum comentario postado</p>
+
         <forumpostanswer p="{{forumPost._id}}" u="{{forumPost.universityId}}" ng-show="forumPost.answers.length > 0" a="{{answer}}" ng-repeat="answer in forumPost.answers | orderBy:'-votesCount'"></forumpostanswer>
 
       </div>
-      <!-- end forum post -->
 
       <div class="academia-content-forum-answer">
 
         <div class="academia-content-forum-answer-title">
-          Your Answer
+          Comentários
         </div>
-        <!-- academia-content-forum-answer-title -->
+
 
         <div class="academia-content-forum-answer-box">
 
@@ -54,19 +58,19 @@
           <trix-editor angular-trix ng-model="answer"></trix-editor>
 
         </div>
-        <!-- academia-content-forum-answer-box -->
 
         <div class="academia-content-forum-answer-action">
-          <button class="btn btn-blue" ng-click="createAnswerPost()">Post your answer</button>
+          <button class="btn btn-blue" ng-click="createAnswerPost()">Postar</button>
         </div>
-        <!-- academia-content-forum-answer -->
 
       </div>
-      <!-- academia-content-forum-answer -->
+
+    -->
 
     </div>
     <!-- end col-xs-12 col-sm-8 -->
 
+    <!--
     <div class="col-xs-12 col-sm-5 video-rightbar">
 
       <div class="video-admin video-rightbar-area">
@@ -79,12 +83,9 @@
           <button class="btn btn-bluebase">Status</button>
 
         </div>
-        <!-- end buttons -->
 
       </div>
-      <!-- end video-rightbar -->
 
-      <!--
       <div class="video-authorscontent video-rightbar-area">
 
         <div class="title">+ VIDEOS</div>
@@ -98,10 +99,9 @@
         </div>
 
       </div>
-      -->
-      <!-- end video-authorscontent -->
 
     </div>
+    -->
     <!-- col-xs-12 col-sm-4 -->
 
   </div>

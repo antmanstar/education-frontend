@@ -1,3 +1,30 @@
+/* video row */
+.video-row-player-area {
+
+}
+
+.video-row {
+  padding-bottom: 30px;
+}
+
+.video-row-title {
+  font-size: 1.6em;
+  font-weight: bold;
+  padding-bottom: 15px;
+}
+
+@media only screen and (max-width: 960px) {
+
+  .player-area-playlist {
+    padding-top: 0px !important;
+  }
+
+}
+
+.video-row-title a {
+  color: #000;
+}
+
 .player-area {
   background-color: #000;
   width: 100%;

@@ -12,7 +12,8 @@ angular.module('netbase', ['ngStorage',
     'angularjs-stripe-elements',
     'chart.js',
     'dibari.angular-ellipsis',
-    'ngSanitize'
+    'ngSanitize',
+    'ngMeta'
 ])
 .config(['$translateProvider', '$localStorageProvider', 'StripeElementsProvider', function ($translateProvider, $localStorageProvider, StripeElementsProvider) {
 
@@ -46,29 +47,7 @@ angular.module('netbase', ['ngStorage',
 
 }])
 
-.run(function($rootScope, $location, $localStorage, $http, $route, $translate) {
-
-  // Sees Index page just one time
-  if ($localStorage.indexVisited == undefined) {
-    $localStorage.indexVisited = false;
-  }
-
-  $rootScope.logged = $localStorage.logged;
-
-  $rootScope.logout = function() {
-
-    $rootScope.logged = false;
-    $localStorage.logged = false;
-    $localStorage.token = undefined;
-
-    $location.path('/home');
-    $route.reload();
-
-  };
-
-})
-
-.config(['$routeProvider', '$httpProvider', '$locationProvider', function ($routeProvider, $httpProvider, $locationProvider) {
+.config(['$routeProvider', '$httpProvider', '$locationProvider', 'ngMetaProvider', function ($routeProvider, $httpProvider, $locationProvider, ngMetaProvider) {
 
     let auth = {
 
@@ -89,6 +68,11 @@ angular.module('netbase', ['ngStorage',
         }
 
    };
+//AcademiaCursosCtrl
+   /* ngMetaProvider */
+   ngMetaProvider.useTitleSuffix(true);
+   ngMetaProvider.setDefaultTitle('Universidade');
+   ngMetaProvider.setDefaultTitleSuffix(' | Universidade');
 
     $routeProvider.
         when('/p/create', {
@@ -110,6 +94,10 @@ angular.module('netbase', ['ngStorage',
         .when('/a/:academiaName/forum', {
             templateUrl: 'partials/academia/academiaforum.html',
             controller: 'AcademiaForumCtrl',
+        })
+        .when('/a/:academiaName/cursos', {
+            templateUrl: 'partials/academia/academiacourses.html',
+            controller: 'AcademiaCoursesCtrl',
         })
         .when('/a/:academiaName/timeline', {
             templateUrl: 'partials/academia/academiatimeline.html',
@@ -342,4 +330,28 @@ angular.module('netbase', ['ngStorage',
 
     }]);
 
-}]);
+}])
+
+.run(function($rootScope, $location, $localStorage, $http, $route, $translate, ngMeta) {
+
+  // Sees Index page just one time
+  if ($localStorage.indexVisited == undefined) {
+    $localStorage.indexVisited = false;
+  }
+
+  $rootScope.logged = $localStorage.logged;
+
+  $rootScope.logout = function() {
+
+    $rootScope.logged = false;
+    $localStorage.logged = false;
+    $localStorage.token = undefined;
+
+    $location.path('/home');
+    $route.reload();
+
+  };
+
+  ngMeta.init();
+
+});
