@@ -1,5 +1,8 @@
 <div ng-include="'partials/headerhome.html'"></div>
 
+<update-title title="{{university.name}} | Universidade"></update-title>
+<update-meta property="og:title" content="{{university.name}} | Universidade"></update-meta>
+
 <div class="container-fluid container-full">
 
   <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>

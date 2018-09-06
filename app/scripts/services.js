@@ -680,7 +680,7 @@ angular.module('netbase')
     .factory('Timeline', ['$http', function($http) {
 
       //var baseUrl = "https://api.universida.de/search";
-      var baseUrl = "https://network-university-prod.herokuapp.com/university";
+      var baseUrl = "https://network-university-prod.herokuapp.com";
       //var baseUrl = "http://192.168.1.7:9003"
 
       return {

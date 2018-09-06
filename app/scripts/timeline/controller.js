@@ -89,7 +89,7 @@ angular.module('netbase')
 
       } else {
 
-        University.getUniversityById(post.universityId).success(function(res) {
+        University.getUniversityById(universityId).success(function(res) {
 
           scope.university = res.data;
 

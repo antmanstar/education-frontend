@@ -9,7 +9,7 @@
     <div class="time"><span am-time-ago="post.createdAt | amFromUnix"></span></div>
   </div>
 
-  <div class="exhibition" ng-if="university.backgroundImage.length > 0" style="background-image: url('')"></div>
+  <div class="exhibition" ng-if="university.backgroundImage.length > 0" style="background-image: url('{{university.backgroundImage}}')"></div>
   <div class="exhibition" ng-if="university.backgroundImage == undefined" style="background-image: url('/img/misc/noimageacademia.jpg')"></div>
 
   <div class="content-wrapper">

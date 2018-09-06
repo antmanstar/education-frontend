@@ -1,7 +1,7 @@
 <div class="timeline-post">
 
   <div class="top">
-    <div class="user-image"><img src="{{student.imageUrl}}" /></div>
+    <div class="user-image"><img ng-if="student.imageUrl == undefined" src="img/user/user.png" /><img ng-if="student.imageUrl.length > 0" src="{{student.imageUrl}}" /></div>
     <div class="texts">
       <div class="name">{{student.name}}</div>
       <div class="date">{{post.createdAt  | amFromUnix | amDateFormat:'dddd, MMMM Do YYYY, h:mm:ss a' }}</div>

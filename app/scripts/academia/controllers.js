@@ -1376,10 +1376,6 @@ angular.module('netbase')
 
           Students.storeLocal(user);
 
-          if (user.imageUrl != undefined && user.imageUrl != null) {
-            scope.userImage = user.imageUrl;
-          }
-
         });
         //END Students
 
