@@ -490,6 +490,8 @@ angular.module('netbase')
   let postId = $route.current.params.postId;
   let university;
 
+  fbq('track', 'ViewContent');
+
   /* load information */
 
   University.getUniversity(universityUrl).then(function(res) {

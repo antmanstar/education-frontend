@@ -158,7 +158,7 @@ angular.module('netbase')
           $rootScope.$applyAsync();
 
           ngDialog.open({ template: 'partials/modals/onboarding.html', className: 'ngdialog-theme-default ngdialog-student-pro', controller: 'OnboardingScreenCtrl' });
-
+          fbq('track', 'CompleteRegistration');
 
         } else {
 
@@ -2068,7 +2068,7 @@ angular.module('netbase')
 
   $scope.short = "";
   $scope.text = "";
-    
+
   Students.getStudentById(studentId).success(function(res) {
 
     let success = res.success;
