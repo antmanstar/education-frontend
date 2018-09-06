@@ -485,6 +485,10 @@ angular.module('netbase')
 
           // check if it's stored local
 
+          if ($localStorage.studentsStorage == undefined) {
+            $localStorage.studentsStorage = {};
+          }
+
           let storage = $localStorage.studentsStorage;
 
           if (studentId in storage) {
