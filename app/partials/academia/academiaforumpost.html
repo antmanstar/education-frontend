@@ -1,5 +1,12 @@
 <div ng-include="'partials/headerhome.html'"></div>
 
+<update-title title="{{forumPost.title}} em {{university.name}} | Universidade"></update-title>
+<update-meta property="og:title" content="{{forumPost.title}} em {{university.name}} | Universidade"></update-meta>
+
+<update-meta ng-if="university.backgroundImage != undefined" property="og:image" content="{{university.backgroundImage}}"></update-meta>
+<update-meta ng-if="university.backgroundImage == undefined" property="og:image" content="https://universida.de/img/misc/noimageacademia.jpg"></update-meta>
+
+
 <div class="container-fluid container-full">
 
   <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
@@ -86,10 +93,10 @@
       </div>
       <!-- academia-content-forum-->
 
-      <div class="academia-content-forum-answer">
+      <div class="academia-content-forum-answer" id="answer">
 
         <div class="academia-content-forum-answer-title">
-          Your Answer
+          Responder
         </div>
         <!-- academia-content-forum-answer-title -->
 

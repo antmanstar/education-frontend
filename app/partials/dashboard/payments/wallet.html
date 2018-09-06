@@ -10,12 +10,13 @@
     <div class="col-xs-12 col-sm-9 col-md-9 col-lg-10 dashboard-content">
 
       <ul class="breadcrumb">
-        <li><a href="#">Payments</a></li>
-        <li><a href="/dashboard/payments/wallet">Your Wallet</a></li>
+        <li><a href="#">Pagamentos</a></li>
+        <li><a href="/dashboard/payments/wallet">Carteira</a></li>
       </ul>
 
+      <!--
       <div class="dashboard-content-title">
-        <h3>Your default purchase preference</h3>
+        <h3>O </h3>
       </div>
 
       <div class="dashboard-infobox">
@@ -25,16 +26,13 @@
           <div class="info" style="float: right;">
             <div class="text" style="font-size: 0.9em;">Your default is used for 1-Click purchasing</div>
           </div>
-          <!-- end info -->
 
           <div class="info">
             <div class="headline-sub-three">Address</div>
             <div class="text">Marcelo Pio Monteiro da Silva Filho</div>
           </div>
-          <!-- end info -->
 
         </div>
-        <!-- end line -->
 
         <div class="line">
 
@@ -42,18 +40,17 @@
             <div class="headline-sub-three">Name</div>
             <div class="text">Marcelo Pio Monteiro da Silva Filho</div>
           </div>
-          <!-- end info -->
 
           <div class="info">
             <div class="headline-sub-three">Payment Method</div>
             <div class="text">Marcelo Pio Monteiro da Silva Filho</div>
           </div>
-          <!-- end info -->
 
         </div>
-        <!-- end line -->
 
       </div>
+      -->
+
       <!-- default payment -->
 
       <div class="row" style="margin-top: 15px;">
@@ -61,29 +58,29 @@
         <div class="col-xs-12 col-sm-12 col-md-12">
 
           <div class="dashboard-content-title">
-            <h3 style="display: inline-block;">Your credit and debit cards</h3>
+            <h3 style="display: inline-block;">Cartões de crédito ou débito</h3>
           </div>
 
-          <div class="dashboard-accordion">
+          <div class="dashboard-accordion" ng-repeat="card in cards">
 
             <div class="top">
-              VISA / Visa ending in 7437 / Expires
+              <b>{{card.brand}}</b>
             </div>
             <!-- end top -->
 
             <div class="content">
-
-              Name on card: Marcelo Pio
-
-              <button>Delete</button>
-
+              <b>Nome no cartão:</b> {{card.name}}</br>
+              <b>Últimos 4 dígitos: </b> {{card.last4}}</br>
+              <b>Expira:</b> {{card.exp_month}}/{{card.exp_year}}
             </div>
             <!-- end content -->
 
           </div>
           <!-- end dashboard-accordion -->
 
-          <button ng-click="addCard()" style="width: 200px; display: inline-block;" class="btn btn-yellow">Add a card</button>
+          <div style="margin-top: 15px; text-align: right;">
+            <button ng-click="addCard()" style="width: 200px; display: inline-block;" class="btn btn-yellow">Add a card</button>
+          </div>
 
         </div>
         <!-- end col-xs-12 col-sm-3 col-md-3 -->

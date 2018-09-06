@@ -12,7 +12,9 @@ angular.module('netbase', ['ngStorage',
     'angularjs-stripe-elements',
     'chart.js',
     'dibari.angular-ellipsis',
-    'ngSanitize'
+    'ngSanitize',
+    'infinite-scroll',
+    'updateMeta'
 ])
 .config(['$translateProvider', '$localStorageProvider', 'StripeElementsProvider', function ($translateProvider, $localStorageProvider, StripeElementsProvider) {
 
@@ -143,9 +145,13 @@ angular.module('netbase', ['ngStorage',
             templateUrl: 'partials/academia/academiajobs.html',
             controller: 'AcademiaJobsCtrl',
         })
-        .when('/profile', {
-            templateUrl: 'partials/profile.html',
+        .when('/perfil', {
+            templateUrl: 'partials/profile/profile.html',
             controller: 'ProfileCtrl',
+        })
+        .when('/p/:studentUsername', {
+            templateUrl: 'partials/profile/profilebyusername.html',
+            controller: 'ProfileByUsernameCtrl',
         })
         .when('/login', {
             templateUrl: 'partials/account.html',
@@ -171,10 +177,6 @@ angular.module('netbase', ['ngStorage',
         .when('/smp/listing/id/:id', {
             templateUrl: 'partials/smpproduct.html',
             controller: 'SmpListingCtrl',
-        })
-        .when('/profile/', {
-            templateUrl: 'partials/profile.html',
-            controller: 'ProfileCtrl',
         })
         .when('/dashboard/', {
             templateUrl: 'partials/dashboard.html',
@@ -236,6 +238,11 @@ angular.module('netbase', ['ngStorage',
             controller: 'DashboardAcademiaManageByIdUsersByIdCtrl',
             resolve: auth
         })
+        .when('/dashboard/orders', {
+            templateUrl: 'partials/dashboard/orders/orders.html',
+            controller: 'DashboardOrdersCtrl',
+            resolve: auth
+        })
         .when('/dashboard/smp/create', {
             templateUrl: 'partials/smpcreate.html',
             controller: 'DashboardSmpCreateCtrl',
@@ -279,6 +286,38 @@ angular.module('netbase', ['ngStorage',
             templateUrl: 'partials/home/home.html',
             controller: 'HomeCtrl',
         })
+        .when('/home/timeline', {
+            templateUrl: 'partials/home/hometimeline.html',
+            controller: 'HomeTimelineCtrl',
+        })
+        .when('/home/noticias', {
+            templateUrl: 'partials/home/homenews.html',
+            controller: 'HomeNoticiasCtrl',
+        })
+        .when('/home/conhecimento/', {
+            templateUrl: 'partials/home/hometopic.html',
+            controller: 'HomeTopicCtrl',
+        })
+        .when('/home/c/:url/', {
+            templateUrl: 'partials/topic/topichome.html',
+            controller: 'HomeTopicUrlCtrl',
+        })
+        .when('/home/c/:url/u', {
+            templateUrl: 'partials/topic/topicacademia.html',
+            controller: 'HomeTopicUrlAcademiaCtrl',
+        })
+        .when('/home/c/:url/posts', {
+            templateUrl: 'partials/topic/topicposts.html',
+            controller: 'HomeTopicUrlPostsCtrl',
+        })
+        .when('/home/c/:url/cursos', {
+            templateUrl: 'partials/topic/topiccursos.html',
+            controller: 'HomeTopicUrlCoursesCtrl',
+        })
+        .when('/home/c/:url/opiniao', {
+            templateUrl: 'partials/topic/topicopiniao.html',
+            controller: 'HomeTopicUrlOpiniaoCtrl',
+        })
         .when('/home/empregos/', {
             templateUrl: 'partials/home/homejobs.html',
             controller: 'HomeJobsCtrl',
@@ -287,7 +326,7 @@ angular.module('netbase', ['ngStorage',
             templateUrl: 'partials/home/homejobscategory.html',
             controller: 'HomeJobsCategoryCtrl',
         })
-        .when('/home/colleges/', {
+        .when('/home/universidades/', {
             templateUrl: 'partials/home/homeuniversidades.html',
             controller: 'HomeUniversidadesCtrl',
         })
@@ -298,6 +337,10 @@ angular.module('netbase', ['ngStorage',
         .when('/home/smp/hashtag/:hash', {
             templateUrl: 'partials/home/homesocialmarketplacehashtag.html',
             controller: 'HomeSocialMarketPlaceHashTagCtrl',
+        })
+        .when('/', {
+            templateUrl: 'partials/index.html',
+            controller: 'IndexCtrl',
         })
         .otherwise({
           redirectTo: '/home'

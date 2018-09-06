@@ -1,0 +1,62 @@
+<div ng-include="'partials/headerhome.html'"></div>
+
+<div class="container-fluid container-home">
+
+  <div class="row">
+
+    <div ng-include="'partials/topic/topicmenu.html'" ng-controller="TopicMenuCtrl"></div>
+
+    <div class="col-sm-9 section-content-col">
+
+      <div class="section-title">{{knowledge.title}} / Opinião</div>
+
+      <!-- start posts -->
+
+      <div class="news" ng-repeat="n in news">
+
+        <div class="index">
+
+          <div class="position">{{$index + 1}}.</div>
+
+        </div>
+
+        <div class="box">
+          <div class="title"><a ng-href="{{n.link}}" target="_blank">{{n.title}}</a></div>
+          <div class="meta">{{n.rssSource}} - <span am-time-ago="n.pubdate"></span></div>
+          <div class="text" ng-click="newsOpen(n._id, n)"><b>ABRIR: </b> <i class="fas fa-arrow-up"></i> {{n.votes.length}} votos - <i class="fas fa-comment"></i> {{n.comments.length}} opiniões</div>
+        </div>
+        <!-- end box -->
+
+        <div class="actions">
+          <i class="fas fa-arrow-up" ng-click="vote(n._id, n.sectionId)"></i></br>
+        </div>
+        <!-- end votes -->
+
+      </div>
+      <!-- end news -->
+
+      <!-- end posts -->
+
+    </div>
+    <!-- end col-sm-9 -->
+
+  </div>
+  <!-- end row -->
+
+  <div class="section-footer">
+
+    <div class="section-footer-title"><b>Explorar</b></div>
+
+    <div class="section-sections">
+      <div ><i style="padding-right: 12px;" class="fas fa-home"></i>Home</div>
+      <div ><i style="padding-right: 12px;" class="fas fa-university"></i>Universidades</div>
+      <div ><i style="padding-right: 12px;" class="fas fa-pencil-alt"></i>Posts</div>
+      <div ><i style="padding-right: 12px;" class="fas fa-graduation-cap"></i>Cursos</div>
+      <div ><i style="padding-right: 12px;" class="fas fa-newspaper"></i>Notícias</div>
+    </div>
+
+  </div>
+  <!-- end section-footer -->
+
+</div>
+<!-- container-fluid container-full -->

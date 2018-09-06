@@ -1,0 +1,29 @@
+<div ng-include="'partials/headerhome.html'"></div>
+
+<div class="container-fluid container-home">
+
+  <div class="row" ng-if="knowledge.knowledges.length > 0" ng-repeat="knowledge in knowledges">
+
+    <div class="col-xs-12 col-sm-12">
+
+      <!-- start knowledge -->
+
+      <div class="headline-container">{{knowledge.title}}</div>
+
+      <div class="section-cards">
+
+        <knowledgecard kid="{{k.knowledgeId}}" ng-repeat="k in knowledge.knowledges"></knowledgecard>
+
+      </div>
+      <!-- end section-cards -->
+
+      <!-- end knowledge -->
+
+    </div>
+    <!-- col-xs-12 col-sm-12 -->
+
+  </div>
+  <!-- end row -->
+
+</div>
+<!-- container-fluid container-full -->

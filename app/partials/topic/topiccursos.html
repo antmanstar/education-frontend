@@ -1,0 +1,72 @@
+<div ng-include="'partials/headerhome.html'"></div>
+
+<div class="container-fluid container-home">
+
+  <div class="row">
+
+    <div ng-include="'partials/topic/topicmenu.html'" ng-controller="TopicMenuCtrl"></div>
+
+    <div class="col-sm-9 section-content-col">
+
+      <div class="section-title">{{knowledge.title}}</div>
+
+      <!-- start universidades -->
+
+      <div class="headline-container">Universidades</div>
+
+      <div class="section-cards">
+
+        <a style="color: #2c4255;" ng-repeat="university in universities | orderBy:'-highlight'" href="/a/{{university.url}}/timeline" target="_blank">
+          <div class="card">
+
+            <div class="picture" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
+            <div class="picture" ng-if="university.backgroundImage == undefined"  style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
+
+            <div class="title">{{university.createdAt}}{{university.name}}</div>
+            <div class="description" data-ellipsis data-ng-bind="university.about"></div>
+
+          </div>
+          <!-- end card -->
+        </a>
+
+      </div>
+      <!-- end section-cards -->
+
+      <!-- end universidades -->
+
+      <!-- start posts -->
+
+      <div class="headline-container">Posts</div>
+
+      <div ng-show="forumPosts.length > 0">
+
+        <timelinepost p="{{post}}" u="{{university}}" ng-repeat="post in forumPosts"></timelinepost>
+
+      </div>
+      <!-- forumPosts.length > 0 -->
+
+      <!-- end posts -->
+
+    </div>
+    <!-- end col-sm-9 -->
+
+  </div>
+  <!-- end row -->
+
+  <div class="section-footer">
+
+    <div class="section-footer-title"><b>Explorar</b></div>
+
+    <div class="section-sections">
+      <div ><i style="padding-right: 12px;" class="fas fa-home"></i>Home</div>
+      <div ><i style="padding-right: 12px;" class="fas fa-university"></i>Universidades</div>
+      <div ><i style="padding-right: 12px;" class="fas fa-pencil-alt"></i>Posts</div>
+      <div ><i style="padding-right: 12px;" class="fas fa-graduation-cap"></i>Cursos</div>
+      <div ><i style="padding-right: 12px;" class="fas fa-newspaper"></i>Notícias</div>
+    </div>
+
+  </div>
+  <!-- end section-footer -->
+
+</div>
+<!-- container-fluid container-full -->

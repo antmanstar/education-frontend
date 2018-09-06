@@ -108,6 +108,11 @@
   outline: none;
 }
 
+.ngdialog-student-pro .ngdialog-close {
+  right: 20px !important;;
+  left: unset !important;
+}
+
 .ngdialog.ngdialog-theme-default .ngdialog-close:before {
   display: block;
   padding: 3px;
@@ -204,4 +209,37 @@
 .ngdialog.ngdialog-theme-default .ngdialog-button.ngdialog-button-secondary {
   background: #e0e0e0;
   color: #777;
+}
+
+.ngdialog-student-pro {
+  padding-bottom: 5vh !important;
+  padding-top: 5vh !important;
+}
+
+.ngdialog-student-pro .modal-accounts {
+  padding-top: 10px !important;
+}
+
+@media screen and (min-width: 768px) {
+
+  .ngdialog-student-pro .ngdialog-content {
+    width: 80vw !important;
+    max-width: 970px !important;
+  }
+
+}
+
+@media screen and (max-width: 768px) {
+
+  .ngdialog-student-pro {
+    padding-left: 0vh !important;
+    padding-right: 0vh !important;
+    padding-bottom: 0vh !important;
+    padding-top: 0vh !important;
+  }
+
+  .ngdialog-student-pro .ngdialog-content {
+    width: 100vw !important;
+  }
+
 }

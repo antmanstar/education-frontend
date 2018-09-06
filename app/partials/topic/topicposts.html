@@ -1,0 +1,54 @@
+<div ng-include="'partials/headerhome.html'"></div>
+
+<div class="container-fluid container-home">
+
+  <div class="row">
+
+    <div ng-include="'partials/topic/topicmenu.html'" ng-controller="TopicMenuCtrl"></div>
+
+    <div class="col-sm-9 section-content-col">
+
+      <div class="section-title">{{knowledge.title}} / Posts</div>
+
+      <!-- start posts -->
+
+      <div ng-show="forumPosts.length > 0">
+
+        <forumpost ng-repeat="post in forumPosts | orderBy:'-votesCount'" p="{{post}}"></forumpost>
+
+      </div>
+      <!-- forumPosts.length > 0 -->
+
+      <!-- end posts -->
+
+      <div>
+        <ul class="pagination" ng-if="pages > 1">
+          <li class="page-item" ng-if="page != 1"><a class="page-link" href="/home/c/{{knowledge.url}}/posts?page={{page - 1}}">Voltar</a></li>
+          <li class="page-item" ng-repeat="p in range(1, pages)"><a class="page-link" ng-style="p == page && {'font-weight':'bold'}" href="/home/c/{{knowledge.url}}/posts?page={{p}}">{{p}}</a></li>
+          <li class="page-item"><a class="page-link" href="/home/c/{{knowledge.url}}/posts?page={{page + 1}}">Próximo</a></li>
+        </ul>
+      </div>
+
+    </div>
+    <!-- end col-sm-9 -->
+
+  </div>
+  <!-- end row -->
+
+  <div class="section-footer">
+
+    <div class="section-footer-title"><b>Explorar</b></div>
+
+    <div class="section-sections">
+      <div ><i style="padding-right: 12px;" class="fas fa-home"></i>Home</div>
+      <div ><i style="padding-right: 12px;" class="fas fa-university"></i>Universidades</div>
+      <div ><i style="padding-right: 12px;" class="fas fa-pencil-alt"></i>Posts</div>
+      <div ><i style="padding-right: 12px;" class="fas fa-graduation-cap"></i>Cursos</div>
+      <div ><i style="padding-right: 12px;" class="fas fa-newspaper"></i>Notícias</div>
+    </div>
+
+  </div>
+  <!-- end section-footer -->
+
+</div>
+<!-- container-fluid container-full -->

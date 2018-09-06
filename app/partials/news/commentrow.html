@@ -1,0 +1,21 @@
+<div class="comment">
+
+  <div class="user">
+    <div class="img"><img ng-show="student.imageUrl == undefined" ng-src="img/user/user.png" /><img ng-show="student.imageUrl != undefined" ng-src="student.imageUrl" /></div><div class="name">{{student.name}}</div>
+  </div>
+  <!-- end user -->
+
+  <div class="text">
+    {{comment.text}}
+  </div>
+  <!-- end text -->
+
+  <div class="votes">
+    <i class="fas fa-clock"></i> <span am-time-ago="news.createdAt | amFromUnix"></span> - <i class="fas fa-arrow-up"></i> {{commentsCount}} votos
+  </div>
+
+</div>
+<!-- end comment -->
+<div class="comment-action">
+  <i class="fas fa-arrow-up" ng-click="voteComment(news._id)"></i>
+</div>

@@ -1,0 +1,39 @@
+<div ng-include="'partials/headerhome.html'"></div>
+
+<div class="container-fluid container-home" style="padding-bottom: 30px;">
+
+  <!-- Welcome -->
+  <div class="row">
+
+    <div class="col-sm-4 col-md-3 section-menu-col">
+
+      <div class="section-menu-title">Universidades</div>
+
+      <div class="section-menu">
+        <timelinemenuuniversity uid="{{u.universityId}}" ng-repeat="u in user.universitiesSubscribed"></timelinemenuuniversity>
+        <div ng-if="user.universitiesSubscribed.length == 0" class="option">Você não esta registrado em nenhuma Universidade</div>
+      </div>
+
+    </div>
+    <!-- col-sm-8 -->
+
+    <div class="col-xs-12 col-sm-8 col-md-9 section-content-col">
+
+      <h3 ng-if="user.universitiesSubscribed.length == 0" class="option">Você não esta registrado em nenhuma Universidade</h3>
+      </br></br>
+      <h3 ng-if="user.universitiesSubscribed.length == 0" class="option">Registre em <a href="/home/universidades">Universidades</a> ou em <a href="/home/conhecimento">Conhecimentos</a> para receber conteúdo personalizado!</h3>
+
+      <div ng-if="user.universitiesSubscribed.length > 0" infinite-scroll='nextPage()' infinite-scroll-disabled='busy' infinite-scroll-distance='1'>
+        <timelineposthome fp="{{fp}}" ng-repeat="fp in forumPosts"></timelinepost>
+      </div>
+
+    </div>
+    <!-- emd -->
+
+  </div>
+  <!-- end row -->
+
+  <!-- End create own university -->
+
+</div>
+<!-- container-fluid container-full -->

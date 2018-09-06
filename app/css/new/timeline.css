@@ -1,0 +1,129 @@
+.timeline-post {
+
+}
+
+.timeline-post .meta {
+  padding-bottom: 5px;
+}
+
+.timeline-post .meta .user {
+  display: inline-block;
+}
+
+.timeline-post .meta .user .img {
+  height: 40px;
+  width: 40px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.timeline-post .meta .user .name {
+  display: inline-block;
+  vertical-align: top;
+  line-height: 40px;
+  padding-left: 6.6px;
+}
+
+.timeline-post .meta .time {
+  display: inline-block;
+  vertical-align: top;
+  line-height: 40px;
+  float: right;
+  color: #b9b9b9;
+}
+
+.timeline-post .exhibition {
+
+  height: 200px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 5px;
+
+  -webkit-box-shadow: 0px 6px 5px 0px rgba(82,82,82,0.48);
+  -moz-box-shadow: 0px 6px 5px 0px rgba(82,82,82,0.48);
+  box-shadow: 0px 6px 5px 0px rgba(82,82,82,0.48);
+
+  position: relative;
+  z-index: 700;
+
+}
+
+.timeline-post .content-wrapper {
+
+  min-height: 300px;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 25px;
+
+  background-color: #f5f5f5;
+
+  -webkit-box-shadow: 0px 6px 5px 0px rgba(82,82,82,0.18);
+  -moz-box-shadow: 0px 6px 5px 0px rgba(82,82,82,0.18);
+  box-shadow: 0px 6px 5px 0px rgba(82,82,82,0.18);
+
+}
+
+.timeline-post .content-wrapper .title {
+  font-weight: bold;
+  text-transform: uppercase;
+  padding-bottom: 10px;
+  font-size: 1.4em;
+}
+
+.timeline-post .content-wrapper .status {
+  border-top: 1px solid #d7d7d7;
+  border-bottom: 1px solid #d7d7d7;
+  line-height: 35px;
+  height: 35px;
+  color: #8c8c8c;
+}
+
+.timeline-post .content-wrapper .status .votes {
+  float: right;
+  display: inline-block;
+}
+
+.timeline-post .content-wrapper .status .comments {
+  float: left;
+  display: inline-block;
+}
+
+.timeline-post .content-wrapper .status i {
+  padding-right: 3px;
+}
+
+.timeline-post .content-wrapper .actions {
+  padding-top: 7px;
+  padding-bottom: 7px;
+}
+
+.timeline-post .content-wrapper .actions .comment {
+  height: 35px;
+  background-color: #fff;
+  display: inline-block;
+  border-radius: 5px;
+  width: calc(100% -  44px);
+  padding-left: 15px;
+  padding-right: 15px;
+  line-height: 35px;
+}
+
+.timeline-post .content-wrapper .actions .comment i {
+  padding-right: 4px;
+  color: #585858;
+}
+
+.timeline-post .content-wrapper .actions .vote {
+  width: 40px;
+  height: 35px;
+  line-height: 35px;
+  display: inline-block;
+  vertical-align: top;
+  text-align: right;
+}

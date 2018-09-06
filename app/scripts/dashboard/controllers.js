@@ -2,6 +2,23 @@
 
 angular.module('netbase')
 
+.controller('DashboardOrdersCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Payments', '$localStorage', 'jwtHelper' , function($rootScope, $scope, $location, $route, University, Payments, $localStorage, jwtHelper) {
+
+  let studentId;
+
+  if ($localStorage.token != undefined && $localStorage.token != null) {
+    studentId = jwtHelper.decodeToken($localStorage.token)._id;
+  }
+
+  Payments.getAllOrders(studentId).success(function(res) {
+
+    $scope.orders = res.data;
+
+  });
+  //END Payments.getAllOrders()
+
+}])
+
 .controller('DashboardAcademiaCreateCtrl', ['$rootScope', '$scope', '$location', '$route', 'University' , function($rootScope, $scope, $location, $route, University) {
 
   $scope.step = 1;

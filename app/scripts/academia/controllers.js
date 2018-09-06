@@ -18,11 +18,11 @@ angular.module('netbase')
 
 .controller('AcademiaCtrl', ['$rootScope', '$scope', '$location', '$route', 'University' , function($rootScope, $scope, $location, $route, University) {
 
-  let universityUrl = $route.current.params.academiaName;
+  let universityUrl = $route.current.params.url;
 
   University.getUniversity(universityUrl).then(function(res) {
 
-    $scope.university = res.data.data;
+    $scope.knowledge = res.data;
 
   });
 
@@ -30,15 +30,34 @@ angular.module('netbase')
 
 }])
 
+.controller('HomeTopicCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Forum', '$sce', '$filter' , function($rootScope, $scope, $location, $route, University, Forum, $sce, $filter) {
+
+}])
+
 .controller('AcademiaTimelineCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Forum', '$sce', '$filter' , function($rootScope, $scope, $location, $route, University, Forum, $sce, $filter) {
 
   let universityUrl = $route.current.params.academiaName;
 
-  University.getUniversity(universityUrl).then(function(res) {
+  if ( University.isStoredLocal(universityUrl) ) {
 
-    $scope.university = res.data.data;
+    let universityStorage = University.retrieveStorage(universityUrl);
 
-  });
+    $scope.university = universityStorage[universityUrl];
+
+      console.log("stored")
+
+  } else {
+
+    console.log("not stored")
+
+    University.getUniversity(universityUrl).then(function(res) {
+
+      $scope.university = res.data.data;
+      University.storeLocal($scope.university);
+
+    });
+
+  }
 
   Forum.getAllOwnerForumPost(universityUrl).then(function(res) {
 
@@ -64,9 +83,11 @@ angular.module('netbase')
   let universityUrl = $route.current.params.academiaName;
   let playlistId = $route.current.params.playlistId;
 
-  University.getUniversity(universityUrl).then(function(res) {
+  if ( University.isStoredLocal(universityUrl) ) {
 
-    $scope.university = res.data.data;
+    let universityStorage = University.retrieveStorage(universityUrl);
+
+    $scope.university = universityStorage[universityUrl];
 
     Playlist.getPlaylistById(playlistId).success(function(res) {
 
@@ -76,7 +97,28 @@ angular.module('netbase')
 
     });
 
-  });
+    console.log("stored")
+
+  } else {
+
+    console.log("not stored")
+
+    University.getUniversity(universityUrl).then(function(res) {
+
+      $scope.university = res.data.data;
+      University.storeLocal($scope.university);
+
+      Playlist.getPlaylistById(playlistId).success(function(res) {
+
+        console.log(res);
+
+        $scope.playlist = res.data;
+
+      });
+
+    });
+
+  }
 
 
 }])
@@ -85,9 +127,11 @@ angular.module('netbase')
 
   let universityUrl = $route.current.params.academiaName;
 
-  University.getUniversity(universityUrl).then(function(res) {
+  if ( University.isStoredLocal(universityUrl) ) {
 
-    $scope.university = res.data.data;
+    let universityStorage = University.retrieveStorage(universityUrl);
+
+    $scope.university = universityStorage[universityUrl];
 
     Playlist.getAllPlaylistByUniversityId($scope.university._id).success(function(res) {
 
@@ -97,7 +141,28 @@ angular.module('netbase')
 
     });
 
-  });
+      console.log("stored")
+
+  } else {
+
+    console.log("not stored")
+
+    University.getUniversity(universityUrl).then(function(res) {
+
+      $scope.university = res.data.data;
+      University.storeLocal($scope.university);
+
+      Playlist.getAllPlaylistByUniversityId($scope.university._id).success(function(res) {
+
+        console.log(res);
+
+        $scope.playlists = res.data;
+
+      });
+
+    });
+
+  }
 
 }])
 
@@ -110,9 +175,6 @@ angular.module('netbase')
   }
 
   $scope.subscribe = function(plan) {
-
-    console.log("subscribe button press: ")
-    console.log($localStorage.token)
 
     if ($localStorage.token != undefined || $localStorage.token != null) {
       ngDialog.open({ template: 'partials/modals/payments.html', controller: 'PaymentsCtrl', className: 'ngdialog-theme-default', data : { flow : "order", page : "order", plan : plan, university : $scope.university } });
@@ -140,18 +202,40 @@ angular.module('netbase')
 
   /* get university informations */
 
-  University.getUniversity(universityUrl).then(function(res) {
+  if ( University.isStoredLocal(universityUrl) ) {
 
-    let success = res.data.success;
-    let university = res.data.data;
+    let universityStorage = University.retrieveStorage(universityUrl);
 
-    if (success) {
+    $scope.university = universityStorage[universityUrl];
 
-      $scope.university = university;
+    University.getUniversityForumPosts($scope.university._id, $scope.page).then(function(res) {
 
-      console.log(university);
+      let forumPostsRequested = res.data.data.docs;
+      $scope.page = Number(res.data.data.page);
+      $scope.pages = res.data.data.pages;
+      $scope.forumPosts = $scope.forumPosts.concat(forumPostsRequested);
 
-      University.getUniversityForumPosts(university._id, $scope.page).then(function(res) {
+      console.log(res.data.data);
+
+    }).catch(function(e) {
+
+      console.log("forum post error request: ");
+      console.log(e);
+
+    });
+
+      console.log("stored")
+
+  } else {
+
+    console.log("not stored")
+
+    University.getUniversity(universityUrl).then(function(res) {
+
+      $scope.university = res.data.data;
+      University.storeLocal($scope.university);
+
+      University.getUniversityForumPosts($scope.university._id, $scope.page).then(function(res) {
 
         let forumPostsRequested = res.data.data.docs;
         $scope.page = Number(res.data.data.page);
@@ -167,14 +251,9 @@ angular.module('netbase')
 
       });
 
-    } else {
+    });
 
-      console.log("error while loading university")
-
-    }
-
-
-  });
+  }
 
   /* get all forum posts */
 
@@ -457,10 +536,8 @@ angular.module('netbase')
 
     //check if logged before
     if ($localStorage.token != undefined && $localStorage.token != null) {
-
       //ngDialog.open({ template: 'partials/modals/payments.html', controller: 'PaymentsCtrl', className: 'ngdialog-theme-default', data : { flow : "order", page : "order" } });
       ngDialog.open({ template: 'partials/modals/planbuy.html', controller: 'AcademiaPlanPurchaseCtrl', className: 'ngdialog-theme-default', data : { university : $scope.university } });
-
     } else {
       ngDialog.open({ template: 'partials/modals/login.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
     }
@@ -1185,6 +1262,85 @@ angular.module('netbase')
   }
 }])
 
+.directive('knowledgecard', ['University', '$rootScope', 'Students', 'Knowledge', function(University, $rootScope, Students, Knowledge) {
+  return {
+    restrict: 'E',
+    templateUrl: '../partials/directive/knowledgecard.html',
+    replace: true,
+    scope: true,
+    link: function(scope, element, attr) {
+
+      let knowledgeId = attr.kid;
+
+      console.log(knowledgeId)
+
+      Knowledge.getById(knowledgeId).success(function(res) {
+
+        scope.knowledge = res.data;
+
+      });
+
+    }
+  }
+}])
+
+.directive('timelineuniversitycard', ['University', '$rootScope', 'Students', function(University, $rootScope, Students) {
+  return {
+    restrict: 'E',
+    templateUrl: '../partials/directive/timelineuniversitycard.html',
+    replace: true,
+    scope: true,
+    link: function(scope, element, attr) {
+
+      let universityId = attr.uid;
+
+      University.getUniversityById(universityId).success(function(res) {
+
+        console.log(res);
+
+        scope.university = res.data;
+
+      });
+
+    }
+  }
+}])
+
+.directive('timelineknowledgepost', ['University', '$rootScope', 'Students', '$filter', function(University, $rootScope, Students, $filter) {
+  return {
+    restrict: 'E',
+    templateUrl: '../partials/directive/knowledgetimelinepost.html',
+    replace: true,
+    scope: true,
+    link: function(scope, element, attr) {
+
+      let post = JSON.parse(attr.p);
+      let universityId = attr.uid;
+
+      if (post.text.indexOf("iframe") != -1) {
+        post.text = $sce.trustAsHtml(post.text)
+      } else {
+        post.text = $filter('limitHtml')(post.text, 350, '...')
+      }
+
+      scope.post = post;
+
+      University.getUniversityById(universityId).success(function(res) {
+
+        scope.university = res.data;
+
+      });
+
+      Students.getStudentById(post.accountId).then(function(res) {
+
+        scope.student = res.data.data;
+
+      })
+
+    }
+  }
+}])
+
 .directive('timelinepost', ['University', '$rootScope', 'Students', function(University, $rootScope, Students) {
   return {
     restrict: 'E',
@@ -1201,7 +1357,56 @@ angular.module('netbase')
 
       scope.university = university;
 
-      Students.getStudentById(post.accountId).then(function(res) {
+      let studentId = post.accountId;
+
+      if ( Students.isStoredLocal(studentId) ) {
+
+        let studentStorage = Students.retrieveStorage(studentId);
+
+        scope.student = studentStorage[studentId];
+        console.log(scope.user)
+
+      } else {
+
+        Students.getStudentById(post.accountId).then(function(res) {
+
+          let user = res.data.data;
+
+          scope.student = user;
+
+          Students.storeLocal(user);
+
+          if (user.imageUrl != undefined && user.imageUrl != null) {
+            scope.userImage = user.imageUrl;
+          }
+
+        });
+        //END Students
+
+      }
+      //END Students.isStoredLocal(studentId)
+
+    }
+  }
+}])
+
+.directive('newscommentrow', ['University', '$rootScope', 'Students', 'News', function(University, $rootScope, Students, News) {
+  return {
+    restrict: 'E',
+    templateUrl: '../partials/news/commentrow.html',
+    replace: false,
+    scope: true,
+    link: function(scope, element, attr) {
+
+      let comment = JSON.parse(attr.c);
+
+      scope.comment = comment;
+
+      scope.commentsCount = comment.votes.length;
+
+      console.log(comment)
+
+      Students.getStudentById(comment.accountId).then(function(res) {
 
         console.log("student: ")
         console.log(res)
@@ -1210,9 +1415,34 @@ angular.module('netbase')
 
       })
 
+      scope.voteComment = function(newsId) {
+
+        News.voteCommentById(newsId, comment._id).success(function(res) {
+
+          console.log("success voting comment comment: ")
+          console.log(res);
+
+          if (res.success) {
+
+            if (res.vote) {
+              scope.commentsCount = scope.commentsCount - 1;
+            } else {
+              scope.commentsCount = scope.commentsCount + 1;
+            }
+
+          } else {
+
+          }
+
+        });
+
+      }
+      //END voteComment
+
     }
   }
 }])
+
 
 .filter('limitHtml', function() {
         return function(text, limit, ellipsis) {

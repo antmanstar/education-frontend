@@ -1,0 +1,23 @@
+<div class="col-sm-3 section-menu-col">
+
+  <div class="section-menu-title">Explorar</div>
+
+  <div class="section-menu">
+    <!-- selected -->
+    <div class="option"><a href="/home/c/{{knowledge.url}}/"><i class="fas fa-home"></i>Home</a></div>
+    <div class="option"><a href="/home/c/{{knowledge.url}}/u"><i class="fas fa-university"></i>Universidades</a></div>
+    <div class="option"><a href="/home/c/{{knowledge.url}}/posts"><i class="fas fa-pencil-alt"></i>Posts</a></div>
+    <div class="option" ng-if="knowledge.courses.length > 0"><a href="/home/c/{{knowledge.url}}/cursos"><i class="fas fa-graduation-cap"></i>Cursos</a></div>
+    <!-- <div class="option" ng-if="knowledge.sections.length > 0"><a href="/home/c/{{knowledge.url}}/opiniao"><i class="fas fa-newspaper"></i>Opinião</a></div> -->
+  </div>
+  <!-- end section-menu -->
+
+  <div class="section-menu-division"></div>
+
+  <div class="section-menu">
+    <div class="option"><button class="btn btn-bluebase" ng-click="subscribe(knowledge._id)">Inscrever</button></div>
+  </div>
+  <!-- end section-menu -->
+
+</div>
+<!-- end col-sm-3 -->

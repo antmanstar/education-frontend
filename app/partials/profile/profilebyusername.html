@@ -1,0 +1,34 @@
+<div ng-include="'partials/headerhome.html'"></div>
+
+<div class="container-fluid container-full profile-container" style="padding-bottom: 50px;">
+  <div class="row">
+
+    <div class="col-xs-12 col-sm-5 col-md-5 col-lg-4 academia-content">
+
+      <div class="profile-pic" ng-if="student.imageUrl != undefined" style="background-image: url('{{student.imageUrl}}')"></div>
+      <div class="profile-pic" ng-if="student.imageUrl == undefined" style="background-image: url('http://virtual-strategy.com/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png')"></div>
+
+    </div>
+    <!-- end col-xs-12 -->
+
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-7">
+
+      <div class="profile-name">{{student.name}}</div>
+
+      <div class="profile-bio">
+
+        <div class="title">Biografia</div>
+        <div class="short" ng-hide="edit"><div ng-if="student.bioShort != undefined">{{student.bioShort}}</div><div ng-if="student.bioShort == undefined"></div></div>
+        <div class="text" ng-hide="edit"><div ng-if="student.bioLong != undefined">{{student.bioLong}}</div><div ng-if="student.bioLong == undefined">{{student.name}} ainda não escreveu a biografica</div></div>
+
+      </div>
+      <!-- end profile-bio -->
+
+    </div>
+    <!-- end col-xs-12 -->
+
+  </div>
+  <!-- end row -->
+
+</div>
+<!-- container-full -->

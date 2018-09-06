@@ -5,6 +5,140 @@ body {
   margin: 0;
 }
 
+/* profile */
+.profile-container {
+
+}
+
+.profile-pic {
+  width: 100%;
+  height: 300px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 5px;
+}
+
+.profile-manage-wrapper {
+  padding-top: 30px;
+}
+
+.profile-name {
+  font-size: 3.5em;
+  font-weight: bold;
+}
+
+.profile-bio {
+  margin-top: 50px;
+}
+
+.profile-bio .title {
+  font-weight: bold;
+  font-size: 1.65em;
+  padding-bottom: 16px;
+}
+
+.profile-bio .edit {
+  margin-bottom: 50px;
+}
+
+.profile-bio .edit textarea {
+  width: 100%;
+  border: 0px;
+  border-bottom: 3px solid #000;
+  outline: none;
+  min-height: 150px;
+  padding-bottom: 25px;
+}
+
+.profile-bio .short {
+  font-family: "Georgia", serif;
+  font-style: italic;
+  font-size: 1.4em;
+  padding-bottom: 25px;
+}
+
+.profile-bio .text {
+  font-size: 1.2em;
+  line-height: 1.8em;
+}
+
+/* orders */
+.dashboard-orders {
+
+}
+
+.dashboard-orders .order {
+
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #cdcdcd;
+
+}
+
+.dashboard-orders .order .info {
+  padding-bottom: 15px;
+}
+
+.dashboard-orders .order .info .id {
+  font-size: 1.35em;
+  padding-bottom: 5px;
+}
+
+.dashboard-orders .order .items {
+  border: 1px solid #cdcdcd;
+  padding: 10px;
+}
+
+.dashboard-orders .order .items .item {
+
+}
+
+.dashboard-orders .order .items .item .top  {
+
+}
+
+.dashboard-orders .order .items .item .top .name {
+  display: inline-block;
+}
+
+.dashboard-orders .order .items .item .top .price {
+  display: inline-block;
+  float: right;
+}
+
+/* student pro */
+
+.student-pro {
+
+}
+
+.student-pro-benefits {
+
+}
+
+.student-pro-benefits div {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #cdcdcd;
+  padding-top: 10px;
+}
+
+.student-pro-benefits div i {
+  padding-right: 5px;
+}
+
+.student-pro-illustration {
+  height: 285px;
+  width: 100%;
+  text-align: center;
+}
+
+.student-pro-illustration img {
+  height: 100%;
+}
+
+/* */
+
 /* plan purchase */
 .ngdialog-plans > .ngdialog-content {
   width: 80vw !important;
@@ -149,6 +283,10 @@ a:hover {
   background-color: #f5f5f5 !important;
 }
 
+.bg-white {
+  background-color: #fff !important;
+}
+
 .bg-primary-blue {
   background-color: #52bfea !important;
 }
@@ -233,6 +371,11 @@ a:hover {
 }
 
 @media screen and (max-width: 768px) {
+
+  .ngdialog-student-pro .headline-sub-one {
+    font-size: 1.8em !important;
+  }
+
   .headline-sub-one {
     font-size: 1.57em;
     padding-top: 20px;
@@ -274,8 +417,55 @@ a:hover {
   }
 }
 
+.headline-sub-four {
+  font-size: 1.1em;
+  font-weight: 300;
+}
+
+@media screen and (max-width: 768px) {
+  .headline-sub-three {
+    font-size: 1em;
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+}
+
 p {
 
+}
+
+/* Student Pro */
+.student-pro {
+  display: inline-block;
+  display: inline-block;
+    background-color: #b460a2;
+    color: #fff;
+    border-radius: 7px;
+    padding-left: 5px;
+    padding-right: 5px;
+    vertical-align: top;
+}
+
+/* Card Highlight */
+.card-highlight {
+  width: 100%;
+  height: 300px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 5px;
+  text-align: center;
+  position: relative;
+}
+
+.card-highlight-wrapper {
+  margin: auto;
+  position: absolute;
+  width: 100%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
 }
 
 /* Buttons */

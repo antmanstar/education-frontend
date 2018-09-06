@@ -22,7 +22,7 @@
               <span><i class="fas fa-user-circle" style="padding-right: 2px;"></i></span> {{user.name}} <span><i class="fas fa-angle-down" style="padding-left: 3px;"></i></span>
               <div class="profile-expanded">
                 <div><a href="/dashboard">Dashboard</a></div>
-                <!-- <div><a href="#">Edit Profile</a></div>-->
+                <div><a href="/perfil">Perfil</a></div>
                 <div ng-click="logout()"><a>Logout</a></div>
               </div>
               <!-- end profile expanded -->
@@ -52,7 +52,12 @@
 
       <div class="navbar-slider" ng-show="homeCheck()">
 
+        <div class="option unselectable" ng-if="logged" ng-class="{'active': originalPath == '/home/timeline' || originalPath == '/home/timeline/'}"><a href="/home/timeline">Timeline</a></div>
         <div class="option unselectable" ng-class="{'active': originalPath == '/home' || originalPath == '/home/'}"><a href="/home">Home</a></div>
+        <div class="option unselectable" ng-class="{'active': originalPath == '/home/universidades' || originalPath == '/home/universidades/'}"><a href="/home/universidades">Universidades</a></div>
+        <div class="option unselectable" ng-class="{'active': originalPath == '/home/noticias' || originalPath == '/home/noticias/'}"><a href="/home/noticias">Opinião</a></div>
+        <div class="option unselectable" ng-class="{'active': originalPath.indexOf('/home/conhecimento') != -1 }"><a href="/home/conhecimento">Conhecimento</a></div>
+        <!--<<div class="option unselectable" ng-class="{'active': originalPath == '/cursos' || originalPath == '/cursos/'}"><a href="/home">Cursos</a></div>-->
         <!--<div class="option unselectable" ng-class="{'active': originalPath == '/home/colleges' || originalPath == '/home/colleges/'}"><a href="/home/colleges">Colleges</a></div>-->
         <!--<div class="option unselectable" ng-class="{'active': originalPath == '/home/smp' || originalPath == '/home/smp/'}"><a href="/home/smp">Marketplace</a></div>-->
 
@@ -62,8 +67,12 @@
       <div class="navbar-mobile">
 
         <div class="menu">
+          <div class="option unselectable" ng-if="logged" ng-class="{'active': originalPath == '/home/timeline' || originalPath == '/home/timeline/'}"><a href="/home/timeline">Timeline</a></div>
           <div class="option unselectable" ng-class="{'active': originalPath == '/home' || originalPath == '/home/'}"><a href="/home">Home</a></div>
-          <div class="option unselectable" ng-show="logged"><a href="/dashboard">Dashboard</a></div>
+          <div class="option unselectable" ng-class="{'active': originalPath == '/home/universidades' || originalPath == '/home/universidades/'}"><a href="/home/universidades">Universidades</a></div>
+          <div class="option unselectable" ng-class="{'active': originalPath == '/home/noticias' || originalPath == '/home/noticias/'}"><a href="/home/noticias">Opinião</a></div>
+          <div class="option unselectable" ng-class="{'active': originalPath.indexOf('/home/conhecimento') != -1 }"><a href="/home/conhecimento">Conhecimento</a></div>
+          <!--div class="option unselectable" ng-class="{'active': originalPath == '/cursos' || originalPath == '/cursos/'}"><a href="/home">Cursos</a></div>-->
           <!--<div class="option unselectable" ng-class="{'active': originalPath == '/home/colleges' || originalPath == '/home/colleges/'}"><a href="/home/colleges">Colleges</a></div>-->
           <!--<div class="option unselectable" ng-class="{'active': originalPath == '/home/smp' || originalPath == '/home/smp/'}"><a href="/home/smp">Marketplace</a></div>-->
         </div>
@@ -80,6 +89,8 @@
           <div class="header"><span><i class="fas fa-user-circle"></i></span> {{user.name}}</div>
           <div class="menu">
             <!-- <<div class="option">Editar perfil</div> -->
+            <div class="option unselectable" ng-show="logged"><a href="/perfil">Perfil</a></div>
+            <div class="option unselectable" ng-show="logged"><a href="/dashboard">Dashboard</a></div>
             <div class="option" ng-click="logout()">Logout</div>
           </div>
           <!-- end menu -->

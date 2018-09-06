@@ -1,0 +1,67 @@
+<div ng-include="'partials/headerhome.html'"></div>
+
+<div class="container-fluid container-home">
+
+  <div class="row">
+
+    <div class="col-sm-3 section-menu-col">
+
+      <div class="section-menu-title">Categorias</div>
+
+      <div class="section-menu">
+        <!-- selected -->
+        <div class="option" ng-click="newsLoadSection('trend')"><i style="color: #e25822;" class="fas fa-fire"></i> Em alta</div>
+        <div class="option" ng-click="newsLoadSection(s._id, s.title)" ng-repeat="s in sections"><i class="{{s.icon}}"></i>{{s.title}}</div>
+      </div>
+      <!-- end section-menu -->
+
+    </div>
+    <!-- end col-sm-3 -->
+
+    <div class="col-sm-9 section-content-col">
+
+      <div class="headline-container">Notícias {{sectionTitle}}</div>
+
+      <div class="news" ng-repeat="n in news">
+
+        <div class="index">
+
+          <div class="position">{{$index + 1}}.</div>
+
+        </div>
+
+        <div class="box">
+          <div class="title"><a ng-href="{{n.link}}" target="_blank">{{n.title}}</a></div>
+          <div class="meta">{{n.rssSource}} - <span am-time-ago="n.pubdate"></span></div>
+          <div class="text" ng-click="newsOpen(n._id, n)"><b>ABRIR: </b> <i class="fas fa-arrow-up"></i> {{n.votes.length}} votos - <i class="fas fa-comment"></i> {{n.comments.length}} opiniões</div>
+        </div>
+        <!-- end box -->
+
+        <div class="actions">
+          <i class="fas fa-arrow-up" ng-click="vote(n._id, n.sectionId)"></i></br>
+        </div>
+        <!-- end votes -->
+
+      </div>
+      <!-- end news -->
+
+    </div>
+    <!-- end col-sm-9 -->
+
+  </div>
+  <!-- end row -->
+
+  <div class="section-footer">
+
+    <div class="section-footer-title"><b>Categorias:</b></div>
+
+    <div class="section-sections">
+      <div ng-click="newsLoadSection('trend')" class="news-section-trend"><i style="padding-right: 12px; color: #e25822;" class="fas fa-fire"></i> Em alta</div>
+      <div ng-click="newsLoadSection(s._id, s.title)" ng-repeat="s in sections"><i style="padding-right: 12px;" class="{{s.icon}}"></i>{{s.title}}</div>
+    </div>
+
+  </div>
+  <!-- end news-footer -->
+
+</div>
+<!-- container-fluid container-full -->

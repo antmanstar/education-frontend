@@ -1,8 +1,37 @@
 <div ng-include="'partials/headerhome.html'"></div>
 
-<div class="container-fluid container-home">
+<div class="container-fluid container-home container-index" style="padding-bottom: 30px;">
 
-  <div class="headline-container">Explorar comunidades</div>
+  <!-- Welcome -->
+
+  <div class="headline-container">Bem vindo</div>
+  <div class="headline-main" style="padding-top: 0;">A melhor plataforma para aprender, ensinar, debater e compartilhar conhecimento.</div>
+  <!-- end Welcome -->
+
+  <div ng-hide="user.membership > 0">
+    <div class="headline-container" style="padding-bottom: 0;">Introduzindo Estudante <div class="student-pro" style="font-size: 0.7em !important; margin-top: 5px;">PRO</div></div>
+    <div class="headline-sub-four" style="padding-bottom: 15px;">Transforme cada novo desafio em oportunidades de aprendizado e crescimento.</div>
+
+    <div class="card-highlight" style="background-image: url('https://cdn.shopify.com/s/files/1/0374/5581/products/SUN-0454_43e1049e-6b1a-4411-ba4d-d901faca2012_2048x.jpg?v=1488258434')">
+
+      <div class="card-highlight-wrapper">
+        <!--
+        <div class="student-pro" style="font-size: 1.1em; background-color: #fff; color: #2d4255;">PRO</div></br>
+        </br>
+        -->
+        <button class="btn bg-white" ng-click="studentProExplore()" style="width: 60%; color: #000;">Conhecer</button>
+      </div>
+      <!-- end card-highlight-wrapper -->
+
+    </div>
+    <!-- end card-highlights -->
+  </div>
+
+  <div style="padding-bottom: 32px;"></div>
+
+  <!-- Explorar universidades -->
+
+  <div class="headline-container">Explorar universidades</div>
 
   <div class="section-cards">
 
@@ -21,6 +50,37 @@
 
   </div>
   <!-- end section-cards -->
+
+  <!-- End Explorar universidades -->
+
+  <div style="padding-bottom: 32px;"></div>
+
+  <!-- Create own university -->
+
+  <div class="section-break row">
+
+    <div class="col-xs-12 col-sm-6">
+
+      <div class="section-break-image" style="background-image: url('https://www.newtimes.co.rw/sites/default/files/main/articles/2015/03/12/1426190446article-0-19012E29000005DC-414_634x400.jpg')"></div>
+
+    </div>
+
+    <div class="col-xs-12 col-sm-6">
+
+      <div style="">
+
+        <div class="section-break-title">Já pensou em criar a sua própria universidade?</div>
+        <p>Crie a sua comunidade educacional online e começe a ensinar para os seus alunos.</p>
+        <button class="btn bg-primary-green" style="width: 60%; color: #fff;">Criar universidade</button>
+
+      </div>
+      <!-- -->
+
+    </div>
+
+  </div>
+
+  <!-- End create own university -->
 
 </div>
 <!-- container-fluid container-full -->

@@ -1,24 +1,30 @@
 <div ng-include="'partials/headerhome.html'"></div>
 
-<div class="container-fluid container-full">
+<div class="container-fluid container-home">
 
-  <div class="headline-container">Explore communites</div>
+  <div class="row" ng-if="k.universities.length > 0" ng-repeat="k in knowledges">
 
-  <div class="section-cards">
+    <div class="col-xs-12">
 
-    <a style="color: #2c4255;" ng-repeat="university in [{ name : 'Calistenia' },{ name : 'Calistenia' },{ name : 'Calistenia' },{ name : 'Calistenia' },{ name : 'Calistenia' }]" href="/a/{{university.url}}/forum" target="_blank">
-      <div class="card">
+      <div class="headline-container">{{k.title}}</div>
 
-        <div class="picture" style="background-image: url('http://{{university.backgroundImage}}') "></div>
-        <div class="title">{{university.name}}</div>
-        <div class="description">Uma metologia de treinamento que tem como principal característica a realização de exercícios que utilizam somente o peso corporal.</div>
+      <div class="section-cards">
+
+        <div class="section-cards" style="padding-bottom: 0px;">
+
+          <timelineuniversitycard uid={{university.universityId}} ng-repeat="university in k.universities"></timelineuniversitycard>
+
+        </div>
+        <!-- end section-cards -->
 
       </div>
-      <!-- end card -->
-    </a>
+      <!-- end section-cards -->
+
+    </div>
+    <!-- end col-xs-12 -->
 
   </div>
-  <!-- end section-cards -->
+  <!-- end row -->
 
 </div>
 <!-- container-fluid container-full -->

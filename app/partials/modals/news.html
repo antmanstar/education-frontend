@@ -1,0 +1,38 @@
+<div class="container-fluid modal-accounts" style="height: calc(100% - 55px); padding-bottom: 15px;">
+
+  <div class="row" style="height: 100%;">
+
+    <div class="col-xs-12" style="height: 100%; overflow-y: scroll;">
+
+      <div class="headline-sub-one" style="line-height: 1.35em;">{{news.title}}</div>
+      <p>{{news.rssSource}} - <i class="fas fa-clock"></i> <span am-time-ago="news.createdAt | amFromUnix"></span></p>
+      <p ng-bind-html="news.description"></p>
+
+      <div class="section-votes">
+        <div class="votes"><b>{{news.votes.length}}</b> votos</div>
+        <button ng-click="vote()" class="btn bg-primary-blue" style="width: 30%"><i class="fas fa-arrow-up"></i> votar</button>
+      </div>
+
+      <div class="section-comments" style="height: 100%;">
+
+        <div class="title" style="margin-bottom: 15px;"><b>Opiniões</b></div>
+
+        <div class="status" ng-if="news.comments.length == 0"><b>Ninguem opinou nesta notícia. Seja o primeiro a opinar.</b></div>
+
+        <newscommentrow c="{{c}}" ng-repeat="c in news.comments | orderBy:'-comments.votes.length' " style="display: block; white-space: nowrap;"></newscommentrow>
+
+      </div>
+      <!-- end news-comments -->
+
+    </div>
+    <!-- end col-xs-12 -->
+
+  </div>
+  <!-- end row -->
+
+</div>
+<!-- end container-fluid -->
+
+<div class="section-actions" style="height: 55px;">
+  <textarea ng-model="text" placeholder="Escreva a sua opinião" style="width: calc(70% - 15px); margin-right: 15px;"></textarea><button class="btn bg-base" ng-click="writeComment()" style="width: 30%">Opinar</button>
+</div>

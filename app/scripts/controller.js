@@ -4,6 +4,31 @@
 
 angular.module('netbase')
 
+.controller('StudentProExploreCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Payments', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Payments) {
+
+  $scope.step = "exhibition";
+
+  $scope.subscribePro = function() {
+
+    // Check if user has card registered
+
+    let plan = { amount : "11988", currency : 'brl', name : "Estudante Pro" }
+
+    if ($localStorage.token != undefined || $localStorage.token != null) {
+      ngDialog.open({ template: 'partials/modals/payments.html', controller: 'PaymentsCtrl', className: 'ngdialog-theme-default', data : { flow : "order", page : "order", purchaseType : "proAnnual", plan : plan } });
+    } else {
+      ngDialog.open({ template: 'partials/modals/login.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
+    }
+
+  };
+  //END $scope.subscribePro
+
+  $scope.timeToStudy = function() {
+    ngDialog.close();
+  }
+
+}])
+
 .controller('AccountCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog) {
 
   // Messages
@@ -54,7 +79,6 @@ angular.module('netbase')
         if (success) {
 
           $localStorage.token = token;
-          console.log($localStorage.token);
           $localStorage.logged = true;
           $rootScope.logged = true;
 
@@ -68,10 +92,10 @@ angular.module('netbase')
 
           if (statusCode == 5000) {
             $scope.loginMessageBox = true;
-            $scope.loginMessage = "Email doesn't exists.";
+            $scope.loginMessage = "Email não existe.";
           } else if (statusCode == 5001) {
             $scope.loginMessageBox = true;
-            $scope.loginMessage = "Password is wrong.";
+            $scope.loginMessage = "Senha esta errada.";
           } else {
             $scope.loginMessageBox = false;
           }
@@ -132,7 +156,9 @@ angular.module('netbase')
           $rootScope.logged = true;
 
           $rootScope.$applyAsync();
-          ngDialog.close();
+
+          ngDialog.open({ template: 'partials/modals/onboarding.html', className: 'ngdialog-theme-default ngdialog-student-pro', controller: 'OnboardingScreenCtrl' });
+
 
         } else {
 
@@ -284,11 +310,418 @@ angular.module('netbase')
 
 }])
 
+/* home - topic */
+
+.controller('TopicMenuCtrl', ['$rootScope', '$scope', '$location', 'University', 'ngDialog', 'News', '$localStorage', 'Knowledge' , function($rootScope, $scope, $location, University, ngDialog, News, $localStorage, Knowledge) {
+
+  $scope.subscribe = function(knowledgeId) {
+
+    console.log(knowledgeId)
+
+    Knowledge.subscribe(knowledgeId).success(function(res) {
+
+      let success = res.success;
+      console.log(res)
+
+    });
+
+    //END Knowledge.subscribe()
+
+  }
+
+}])
+
+.controller('HomeTopicCtrl', ['$rootScope', '$scope', '$location', 'University', 'ngDialog', 'News', '$localStorage', 'Knowledge' , function($rootScope, $scope, $location, University, ngDialog, News, $localStorage, Knowledge) {
+
+  Knowledge.getAllPaginated().success(function(res) {
+
+    let data = res.data;
+    let success = res.success;
+    let docs = data.docs;
+
+    $scope.knowledges = docs;
+
+  });
+
+}])
+
+.controller('HomeTopicUrlCtrl', ['$rootScope', '$scope', '$location', 'University', 'ngDialog', 'News', '$localStorage', 'Forum', 'Knowledge', '$route', function($rootScope, $scope, $location, University, ngDialog, News, $localStorage, Forum, Knowledge, $route) {
+
+  $scope.page = 1;
+  $scope.pages = 1;
+
+  let knowledgeUrl = $route.current.params.url;
+
+  console.log("politica: ")
+
+  /* Load Knowledge */
+
+  Knowledge.getByUrl(knowledgeUrl).success(function(res) {
+
+    console.log("knowledge: ");
+    console.log(res.data);
+
+    $scope.knowledge = res.data;
+
+  });
+  //END Knowledge.getByUrl
+
+  $scope.forumPosts = [];
+
+  Knowledge.getAllPostsByUrlPaginated(knowledgeUrl).success(function(res) {
+
+    console.log(res.data.docs)
+    $scope.forumPosts = forumPosts;
+    $scope.pages = res.data.pages;
+
+  });
+  //END Knowledge.getAllPostsByUrlPaginated
+
+  $scope.busy = false;
+
+  $scope.nextPage = function() {
+
+    $scope.page = $scope.page + 1;
+
+    $scope.busy = true;
+
+    Knowledge.getAllPostsByUrlPaginated(knowledgeUrl).success(function(res) {
+
+      let forumPosts = res.data.docs;
+
+      console.log(res.data)
+
+      $scope.forumPosts = $scope.forumPosts.concat(forumPosts);
+
+      console.log($scope.forumPosts)
+
+      $scope.busy = false;
+
+    });
+    //END Timeline
+
+  };
+
+}])
+
+.controller('HomeTopicUrlAcademiaCtrl', ['$rootScope', '$scope', '$location', 'University', 'ngDialog', 'News', '$localStorage', 'Forum', 'Knowledge', '$route', function($rootScope, $scope, $location, University, ngDialog, News, $localStorage, Forum, Knowledge, $route) {
+
+  let knowledgeUrl = $route.current.params.url;
+
+  console.log("politica: ")
+
+  /* Load Knowledge */
+
+  Knowledge.getByUrl(knowledgeUrl).success(function(res) {
+
+    console.log("knowledge: ");
+    console.log(res.data);
+
+    $scope.knowledge = res.data;
+
+  });
+
+}])
+
+.controller('HomeTopicUrlPostsCtrl', ['$rootScope', '$scope', '$location', 'University', 'ngDialog', 'News', '$localStorage', 'Forum', 'Knowledge', '$route', function($rootScope, $scope, $location, University, ngDialog, News, $localStorage, Forum, Knowledge, $route) {
+
+  let knowledgeUrl = $route.current.params.url;
+
+  $scope.forumPosts = [];
+  $scope.page = 1;
+  $scope.pages = 1;
+
+  if ($location.search().page != undefined) {
+    $scope.page = $location.search().page;
+  }
+
+  /* Load Knowledge */
+
+  Knowledge.getByUrl(knowledgeUrl).success(function(res) {
+
+    console.log("knowledge: ");
+    console.log(res.data);
+
+    $scope.knowledge = res.data;
+
+  });
+
+  Knowledge.getAllPostsByUrlPaginated(knowledgeUrl, $scope.page).success(function(res) {
+
+    console.log(res.data.pages)
+
+    let forumPostsRequested = res.data.docs;
+    $scope.page = Number(res.data.page);
+    $scope.pages = res.data.pages;
+
+    $scope.forumPosts = res.data.docs;
+
+  });
+
+  $scope.range = function(min, max, step) {
+    step = step || 1;
+    var input = [];
+    for (var i = min; i <= max; i += step) {
+        input.push(i);
+    }
+    return input;
+  };
+
+}])
+
+.controller('HomeTopicUrlCoursesCtrl', ['$rootScope', '$scope', '$location', 'University', 'ngDialog', 'News', '$localStorage', 'Forum', 'Knowledge', '$route', function($rootScope, $scope, $location, University, ngDialog, News, $localStorage, Forum, Knowledge, $route) {
+
+  let knowledgeUrl = $route.current.params.url;
+
+  console.log("politica: ")
+
+  /* Load Knowledge */
+
+  Knowledge.getByUrl(knowledgeUrl).success(function(res) {
+
+    console.log("knowledge: ");
+    console.log(res.data);
+
+    $scope.knowledge = res.data;
+
+  });
+
+  Knowledge.getAllPostsByUrlPaginated(knowledgeUrl).success(function(res) {
+
+    console.log(res.data.docs)
+    $scope.forumPosts = res.data.docs;
+
+  });
+
+
+}])
+
+.controller('HomeTopicUrlOpiniaoCtrl', ['$rootScope', '$scope', '$location', 'University', 'ngDialog', 'News', '$localStorage', 'Forum', 'Knowledge', '$route', function($rootScope, $scope, $location, University, ngDialog, News, $localStorage, Forum, Knowledge, $route) {
+
+  let knowledgeUrl = $route.current.params.url;
+
+  console.log("opiniao: ")
+
+  /* Load Knowledge */
+
+  Knowledge.getByUrl(knowledgeUrl).success(function(res) {
+
+    console.log("knowledge: ");
+    console.log(res.data);
+
+    $scope.knowledge = res.data;
+
+    if ($scope.knowledge.sections.length > 0) {
+
+      let sectionId = $scope.knowledge.sections[0].sectionId;
+
+      News.getNewsBySection(sectionId).success(function(res) {
+
+        console.log("news")
+        console.log(res);
+
+        $scope.news = res.data;
+
+      });
+
+    }
+
+  });
+
+  Knowledge.getAllPostsByUrlPaginated(knowledgeUrl).success(function(res) {
+
+    console.log(res.data.docs)
+    $scope.forumPosts = res.data.docs;
+
+  });
+
+
+}])
+
+/* home - noticias */
+
+.controller('HomeNoticiasCtrl', ['$rootScope', '$scope', '$location', 'University', 'ngDialog', 'News', '$localStorage' , function($rootScope, $scope, $location, University, ngDialog, News, $localStorage) {
+
+  $scope.sectionTitle = "em alta";
+  let section = "trend";
+
+  News.getAllSections().success(function(res) {
+
+    console.log("sections")
+    console.log(res);
+    $scope.sections = res.data;
+
+  });
+
+  News.getAllTrends().success(function(res) {
+
+    console.log("news: ")
+    console.log(res)
+    $scope.news = res.data;
+
+  });
+
+  $scope.newsLoadSection = function(id, title) {
+
+    if (id == "trend") {
+
+      News.getAllTrends().success(function(res) {
+
+        $scope.sectionTitle = "em alta";
+        $scope.news = res.data;
+
+      });
+
+    } else {
+
+      News.getNewsBySection(id, title).success(function(res) {
+
+        $scope.sectionTitle = "sobre " + title;
+        $scope.news = res.data;
+
+      });
+
+    }
+
+  }
+
+  $scope.vote = function(newsId, sectionId) {
+
+    if ($localStorage.token != undefined || $localStorage.token != null) {
+
+      News.vote(newsId).success(function(res) {
+
+        let news = res.data;
+
+        if (res.success) {
+
+          if (section == "trend") {
+
+            News.getAllTrends().success(function(res) {
+
+              console.log("news: ")
+              console.log(res)
+              $scope.news = res.data;
+
+            });
+
+          } else {
+
+            News.getNewsBySection(news.sectionId).success(function(res) {
+
+              console.log("news: ")
+              console.log(res)
+              $scope.news = res.data;
+
+            });
+            //END News.getNewsBySection
+
+          }
+
+        } else {
+
+        }
+
+      });
+
+    } else {
+      ngDialog.open({ template: 'partials/modals/login.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
+    }
+
+  }
+
+  $scope.newsOpen = function(id, news) {
+    ngDialog.open({ template: 'partials/modals/news.html', controller: 'NewsByIdCtrl', className: 'ngdialog-theme-default modal-news', data : { news : news } });
+  };
+
+}])
+
+.controller('NewsByIdCtrl', ['$rootScope', '$scope', '$location', 'University', 'ngDialog', 'News', '$localStorage' , function($rootScope, $scope, $location, University, ngDialog, News, $localStorage) {
+
+  console.log("news by id!!!")
+
+  let news = $scope.ngDialogData.news;
+
+  $scope.news = news;
+
+  $scope.vote = function() {
+
+    if ($localStorage.token != undefined || $localStorage.token != null) {
+
+      News.vote(news._id).success(function(res) {
+
+        if (res.success) {
+          $scope.news = res.data;
+        } else {
+
+        }
+
+      });
+
+    } else {
+      ngDialog.open({ template: 'partials/modals/login.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
+    }
+
+    console.log(data);
+
+  }
+
+  $scope.writeComment = function() {
+
+    let data = { text : $scope.text };
+
+    if ($localStorage.token != undefined || $localStorage.token != null) {
+
+      if (data.text.length > 0) {
+
+        News.writeComment(news._id, data).success(function(res) {
+
+          console.log("writing comment: ")
+          console.log(res);
+
+          if (res.success) {
+            $scope.news = res.data;
+            $scope.text = "";
+          } else {
+
+          }
+
+        });
+        //END News.writeComment
+
+      }
+      //END data.text.length
+
+    } else {
+      ngDialog.open({ template: 'partials/modals/login.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
+    }
+
+  }
+
+}])
 
 /* home - universidades */
-.controller('HomeUniversidadesCtrl', ['$rootScope', '$scope', '$location', 'University' , function($rootScope, $scope, $location, University) {
+.controller('HomeUniversidadesCtrl', ['$rootScope', '$scope', '$location', 'University', 'Knowledge' , function($rootScope, $scope, $location, University, Knowledge) {
 
-  console.log("universidades!!!")
+  Knowledge.getAllPaginated().success(function(res) {
+
+    console.log("knowledge: ")
+    console.log(res);
+    let success = res.success;
+    let data = res.data;
+    let docs = data.docs;
+    console.log(docs)
+    $scope.knowledges = docs;
+
+  });
+
+  University.getUniversities().then(function(res) {
+
+    console.log(res);
+
+    $scope.universities = res.data.data;
+
+  });
 
 }])
 
@@ -745,7 +1178,11 @@ angular.module('netbase')
 
     } else {
 
-      window.location.href = '/home'
+      if (logged) {
+        window.location.href = '/home/timeline'
+      } else {
+        window.location.href = '/home'
+      }
 
     }
 
@@ -1616,27 +2053,135 @@ angular.module('netbase')
 
 }])
 
-.controller('ProfileCtrl', ['$rootScope', '$scope', '$location' , function($rootScope, $scope, $location) {
+.controller('ProfileCtrl', ['$rootScope', '$scope', '$location', '$localStorage', 'jwtHelper', 'Students', function($rootScope, $scope, $location, $localStorage, jwtHelper, Students) {
+
+  /* premium */
+  let studentId;
+
+  if ($localStorage.token != undefined && $localStorage.token != null) {
+    studentId = jwtHelper.decodeToken($localStorage.token)._id;
+  } else {
+    $location.path("/");
+  }
+
+  $scope.edit = false;
+
+  $scope.short = "";
+  $scope.text = "";
+    
+  Students.getStudentById(studentId).success(function(res) {
+
+    let success = res.success;
+    let data = res.data;
+
+    if (success) {
+
+      $scope.student = res.data;
+
+    }
+
+  });
+  //END Students.getStudentById
+
+  $scope.saveImage = function() {
+
+    let imageUrl = $("#file").attr("value");
+
+    let payload = {
+      imageUrl : imageUrl
+    };
+
+    if (imageUrl.length > 0) {
+
+      Students.update(studentId, payload).success(function(res) {
+
+        let success = res.success;
+        let data = res.data;
+
+        console.log(res)
+
+        if (success) {
+
+          alert("Imagem salva com sucesso!")
+
+        }
+
+      });
+      //END Students.update
+
+    }
+    //END length > 0
+
+  }
+
+  $scope.saveBio = function() {
+
+    $scope.edit = false;
+
+    let payload = {
+      bioLong : $scope.text,
+      bioShort : $scope.short
+    };
+
+    console.log("save bio")
+
+    Students.update(studentId, payload).success(function(res) {
+
+      let success = res.success;
+      let data = res.data;
+
+      console.log(res)
+
+      if (success) {
+
+        $scope.student = data;
+        $scope.short = data.bioShort;
+        $scope.text = data.bioLong;
+
+      }
+
+    });
+    //END Students.update
+
+  }
+
+  $scope.editBio = function() {
+
+    $scope.edit = true;
+
+  }
+
+}])
 
 
+.controller('ProfileByUsernameCtrl', ['$rootScope', '$scope', '$location', '$localStorage', 'jwtHelper', 'Students', '$route', function($rootScope, $scope, $location, $localStorage, jwtHelper, Students, $route) {
+
+  let studentUsername = $route.current.params.studentUsername;
+
+  Students.getStudentByUsername(studentUsername).success(function(res) {
+
+    let success = res.success;
+    let data = res.data;
+
+    if (success) {
+
+      $scope.student = res.data;
+
+    }
+
+  });
+  //END Students.getStudentById
 
 }])
 
 .controller('IndexCtrl', ['$rootScope', '$scope', '$location', '$localStorage', function($rootScope, $scope, $location, $localStorage) {
 
-  $scope.search = '';
-
-  $scope.$watch("search", function(newValue, oldValue) {
-    if ($scope.search.length > 0) {
-      $location.path("/search").search({ query : $scope.search });
-    }
-  });
-
-  console.log("heyy");
-
   // If isn't the first visit, redirects to home
-  if ($localStorage.indexVisited) {
+  if ($localStorage.logged) {
     //$location.path("/home");
+    $location.path("/home/timeline");
+  } else {
+    $location.path("/home");
   }
 
   $localStorage.indexVisited = true;
@@ -1649,8 +2194,18 @@ angular.module('netbase')
 
   $scope.universities = [];
 
-  $scope.clickToOpen = function () {
-    ngDialog.open({ template: 'partials/jobmodal.html', className: 'ngdialog-theme-default jobmodal' });
+  University.getUniversities().then(function(res) {
+
+    console.log(res);
+
+    $scope.universities = res.data.data;
+
+  });
+
+  //ngDialog.open({ template: 'partials/modals/studentpro.html',className: 'ngdialog-theme-default ngdialog-student-pro', controller: 'StudentProExploreCtrl' });
+
+  $scope.studentProExplore = function () {
+    ngDialog.open({ template: 'partials/modals/studentpro.html', className: 'ngdialog-theme-default ngdialog-student-pro', controller: 'StudentProExploreCtrl' });
   };
 
   University.getUniversities().then(function(res) {

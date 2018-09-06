@@ -3,6 +3,7 @@
 <script type="text/javascript">
 // Initialize instances:
 var socket = io.connect("http://35.196.23.69:8080");
+//var socket = io.connect("http://localhost:7777");
 var siofu = new SocketIOFileUpload(socket);
 
 let filesCount = 0;
@@ -34,7 +35,15 @@ socket.on("progressCloud", function(a){
   console.log("process cloud is: " + progressCloud)
   console.log("process percent is: " + progressPercent)
 
-  $("#file_drop").html("Processando o vídeo: " + progressPercent.toFixed(2) + "%");
+  $("#file_drop").html("<b>Salvando o vídeo:</b> " + progressPercent.toFixed(2) + "%");
+});
+
+socket.on("progressProgressing", function(a){
+
+  let progressPercent = a;
+
+  $("#file_drop").html("<b>Processando o vídeo:</b> " + progressPercent.toFixed(2) + "%");
+
 });
 
 socket.on("status", function(a){
@@ -67,7 +76,6 @@ socket.on("videopath", function(a) {
 })
 
 </script>
-
 
 <div class="container-fluid container-full">
 

@@ -1,0 +1,68 @@
+<div class="container-fluid modal-accounts" style="height: calc(100% - 70px); padding-bottom: 15px; overflow-y: auto;">
+
+  <div class="row" ng-if="step == 'exhibition'">
+
+    <div class="col-xs-12">
+
+      <div class="headline-sub-one">Estudante <div class="student-pro" style="overflow-y: auto; font-size: 0.8em !important; padding-top: 5px; padding-bottom: 5px; vertical-align: middle !important;">PRO</div></div>
+
+      <div class="student-pro-illustration">
+        <img src="https://cdn.dribbble.com/users/702789/screenshots/4658644/artboard.png" />
+      </div>
+
+      <div style="font-size: 1.8em; line-height: 1.5em; padding-bottom: 15px; padding-right: 15px; text-align: center; font-weight: bold;">Conhecimento é poder</div>
+      <p></p>
+
+      <b>Benefícios: </b>
+
+      <div class="student-pro-benefits">
+
+        <div><i class="fas fa-university"></i> Inscrição ilimitada em universidades</div>
+        <div><i class="fas fa-hand-holding-usd"></i> Desconto de 3% em compra de cursos e assinaturas</div>
+        <div><i class="fas fa-newspaper"></i> Opinar em notícias publicas</div>
+        <div><i class="fas fa-graduation-cap"></i> Verificação de conta</div>
+        <div style="border-bottom: unset;"><i class="fab fa-bitcoin"></i> Diplomas na Blockchain</div>
+
+      </div>
+      <!-- end student-pro-benefits -->
+
+    </div>
+    <!-- end col-xs-12 -->
+
+  </div>
+  <!-- end row -->
+
+  <div class="row" ng-if="step == 'success'">
+
+    <div class="col-xs-12">
+
+      <div class="headline-sub-one">Sucesso</div>
+
+      <div class="student-pro-illustration">
+        <img src="https://cdn.dribbble.com/users/1162077/screenshots/3855991/stack-of-books.png" />
+      </div>
+      <!-- end student-pro-illustration -->
+
+      <div style="padding-top: 15px">
+        <b>É hora de aprender!</b>
+        <p>Parabens! Você é Estudante Pro.</p>
+        <!-- end p -->
+      </div>
+      <!-- end div -->
+
+    </div>
+    <!-- end col-xs-12 -->
+
+  </div>
+  <!-- end row -->
+
+</div>
+<!-- end container-fluid -->
+
+<div class="section-actions" ng-show="step == 'exhibition'" style="height: 70px; padding-top: 10px; padding-bottom: 10px;">
+  <button class="btn bg-base" ng-click="subscribePro()" style="width: 100%; color: #fff;">Assinar por R$9.99 mês</button>
+</div>
+
+<div ng-show="step == 'success'" class="section-actions" style="height: 70px; padding-top: 10px; padding-bottom: 10px;">
+  <button class="btn bg-primary-green" ng-click="timeToStudy()" style="width: 100%; color: #fff;">Vamos estudar!</button>
+</div>

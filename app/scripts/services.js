@@ -6,7 +6,7 @@ angular.module('netbase')
 
       var baseUrl = "https://network-university-prod.herokuapp.com/university";
       //var baseUrl = "https://api.universida.de/university";
-      //var baseUrl = "http://localhost:9003/university";
+      //var baseUrl = "http://192.168.1.7:9003/university";
       /*
 
       router.get('/id/:id/playlist', university_controller.getAllPlaylistByUniversityId)
@@ -61,7 +61,7 @@ angular.module('netbase')
 
       var baseUrl = "https://network-university-prod.herokuapp.com/university";
       //var baseUrl = "https://api.universida.de/university";
-      //var baseUrl = "http://localhost:9003/university";
+      //var baseUrl = "http://192.168.1.7:9003/university";
 
       return {
 
@@ -141,13 +141,46 @@ angular.module('netbase')
 
     }])
 
-    .factory('University', ['$http', function($http) {
+    .factory('University', ['$http', '$localStorage', function($http, $localStorage) {
 
       var baseUrl = "https://network-university-prod.herokuapp.com/university";
       //var baseUrl = "https://api.universida.de/university";
-      //var baseUrl = "http://localhost:9003/university";
+      //var baseUrl = "http://192.168.1.7:9003/university";
 
       return {
+
+        storeLocal: function(university) {
+          //$localStorage.studentsStorage = {}
+          if ($localStorage.universityStorage == undefined) {
+            $localStorage.universityStorage = {};
+          }
+
+          $localStorage.universityStorage[university._id] = university;
+          $localStorage.universityStorage[university.url] = university;
+
+        },
+
+        isStoredLocal: function(query) {
+
+          if ($localStorage.universityStorage == undefined) {
+            $localStorage.universityStorage = {};
+          }
+
+          let university = $localStorage.universityStorage;
+
+          if (query in university) {
+            return true;
+          } else {
+            return false;
+          }
+
+        },
+
+        retrieveStorage: function() {
+
+          return $localStorage.universityStorage;
+
+        },
 
         create: function(data) {
 
@@ -434,9 +467,59 @@ angular.module('netbase')
 
       //var baseUrl = "https://api.universida.de/accounts/students";
       var baseUrl = "https://network-accounts-prod.herokuapp.com/accounts/students";
-      //var baseUrl = "http://localhost:9000/accounts/students";
+      //var baseUrl = "http://192.168.1.7:9000/accounts/students";
 
       return {
+
+        storeLocal: function(student) {
+          //$localStorage.studentsStorage = {}
+          if ($localStorage.studentsStorage == undefined) {
+            $localStorage.studentsStorage = {};
+          }
+
+          $localStorage.studentsStorage[student._id] = student;
+
+        },
+
+        isStoredLocal: function(studentId) {
+
+          // check if it's stored local
+
+          let storage = $localStorage.studentsStorage;
+
+          if (studentId in storage) {
+            return true;
+          } else {
+            return false;
+          }
+
+        },
+
+        retrieveStorage: function() {
+
+          return $localStorage.studentsStorage;
+
+        },
+
+        update: function(accountId, data) {
+
+          var url = "/id/" + accountId + "/update";
+
+          return $http({
+            method: 'PUT',
+            url: baseUrl + url,
+            data : data,
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }});
+
+        },
 
         getCards: function(userId) {
 
@@ -580,6 +663,34 @@ angular.module('netbase')
 
           return $http.get(baseUrl + url);
 
+        },
+
+        getStudentByUsername: function(id) {
+
+          var url = '/username/' + id;
+
+          return $http.get(baseUrl + url);
+
+        }
+
+      }
+
+    }])
+
+    .factory('Timeline', ['$http', function($http) {
+
+      //var baseUrl = "https://api.universida.de/search";
+      var baseUrl = "https://network-university-prod.herokuapp.com/university";
+      //var baseUrl = "http://192.168.1.7:9003"
+
+      return {
+
+        getTimelineByStudentId: function(studentId, page) {
+
+          var url = '/university/student/' + studentId + '/timeline?page=' + page;
+
+          return $http.get(baseUrl + url);
+
         }
 
       }
@@ -605,10 +716,88 @@ angular.module('netbase')
 
     }])
 
+    .factory('Knowledge', ['$http', '$localStorage', function($http, $localStorage) {
+
+      //var baseUrl = "https://api.universida.de/search";
+      //var baseUrl = "http://192.168.1.7:9003/knowledge";
+      var baseUrl = "https://network-university-prod.herokuapp.com/knowledge";
+
+      return {
+
+        getAllPaginated: function(query) {
+
+          // do paginated here
+
+          var url = '/all';
+
+          return $http.get(baseUrl + url);
+
+        },
+
+        getById: function(id) {
+
+          // do paginated here
+
+          var url = '/id/' + id;
+
+          return $http.get(baseUrl + url);
+
+        },
+
+        getByUrl: function(urlArg) {
+
+          // do paginated here
+
+          var url = '/url/' + urlArg;
+
+          return $http.get(baseUrl + url);
+
+        },
+
+        getAllPostsByIdPaginated: function(id) {
+
+          // do paginated here
+
+          var url = '/id/' + id + '/posts';
+
+          return $http.get(baseUrl + url);
+
+        },
+
+        getAllPostsByUrlPaginated: function(id, page) {
+
+          // do paginated here
+
+          var url = '/url/' + id + '/posts' + "?page=" + page;
+
+          return $http.get(baseUrl + url);
+
+        },
+
+        subscribe: function(knowledgeId) {
+
+          // do paginated here
+
+          var url = '/id/' + knowledgeId + "/subscribe";
+
+          return $http({
+            method: 'POST',
+            url: baseUrl + url,
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'x-access-token': $localStorage.token
+            }});
+
+        }
+
+      }
+
+    }])
+
     .factory('Videos', ['$http', function($http) {
 
       var baseUrl = "https://network-university-prod.herokuapp.com/university";
-      //var baseUrl = "http://localhost:9003/university";
+      //var baseUrl = "http://192.168.1.7:9003/university";
 
       return {
 
@@ -818,19 +1007,146 @@ angular.module('netbase')
 
       //var baseUrl = "https://api.universida.de/search";
 
-      var baseUrl = "https://network-payments-prod.herokuapp.com";
-      //var baseUrl = "http://localhost:9004";
+      var baseUrl = "https://network-payments-prod.herokuapp.com/payments";
+      //var baseUrl = "http://192.168.1.7:9004/payments";
 
       return {
 
         subscription: function(data) {
 
-          var url = '/payments/subscription';
+          var url = '/subscription';
 
           return $http({
             method: 'POST',
             url: baseUrl + url,
             data : data,
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }});
+
+        },
+
+        subscribePro: function(interval) {
+
+          var url = '/subscription/pro';
+
+          let data = { interval : interval };
+
+          return $http({
+            method: 'POST',
+            url: baseUrl + url,
+            data : data,
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }});
+
+        },
+
+        getAllOrders: function(id) {
+
+          var url = '/students/id/' + id + '/orders';
+
+          return $http.get(baseUrl + url);
+
+        }
+
+      }
+
+    }])
+
+    .factory('News', ['$http', function($http) {
+
+      //var baseUrl = "https://api.universida.de/search";
+      var baseUrl = "https://network-news-prod.herokuapp.com";
+      //var baseUrl = "http://192.168.1.7:8888";
+      //var baseUrl = "http://192.168.1.7:9004";
+
+      return {
+
+        getAllSections: function() {
+
+          var url = '/news/section';
+
+          return $http.get(baseUrl + url);
+
+        },
+
+        getAllTrends: function() {
+
+          var url = '/news/trends';
+
+          return $http.get(baseUrl + url);
+
+        },
+
+        getNewsBySection: function(id) {
+
+          ///section/id/:id/news
+
+          var url = '/news/section/id/' + id + '/news';
+
+          return $http.get(baseUrl + url);
+
+        },
+
+        writeComment: function(id, data) {
+
+          var url = '/news/id/' + id + '/comment';
+
+          return $http({
+            method: 'POST',
+            url: baseUrl + url,
+            data : data,
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }});
+
+        },
+
+        vote: function(id) {
+
+          var url = '/news/id/' + id + '/vote';
+
+          return $http({
+            method: 'POST',
+            url: baseUrl + url,
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }});
+
+        },
+
+        voteCommentById: function(newsId, commentId) {
+
+          var url = '/news/id/' + newsId + '/comment/' + commentId + '/vote';
+
+          return $http({
+            method: 'PUT',
+            url: baseUrl + url,
             transformRequest: function(obj) {
                 var str = [];
                 for(var p in obj)
@@ -852,7 +1168,7 @@ angular.module('netbase')
       //var baseUrl = "https://api.universida.de/search";
 
       var baseUrl = "https://network-payments-prod.herokuapp.com";
-      //var baseUrl = "http://localhost:9004";
+      //var baseUrl = "http://192.168.1.7:9004";
 
       return {
 
