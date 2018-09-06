@@ -14,14 +14,13 @@ angular.module('netbase', ['ngStorage',
     'dibari.angular-ellipsis',
     'ngSanitize',
     'infinite-scroll',
-    'updateMeta',
-    'angular-google-analytics'
+    'updateMeta'
 ])
-.config(['$translateProvider', '$localStorageProvider', 'StripeElementsProvider', 'AnalyticsProvider', function ($translateProvider, $localStorageProvider, StripeElementsProvider, AnalyticsProvider) {
+.config(['$translateProvider', '$localStorageProvider', 'StripeElementsProvider', function ($translateProvider, $localStorageProvider, StripeElementsProvider) {
 
   let stripeKey = "pk_live_ZBmOf7GNQ13AIEGeP9WkPv3M";
 
-  AnalyticsProvider.setAccount('UA-125408424-1');
+  //AnalyticsProvider.setAccount('UA-125408424-1');
 
   StripeElementsProvider.setAPIKey(stripeKey);
 
