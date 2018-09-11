@@ -2255,7 +2255,7 @@ angular.module('netbase')
   //END $scope.createUniversityRedirect
 
   $scope.studentProExplore = function () {
-    ngDialog.open({ template: 'partials/modals/studentpro.html', className: 'ngdialog-theme-default ngdialog-student-pro', controller: 'StudentProExploreCtrl', data : { redirectUrl : redirectUrl } });
+    ngDialog.open({ template: 'partials/modals/studentpro.html', className: 'ngdialog-theme-default ngdialog-student-pro', controller: 'StudentProExploreCtrl' });
   };
 
   University.getUniversities().then(function(res) {

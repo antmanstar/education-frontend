@@ -18,7 +18,7 @@
 
         <div class="form-group">
           <i class="fas fa-key"></i>
-          <input ng-model="loginPassword" placeholder="Password" type="password" />
+          <input ng-keypress="($event.which === 13)?login():0" ng-model="loginPassword" placeholder="Password" type="password" />
         </div>
         <!-- end form group -->
 
