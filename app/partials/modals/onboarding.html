@@ -12,9 +12,7 @@
 
       <!--  ng-if="knowledge.knowledges.length > 0" -->
 
-      <div ng-repeat="a in [1,2,3,4,5,6]">
       <div ng-repeat="knowledge in knowledges" style="width: 50%; text-align: center; font-size: 1.15em; display: inline-block; line-height: 2.5em;"><input style="margin-right: 10px;" ng-change="knowledgeCheck(knowledge._id)" type="checkbox" id="scales" name="feature" ng-model="checkbox" value="scales" />{{knowledge.title}}</div>
-      </div>
 
     </div>
     <!-- end col-xs-12 -->
