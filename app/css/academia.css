@@ -92,7 +92,7 @@
 
 .academia-content-forum-post-info-text.text {
 
-  border: 1px solid #2d4255;
+  border: 1px solid #2d42552e;
   border-radius: 5px;
   margin-top: 15px;
   margin-bottom: 15px;
@@ -101,6 +101,10 @@
 
   width: 100%;
 
+}
+
+.academia-content-forum-post-info-text > div {
+  font-size: 1.25em;
 }
 
 .academia-content-forum-post-info-text figure iframe {

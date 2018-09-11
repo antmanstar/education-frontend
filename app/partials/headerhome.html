@@ -56,7 +56,7 @@
         <div class="option unselectable" ng-class="{'active': originalPath == '/home' || originalPath == '/home/'}"><a href="/home">Home</a></div>
         <div class="option unselectable" ng-class="{'active': originalPath == '/home/universidades' || originalPath == '/home/universidades/'}"><a href="/home/universidades">Universidades</a></div>
         <div class="option unselectable" ng-class="{'active': originalPath == '/home/noticias' || originalPath == '/home/noticias/'}"><a href="/home/noticias">Opinião</a></div>
-        <div class="option unselectable" ng-class="{'active': originalPath.indexOf('/home/conhecimento') != -1 }"><a href="/home/conhecimento">Conhecimento</a></div>
+        <!--<div class="option unselectable" ng-class="{'active': originalPath.indexOf('/home/conhecimento') != -1 }"><a href="/home/conhecimento">Conhecimento</a></div>-->
         <!--<<div class="option unselectable" ng-class="{'active': originalPath == '/cursos' || originalPath == '/cursos/'}"><a href="/home">Cursos</a></div>-->
         <!--<div class="option unselectable" ng-class="{'active': originalPath == '/home/colleges' || originalPath == '/home/colleges/'}"><a href="/home/colleges">Colleges</a></div>-->
         <!--<div class="option unselectable" ng-class="{'active': originalPath == '/home/smp' || originalPath == '/home/smp/'}"><a href="/home/smp">Marketplace</a></div>-->
@@ -71,7 +71,7 @@
           <div class="option unselectable" ng-class="{'active': originalPath == '/home' || originalPath == '/home/'}"><a href="/home">Home</a></div>
           <div class="option unselectable" ng-class="{'active': originalPath == '/home/universidades' || originalPath == '/home/universidades/'}"><a href="/home/universidades">Universidades</a></div>
           <div class="option unselectable" ng-class="{'active': originalPath == '/home/noticias' || originalPath == '/home/noticias/'}"><a href="/home/noticias">Opinião</a></div>
-          <div class="option unselectable" ng-class="{'active': originalPath.indexOf('/home/conhecimento') != -1 }"><a href="/home/conhecimento">Conhecimento</a></div>
+          <!--<div class="option unselectable" ng-class="{'active': originalPath.indexOf('/home/conhecimento') != -1 }"><a href="/home/conhecimento">Conhecimento</a></div>-->
           <!--div class="option unselectable" ng-class="{'active': originalPath == '/cursos' || originalPath == '/cursos/'}"><a href="/home">Cursos</a></div>-->
           <!--<div class="option unselectable" ng-class="{'active': originalPath == '/home/colleges' || originalPath == '/home/colleges/'}"><a href="/home/colleges">Colleges</a></div>-->
           <!--<div class="option unselectable" ng-class="{'active': originalPath == '/home/smp' || originalPath == '/home/smp/'}"><a href="/home/smp">Marketplace</a></div>-->
@@ -90,7 +90,15 @@
           <div class="menu">
             <!-- <<div class="option">Editar perfil</div> -->
             <div class="option unselectable" ng-show="logged"><a href="/perfil">Perfil</a></div>
-            <div class="option unselectable" ng-show="logged"><a href="/dashboard">Dashboard</a></div>
+            <div class="option unselectable" ng-show="logged"><a href="/dashboard"><b>Dashboard</b></a></div>
+            <div class="option unselectable" ng-show="logged" style="padding-left: 40px; text-decoration: underline;">Universidades</div>
+            <div class="option unselectable" ng-show="logged" style="padding-left: 40px;"><a href="/dashboard">- Inscrito</a></div>
+            <div class="option unselectable" ng-show="logged" style="padding-left: 40px;"><a href="/dashboard">- Criar Universidade</a></div>
+            <div class="option unselectable" ng-show="logged" style="padding-left: 40px;"><a href="/dashboard">- Administrar Universidade</a></div>
+            <div class="option unselectable" ng-show="logged" style="padding-left: 40px; text-decoration: underline;">Pedidos</div>
+            <div class="option unselectable" ng-show="logged" style="padding-left: 40px;"><a href="/dashboard">- Todas compras</a></div>
+            <div class="option unselectable" ng-show="logged" style="padding-left: 40px; text-decoration: underline;">Pagamentos</div>
+            <div class="option unselectable" ng-show="logged" style="padding-left: 40px;"><a href="/dashboard">- Carteira</a></div>
             <div class="option" ng-click="logout()">Logout</div>
           </div>
           <!-- end menu -->

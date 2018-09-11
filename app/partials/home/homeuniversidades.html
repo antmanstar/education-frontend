@@ -1,30 +1,66 @@
 <div ng-include="'partials/headerhome.html'"></div>
 
-<div class="container-fluid container-home">
+<style>
 
-  <div class="row" ng-if="k.universities.length > 0" ng-repeat="k in knowledges">
+.section-cards .card .description {
+  height: unset !important;
+  max-height: 125px;
+}
 
-    <div class="col-xs-12">
+</style>
 
-      <div class="headline-container">{{k.title}}</div>
+<div class="container-fluid container-home" style="padding-bottom: 90px;">
 
-      <div class="section-cards">
+  <div class="row">
 
-        <div class="section-cards" style="padding-bottom: 0px;">
+    <div class="col-sm-4 col-md-3 section-menu-col">
 
-          <timelineuniversitycard uid={{university.universityId}} ng-repeat="university in k.universities"></timelineuniversitycard>
+      <div class="section-menu-title">Conhecimentos</div>
 
-        </div>
-        <!-- end section-cards -->
-
+      <div class="section-menu">
+        <div class="option" ng-repeat="k in knowledges"><a href="/home/c/{{k.url}}">{{k.title}}</a></div>
       </div>
-      <!-- end section-cards -->
 
     </div>
-    <!-- end col-xs-12 -->
+    <!-- col-sm-4 col-md-3 section-menu-col -->
+
+    <div class="col-sm-8 col-md-9">
+
+      <div class="row" ng-if="k.universities.length > 0" ng-repeat="k in knowledges">
+
+        <div class="col-xs-12">
+
+          <div class="headline-container">{{k.title}}</div>
+
+          <div class="section-cards" style="padding-bottom: 0px !important;">
+
+            <timelineuniversitycard uid={{university.universityId}} ng-repeat="university in k.universities"></timelineuniversitycard>
+
+          </div>
+          <!-- end section-cards -->
+
+        </div>
+        <!-- end col-xs-12 -->
+
+      </div>
+      <!-- end row -->
+
+    </div>
+    <!-- end col-sm-8 -->
 
   </div>
   <!-- end row -->
+
+  <div class="section-footer">
+
+    <div class="section-footer-title" style="width: 125px;"><b>Conhecimentos</b></div>
+
+    <div class="section-sections" style="padding-left: 125px;">
+      <div ng-repeat="k in knowledges">{{k.title}}</div>
+    </div>
+
+  </div>
+  <!-- end news-footer -->
 
 </div>
 <!-- container-fluid container-full -->

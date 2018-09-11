@@ -1,5 +1,53 @@
 <div ng-include="'partials/headerhome.html'"></div>
 
+<script type="text/javascript">
+
+var socket = io.connect("https://fluted-house-215816.appspot.com");
+//var socket = io.connect("http://104.196.9.222:5555");
+//var socket = io.connect("http://localhost:8888");
+var siofu = new SocketIOFileUpload(socket);
+
+let filesCount = 0;
+
+let progressCloud = 0;
+var progressPercent = 0;
+
+document.getElementById("upload_btn").addEventListener("click", siofu.prompt, false);
+
+// Do something on upload progress:
+siofu.addEventListener("progress", function(event){
+  var percent = event.bytesLoaded / event.file.size * 100;
+  console.log("File is", percent.toFixed(2), "percent loaded");
+
+  $("#file_drop").html("Upload: " + percent.toFixed(2) + "%");
+
+  if (percent.toFixed(2) == 100) {
+    $("#file_drop").html("<b>Iniciando o processamento da imagem</b>");
+  }
+
+});
+
+socket.on("files", function(a){
+  console.log("files: ")
+  console.log(a)
+  filesCount = a;
+});
+
+// Do something when a file is uploaded:
+siofu.addEventListener("complete", function(event){
+    console.log(event.success);
+    console.log(event.file);
+    console.log(event)
+});
+
+socket.on("imagepath", function(a) {
+  $("#file").attr("value", a);
+  $("#university-background-image").attr("style", "background-image: url('" + a + "')");
+  console.log(a)
+})
+
+</script>
+
 <div class="container-fluid">
 
   <div class="row">
@@ -34,6 +82,36 @@
 
         <div class="form">
 
+          <style>
+            #university-background-image {
+              height: 300px;
+              border-radius: 5px;
+              background-size: cover;
+              background-position: 50% 50%;
+            }
+          </style>
+
+          <div class="form-group">
+            <label>Foto da Universidade</label>
+            <input type="hidden" ng-model="backgroundImage" id="file" ng-change="backgroundImageUpdate()">
+            <div id="university-background-image" style="background-image: url('https://universida.de/img/misc/noimageacademia.jpg')"></div>
+
+            <div class="row">
+
+              <div class="col-xs-12 col-sm-6" style="margin-top: 15px;">
+                <button id="upload_btn" class="btn bg-base">Selecionar Foto</button>
+              </div>
+
+              <div class="col-xs-12 col-sm-6" style="margin-top: 15px;">
+                <button class="btn btn-red">Remover foto</button>
+              </div>
+
+            </div>
+            <!-- end row -->
+
+          </div>
+          <!-- end form group -->
+
           <div class="form-group">
             <label>Nome da Universidade</label>
             <input ng-model="name" placeholder="Escreva aqui o nome da sua Universidade" type="text" />
@@ -47,9 +125,9 @@
           <!-- end form group -->
 
           <div class="form-group">
-            <label>Language</label>
+            <label>Idioma</label>
             <select ng-model="language">
-              <option value="PT" selected>Portuguese</option>
+              <option value="PT" selected>Português</option>
               <option value="EN">Inglês</option>
             </select>
           </div>
@@ -88,37 +166,21 @@
       <p style="padding-bottom: 20px; padding-top: 0px;">Prever</p>
 
       <div class="form-group">
-        <label>Name</label>
+        <label>Foto da Universidade</label>
+        <div id="university-background-image" style="background-image: url('{{backgroundImage}}')"></div>
+      </div>
+      <!-- end form group -->
+
+      <div class="form-group">
+        <label>Nome</label>
         <div class="headline-display" style="padding-top: 0; padding-bottom: 0;">{{name}}</div>
       </div>
 
-      <!--
       <div class="form-group">
-
-        <label>Background Image</label>
-
-        <div uploadbox></div>
-
-        <style>
-
-          .dashboard-input-picture-wrap {
-            width: 100%;
-          }
-
-          .dashboard-input-picture {
-            width: 100%;
-          }
-
-        </style>
-
-      </div>
-      -->
-      <!-- end form-group -->
-
-      <div class="form-group">
-        <label>About</label>
+        <label>Sobre</label>
         <div class="headline-sub-two" style="padding-top: 0; padding-bottom: 0;">{{about}}</div>
       </div>
+
 
       <div class="form-group">
         <label>URL</label>

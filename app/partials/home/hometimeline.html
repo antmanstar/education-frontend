@@ -21,7 +21,8 @@
 
       <h3 ng-if="user.universitiesSubscribed.length == 0" class="option">Você não esta registrado em nenhuma Universidade</h3>
       </br></br>
-      <h3 ng-if="user.universitiesSubscribed.length == 0" class="option">Registre em <a href="/home/universidades">Universidades</a> ou em <a href="/home/conhecimento">Conhecimentos</a> para receber conteúdo personalizado!</h3>
+      <!-- <a href="/home/conhecimento">Conhecimentos</a> -->
+      <h3 ng-if="user.universitiesSubscribed.length == 0" class="option">Registre em <a href="/home/universidades">Universidades</a> para receber conteúdo personalizado!</h3>
 
       <div ng-if="user.universitiesSubscribed.length > 0" infinite-scroll='nextPage()' infinite-scroll-disabled='busy' infinite-scroll-distance='1'>
         <timelineposthome fp="{{fp}}" ng-repeat="fp in forumPosts"></timelinepost>

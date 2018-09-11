@@ -66,7 +66,7 @@ angular.module('netbase')
     $scope.page = page;
 
     if (page = "order") {
-
+      $scope.initOrder();
     }
     //$scope.$apply();
 

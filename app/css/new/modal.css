@@ -1,3 +1,28 @@
+/* modal account suggestion */
+.modal-accountsuggestion {
+
+}
+
+@media screen and (max-width: 768px) {
+  .modal-accountsuggestion .bg-image {
+    height: 250px !important;
+    margin-bottom: 30px;
+  }
+  .modal-accountsuggestion .container-fluid {
+    padding-top: 0px !important;
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+}
+
+.modal-accountsuggestion .ngdialog-close {
+
+  display: none;
+
+}
+
+/* */
+
 .modal-accounts {
   padding-top: 45px;
   padding-left: 30px;

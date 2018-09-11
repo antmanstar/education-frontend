@@ -29,18 +29,44 @@ angular.module('netbase')
 
 }])
 
+.controller('AccountSuggestionCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog) {
+
+  let university = $scope.ngDialogData.university;
+
+  $scope.university = university;
+
+  $scope.create = function() {
+    ngDialog.open({ template: 'partials/modals/signup.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
+  }
+
+  $scope.close = function() {
+    ngDialog.close();
+  }
+
+}])
+
 .controller('AccountCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog) {
+
+  // Redirect
+  let redirectUrl;
+
+  console.log($scope.ngDialogData);
+
+  try {
+    if ($scope.ngDialogData.redirectUrl != null) {
+      redirectUrl = $scope.ngDialogData.redirectUrl;
+    }
+  } catch(e) {
+    redirectUrl = "";
+  }
 
   // Messages
   $scope.loginMessageBox = false;
   $scope.createMessageBox = false;
-
   $scope.resetPasswordSuccess = false;
 
   $scope.forgotPassword = function() {
-
     ngDialog.open({ template: 'partials/modals/resetone.html', className: 'ngdialog-theme-default', controller: 'AccountCtrl' });
-
   }
 
   $scope.resetPasswordStepOne = function() {
@@ -84,7 +110,12 @@ angular.module('netbase')
 
           $rootScope.$applyAsync();
           ngDialog.close();
-          $route.reload();
+
+          if (redirectUrl.length > 0) {
+            $location.path(redirectUrl)
+          } else {
+            $route.reload();
+          }
 
         } else {
 
@@ -159,6 +190,12 @@ angular.module('netbase')
 
           ngDialog.open({ template: 'partials/modals/onboarding.html', className: 'ngdialog-theme-default ngdialog-student-pro', controller: 'OnboardingScreenCtrl' });
           fbq('track', 'CompleteRegistration');
+
+          if (redirectUrl.length > 0) {
+            $location.path(redirectUrl)
+          } else {
+            $route.reload();
+          }
 
         } else {
 
@@ -2196,16 +2233,29 @@ angular.module('netbase')
 
   University.getUniversities().then(function(res) {
 
-    console.log(res);
-
     $scope.universities = res.data.data;
 
   });
 
   //ngDialog.open({ template: 'partials/modals/studentpro.html',className: 'ngdialog-theme-default ngdialog-student-pro', controller: 'StudentProExploreCtrl' });
 
+  $scope.createUniversityRedirect = function() {
+
+    let logged = $rootScope.logged;
+
+    let redirectUrl = "/dashboard/a/create";
+
+    if (logged) {
+      $location.path(redirectUrl);
+    } else {
+      ngDialog.open({ template: 'partials/modals/login.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default', data : { redirectUrl : redirectUrl } });
+    }
+
+  }
+  //END $scope.createUniversityRedirect
+
   $scope.studentProExplore = function () {
-    ngDialog.open({ template: 'partials/modals/studentpro.html', className: 'ngdialog-theme-default ngdialog-student-pro', controller: 'StudentProExploreCtrl' });
+    ngDialog.open({ template: 'partials/modals/studentpro.html', className: 'ngdialog-theme-default ngdialog-student-pro', controller: 'StudentProExploreCtrl', data : { redirectUrl : redirectUrl } });
   };
 
   University.getUniversities().then(function(res) {
