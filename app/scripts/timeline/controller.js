@@ -36,8 +36,9 @@ angular.module('netbase')
 
   Timeline.getTimelineByStudentId(studentId, $scope.page).success(function(res) {
 
+    console.log(res)
     let forumPosts = res.data.docs;
-
+    console.log(forumPosts)
     $scope.forumPosts = forumPosts;
     $scope.pages = res.data.pages;
 
