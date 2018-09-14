@@ -2120,6 +2120,28 @@ angular.module('netbase')
   });
   //END Students.getStudentById
 
+  $scope.savePassword = function() {
+
+    let payload = {
+      password : $scope.password
+    };
+
+    Students.update(studentId, payload).success(function(res) {
+
+      let success = res.success;
+      let data = res.data;
+
+      if (success) {
+
+        alert("Senha atualizada com sucesso");
+
+      }
+
+    });
+    //END Students.update
+
+  }
+
   $scope.saveImage = function() {
 
     let imageUrl = $("#file").attr("value");
@@ -2230,6 +2252,8 @@ angular.module('netbase')
   $scope.showMobileMenu = false;
 
   $scope.universities = [];
+
+  ngDialog.open({ template: 'partials/modals/onboarding.html', className: 'ngdialog-theme-default ngdialog-student-pro', controller: 'OnboardingScreenCtrl' });
 
   University.getUniversities().then(function(res) {
 

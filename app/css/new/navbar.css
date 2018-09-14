@@ -222,14 +222,17 @@ nav .navbar-slider .option:hover {
   z-index: 99;
 
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
 
   background-color: #fff;
 
   top: 65px;
+  bottom: 0;
+
+  overflow-y: scroll;
 
   padding-top: 15px;
-  padding-bottom: 15px;
+  padding-bottom: 70px;
 
 }
 

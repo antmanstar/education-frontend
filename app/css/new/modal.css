@@ -1,3 +1,16 @@
+/* onboarding */
+.onboarding-options {
+  padding-top: 15px;
+}
+
+.onboarding-options .option {
+  width: 50%;
+  text-align: center;
+  font-size: 1em;
+  display: inline-block;
+  padding-bottom: 15px;
+}
+
 /* modal account suggestion */
 .modal-accountsuggestion {
 

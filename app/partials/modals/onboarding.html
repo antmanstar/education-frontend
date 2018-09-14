@@ -1,6 +1,6 @@
 <div class="container-fluid modal-accounts" style="height: calc(100% - 70px); padding-bottom: 15px; overflow-y: auto;">
 
-  <div class="row">
+  <div class="row" ng-if="page == 1">
 
     <div class="col-xs-12">
 
@@ -9,10 +9,37 @@
       <div class="student-pro-illustration">
         <img style="width: 300px; height: unset;" src="https://cdn.dribbble.com/users/24711/screenshots/1507479/learngit-teaser.gif" />
       </div>
+      <!--  ng-if="knowledge.knowledges.length > 0" -->
+
+      <div class="onboarding-options">
+        <div class="option" ng-repeat="knowledge in knowledges"><input style="margin-right: 10px;" ng-change="knowledgeCheck(knowledge._id)" type="checkbox" id="scales" name="feature" ng-model="checkbox" value="scales" />{{knowledge.title}}</div>
+      </div>
+      <!-- -->
+
+    </div>
+    <!-- end col-xs-12 -->
+
+  </div>
+  <!-- end row -->
+
+  <div class="row" ng-if="page == 2">
+
+    <div class="col-xs-12">
+
+      <div class="headline-sub-one">Cadastrar em universidades</div>
+
+      <div class="student-pro-illustration">
+        <img style="height: 100%; max-width: 350px;" src="https://cdn.dribbble.com/users/1022481/screenshots/3951262/chat_lina_shot.png" />
+      </div>
+
+      <h4 style="padding-top: 15px; line-height: 1.7em;">Selecione até 3 universidades para se cadastrar. Se torne <b>Estudante</b> <div class="student-pro" style="font-size: 0.75em;">PRO</div> para cadastrar em mais de 5 universidades.</h4>
 
       <!--  ng-if="knowledge.knowledges.length > 0" -->
 
-      <div ng-repeat="knowledge in knowledges" style="width: 50%; text-align: center; font-size: 1.15em; display: inline-block; line-height: 2.5em;"><input style="margin-right: 10px;" ng-change="knowledgeCheck(knowledge._id)" type="checkbox" id="scales" name="feature" ng-model="checkbox" value="scales" />{{knowledge.title}}</div>
+      <div class="onboarding-options">
+        <div class="option" ng-repeat="university in universities"><input style="margin-right: 10px;" ng-change="universityCheck(university.url)" type="checkbox" name="feature" ng-model="checkbox" value="scales" />{{university.name}}</div>
+      </div>
+      <!-- -->
 
     </div>
     <!-- end col-xs-12 -->
@@ -23,6 +50,11 @@
 </div>
 <!-- end container-fluid -->
 
-<div class="section-actions" style="height: 70px; padding-top: 10px; padding-bottom: 10px;">
-  <button ng-click="knowledgeStore()" class="btn bg-primary-blue" ng-click="subscribePro()" style="width: 100%; color: #fff;">Continuar</button>
+<div ng-if="page == 1" class="section-actions" style="height: 70px; padding-top: 10px; padding-bottom: 10px;">
+  <button ng-click="knowledgeStore()" class="btn bg-primary-blue" style="width: 100%; color: #fff;">Continuar</button>
+</div>
+
+<div ng-if="page == 2" class="section-actions" style="height: 70px; padding-top: 10px; padding-bottom: 10px; white-space: nowrap;">
+  <button class="btn bg-base" ng-click="universityStore()" style="display: inline-block; width: 50%; color: #fff;">Cadastrar</button>
+  <button class="btn bg-primary-blue" ng-click="studentProExplore()" style="display: inline-block; width: 50%; color: #fff;">Ser Estudante PRO</button>
 </div>

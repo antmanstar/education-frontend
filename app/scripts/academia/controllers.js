@@ -46,6 +46,17 @@ angular.module('netbase')
 
     $scope.university = universityStorage[universityUrl];
 
+    let universityId = $scope.university._id;
+
+    console.log(universityId);
+
+    Forum.getAllOwnerForumPost(universityId).then(function(res) {
+      console.log(res)
+      console.log(res.data.data.docs)
+      $scope.forumPosts = res.data.data.docs;
+
+    });
+
     if (!$rootScope.logged) {
 
       $timeout(function() {
@@ -68,6 +79,15 @@ angular.module('netbase')
       $scope.university = res.data.data;
       University.storeLocal($scope.university);
 
+      let universityId = $scope.university._id;
+
+      Forum.getAllOwnerForumPost(universityId).then(function(res) {
+
+        console.log(res.data.data.docs)
+        $scope.forumPosts = res.data.data.docs;
+
+      });
+
       if (!$rootScope.logged) {
 
         $timeout(function() {
@@ -84,13 +104,6 @@ angular.module('netbase')
     });
 
   }
-
-  Forum.getAllOwnerForumPost(universityUrl).then(function(res) {
-
-    console.log(res.data.data.docs)
-    $scope.forumPosts = res.data.data.docs;
-
-  });
 
   $scope.textFilter = function(text) {
 
@@ -228,6 +241,8 @@ angular.module('netbase')
 
   /* get university informations */
 
+  console.log("acaemia forum ctrl")
+
   if ( University.isStoredLocal(universityUrl) ) {
 
     let universityStorage = University.retrieveStorage(universityUrl);
@@ -240,6 +255,8 @@ angular.module('netbase')
       $scope.page = Number(res.data.data.page);
       $scope.pages = res.data.data.pages;
       $scope.forumPosts = $scope.forumPosts.concat(forumPostsRequested);
+
+      console.log($scope.forumPost)
 
       if (!$rootScope.logged) {
 
@@ -278,6 +295,8 @@ angular.module('netbase')
         $scope.page = Number(res.data.data.page);
         $scope.pages = res.data.data.pages;
         $scope.forumPosts = $scope.forumPosts.concat(forumPostsRequested);
+
+        console.log(res)
 
         if (!$rootScope.logged) {
 
@@ -1094,7 +1113,7 @@ angular.module('netbase')
   }
 }])
 
-.directive('academiarightcolumn', ['University', '$localStorage', '$route', 'jwtHelper', 'ngDialog', function(University, $localStorage, $route, jwtHelper, ngDialog) {
+.directive('academiarightcolumn', ['University', '$localStorage', '$route', 'jwtHelper', 'ngDialog', '$location', function(University, $localStorage, $route, jwtHelper, ngDialog, $location) {
   return {
     restrict: 'EA',
     templateUrl: '../partials/academia/rightcolumn.html',
@@ -1108,7 +1127,6 @@ angular.module('netbase')
 
       if ($localStorage.token != undefined && $localStorage.token != null) {
         studentId = jwtHelper.decodeToken($localStorage.token)._id;
-        console.log(studentId)
       }
 
       scope.studentIsPremium = false;
@@ -1119,7 +1137,7 @@ angular.module('netbase')
         if (value) {
 
           university = JSON.parse(value);
-
+          console.log(university)
           /* check if student is a premium member */
           for (let idx = 0; idx < university.members.length; idx++) {
 
@@ -1129,8 +1147,13 @@ angular.module('netbase')
               scope.studentIsPremium = true;
             }
 
+            console.log("studentId is : " + studentId)
+            console.log("accountId is : " + member.accountId)
+            console.log("privilege is : " + member.privilege)
+
             if (studentId != undefined && member.accountId == studentId && member.privilege == 99) {
               console.log("é 99")
+              console.log(member)
               scope.studentIsAdmin = true;
             }
 
@@ -1161,6 +1184,17 @@ angular.module('netbase')
         }
 
       });
+
+      scope.createPost = function(url) {
+
+        if ($localStorage.token != undefined && $localStorage.token != null) {
+          $location.path("/a/" + url + "/forum/post/create")
+        } else {
+          ngDialog.open({ template: 'partials/modals/login.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
+        }
+
+      }
+      //END createPost
 
       scope.premium = function () {
 
@@ -1193,26 +1227,31 @@ angular.module('netbase')
 
       };
 
-
       scope.subscribe = function() {
 
-        University.subscribeOnUniversity(university.url).then(function(res) {
+        if ($localStorage.token != undefined && $localStorage.token != null) {
 
-          if (userSubscribed(scope.university.members)) {
+          University.subscribeOnUniversity(university.url).then(function(res) {
 
-            let studentIdMembersLocation = userMembersLocation(scope.university.members);
+            if (userSubscribed(scope.university.members)) {
 
-            scope.university.members.splice(studentIdMembersLocation, 1);
+              let studentIdMembersLocation = userMembersLocation(scope.university.members);
 
-          } else {
+              scope.university.members.splice(studentIdMembersLocation, 1);
 
-            console.log("user added: ");
-            console.log(res);
-            scope.university.members.push({ accountId : studentId });
+            } else {
 
-          }
+              console.log("user added: ");
+              console.log(res);
+              scope.university.members.push({ accountId : studentId });
 
-        });
+            }
+
+          });
+
+        } else {
+          ngDialog.open({ template: 'partials/modals/login.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
+        }
 
       };
       /* end subscribe */
@@ -1416,7 +1455,6 @@ angular.module('netbase')
       let university = JSON.parse(attr.u)
 
       scope.post = post;
-      console.log(post)
 
       scope.university = university;
 
@@ -1427,7 +1465,6 @@ angular.module('netbase')
         let studentStorage = Students.retrieveStorage(studentId);
 
         scope.student = studentStorage[studentId];
-        console.log(scope.user)
 
       } else {
 

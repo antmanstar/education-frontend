@@ -19,7 +19,7 @@
 
     -->
 
-    <a href="/a/{{university.url}}/forum/post/create"><button class="academia-supportcol-button bg-base">Criar postagem</button></a>
+    <button class="academia-supportcol-button bg-base" ng-click="createPost(university.url)">Criar postagem</button>
     <a href="/a/{{university.url}}/forum/category/create" ng-if="studentIsAdmin == true"><button class="academia-supportcol-button bg-base">Criar categoria</button></a>
     <a href="/v/create?universityId={{university._id}}" ng-if="studentIsAdmin == true"><button class="academia-supportcol-button bg-base">Criar video</button></a>
     <a href="/p/create?universityId={{university._id}}" ng-if="studentIsAdmin == true"><button class="academia-supportcol-button bg-base">Criar playlist</button></a>

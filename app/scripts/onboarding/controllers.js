@@ -9,8 +9,10 @@ angular.module('netbase')
   $scope.universities = [];
 
   /* */
-
+  $scope.page = 2;
   /* */
+
+  /* Knowledge -> Page 1 */
 
   Knowledge.getAllPaginated().success(function(res) {
 
@@ -40,10 +42,6 @@ angular.module('netbase')
 
   }
 
-  $scope.studentProExplore = function () {
-    ngDialog.open({ template: 'partials/modals/studentpro.html',className: 'ngdialog-theme-default ngdialog-student-pro', controller: 'StudentProExploreCtrl' });
-  };
-
   $scope.knowledgeStore = function() {
 
     // Get value id from inputs
@@ -61,8 +59,64 @@ angular.module('netbase')
     });
     //END knowledgeSelected
 
-    ngDialog.close();
+    $scope.page = 2;
 
   }
+
+  /* Universities -> Page 2 */
+
+  let universitySelected = [];
+
+  University.getAllUniversities().success(function(res) {
+
+    let success = res.success;
+    let data = res.data;
+
+    $scope.universities = data;
+
+    console.log(res);
+
+  });
+
+  $scope.universityCheck = function(url) {
+
+    let idx = universitySelected.indexOf(url);
+
+    if (idx >= 0) {
+      universitySelected.splice(idx, 1);
+    } else {
+      universitySelected.push(url);
+    }
+
+  }
+
+  $scope.universityStore = function() {
+
+    // Get value id from inputs
+    // Do a for loop
+    // Do multiple requests to push into user account
+
+    universitySelected.forEach(function(url, idx) {
+
+      University.subscribeOnUniversity(url).success(function(res) {
+
+        console.log("knowledge registered")
+
+      });
+
+      ngDialog.close();
+
+    });
+    //END knowledgeSelected
+
+    $scope.page = 2;
+
+  }
+
+  $scope.studentProExplore = function () {
+    ngDialog.open({ template: 'partials/modals/studentpro.html', className: 'ngdialog-theme-default ngdialog-student-pro', controller: 'StudentProExploreCtrl' });
+  };
+
+  //ngDialog.close();
 
 }])

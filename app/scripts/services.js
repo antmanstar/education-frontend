@@ -65,9 +65,9 @@ angular.module('netbase')
 
       return {
 
-        getAllOwnerForumPost: function(universityUrl) {
+        getAllOwnerForumPost: function(universityId) {
 
-          var url = '/url/' + universityUrl + '/forum/owner';
+          var url = '/id/' + universityId + '/forum/owner';
 
           return $http.get(baseUrl + url);
 
@@ -155,6 +155,10 @@ angular.module('netbase')
             $localStorage.universityStorage = {};
           }
 
+          let ts = Math.round((new Date()).getTime() / 1000);
+
+          university.updated = ts;
+
           $localStorage.universityStorage[university._id] = university;
           $localStorage.universityStorage[university.url] = university;
 
@@ -162,17 +166,30 @@ angular.module('netbase')
 
         isStoredLocal: function(query) {
 
+          let ts = Math.round((new Date()).getTime() / 1000);
+
           if ($localStorage.universityStorage == undefined) {
             $localStorage.universityStorage = {};
           }
 
           let university = $localStorage.universityStorage;
 
+          // check timestamp, 3hr updates
+
           if (query in university) {
-            return true;
+
+            let lastUpdate = university[query].updated;
+
+            if (lastUpdate + (3600 * 2) < ts) {
+              return true;
+            } else {
+              return false;
+            }
+
           } else {
             return false;
           }
+
 
         },
 

@@ -18,8 +18,8 @@ angular.module('netbase', ['ngStorage',
 ])
 .config(['$translateProvider', '$localStorageProvider', 'StripeElementsProvider', function ($translateProvider, $localStorageProvider, StripeElementsProvider) {
 
-  //let stripeKey = "pk_live_ZBmOf7GNQ13AIEGeP9WkPv3M";
-  let stripeKey = "pk_test_2XclbP1INDqkspKrbRn6oBZR";
+  let stripeKey = "pk_live_ZBmOf7GNQ13AIEGeP9WkPv3M";
+  //let stripeKey = "pk_test_2XclbP1INDqkspKrbRn6oBZR";
 
   //AnalyticsProvider.setAccount('UA-125408424-1');
 
@@ -126,6 +126,7 @@ angular.module('netbase', ['ngStorage',
         .when('/a/:academiaName/forum/post/create', {
             templateUrl: 'partials/academia/academiaforumpostcreate.html',
             controller: 'AcademiaForumPostCreateCtrl',
+            resolve: auth
         })
         .when('/a/:academiaName/forum/post/id/:postId', {
             templateUrl: 'partials/academia/academiaforumpost.html',
