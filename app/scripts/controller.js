@@ -2253,8 +2253,6 @@ angular.module('netbase')
 
   $scope.universities = [];
 
-  ngDialog.open({ template: 'partials/modals/onboarding.html', className: 'ngdialog-theme-default ngdialog-student-pro', controller: 'OnboardingScreenCtrl' });
-
   University.getUniversities().then(function(res) {
 
     $scope.universities = res.data.data;
