@@ -189,7 +189,7 @@ angular.module('netbase')
           $rootScope.$applyAsync();
 
           ngDialog.open({ template: 'partials/modals/onboarding.html', className: 'ngdialog-theme-default ngdialog-student-pro', controller: 'OnboardingScreenCtrl' });
-          fbq('track', 'CompleteRegistration');
+          //fbq('track', 'CompleteRegistration');
 
           if (redirectUrl.length > 0) {
             $location.path(redirectUrl)
