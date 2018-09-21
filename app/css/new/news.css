@@ -4,28 +4,6 @@
 
 }
 
-@media only screen and (min-width: 768px) {
-
-  .section-content-col {
-
-    padding-left: 10%;
-    padding-right: 10%;
-
-  }
-
-}
-
-@media only screen and (min-width: 960px) {
-
-  .section-content-col {
-
-    padding-left: 15%;
-    padding-right: 15%;
-
-  }
-
-}
-
 /* */
 
 .section-menu-col {
@@ -352,6 +330,13 @@
 }
 
 .section-footer .section-sections div {
+
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none;
 
   display: inline-block;
 

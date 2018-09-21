@@ -1,6 +1,6 @@
 <div ng-include="'partials/headerhome.html'"></div>
 
-<div class="container-fluid container-home" style="padding-bottom: 30px;">
+<div class="container-fluid container-home animated fadeIn" style="padding-bottom: 30px;">
 
   <!-- Welcome -->
   <div class="row">
@@ -10,7 +10,7 @@
       <div class="section-menu-title">Universidades</div>
 
       <div class="section-menu">
-        <timelinemenuuniversity uid="{{u.universityId}}" ng-repeat="u in user.universitiesSubscribed"></timelinemenuuniversity>
+        <timelinemenuuniversity uid="{{u.universityId}}" ng-if="u.unsubscribed == false" ng-repeat="u in user.universitiesSubscribed"></timelinemenuuniversity>
         <div ng-if="user.universitiesSubscribed.length == 0" class="option">Você não esta registrado em nenhuma Universidade</div>
       </div>
 

@@ -2,6 +2,10 @@
 
 }
 
+.container-full {
+  padding-bottom: 60px;
+}
+
 @media screen and (min-width: 768px) {
   .container-index {
     padding-left: 5vw;
@@ -32,7 +36,7 @@
     padding-top: 108px;
   }
   .container-full {
-    padding-top: 65px;
+    padding-top: 106px;
   }
 }
 

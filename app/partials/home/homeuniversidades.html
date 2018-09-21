@@ -9,7 +9,7 @@
 
 </style>
 
-<div class="container-fluid container-home" style="padding-bottom: 90px;">
+<div class="container-fluid container-home animated fadeIn" style="padding-bottom: 90px;">
 
   <div class="row">
 
@@ -56,7 +56,7 @@
     <div class="section-footer-title" style="width: 125px;"><b>Conhecimentos</b></div>
 
     <div class="section-sections" style="padding-left: 125px;">
-      <div ng-repeat="k in knowledges">{{k.title}}</div>
+      <div ng-repeat="k in knowledges"><a href="/home/c/{{k.url}}">{{k.title}}</a></div>
     </div>
 
   </div>

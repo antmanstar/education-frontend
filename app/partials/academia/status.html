@@ -11,8 +11,8 @@
   </div>
   <!-- academia-content-mobile -->
 
-  <button class="academia-supportcol-button" ng-hide="userSubscribed(university.members)" ng-click="subscribe()">Inscrever</button>
-  <button class="academia-supportcol-button" ng-show="userSubscribed(university.members)" ng-click="subscribe()">Desinscrever</button>
+  <button ng-hide="userSubscribed(university.members)" class="btn bg-primary-purple" style="margin-top: 2px; height: 29px; width: unset;" ng-click="subscribe()">Inscrever</button>
+  <button ng-show="userSubscribed(university.members)" class="btn bg-primary-purple" style="margin-top: 2px; height: 29px; width: unset;" ng-click="subscribe()">Desinscrever</button>
 
 </div>
 <!-- academia-content-mobile -->
@@ -24,7 +24,7 @@
   <div class="academia-content-navigation-option">/ <a href="/a/{{university.url}}/forum/category/all" ng-class="categoryClass">categorias</a></div>
   <div class="academia-content-navigation-option">/ <a href="/a/{{university.url}}/playlist/all" ng-class="playlistClass">playlists</a></div>
   <div class="academia-content-navigation-option">/ <a href="/a/{{university.url}}/cursos" ng-class="cursosClass">cursos</a></div>
-  <!-- <div class="academia-content-navigation-option">/ <a href="/messenger" target="_blank">chat</a> /</div> -->
+  <!-- <div class="academia-content-navigation-option">/ <a href="/messenger" >chat</a> /</div> -->
   <!--<div class="academia-content-navigation-option">/ <a href="/a/{{university.url}}/marketplace" ng-class="smpClass">marketplace</a> /</div>-->
   <!-- <div class="academia-content-navigation-option"><a href="/a/{{universityUrl}}/jobs" ng-class="jobsClass">jobs</a> /</div> -->
 

@@ -408,7 +408,7 @@ angular.module('netbase')
   Knowledge.getAllPostsByUrlPaginated(knowledgeUrl).success(function(res) {
 
     console.log(res.data.docs)
-    $scope.forumPosts = forumPosts;
+    $scope.forumPosts = res.data.docs;
     $scope.pages = res.data.pages;
 
   });
@@ -1121,7 +1121,7 @@ angular.module('netbase')
   }
 
   $scope.signup = function() {
-    console.log("login")
+    console.log("signup")
     ngDialog.open({ template: 'partials/modals/signup.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
   }
 
@@ -2258,6 +2258,11 @@ angular.module('netbase')
     $scope.universities = res.data.data;
 
   });
+
+  $scope.signup = function() {
+    console.log("signup")
+    ngDialog.open({ template: 'partials/modals/signup.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
+  }
 
   //ngDialog.open({ template: 'partials/modals/studentpro.html',className: 'ngdialog-theme-default ngdialog-student-pro', controller: 'StudentProExploreCtrl' });
 

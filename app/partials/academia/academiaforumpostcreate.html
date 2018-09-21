@@ -17,6 +17,12 @@
       </div>
       <!-- academia-content-navigation -->
 
+      <div class="alert bg-primary-red" ng-if="errors.length > 0">
+        <ul>
+          <li ng-repeat="e in errors">{{e}}</li>
+        </ul>
+      </div>
+
       <div class="academia-content-forum-answer">
 
         <input class="academia-content-forum-post-create-title" placeholder="Escreva o título da sua postagem" ng-model="title"></input>
@@ -36,6 +42,7 @@
 
         </div>
 
+        <!--
         <div class="academia-content-forum-post-create-premium">
 
           <b>Este conteúdo é exclusivo para assinantes premium?</b>
@@ -48,6 +55,7 @@
           </div>
 
         </div>
+        -->
 
         <div class="academia-content-forum-answer-action" style="margin-top: 15px;">
           <button class="btn btn-bluebase" ng-click="createForumPost()">Criar postagem</button>

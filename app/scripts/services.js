@@ -283,7 +283,13 @@ angular.module('netbase')
 
           var url = "/id/" + universityId + "/forum" + "?page=" + page;
 
-          return $http.get(baseUrl + url);
+          return $http({
+            method: 'GET',
+            url: baseUrl + url,
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'x-access-token': $localStorage.token
+            }});
 
         },
 

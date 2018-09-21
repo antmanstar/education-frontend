@@ -74,7 +74,7 @@ angular.module('netbase')
 .directive('timelinemenuuniversity', ['University', 'Students', '$filter', '$sce', '$location', function(University, Students, $filter, $sce, $location) {
   return {
     restrict: 'E',
-    template: '<div class="option"><a href="/a/{{university.url}}">{{university.name}}</a></div>',
+    templateUrl:  '../../partials/directive/timelineuniversityrow.html',
     replace: true,
     scope: true,
     link: function(scope, element, attr) {

@@ -21,7 +21,7 @@
         </div>
 
         <div class="box">
-          <div class="title"><a ng-href="{{n.link}}" target="_blank">{{n.title}}</a></div>
+          <div class="title"><a ng-href="{{n.link}}" >{{n.title}}</a></div>
           <div class="meta">{{n.rssSource}} - <span am-time-ago="n.pubdate"></span></div>
           <div class="text" ng-click="newsOpen(n._id, n)"><b>ABRIR: </b> <i class="fas fa-arrow-up"></i> {{n.votes.length}} votos - <i class="fas fa-comment"></i> {{n.comments.length}} opiniões</div>
         </div>

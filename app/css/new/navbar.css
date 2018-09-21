@@ -15,14 +15,22 @@ nav {
 }
 
 /* navbar top */
-
 nav .navbar-top {
   height: 65px;
   padding-left: 15px;
   padding-right: 15px;
-  padding-top: 15px;
-  padding-bottom: 15px;
+  padding-top: 14px;
+  padding-bottom: 14px;
+  margin-bottom: 10px;
   overflow: hidden;
+}
+
+@media screen and (max-width: 768px) {
+
+  nav .navbar-top {
+    margin-bottom: 0px;
+  }
+
 }
 
 /* brand */
@@ -61,13 +69,13 @@ nav .navbar-top .menu-right {
   float: right;
   display: inline-block;
   line-height: 34px;
-  width: calc(100% - 188px);
+  width: calc(100% - 202px);
 }
 
 @media screen and (max-width: 768px) {
 
   nav .navbar-top .menu-right {
-    width: calc(100% - 207px);
+    width: calc(100% - 214px);
   }
 
 }
@@ -165,14 +173,25 @@ nav .navbar-slider {
   padding-left: 15px;
   margin-top: 3px;
 
-  -webkit-box-shadow: 0px 2px 3px 0px rgba(196,196,196,0.24);
-  -moz-box-shadow: 0px 2px 3px 0px rgba(196,196,196,0.24);
-  box-shadow: 0px 2px 3px 0px rgba(196,196,196,0.24);
+  -webkit-box-shadow: 0px 2px 3px 0px rgba(196,196,196,0.34);
+  -moz-box-shadow: 0px 2px 3px 0px rgba(196,196,196,0.34);
+  box-shadow: 0px 2px 3px 0px rgba(196,196,196,0.34);
 
   overflow: auto;
   white-space: nowrap;
 
+  border-radius: 4px;
+
   width: 100%;
+
+}
+
+@media screen and (min-width: 768px) {
+
+  nav .navbar-slider {
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
 
 }
 

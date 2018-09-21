@@ -293,6 +293,7 @@ angular.module('netbase', ['ngStorage',
         .when('/home/timeline', {
             templateUrl: 'partials/home/hometimeline.html',
             controller: 'HomeTimelineCtrl',
+            resolve: auth
         })
         .when('/home/noticias', {
             templateUrl: 'partials/home/homenews.html',
@@ -385,6 +386,8 @@ angular.module('netbase', ['ngStorage',
 
   $rootScope.logout = function() {
 
+    $localStorage.$reset();
+    
     $rootScope.logged = false;
     $localStorage.logged = false;
     $localStorage.token = undefined;

@@ -4,24 +4,55 @@
 
     <div class="col-xs-12">
 
-      <div class="headline-sub-one">Estudante <div class="student-pro" style="overflow-y: auto; font-size: 0.8em !important; padding-top: 5px; padding-bottom: 5px; vertical-align: middle !important;">PRO</div></div>
-
-      <div class="student-pro-illustration">
-        <img src="https://cdn.dribbble.com/users/702789/screenshots/4658644/artboard.png" />
-      </div>
-
-      <div style="font-size: 1.8em; line-height: 1.5em; padding-bottom: 15px; padding-right: 15px; text-align: center; font-weight: bold;">Conhecimento é poder</div>
-      <p></p>
-
-      <b>Benefícios: </b>
+      <div class="headline-sub-one">Estudante <div class="student-pro" style="font-size: 0.8em !important; vertical-align: middle !important;">PRO</div></div>
+      <p style="margin-bottom: 30px; font-size: 0.9em; font-weight: bold; color: #2c4256;">Benefícios incluem:</p>
 
       <div class="student-pro-benefits">
 
-        <div><i class="fas fa-university"></i> Inscrição ilimitada em universidades</div>
-        <div><i class="fas fa-hand-holding-usd"></i> Desconto de 3% em compra de cursos e assinaturas</div>
-        <div><i class="fas fa-newspaper"></i> Opinar em notícias publicas</div>
-        <div><i class="fas fa-graduation-cap"></i> Verificação de conta</div>
-        <div style="border-bottom: unset;"><i class="fab fa-bitcoin"></i> Diplomas na Blockchain</div>
+        <div class="benefit">
+          <div class="icon"><img src="/img/education/university.png" /></div>
+          <div class="texts">
+            <div class="top">Inscrição ilimitada em universidades</div>
+            <div class="description">Você pode se inscrever em diversas universidades</div>
+          </div>
+        </div>
+        <!-- end benefits -->
+
+        <div class="benefit">
+          <div class="icon"><img src="/img/education/mortarboard.png" /></div>
+          <div class="texts">
+            <div class="top">Verificação de conta</div>
+            <div class="description">Nossa plataforma é constituida por membros reais.</div>
+          </div>
+        </div>
+        <!-- end benefits -->
+
+        <div class="benefit">
+          <div class="icon"><img src="/img/education/diploma-1.png" /></div>
+          <div class="texts">
+            <div class="top">Diplomas na Blockchain</div>
+            <div class="description">Todos os seus certificados são registrados em Certificate Network</div>
+          </div>
+        </div>
+        <!-- end benefits -->
+
+        <div class="benefit">
+          <div class="icon"><img src="/img/education/coupon.png" /></div>
+          <div class="texts">
+            <div class="top">Descontos de 5%</div>
+            <div class="description">Aplicavel em todas as compras de cursos e assinaturas</div>
+          </div>
+        </div>
+        <!-- end benefits -->
+
+        <div class="benefit">
+          <div class="icon"><img src="/img/education/newspaper.png" /></div>
+          <div class="texts">
+            <div class="top">Opinar em notícias públicas</div>
+            <div class="description">Comente e vote no agregador de notícias</div>
+          </div>
+        </div>
+        <!-- end benefits -->
 
       </div>
       <!-- end student-pro-benefits -->
@@ -31,6 +62,32 @@
 
   </div>
   <!-- end row -->
+
+  <p style="padding-top: 15px;"><b>Selecione um plano</b></p>
+
+  <div class="student-pro-plans">
+
+    <div class="plan" style="background-color: #2c4256;">
+
+      <div class="name" style="color: #fff;">Mensal</div>
+      <div class="time" style="color: #fff;">7 dias experimental</div>
+      <div class="info" style="color: #ffffff96;">Depois, pague R$19.99 </br>por mês</div>
+
+    </div>
+    <!-- plan -->
+
+    <div class="plan active" style="background-color: #fff; position: relative;">
+
+      <div class="discount">50% desconto</div>
+      <div class="name" style="color: #f05642;">Anual</div>
+      <div class="time" style="color: #000;">1 ano</div>
+      <div class="info" style="color: #00000096;">50% de desconto, pague R$9.99 </br>por mês</div>
+
+    </div>
+    <!-- plan -->
+
+  </div>
+  <!-- end plans -->
 
   <div class="row" ng-if="step == 'success'">
 

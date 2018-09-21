@@ -1,8 +1,137 @@
 body {
   font-family: 'Lota Grotesque', Helvetica, sans-serif;
   font-size: 14px;
-  padding: 0;
-  margin: 0;
+  padding-left: 4%;
+  padding-right: 4%;
+  padding-top: 15px;
+}
+
+/* hide - show */
+@media screen and (max-width: 768px) {
+
+  .hide-max-768 {
+    display: none;
+  }
+
+}
+
+@media screen and (min-width: 768px) {
+
+  .hide-min-768 {
+    display: none;
+  }
+
+}
+
+/* animation home */
+
+@-webkit-keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@-moz-keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+
+
+.section-cards-loading {
+
+}
+
+.section-cards-loading .area {
+
+  background: linear-gradient(270deg, #e1e1e1, #e1e1e1, #a7a7a7);
+  background-size: 600% 600% !important;
+
+  -webkit-animation: AnimationName 3s ease infinite;
+  -moz-animation: AnimationName 3s ease infinite;
+  animation: AnimationName 3s ease infinite;
+
+}
+
+.section-cards-loading a .card .title {
+  background: linear-gradient(270deg, #e1e1e1, #e1e1e1, #a7a7a7);
+  background-size: 600% 600% !important;
+
+  -webkit-animation: AnimationName 3s ease infinite;
+  -moz-animation: AnimationName 3s ease infinite;
+  animation: AnimationName 3s ease infinite;
+
+  margin-top: 10px;
+
+}
+
+/* end animation home */
+
+@media screen and (min-width: 1024px) {
+
+  .section-content-col {
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+
+}
+
+@media screen and (max-width: 768px) {
+
+  body {
+    padding: 0;
+  }
+
+}
+
+/* */
+
+@media screen and (max-width: 768px) {
+
+  .mobile-show {
+    display: block !important;
+  }
+
+}
+
+/* knowledge */
+
+.knowledge-meta {
+
+}
+
+.knowledge-title {
+  padding-top: 10px;
+  font-size: 3.5em;
+  font-weight: bold;
+}
+
+@media screen and (max-width: 768px) {
+
+  .knowledge-title {
+    padding-top: 10px;
+    font-size: 2.5em;
+    font-weight: bold;
+  }
+
+}
+
+.knowledge-description {
+  padding-top: 10px;
+}
+
+.knowledge-button {
+  width: 40%;
+  min-width: 230px;
+  padding-top: 15px;
+}
+
+.knowledge-image img {
+  width: 100%;
 }
 
 /* profile */
@@ -113,18 +242,61 @@ body {
 
 }
 
-.student-pro-benefits {
-
-}
-
-.student-pro-benefits div {
+.student-pro-benefits .benefit {
+  min-height: 75px;
+  white-space: nowrap;
   padding-bottom: 10px;
-  border-bottom: 1px solid #cdcdcd;
-  padding-top: 10px;
 }
 
-.student-pro-benefits div i {
-  padding-right: 5px;
+.student-pro-benefits .benefit .icon {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.student-pro-benefits .benefit .icon img {
+  width: 40px;
+  height: 40px;
+}
+
+@media screen and (max-width: 768px) {
+  .student-pro-benefits .benefit .icon img {
+    width: 25px;
+    height: 25px;
+  }
+}
+
+.student-pro-benefits .benefit .texts {
+  display: inline-block;
+  padding-left: 20px;
+}
+@media screen and (max-width: 768px) {
+  .student-pro-benefits .benefit .texts {
+    padding-left: 10px;
+  }
+}
+
+.student-pro-benefits .benefit .texts .top {
+  font-weight: bold;
+  display: block;
+  vertical-align: top;
+  font-size: 1.10em;
+  color: #1f1f1f;
+  padding-bottom: 4px;
+}
+
+@media screen and (max-width: 768px) {
+  .student-pro-benefits .benefit .texts .top {
+    font-size: 1em;
+  }
+}
+
+.student-pro-benefits .benefit .texts .description {
+  display: block;
+  font-size: 0.9em;
+  color: #777777;
+  font-weight: bold;
+  word-wrap: break-word;
+  white-space: pre-wrap;
 }
 
 .student-pro-illustration {
@@ -137,7 +309,79 @@ body {
   height: 100%;
 }
 
-/* */
+/* student pro plans */
+.student-pro-plans {
+  text-align: center;
+  width: 100%;
+  overflow-x: scroll;
+  white-space: nowrap;
+  padding-bottom: 15px;
+  padding-top: 15px;
+}
+
+.student-pro-plans::-webkit-scrollbar-track {
+  background: #fff;
+  border-radius: 4px;
+  height: 4px;
+}
+
+.student-pro-plans::-webkit-scrollbar-thumb {
+  background: #2e4255;
+  border-radius: 4px;
+  height: 4px;
+}
+
+.student-pro-plans::-webkit-scrollbar {
+    height: 4px;
+}
+
+.student-pro-plans .plan {
+  padding-left: 25px;
+  border-radius: 6px;
+  height: 200px;
+  padding-top: 70px;
+  padding-right: 25px;
+  margin-right: 15px;
+  display: inline-block;
+  -webkit-box-shadow: 0px 0px 6px 0px rgba(84,84,84,0.31);
+  -moz-box-shadow: 0px 0px 6px 0px rgba(84,84,84,0.31);
+  box-shadow: 0px 0px 6px 0px rgba(84,84,84,0.31);
+  text-align: left;
+}
+
+.student-pro-plans .plan.active {
+  border: 2px dashed green;
+}
+
+.student-pro-plans .plan .discount {
+  position: absolute; top: 15px; right: 15px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 0.8em;
+  background: #299a0b; /* Old browsers */
+  background: -moz-linear-gradient(top, #299a0b 0%, #299a0b 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top, #299a0b 0%,#299a0b 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom, #299a0b 0%,#299a0b 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#299a0b', endColorstr='#299a0b',GradientType=0 );
+}
+
+.student-pro-plans .plan .name {
+  font-size: 2em;
+}
+
+.student-pro-plans .plan .time {
+  font-size: 0.80em;
+  padding-top: 6px;
+}
+
+.student-pro-plans .plan .info {
+  padding-top: 20px;
+  font-size: 0.75em;
+  line-height: 1.5em;
+}
+
 
 /* plan purchase */
 .ngdialog-plans > .ngdialog-content {
@@ -285,6 +529,10 @@ a:hover {
 
 .bg-white {
   background-color: #fff !important;
+}
+
+.bg-primary-purple {
+  background-color: #b55ea3 !important;
 }
 
 .bg-primary-blue {

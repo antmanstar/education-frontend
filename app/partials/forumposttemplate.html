@@ -24,7 +24,7 @@
 
   <div class="academia-content-forum-post-info-title">
 
-    <a href="/a/{{university.url}}/forum/post/id/{{post._id}}" target="_blank">{{post.title}}</a>
+    <a href="/a/{{university.url}}/forum/post/id/{{post._id}}" >{{post.title}}</a>
 
   </div>
 
@@ -32,9 +32,10 @@
 
   <div class="academia-content-forum-post-info-actions">
 
-    <a class="action" href="/a/{{university.url}}/forum/post/id/{{post._id}}" target="_blank">{{post.answers.length}} respostas</a>
-    <!--<a class="action">report</a></div>-->
+    <a class="action" href="/a/{{university.url}}/forum/post/id/{{post._id}}" >{{post.answers.length}} respostas</a>
+    <a class="action" href="/a/{{university.url}}/forum/post/id/{{post._id}}" >{{post.visualization.length}} visualizações</a>
+    <a class="action" ng-if="viewers.length > 0" href="/a/{{university.url}}/forum/post/id/{{post._id}}" >{{viewers.length}} <div ng-if="viewers.length <= 1" style="display: inline-block;">visualização única</div> <div ng-if="viewers.length > 1" style="display: inline-block;">visualizações únicas</div></a>
 
-</div>
+  </div>
 
 </div>

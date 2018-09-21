@@ -19,12 +19,17 @@
 
     -->
 
-    <button class="academia-supportcol-button bg-base" ng-click="createPost(university.url)">Criar postagem</button>
-    <a href="/a/{{university.url}}/forum/category/create" ng-if="studentIsAdmin == true"><button class="academia-supportcol-button bg-base">Criar categoria</button></a>
-    <a href="/v/create?universityId={{university._id}}" ng-if="studentIsAdmin == true"><button class="academia-supportcol-button bg-base">Criar video</button></a>
-    <a href="/p/create?universityId={{university._id}}" ng-if="studentIsAdmin == true"><button class="academia-supportcol-button bg-base">Criar playlist</button></a>
-    <button class="academia-supportcol-button" ng-hide="userSubscribed(university.members)" ng-click="subscribe()">Inscrever</button>
-    <button class="academia-supportcol-button" ng-show="userSubscribed(university.members)" ng-click="subscribe()">Desinscrever</button>
+    <div style="height: 5px"></div>
+
+    <button class="btn bg-base" style="margin-top: 2px; height: 29px; width: unset;" ng-click="createPost(university.url)">Criar postagem</button>
+
+    <p style="margin-top: 15px; margin-bottom: 15px;" ng-if="studentIsAdmin == true"><b>Administração</b></p>
+
+    <a href="/a/{{university.url}}/forum/category/create" ng-if="studentIsAdmin == true"><button class="btn bg-base" style="margin-top: 2px; height: 29px; width: unset;">Criar categoria</button></a>
+    <a href="/v/create?universityId={{university._id}}" ng-if="studentIsAdmin == true"><button class="btn bg-base" style="margin-top: 2px; height: 29px; width: unset;">Criar video</button></a>
+    <a href="/p/create?universityId={{university._id}}" ng-if="studentIsAdmin == true"><button class="btn bg-base" style="margin-top: 2px; height: 29px; width: unset;">Criar playlist</button></a>
+    <button class="btn bg-primary-purple" style="margin-top: 2px; height: 29px; width: unset;" ng-hide="userSubscribed(university.members)" ng-click="subscribe()">Inscrever</button>
+    <button class="btn bg-primary-purple" style="margin-top: 2px; height: 29px; width: unset;" ng-show="userSubscribed(university.members)" ng-click="subscribe()">Desinscrever</button>
 
   </div>
 
@@ -53,8 +58,8 @@
     <!-- end academia-supportcol-info-title -->
 
     <p ng-show="studentIsPremium">Você é membro premium!</p>
-    <button ng-show="studentIsPremium" class="academia-supportcol-button" ng-click="premium()">Ver planos</button>
-    <button ng-hide="studentIsPremium" class="academia-supportcol-button" ng-click="premium()">Assinar premium</button>
+    <button ng-show="studentIsPremium" class="btn bg-primary-purple" style="margin-top: 2px; height: 29px; width: unset;" ng-click="premium()">Ver planos</button>
+    <button ng-hide="studentIsPremium" class="btn bg-primary-purple" style="margin-top: 2px; height: 29px; width: unset;" ng-click="premium()">Assinar premium</button>
 
   </div>
   <!-- end academia-supportcol-info -->

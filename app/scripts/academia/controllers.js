@@ -44,6 +44,9 @@ angular.module('netbase')
 
     let universityStorage = University.retrieveStorage(universityUrl);
 
+    console.log("university storage: ")
+    console.log(universityStorage)
+
     $scope.university = universityStorage[universityUrl];
 
     let universityId = $scope.university._id;
@@ -78,6 +81,8 @@ angular.module('netbase')
 
       $scope.university = res.data.data;
       University.storeLocal($scope.university);
+      console.log("university parsed not stored: ")
+      console.log($scope.university)
 
       let universityId = $scope.university._id;
 
@@ -248,7 +253,8 @@ angular.module('netbase')
     let universityStorage = University.retrieveStorage(universityUrl);
 
     $scope.university = universityStorage[universityUrl];
-
+    console.log("university: ")
+    console.log($scope.university)
     University.getUniversityForumPosts($scope.university._id, $scope.page).then(function(res) {
 
       let forumPostsRequested = res.data.data.docs;
@@ -286,6 +292,8 @@ angular.module('netbase')
 
     University.getUniversity(universityUrl).then(function(res) {
 
+      console.log("university: ")
+      console.log(res.data.data)
       $scope.university = res.data.data;
       University.storeLocal($scope.university);
 
@@ -539,6 +547,8 @@ angular.module('netbase')
 
     Forum.createCategory(university._id, data).success(function(res) {
 
+      console.log(res)
+
       if (res.success) {
 
         $location.path("/a/" + university.url + "/forum/category/id/" + res.data._id)
@@ -747,16 +757,18 @@ angular.module('netbase')
 
   if (type == "pic") {
 
-    $scope.title = "Add Picture";
+    $scope.title = "Adicionar imagem";
     $scope.form.iconClass = "glyphicon glyphicon-picture";
     $scope.form.placeholder = "Image link";
-    $scope.form.button = "Add image";
+    $scope.form.button = "Adicionar imagem";
 
     $scope.imagePush = "";
 
     $scope.$watch('link', function() {
 
       let link = $scope.link;
+
+      $scope.imageLink = link;
 
     }, true);
 
@@ -818,9 +830,6 @@ angular.module('netbase')
   let universityUrl = $route.current.params.academiaName;
   let university;
 
-  console.log("look it ")
-  console.log($location.search());
-
   if ($location.search().categoryId != undefined) {
     $scope.categoryForum = { _id : $location.search().categoryId };
   } else {
@@ -836,11 +845,14 @@ angular.module('netbase')
 
     Forum.getCategoriesByUniversityId($scope.university._id).success(function(resCategory) {
 
-      console.log(resCategory)
-
       if (resCategory.success) {
 
         $scope.categories = resCategory.data;
+
+        console.log("categories on this forum: ")
+        console.log($scope.categories)
+
+        //$scope.categoryForum = {}
 
       }
 
@@ -889,22 +901,55 @@ angular.module('netbase')
       categoryId : $scope.categoryForum._id
     };
 
-    console.log(data);
+    /* */
 
-    University.createForumPost(university._id, data).then(function(res) {
+    let createPost = true;
+    let errors = [];
 
-      let status = res.data.status;
-      let data = res.data.data;
-      let success = res.data.success;
+    /* */
 
-      if (success) {
+    if (data.categoryId == undefined) {
+      createPost = false;
+      errors.push("Selecione a categoria do post.")
+    }
 
-        $location.path('/a/' + university.url + '/forum/post/id/' + data._id)
-        window.scrollTo(0, 0);
+    if (data.title == undefined || data.title.length == 0) {
+      createPost = false;
+      errors.push("Escreva um título para a postagem")
+    }
 
-      }
+    if (data.text == undefined || data.text.length == 0) {
+      createPost = false;
+      errors.push("Escreva um texto na postagem")
+    }
 
-    });
+    /* */
+
+    console.log(data)
+
+    if (createPost) {
+
+      University.createForumPost(university._id, data).then(function(res) {
+
+        let status = res.data.status;
+        let data = res.data.data;
+        let success = res.data.success;
+
+        if (success) {
+
+          $location.path('/a/' + university.url + '/forum/post/id/' + data._id)
+          window.scrollTo(0, 0);
+
+        }
+
+      });
+      //END University.createForumPost
+
+    } else {
+
+      $scope.errors = errors;
+
+    }
 
   };
 
@@ -1137,7 +1182,7 @@ angular.module('netbase')
         if (value) {
 
           university = JSON.parse(value);
-          console.log(university)
+
           /* check if student is a premium member */
           for (let idx = 0; idx < university.members.length; idx++) {
 
@@ -1147,13 +1192,8 @@ angular.module('netbase')
               scope.studentIsPremium = true;
             }
 
-            console.log("studentId is : " + studentId)
-            console.log("accountId is : " + member.accountId)
-            console.log("privilege is : " + member.privilege)
 
             if (studentId != undefined && member.accountId == studentId && member.privilege == 99) {
-              console.log("é 99")
-              console.log(member)
               scope.studentIsAdmin = true;
             }
 
@@ -1174,7 +1214,13 @@ angular.module('netbase')
             let studentIdMembersLocation = userMembersLocation(array);
 
             if (studentIdMembersLocation != -1) {
-              return true;
+
+              if (array[studentIdMembersLocation].unsubscribed) {
+                return false;
+              } else {
+                return true;
+              }
+
             } else {
               return false;
             }
@@ -1198,9 +1244,6 @@ angular.module('netbase')
 
       scope.premium = function () {
 
-        console.log("press premium")
-        console.log($localStorage.token)
-
         ngDialog.open({ template: 'partials/modals/planbuy.html', controller: 'AcademiaPlanPurchaseCtrl', className: 'ngdialog-theme-default ngdialog-plans', data : { university : university } });
 
       }
@@ -1220,7 +1263,16 @@ angular.module('netbase')
         let studentIdMembersLocation = userMembersLocation(array);
 
         if (studentIdMembersLocation != -1) {
-          return true;
+
+          console.log("array student id member location");
+          console.log(array[studentIdMembersLocation].unsubscribed)
+
+          if (array[studentIdMembersLocation].unsubscribed) {
+            return false;
+          } else {
+            return true;
+          }
+
         } else {
           return false;
         }
@@ -1241,9 +1293,7 @@ angular.module('netbase')
 
             } else {
 
-              console.log("user added: ");
-              console.log(res);
-              scope.university.members.push({ accountId : studentId });
+              scope.university.members.push({ accountId : studentId, unsubscribed : false });
 
             }
 
@@ -1318,6 +1368,30 @@ angular.module('netbase')
       let post = JSON.parse(attr.p);
 
       scope.post = post;
+
+      /* who viewed */
+
+      // 1 - Loop through visualizations
+      // 2 - Push into array, accounts that doesn't exists
+      // 3 -
+
+      let viewers = [];
+      let visualizations = post.visualization;
+
+      for (let idx = 0; idx < visualizations.length; idx++) {
+
+        let v = visualizations[idx];
+
+        if (!viewers.includes(v.accountId)) {
+          viewers.push(v.accountId)
+        }
+
+      }
+      //END for()
+
+      scope.viewers = viewers;
+
+      /* up vote */
 
       scope.upvoteForumPost = function(post) {
 

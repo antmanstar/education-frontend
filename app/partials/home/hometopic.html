@@ -2,22 +2,59 @@
 
 <div class="container-fluid container-home">
 
-  <div class="row" ng-if="knowledge.knowledges.length > 0" ng-repeat="knowledge in knowledges">
+  <div class="row" style="padding-top: 30px;">
 
-    <div class="col-xs-12 col-sm-12">
+    <div class="col-xs-12 col-sm-7">
 
       <!-- start knowledge -->
 
-      <div class="headline-container">{{knowledge.title}}</div>
+      <div style="font-size: 3.5em; font-family: 'Georgia';">Aprender sobre</div>
 
-      <div class="section-cards">
+      <div style="height: 200px"></div>
 
-        <knowledgecard kid="{{k.knowledgeId}}" ng-repeat="k in knowledge.knowledges"></knowledgecard>
+      <div class="row">
+
+        <div class="col-sm-7">
+
+          <div class="col-xs-12 col-sm-6">
+
+            <p style="padding-bottom: 30px;">HUMANAS</p>
+
+            <p style="font-size: 1.35em;">Português</p>
+            <p style="font-size: 1.35em;">Inglês</p>
+            <p style="font-size: 1.35em;">Geografia</p>
+
+          </div>
+          <!-- end col-xs-12 -->
+
+          <div class="col-xs-12 col-sm-6">
+
+            <p style="padding-bottom: 30px;">EXATAS</p>
+
+            <p style="font-size: 1.35em;">Lógica</p>
+            <p style="font-size: 1.35em;">Matemática</p>
+            <p style="font-size: 1.35em;">Ciência da Computação</p>
+
+          </div>
+          <!-- end col-xs-12 -->
+
+        </div>
+        <!-- col-sm-7 -->
 
       </div>
-      <!-- end section-cards -->
+      <!-- div -->
 
-      <!-- end knowledge -->
+      <div style="height: 70px"></div>
+
+      <p style="font-size: 1.5em; font-family: 'Georgia'; color: #f05642; letter-spacing: 1.55px;">Ver todos Conhecimentos +</p>
+
+    </div>
+    <!-- col-xs-12 col-sm-12 -->
+
+    <div class="col-xs-12 col-sm-5">
+
+      <div style="height: 550px; width: 75%; background-image: url('https://segredosdomundo.r7.com/wp-content/uploads/2018/07/destaque-44-758x455.jpg');"></div>
+      <div style="font-size: 4.5em; position: absolute; right: 0; transform: rotate(90deg); background-color: #fff; top: 25%; padding-left: 20px; padding-right: 20px;">Lógica</div>
 
     </div>
     <!-- col-xs-12 col-sm-12 -->

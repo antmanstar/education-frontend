@@ -1,5 +1,17 @@
 <div ng-include="'partials/headerhome.html'"></div>
 
+<style>
+
+  body {
+    padding: 0 !important;
+  }
+
+  nav .navbar-top {
+    margin-bottom: 0px !important;
+  }
+
+</style>
+
 <script type="text/javascript">
 
 var socket = io.connect("https://fluted-house-215816.appspot.com");
@@ -60,7 +72,11 @@ socket.on("imagepath", function(a) {
 
       <div style="text-align: center;">
         <div class="headline-display" style="padding-bottom: 10px; text-align: center;">Crie a sua Universidade</div>
-        <div class="headline-sub-two">Siga todos as etapas para criar a sua própria Universidade.</div>
+
+        <div style="background-image: url('https://cdn.dribbble.com/users/19319/screenshots/4063898/universitylaundry.jpg'); height: 250px; background-repeat: no-repeat; background-position: center; background-size: cover;"></div>
+
+        <div class="headline-sub-two">Siga todas as etapas para criar a sua própria Universidade.</div>
+
         <div style="margin-top: 15px;">
           <button ng-click="move(1)" class="btn btn-green">Iniciar!</button>
         </div>

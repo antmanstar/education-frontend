@@ -7,7 +7,7 @@
 <update-meta ng-if="university.backgroundImage != undefined" property="og:image" content="{{university.backgroundImage}}"></update-meta>
 <update-meta ng-if="university.backgroundImage == undefined" property="og:image" content="https://universida.de/img/misc/noimageacademia.jpg"></update-meta>
 
-<div class="container-fluid container-full">
+<div class="container-fluid container-full animated fadeIn">
 
   <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
   <div class="row academia-coverimage" ng-if="university.backgroundImage == undefined"  style="background-image: url('/img/misc/noimageacademia.jpg') "></div>

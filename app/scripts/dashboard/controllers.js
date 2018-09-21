@@ -28,11 +28,15 @@ angular.module('netbase')
 
   $scope.backgroundImageUpdate = function() {
 
+    // Bug if undefined.
+
+    /*
     let backgroundImage = $("#file").attr("value");
 
     if (backgroundImage.indexOf("https") != -1) {
       $scope.backgroundImage = backgroundImage;
     }
+    */
 
     console.log("update")
   }
@@ -81,6 +85,8 @@ angular.module('netbase')
     };
 
     let backgroundImage = $("#file").attr("value");
+
+    // Error while checking. If undefined, bugs
 
     if (backgroundImage.indexOf("https://") != -1) {
       data.backgroundImage = backgroundImage;
