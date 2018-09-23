@@ -44,11 +44,13 @@
 
     <p><b>Visualizações</b></p>
 
-    <div class="academia-content-viewers-user" ng-if="viewersParsed.length > 0" ng-repeat="v in viewersParsed">
+    <div class="academia-content-viewers-user" ng-if="viewersParsed.length > 0" ng-repeat="v in viewersParsed | limitTo : 5">
       <img class="academia-content-viewers-user-pic" ng-if="v.imageUrl == undefined" src="img/user/user.png" />
       <img class="academia-content-viewers-user-pic"  ng-if="v.imageUrl.length > 0" src="{{v.imageUrl}}" />{{v.name}}
     </div>
     <!-- end ng-repeat -->
+
+    <p ng-if="viewersParsed.length > 5">E + {{viewersParsed.length - 5}}</p>
 
   </div>
   <!-- end academia-content-viewers -->
