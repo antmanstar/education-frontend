@@ -1357,7 +1357,7 @@ angular.module('netbase')
 }])
 
 /* forum post */
-.directive('forumpost', ['University', '$rootScope', function(University, $rootScope) {
+.directive('forumpost', ['University', '$rootScope', '$localStorage', 'jwtHelper', 'Students', function(University, $rootScope, $localStorage, jwtHelper, Students) {
   return {
     restrict: 'E',
     templateUrl: '../partials/forumposttemplate.html',
@@ -1370,10 +1370,6 @@ angular.module('netbase')
       scope.post = post;
 
       /* who viewed */
-
-      // 1 - Loop through visualizations
-      // 2 - Push into array, accounts that doesn't exists
-      // 3 -
 
       let viewers = [];
       let visualizations = post.visualization;
@@ -1388,6 +1384,71 @@ angular.module('netbase')
 
       }
       //END for()
+
+      scope.viewers = viewers;
+      scope.viewersParseFirstTime = true;
+
+      scope.viewersParsed = [];
+      scope.viewersParsedDisplay = false;
+
+      scope.viewersParse = function() {
+
+        let firstTime = scope.viewersParseFirstTime;
+
+        if (firstTime) {
+
+          // loop viewers
+          if (viewers.length > 0) {
+
+            for (let idx = 0; idx < viewers.length; idx++) {
+
+              let viewerId = viewers[idx];
+
+              // Parse students
+              Students.getStudentById(viewerId).then(function(res) {
+
+                console.log(res);
+
+                scope.viewersParsed.push(res.data.data)
+
+              })
+              //END Students.getStudentById
+
+            }
+
+          }
+
+          scope.viewersParsedDisplay = true;
+
+          scope.viewersParseFirstTime = false;
+
+        } else {
+
+          // Just show, css
+          scope.viewersParsedDisplay = true;
+
+        }
+
+      };
+
+      // Find user on viewers
+      scope.studentReaded = false;
+      let studentId;
+
+      if ($localStorage.token != undefined && $localStorage.token != null) {
+        studentId = jwtHelper.decodeToken($localStorage.token)._id;
+      }
+
+      if (studentId.length > 0) {
+        console.log(viewers)
+        if (viewers.includes(studentId)) {
+          scope.studentReaded = true;
+        } else {
+          scope.studentReaded = false;
+        }
+
+      }
+      //END studentId.length > 0
 
       scope.viewers = viewers;
 

@@ -20,11 +20,13 @@
 
 </div>
 
-<div class="academia-content-forum-post-info">
+<div class="academia-content-forum-post-info" style="position: relative;">
+
+  <div ng-hide="studentReaded"  style="position: absolute; top: 0; right: 0; padding: 5px; background-color: #2d4255; color: #fff; border-radius: 5px; font-size: 0.85em;"><i class="fa fa-eye" style="padding-right: 2px;" aria-hidden="true"></i> Novo</div>
 
   <div class="academia-content-forum-post-info-title">
 
-    <a href="/a/{{university.url}}/forum/post/id/{{post._id}}" >{{post.title}}</a>
+    <a href="/a/{{university.url}}/forum/post/id/{{post._id}}">{{post.title}}</a>
 
   </div>
 
@@ -34,8 +36,21 @@
 
     <a class="action" href="/a/{{university.url}}/forum/post/id/{{post._id}}" >{{post.answers.length}} respostas</a>
     <a class="action" href="/a/{{university.url}}/forum/post/id/{{post._id}}" >{{post.visualization.length}} visualizações</a>
-    <a class="action" ng-if="viewers.length > 0" href="/a/{{university.url}}/forum/post/id/{{post._id}}" >{{viewers.length}} <div ng-if="viewers.length <= 1" style="display: inline-block;">visualização única</div> <div ng-if="viewers.length > 1" style="display: inline-block;">visualizações únicas</div></a>
+    <a class="action" ng-if="viewers.length > 0" ng-mouseover="viewersParse()">{{viewers.length}} <div ng-if="viewers.length <= 1" style="display: inline-block;">visualização única</div> <div ng-if="viewers.length > 1" style="display: inline-block;">visualizações únicas</div></a>
 
   </div>
+
+  <div class="academia-content-viewers" ng-show="viewersParsed.length > 0">
+
+    <p><b>Visualizações</b></p>
+
+    <div class="academia-content-viewers-user" ng-if="viewersParsed.length > 0" ng-repeat="v in viewersParsed">
+      <img class="academia-content-viewers-user-pic" ng-if="v.imageUrl == undefined" src="img/user/user.png" />
+      <img class="academia-content-viewers-user-pic"  ng-if="v.imageUrl.length > 0" src="{{v.imageUrl}}" />{{v.name}}
+    </div>
+    <!-- end ng-repeat -->
+
+  </div>
+  <!-- end academia-content-viewers -->
 
 </div>

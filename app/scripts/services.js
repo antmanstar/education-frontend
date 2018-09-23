@@ -57,7 +57,7 @@ angular.module('netbase')
 
     }])
 
-    .factory('Forum', ['$http', function($http) {
+    .factory('Forum', ['$http', '$localStorage', function($http, $localStorage) {
 
       var baseUrl = "https://network-university-prod.herokuapp.com/university";
       //var baseUrl = "https://api.universida.de/university";
@@ -77,7 +77,13 @@ angular.module('netbase')
 
           var url = '/id/' + universityId + '/forum/post/id/' + id;
 
-          return $http.get(baseUrl + url);
+          return $http({
+            method: 'GET',
+            url: baseUrl + url,
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'x-access-token': $localStorage.token
+            }});
 
         },
 

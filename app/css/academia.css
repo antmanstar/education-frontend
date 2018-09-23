@@ -34,11 +34,32 @@
   border-radius: 50%;
 }
 
+@media only screen and (max-width: 768px) {
+
+  .timeline-post .top .user-image img {
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+  }
+
+}
+
 .timeline-post .top .texts {
   display: inline-block;
   padding-left: 15px;
   padding-right: 15px;
   height: 60px;
+}
+
+@media only screen and (max-width: 768px) {
+
+  .timeline-post .top .texts {
+    display: inline-block;
+    padding-left: 7px;
+    padding-right: 7px;
+    height: 60px;
+  }
+
 }
 
 .timeline-post .top .texts .name {
@@ -51,6 +72,21 @@
   color: #6f6f6f;
 }
 
+@media only screen and (max-width: 768px) {
+
+  .timeline-post .top .texts .name {
+    font-size: 1.4em;
+    font-weight: 600;
+  }
+
+  .timeline-post .top .texts .date {
+    font-weight: bold;
+    color: #6f6f6f;
+    font-size: 0.9em;
+  }
+
+}
+
 .timeline-post .content .text iframe {
   width: 100%;
   height: 300px;
@@ -60,6 +96,14 @@
 .timeline-post .content {
   padding-top: 15px;
   padding-bottom: 15px;
+}
+
+@media only screen and (max-width: 768px) {
+
+  .timeline-post .content {
+    padding: 0;
+  }
+
 }
 
 .timeline-post .content .title {
@@ -88,6 +132,23 @@
 
   font-family: 'Roboto', sans-serif;
 
+}
+
+.academia-content-viewers {
+  padding-top: 5px;
+  border-top: 3px solid #f3f3f3;
+}
+
+.academia-content-viewers-user {
+  display: inline-block;
+  padding-right: 10px;
+}
+
+.academia-content-viewers-user-pic {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  margin-right: 5px;
 }
 
 .academia-content-forum-post-info-text.text {
