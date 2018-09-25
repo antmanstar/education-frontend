@@ -22,7 +22,7 @@
 
       <div class="headline-container">Notícias {{sectionTitle}}</div>
 
-      <div class="news" ng-repeat="n in news">
+      <div class="news" ng-repeat="n in news | orderBy:'-votesCount' ">
 
         <div class="index">
 

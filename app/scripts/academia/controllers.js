@@ -38,6 +38,8 @@ angular.module('netbase')
 
   let universityUrl = $route.current.params.academiaName;
 
+  $scope.loaded = false;
+
   /* Accounts suggestion */
 
   if ( University.isStoredLocal(universityUrl) ) {
@@ -51,11 +53,9 @@ angular.module('netbase')
 
     let universityId = $scope.university._id;
 
-    console.log(universityId);
-
     Forum.getAllOwnerForumPost(universityId).then(function(res) {
-      console.log(res)
-      console.log(res.data.data.docs)
+
+      $scope.loaded = true;
       $scope.forumPosts = res.data.data.docs;
 
     });
@@ -87,6 +87,8 @@ angular.module('netbase')
       let universityId = $scope.university._id;
 
       Forum.getAllOwnerForumPost(universityId).then(function(res) {
+
+        $scope.loaded = true;
 
         console.log(res.data.data.docs)
         $scope.forumPosts = res.data.data.docs;
@@ -239,6 +241,7 @@ angular.module('netbase')
   $scope.forumPosts = [];
   $scope.page = 1;
   $scope.pages = 1;
+  $scope.loaded = false;
 
   if ($location.search().page != undefined) {
     $scope.page = $location.search().page;
@@ -261,6 +264,7 @@ angular.module('netbase')
       $scope.page = Number(res.data.data.page);
       $scope.pages = res.data.data.pages;
       $scope.forumPosts = $scope.forumPosts.concat(forumPostsRequested);
+      $scope.loaded = true;
 
       console.log($scope.forumPost)
 
@@ -303,6 +307,7 @@ angular.module('netbase')
         $scope.page = Number(res.data.data.page);
         $scope.pages = res.data.data.pages;
         $scope.forumPosts = $scope.forumPosts.concat(forumPostsRequested);
+        $scope.loaded = true;
 
         console.log(res)
 
@@ -1051,6 +1056,30 @@ angular.module('netbase')
 
 /* end academia */
 
+.directive('studentinfo', ['University', '$localStorage', '$route', 'jwtHelper', 'Students', function(University, $localStorage, $route, jwtHelper, Students) {
+  return {
+    restrict: 'EA',
+    templateUrl: '../partials/directive/studentinfo.html',
+    replace: false,
+    scope: true,
+    link: function(scope, element, attr) {
+
+      let studentId = attr.sid;
+
+      Students.getStudentById(studentId).then(function(res) {
+
+        console.log("response student: ");
+        console.log(res);
+        scope.student = res.data.data;
+
+      });
+
+    }
+
+  }
+
+}])
+
 .directive('academiastatus', ['University', '$localStorage', '$route', 'jwtHelper', function(University, $localStorage, $route, jwtHelper) {
   return {
     restrict: 'EA',
@@ -1167,7 +1196,6 @@ angular.module('netbase')
     link: function(scope, element, attr) {
 
       let university;
-
       let studentId;
 
       if ($localStorage.token != undefined && $localStorage.token != null) {
@@ -1177,11 +1205,39 @@ angular.module('netbase')
       scope.studentIsPremium = false;
       scope.studentIsAdmin = false;
 
+      /* */
+
       attr.$observe('university', function(value) {
+
+        /* socket io */
+        var socket = io("https://network-realtime-prod.herokuapp.com");
+
+        // userId
+        let student = { _id : studentId };
 
         if (value) {
 
           university = JSON.parse(value);
+
+          socket.on('connect', function(data) {
+
+            console.log(data)
+
+            if (studentId.length > 0) {
+
+              socket.emit('universityVisit', { universityUrl : university.url, student : student });
+
+              socket.on('universityVisitsTodayList', function(data) {
+
+                scope.universityVisitsTodayList = data;
+
+              });
+              //END socket.on('universityVisitsTodayList')
+
+            }
+
+          });
+          //END socket.on('connect')
 
           /* check if student is a premium member */
           for (let idx = 0; idx < university.members.length; idx++) {
@@ -1230,6 +1286,7 @@ angular.module('netbase')
         }
 
       });
+      //END attr.$observe('university')
 
       scope.createPost = function(url) {
 
@@ -1369,6 +1426,15 @@ angular.module('netbase')
 
       scope.post = post;
 
+      /* */
+
+      let studentId;
+      let studentReadedTimestamps = [];
+
+      if ($localStorage.token != undefined && $localStorage.token != null) {
+        studentId = jwtHelper.decodeToken($localStorage.token)._id;
+      }
+
       /* who viewed */
 
       let viewers = [];
@@ -1378,12 +1444,22 @@ angular.module('netbase')
 
         let v = visualizations[idx];
 
-        if (!viewers.includes(v.accountId)) {
+        if (!viewers.includes(v.accountId) && v.accountId != undefined) {
           viewers.push(v.accountId)
+        }
+
+        if (v.accountId == studentId) {
+          studentReadedTimestamps.push(v.createdAt);
         }
 
       }
       //END for()
+
+      // latestStudentReadedTimestamps
+
+      let latestStudentReadedTimestamps = studentReadedTimestamps.sort(function(a, b){return b-a})[0];
+
+      /* */
 
       scope.viewers = viewers;
       scope.viewersParseFirstTime = true;
@@ -1406,8 +1482,6 @@ angular.module('netbase')
 
               // Parse students
               Students.getStudentById(viewerId).then(function(res) {
-
-                console.log(res);
 
                 scope.viewersParsed.push(res.data.data)
 
@@ -1433,14 +1507,9 @@ angular.module('netbase')
 
       // Find user on viewers
       scope.studentReaded = false;
-      let studentId;
-
-      if ($localStorage.token != undefined && $localStorage.token != null) {
-        studentId = jwtHelper.decodeToken($localStorage.token)._id;
-      }
 
       if (studentId.length > 0) {
-        console.log(viewers)
+
         if (viewers.includes(studentId)) {
           scope.studentReaded = true;
         } else {
@@ -1451,6 +1520,28 @@ angular.module('netbase')
       //END studentId.length > 0
 
       scope.viewers = viewers;
+
+      /* Display "alert" if new action */
+
+      // 1 - Get timestamp from latest answer on FP
+      // 2 - Compare with timestamp from lastest user timestamp viewed
+
+      let answersTimestamps = [post.createdAt];
+
+      for (let idx = 0; idx < post.answers.length; idx++) {
+
+        let timestamp = post.answers[idx].createdAt;
+        answersTimestamps.push(timestamp);
+
+      }
+
+      // 1.1 - Sort array, get highest
+
+      let latestAnswersTimestamp = answersTimestamps.sort(function(a, b){return b-a})[0];
+
+      if (latestAnswersTimestamp > latestStudentReadedTimestamps) {
+        scope.studentReaded = false;
+      }
 
       /* up vote */
 

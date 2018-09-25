@@ -1110,7 +1110,9 @@ angular.module('netbase')
     .factory('News', ['$http', function($http) {
 
       //var baseUrl = "https://api.universida.de/search";
+
       var baseUrl = "https://network-news-prod.herokuapp.com";
+
       //var baseUrl = "http://192.168.1.7:8888";
       //var baseUrl = "http://192.168.1.7:9004";
 

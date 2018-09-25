@@ -76,7 +76,7 @@ socket.on("imagepath", function(a) {
       <div class="profile-pic" ng-if="student.imageUrl == undefined" style="background-image: url('http://virtual-strategy.com/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png')"></div>
 
       <div class="profile-manage-wrapper">
-        <h4 ng-click="imageEdit = true">Modificar foto</h4>
+        <h4 ng-click="imageEdit = true" style="text-align: center;">Modificar fotografia</h4>
         <div ng-show="imageEdit">
           <input type="hidden" id="file" ng-model="file">
           <button class="btn bg-base" id="upload_btn" style="color: #fff; margin-bottom: 15px;">Selecionar foto</button>
@@ -86,7 +86,7 @@ socket.on("imagepath", function(a) {
 
       <div class="profile-manage-wrapper">
 
-        <h4 ng-click="passwordEdit = true" style="margin-bottom: 15px; margin-top: 15px;">Modificar a sua senha</h4>
+        <h4 ng-click="passwordEdit = true" style="margin-bottom: 15px; margin-top: 15px; text-align: center;">Modificar a sua senha</h4>
 
         <div ng-show="passwordEdit" class="form-group" style="margin-top: 15px;">
           <label>Nova senha</label>

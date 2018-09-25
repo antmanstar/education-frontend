@@ -22,18 +22,32 @@
     <div style="height: 5px"></div>
 
     <button class="btn bg-base" style="margin-top: 2px; height: 29px; width: unset;" ng-click="createPost(university.url)">Criar postagem</button>
-
-    <p style="margin-top: 15px; margin-bottom: 15px;" ng-if="studentIsAdmin == true"><b>Administração</b></p>
-
-    <a href="/a/{{university.url}}/forum/category/create" ng-if="studentIsAdmin == true"><button class="btn bg-base" style="margin-top: 2px; height: 29px; width: unset;">Criar categoria</button></a>
-    <a href="/v/create?universityId={{university._id}}" ng-if="studentIsAdmin == true"><button class="btn bg-base" style="margin-top: 2px; height: 29px; width: unset;">Criar video</button></a>
-    <a href="/p/create?universityId={{university._id}}" ng-if="studentIsAdmin == true"><button class="btn bg-base" style="margin-top: 2px; height: 29px; width: unset;">Criar playlist</button></a>
     <button class="btn bg-primary-purple" style="margin-top: 2px; height: 29px; width: unset;" ng-hide="userSubscribed(university.members)" ng-click="subscribe()">Inscrever</button>
     <button class="btn bg-primary-purple" style="margin-top: 2px; height: 29px; width: unset;" ng-show="userSubscribed(university.members)" ng-click="subscribe()">Desinscrever</button>
+
+    <p style="font-size: 0.9em; padding-top: 15px; color: #7d7d7d; font-weight: bold;" ng-if="universityVisitsTodayList.length > 0">ONLINE HOJE</p>
+
+    <div class="academia-supportcol-info-text" ng-if="universityVisitsTodayList.length > 0">
+      <studentinfo ng-repeat="id in universityVisitsTodayList | limitTo: 10" sid="{{id}}"></studentinfo>
+    </div>
 
   </div>
 
   <!-- end academia-supportcol-stats -->
+
+  <div class="academia-supportcol-info">
+
+    <div class="academia-supportcol-info-title" ng-if="studentIsAdmin == true">
+      administração
+    </div>
+    <!-- end academia-supportcol-info-title -->
+
+    <a href="/a/{{university.url}}/forum/category/create" ng-if="studentIsAdmin == true"><button class="btn bg-base" style="margin-top: 2px; height: 29px; width: unset;">Criar categoria</button></a>
+    <a href="/v/create?universityId={{university._id}}" ng-if="studentIsAdmin == true"><button class="btn bg-base" style="margin-top: 2px; height: 29px; width: unset;">Criar video</button></a>
+    <a href="/p/create?universityId={{university._id}}" ng-if="studentIsAdmin == true"><button class="btn bg-base" style="margin-top: 2px; height: 29px; width: unset;">Criar playlist</button></a>
+
+  </div>
+  <!-- end academia-supportcol-info -->
 
   <div class="academia-supportcol-info">
 

@@ -40,17 +40,17 @@
 
   </div>
 
-  <div class="academia-content-viewers" ng-show="viewersParsed.length > 0">
+  <div class="academia-content-viewers animated fadeIn faster" ng-show="viewersParsed.length > 0">
 
     <p><b>Visualizações</b></p>
 
-    <div class="academia-content-viewers-user" ng-if="viewersParsed.length > 0" ng-repeat="v in viewersParsed | limitTo : 5">
+    <div style="padding-bottom: 5px;" class="academia-content-viewers-user" ng-if="viewersParsed.length > 0" ng-repeat="v in viewersParsed | limitTo : 5">
       <img class="academia-content-viewers-user-pic" ng-if="v.imageUrl == undefined" src="img/user/user.png" />
       <img class="academia-content-viewers-user-pic"  ng-if="v.imageUrl.length > 0" src="{{v.imageUrl}}" />{{v.name}}
     </div>
     <!-- end ng-repeat -->
 
-    <p ng-if="viewersParsed.length > 5">E + {{viewersParsed.length - 5}}</p>
+    <div style="display: inline-block; padding-top: 15px;" ng-if="viewersParsed.length > 5">+ <i class="fa fa-eye" style="padding-right: 2px; padding-left: 2px;" aria-hidden="true"></i> {{viewersParsed.length - 5}}</div>
 
   </div>
   <!-- end academia-content-viewers -->

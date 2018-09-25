@@ -614,7 +614,7 @@ angular.module('netbase')
       News.getNewsBySection(id, title).success(function(res) {
 
         $scope.sectionTitle = "sobre " + title;
-        $scope.news = res.data;
+        $scope.news = res.data.docs;
 
       });
 
@@ -1113,6 +1113,30 @@ angular.module('netbase')
 
   /* header variables */
   let logged = $rootScope.logged;
+
+  /* Real time connection */
+
+/*
+  var socket = io("http://192.168.1.7:8787");
+
+  socket.on('connect', function(data) {
+    console.log("Connected...");
+
+    // userId
+    let student = { _id : "234fads" };
+
+    socket.emit('online', student);
+    socket.emit('universityVisit', { universityUrl : "sambapoker", student : student });
+
+  });
+  // END socket.on('connect')
+
+  socket.on("onlinelist", function(data){
+    console.log("online list: ")
+    console.log(data);
+  });
+*/
+  /* */
 
   /* functions */
   $scope.login = function() {
@@ -2048,11 +2072,6 @@ angular.module('netbase')
   $scope.pictureSelect = function(idx) {
 
     $scope.pictureSelected = $scope.listing.pictures[idx].url;
-
-    console.log("picture selected: ")
-    console.log($scope.pictureSelected);
-
-    console.log($scope.listing.pictures)
 
     ngDialog.open({ template: 'templateId', className: 'ngdialog-theme-default ngdialog-theme-smp', scope : $scope });
 
