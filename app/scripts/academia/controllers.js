@@ -65,7 +65,7 @@ angular.module('netbase')
       $timeout(function() {
 
         console.log("time out!");
-        ngDialog.open({ template: 'partials/modals/accountsuggestion.html', controller: 'AccountSuggestionCtrl', className: 'ngdialog-theme-default ngdialog-plans modal-accountsuggestion', data : { university : $scope.university } });
+        ngDialog.open({ template: 'partials/modals/accountsuggestion.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default ngdialog-plans modal-accountsuggestion', data : { university : $scope.university } });
         $timeout.cancel()
 
       }, 8500, true);
@@ -100,7 +100,7 @@ angular.module('netbase')
         $timeout(function() {
 
           console.log("time out!");
-          ngDialog.open({ template: 'partials/modals/accountsuggestion.html', controller: 'AccountSuggestionCtrl', className: 'ngdialog-theme-default ngdialog-plans modal-accountsuggestion', data : { university : $scope.university } });
+          ngDialog.open({ template: 'partials/modals/accountsuggestion.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default ngdialog-plans modal-accountsuggestion', data : { university : $scope.university } });
           $timeout.cancel()
 
         }, 8500, true);
@@ -233,7 +233,7 @@ angular.module('netbase')
 
 }])
 
-.controller('AcademiaForumCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', '$timeout' , function($rootScope, $scope, $location, $route, University, $timeout) {
+.controller('AcademiaForumCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', '$timeout', 'ngDialog' , function($rootScope, $scope, $location, $route, University, $timeout, ngDialog) {
 
   let universityUrl = $route.current.params.academiaName;
 
@@ -249,15 +249,12 @@ angular.module('netbase')
 
   /* get university informations */
 
-  console.log("acaemia forum ctrl")
-
   if ( University.isStoredLocal(universityUrl) ) {
 
     let universityStorage = University.retrieveStorage(universityUrl);
 
     $scope.university = universityStorage[universityUrl];
-    console.log("university: ")
-    console.log($scope.university)
+
     University.getUniversityForumPosts($scope.university._id, $scope.page).then(function(res) {
 
       let forumPostsRequested = res.data.data.docs;
@@ -266,14 +263,11 @@ angular.module('netbase')
       $scope.forumPosts = $scope.forumPosts.concat(forumPostsRequested);
       $scope.loaded = true;
 
-      console.log($scope.forumPost)
-
       if (!$rootScope.logged) {
 
         $timeout(function() {
 
-          console.log("time out!");
-          ngDialog.open({ template: 'partials/modals/accountsuggestion.html', controller: 'AccountSuggestionCtrl', className: 'ngdialog-theme-default ngdialog-plans modal-accountsuggestion', data : { university : $scope.university } });
+          ngDialog.open({ template: 'partials/modals/accountsuggestion.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default ngdialog-plans modal-accountsuggestion', data : { university : $scope.university } });
           $timeout.cancel()
 
         }, 8500, true);
@@ -283,16 +277,10 @@ angular.module('netbase')
 
     }).catch(function(e) {
 
-      console.log("forum post error request: ");
-      console.log(e);
 
     });
 
-      console.log("stored")
-
   } else {
-
-    console.log("not stored")
 
     University.getUniversity(universityUrl).then(function(res) {
 
@@ -316,7 +304,7 @@ angular.module('netbase')
           $timeout(function() {
 
             console.log("time out!");
-            ngDialog.open({ template: 'partials/modals/accountsuggestion.html', controller: 'AccountSuggestionCtrl', className: 'ngdialog-theme-default ngdialog-plans modal-accountsuggestion', data : { university : $scope.university } });
+            ngDialog.open({ template: 'partials/modals/accountsuggestion.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default ngdialog-plans modal-accountsuggestion', data : { university : $scope.university } });
             $timeout.cancel()
 
           }, 8500, true);
@@ -586,7 +574,7 @@ angular.module('netbase')
       $timeout(function() {
 
         console.log("time out!");
-        ngDialog.open({ template: 'partials/modals/accountsuggestion.html', controller: 'AccountSuggestionCtrl', className: 'ngdialog-theme-default ngdialog-plans modal-accountsuggestion', data : { university : $scope.university } });
+        ngDialog.open({ template: 'partials/modals/accountsuggestion.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default ngdialog-plans modal-accountsuggestion', data : { university : $scope.university } });
         $timeout.cancel()
 
       }, 8500, true);
@@ -1270,7 +1258,7 @@ angular.module('netbase')
             let studentIdMembersLocation = userMembersLocation(array);
 
             if (studentIdMembersLocation != -1) {
-
+              console.log(array[studentIdMembersLocation])
               if (array[studentIdMembersLocation].unsubscribed) {
                 return false;
               } else {

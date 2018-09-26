@@ -396,7 +396,7 @@ angular.module('netbase')
       if (res.success) {
 
         $scope.success = {
-          text : "Privilege updated with success",
+          text : "Permissão atualizada com sucesso",
           status : true
         };
 

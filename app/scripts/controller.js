@@ -47,6 +47,28 @@ angular.module('netbase')
 
 .controller('AccountCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog) {
 
+  //
+  let university;
+
+  if ($scope.ngDialogData != undefined) {
+
+    if ($scope.ngDialogData.university != undefined) {
+      university = $scope.ngDialogData.university;
+    }
+
+  }
+
+  $scope.university = university;
+
+  $scope.createDialog = function() {
+    ngDialog.close();
+    ngDialog.open({ template: 'partials/modals/signup.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
+  }
+
+  $scope.close = function() {
+    ngDialog.close();
+  }
+
   // Redirect
   let redirectUrl;
 
@@ -99,8 +121,6 @@ angular.module('netbase')
 
         let success = res.data.success;
         let token = res.data.token;
-
-        console.log(res);
 
         if (success) {
 
@@ -687,6 +707,8 @@ angular.module('netbase')
 
       News.vote(news._id).success(function(res) {
 
+        console.log(res);
+
         if (res.success) {
           $scope.news = res.data;
         } else {
@@ -698,8 +720,6 @@ angular.module('netbase')
     } else {
       ngDialog.open({ template: 'partials/modals/login.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
     }
-
-    console.log(data);
 
   }
 
