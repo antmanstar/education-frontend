@@ -1134,30 +1134,6 @@ angular.module('netbase')
   /* header variables */
   let logged = $rootScope.logged;
 
-  /* Real time connection */
-
-/*
-  var socket = io("http://192.168.1.7:8787");
-
-  socket.on('connect', function(data) {
-    console.log("Connected...");
-
-    // userId
-    let student = { _id : "234fads" };
-
-    socket.emit('online', student);
-    socket.emit('universityVisit', { universityUrl : "sambapoker", student : student });
-
-  });
-  // END socket.on('connect')
-
-  socket.on("onlinelist", function(data){
-    console.log("online list: ")
-    console.log(data);
-  });
-*/
-  /* */
-
   /* functions */
   $scope.login = function() {
     console.log("login")
@@ -2438,12 +2414,12 @@ angular.module('netbase')
     scope: true,
     link: function(scope, element, attr) {
 
-      let want = JSON.parse(attr.w);
+      let viewer = JSON.parse(attr.v);
 
-      console.log("want: ");
-      console.log(want);
+      console.log("viewer: ");
+      console.log(viewer);
 
-      Students.getStudentById(want.accountId).then(function(res) {
+      Students.getStudentById(viewer.accountId).then(function(res) {
 
         console.log("student by id: ")
         console.log(res);

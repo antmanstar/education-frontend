@@ -10,13 +10,18 @@
 
   <div class="row">
 
-    <div class="col-xs-12 col-sm-12">
+    <div class="col-xs-12 col-sm-7">
 
       <div class="video-title">{{video.title}}</div>
 
-      <div class="video-author">
-        <div class="pic"><img src="{{student.imageUrl}}" /></div>
+      <div class="video-author" ng-if="university == undefined">
+        <div class="pic" style="background-image: unset !important;"><img src="{{student.imageUrl}}" /></div>
         <div class="name">{{student.name}}</div>
+      </div>
+
+      <div class="video-author" ng-if="university != undefined">
+        <div class="pic" style="background-image: unset !important;"><img src="{{university.backgroundImage}}" /></div>
+        <div class="name">{{university.name}}</div>
       </div>
 
       <div class="video-description">
@@ -25,14 +30,11 @@
       </div>
       <!-- -->
 
-      <!--
       <div class="video-forum">
 
-        <div class="title">Forum</div>
+        <div class="title">Comentários</div>
 
-        {{forumPost}}
-        {{forumPost.answers.length}}
-        <p ng-show="forumPost.answers.length == 0">Nenhum comentario postado</p>
+        <p style="padding-top: 30px;" ng-show="forumPost.answers.length == 0">Nenhum comentario postado</p>
 
         <forumpostanswer p="{{forumPost._id}}" u="{{forumPost.universityId}}" ng-show="forumPost.answers.length > 0" a="{{answer}}" ng-repeat="answer in forumPost.answers | orderBy:'-votesCount'"></forumpostanswer>
 
@@ -41,7 +43,7 @@
       <div class="academia-content-forum-answer">
 
         <div class="academia-content-forum-answer-title">
-          Comentários
+          Escreva o seu comentário
         </div>
 
 
@@ -64,14 +66,12 @@
         </div>
 
       </div>
-
-    -->
+      <!-- academia-content-forum-answer -->
 
     </div>
     <!-- end col-xs-12 col-sm-8 -->
 
-    <!--
-    <div class="col-xs-12 col-sm-5 video-rightbar">
+    <div class="col-xs-12 col-sm-5 video-rightbar" ng-if="studentIsAdmin">
 
       <div class="video-admin video-rightbar-area">
 
@@ -79,29 +79,15 @@
 
         <div class="buttons">
 
-          <button class="btn btn-bluebase" style="margin-right: 15px;">Editar</button>
-          <button class="btn btn-bluebase">Status</button>
+          <!--<button class="btn btn-bluebase" style="margin-right: 15px;"><i class="fas fa-pencil-alt" style="padding-right: 5px;"></i> Editar</button>-->
+          <button class="btn btn-bluebase" ng-click="openViewers()"><i class="fa fa-eye" style="padding-right: 5px;" aria-hidden="true"></i> Visualizações</button>
 
         </div>
 
       </div>
-
-      <div class="video-authorscontent video-rightbar-area">
-
-        <div class="title">+ VIDEOS</div>
-
-        <div class="video">
-          <div class="poster"><img src="https://i.vimeocdn.com/video/718609740.webp?mw=960&mh=540" /></div>
-          <div class="texts">
-            <div class="title">AA x JJ Pre-flop</div>
-            <div class="author">Samba</div>
-          </div>
-        </div>
-
-      </div>
+      <!-- end video-rightbar-area -->
 
     </div>
-    -->
     <!-- col-xs-12 col-sm-4 -->
 
   </div>

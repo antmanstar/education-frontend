@@ -1,0 +1,22 @@
+<div class="container-fluid modal-accounts">
+
+  <div class="row">
+
+    <div class="col-xs-12">
+
+      <div class="headline-sub-one" style="padding-bottom: 30px;">Visualizações</div>
+
+      <p style="padding-bottom: 10px;" ng-if="viewers.length > 0">Lista com progresso das visualizações de cada estudante em porcentagem</p>
+
+      <accountviewer v="{{viewer}}" pd="{{playerDuration}}" ng-repeat="viewer in viewers"></accountviewer>
+
+      <p style="padding-bottom: 10px;" ng-if="viewers.length == 0">Nenhuma visualização realizada</p>
+
+    </div>
+    <!-- end col-xs-12 -->
+
+  </div>
+  <!-- end row -->
+
+</div>
+<!-- end container-fluid -->

@@ -225,7 +225,6 @@
 .video-admin .buttons button {
 
   display: inline-block;
-  width: calc(50% - 30px);
   margin-bottom: 15px;
   white-space: none;
 

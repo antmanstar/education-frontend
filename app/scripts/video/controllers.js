@@ -6,7 +6,7 @@ angular.module('netbase')
 
 .filter('unsafe', function($sce) { return $sce.trustAsHtml; })
 
-.controller('VideoWatchCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Videos', '$sce', '$localStorage', 'User', 'Forum', 'Students' , function($rootScope, $scope, $location, $route, University, Videos, $sce, $localStorage, User, Forum, Students) {
+.controller('VideoWatchCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Videos', '$sce', 'User', 'Forum', 'Students', 'ngDialog', '$localStorage', 'jwtHelper', function($rootScope, $scope, $location, $route, University, Videos, $sce, User, Forum, Students, ngDialog, $localStorage, jwtHelper) {
 
   let videoId = $route.current.params.videoId;
 
@@ -30,74 +30,122 @@ angular.module('netbase')
 
       $scope.video = res.data;
 
-      if(Hls.isSupported()) {
-        var hls = new Hls();
-        hls.loadSource($scope.video.file);
-        hls.attachMedia(player);
-      }
+      console.log($scope.video)
 
-      $scope.video.file = $sce.trustAsResourceUrl($scope.video.file);
-      $scope.forumPost = res.forumpost;
-      /* video progress */
+      if ($scope.video != null && $scope.video != undefined) {
 
-      //ng-src="{{video.file}}"
+        if(Hls.isSupported()) {
+          var hls = new Hls();
+          hls.loadSource($scope.video.file);
+          hls.attachMedia(player);
+        }
 
-      /* Load channel owner */
-      Students.getStudentById($scope.video.accountId).success(function(res) {
+        $scope.video.file = $sce.trustAsResourceUrl($scope.video.file);
 
-        console.log("student: ")
-        console.log(res);
-        $scope.student = res.data;
+        // Get University
 
-      });
-      /* */
+        $scope.studentIsAdmin = false;
 
-      viewers = $scope.video.viewers;
+        if ($scope.video.universityId.length > 0) {
 
-      if (logged) {
+          let studentId;
+
+          if ($localStorage.token != undefined && $localStorage.token != null) {
+            studentId = jwtHelper.decodeToken($localStorage.token)._id;
+          }
+
+          University.getUniversityById($scope.video.universityId).success(function(res) {
+
+            let university = res.data;
+            $scope.university = university;
+
+            /* check if student is a premium member */
+            for (let idx = 0; idx < university.members.length; idx++) {
+
+              var member = university.members[idx];
+
+              if (studentId != undefined && member.accountId == studentId && member.privilege == 99) {
+                $scope.studentIsAdmin = true;
+              }
+            }
+            //END for (let idx)
+
+            /* Get Forum Post */
+
+            Forum.getForumPostById($scope.video.forumpostId, $scope.video.universityId).success(function(res) {
+
+              $scope.forumPost = res.data;
+
+            });
+            //END Forum.getForumPostById
+
+          });
+          //END
+
+        }
+
+        // Time Tracking
+
+        Students.getStudentById($scope.video.accountId).success(function(res) {
+
+          console.log("student: ")
+          console.log(res);
+          $scope.student = res.data;
+
+        });
+        /* */
+
+        viewers = $scope.video.viewers;
 
         let timeWatched = 0;
 
-        let accountId = User.getId();
+        if (logged) {
 
-        if (viewers.length > 0) {
+          let accountId = User.getId();
 
-          for (let idx = 0; idx < viewers.length; idx++) {
+          if (viewers.length > 0) {
 
-            if (viewers[idx].accountId == accountId) {
-              timeWatched = viewers[idx].time;
+            for (let idx = 0; idx < viewers.length; idx++) {
+
+              if (viewers[idx].accountId == accountId) {
+                timeWatched = viewers[idx].time;
+              }
+
             }
 
           }
+          //END viewers
 
         }
-        //END viewers
+        //END logged
+
+        setInterval(function(){
+
+            let percentComplete = player.currentTime / player.duration;
+
+            if (timeWatched < player.currentTime) {
+
+              timeWatched = player.currentTime;
+
+              let payload = { timeWatched : timeWatched };
+
+              Videos.progress(payload, videoId).success(function(res) {
+
+                console.log("time viewed updated")
+                console.log(res);
+
+              });
+              //END update progress
+
+            }
+            //END timeWatched < player.currentTime
+
+        }, 10000);
+        //END setInterval
+
 
       }
-      //END logged
-
-      setInterval(function(){
-
-          let percentComplete = player.currentTime / player.duration;
-
-          if (timeWatched < player.currentTime) {
-
-            timeWatched = player.currentTime;
-
-            let payload = { timeWatched : timeWatched };
-
-            Videos.progress(payload, videoId).success(function(res) {
-
-              console.log("time viewed updated")
-
-            });
-            //END update progress
-
-          }
-          //END timeWatched < player.currentTime
-
-      }, 10000);
-      //END setInterval
+      //END if (video is null or undefined)
 
     }
     //END status 90010
@@ -111,23 +159,38 @@ angular.module('netbase')
 
     // change forum post structure
 
-    Forum.postAnswerByForumPostId($scope.forumPost._id, data).then(function(res) {
+    var data = { text : $scope.answer };
 
-      let status = res.data.status;
-      let data = res.data.data;
-      let success = res.data.success;
+    if ($localStorage.token != undefined || $localStorage.token != null) {
 
-      if (success) {
+      Forum.postAnswerByForumPostId($scope.forumPost._id, data).then(function(res) {
 
-        data.votesCount = 0;
-        data.createdAt = Math.round((new Date()).getTime() / 1000);
-        $scope.forumPost.answers.push(data);
+        let status = res.data.status;
+        let data = res.data.data;
+        let success = res.data.success;
 
-      }
+        if (success) {
 
-    });
+          data.votesCount = 0;
+          data.createdAt = Math.round((new Date()).getTime() / 1000);
+          $scope.forumPost.answers.push(data);
+
+        }
+
+      });
+      //END Forum.postAnswerByForumPostId
+
+     } else {
+      ngDialog.open({ template: 'partials/modals/login.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
+    }
 
   };
+
+  $scope.openViewers = function() {
+    let duration = player.duration;
+    console.log("duration: " + duration)
+    ngDialog.open({ template: 'partials/modals/videoaccountviewer.html', controller: 'VideoViewersCtrl', className: 'ngdialog-theme-default', data : { viewers : viewers, duration : duration } });
+  }
 
 }])
 
@@ -276,4 +339,56 @@ angular.module('netbase')
 
   }
 
+}])
+
+.controller('VideoViewersCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Videos', '$sce', '$localStorage', 'User', 'Forum', 'Students' , function($rootScope, $scope, $location, $route, University, Videos, $sce, $localStorage, User, Forum, Students) {
+
+  let viewers = $scope.ngDialogData.viewers;
+  let playerDuration = $scope.ngDialogData.duration;
+
+  $scope.viewers = viewers;
+  $scope.playerDuration = playerDuration;
+
+  console.log("viewers: ")
+  console.log($scope.viewers)
+
+}])
+
+.directive('accountviewer', ['Students', function(Students) {
+  return {
+    restrict: 'E',
+    templateUrl: "../partials/directive/accountviewer.html",
+    replace: true,
+    scope: true,
+    link: function(scope, element, attr) {
+
+      let viewer = JSON.parse(attr.v);
+      let playerDuration = attr.pd;
+
+      console.log("playerDuration: ");
+      console.log(playerDuration);
+
+      scope.playerDuration = playerDuration;
+      scope.viewer = viewer;
+
+      scope.percentage = Math.floor( viewer.time / playerDuration * 100 );
+
+      Students.getStudentById(viewer.accountId).then(function(res) {
+
+        console.log("student by id: ")
+        console.log(res);
+        let account = res.data.data;
+
+        scope.account = account;
+
+        if (account.imageUrl != undefined) {
+          scope.picture = account.imageUrl;
+        } else {
+          scope.picture = "/img/user/user.png";
+        }
+
+      });
+
+    }
+  }
 }])
