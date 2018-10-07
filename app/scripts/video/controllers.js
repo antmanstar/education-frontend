@@ -34,13 +34,27 @@ angular.module('netbase')
 
       if ($scope.video != null && $scope.video != undefined) {
 
-        if(Hls.isSupported()) {
-          var hls = new Hls();
-          hls.loadSource($scope.video.file);
-          hls.attachMedia(player);
-        }
+        console.log($scope.video.file.indexOf(".mp4"))
 
-        $scope.video.file = $sce.trustAsResourceUrl($scope.video.file);
+        if ($scope.video.file.indexOf(".mp4") == -1 && $scope.video.file.indexOf(".wmv") == -1) {
+
+          console.log("doesn't have")
+          console.log($scope.video.file)
+
+          if(Hls.isSupported()) {
+            var hls = new Hls();
+            hls.loadSource($scope.video.file);
+            hls.attachMedia(player);
+          }
+
+          $scope.video.file = $sce.trustAsResourceUrl($scope.video.file);
+
+        } else {
+
+          console.log("is mp4")
+          $("video").attr("src", $scope.video.file);
+
+        }
 
         // Get University
 

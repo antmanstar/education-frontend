@@ -1211,18 +1211,24 @@ angular.module('netbase')
 
             console.log(data)
 
-            if (studentId.length > 0) {
+            if (studentId != undefined) {
 
-              socket.emit('universityVisit', { universityUrl : university.url, student : student });
+              if (studentId.length > 0) {
 
-              socket.on('universityVisitsTodayList', function(data) {
+                socket.emit('universityVisit', { universityUrl : university.url, student : student });
 
-                scope.universityVisitsTodayList = data;
+                socket.on('universityVisitsTodayList', function(data) {
 
-              });
-              //END socket.on('universityVisitsTodayList')
+                  scope.universityVisitsTodayList = data;
+
+                });
+                //END socket.on('universityVisitsTodayList')
+
+              }
+              //END if (studentId.length > 0) 
 
             }
+            //END studentId
 
           });
           //END socket.on('connect')
