@@ -9,12 +9,14 @@
     <div class="time"><span am-time-ago="post.createdAt | amFromUnix"></span></div>
   </div>
 
+  <!--
   <div class="exhibition" ng-if="university.backgroundImage.length > 0" style="background-image: url('{{university.backgroundImage}}')"></div>
   <div class="exhibition" ng-if="university.backgroundImage == undefined" style="background-image: url('/img/misc/noimageacademia.jpg')"></div>
+  -->
 
   <div class="content-wrapper">
     <div class="title"><a href="/a/{{university.url}}/forum/post/id/{{post._id}}">{{post.title}}</a></div>
-    <p ng-bind-html="post.text"></p>
+    <div style="overflow-wrap: break-word;" ng-bind-html="post.text"></div>
     <div class="status">
       <div class="comments"><i class="fas fa-comment"></i> {{post.answers.length}} comentários</div>
       <div class="votes"><i class="fas fa-arrow-up"></i> {{post.votesCount}} votos</div>

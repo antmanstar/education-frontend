@@ -154,7 +154,14 @@ angular.module('netbase')
         let studentStorage = Students.retrieveStorage(studentId);
 
         scope.user = studentStorage[studentId];
-        console.log(scope.user)
+
+        console.log("scope user name: ")
+        console.log(scope.user.name)
+        console.log(scope.user.name.length)
+
+        if (scope.user.name.length > 14) {
+          scope.user.name = $filter('limitHtml')(scope.user.name, 15, '...');
+        }
 
       } else {
 
