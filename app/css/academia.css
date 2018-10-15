@@ -209,6 +209,7 @@
 
 .academia-content-navigation {
 
+  display: none;
   padding-bottom: 10px;
 
 }
@@ -295,7 +296,6 @@
 
 .academia-content-forum {
 
-  padding-top: 15px;
   padding-bottom: 15px;
 
 }
@@ -470,10 +470,8 @@
 .academia-content-mobile {
 
   display: none;
-
   width: 100%;
   text-align: center;
-
   padding-bottom: 15px;
 
 }
@@ -872,7 +870,7 @@
 
   .academia-content-navigation {
 
-    /* display: none; */
+    display: block;
 
   }
 

@@ -15,7 +15,9 @@
 
   <div class="row">
 
-    <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9 academia-content">
+    <div academiarightcolumn university="{{university}}"></div>
+
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 academia-content">
 
       <div academiastatus university="{{university}}"></div>
 
@@ -50,7 +52,31 @@
     </div>
     <!-- end col-xs-12 -->
 
-    <div academiarightcolumn university="{{university}}"></div>
+    <!--
+    <div class="col-sm-2 col-md-2 col-lg-3 academia-content">
+
+      <p style="font-size: 1.3em; font-weight: bold;">Chat</p>
+
+      <div class="chat-widget-messages" style="min-height: 320px;">
+
+        <div class="message" style="padding-bottom: 5px; padding-top: 5px;" ng-repeat="n in [1,2]">
+
+          <div class="user" style="padding-bottom: 7px;">
+            <img style="height: 20px; width: 20px; border-radius: 50px; margin-right: 5px;" src="https://storage.googleapis.com/networkbase-images/images/1537853209/a40.jpg" /><b>Nome</b>
+          </div>
+          <div class="txt">Mensagem enviada pelo usuário</div>
+
+        </div>
+
+      </div>
+
+      <div>
+        <input type="text" style="background-color: #f2f2f2; padding: 10px; border-radius: 5px; border: none; width: 100%; padding-bottom: 15px; outline: none;" />
+        <button style="background-color: #38b6a2; border: none; float: right; padding-left: 15px; padding-right: 15px; padding-top: 5px; padding-bottom: 5px; margin-top: 5px; border-radius: 3px; color: #fff; margin-top: 8px; outline: none;">Enviar</button>
+      </div>
+
+    </div>
+    <!-- end -->
 
   </div>
   <!-- end row -->

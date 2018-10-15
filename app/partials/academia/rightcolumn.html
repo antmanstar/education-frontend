@@ -1,9 +1,82 @@
+<div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 section-menu-col">
+
+  <div class="section-menu">
+    <div class="section-menu-title" style="padding-left: 0px;">{{university.name}}</div>
+    <div class="academia-supportcol-stats">
+
+      <div class="academia-supportcol-stats-stat">
+        {{ (university.members | filter : { 'unsubscribed' : 'false' }).length }} members
+      </div>
+
+      <div style="height: 5px"></div>
+
+    </div>
+    <div class="option" style="padding-left: 0px;"><a href="/a/{{university.url}}/timeline"><i class="fa fa-rss" aria-hidden="true"></i>Timeline</a></div>
+    <div class="option" style="padding-left: 0px;"><a href="/a/{{university.url}}/forum"><i class="fa fa-pencil-square" aria-hidden="true"></i>Forum</a></div>
+    <div class="option" style="padding-left: 0px;"><a href="/a/{{university.url}}/forum/category/all"><i class="fa fa-th-large" aria-hidden="true"></i>Categorias</a></div>
+    <div class="option" style="padding-left: 0px;"><a href="/a/{{university.url}}/playlist/all"><i class="fa fa-play" aria-hidden="true"></i> Playlists</a></div>
+    <div class="option" style="padding-left: 0px;"><a href="/a/{{university.url}}/cursos"><i class="fa fa-graduation-cap" aria-hidden="true"></i>Cursos</a></div>
+
+    <p style="font-size: 0.9em; padding-top: 15px; color: #7d7d7d; font-weight: bold;">AÇÕES</p>
+
+    <button class="btn bg-primary-purple" style="margin-top: 2px; height: 29px; width: unset;" ng-hide="userSubscribed(university.members)" ng-click="subscribe()">Inscrever</button>
+    <button class="btn bg-primary-purple" style="margin-top: 2px; height: 29px; width: unset;" ng-show="userSubscribed(university.members)" ng-click="subscribe()">Desinscrever</button>
+    <button class="btn bg-base" style="margin-top: 2px; height: 29px; width: unset;" ng-click="createPost(university.url)">Criar postagem</button>
+
+    <div style="height: 5px"></div>
+
+    <p style="font-size: 0.9em; padding-top: 15px; color: #7d7d7d; font-weight: bold;" ng-if="universityVisitsTodayList.length > 0">ONLINE HOJE</p>
+
+    <div class="academia-supportcol-info-text" ng-if="universityVisitsTodayList.length > 0">
+      <studentinfo ng-repeat="id in universityVisitsTodayList | limitTo: 10" sid="{{id}}"></studentinfo>
+    </div>
+  </div>
+
+  <div class="academia-supportcol-info">
+
+    <div class="academia-supportcol-info-title">
+      sobre
+    </div>
+
+    <div class="academia-supportcol-info-text">
+      {{university.about}}
+    </div>
+
+  </div>
+
+  <div class="academia-supportcol-info">
+
+    <div class="academia-supportcol-info-title" ng-if="studentIsAdmin == true">
+      administração
+    </div>
+
+    <a href="/a/{{university.url}}/forum/category/create" ng-if="studentIsAdmin == true"><button class="btn bg-base" style="margin-top: 2px; height: 29px; width: unset;">Criar categoria</button></a>
+    <a href="/v/create?universityId={{university._id}}" ng-if="studentIsAdmin == true"><button class="btn bg-base" style="margin-top: 2px; height: 29px; width: unset;">Criar video</button></a>
+    <a href="/p/create?universityId={{university._id}}" ng-if="studentIsAdmin == true"><button class="btn bg-base" style="margin-top: 2px; height: 29px; width: unset;">Criar playlist</button></a>
+
+  </div>
+
+  <div class="academia-supportcol-info" ng-if="university.plans.length > 0">
+
+    <div class="academia-supportcol-info-title">
+      membro premium
+    </div>
+
+    <p ng-show="studentIsPremium">Você é membro premium!</p>
+    <button ng-show="studentIsPremium" class="btn bg-primary-purple" style="margin-top: 2px; height: 29px; width: unset;" ng-click="premium()">Ver planos</button>
+    <button ng-hide="studentIsPremium" class="btn bg-primary-purple" style="margin-top: 2px; height: 29px; width: unset;" ng-click="premium()">Assinar premium</button>
+
+  </div>
+
+</div>
+<!-- end -->
+
+<!--
 <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 academia-supportcol">
 
   <div class="academia-supportcol-title">
     <a href="/a/{{university.url}}/">{{university.name}}</a>
   </div>
-  <!-- end academia-supportcol-title -->
 
   <div class="academia-supportcol-stats">
 
@@ -11,13 +84,6 @@
       {{ (university.members | filter : { 'unsubscribed' : 'false' }).length }} members
     </div>
 
-    <!--
-
-    <div class="academia-supportcol-stats-stat">
-      10 users online
-    </div>
-
-    -->
 
     <div style="height: 5px"></div>
 
@@ -33,55 +99,46 @@
 
   </div>
 
-  <!-- end academia-supportcol-stats -->
-
   <div class="academia-supportcol-info">
 
     <div class="academia-supportcol-info-title" ng-if="studentIsAdmin == true">
       administração
     </div>
-    <!-- end academia-supportcol-info-title -->
 
     <a href="/a/{{university.url}}/forum/category/create" ng-if="studentIsAdmin == true"><button class="btn bg-base" style="margin-top: 2px; height: 29px; width: unset;">Criar categoria</button></a>
     <a href="/v/create?universityId={{university._id}}" ng-if="studentIsAdmin == true"><button class="btn bg-base" style="margin-top: 2px; height: 29px; width: unset;">Criar video</button></a>
     <a href="/p/create?universityId={{university._id}}" ng-if="studentIsAdmin == true"><button class="btn bg-base" style="margin-top: 2px; height: 29px; width: unset;">Criar playlist</button></a>
 
   </div>
-  <!-- end academia-supportcol-info -->
 
   <div class="academia-supportcol-info">
 
     <div class="academia-supportcol-info-title">
       sobre
     </div>
-    <!-- end academia-supportcol-info-title -->
 
     <div class="academia-supportcol-info-text">
       {{university.about}}
     </div>
-    <!-- end academia-supportcol-info-title -->
 
   </div>
-  <!-- end academia-supportcol-info -->
 
   <div class="academia-supportcol-info" ng-if="university.plans.length > 0">
 
     <div class="academia-supportcol-info-title">
       membro premium
     </div>
-    <!-- end academia-supportcol-info-title -->
 
     <p ng-show="studentIsPremium">Você é membro premium!</p>
     <button ng-show="studentIsPremium" class="btn bg-primary-purple" style="margin-top: 2px; height: 29px; width: unset;" ng-click="premium()">Ver planos</button>
     <button ng-hide="studentIsPremium" class="btn bg-primary-purple" style="margin-top: 2px; height: 29px; width: unset;" ng-click="premium()">Assinar premium</button>
 
   </div>
-  <!-- end academia-supportcol-info -->
 
 </div>
-<!-- end col-xs-12 -->
+-->
 
-<div class="academia-footer">
+<div class="academia-footer" style="z-index: 9999; background-color: #fff;">
 
   <ul style="width: 100vw">
 
