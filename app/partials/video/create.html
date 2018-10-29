@@ -2,9 +2,9 @@
 
 <script type="text/javascript">
 // Initialize instances:
-//var socket = io.connect("http://35.196.23.69:8080");
-//let socket = io.connect("https://networkbase-videoupload.appspot.com");
-var socket = io.connect("http://localhost:7777");
+
+var socket = io.connect("https://network-videosuploadsocke-prod.herokuapp.com/");
+
 var siofu = new SocketIOFileUpload(socket);
 
 let filesCount = 0;
@@ -54,7 +54,7 @@ socket.on("status", function(a){
 
   }
   if (a == 2) {
-    $("#file_drop").html("<b>Upload completo!</b>");
+    $("#file_drop").html("<b>O vídeo foi salvo no servidor! Estamos processando o vídeo na melhor qualidade possível.</b>");
   }
 });
 

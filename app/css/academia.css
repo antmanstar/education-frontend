@@ -363,6 +363,7 @@
 .academia-content-forum-post-info-title {
 
   font-size: 1.3em;
+  width: calc(100% - 75px);
 
 }
 
@@ -732,7 +733,7 @@
 
   bottom: 0;
   left: 0;
-  height: 50px;
+  height: 55px;
 
   position: fixed;
 
@@ -759,14 +760,11 @@
 
   display: inline-block;
 
-  width: 75vw;
-
   float: left;
 
 }
 
 .academia-footer li {
-
 
   display: inline-block;
   list-style: none;
@@ -778,10 +776,10 @@
   min-width: 25vw;
   text-align: center;
 
-  padding-top: 7px;
+  padding-top: 10px;
   height: 50px;
 
-  padding-left: 15px;
+  padding-left: 5px;
   padding-right: 15px;
 
 }
@@ -859,6 +857,7 @@
   .academia-coverimage {
 
     height: 170px;
+    border-radius: 0px !important;
 
   }
 

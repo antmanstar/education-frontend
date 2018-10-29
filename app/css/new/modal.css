@@ -16,9 +16,16 @@
 
 }
 
+@media screen and (min-width: 768px) {
+  .modal-accountsuggestion-title {
+    padding-top: 30px;
+  }
+}
+
 @media screen and (max-width: 768px) {
+
   .modal-accountsuggestion .bg-image {
-    height: 250px !important;
+    height: 180px !important;
     margin-bottom: 30px;
   }
   .modal-accountsuggestion .container-fluid {

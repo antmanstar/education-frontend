@@ -34,7 +34,12 @@ angular.module('netbase')
 
       if ($scope.video != null && $scope.video != undefined) {
 
-        console.log($scope.video.file.indexOf(".mp4"))
+        /* Video is being processed */
+        //$scope.video
+
+        /* */
+
+        //console.log($scope.video.file.indexOf(".mp4"))
 
         if ($scope.video.file.indexOf(".mp4") == -1 && $scope.video.file.indexOf(".wmv") == -1) {
 

@@ -45,7 +45,7 @@ angular.module('netbase')
 
 }])
 
-.controller('AccountCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog) {
+.controller('AccountCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', '$timeout', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, $timeout) {
 
   //
   let university;
@@ -66,6 +66,7 @@ angular.module('netbase')
   }
 
   $scope.close = function() {
+    $timeout.cancel($rootScope.accountSuggestion);
     ngDialog.close();
   }
 
@@ -1129,7 +1130,7 @@ angular.module('netbase')
 
 /* end messenger */
 
-.controller('HeaderCtrl', ['$rootScope', '$scope', '$location', '$localStorage', 'jwtHelper', 'Search', 'Students', '$route', 'ngDialog', function($rootScope, $scope, $location, $localStorage, jwtHelper, Search, Students, $route, ngDialog) {
+.controller('HeaderCtrl', ['$rootScope', '$scope', '$location', '$localStorage', 'jwtHelper', 'Search', 'Students', '$route', 'ngDialog', '$timeout', function($rootScope, $scope, $location, $localStorage, jwtHelper, Search, Students, $route, ngDialog, $timeout) {
 
   /* header variables */
   let logged = $rootScope.logged;
@@ -1137,11 +1138,13 @@ angular.module('netbase')
   /* functions */
   $scope.login = function() {
     console.log("login")
+    $timeout.cancel($rootScope.accountSuggestion);
     ngDialog.open({ template: 'partials/modals/login.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
   }
 
   $scope.signup = function() {
     console.log("signup")
+    $timeout.cancel($rootScope.accountSuggestion);
     ngDialog.open({ template: 'partials/modals/signup.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
   }
 
@@ -1215,19 +1218,22 @@ angular.module('netbase')
   /* bool */
   let navbarMobileOpen = false;
   let navbarMobileSearchOpen = false;
+  $scope.navbarMobileOpen = navbarMobileOpen;
 
   /* open/close menu mobile */
   brand.click(function() {
 
     let width = $(window).width();
-
+    console.log("click")
     if (width <= 768) {
 
       if (navbarMobileOpen) {
+        $scope.navbarMobileOpen = false;
         navbarMobile.css("display", "none");
         brandArrow.attr("class", "fas fa-angle-down");
         navbarMobileOpen = false;
       } else {
+        $scope.navbarMobileOpen = true;
         navbarMobile.css("display", "block");
         brandArrow.attr("class", "fas fa-angle-up");
         navbarMobileOpen = true;

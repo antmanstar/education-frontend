@@ -46,9 +46,6 @@ angular.module('netbase')
 
     let universityStorage = University.retrieveStorage(universityUrl);
 
-    console.log("university storage: ")
-    console.log(universityStorage)
-
     $scope.university = universityStorage[universityUrl];
 
     let universityId = $scope.university._id;
@@ -62,13 +59,13 @@ angular.module('netbase')
 
     if (!$rootScope.logged) {
 
-      $timeout(function() {
+      $rootScope.accountSuggestion = $timeout(function() {
 
         console.log("time out!");
         ngDialog.open({ template: 'partials/modals/accountsuggestion.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default ngdialog-plans modal-accountsuggestion', data : { university : $scope.university } });
         $timeout.cancel()
 
-      }, 8500, true);
+      }, 13500, true);
 
     }
     //END if (!$rootScope.logged)
@@ -97,13 +94,13 @@ angular.module('netbase')
 
       if (!$rootScope.logged) {
 
-        $timeout(function() {
+        $rootScope.accountSuggestion = $timeout(function() {
 
           console.log("time out!");
           ngDialog.open({ template: 'partials/modals/accountsuggestion.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default ngdialog-plans modal-accountsuggestion', data : { university : $scope.university } });
           $timeout.cancel()
 
-        }, 8500, true);
+        }, 13500, true);
 
       }
       //END if (!$rootScope.logged)
@@ -265,12 +262,12 @@ angular.module('netbase')
 
       if (!$rootScope.logged) {
 
-        $timeout(function() {
+        $rootScope.accountSuggestion = $timeout(function() {
 
           ngDialog.open({ template: 'partials/modals/accountsuggestion.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default ngdialog-plans modal-accountsuggestion', data : { university : $scope.university } });
           $timeout.cancel()
 
-        }, 8500, true);
+        }, 13500, true);
 
       }
       //END if (!$rootScope.logged)
@@ -301,13 +298,13 @@ angular.module('netbase')
 
         if (!$rootScope.logged) {
 
-          $timeout(function() {
+          $rootScope.accountSuggestion = $timeout(function() {
 
             console.log("time out!");
             ngDialog.open({ template: 'partials/modals/accountsuggestion.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default ngdialog-plans modal-accountsuggestion', data : { university : $scope.university } });
             $timeout.cancel()
 
-          }, 8500, true);
+          }, 13500, true);
 
         }
         //END if (!$rootScope.logged)
@@ -571,13 +568,13 @@ angular.module('netbase')
 
     if (!$rootScope.logged) {
 
-      $timeout(function() {
+      $rootScope.accountSuggestion = $timeout(function() {
 
         console.log("time out!");
         ngDialog.open({ template: 'partials/modals/accountsuggestion.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default ngdialog-plans modal-accountsuggestion', data : { university : $scope.university } });
         $timeout.cancel()
 
-      }, 8500, true);
+      }, 13500, true);
 
     }
     //END if (!$rootScope.logged)
@@ -733,7 +730,7 @@ angular.module('netbase')
 
       $scope.soundCloudIframe = $sce.trustAsHtml(link);
 
-    }, true);
+    }, 13500, true);
 
     $scope.add = function() {
 
@@ -763,7 +760,7 @@ angular.module('netbase')
 
       $scope.imageLink = link;
 
-    }, true);
+    }, 13500, true);
 
     $scope.add = function() {
 
@@ -812,7 +809,7 @@ angular.module('netbase')
         $scope.ytiFrameSCE = $sce.trustAsResourceUrl("https://www.youtube.com/embed/" + youtubeId);
       }
 
-    }, true);
+    }, 13500, true);
 
   }
 
@@ -1225,7 +1222,7 @@ angular.module('netbase')
                 //END socket.on('universityVisitsTodayList')
 
               }
-              //END if (studentId.length > 0) 
+              //END if (studentId.length > 0)
 
             }
             //END studentId

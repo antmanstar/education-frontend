@@ -148,11 +148,12 @@ nav .navbar-top .menu-right .options {
 }
 
 nav .navbar-top .menu-right .options > div {
-  font-size: 1.15em;
   padding-left: 10px;
   padding-right: 10px;
   display: inline-block;
-  font-size: 1em;
+  font-size: 1.07em !important;
+  color: #2d4255 !important;
+  font-weight: 600;
 }
 
 nav .navbar-top .menu-right .options > div a {
@@ -281,6 +282,8 @@ nav .navbar-slider .option:hover {
 
   font-size: 1.1em;
   font-weight: 300;
+
+  line-height: 25px;
 
 }
 
