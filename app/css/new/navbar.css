@@ -14,13 +14,75 @@ nav {
   }
 }
 
+/* vertical navbar */
+.navbar-vertical {
+  border-radius: 5px;
+  box-shadow: 0px 0px 8px 0px rgba(196, 196, 196, 0.35);
+  padding-left: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  max-width: 280px;
+}
+
+.navbar-vertical .navbar-vertical-profile {
+  padding-bottom: 10px;
+}
+
+.navbar-vertical .navbar-vertical-profile .picture {
+
+  background-size: cover;
+  background-position: 50% 50%;
+
+  height: 40px;
+  width: 40px;
+  display: inline-block;
+
+  border-radius: 3px;
+
+}
+
+.navbar-vertical .navbar-vertical-profile .texts {
+  display: inline-block;
+  vertical-align: top;
+  padding-left: 7px;
+}
+
+.navbar-vertical .navbar-vertical-profile .texts .name {
+  display: inline-block;
+  font-weight: 600;
+}
+
+.navbar-vertical .header {
+  font-size: 0.9em;
+  border-bottom: 1px solid rgba(0,0,0,.5);
+  color: rgba(0,0,0,.5);
+  margin-bottom: 7px;
+}
+
+.navbar-vertical .option:hover {
+  background-color: #f8f8f8;
+}
+
+.navbar-vertical .option:hover a {
+  font-weight: bold;
+}
+
+.navbar-vertical .option {
+  padding-top: 10px !important;
+  padding-bottom: 5px !important;
+  padding-left: 5px !important;
+  padding-right: 15px !important;
+  font-size: 1em !important;
+  color: #2d4255 !important;
+}
+
 /* navbar top */
 nav .navbar-top {
-  height: 65px;
+  height: 52px;
   padding-left: 15px;
   padding-right: 15px;
-  padding-top: 14px;
-  padding-bottom: 14px;
+  padding-top: 9px;
+  padding-bottom: 9px;
   margin-bottom: 10px;
   overflow: hidden;
 }
@@ -72,10 +134,18 @@ nav .navbar-top .menu-right {
   width: calc(100% - 202px);
 }
 
+nav .navbar-top .menu-right.landing {
+  width: calc(100% - 280px);
+}
+
 @media screen and (max-width: 768px) {
 
   nav .navbar-top .menu-right {
     width: calc(100% - 214px);
+  }
+
+  nav .navbar-top .menu-right.landing {
+    width: calc(100% - 230px);
   }
 
 }
@@ -147,12 +217,26 @@ nav .navbar-top .menu-right .options {
   padding-right: 15px;
 }
 
+nav .navbar-top .menu-right .options .landing-action {
+  color: #ed6457;
+  font-size: 1.45em;
+  border-bottom: 3px solid #ed6457;
+  padding-left: 2px;
+  padding-right: 2px;
+}
+
+@media screen and (max-width: 992px) {
+  nav .navbar-top .menu-right .options .landing-action {
+    font-size: 1.25em;
+  }
+}
+
 nav .navbar-top .menu-right .options > div {
   padding-left: 10px;
   padding-right: 10px;
   display: inline-block;
-  font-size: 1.07em !important;
-  color: #2d4255 !important;
+  font-size: 1.07em;
+  color: #2d4255;
   font-weight: 600;
 }
 
@@ -165,6 +249,9 @@ nav .navbar-top .menu-right .options > div a {
 @media screen and (max-width: 768px) {
   nav .navbar-top .menu-right .options {
     display: none;
+  }
+  nav .navbar-top .menu-right.landing .options {
+    display: block;
   }
 }
 

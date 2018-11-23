@@ -1,0 +1,45 @@
+<div ng-controller="HeaderCtrl" style="padding-top: 25px;">
+
+  <style>
+
+  @media screen and (max-width: 768px) {
+    nav {
+        position: unset !important;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    .navbar-top {
+      height: 54px !important;
+    }
+
+  }
+
+  </style>
+
+  <nav>
+
+    <div class="navbar-top" style="height: 68px;">
+
+        <div class="brand">
+          <img id="logo" src="https://storage.googleapis.com/networkbase-static/img/logo/universidade.png" />
+          <img id="logoIcon" src="https://storage.googleapis.com/networkbase-static/img/icon.png" />
+        </div>
+
+        <div class="menu-right landing">
+
+          <div class="options">
+
+            <div class="landing-action" ng-click="signup()">Aprender</div>
+
+          </div>
+          <!-- end options -->
+
+        </div>
+
+      </div>
+      <!-- end navbar-top -->
+
+  </nav>
+  <!-- end nav -->
+
+</div>

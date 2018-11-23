@@ -1,10 +1,63 @@
 <div ng-include="'partials/headerhome.html'"></div>
 
-<div class="container-fluid container-home container-index animated fadeIn" style="padding-bottom: 30px;">
+<div class="container-fluid container-home" style="padding-bottom: 30px;">
 
   <div class="row">
 
-      <div class="col-xs-12" style="padding-left: 20px; padding-right: 20px;">
+    <div class="col-sm-4 col-md-3 section-menu-col animated fadeIn">
+
+      <div class="section-menu navbar-vertical">
+
+        <div class="navbar-vertical-profile" ng-if="user.name.length > 0 && user.name != undefined">
+
+          <div class="picture" ng-if="user.imageUrl == undefined" style="background-image: url('img/user/user.png');"></div>
+          <div class="picture" ng-if="user.imageUrl != undefined" style="background-image: url('{{user.imageUrl}}');"></div>
+
+          <div class="texts">
+
+            <div ng-if="user.name.length > 0 && user.name != undefined" class="name">{{user.name}}</div>
+
+          </div>
+          <!-- end texts -->
+
+        </div>
+        <!-- end navbar-vertical-profile -->
+
+        <div class="header">EXPLORAR</div>
+        <div class="option"><a href="/home"><img src="/img/icon/office/home.png" height="20px" width="35px" style="padding-right: 13px;" />Home</a></div>
+        <div class="option"><a href="/home/timeline"><img src="/img/icon/timeline.png" style="margin-right: 14px;" height="20px" width="20px">Timeline</a></div>
+        <!-- <div class="option"><a href="/home/noticias"><img src="https://png.icons8.com/office/100/000000/classroom.png" style="margin-right: 14px;" height="20px" width="20px">Sala de Aula</a></div> -->
+        <div class="option"><a href="/home/noticias"><img src="/img/icon/office/opinion.png" height="20px" width="35px" style="padding-right: 13px;" />Opinião</a></div>
+
+        <div class="header" style="padding-top: 30px;">UNIVERSIDADES</div>
+        <div ng-if="user.universitiesSubscribed.length == 0" class="option"><a href="/home/universidades"><img src="https://png.icons8.com/office/100/000000/plus-math.png" height="20px" width="35px" style="padding-right: 13px;" />Increver</a></div>
+        <div ng-if="user == undefined" class="option"><a href="/home/universidades"><img src="https://png.icons8.com/office/100/000000/plus-math.png" height="20px" width="35px" style="padding-right: 13px;" />Increver</a></div>
+        <timelinemenuuniversity uid="{{u.universityId}}" ng-if="u.unsubscribed == false" ng-repeat="u in user.universitiesSubscribed"></timelinemenuuniversity>
+
+        <!--
+        <div class="header" style="padding-top: 30px;">APRENDER</div>
+        <div class="option"><a href="/home/noticias"><img src="https://visualpharm.com/assets/311/Graduation%20Cap-595b40b65ba036ed117d2d97.svg" height="20px" width="35px" style="padding-right: 13px;" />Cursos</a></div>
+        <div class="option"><a href="/home/noticias"><img src="https://png.icons8.com/office/100/000000/tabletop-radio.png" height="20px" width="35px" style="padding-right: 13px;" />Podcasts</a></div>
+        <div class="option"><a href="/home/noticias"><img src="https://png.icons8.com/office/80/000000/collaboration.png" height="20px" width="35px" style="padding-right: 13px;" />Entrevistas</a></div>
+        -->
+
+        <!--
+        <div class="header" style="padding-top: 30px;">ENSINAR</div>
+        <div class="option"><a href="/home/noticias"><img src="https://png.icons8.com/office/100/000000/courses.png" height="20px" width="35px" style="padding-right: 13px;" />Criar Curso</a></div>
+        <div class="option"><a href="/home/noticias"><img src="https://png.icons8.com/office/100/000000/create-new.png" height="20px" width="35px" style="padding-right: 13px;" />Escrever Artigo</a></div>
+        <div class="option"><a href="/home/noticias"><img src="https://png.icons8.com/office/80/000000/sending-video-frames.png" height="20px" width="35px" style="padding-right: 13px;" />Subir Video</a></div>
+        <div class="option"><a href="/home/noticias"><img src="https://png.icons8.com/office/100/000000/training.png" height="20px" width="35px" style="padding-right: 13px;" />Criar Sala</a></div>
+
+        <div class="header" style="padding-top: 30px;">PERFIL</div>
+        <div class="option"><a href="/home/noticias"><img src="https://png.icons8.com/office/100/000000/id-verified.png" height="20px" width="35px" style="padding-right: 13px;" />Verificar Identidade</a></div>
+        -->
+
+      </div>
+
+    </div>
+    <!-- col-sm-4 col-md-3 section-menu-col -->
+
+      <div class="col-sm-8 col-md-9 animated fadeIn" style="padding-left: 20px; padding-right: 20px;">
 
       <!-- Welcome -->
 
@@ -58,6 +111,7 @@
 
       <div style="padding-bottom: 32px;"></div>
 
+      <!--
       <div class="row" ng-hide="user.membership > 0">
 
         <div class="col-xs-12 col-sm-6">
@@ -69,20 +123,18 @@
             <div class="card-highlight" style="background-image: url('https://cdn.shopify.com/s/files/1/0374/5581/products/SUN-0454_43e1049e-6b1a-4411-ba4d-d901faca2012_2048x.jpg?v=1488258434')">
 
               <div class="card-highlight-wrapper">
-                <!--
+
                 <div class="student-pro" style="font-size: 1.1em; background-color: #fff; color: #2d4255;">PRO</div></br>
                 </br>
-                -->
+
                 <button class="btn bg-white" ng-click="studentProExplore()" style="width: 60%; color: #000;">Conhecer</button>
               </div>
-              <!-- end card-highlight-wrapper -->
 
             </div>
-            <!-- end card-highlights -->
+
           </div>
 
         </div>
-        <!-- end col-xs-12 col-sm-6 -->
 
         <div class="col-xs-12 col-sm-6">
           <div class="headline-container" style="padding-bottom: 0;">Certificados na Blockchain</div>
@@ -92,9 +144,9 @@
             <b style="font-size: 2.3em; padding-right: 10px;">+</b>
             <img width="200px" src="https://certificate.network/img/logo.jpg" /></div>
         </div>
-        <!-- end col-xs-12 col-sm-6 -->
 
       </div>
+      -->
       <!-- end row -->
 
       <!-- End Explorar universidades -->

@@ -1,0 +1,107 @@
+<div ng-include="'partials/landing/headerlanding.html'"></div>
+
+<update-title title="{{university.name}} | Universidade"></update-title>
+<update-meta property="og:title" content="Aprenda com o {{university.name}}"></update-meta>
+<update-meta property="og:url" content="https://universida.de/a/{{university.url}}/landing/facebook"></update-meta>
+<meta property="og:description" content="{{university.name}} ensina, debate e compartilhar conhecimento na plataforma Universidade." />
+
+<update-meta ng-if="university.backgroundImage != undefined" property="og:image" content="{{university.backgroundImage}}"></update-meta>
+<update-meta ng-if="university.backgroundImage == undefined" property="og:image" content="https://universida.de/img/misc/noimageacademia.jpg"></update-meta>
+
+<div class="container-fluid container-full animated fadeIn faster container-landing">
+
+  <div class="row">
+
+    <div class="col-xs-12 col-sm-6" ng-show="step >= 2">
+
+      <div class="landing-subtitle"><b style="color: #000;">Aproveite a promoção do Black Friday.</b> Faça a sua assinatura do {{university.name}} com 20% de desconto.</div>
+
+      <div class="plans">
+
+        <div class="plan">
+
+          <div class="texts">
+            <div class="name">{{university.plans[0].name}}</div>
+            <div class="price">
+              <div style="display: inline-block" class="ng-scope">R$</div>
+              <div class="amount">{{planAmount(university.plans[0].amount)}}</div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+      <!-- end plans -->
+
+      <button class="btn bg-primary-green" ng-click="openPayment(university.plans[0])" style="font-size: 1.1em; margin-bottom: 10px;">Assinar agora</button>
+
+    </div>
+    <!-- end step 2 -->
+
+    <div class="col-xs-12 col-sm-6" ng-show="step == 0 || step == 1 || step == 'facebook'">
+
+      <div class="landing-title">Aprenda com o {{university.name}}</div>
+      <div class="landing-subtitle">Todo o conteúdo organizado: posts, artigos, vídeos, aulas e cursos.</div>
+      <button class="btn bg-primary-green" ng-click="landingRegister()" style="font-size: 1.1em; margin-bottom: 10px;">Registrar agora</button>
+
+    </div>
+    <!-- {{university.backgroundImage}} -->
+
+    <div class="col-xs-12 col-sm-6">
+      <div class="academia-coverimage" ng-if="university.backgroundImage != undefined" style="height: 380px; border-radius: 4px !important; background-image: url('https://storage.googleapis.com/networkbase-images/bg-university/olavoboa.jpg') "></div>
+    </div>
+
+  </div>
+  <!-- end row -->
+
+  <div class="row" ng-show="step == 0 || step == 1 || step == 'facebook'" style="padding-top: 55px;">
+
+    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3">
+
+      <div style="font-size: 2em;"><img src="/img/icon/timeline.png" style="margin-right: 14px;" height="20px" width="20px">Timeline</div>
+
+    </div>
+
+    <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9 academia-content">
+
+      <div class="academia-content-forum">
+
+        <div ng-hide="loaded" style="text-align: center;">
+          <img src="https://i2.wp.com/logicainformatica.com.br/wp-content/uploads/2017/12/magic-dots.gif?ssl=1" width="150px" />
+        </div>
+
+        <div  ng-show="forumPosts.length == 0 && loaded">
+          Nenhuma postagem foi realizada.
+        </div>
+
+        <div ng-show="forumPosts.length > 0">
+
+          <timelinepost p="{{post}}" u="{{university}}" ng-repeat="post in forumPosts | limitTo: 5"></timelinepost>
+
+        </div>
+        <!-- forumPosts.length > 0 -->
+
+      </div>
+      <!-- academia-content-forum-->
+
+      <div>
+        <ul class="pagination" ng-if="pages > 1">
+          <li class="page-item" ng-if="page != 1"><a class="page-link" href="/a/{{university.url}}/forum?page={{page - 1}}">Voltar</a></li>
+          <li class="page-item" ng-repeat="p in range(1, pages)"><a class="page-link" ng-style="p == page && {'font-weight':'bold'}" href="/a/{{university.url}}/forum?page={{p}}">{{p}}</a></li>
+          <li class="page-item"><a class="page-link" href="/a/{{university.url}}/forum?page={{page + 1}}">Próximo</a></li>
+        </ul>
+      </div>
+
+    </div>
+    <!-- end col-xs-12 -->
+
+  </div>
+  <!-- end row -->
+
+  <div class="row" style="padding-top: 55px;" ng-show="step == 0 || step == 1">
+    <div class="col-xs-12" style="text-align: center;">Registrar</div>
+  </div>
+  <!-- end row -->
+
+</div>
+<!-- container-full -->

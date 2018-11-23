@@ -208,9 +208,14 @@ angular.module('netbase')
           $rootScope.logged = true;
 
           $rootScope.$applyAsync();
-
-          ngDialog.open({ template: 'partials/modals/onboarding.html', className: 'ngdialog-theme-default ngdialog-student-pro', controller: 'OnboardingScreenCtrl' });
-          //fbq('track', 'CompleteRegistration');
+          console.log($location.path().search("landing"))
+          console.log($location.path())
+          if ($location.path().search("landing") == -1) {
+            console.log($location.path().search("landing"))
+            ngDialog.open({ template: 'partials/modals/onboarding.html', className: 'ngdialog-theme-default ngdialog-student-pro', controller: 'OnboardingScreenCtrl' });
+          } else {
+            ngDialog.close();
+          }
 
           if (redirectUrl.length > 0) {
             $location.path(redirectUrl)

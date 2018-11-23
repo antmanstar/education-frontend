@@ -1,5 +1,10 @@
 <div ng-include="'partials/headerhome.html'"></div>
 
+<update-title title="{{forumPost.title}} | Universidade"></update-title>
+<update-meta property="og:title" content="{{video.title}} | Universidade"></update-meta>
+<update-meta property="og:url" content="https://universida.de/v/id/{{video._id}}"></update-meta>
+<meta property="og:description" content="Assista {{video.title}} na plataforma Universidade, a melhor plataforma para ensinar, debater e compartilhar conhecimento." />
+
 <div ng-if="video.status == 1" class="container-fluid" style="text-align: center;">
 
   <div class="video-title" style="margin-top: 30px;">{{video.title}}</div>
@@ -17,7 +22,7 @@
 
 <div ng-if="video.status != 1" class="player-area">
 
-  <video id="video" class="video-js vjs-default-skin" controls preload="auto" vjs-video></video>
+  <video id="video" crossorigin="anonymous" class="video-js vjs-default-skin" controls preload="auto" vjs-video></video>
 
 </div>
 
@@ -36,7 +41,7 @@
 
       <div class="video-author" ng-if="university != undefined">
         <div class="pic" style="background-image: unset !important;"><img src="{{university.backgroundImage}}" /></div>
-        <div class="name">{{university.name}}</div>
+        <div class="name"><a href="https://universida.de/a/{{university.url}}">{{university.name}}</a></div>
       </div>
 
       <div class="video-description">

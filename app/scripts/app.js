@@ -87,6 +87,10 @@ angular.module('netbase', ['ngStorage',
             templateUrl: 'partials/video/create.html',
             controller: 'VideoCreateCtrl',
         })
+        .when('/a/:academiaName/landing/:step', {
+          templateUrl: 'partials/landing/fb/landingone.html',
+          controller: 'AcademiaLandingCtrl'
+        })
         .when('/a/:academiaName/', {
             templateUrl: 'partials/academia/academia.html',
             controller: 'AcademiaCtrl',
@@ -148,6 +152,10 @@ angular.module('netbase', ['ngStorage',
         .when('/a/:academiaName/jobs', {
             templateUrl: 'partials/academia/academiajobs.html',
             controller: 'AcademiaJobsCtrl',
+        })
+        .when('/ensinar', {
+            templateUrl: 'partials/teach/home.html',
+            controller: 'TeachSalesCtrl',
         })
         .when('/perfil', {
             templateUrl: 'partials/profile/profile.html',
@@ -387,7 +395,7 @@ angular.module('netbase', ['ngStorage',
   $rootScope.logout = function() {
 
     $localStorage.$reset();
-    
+
     $rootScope.logged = false;
     $localStorage.logged = false;
     $localStorage.token = undefined;

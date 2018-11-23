@@ -4,6 +4,62 @@
 
 angular.module('netbase')
 
+.controller('AcademiaLandingCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Forum', '$sce', '$filter', 'ngDialog', '$window', function($rootScope, $scope, $location, $route, University, Forum, $sce, $filter, ngDialog, $window) {
+
+  let universityUrl = $route.current.params.academiaName;
+  let step = $route.current.params.step;
+
+  $scope.step = step;
+
+  /* read params */
+  if (step == 1) {
+    ngDialog.open({ template: 'partials/modals/signup.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default', data : { redirectUrl : "/a/olavodecarvalho/landing/2" } });
+  }
+
+  University.getUniversity(universityUrl).then(function(res) {
+
+    $scope.university = res.data.data;
+
+    let universityId = $scope.university._id;
+
+    Forum.getAllOwnerForumPost(universityId).then(function(res) {
+
+      $scope.loaded = true;
+      $scope.forumPosts = res.data.data.docs;
+
+    });
+
+  });
+
+  $scope.loaded = false;
+
+  $scope.openPayment = function(plan) {
+    ngDialog.open({ template: 'partials/modals/payments.html', controller: 'PaymentsCtrl', className: 'ngdialog-theme-default', data : { flow : "order", page : "order", plan : plan, university : $scope.university } });
+  }
+
+  $scope.planAmount = function(amount) {
+    return amount.substr(0, amount.length - 2) + "." + amount.substr(amount.length - 2, amount.length);
+  }
+
+  $scope.landingRegister = function() {
+    $location.path("/a/olavodecarvalho/landing/1")
+  }
+
+  $scope.textFilter = function(text) {
+
+    if (text.indexOf("iframe") != -1) {
+      return $sce.trustAsHtml(text)
+    } else {
+      return $filter('limitHtml')(text, 350, '...')
+    }
+
+  }
+
+
+}])
+
+/* end landing pages */
+
 .controller('AcademiaCoursesCtrl', ['$rootScope', '$scope', '$location', '$route', 'University' , function($rootScope, $scope, $location, $route, University) {
 
   let universityUrl = $route.current.params.academiaName;

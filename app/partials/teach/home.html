@@ -54,20 +54,6 @@
       </div>
       <!-- end navbar-top -->
 
-      <div class="navbar-slider" ng-hide="originalPath.indexOf('/dashboard') != -1">
-
-        <div class="option unselectable" ng-if="logged" ng-class="{'active': originalPath == '/home/timeline' || originalPath == '/home/timeline/'}"><a href="/home/timeline">Timeline</a></div>
-        <div class="option unselectable" ng-class="{'active': originalPath == '/home' || originalPath == '/home/'}"><a href="/home">Home</a></div>
-        <div class="option unselectable" ng-class="{'active': originalPath == '/home/universidades' || originalPath == '/home/universidades/' || originalPath.indexOf('/a/') != -1 }"><a href="/home/universidades">Universidades</a></div>
-        <!--<div class="option unselectable" ng-class="{'active': originalPath == '/home/noticias' || originalPath == '/home/noticias/'}"><a href="/home/noticias">Opinião</a></div>-->
-        <!--<div class="option unselectable" ng-class="{'active': originalPath.indexOf('/home/conhecimento') != -1 }"><a href="/home/conhecimento">Conhecimento</a></div>-->
-        <!--<<div class="option unselectable" ng-class="{'active': originalPath == '/cursos' || originalPath == '/cursos/'}"><a href="/home">Cursos</a></div>-->
-        <!--<div class="option unselectable" ng-class="{'active': originalPath == '/home/colleges' || originalPath == '/home/colleges/'}"><a href="/home/colleges">Colleges</a></div>-->
-        <!--<div class="option unselectable" ng-class="{'active': originalPath == '/home/smp' || originalPath == '/home/smp/'}"><a href="/home/smp">Marketplace</a></div>-->
-
-      </div>
-      <!-- end navbar-slider -->
-
       <!-- fadeInDown -->
       <div class="navbar-mobile animated faster" ng-class="{slideInDown: navbarMobileOpen == false}">
 
@@ -117,3 +103,65 @@
   <!-- end nav -->
 
 </div>
+
+<!-- end header -->
+
+<div class="container-fluid container-full animated fadeIn faster">
+
+  <div class="row" style="padding-top: 55px">
+
+    <div class="col-xs-12 col-sm-6" style="color: #2e4254; padding-left: 50px;">
+
+      <div style="font-size: 3em; padding-bottom: 30px; font-weight: 600;">É hora de educar</div>
+      <div style="font-size: 1.5em; font-weight: 300;">Começe a educar e estimular a troca de conhecimento por via de comunidades educacionais online.</div>
+      <div style="height: 130px;"></div>
+      <button class="btn bg-base" style="max-width: 250px">Começar</button>
+
+    </div>
+    <!-- end col-xs-12 -->
+
+    <div class="col-xs-12 col-sm-6" style="text-align: center;">
+
+      <img src="/img/professor.jpg" style="height: 380px;" />
+
+    </div>
+    <!-- end col-xs-12 -->
+
+  </div>
+  <!-- end row -->
+
+  <div class="row" style="padding-top: 95px">
+
+    <div class="col-xs-12" style="text-align: center; color: #2e4254;">
+
+      <div style="font-size: 3em; padding-bottom: 35px; font-weight: 500;">A melhor plataforma</div>
+      <div style="font-size: 1.6em; padding-bottom: 50px; font-weight: 300;">Funcionalidades ideias para ajudar indivíduos, grupos e empresas a ensinar</br>e compartilhar conhecimento da melhor maneira possível.</div>
+
+      <style>
+        .active {
+          border-bottom: 3px solid #2e4254;
+        }
+
+        .unactive {
+          border-bottom: 3px solid #2e425438;
+        }
+
+      </style>
+
+      <div style="white-space: nowrap;">
+        <div style="display: inline-block; padding: 30px;" class="unactive"><img src="/img/icon/cotton/filter.png" /></div><!--
+        --><div style="display: inline-block; padding: 30px;" class="unactive"><img src="/img/icon/cotton/chat.png" /></div><!--
+        --><div style="display: inline-block; padding: 30px;" class="unactive"><img src="/img/icon/cotton/support.png" /></div><!--
+        --><div style="display: inline-block; padding: 30px;" class="active"><img src="/img/icon/cotton/diploma.png" /></div><!--
+        --><div style="display: inline-block; padding: 30px;" class="unactive"><img src="/img/icon/cotton/calendar.png" /></div><!--
+        --><div style="display: inline-block; padding: 30px;" class="unactive"><img src="/img/icon/cotton/collegehat.png" /></div>
+      </div>
+
+    </div>
+    <!-- end col-xs-12 -->
+
+  </div>
+  <!-- end row -->
+
+</div>
+<!-- end container-fluid -->

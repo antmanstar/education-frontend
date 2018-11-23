@@ -2,8 +2,39 @@
 
 }
 
+.plans {
+  grid-row-start: 2;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.plans .plan {
+  -webkit-box-flex: 1;
+  flex-grow: 1;
+  flex-shrink: 0;
+  flex-basis: 50%;
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
+
 .container-full {
   padding-bottom: 60px;
+}
+
+.container-landing {
+  padding-top: 50px !important;
+}
+
+.landing-title {
+  font-size: 4.5em;
+  letter-spacing: -3px;
+  line-height: 1.3em;
+}
+
+.landing-subtitle {
+  font-size: 2em;
+  color: #aaa8a8;
+  margin-bottom: 25px;
 }
 
 @media screen and (min-width: 768px) {
@@ -11,6 +42,33 @@
     padding-left: 5vw;
     padding-right: 5vw;
     padding-top: 1.5vh;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .container-landing {
+    padding-top: 25px !important;
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+  .container-landing .academia-coverimage {
+    margin-top: 25px;
+    height: 310 !important;
+  }
+
+}
+
+@media screen and (max-width: 992px) {
+  .landing-title {
+    font-size: 3.5em;
+    letter-spacing: -3px;
+    line-height: 1.2em;
+  }
+
+  .landing-subtitle {
+    font-size: 1.7em;
+    color: #aaa8a8;
+    margin-bottom: 25px;
   }
 }
 
@@ -24,7 +82,7 @@
 
 /* container header */
 .headline-container {
-  font-weight: 400;
+  font-weight: 600;
   font-size: 2em;
   padding-top: 25px;
   padding-bottom: 25px;
@@ -33,10 +91,10 @@
 
 @media screen and (max-width: 768px) {
   .container-home {
-    padding-top: 108px;
+    padding-top: 94px;
   }
   .container-full {
-    padding-top: 106px;
+    padding-top: 94px;
   }
 }
 
