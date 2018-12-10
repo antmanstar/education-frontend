@@ -2,6 +2,39 @@
 angular.module('netbase')
   //35.229.52.103
 
+    .factory('Chat', ['$http', '$localStorage', function($http, $localStorage) {
+
+      //var baseUrl = "";
+      var baseUrl = "http://localhost:6969";
+
+      return {
+
+        getUniversityChannels: function(universityId) {
+
+          let url = "/chat/channel/university/" + universityId;
+
+          return $http.get(baseUrl + url);
+
+        },
+
+        getTwilioToken: function(payload) {
+
+          let url = "/chat/token/device/" + payload.deviceID;
+
+          return $http({
+            method: 'GET',
+            url: baseUrl + url,
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'x-access-token': $localStorage.token
+          }});
+
+        }
+
+      }
+
+    }])
+
     .factory('Playlist', ['$http', function($http) {
 
       var baseUrl = "https://network-university-prod.herokuapp.com/university";

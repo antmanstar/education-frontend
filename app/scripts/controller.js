@@ -1135,7 +1135,7 @@ angular.module('netbase')
 
 /* end messenger */
 
-.controller('HeaderCtrl', ['$rootScope', '$scope', '$location', '$localStorage', 'jwtHelper', 'Search', 'Students', '$route', 'ngDialog', '$timeout', function($rootScope, $scope, $location, $localStorage, jwtHelper, Search, Students, $route, ngDialog, $timeout) {
+.controller('HeaderCtrl', ['$rootScope', '$scope', '$location', '$localStorage', 'jwtHelper', 'Search', 'Students', '$route', 'ngDialog', '$timeout', 'Chat', function($rootScope, $scope, $location, $localStorage, jwtHelper, Search, Students, $route, ngDialog, $timeout, Chat) {
 
   /* header variables */
   let logged = $rootScope.logged;
@@ -1191,6 +1191,55 @@ angular.module('netbase')
 
       if (data.imageUrl != undefined && data.imageUrl != null) {
         $scope.userImage = data.imageUrl;
+      }
+
+      /* chat */
+
+      if ($localStorage.tokenTwilio != undefined) {
+
+        const chatClient = new Twilio.Chat.Client($localStorage.tokenTwilio);
+
+      } else {
+
+        // Request token from API
+
+        let fingertips;
+
+        new Fingerprint2().get(function(result, components) {
+            var info = {
+                fingerprint: result
+            };
+
+            processFingerprint(info);
+
+            Chat.getTwilioToken(info).success(function(res) {
+
+              console.log(res);
+
+              let token = res.token;
+
+              $localStorage.tokenTwilio = res.token;
+
+              const chatClient = new Twilio.Chat.Client(token);
+
+              chatClient.on('tokenExpired', refreshToken);
+
+            })
+
+        });
+
+        function refreshToken() {
+          fetchAccessToken(setNewToken);
+        }
+
+        function setNewToken(tokenResponse) {
+          accessManager.updateToken(tokenResponse.token);
+        }
+
+        function processFingerprint(data) {
+          //alert(data.fingerprint);
+        }
+
       }
 
     }).catch(function(e) {
@@ -1295,6 +1344,7 @@ angular.module('netbase')
     }
 
   });
+
 
 }])
 

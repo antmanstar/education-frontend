@@ -1,3 +1,36 @@
+<!--
+<div id="chat" style="-webkit-box-shadow: 0px -3px 35px -1px rgba(133,133,133,0.25); -moz-box-shadow: 0px -3px 35px -1px rgba(133,133,133,0.25); box-shadow: 0px -3px 35px -1px rgba(133,133,133,0.25);z-index: 999999; position: fixed; min-width: 290px; right: 8%; border: 1px solid #cecccc; border-bottom: 0px; bottom: 0; padding: 0; border-top-left-radius: 2px; border-top-right-radius: 2px;" class="col-sm-2 col-md-2 col-lg-3">
+
+  <div class="chat-header" ng-click="chatToggle()">
+    <i class="fa fa-circle" aria-hidden="true" style="padding-right: 10px; font-size: 0.55em; vertical-align: 2px; color: #37bb74;"></i>Samba Poker Chat
+  </div>
+
+  <div class="chat-channel" ng-show="chatDisplay">
+    <select>
+      <option ng-repeat="channel in channels">{{channel.title}}</option>
+    </select>
+  </div>
+
+  <div class="chat-area" style="min-height: 285px;" ng-show="chatDisplay">
+
+    <div class="message" style="padding-bottom: 10px; padding-top: 5px;" ng-repeat="n in [1,2]">
+
+      <div class="user" style="padding-bottom: 7px;">
+        <img style="height: 20px; width: 20px; border-radius: 50px; margin-right: 5px;" src="https://storage.googleapis.com/networkbase-images/images/1537853209/a40.jpg" /><b>Nome</b>
+      </div>
+      <div class="txt">Mensagem enviada pelo usuário</div>
+
+    </div>
+
+  </div>
+
+  <div class="chat-textarea" ng-show="chatDisplay">
+    <textarea resize="no" placeholder="Escreva uma mensagem..."></textarea><button>Enviar</button>
+  </div>
+
+</div>
+-->
+
 <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 section-menu-col">
 
   <div class="section-menu">
@@ -15,8 +48,8 @@
     <!-- <i class="fa fa-rss" aria-hidden="true"></i> -->
 
     <div class="option" style="padding-left: 0px;"><a href="/a/{{university.url}}/timeline"><img src="/img/icon/timeline.png" style="margin-right: 14px;" height="20px" width="20px" />Timeline</a></div>
-    <div class="option" style="padding-left: 0px;"><a href="/a/{{university.url}}/forum"><img src="https://visualpharm.com/assets/116/Open%20Book-595b40b65ba036ed117d154c.svg" style="margin-right: 14px;" height="20px" width="20px" />Forum</a></div>
-    <div class="option" style="padding-left: 0px;"><a href="/a/{{university.url}}/forum/category/all"><img src="https://visualpharm.com/assets/714/Sidebar%20Menu-595b40b65ba036ed117d1640.svg" style="margin-right: 14px;" height="20px" width="20px" />Categorias</a></div>
+    <div class="option" style="padding-left: 0px;"><a href="/a/{{university.url}}/forum"><img src="https://visualpharm.com/assets/116/Open%20Book-595b40b65ba036ed117d154c.svg" style="margin-right: 14px;" height="20px" width="20px" />Feed</a></div>
+    <div class="option" style="padding-left: 0px;"><a href="/a/{{university.url}}/forum/category/all"><img src="https://visualpharm.com/assets/811/Discussion%20Forum-595b40b65ba036ed117d396c.svg" style="margin-right: 14px;" height="20px" width="20px" />Forum</a></div>
     <div class="option" style="padding-left: 0px;"><a href="/a/{{university.url}}/playlist/all"><img src="https://visualpharm.com/assets/459/Film-595b40b75ba036ed117d9cd1.svg" style="margin-right: 14px;" height="20px" width="20px" />Playlists</a></div>
     <div class="option" style="padding-left: 0px;"><a href="/a/{{university.url}}/cursos"><img src="https://visualpharm.com/assets/311/Graduation%20Cap-595b40b65ba036ed117d2d97.svg" style="margin-right: 14px;" height="20px" width="20px" />Cursos</a></div>
 

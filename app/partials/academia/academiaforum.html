@@ -33,7 +33,41 @@
 
         <div ng-show="forumPosts.length > 0">
 
-          <forumpost ng-repeat="post in forumPosts | orderBy:'-votesCount'" p="{{post}}"></forumpost>
+          <!-- ordering -->
+          <div ng-if="forumPostsNew != undefined">
+          <div style="border-bottom: 1px solid #d6d6d6; border-top: 1px solid #d6d6d6; padding-bottom: 10px; padding-top: 10px; margin-bottom: 10px; text-align: left;">
+
+            <div style="display: inline-block; padding-right: 5px;"><b>Novas postagens</b></div>
+
+          </div>
+          <!-- end ordering -->
+
+          <forumpost ng-if="forumPostsNew.length > 0" ng-repeat="a in forumPostsNew track by $index | limitTo: 5" p="{{a}}"></forumpost>
+
+        </div>
+
+          <!-- ordering -->
+
+          <div style="border-bottom: 1px solid #d6d6d6; border-top: 1px solid #d6d6d6; padding-bottom: 10px; padding-top: 10px; margin-top: 10px; margin-bottom: 10px; text-align: right;">
+
+            <div style="display: inline-block; padding-right: 5px;"><b>Ordernar por: </b></div>
+
+            <div class="dropdown" style="display: inline-block;">
+              <button class="btn btn-default dropdown-toggle" type="button" style="height: 30px; background-color: #cecece;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                <b ng-if="forumPostsOrder == '-createdAt'">Data criação</b>
+                <b ng-if="forumPostsOrder == '-votesCount'">Mais votados</b>
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <li ng-click="orderForumPosts('createdAt')"><a href="#">Data criação</a></li>
+                <li ng-click="orderForumPosts('votesCount')"><a href="#">Mais votados</a></li>
+              </ul>
+            </div>
+
+          </div>
+          <!-- end ordering -->
+
+          <forumpost ng-repeat="post in forumPosts | orderBy:forumPostsOrder" p="{{post}}"></forumpost>
 
         </div>
         <!-- forumPosts.length > 0 -->
@@ -52,75 +86,15 @@
     </div>
     <!-- end col-xs-12 -->
 
-    <!--
-    <div style="-webkit-box-shadow: 0px -3px 35px -1px rgba(133,133,133,0.25); -moz-box-shadow: 0px -3px 35px -1px rgba(133,133,133,0.25); box-shadow: 0px -3px 35px -1px rgba(133,133,133,0.25);z-index: 999999; position: fixed; min-width: 290px; right: 8%; border: 1px solid #cecccc; border-bottom: 0px; bottom: 0; padding: 0; border-top-left-radius: 2px; border-top-right-radius: 2px;" class="col-sm-2 col-md-2 col-lg-3">
-
-      <div class="chat-header">
-        <i class="fa fa-circle" aria-hidden="true" style="padding-right: 10px; font-size: 0.55em; vertical-align: 2px; color: #37bb74;"></i>Samba Poker Chat
-      </div>
-
-      <div class="chat-channel">
-        <select>
-          <option selected>Sambinha</option>
-          <option>Samba</option>
-        </select>
-      </div>
-
-      <div class="chat-area" style="min-height: 585px;">
-
-        <div class="message" style="padding-bottom: 10px; padding-top: 5px;" ng-repeat="n in [1,2]">
-
-          <div class="user" style="padding-bottom: 7px;">
-            <img style="height: 20px; width: 20px; border-radius: 50px; margin-right: 5px;" src="https://storage.googleapis.com/networkbase-images/images/1537853209/a40.jpg" /><b>Nome</b>
-          </div>
-          <div class="txt">Mensagem enviada pelo usuário</div>
-
-        </div>
-
-      </div>
-
-      <div class="chat-textarea">
-        <textarea resize="no" placeholder="Escreva uma mensagem..."></textarea><button>Enviar</button>
-      </div>
-
-    </div>
-    -->
-
     <!-- col-sm-2 col-md-2 col-lg-3 -->
 
-    <div class="col-sm-2 col-md-2 col-lg-3 academia-content">
+    <div class="col-xs-12 col-sm-2 col-md-2 col-lg-3 academia-content">
 
-      <!--
-      <div style="background-color: #e3d3d3; border-radius: 3px; padding: 10px;">Notificação</div>
+      <div style="margin-bottom: 15px; font-weight: bold;">Experiências</div>
 
-    </div>
-    <!-- end -->
-
-    <!--
-    <div class="col-sm-2 col-md-2 col-lg-3 academia-content">
-
-      <p style="font-size: 1.3em; font-weight: bold;">Chat</p>
-
-      <div class="chat-widget-messages" style="min-height: 320px;">
-
-        <div class="message" style="padding-bottom: 5px; padding-top: 5px;" ng-repeat="n in [1,2]">
-
-          <div class="user" style="padding-bottom: 7px;">
-            <img style="height: 20px; width: 20px; border-radius: 50px; margin-right: 5px;" src="https://storage.googleapis.com/networkbase-images/images/1537853209/a40.jpg" /><b>Nome</b>
-          </div>
-          <div class="txt">Mensagem enviada pelo usuário</div>
-
-        </div>
-
-      </div>
-
-      <div>
-        <input type="text" style="background-color: #f2f2f2; padding: 10px; border-radius: 5px; border: none; width: 100%; padding-bottom: 15px; outline: none;" />
-        <button style="background-color: #38b6a2; border: none; float: right; padding-left: 15px; padding-right: 15px; padding-top: 5px; padding-bottom: 5px; margin-top: 5px; border-radius: 3px; color: #fff; margin-top: 8px; outline: none;">Enviar</button>
-      </div>
+      <div style="background-color: #efefef; border-radius: 3px; height: 40px;"><i style="line-height: 40px; padding-left: 12px;">Resumo do dia</i> <button style="background-color: #38b6a2; border: none; float: right; padding-left: 15px; padding-right: 15px; padding-top: 5px; padding-bottom: 5px; border-radius: 3px; color: #fff; margin-right: 5px; margin-top: 5px; outline: none;">Ler</button></div></div>
 
     </div>
-    <!-- end -->
 
   </div>
   <!-- end row -->

@@ -286,7 +286,7 @@ angular.module('netbase')
 
 }])
 
-.controller('AcademiaForumCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', '$timeout', 'ngDialog' , function($rootScope, $scope, $location, $route, University, $timeout, ngDialog) {
+.controller('AcademiaForumCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', '$timeout', 'ngDialog', 'jwtHelper', '$localStorage' , function($rootScope, $scope, $location, $route, University, $timeout, ngDialog, jwtHelper, $localStorage) {
 
   let universityUrl = $route.current.params.academiaName;
 
@@ -298,6 +298,16 @@ angular.module('netbase')
 
   if ($location.search().page != undefined) {
     $scope.page = $location.search().page;
+  }
+
+  /* forum posts order */
+  $scope.forumPostsOrder = "-createdAt";
+  //-votesCount
+
+  $scope.orderForumPosts = function(order) {
+
+    $scope.forumPostsOrder = "-" + order;
+
   }
 
   /* get university informations */
@@ -327,6 +337,42 @@ angular.module('netbase')
 
       }
       //END if (!$rootScope.logged)
+
+      /* organize new posts */
+
+      if ($rootScope.logged) {
+
+        let studentId;
+
+        if ($localStorage.token != undefined && $localStorage.token != null) {
+          studentId = jwtHelper.decodeToken($localStorage.token)._id;
+        }
+
+        $scope.forumPostsNew = [];
+
+        for (let idx = 0; idx < $scope.forumPosts.length; idx++) {
+
+          let userViewed = false;
+
+          for (let bdx = 0; bdx < $scope.forumPosts[idx].visualization.length; bdx++) {
+
+            if ($scope.forumPosts[idx].visualization[bdx].accountId == studentId) {
+              userViewed = true;
+            }
+
+          }
+
+          if (!userViewed) {
+            $scope.forumPostsNew.push($scope.forumPosts[idx]);
+          }
+
+        }
+
+        console.log($scope.forumPostsNew);
+
+      }
+
+      /* */
 
     }).catch(function(e) {
 
@@ -1228,7 +1274,7 @@ angular.module('netbase')
   }
 }])
 
-.directive('academiarightcolumn', ['University', '$localStorage', '$route', 'jwtHelper', 'ngDialog', '$location', function(University, $localStorage, $route, jwtHelper, ngDialog, $location) {
+.directive('academiarightcolumn', ['University', '$localStorage', '$route', 'jwtHelper', 'ngDialog', '$location', 'Chat', function(University, $localStorage, $route, jwtHelper, ngDialog, $location, Chat) {
   return {
     restrict: 'EA',
     templateUrl: '../partials/academia/rightcolumn.html',
@@ -1246,6 +1292,24 @@ angular.module('netbase')
       scope.studentIsPremium = false;
       scope.studentIsAdmin = false;
 
+      /* chat */
+
+      scope.chatDisplay = true;
+
+      /* chat functions */
+
+      scope.chatToggle = function() {
+
+        console.log("ae")
+
+        if (scope.chatDisplay) {
+          scope.chatDisplay = false;
+        } else {
+          scope.chatDisplay = true;
+        }
+
+      }
+
       /* */
 
       attr.$observe('university', function(value) {
@@ -1259,6 +1323,46 @@ angular.module('netbase')
         if (value) {
 
           university = JSON.parse(value);
+
+          /* chat services */
+
+          console.log("university get channels 1")
+
+          console.log(university._id)
+
+          Chat.getUniversityChannels(university._id).success(function(res) {
+
+            console.log("chat get channels :: ")
+            console.log(res.data)
+
+            if (res.success) {
+
+              scope.channels = res.data;
+
+              const chatClient = new Twilio.Chat.Client($localStorage.tokenTwilio);
+
+              chatClient.on('channelJoined', function(channel) {
+                console.log('Joined channel ' + channel.friendlyName);
+              });
+
+              console.log("hey")
+
+              chatClient.getSubscribedChannels().then(function(paginator) {
+                console.log("paginator: ")
+                console.log(paginator)
+                for (let i = 0; i < paginator.items.length; i++) {
+                  const channel = paginator.items[i];
+                  console.log('Channel: ' + channel.friendlyName);
+                }
+              });
+
+            } else {
+
+            }
+
+          });
+
+          /* real time connect */
 
           socket.on('connect', function(data) {
 
@@ -1317,7 +1421,7 @@ angular.module('netbase')
             let studentIdMembersLocation = userMembersLocation(array);
 
             if (studentIdMembersLocation != -1) {
-              console.log(array[studentIdMembersLocation])
+
               if (array[studentIdMembersLocation].unsubscribed) {
                 return false;
               } else {

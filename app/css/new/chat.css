@@ -16,6 +16,14 @@
 
 }
 
+@media screen and (max-width: 768px) {
+
+  #chat {
+    display: none;
+  }
+
+}
+
 .chat-textarea {
 
 }
