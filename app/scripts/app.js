@@ -95,6 +95,18 @@ angular.module('netbase', ['ngStorage',
             templateUrl: 'partials/academia/academia.html',
             controller: 'AcademiaCtrl',
         })
+        .when('/a/:academiaName/handanalysis/', {
+            templateUrl: 'partials/handanalysis/index.html',
+            controller: 'AcademiaHandAnalysisCtrl',
+        })
+        .when('/a/:academiaName/handanalysis/id/:id', {
+            templateUrl: 'partials/handanalysis/handbyid.html',
+            controller: 'AcademiaHandAnalysisByIdCtrl',
+        })
+        .when('/a/:academiaName/handanalysis/create', {
+            templateUrl: 'partials/handanalysis/create.html',
+            controller: 'AcademiaHandAnalysisCreateCtrl',
+        })
         .when('/a/:academiaName/forum', {
             templateUrl: 'partials/academia/academiaforum.html',
             controller: 'AcademiaForumCtrl',

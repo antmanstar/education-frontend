@@ -1,0 +1,109 @@
+<div ng-include="'partials/headerhome.html'"></div>
+
+<update-title title="{{university.name}} | Universidade"></update-title>
+<update-meta property="og:title" content="{{university.name}} | Universidade"></update-meta>
+<update-meta property="og:url" content="https://universida.de/a/{{university.url}}/timeline"></update-meta>
+<meta property="og:description" content="{{university.name}} ensina, debate e compartilhar conhecimento na plataforma Universidade." />
+
+<update-meta ng-if="university.backgroundImage != undefined" property="og:image" content="{{university.backgroundImage}}"></update-meta>
+<update-meta ng-if="university.backgroundImage == undefined" property="og:image" content="https://universida.de/img/misc/noimageacademia.jpg"></update-meta>
+
+<div class="container-fluid container-full animated fadeIn faster">
+
+  <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
+  <div class="row academia-coverimage" ng-if="university.backgroundImage == undefined"  style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
+
+  <div class="row">
+
+    <div academiarightcolumn university="{{university}}"></div>
+
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 academia-content">
+
+      <div academiastatus university="{{university}}"></div>
+
+      <div class="academia-content-forum">
+
+        <div ng-show="forumPosts.length > 0">
+
+          <!-- ordering -->
+
+          <!--
+          <div ng-if="forumPostsNew != undefined">
+          <div style="border-bottom: 1px solid #d6d6d6; border-top: 1px solid #d6d6d6; padding-bottom: 10px; padding-top: 10px; margin-bottom: 10px; text-align: left;">
+
+            <div style="display: inline-block; padding-right: 5px;"><b>Novas postagens</b></div>
+
+          </div>
+
+          <forumpost ng-if="forumPostsNew.length > 0" ng-repeat="a in forumPostsNew track by $index | limitTo: 5" p="{{a}}"></forumpost>
+                  </div>
+        -->
+
+
+          <!-- ordering -->
+
+          <div style="border-bottom: 1px solid #d6d6d6; border-top: 1px solid #d6d6d6; padding-bottom: 10px; padding-top: 10px; margin-bottom: 10px; text-align: right;">
+
+            <div style="display: inline-block; padding-right: 5px;"><b>Ordernar por: </b></div>
+
+            <div class="dropdown" style="display: inline-block;">
+              <button class="btn btn-default dropdown-toggle" type="button" style="height: 30px; background-color: #cecece;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                <b ng-if="forumPostsOrder == '-createdAt'">Data criação</b>
+                <b ng-if="forumPostsOrder == '-votesCount'">Mais votados</b>
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <li ng-click="orderForumPosts('createdAt')"><a href="#">Data criação</a></li>
+                <li ng-click="orderForumPosts('votesCount')"><a href="#">Mais votados</a></li>
+              </ul>
+            </div>
+
+          </div>
+          <!-- end ordering -->
+
+          <forumpost ng-repeat="post in forumPosts | orderBy:forumPostsOrder" p="{{post}}"></forumpost>
+
+        </div>
+        <!-- forumPosts.length > 0 -->
+
+        <div ng-hide="loaded" style="text-align: center;">
+          <img src="https://i2.wp.com/logicainformatica.com.br/wp-content/uploads/2017/12/magic-dots.gif?ssl=1" width="150px" />
+        </div>
+
+        <div  ng-show="forumPosts.length == 0 && loaded">
+          Nenhuma postagem foi realizada.
+        </div>
+
+      </div>
+      <!-- academia-content-forum-->
+
+      <div>
+        <ul class="pagination" ng-if="pages > 1">
+          <li class="page-item" ng-if="page != 1"><a class="page-link" href="/a/{{university.url}}/forum?page={{page - 1}}">Voltar</a></li>
+          <li class="page-item" ng-repeat="p in range(1, pages)"><a class="page-link" ng-style="p == page && {'font-weight':'bold'}" href="/a/{{university.url}}/forum?page={{p}}">{{p}}</a></li>
+          <li class="page-item"><a class="page-link" href="/a/{{university.url}}/forum?page={{page + 1}}">Próximo</a></li>
+        </ul>
+      </div>
+
+    </div>
+    <!-- end col-xs-12 -->
+
+    <!-- col-sm-2 col-md-2 col-lg-3 -->
+
+    <div class="col-xs-12 col-sm-2 col-md-2 col-lg-3 academia-content">
+
+      <!--
+
+      <div style="margin-bottom: 15px; font-weight: bold;">Experiências</div>
+
+      <div style="background-color: #efefef; border-radius: 3px; height: 40px;"><i style="line-height: 40px; padding-left: 12px;">Resumo do dia</i> <button style="background-color: #38b6a2; border: none; float: right; padding-left: 15px; padding-right: 15px; padding-top: 5px; padding-bottom: 5px; border-radius: 3px; color: #fff; margin-right: 5px; margin-top: 5px; outline: none;">Ler</button></div></div>
+
+      -->
+
+    </div>
+
+  </div>
+  <!-- end row -->
+
+</div>
+<!-- container-full -->

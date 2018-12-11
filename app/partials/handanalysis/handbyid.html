@@ -1,0 +1,100 @@
+<div ng-include="'partials/headerhome.html'"></div>
+
+<update-title title="{{university.name}} | Universidade"></update-title>
+<update-meta property="og:title" content="{{university.name}} | Universidade"></update-meta>
+<update-meta property="og:url" content="https://universida.de/a/{{university.url}}/timeline"></update-meta>
+<meta property="og:description" content="{{university.name}} ensina, debate e compartilhar conhecimento na plataforma Universidade." />
+
+<update-meta ng-if="university.backgroundImage != undefined" property="og:image" content="{{university.backgroundImage}}"></update-meta>
+<update-meta ng-if="university.backgroundImage == undefined" property="og:image" content="https://universida.de/img/misc/noimageacademia.jpg"></update-meta>
+
+<div class="container-fluid container-full animated fadeIn faster">
+
+  <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
+  <div class="row academia-coverimage" ng-if="university.backgroundImage == undefined"  style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
+
+  <div class="row">
+
+    <div academiarightcolumn university="{{university}}"></div>
+
+    <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9 academia-content">
+
+      <div class="row">
+
+      </div>
+
+      <div class="row">
+
+        <div class="col-xs-12 col-sm-7 col-md-7 col-lg-7" style="padding: 10px; min-height: 200px; border-radius: 5px; margin-bottom: 25px;">
+
+          <div academiastatus university="{{university}}"></div>
+
+          <div style="box-shadow: 0px 0px 8px 0px rgba(196, 196, 196, 0.35); padding: 10px; border-radius: 5px; margin-bottom: 15px;">
+
+            <div style="padding-bottom: 15px;">
+
+              <div ng-if="student.imageUrl == undefined" style="display: inline-block; background-image: url('img/user/user.png'); background-position: cover; background-size: cover; background-position: 50% 50%; border-radius: 4px; height: 50px; width: 50px;"></div>
+              <div ng-if="student.imageUrl.length > 0" style="display: inline-block; background-image: url('https://storage.googleapis.com/networkbase-images/images/1536428319/a48.jpg'); background-position: cover; background-size: cover; background-position: 50% 50%; border-radius: 4px; height: 50px; width: 50px;"></div>
+              <div style="display: inline-block; font-size: 1.3em; line-height: 50px; vertical-align: top; padding-left: 10px; font-weight: bold;">Jogador X pergunta....</div>
+
+            </div>
+            <!-- user text -->
+
+            <!-- -->
+            <div ng-repeat="hand in pokerhands.hand track by $index" ng-show="handIndex == $index">
+
+              <div style="margin-bottom: 15px; font-size: 1.15em; color: #606161;">{{hand.title}}</div>
+
+              <handhistory embedid="{{hand.embedId}}"></handhistory>
+
+            </div>
+            <!-- end  -->
+
+          </div>
+          <!-- end -->
+
+          <div style="box-shadow: 0px 0px 8px 0px rgba(196, 196, 196, 0.35); padding: 10px; border-radius: 5px;">
+            <div style="margin-bottom: 15px; font-weight: bold; font-size: 1.3em;">Mão {{handIndex + 1}} / {{pokerhands.hand.length}}</div>
+            <div style="text-align: center;">
+              <button class="btn bg-primary-purple" style="height: 29px; width: calc(50% - 20px); margin-right: 5px;" ng-click='move("back")'>Voltar</button>
+              <button ng-click='move("next")' class="btn bg-primary-purple" style="height: 29px; width: calc(50% - 20px); margin-right: 5px;">Próxima</button>
+            </div>
+          </div>
+
+        </div>
+        <!-- end col-xs-12 -->
+
+        <!-- col-sm-2 col-md-2 col-lg-3 -->
+
+        <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+
+          <div style="margin-bottom: 15px; font-weight: bold; font-size: 1.3em;">{{pokerhands.title}}</div>
+
+          <div style="box-shadow: 0px 0px 8px 0px rgba(196, 196, 196, 0.35); padding: 10px; min-height: 200px; border-radius: 5px; margin-bottom: 25px;">
+
+            <div style="font-size: 1.3em; margin-bottom: 15px; font-weight: bold;">Análises</div>
+
+            <pokerhandanswer a="{{a}}" ng-repeat="a in pokerhands.hand[handIndex].answers"></pokerhandanswer>
+
+          </div>
+
+          <div style="height: 25px;"></div>
+
+          <div style="box-shadow: 0px 0px 8px 0px rgba(196, 196, 196, 0.35); padding: 10px; min-height: 200px; border-radius: 5px;">
+            <div style="margin-bottom: 15px; font-weight: bold; font-size: 1.3em;">Escrever Análise</div>
+            <textarea ng-model="analysisText" style="background-color: #efefef; border-radius: 3px; height: 130px; width: 100%; resize: none; border: none; padding: 10px;" placeholder="Escreve a sua análise aqui"></textarea>
+            <button ng-click="sendAnalysis()" style="background-color: #38b6a2; border: none; width: 100%; padding-left: 15px; padding-right: 15px; padding-top: 5px; padding-bottom: 5px; border-radius: 3px; color: #fff; margin-right: 5px; margin-top: 5px; outline: none;">Enviar</button>
+          </div>
+
+        </div>
+
+      </div>
+
+
+    </div>
+    <!-- end col-xs-12 -->
+
+  </div>
+
+</div>
+<!-- end container -->

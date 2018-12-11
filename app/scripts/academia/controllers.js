@@ -1968,7 +1968,6 @@ angular.module('netbase')
   }
 }])
 
-
 .filter('limitHtml', function() {
         return function(text, limit, ellipsis) {
             var _getClosedTagsString = function(_tagArray) {

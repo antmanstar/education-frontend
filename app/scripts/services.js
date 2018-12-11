@@ -2,6 +2,93 @@
 angular.module('netbase')
   //35.229.52.103
 
+    .factory('PokerHands', ['$http', '$localStorage', function($http, $localStorage) {
+
+      //var baseUrl = "";
+      var baseUrl = "http://localhost:9003";
+
+      return {
+
+        getAll: function() {
+
+          var url = '/pokerhands/all';
+
+          return $http.get(baseUrl + url);
+
+        },
+
+        getById: function(id) {
+
+          var url = '/pokerhands/id/' + id;
+
+          return $http.get(baseUrl + url);
+
+        },
+
+        answer: function(id, data) {
+
+          let url = "http://localhost:9003/pokerhands/id/" + id + "/answer";
+
+          return $http({
+            method: 'POST',
+            data : data,
+            url: url,
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }});
+
+        },
+
+        create: function(data) {
+
+          let url = "http://localhost:9003/pokerhands/create";
+
+          return $http({
+            method: 'POST',
+            data : data,
+            url: url,
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }});
+
+        },
+
+        animateHand: function(handtext) {
+
+          let url = "http://localhost:9003/pokerhands/embed/create";
+
+          return $http({
+            method: 'POST',
+            data : { raw : handtext, embed : true },
+            url: url,
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }});
+
+        }
+
+      }
+
+    }])
+
     .factory('Chat', ['$http', '$localStorage', function($http, $localStorage) {
 
       //var baseUrl = "";
