@@ -216,6 +216,7 @@ angular.module('netbase')
   };
 
   $scope.openViewers = function() {
+    let player = $("video").get(0);
     let duration = player.duration;
     console.log("duration: " + duration)
     ngDialog.open({ template: 'partials/modals/videoaccountviewer.html', controller: 'VideoViewersCtrl', className: 'ngdialog-theme-default', data : { viewers : viewers, duration : duration } });

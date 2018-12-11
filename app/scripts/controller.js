@@ -1197,7 +1197,7 @@ angular.module('netbase')
 
       if ($localStorage.tokenTwilio != undefined) {
 
-        const chatClient = new Twilio.Chat.Client($localStorage.tokenTwilio);
+        //const chatClient = new Twilio.Chat.Client($localStorage.tokenTwilio);
 
       } else {
 
@@ -1220,9 +1220,9 @@ angular.module('netbase')
 
               $localStorage.tokenTwilio = res.token;
 
-              const chatClient = new Twilio.Chat.Client(token);
+              //const chatClient = new Twilio.Chat.Client(token);
 
-              chatClient.on('tokenExpired', refreshToken);
+              //chatClient.on('tokenExpired', refreshToken);
 
             })
 

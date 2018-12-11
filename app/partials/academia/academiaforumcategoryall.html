@@ -13,17 +13,28 @@
 
       <div academiastatus university="{{university}}"></div>
 
-      <div class="academia-content-forum">
+      <style>
+      tr.spaceUnder>td {
+        padding-bottom: 1em;
+      }
+      </style>
 
-        <div class="academia-category" ng-repeat="category in categories">
-
-          <div class="texts">
-            <div class="title"><div class="icon"><i class="fas fa-newspaper"></i><a href="/a/{{university.url}}/forum/category/id/{{category._id}}"></div>{{category.title}}</a></div>
-            <div class="description">{{category.description}}</div>
-          </div>
-
-        </div>
-        <!-- end academia-category -->
+      <div class="academia-content-forum" style="border-radius: 5px; box-shadow: 0px 0px 8px 0px rgba(196, 196, 196, 0.35);">
+        <table class="table">
+          <thead>
+            <tr>
+              <th class="col-sm-1 col-md-1" style="text-align: left;"></th>
+              <th class="col-sm-6 col-md-6" style="text-align: left;">Fórum</th>
+              <th class="col-sm-2 col-md-2" style="text-align: left;">Tópicos</th>
+              <th class="col-sm-2 col-md-2" style="text-align: left;">Última post criado</th>
+            </tr>
+          </thead>
+        </table>
+        <table class="table">
+          <tbody>
+            <categoryrow ng-repeat="category in categories" category="{{category}}" universityid="{{university._id}}"></categoryrow>
+          </tbody>
+        </table>
 
         <div ng-show="categories.length == 0">
           Nenhuma categoria cadastrada
