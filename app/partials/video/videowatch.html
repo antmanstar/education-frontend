@@ -20,9 +20,21 @@
 </div>
 <!-- end container-fluid -->
 
+<style>
+  .plyr {
+    height: 100% !important;
+  }
+  .plyr__video-wrapper {
+    height: 100% !important;
+  }
+</style>
+
 <div ng-if="video.status != 1" class="player-area">
 
+  <video id="video" controls poster="{{university.backgroundImage}}"></video>
+  <!--
   <video id="video" crossorigin="anonymous" class="video-js vjs-default-skin" controls preload="auto" vjs-video></video>
+  -->
 
 </div>
 

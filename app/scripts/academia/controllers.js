@@ -445,13 +445,21 @@ angular.module('netbase')
   $scope.page = 1;
   $scope.pages = 1;
 
-  console.log($location.search().page)
-
   if ($location.search().page != undefined) {
     $scope.page = $location.search().page;
   }
 
   $scope.categoryId = categoryId;
+
+  /* forum posts order */
+  $scope.forumPostsOrder = "-createdAt";
+  //-votesCount
+
+  $scope.orderForumPosts = function(order) {
+
+    $scope.forumPostsOrder = "-" + order;
+
+  }
 
   /* get university informations */
   University.getUniversity(universityUrl).then(function(res) {
@@ -1519,7 +1527,7 @@ angular.module('netbase')
   }
 }])
 
-.directive('videorow', ['Videos', '$rootScope', '$sce', function(Videos, $rootScope, $sce) {
+.directive('videorow', ['Videos', '$rootScope', '$sce', '$location', function(Videos, $rootScope, $sce, $location) {
   return {
     restrict: 'E',
     templateUrl: '../partials/academia/videorow.html',

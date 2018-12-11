@@ -10,7 +10,7 @@ angular.module('netbase')
 
   let videoId = $route.current.params.videoId;
 
-  let player = $("video").get(0);
+  //let player = angular.element(element.find("video")[0]).get(0);
 
   let viewers = {};
 
@@ -43,16 +43,18 @@ angular.module('netbase')
 
         if ($scope.video.file.indexOf(".mp4") == -1 && $scope.video.file.indexOf(".wmv") == -1) {
 
-          console.log("doesn't have")
-          console.log($scope.video.file)
+          const video = document.querySelector('video');
 
-          if(Hls.isSupported()) {
-            var hls = new Hls();
-            hls.loadSource($scope.video.file);
-            hls.attachMedia(player);
+          const player = new Plyr(video);
+
+          if (!Hls.isSupported()) {
+        		video.src = $scope.video.file;
+        	} else {
+        		// For more Hls.js options, see https://github.com/dailymotion/hls.js
+        		const hls = new Hls();
+        		hls.loadSource($scope.video.file);
+        		hls.attachMedia(video);
           }
-
-          $scope.video.file = $sce.trustAsResourceUrl($scope.video.file);
 
         } else {
 
@@ -138,7 +140,13 @@ angular.module('netbase')
         }
         //END logged
 
+        // FIX
+
         setInterval(function(){
+
+          let player = $("video").get(0);
+
+          if (player != undefined) {
 
             let percentComplete = player.currentTime / player.duration;
 
@@ -158,6 +166,8 @@ angular.module('netbase')
 
             }
             //END timeWatched < player.currentTime
+
+          }
 
         }, 10000);
         //END setInterval
