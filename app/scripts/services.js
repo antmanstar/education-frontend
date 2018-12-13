@@ -53,7 +53,7 @@ angular.module('netbase')
 
         create: function(data) {
 
-          let url = "https://network-university-prod.herokuapp.com/create";
+          let url = "https://network-university-prod.herokuapp.com/pokerhands/create";
 
           return $http({
             method: 'POST',
@@ -73,7 +73,7 @@ angular.module('netbase')
 
         animateHand: function(handtext) {
 
-          let url = "https://network-university-prod.herokuapp.com/embed/create";
+          let url = "https://network-university-prod.herokuapp.com/pokerhands/embed/create";
 
           return $http({
             method: 'POST',
