@@ -44,7 +44,7 @@
 
           <p style="width: 100%;"><b>Mão #{{$index}}</b></p>
           <input class="academia-content-forum-post-create-title" placeholder="Escreva a sua pergunta aqui" ng-model="hands[$index].title"></input>
-          <textarea ng-model="hands[$index].handtext" style="margin-bottom: 15px; background-color: #efefef; border-radius: 3px; height: 130px; width: 100%; resize: none; border: none; padding: 10px;" placeholder="Cole o hand history aqui"></textarea>
+          <textarea id="singlehandform-raw" ng-model="hands[$index].handtext" style="margin-bottom: 15px; background-color: #efefef; border-radius: 3px; height: 130px; width: 100%; resize: none; border: none; padding: 10px;" placeholder="Cole o hand history aqui"></textarea>
 
         </div>
 
@@ -85,3 +85,11 @@
   -->
 
 </div>
+
+<script type="text/javascript">
+$(document).ready(function () {
+$('#single-hand-form').yiiActiveForm([{"id":"singlehandform-raw","name":"raw","container":".field-singlehandform-raw","input":"#singlehandform-raw","validateOnType":true,"validationDelay":1000,"validate":function (attribute, value, messages, deferred, $form) {yii.validation.required(value, messages, {"message":"0"});yii.validation.string(value, messages, {"message":"Raw must be a string.","min":128,"tooShort":"Hand history is too short","max":10000,"tooLong":"Hand history is too long","skipOnEmpty":1});}}], {"errorSummary":".alert"});
+});
+</script>
+
+<!-- end container -->

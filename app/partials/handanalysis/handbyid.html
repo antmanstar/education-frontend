@@ -25,20 +25,13 @@
 
       <div class="row">
 
-        <div class="col-xs-12 col-sm-7 col-md-7 col-lg-7" style="padding: 10px; min-height: 200px; border-radius: 5px; margin-bottom: 25px;">
+        <div class="col-xs-12 col-sm-7 col-md-7 col-lg-8" style="min-height: 200px; border-radius: 5px; margin-bottom: 25px;">
 
           <div academiastatus university="{{university}}"></div>
 
           <div style="box-shadow: 0px 0px 8px 0px rgba(196, 196, 196, 0.35); padding: 10px; border-radius: 5px; margin-bottom: 15px;">
 
-            <div style="padding-bottom: 15px;">
-
-              <div ng-if="student.imageUrl == undefined" style="display: inline-block; background-image: url('img/user/user.png'); background-position: cover; background-size: cover; background-position: 50% 50%; border-radius: 4px; height: 50px; width: 50px;"></div>
-              <div ng-if="student.imageUrl.length > 0" style="display: inline-block; background-image: url('https://storage.googleapis.com/networkbase-images/images/1536428319/a48.jpg'); background-position: cover; background-size: cover; background-position: 50% 50%; border-radius: 4px; height: 50px; width: 50px;"></div>
-              <div style="display: inline-block; font-size: 1.3em; line-height: 50px; vertical-align: top; padding-left: 10px; font-weight: bold;">Jogador X pergunta....</div>
-
-            </div>
-            <!-- user text -->
+            <div style="font-size: 1.3em; margin-bottom: 15px; font-weight: bold;">Pergunta</div>
 
             <!-- -->
             <div ng-repeat="hand in pokerhands.hand track by $index" ng-show="handIndex == $index">
@@ -53,8 +46,9 @@
           </div>
           <!-- end -->
 
+          <div style="height: 5px; width: 100%; background-color: #cdcdcd; margin-bottom: 15px;"></div>
+
           <div style="box-shadow: 0px 0px 8px 0px rgba(196, 196, 196, 0.35); padding: 10px; border-radius: 5px;">
-            <div style="margin-bottom: 15px; font-weight: bold; font-size: 1.3em;">Mão {{handIndex + 1}} / {{pokerhands.hand.length}}</div>
             <div style="text-align: center;">
               <button class="btn bg-primary-purple" style="height: 29px; width: calc(50% - 20px); margin-right: 5px;" ng-click='move("back")'>Voltar</button>
               <button ng-click='move("next")' class="btn bg-primary-purple" style="height: 29px; width: calc(50% - 20px); margin-right: 5px;">Próxima</button>
@@ -66,15 +60,36 @@
 
         <!-- col-sm-2 col-md-2 col-lg-3 -->
 
-        <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+        <div class="col-xs-12 col-sm-5 col-md-5 col-lg-4">
 
-          <div style="margin-bottom: 15px; font-weight: bold; font-size: 1.3em;">{{pokerhands.title}}</div>
+          <div style="box-shadow: 0px 0px 8px 0px rgba(196, 196, 196, 0.35); padding: 10px; border-radius: 5px; margin-bottom: 15px;">
+            <div style="margin-bottom: 15px; font-weight: bold; font-size: 1.3em; border-bottom: 1px solid #cdcdcd; padding-bottom: 10px;"><img src="https://visualpharm.com/assets/18/Cards-595b40b65ba036ed117d2a26.svg" style="margin-right: 14px;" height="20px" width="20px" />{{pokerhands.title}}</div>
+            <div style="margin-bottom: 15px; border-bottom: 1px solid #cdcdcd; padding-bottom: 10px;"><b>Mão</b> <i style="float: right;">{{handIndex + 1}} / {{pokerhands.hand.length}}</i></div>
+            <div style="padding-bottom: 5px;">
 
-          <div style="box-shadow: 0px 0px 8px 0px rgba(196, 196, 196, 0.35); padding: 10px; min-height: 200px; border-radius: 5px; margin-bottom: 25px;">
+              <div ng-if="student.imageUrl == undefined" style="display: inline-block; background-image: url('img/user/user.png'); background-position: cover; background-size: cover; background-position: 50% 50%; border-radius: 4px; height: 20px; width: 20px;"></div>
+              <div ng-if="student.imageUrl.length > 0" style="display: inline-block; background-image: url('{{student.imageUrl}}'); background-position: cover; background-size: cover; background-position: 50% 50%; border-radius: 4px; height: 20px; width: 20px;"></div>
+              <div style="display: inline-block; font-size: 1em; line-height: 20px; vertical-align: top; padding-left: 10px;">{{studentAsking.name}}</div>
+
+            </div>
+            <!-- user text -->
+            <div style="padding-bottom: 5px">
+              <img src="https://visualpharm.com/assets/204/Calendar-595b40b65ba036ed117d3cfb.svg" style="margin-right: 14px;" height="20px" width="20px" /><span am-time-ago="pokerhands.createdAt | amFromUnix"></span>
+            </div>
+            <!-- end date -->
+          </div>
+
+          <div style="height: 2px; width: 100%; background-color: #cdcdcd; margin-bottom: 15px;"></div>
+
+          <div style="box-shadow: 0px 0px 8px 0px rgba(196, 196, 196, 0.35); padding: 10px; min-height: 200px; border-radius: 5px;">
 
             <div style="font-size: 1.3em; margin-bottom: 15px; font-weight: bold;">Análises</div>
 
-            <pokerhandanswer a="{{a}}" ng-repeat="a in pokerhands.hand[handIndex].answers"></pokerhandanswer>
+            <div style="max-height: 300px; overflow-y: scroll;">
+
+              <pokerhandanswer a="{{a}}" ng-repeat="a in pokerhands.hand[handIndex].answers"></pokerhandanswer>
+
+            </div>
 
           </div>
 
@@ -97,4 +112,3 @@
   </div>
 
 </div>
-<!-- end container -->

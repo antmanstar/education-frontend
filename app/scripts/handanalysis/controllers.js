@@ -71,6 +71,12 @@ angular.module('netbase')
         console.log(result)
         console.log(adx)
         handsUpload[adx].embedId = result._id;
+        handsUpload[adx].handtext = $scope.hands[adx].handtext;
+
+        handsUpload[adx].board_cards = result.board_cards;
+        handsUpload[adx].holes = result.holes;
+        handsUpload[adx].pot_final = result.pot_final;
+
         console.log("handsUpload[adx]: ")
         console.log(handsUpload[adx])
         handsUploadFinal.push(handsUpload[adx])
@@ -89,7 +95,7 @@ angular.module('netbase')
 
         if (res.success) {
           console.log(res);
-          $location.path('/a/sambapoker/handanalysis/id/' + res.data._id)
+          $location.path('/a/' + universityUrl + '/handanalysis/id/' + res.data._id)
         } else {
           console.log("error, no success")
         }
@@ -165,14 +171,27 @@ angular.module('netbase')
 
   $scope.analysisText = "";
 
+  let studentId;
+
+  if ($localStorage.token != undefined && $localStorage.token != null) {
+    studentId = jwtHelper.decodeToken($localStorage.token)._id;
+  }
+
   $scope.sendAnalysis = function() {
 
-    let payload = { text : $scope.analysisText , embedId : $scope.pokerhands[$scope.handIndex].embedId };
+    let payload = { text : $scope.analysisText , embedId : $scope.pokerhands.hand[$scope.handIndex].embedId };
 
-    PokerHands.answer(id, payload).success(function(res) {
+    PokerHands.answer($scope.pokerhands._id, payload).success(function(res) {
 
-      console.log("poker hands answer: ")
-      console.log(res);
+      if (res.success) {
+
+        let answer = { text : $scope.analysisText, accountId : studentId };
+        $scope.pokerhands.hand[$scope.handIndex].answers.push(answer)
+        $scope.analysisText = "";
+
+      } else {
+        alert("Um erro aconteceu ao postar a sua resposta. Avise a equipe de desenvolvedores. Nosso objetivo é resolver este erro o mais breve possível.")
+      }
 
     });
 
@@ -186,7 +205,7 @@ angular.module('netbase')
 
   //
 
-  $scope.pokerhands = pokerhands;
+  //$scope.pokerhands = pokerhands;
 
   if ( University.isStoredLocal(universityUrl) ) {
 
@@ -195,13 +214,17 @@ angular.module('netbase')
     $scope.university = universityStorage[universityUrl];
 
     PokerHands.getById(handId).success(function(res) {
-      console.log(res);
+
       if (res.success) {
-        //$scope.pokerhands = res.data;
+
+        $scope.pokerhands = res.data;
 
         Students.getStudentById($scope.pokerhands.accountId).then(function(res) {
 
           let data = res.data.data;
+
+          console.log("get student by id: ")
+          console.log(data)
 
           if (data.imageUrl != undefined && data.imageUrl != null) {
             $scope.userImage = data.imageUrl;
@@ -213,7 +236,8 @@ angular.module('netbase')
 
         console.log(res.data)
       } else {
-        alert("error while loading")
+        console.log("error while loading hand")
+        console.log(res)
       }
 
     });
@@ -227,15 +251,19 @@ angular.module('netbase')
       $scope.university = res.data.data;
       University.storeLocal($scope.university);
 
-      PokerHand.getById(handId).success(function(res) {
+      PokerHands.getById(handId).success(function(res) {
         console.log(res);
         if (res.success) {
-          //$scope.pokerhands = res.data;
+
+          $scope.pokerhands = res.data;
           console.log(res.data)
 
           Students.getStudentById($scope.pokerhands.accountId).then(function(res) {
 
             let data = res.data.data;
+
+            console.log("get student by id: ")
+            console.log(data)
 
             if (data.imageUrl != undefined && data.imageUrl != null) {
               $scope.userImage = data.imageUrl;
@@ -278,120 +306,75 @@ angular.module('netbase')
 
 }])
 
-.controller('AcademiaHandAnalysisCtrl', ['$rootScope', '$scope', 'ngDialog', 'University', 'Knowledge' , function($rootScope, $scope, ngDialog, University, Knowledge) {
+.controller('AcademiaHandAnalysisCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', '$timeout', 'ngDialog', 'jwtHelper', '$localStorage', 'PokerHands', '$sce', 'Students' , function($rootScope, $scope, $location, $route, University, $timeout, ngDialog, jwtHelper, $localStorage, PokerHands, $sce, Students) {
+
+  let universityUrl = $route.current.params.academiaName;
+  let handId = $route.current.params.id;
 
   $scope.universities = [];
 
   /* */
-  $scope.page = 2;
+  $scope.page = 1;
   /* */
+
+  $scope.forumPostsOrder = "-createdAt";
+  //-votesCount
+
+  $scope.orderForumPosts = function(order) {
+
+    $scope.forumPostsOrder = "-" + order;
+
+  }
 
   /* Knowledge -> Page 1 */
 
-  Knowledge.getAllPaginated().success(function(res) {
+  if ( University.isStoredLocal(universityUrl) ) {
 
-    let data = res.data;
-    let success = res.success;
-    let docs = data.docs;
+    let universityStorage = University.retrieveStorage(universityUrl);
 
-    $scope.knowledges = docs;
+    $scope.university = universityStorage[universityUrl];
 
-  });
+    PokerHands.getAll().success(function(res) {
 
-  $scope.checkbox = false;
+      let data = res.data;
+      let success = res.success;
+      let docs = data.docs;
 
-  let knowledgeSelected = [];
-
-  $scope.knowledgeCheck = function(id) {
-
-    let idx = knowledgeSelected.indexOf(id);
-
-    if (idx >= 0) {
-      knowledgeSelected.splice(idx, 1);
-    } else {
-      knowledgeSelected.push(id);
-    }
-
-    console.log(knowledgeSelected)
-
-  }
-
-  $scope.knowledgeStore = function() {
-
-    // Get value id from inputs
-    // Do a for loop
-    // Do multiple requests to push into user account
-
-    knowledgeSelected.forEach(function(id, idx) {
-
-      Knowledge.subscribe(id).success(function(res) {
-
-        console.log("knowledge registered")
-
-      });
+      $scope.pokerhands = data;
+      console.log("poker hands")
+      console.log(data);
+      $scope.loaded = true;
 
     });
-    //END knowledgeSelected
+    //end PokerHands.getAll
 
-    $scope.page = 2;
+  } else {
 
-  }
+    University.getUniversity(universityUrl).then(function(res) {
 
-  /* Universities -> Page 2 */
+      console.log("university: ")
+      console.log(res.data.data)
+      $scope.university = res.data.data;
+      University.storeLocal($scope.university);
 
-  let universitySelected = [];
+      PokerHands.getAll().success(function(res) {
 
-  University.getAllUniversities().success(function(res) {
+        let data = res.data;
+        let success = res.success;
+        let docs = data.docs;
 
-    let success = res.success;
-    let data = res.data;
-
-    $scope.universities = data;
-
-    console.log(res);
-
-  });
-
-  $scope.universityCheck = function(url) {
-
-    let idx = universitySelected.indexOf(url);
-
-    if (idx >= 0) {
-      universitySelected.splice(idx, 1);
-    } else {
-      universitySelected.push(url);
-    }
-
-  }
-
-  $scope.universityStore = function() {
-
-    // Get value id from inputs
-    // Do a for loop
-    // Do multiple requests to push into user account
-
-    universitySelected.forEach(function(url, idx) {
-
-      University.subscribeOnUniversity(url).success(function(res) {
-
-        console.log("knowledge registered")
+        $scope.pokerhands = data;
+        console.log("poker hands")
+        console.log(data);
+        $scope.loaded = true;
 
       });
-
-      ngDialog.close();
+      //end PokerHands.getAll
 
     });
-    //END knowledgeSelected
-
-    $scope.page = 2;
+    //END University.getUniversity()
 
   }
-
-  $scope.studentProExplore = function () {
-    ngDialog.open({ template: 'partials/modals/studentpro.html', className: 'ngdialog-theme-default ngdialog-student-pro', controller: 'StudentProExploreCtrl' });
-  };
-
-  //ngDialog.close();
 
 }])
 
@@ -405,7 +388,38 @@ angular.module('netbase')
 
       let id = attr.embedid;
 
+      let handtextupdated = scope.hand.handtext.replace(/Seat/g, '<br>Seat').replace(/\*\*\*/g, '<br>***');
+
+      scope.hand.handtext = handtextupdated;
       scope.embedUrl = $sce.trustAsResourceUrl("https://www.weaktight.com/e/" + id);
+
+    }
+  }
+}])
+
+.directive('handcard', ['University', '$rootScope', 'Students', 'News', '$sce', function(University, $rootScope, Students, News, $sce) {
+  return {
+    restrict: 'E',
+    templateUrl: '../partials/handanalysis/handcard.html',
+    replace: false,
+    scope: true,
+    link: function(scope, element, attr) {
+
+      let hand = JSON.parse(attr.hand);
+
+      console.log(hand.accountId)
+
+      Students.getStudentById(hand.accountId).success(function(res) {
+
+        scope.student = res.data;
+
+      })
+      //END Students.getStudentById
+
+      //let handtextupdated = scope.hand.handtext.replace(/Seat/g, '<br>Seat').replace(/\*\*\*/g, '<br>***');
+
+      //scope.hand.handtext = handtextupdated;
+      //scope.embedUrl = $sce.trustAsResourceUrl("https://www.weaktight.com/e/" + id);
 
     }
   }

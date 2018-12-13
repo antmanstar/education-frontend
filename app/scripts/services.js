@@ -4,8 +4,8 @@ angular.module('netbase')
 
     .factory('PokerHands', ['$http', '$localStorage', function($http, $localStorage) {
 
-      //var baseUrl = "";
-      var baseUrl = "http://localhost:9003";
+      var baseUrl = "https://network-university-prod.herokuapp.com";
+      //var baseUrl = "http://localhost:9003";
 
       return {
 
@@ -21,13 +21,19 @@ angular.module('netbase')
 
           var url = '/pokerhands/id/' + id;
 
-          return $http.get(baseUrl + url);
+          return $http({
+            method: 'GET',
+            url: baseUrl + url,
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'x-access-token': $localStorage.token
+          }})
 
         },
 
         answer: function(id, data) {
 
-          let url = "http://localhost:9003/pokerhands/id/" + id + "/answer";
+          let url = "https://network-university-prod.herokuapp.com/pokerhands/id/" + id + "/answer";
 
           return $http({
             method: 'POST',
@@ -47,7 +53,7 @@ angular.module('netbase')
 
         create: function(data) {
 
-          let url = "http://localhost:9003/pokerhands/create";
+          let url = "https://network-university-prod.herokuapp.com/create";
 
           return $http({
             method: 'POST',
@@ -67,7 +73,7 @@ angular.module('netbase')
 
         animateHand: function(handtext) {
 
-          let url = "http://localhost:9003/pokerhands/embed/create";
+          let url = "https://network-university-prod.herokuapp.com/embed/create";
 
           return $http({
             method: 'POST',

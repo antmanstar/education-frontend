@@ -1,1 +1,2 @@
-<iframe ng-src="{{embedUrl}}" width="100%" height="388"></iframe>
+<iframe ng-show="hand.board_cards.length > 0 && hand.holes.length > 0 && hand.pot_final.length > 0" ng-src="{{embedUrl}}" width="100%" height="388"></iframe>
+<p ng-bind-html="hand.handtext" ng-show="hand.board_cards.length <= 0 || hand.holes.length <= 0 || hand.pot_final.length <= 0"></p>

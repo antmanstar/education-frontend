@@ -1,9 +1,7 @@
-<div>
-
+<div style="padding-bottom: 10px;">
   <div style="margin-bottom: 15px;">
     <div class="user-image" style="display: inline-block;"><img ng-if="student.imageUrl == undefined" src="img/user/user.png" style="height: 30px; margin-right: 6px;" /><img style="height: 30px; margin-right: 6px;" ng-if="student.imageUrl.length > 0" src="{{student.imageUrl}}" /></div> {{student.name}}
   </div>
   <div ng-bind-html="text">{{text}}</div>
-
 </div>
 <!-- end  -->
