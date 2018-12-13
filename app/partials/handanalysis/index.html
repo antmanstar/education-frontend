@@ -1,8 +1,8 @@
 <div ng-include="'partials/headerhome.html'"></div>
 
-<update-title title="{{university.name}} | Universidade"></update-title>
-<update-meta property="og:title" content="{{university.name}} | Universidade"></update-meta>
-<update-meta property="og:url" content="https://universida.de/a/{{university.url}}/timeline"></update-meta>
+<update-title title="Hand Analysis | {{university.name}} | Universidade"></update-title>
+<update-meta property="og:title" content="Hand Analysis | {{university.name}} | Universidade"></update-meta>
+<update-meta property="og:url" content="https://universida.de/a/{{university.url}}/handanalysis"></update-meta>
 <meta property="og:description" content="{{university.name}} ensina, debate e compartilhar conhecimento na plataforma Universidade." />
 
 <update-meta ng-if="university.backgroundImage != undefined" property="og:image" content="{{university.backgroundImage}}"></update-meta>
@@ -50,7 +50,6 @@
           <div class="dropdown" style="display: inline-block;">
             <button class="btn btn-default dropdown-toggle" type="button" style="height: 30px; background-color: #cecece;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
               <b ng-if="forumPostsOrder == '-createdAt'">Data criação</b>
-              <b ng-if="forumPostsOrder == '-votesCount'">Mais votados</b>
               <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">

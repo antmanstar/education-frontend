@@ -1,12 +1,31 @@
 <div ng-include="'partials/headerhome.html'"></div>
 
-<update-title title="{{university.name}} | Universidade"></update-title>
-<update-meta property="og:title" content="{{university.name}} | Universidade"></update-meta>
-<update-meta property="og:url" content="https://universida.de/a/{{university.url}}/timeline"></update-meta>
+<update-title title="{{pokerhands.title}} | Hand Analysis | {{university.name}} | Universidade"></update-title>
+<update-meta property="og:title" content="{{hand.title}} | Hand Analysis | {{university.name}} | Universidade"></update-meta>
+<update-meta property="og:url" content="https://universida.de/a/{{university.url}}/handanalysis/id/{{pokerhands._id}}"></update-meta>
 <meta property="og:description" content="{{university.name}} ensina, debate e compartilhar conhecimento na plataforma Universidade." />
 
 <update-meta ng-if="university.backgroundImage != undefined" property="og:image" content="{{university.backgroundImage}}"></update-meta>
 <update-meta ng-if="university.backgroundImage == undefined" property="og:image" content="https://universida.de/img/misc/noimageacademia.jpg"></update-meta>
+
+<style>
+
+.analysis-scroll::-webkit-scrollbar {
+    height: 4px;
+}
+
+.analysis-scroll::-webkit-scrollbar-thumb {
+    background: #2e4255;
+    border-radius: 4px;
+    height: 4px;
+}
+.analysis-scroll::-webkit-scrollbar-track {
+    background: #fff;
+    border-radius: 4px;
+    height: 4px;
+}
+
+</style>
 
 <div class="container-fluid container-full animated fadeIn faster">
 
@@ -85,7 +104,7 @@
 
             <div style="font-size: 1.3em; margin-bottom: 15px; font-weight: bold;">Análises</div>
 
-            <div style="max-height: 300px; overflow-y: scroll;">
+            <div class="analysis-scroll" style="max-height: 300px; overflow-y: scroll;">
 
               <pokerhandanswer a="{{a}}" ng-repeat="a in pokerhands.hand[handIndex].answers"></pokerhandanswer>
 
