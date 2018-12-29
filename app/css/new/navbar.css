@@ -81,8 +81,6 @@ nav .navbar-top {
   height: 52px;
   padding-left: 15px;
   padding-right: 15px;
-  padding-top: 9px;
-  padding-bottom: 9px;
   margin-bottom: 10px;
   overflow: hidden;
 }
@@ -105,12 +103,16 @@ nav .navbar-top .brand {
 nav .navbar-top .brand span {
   height: 100%;
   display: none;
-  vertical-align: top;
   line-height: 34px;
   margin-left: 7px;
 }
 
 @media screen and (max-width: 768px) {
+  nav .navbar-top .brand {
+    height: 100%;
+    padding-top: 7px;
+    display: inline-block;
+  }
   nav .navbar-top .brand span {
     display: inline-block;
   }
@@ -131,7 +133,7 @@ nav .navbar-top .menu-right {
   float: right;
   display: inline-block;
   line-height: 34px;
-  width: calc(100% - 202px);
+  width: calc(100% - 283px);
 }
 
 nav .navbar-top .menu-right.landing {
