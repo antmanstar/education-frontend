@@ -1,0 +1,103 @@
+<div ng-include="'partials/headerhome.html'"></div>
+
+<update-title title="{{university.name}} | Universidade"></update-title>
+<update-meta property="og:title" content="{{university.name}} | Universidade"></update-meta>
+<update-meta property="og:url" content="https://universida.de/a/{{university.url}}/timeline"></update-meta>
+<meta property="og:description" content="{{university.name}} ensina, debate e compartilhar conhecimento na plataforma Universidade." />
+
+<update-meta ng-if="university.backgroundImage != undefined" property="og:image" content="{{university.backgroundImage}}"></update-meta>
+<update-meta ng-if="university.backgroundImage == undefined" property="og:image" content="https://universida.de/img/misc/noimageacademia.jpg"></update-meta>
+
+<div class="container-fluid container-full animated fadeIn faster">
+
+  <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
+  <div class="row academia-coverimage" ng-if="university.backgroundImage == undefined"  style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
+
+  <div class="row">
+
+    <div academiarightcolumn university="{{university}}"></div>
+
+    <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 academia-content">
+
+      <div academiastatus university="{{university}}"></div>
+
+      <div class="academia-content-forum" style="border-radius: 5px; box-shadow: 0px 0px 8px 0px rgba(196, 196, 196, 0.35);">
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th class="col-sm-1 col-md-1" style="text-align: left;"></th>
+              <th class="col-sm-6 col-md-6" style="text-align: left;">Título</th>
+              <th class="col-sm-2 col-md-2" style="text-align: left;">Categoria</th>
+              <th class="col-sm-2 col-md-2" style="text-align: left;">Data Upload</th>
+            </tr>
+          </thead>
+        </table>
+
+        <table class="table">
+          <tbody>
+            <videouploadrow ng-repeat="category in categories" category="{{category}}" universityid="{{university._id}}"></videouploadrow>
+          </tbody>
+        </table>
+
+        <div ng-show="categories.length == 0">
+          Nenhuma categoria cadastrada
+        </div>
+
+        <div ng-show="forumPosts.length > 0">
+
+          <forumpost ng-repeat="post in forumPosts | orderBy:'-votesCount'" p="{{post}}"></forumpost>
+
+        </div>
+        <!-- forumPosts.length > 0 -->
+
+      </div>
+      <!-- academia-content-forum-->
+
+      <div class="dashboard-content-title">
+        <h3>Upload via weTransfer</h3>
+      </div>
+
+      <input class="academia-content-forum-post-create-title" placeholder="Escreva o título do vídeo" ng-model="title"></input>
+
+      <input class="academia-content-forum-post-create-title" placeholder="Escreva a URL do vídeo" ng-model="title"></input>
+
+      <div class="academia-content-forum-post-create-premium">
+
+        <b>Categoria do Post</b>
+
+        <div class="form-group">
+          <select ng-model="categoryForum._id">
+            <option ng-repeat="category in categories" ng-selected="category._id == categoryForum._id" value="{{category._id}}" ng-selected="">{{category.title}}</option>
+          </select>
+        </div>
+
+      </div>
+
+      <div class="academia-content-forum-answer-action" style="margin-top: 15px;">
+        <button class="btn btn-bluebase" ng-click="createForumPost()">Criar postagem</button>
+      </div>
+      <!-- academia-content-forum-answer -->
+
+    </div>
+    <!-- end col-xs-12 -->
+
+    <!-- col-sm-2 col-md-2 col-lg-3 -->
+
+    <div class="col-xs-12 col-sm-2 col-md-2 col-lg-3 academia-content">
+
+      <!--
+
+      <div style="margin-bottom: 15px; font-weight: bold;">Experiências</div>
+
+      <div style="background-color: #efefef; border-radius: 3px; height: 40px;"><i style="line-height: 40px; padding-left: 12px;">Resumo do dia</i> <button style="background-color: #38b6a2; border: none; float: right; padding-left: 15px; padding-right: 15px; padding-top: 5px; padding-bottom: 5px; border-radius: 3px; color: #fff; margin-right: 5px; margin-top: 5px; outline: none;">Ler</button></div></div>
+
+      -->
+
+    </div>
+
+  </div>
+  <!-- end row -->
+
+</div>
+<!-- container-full -->

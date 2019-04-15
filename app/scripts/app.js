@@ -95,6 +95,10 @@ angular.module('netbase', ['ngStorage',
             templateUrl: 'partials/academia/academia.html',
             controller: 'AcademiaCtrl',
         })
+        .when('/a/:academiaName/videostudio', {
+            templateUrl: 'partials/academia/academiavideostudio.html',
+            controller: 'AcademiaStudioCtrl',
+        })
         .when('/a/:academiaName/handanalysis/', {
             templateUrl: 'partials/handanalysis/index.html',
             controller: 'AcademiaHandAnalysisCtrl',

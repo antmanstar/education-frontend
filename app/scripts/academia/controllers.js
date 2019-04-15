@@ -4,6 +4,21 @@
 
 angular.module('netbase')
 
+.controller('AcademiaStudioCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Forum', '$sce', '$filter', 'ngDialog', '$window', function($rootScope, $scope, $location, $route, University, Forum, $sce, $filter, ngDialog, $window) {
+
+  let universityUrl = $route.current.params.academiaName;
+
+  University.getUniversity(universityUrl).then(function(res) {
+
+    $scope.university = res.data.data;
+    University.storeLocal($scope.university);
+    console.log("university parsed not stored: ")
+    console.log($scope.university)
+
+  });
+
+}])
+
 .controller('AcademiaLandingCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Forum', '$sce', '$filter', 'ngDialog', '$window', function($rootScope, $scope, $location, $route, University, Forum, $sce, $filter, ngDialog, $window) {
 
   let universityUrl = $route.current.params.academiaName;
@@ -1530,6 +1545,45 @@ angular.module('netbase')
   }
 }])
 
+.directive('videouploadrow', ['Forum', '$rootScope', '$sce', '$location', function(Forum, $rootScope, $sce, $location) {
+  return {
+    restrict: 'E',
+    templateUrl: '../partials/academia/categoryrow.html',
+    replace: true,
+    scope: true,
+    link: function(scope, element, attr) {
+
+      let category = JSON.parse(attr.category);
+      let universityid = attr.universityid;
+
+      //let logged = $rootScope.logged;
+
+      console.log(category._id)
+      console.log(universityid)
+
+      Forum.getForumPostsByCategoryId(universityid, category._id, 1).success(function(res) {
+
+        console.log("category row: ")
+        console.log(res)
+
+        if (res.success) {
+
+          let forumPostsRequested = res.data.docs;
+
+          scope.page = Number(res.data.page);
+          scope.pages = res.data.pages;
+          scope.posts = forumPostsRequested;
+          scope.total = res.data.total;
+          scope.docs = res.data.docs;
+
+        }
+
+      });
+      //END Videos.getById
+
+    }
+  }
+}])
 
 .directive('categoryrow', ['Forum', '$rootScope', '$sce', '$location', function(Forum, $rootScope, $sce, $location) {
   return {
