@@ -93,7 +93,7 @@
 
       <div ng-show="universities.length > 0" class="section-cards">
 
-        <a style="color: #2c4255;" ng-repeat="university in universities | orderBy:'-highlight'" href="/a/{{university.url}}/timeline">
+        <a style="color: #2c4255;" ng-repeat="university in universities | filter: { active: true } | orderBy:'-highlight'" href="/a/{{university.url}}/timeline">
           <div class="card hvr-hang">
 
             <div class="picture" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>

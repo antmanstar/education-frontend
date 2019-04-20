@@ -14,7 +14,7 @@
 
 <script type="text/javascript">
 
-var socket = io.connect("https://fluted-house-215816.appspot.com");
+var socket = io.connect("https://totemic-chimera-237707.appspot.com");
 //var socket = io.connect("http://104.196.9.222:5555");
 //var socket = io.connect("http://localhost:8888");
 var siofu = new SocketIOFileUpload(socket);
@@ -70,6 +70,33 @@ socket.on("imagepath", function(a) {
     <!-- step 1 -->
     <div ng-show="step == 1" class="col-xs-12 col-sm-9 col-md-9 col-lg-10 col-lg-10 dashboard-content">
 
+      <div class="col-xs-12 col-sm-6 dashboard-status-box" style="height: unset; padding-left: 0; padding-right: 0; padding-top: 0;">
+
+        <div style="height: 200px; background-color: #3367d6; background-image: -webkit-linear-gradient(left top,#3367d6,#0fbfff); padding-top: 55px;">
+
+          <div class="col-xs-12 col-sm-3" style="color: #fff; text-align: right;">
+            <img height="45px" src="https://iconsplace.com/wp-content/uploads/_icons/ffffff/256/png/university-icon-18-256.png" />
+          </div>
+
+          <div class="col-xs-12 col-sm-9" style="color: #fff; text-align: left;">
+            <p style="font-size: 1.35em; margin-bottom: 0;">Crie a sua Universidade</p>
+            <p style="font-size: 1em;">Build scalable apps in any language on Google's infrastructure</p>
+          </div>
+
+        </div>
+        <!-- blue bg -->
+
+        <div style="text-align: center; padding-bottom: 15px; padding-top: 15px;">
+
+          <div style="font-size: 1.1em; padding-bottom: 10px; padding-top: 10px;">Siga todas as etapas para criar a sua própria Universidade.</div>
+          <button style="max-width: 150px;" ng-click="move(1)" class="btn btn-green">Iniciar!</button>
+
+        </div>
+        <!-- text and action -->
+
+      </div>
+
+      <!--
       <div style="text-align: center;">
         <div class="headline-display" style="padding-bottom: 10px; text-align: center;">Crie a sua Universidade</div>
 
@@ -81,6 +108,7 @@ socket.on("imagepath", function(a) {
           <button ng-click="move(1)" class="btn btn-green">Iniciar!</button>
         </div>
       </div>
+      -->
 
     </div>
     <!-- step 1 -->

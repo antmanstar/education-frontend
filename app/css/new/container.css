@@ -184,6 +184,9 @@
   .section-cards .card .title {
     padding-top: 15px;
     padding-bottom: 15px;
+    width: 100%;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
 
 }

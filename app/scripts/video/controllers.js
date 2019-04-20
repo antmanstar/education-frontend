@@ -266,9 +266,6 @@ angular.module('netbase')
       premium : $scope.premium.value
     };
 
-    console.log("send")
-    console.log(payload)
-
     if (payload.file == undefined) {
       $scope.errorMessages.push("O upload do vídeo precisa estar completo.");
       upload = false;
