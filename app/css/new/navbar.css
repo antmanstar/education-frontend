@@ -143,7 +143,7 @@ nav .navbar-top .menu-right.landing {
 @media screen and (max-width: 768px) {
 
   nav .navbar-top .brand img {
-    max-height: 42px;
+    max-height: 39px;
   }
 
   nav .navbar-top .menu-right {

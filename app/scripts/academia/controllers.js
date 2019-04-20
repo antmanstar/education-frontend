@@ -137,7 +137,7 @@ angular.module('netbase')
         if (!displayinvite) {
 
           console.log("time out!");
-          ngDialog.open({ template: 'partials/modals/accountsuggestion.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default ngdialog-plans modal-accountsuggestion', data : { university : $scope.university } });
+          //ngDialog.open({ template: 'partials/modals/accountsuggestion.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default ngdialog-plans modal-accountsuggestion', data : { university : $scope.university } });
           $timeout.cancel()
           displayinvite = true;
 
@@ -177,7 +177,7 @@ angular.module('netbase')
           if (!displayinvite) {
 
             console.log("time out!");
-            ngDialog.open({ template: 'partials/modals/accountsuggestion.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default ngdialog-plans modal-accountsuggestion', data : { university : $scope.university } });
+            //ngDialog.open({ template: 'partials/modals/accountsuggestion.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default ngdialog-plans modal-accountsuggestion', data : { university : $scope.university } });
             $timeout.cancel()
             displayinvite = true;
 
@@ -360,7 +360,7 @@ angular.module('netbase')
 
           $rootScope.accountSuggestion = $timeout(function() {
 
-            ngDialog.open({ template: 'partials/modals/accountsuggestion.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default ngdialog-plans modal-accountsuggestion', data : { university : $scope.university } });
+            //ngDialog.open({ template: 'partials/modals/accountsuggestion.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default ngdialog-plans modal-accountsuggestion', data : { university : $scope.university } });
             $timeout.cancel()
 
           }, 13500, true);
@@ -436,7 +436,7 @@ angular.module('netbase')
 
             $rootScope.accountSuggestion = $timeout(function() {
 
-              ngDialog.open({ template: 'partials/modals/accountsuggestion.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default ngdialog-plans modal-accountsuggestion', data : { university : $scope.university } });
+              //ngDialog.open({ template: 'partials/modals/accountsuggestion.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default ngdialog-plans modal-accountsuggestion', data : { university : $scope.university } });
               $timeout.cancel()
 
             }, 13500, true);
@@ -721,8 +721,9 @@ angular.module('netbase')
 
         $rootScope.accountSuggestion = $timeout(function() {
 
-          ngDialog.open({ template: 'partials/modals/accountsuggestion.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default ngdialog-plans modal-accountsuggestion', data : { university : $scope.university } });
+          //ngDialog.open({ template: 'partials/modals/accountsuggestion.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default ngdialog-plans modal-accountsuggestion', data : { university : $scope.university } });
           $timeout.cancel()
+          displayinvite = true;
 
         }, 13500, true);
 

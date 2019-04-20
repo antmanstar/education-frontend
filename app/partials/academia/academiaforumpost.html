@@ -8,6 +8,15 @@
 <update-meta ng-if="university.backgroundImage != undefined" property="og:image" content="{{university.backgroundImage}}"></update-meta>
 <update-meta ng-if="university.backgroundImage == undefined" property="og:image" content="https://universida.de/img/misc/noimageacademia.jpg"></update-meta>
 
+<style>
+
+figure img {
+  width: 100% !important;
+  height: unset !important;
+}
+
+</style>
+
 <div class="container-fluid container-full">
 
   <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
