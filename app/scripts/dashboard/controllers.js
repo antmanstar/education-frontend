@@ -348,8 +348,6 @@ angular.module('netbase')
 
   $scope.privilege;
 
-  console.log($scope.university)
-
   /* university.members */
   University.getUniversityById(universityId).success(function(resUniversity) {
 
@@ -384,7 +382,7 @@ angular.module('netbase')
   $scope.setMemberPrivilege = function() {
 
     let data = {
-      privilege : $scope.privilege
+      privilege : $scope.privilege + 1
     };
 
     console.log(data);
