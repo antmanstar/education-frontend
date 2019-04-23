@@ -4,6 +4,40 @@
 
 angular.module('netbase')
 
+.controller('AcademiaDriverCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Forum', '$sce', '$filter', 'ngDialog', '$window', 'jwtHelper', '$localStorage', function($rootScope, $scope, $location, $route, University, Forum, $sce, $filter, ngDialog, $window, jwtHelper, $localStorage) {
+
+  let universityUrl = $route.current.params.academiaName;
+  let studentId = jwtHelper.decodeToken($localStorage.token)._id;
+
+  $scope.studentId = studentId;
+
+  University.getUniversity(universityUrl).then(function(res) {
+
+    $scope.university = res.data.data;
+    University.storeLocal($scope.university);
+    console.log("university parsed not stored: ")
+    console.log($scope.university)
+
+  });
+
+}])
+
+
+.controller('AcademiaTrainingCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Forum', '$sce', '$filter', 'ngDialog', '$window', function($rootScope, $scope, $location, $route, University, Forum, $sce, $filter, ngDialog, $window) {
+
+  let universityUrl = $route.current.params.academiaName;
+
+  University.getUniversity(universityUrl).then(function(res) {
+
+    $scope.university = res.data.data;
+    University.storeLocal($scope.university);
+    console.log("university parsed not stored: ")
+    console.log($scope.university)
+
+  });
+
+}])
+
 .controller('AcademiaStudioCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Forum', '$sce', '$filter', 'ngDialog', '$window', function($rootScope, $scope, $location, $route, University, Forum, $sce, $filter, ngDialog, $window) {
 
   let universityUrl = $route.current.params.academiaName;
@@ -1342,6 +1376,7 @@ angular.module('netbase')
 
       scope.studentIsPremium = false;
       scope.studentIsAdmin = false;
+      scope.studentIsTeam = false;
 
       /* chat */
 
@@ -1446,10 +1481,13 @@ angular.module('netbase')
 
             var member = university.members[idx];
 
-            if (studentId != undefined && member.accountId == studentId && member.privilege == 10) {
+            if (studentId != undefined && member.accountId == studentId && member.privilege >= 10) {
               scope.studentIsPremium = true;
             }
 
+            if (studentId != undefined && member.accountId == studentId && member.privilege >= 50) {
+              scope.studentIsTeam = true;
+            }
 
             if (studentId != undefined && member.accountId == studentId && member.privilege == 99) {
               scope.studentIsAdmin = true;

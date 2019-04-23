@@ -1,0 +1,141 @@
+<div ng-include="'partials/headerhome.html'"></div>
+
+<script type="text/javascript">
+// Initialize instances:
+
+//var socket = io.connect("https://network-videosuploadsocke-prod.herokuapp.com/");
+var socket = io.connect("http://localhost:8888/");
+
+var siofu = new SocketIOFileUpload(socket);
+
+let filesCount = 0;
+
+let progressCloud = 0;
+var progressPercent = 0;
+
+siofu.listenOnDrop(document.getElementById("file_drop"));
+
+let scope = angular.element().scope();
+//let university = scope.university;
+
+
+siofu.addEventListener("start", function(event){
+  event.file.meta.universityId = "samba";
+  event.file.meta.studentId = scope.studentId;
+
+});
+
+// Do something on upload progress:
+siofu.addEventListener("progress", function(event){
+  var percent = event.bytesLoaded / event.file.size * 100;
+  console.log("File is", percent.toFixed(2), "percent loaded");
+
+  $("#file_drop").html("Upload: " + percent.toFixed(2) + "%");
+
+  if (percent.toFixed(2) == 100) {
+    $("#file_drop").html("<b>Iniciando o processamento do arquivo</b>");
+  }
+
+});
+
+socket.on("progressCloud", function(a){
+  console.log("cloud progress: ")
+  console.log(a)
+  progressCloud = progressCloud + 1;
+  progressPercent = (progressCloud / filesCount) * 100;
+
+  console.log("process cloud is: " + progressCloud)
+  console.log("process percent is: " + progressPercent)
+
+  $("#file_drop").html("<b>Salvando o arquivo:</b> " + progressPercent.toFixed(2) + "%");
+});
+
+socket.on("progressProgressing", function(a){
+
+  let progressPercent = a;
+
+  $("#file_drop").html("<b>Processando o arquivo:</b> " + progressPercent.toFixed(2) + "%");
+
+});
+
+socket.on("status", function(a){
+  console.log("status: ")
+  console.log(a)
+  if (a == 1) {
+
+  }
+  if (a == 2) {
+    $("#file_drop").html("<b>O arquivo foi salvo no servidor! Estamos processando o arquivo na melhor qualidade possível.</b>");
+  }
+});
+
+socket.on("files", function(a){
+  console.log("files: ")
+  console.log(a)
+  filesCount = a;
+});
+
+// Do something when a file is uploaded:
+siofu.addEventListener("complete", function(event){
+    console.log(event.success);
+    console.log(event.file);
+    console.log(event)
+});
+
+socket.on("videopath", function(a) {
+  $("#file").attr("value", a);
+  console.log(a)
+})
+
+</script>
+
+<div class="container-fluid container-full">
+
+  <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
+  <div class="row academia-coverimage" ng-if="university.backgroundImage == undefined"  style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
+
+  <div class="row">
+
+    <div academiarightcolumn university="{{university}}"></div>
+
+    <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9 academia-content">
+
+      <!--
+      <div class="academia-content-navigation">
+
+        <div class="academia-content-navigation-option">Criar video</div>
+
+      </div>
+      <!-- academia-content-navigation -->
+
+      <div class="alert bg-primary-red" ng-show="errorDisplay">
+        <p ng-repeat="m in errorMessages">{{m}}<p>
+      </div>
+
+      <div>
+        <input type="hidden" id="file" ng-model="file">
+        <div id="file_drop" dropzone="copy" title="drop files for upload" class="file-drop-area"><b>Para iniciar o upload,</b> arraste o arquivo aqui</div>
+        <!-- end file-drop-area -->
+
+      </div>
+      <!-- end file -->
+
+    </div>
+    <!-- end col-xs-12 -->
+
+  </div>
+  <!-- end row -->
+
+  <!--
+  <div class="academia-footer">
+
+    <ul style="width: 100vw">
+
+      <li style="width: 100%;"><a href="/a/{{universityUrl}}/forum" ng-class="forumClass">Forum</a></li>
+
+    </ul>
+
+  </div>
+  -->
+
+</div>
