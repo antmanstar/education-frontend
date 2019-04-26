@@ -4,7 +4,7 @@
 // Initialize instances:
 
 //var socket = io.connect("https://network-videosuploadsocke-prod.herokuapp.com/");
-var socket = io.connect("http://localhost:8888/");
+var socket = io.connect("https://network-uploadsuite.herokuapp.com/");
 
 var siofu = new SocketIOFileUpload(socket);
 
@@ -21,8 +21,7 @@ let scope = angular.element().scope();
 
 siofu.addEventListener("start", function(event){
   event.file.meta.universityId = "samba";
-  event.file.meta.studentId = scope.studentId;
-
+  event.file.meta.studentId = "student id";
 });
 
 // Do something on upload progress:
