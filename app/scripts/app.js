@@ -181,9 +181,17 @@ angular.module('netbase', ['ngStorage',
             templateUrl: 'partials/teach/home.html',
             controller: 'TeachSalesCtrl',
         })
+        .when('/ensinar/preco', {
+            templateUrl: 'partials/teach/pricing.html',
+            controller: 'TeachSalesPricingCtrl',
+        })
         .when('/perfil', {
             templateUrl: 'partials/profile/profile.html',
             controller: 'ProfileCtrl',
+        })
+        .when('/login', {
+            templateUrl: 'partials/account.html',
+            controller: 'AccountCtrl',
         })
         .when('/p/:studentUsername', {
             templateUrl: 'partials/profile/profilebyusername.html',
