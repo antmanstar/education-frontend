@@ -1401,7 +1401,7 @@ angular.module('netbase')
       attr.$observe('university', function(value) {
 
         /* socket io */
-        var socket = io("https://network-realtime-prod.herokuapp.com");
+        var socket = io("https://educationalcommunity-realtime.herokuapp.com");
 
         // userId
         let student = { _id : studentId };
