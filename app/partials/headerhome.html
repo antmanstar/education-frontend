@@ -30,9 +30,9 @@
         <div class="container-fluid">
         <div class="row" style="height: 40px; line-height: 40px; padding-bottom: 2px; padding-top: 6px;">
           <div id="logomaster" class="col-xs-3 col-sm-4" style="padding: 3px; height: 100%; padding-left: 15px;"><img height="100%" src="https://storage.googleapis.com/educationalcommunity/pt/img/universidade_icon.png" /><span style="margin-left: 8px; font-size: 1.15em;"><i class="fas fa-angle-down" style="vertical-align: top; padding-top: 6px;"></i></span></div>
-          <div class="col-xs-6 col-sm-4" style="text-align: center; padding: 5.5px; height: 100%;"><img height="100%" src="https://storage.googleapis.com/educationalcommunity/pt/img/universidade_logo.png" /></div>
-          <div class="col-xs-3 col-sm-4" ng-hide="logged" ng-click="login()" style="padding: 3px; text-align: right; height: 100%;"><img height="100%" src="https://visualpharm.com/assets/880/Customer-595b40b65ba036ed117d413a.svg" /></div>
-          <div class="col-xs-3 col-sm-4" style="height: 40px;">
+          <div class="col-xs-6 col-sm-4" style="text-align: center; padding: 6px; height: 100%;"><img height="100%" src="https://storage.googleapis.com/educationalcommunity/pt/img/universidade_logo.png" /></div>
+          <div class="col-xs-3 col-sm-4" id="mobile-credentials" ng-hide="logged" ng-click="login()" style="padding: 3px; text-align: right; height: 100%; padding-right: 10px;"><img height="100%" src="https://visualpharm.com/assets/880/Customer-595b40b65ba036ed117d413a.svg" /></div>
+          <div class="col-xs-3 col-sm-4" id="desktop-credentials" style="height: 40px;">
 
             <div class="menu-right">
               <div class="options" style="padding-right: 0px;">
@@ -66,7 +66,7 @@
 
           <div class="option unselectable" ng-if="logged" ng-class="{'active': originalPath == '/home/timeline' || originalPath == '/home/timeline/'}"><a href="/home/timeline">Timeline</a></div>
           <div class="option unselectable" ng-class="{'active': originalPath == '/home' || originalPath == '/home/'}"><a href="/home">Home</a></div>
-          <div class="option unselectable" ng-class="{'active': originalPath == '/home/universidades' || originalPath == '/home/universidades/' || originalPath.indexOf('/a/') != -1 }"><a href="/home/universidades">Universidades</a></div>
+          <!--<div class="option unselectable" ng-class="{'active': originalPath == '/home/universidades' || originalPath == '/home/universidades/' || originalPath.indexOf('/a/') != -1 }"><a href="/home/universidades">Universidades</a></div>-->
           <!--<div class="option unselectable" ng-class="{'active': originalPath == '/home/noticias' || originalPath == '/home/noticias/'}"><a href="/home/noticias">Opinião</a></div>-->
           <!--<div class="option unselectable" ng-class="{'active': originalPath.indexOf('/home/conhecimento') != -1 }"><a href="/home/conhecimento">Conhecimento</a></div>-->
           <!--<<div class="option unselectable" ng-class="{'active': originalPath == '/cursos' || originalPath == '/cursos/'}"><a href="/home">Cursos</a></div>-->
@@ -109,9 +109,9 @@
       <div class="navbar-mobile animated fast" ng-class="{fadeIn: navbarMobileOpen == false}">
 
         <div class="menu">
-          <div class="option unselectable" ng-if="logged" ng-class="{'active': originalPath == '/home/timeline' || originalPath == '/home/timeline/'}"><a href="/home/timeline"><img src="/img/icon/timeline.png" height="23px" width="33px" style="padding-right: 10px;" />Timeline</a></div>
-          <div class="option unselectable" ng-class="{'active': originalPath == '/home' || originalPath == '/home/'}"><a href="/home"><img src="/img/icon/office/home.png" height="23px" width="33px" style="padding-right: 10px;" />Home</a></div>
-          <div class="option unselectable" ng-class="{'active': originalPath == '/home/universidades' || originalPath == '/home/universidades/'}"><a href="/home/universidades"><img src="/img/icon/office/university.png" height="23px" width="33px" style="padding-right: 10px;" />Universidades</a></div>
+          <div class="option unselectable" ng-if="logged" ng-class="{'active': originalPath == '/home/timeline' || originalPath == '/home/timeline/'}"><a href="/home/timeline"><img src="/img/icon/timeline.png" height="33px" width="33px" style="margin-right: 15px;" />Timeline</a></div>
+          <div class="option unselectable" ng-class="{'active': originalPath == '/home' || originalPath == '/home/'}"><a href="/home"><img src="/img/icon/office/home.png" height="33px" width="33px" style="margin-right: 15px;" />Home</a></div>
+          <div class="option unselectable" ng-class="{'active': originalPath == '/home/universidades' || originalPath == '/home/universidades/'}"><a href="/home/universidades"><img src="/img/icon/office/university.png" height="33px" width="33px" style="margin-right: 15px;" />Universidades</a></div>
           <!--<div class="option unselectable" ng-class="{'active': originalPath == '/home/noticias' || originalPath == '/home/noticias/'}"><a href="/home/noticias"><img src="/img/icon/office/opinion.png" height="23px" width="33px" style="padding-right: 10px;" />Opinião</a></div>-->
           <!--<div class="option unselectable" ng-class="{'active': originalPath.indexOf('/home/conhecimento') != -1 }"><a href="/home/conhecimento">Conhecimento</a></div>-->
           <!--div class="option unselectable" ng-class="{'active': originalPath == '/cursos' || originalPath == '/cursos/'}"><a href="/home">Cursos</a></div>-->

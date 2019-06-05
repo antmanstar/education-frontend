@@ -84,7 +84,7 @@
       <div class="col col-xs-4 col-sm-4" style="text-align: center;">
         <div style="background-color: #fff; border-radius: 3px; min-height: 140px; padding-top: 15px;">
           <img width="60px" style="margin-bottom: 10px; padding: 10px;" src="https://visualpharm.com/assets/88/Class-595b40b65ba036ed117d3dfa.svg" /></br>
-          <b>Aulas</b>
+          <b>Crescer</b>
         </div>
       </div>
 
@@ -118,7 +118,7 @@
 
       </div>
 
-      <div ng-if="k.universities.length > 0" ng-repeat="k in knowledges | orderBy: '-universities.length'">
+      <div ng-if="k.universities.length > 0" ng-repeat="k in knowledges | orderBy: '-universities.length'" style="margin-bottom: 25px;">
 
         <div class="section-header">
           <div class="title">{{k.title}}</div>
@@ -213,3 +213,39 @@
 
 </div>
 <!-- container-fluid container-full -->
+
+<div class="academia-footer" style="z-index: 9; background-color: #fff; box-shadow: 0px -2px 4px -1px rgba(0,0,0,0.15); -moz-box-shadow: 0px -2px 4px -1px rgba(0,0,0,0.15); -webkit-box-shadow: 0px -2px 4px -1px rgba(0,0,0,0.15);">
+
+  <ul style="width: 100vw" style="color: #565656 !important;">
+
+    <li style="width: 20%; min-width: 20vw;">
+      <a style="color: #565656 !important;" href="/a/{{university.url}}/forum" ng-class="forumClass">
+        <i style="font-size: 1.35em; color: #52bfea; font-weight: bolder;" class="far fa-newspaper"></i>
+      </a>
+    </li>
+
+    <li style="width: 20%; min-width: 20vw;">
+      <a style="color: #565656 !important;" href="/a/{{university.url}}/forum/post/create">
+        <i style="font-size: 1.35em;" class="fas fa-search"></i>
+      </a>
+    </li>
+
+    <li style="width: 20%; min-width: 20vw;">
+      <a style="color: #565656 !important;" href="/a/{{university.url}}/forum/post/create">
+        <i style="font-size: 1.35em;" class="fas fa-plus"></i>
+      </a>
+    </li>
+
+    <li style="width: 20%; min-width: 20vw;">
+      <a style="color: #565656 !important;" href="/a/{{university.url}}/forum/category/all" ng-class="forumClass">
+        <i style="font-size: 1.35em;" class="fas fa-bell"></i>
+      </a>
+    </li>
+
+    <li style="width: 20%; color: #565656 !important; min-width: 20vw;" ng-click="premium()">
+      <i style="font-size: 1.35em;" class="fas fa-user-graduate"></i>
+    </li>
+
+  </ul>
+
+</div>

@@ -8,9 +8,19 @@ nav {
   color: #000 !important;
 }
 
+#mobile-credentials {
+  display: none;
+}
+
 @media screen and (max-width: 768px) {
   nav {
     position: fixed;
+  }
+  #desktop-credentials {
+    display: none;
+  }
+  #mobile-credentials {
+    display: block;
   }
 }
 
@@ -332,20 +342,26 @@ nav .navbar-slider .option:hover {
   display: none;
 
   position: fixed;
-  z-index: 99;
+  z-index: 999999999999999999;
 
   width: 100vw;
   min-height: 100vh;
 
   background-color: #fff;
 
-  top: 65px;
+  top: 40px;
   bottom: 0;
+  left: 0;
 
   overflow-y: scroll;
 
-  padding-top: 15px;
+  padding-top: 20px;
   padding-bottom: 70px;
+
+  padding-left: 10px;
+  padding-right: 10px;
+
+  font-size: 1.10em;
 
 }
 
