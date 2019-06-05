@@ -78,9 +78,6 @@ nav {
 
 /* navbar top */
 nav .navbar-top {
-  height: 52px;
-  padding-left: 15px;
-  padding-right: 15px;
   margin-bottom: 10px;
   overflow: hidden;
 }
@@ -130,10 +127,7 @@ nav .navbar-top .brand img {
 
 nav .navbar-top .menu-right {
   height: 100%;
-  float: right;
   display: inline-block;
-  line-height: 34px;
-  width: calc(100% - 315px);
 }
 
 nav .navbar-top .menu-right.landing {
@@ -148,7 +142,7 @@ nav .navbar-top .menu-right.landing {
 
   nav .navbar-top .menu-right {
     width: calc(100% - 244px);
-    padding-top: 7px;
+    padding-top: 0px;
   }
 
   nav .navbar-top .menu-right.landing {
@@ -217,11 +211,16 @@ nav .navbar-top .menu-right .search input {
 
 /* menu-right options */
 
+nav .navbar-top .menu-right {
+  width: 100%;
+}
+
 nav .navbar-top .menu-right .options {
   display: inline-block;
-  float: right;
+  text-align: right;
   padding-left: 15px;
   padding-right: 15px;
+  width: 100%;
 }
 
 nav .navbar-top .menu-right .options .landing-action {
@@ -240,7 +239,7 @@ nav .navbar-top .menu-right .options .landing-action {
 
 nav .navbar-top .menu-right .options > div {
   padding-left: 10px;
-  padding-right: 10px;
+  padding-right: 0px;
   display: inline-block;
   font-size: 1.07em;
   color: #2d4255;
@@ -255,7 +254,7 @@ nav .navbar-top .menu-right .options > div a {
 
 @media screen and (max-width: 768px) {
   nav .navbar-top .menu-right .options {
-    display: none;
+    display: block;
   }
   nav .navbar-top .menu-right.landing .options {
     display: block;
@@ -265,7 +264,7 @@ nav .navbar-top .menu-right .options > div a {
 /* slider */
 nav .navbar-slider {
 
-  padding-left: 15px;
+  /* padding-left: 15px; */
   margin-top: 3px;
 
   -webkit-box-shadow: 0px 2px 3px 0px rgba(196,196,196,0.34);

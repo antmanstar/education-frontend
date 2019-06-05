@@ -84,17 +84,17 @@
 .headline-container {
   font-weight: 600;
   font-size: 2em;
-  padding-top: 25px;
+  padding-top: 15px;
   padding-bottom: 25px;
 }
 /* end container header */
 
 @media screen and (max-width: 768px) {
   .container-home {
-    padding-top: 94px;
+    padding-top: 83px;
   }
   .container-full {
-    padding-top: 94px;
+    padding-top: 83px;
   }
 }
 
@@ -128,6 +128,76 @@
 
 .section-cards::-webkit-scrollbar {
     height: 4px;
+}
+
+/* /* */
+.section-header {
+
+}
+
+.section-header .title {
+  line-height: 1em; color: #2d4255;
+  font-weight: bolder;
+  font-size: 1.5em;
+  padding-bottom: 5px;
+}
+
+/* */
+
+.card-shadow {
+  -webkit-box-shadow: 0px 0px 3px 0px rgba(97,97,97,0.45);
+-moz-box-shadow: 0px 0px 3px 0px rgba(97,97,97,0.45);
+box-shadow: 0px 0px 3px 0px rgba(97,97,97,0.45);
+}
+
+/* */
+
+.card-article-large {
+  width: 180px;
+}
+
+.card-article-large .picture {
+  height: 100px !important;
+}
+
+/* */
+.section-cards-new {
+    width: 100%;
+    overflow-x: scroll;
+    white-space: nowrap;
+}
+
+.section-cards-new .card {
+    border: 0;
+    vertical-align: top;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 5px;
+    margin-right: 15px;
+}
+
+.section-cards-new::-webkit-scrollbar {
+    height: 4px;
+}
+
+.section-cards-new::-webkit-scrollbar-thumb {
+    background: #2e4255;
+    border-radius: 4px;
+    height: 4px;
+}
+.section-cards-new::-webkit-scrollbar-track {
+    background: #fff;
+    border-radius: 4px;
+    height: 4px;
+}
+
+@media screen and (max-width: 768px) {
+
+  .section-cards .card {
+      display: inline-block;
+  }
+
 }
 
 /* Track */

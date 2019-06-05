@@ -1257,10 +1257,10 @@ angular.module('netbase')
   $scope.originalPath = originalPath;
 
   /* Functions */
-  let brand = $(".navbar-top .brand");
+  let brand = $("#logomaster");
   let logo = $("#logo");
   let logoIcon = $("#logoIcon");
-  let brandArrow = $(".navbar-top .brand span i");
+  let brandArrow = $(".navbar-top #logomaster span i");
 
   let navbarMobile = $(".navbar-mobile");
 
@@ -2323,11 +2323,23 @@ angular.module('netbase')
 
 }])
 
-.controller('HomeCtrl', ['$rootScope', '$scope', 'ngDialog', 'University' , function($rootScope, $scope, ngDialog, University) {
+.controller('HomeCtrl', ['$rootScope', '$scope', 'ngDialog', 'University', 'Knowledge' , function($rootScope, $scope, ngDialog, University, Knowledge) {
 
   $scope.showMobileMenu = false;
 
   $scope.universities = [];
+
+  Knowledge.getAllPaginated().success(function(res) {
+
+    console.log("knowledge: ")
+    console.log(res);
+    let success = res.success;
+    let data = res.data;
+    let docs = data.docs;
+    console.log(docs)
+    $scope.knowledges = docs;
+
+  });
 
   University.getUniversities().then(function(res) {
 

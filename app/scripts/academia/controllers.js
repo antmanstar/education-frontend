@@ -1932,6 +1932,34 @@ angular.module('netbase')
   }
 }])
 
+.directive('homeuniversitynewcard', ['University', '$rootScope', 'Students', function(University, $rootScope, Students) {
+  return {
+    restrict: 'E',
+    templateUrl: '../partials/directive/timelineuniversitynewcard.html',
+    replace: true,
+    scope: true,
+    link: function(scope, element, attr) {
+
+      let universityId = attr.uid;
+
+      University.getUniversityById(universityId).success(function(res) {
+
+        console.log(res);
+
+        scope.university = res.data;
+
+      });
+
+      /*
+
+      filter: { active: true } | orderBy:'-highlight'
+      
+      */
+
+    }
+  }
+}])
+
 .directive('timelineuniversitycard', ['University', '$rootScope', 'Students', function(University, $rootScope, Students) {
   return {
     restrict: 'E',

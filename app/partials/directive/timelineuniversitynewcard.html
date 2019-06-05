@@ -1,0 +1,7 @@
+<a ng-show="university.active" style="color: #2c4255;" href="/a/{{university.url}}/timeline" >
+  <div class="card card-article-large">
+    <div class="picture card-shadow" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
+    <div class="picture card-shadow" ng-if="university.backgroundImage == undefined"  style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
+    <div style="margin-bottom: 10px; margin-top: 10px;"><!--<b style="color: #00b200;">PILATES</b>--><p><b style="color: #383838;">{{university.name}}</b></p></div>
+  </div>
+</a>

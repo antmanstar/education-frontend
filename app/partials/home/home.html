@@ -61,21 +61,48 @@
 
       <!-- Welcome -->
 
-      <div class="headline-container">Bem vindo</div>
-      <div class="headline-main" style="padding-top: 0;">A melhor plataforma para aprender, ensinar, debater e compartilhar conhecimento.</div>
+      <!--<div class="headline-container">Bem vindo</div>-->
+      <div class="headline-main" style="padding-top: 15px;">A melhor plataforma para aprender, ensinar, debater e compartilhar conhecimento.</div>
       <!-- end Welcome -->
+
+      <div class="row" style="padding-left: 10px; padding-right: 10px; padding-top: 0px; padding-top: 0px;">
+
+      <div class="col col-xs-4 col-sm-4" style="text-align: center;">
+        <div style="background-color: #fff; border-radius: 3px; min-height: 140px; padding-top: 15px;">
+          <img width="60px" style="margin-bottom: 10px; padding: 10px;" src="https://visualpharm.com/assets/311/Graduation%20Cap-595b40b65ba036ed117d2d97.svg" /></br>
+          <b>Aprender</b>
+        </div>
+      </div>
+
+      <div class="col col-xs-4 col-sm-4" style="text-align: center;">
+        <div style="background-color: #fff; border-radius: 3px; min-height: 140px; padding-top: 15px;">
+          <img width="60px" style="margin-bottom: 10px; padding: 10px;" src="https://visualpharm.com/assets/395/University-595b40b65ba036ed117d3588.svg" /></br>
+          <b>Educar</b>
+        </div>
+      </div>
+
+      <div class="col col-xs-4 col-sm-4" style="text-align: center;">
+        <div style="background-color: #fff; border-radius: 3px; min-height: 140px; padding-top: 15px;">
+          <img width="60px" style="margin-bottom: 10px; padding: 10px;" src="https://visualpharm.com/assets/88/Class-595b40b65ba036ed117d3dfa.svg" /></br>
+          <b>Aulas</b>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- end row -->
 
       <div class="mobile-show" style="text-align: right;">
         <button ng-hide="logged" ng-click="signup()" class="btn bg-primary-green" style="margin-top: 2px; height: 29px; width: unset;">Registrar</button>
       </div>
 
-      <div style="padding-bottom: 32px;"></div>
+      <div style="padding-bottom: 16px;"></div>
 
       <!-- Explorar universidades -->
 
-      <div class="headline-container">Explorar universidades</div>
+      <!-- <div class="headline-container">Explorar universidades</div> -->
 
-      <div class="section-cards section-cards-loading">
+      <div class="section-cards section-cards-loading" ng-hide="universities.length > 0">
 
         <a ng-hide="universities.length > 0" ng-repeat="n in [1,2,3,4,5]">
           <div class="card hvr-hang">
@@ -91,23 +118,24 @@
 
       </div>
 
-      <div ng-show="universities.length > 0" class="section-cards">
+      <div ng-if="k.universities.length > 0" ng-repeat="k in knowledges | orderBy: '-universities.length'">
 
-        <a style="color: #2c4255;" ng-repeat="university in universities | filter: { active: true } | orderBy:'-highlight'" href="/a/{{university.url}}/timeline">
-          <div class="card hvr-hang">
+        <div class="section-header">
+          <div class="title">{{k.title}}</div>
+          <!-- <div>Aprenda sobre pilates, calistenia, pilates, ...</div> -->
+          <div style="padding-bottom: 16px;"></div>
+          <div class="section-cards" style="padding-bottom: 10px;">
 
-            <div class="picture" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
-            <div class="picture" ng-if="university.backgroundImage == undefined"  style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
-
-            <div class="title">{{university.createdAt}}{{university.name}}</div>
-            <div class="description" data-ellipsis data-ng-bind="university.about"></div>
+            <homeuniversitynewcard uid={{university.universityId}} ng-repeat="university in k.universities"></homeuniversitynewcard>
 
           </div>
-          <!-- end card -->
-        </a>
+          <!-- end section-cards -->
+
+        </div>
+        <!-- end section-header -->
 
       </div>
-      <!-- end section-cards -->
+      <!-- end -->
 
       <div style="padding-bottom: 32px;"></div>
 
@@ -155,6 +183,7 @@
 
       <!-- Create own university -->
 
+      <!--
       <div class="section-break row">
 
         <div class="col-xs-12 col-sm-6">
@@ -172,15 +201,13 @@
             <button class="btn bg-primary-green" ng-click="createUniversityRedirect()" style="width: 60%; color: #fff;">Criar universidade</button>
 
           </div>
-          <!-- -->
 
         </div>
 
       </div>
 
-      <!-- End create own university -->
-
     </div>
+    -->
 
   </div>
 
