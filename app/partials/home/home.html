@@ -61,42 +61,76 @@
 
       <!-- Welcome -->
 
+      <!--
+      <div style="bottom: -12px; position: relative; width: 100%; text-align: center; height: 240px; border-radius: 5px; margin-bottom: 45px; background-image: url('https://storage.googleapis.com/educationalcommunity-upload/university-bg/alaskabg.webp'); background-size: cover;">
+
+        <div style="position: absolute; bottom: -16px; width: 100%;">
+          <input type="text" style="outline: none; height: 50px; border: 0; width: 85%; border-radius: 5px; box-shadow: 0px 2px 12px 0px rgba(97,97,97,0.45); padding-left: 45px;"></input>
+          <div style="position: absolute; left: calc(7% + 15px); height: 100%; top: 15px;"><i style="font-size: 1.3em; font-weight: bolder;" class="fas fa-search"></i></div>
+        </div>
+
+        <div style="position: absolute; width: 100%; left: 0; bottom: 45px; color: #fff; text-align: left; padding-left: 7%; font-size: 1.5em; font-weight: 600;">Nome</div>
+
+      </div>
+      -->
+      <!-- end -->
+
       <!--<div class="headline-container">Bem vindo</div>-->
-      <div class="headline-main" style="padding-top: 15px;">A melhor plataforma para aprender, ensinar, debater e compartilhar conhecimento.</div>
+      <div class="headline-main" ng-hide="user.name.length > 0 && user.name != undefined" style="padding-top: 15px;">A melhor plataforma para aprender, ensinar, debater e compartilhar conhecimento.</div>
       <!-- end Welcome -->
 
-      <div class="row" style="padding-left: 10px; padding-right: 10px; padding-top: 0px; padding-top: 0px;">
+      <div class="row" ng-hide="user.name.length > 0 && user.name != undefined" style="padding-left: 10px; padding-right: 10px; padding-top: 0px; padding-top: 0px;">
 
-      <div class="col col-xs-4 col-sm-4" style="text-align: center;">
-        <div style="background-color: #fff; border-radius: 3px; min-height: 140px; padding-top: 15px;">
-          <img width="60px" style="margin-bottom: 10px; padding: 10px;" src="https://visualpharm.com/assets/311/Graduation%20Cap-595b40b65ba036ed117d2d97.svg" /></br>
-          <b>Aprender</b>
+        <div class="col col-xs-4 col-sm-4" style="text-align: center;">
+          <div style="background-color: #fff; border-radius: 3px; min-height: 140px; padding-top: 15px;">
+            <img width="60px" style="margin-bottom: 10px; padding: 10px;" src="https://visualpharm.com/assets/311/Graduation%20Cap-595b40b65ba036ed117d2d97.svg" /></br>
+            <b>Aprender</b>
+          </div>
         </div>
+
+        <div class="col col-xs-4 col-sm-4" style="text-align: center;">
+          <div style="background-color: #fff; border-radius: 3px; min-height: 140px; padding-top: 15px;">
+            <img width="60px" style="margin-bottom: 10px; padding: 10px;" src="https://visualpharm.com/assets/395/University-595b40b65ba036ed117d3588.svg" /></br>
+            <b>Educar</b>
+          </div>
+        </div>
+
+        <div class="col col-xs-4 col-sm-4" style="text-align: center;">
+          <div style="background-color: #fff; border-radius: 3px; min-height: 140px; padding-top: 15px;">
+            <img width="60px" style="margin-bottom: 10px; padding: 10px;" src="https://visualpharm.com/assets/88/Class-595b40b65ba036ed117d3dfa.svg" /></br>
+            <b>Crescer</b>
+          </div>
+        </div>
+
       </div>
 
-      <div class="col col-xs-4 col-sm-4" style="text-align: center;">
-        <div style="background-color: #fff; border-radius: 3px; min-height: 140px; padding-top: 15px;">
-          <img width="60px" style="margin-bottom: 10px; padding: 10px;" src="https://visualpharm.com/assets/395/University-595b40b65ba036ed117d3588.svg" /></br>
-          <b>Educar</b>
-        </div>
-      </div>
-
-      <div class="col col-xs-4 col-sm-4" style="text-align: center;">
-        <div style="background-color: #fff; border-radius: 3px; min-height: 140px; padding-top: 15px;">
-          <img width="60px" style="margin-bottom: 10px; padding: 10px;" src="https://visualpharm.com/assets/88/Class-595b40b65ba036ed117d3dfa.svg" /></br>
-          <b>Crescer</b>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- end row -->
+      <!-- end row -->
 
       <div class="mobile-show" style="text-align: right;">
         <button ng-hide="logged" ng-click="signup()" class="btn bg-primary-green" style="margin-top: 2px; height: 29px; width: unset;">Registrar</button>
       </div>
 
       <div style="padding-bottom: 16px;"></div>
+
+      <div class="section-header">
+        <div class="title">Artigos em Destaque</div>
+        <div>Aprenda sobre pilates, calistenia, pilates, ...</div>
+        <div style="padding-bottom: 16px;"></div>
+      </div>
+
+      <div class="section-cards">
+        <div class="card" style="width: 210px; vertical-align: top;" ng-repeat="x in [1,2,3,4,5,6]">
+          <div style="color: #000; word-wrap: break-word; white-space: normal;">
+            <div style="font-weight: 600; font-size: 1.1em;"><b>Info-ricos e info-pobres</b></div>
+            <div style="font-weight: 500; font-size: 0.9em;"><b>Roberto Campos</b></div>
+            <div style="padding-bottom: 10px;"></div>
+            <div style="width: 100%;">A sociedade humana sempre foi uma "sociedade da informação", desde quando o Pitecantropo ancestral começou a comunicar-se articuladamente com os outros.</div>
+          </div>
+        </div>
+
+      </div>
+
+      <div style="padding-bottom: 32px;"></div>
 
       <!-- Explorar universidades -->
 
@@ -216,34 +250,34 @@
 
 <div class="academia-footer" style="z-index: 9; background-color: #fff; box-shadow: 0px -2px 4px -1px rgba(0,0,0,0.15); -moz-box-shadow: 0px -2px 4px -1px rgba(0,0,0,0.15); -webkit-box-shadow: 0px -2px 4px -1px rgba(0,0,0,0.15);">
 
-  <ul style="width: 100vw" style="color: #565656 !important;">
+  <ul style="width: 98%" style="color: #565656 !important;">
 
-    <li style="width: 20%; min-width: 20vw;">
-      <a style="color: #565656 !important;" href="/a/{{university.url}}/forum" ng-class="forumClass">
-        <i style="font-size: 1.35em; color: #52bfea; font-weight: bolder;" class="far fa-newspaper"></i>
+    <li style="width: 20%; min-width: unset; padding-top: 4px; padding-left: 0; padding-right: 0;">
+      <a style="color: #565656 !important;" href="/home/timeline" ng-class="forumClass">
+        <i style="font-size: 1.7em;" class="far fa-newspaper"></i>
       </a>
     </li>
 
-    <li style="width: 20%; min-width: 20vw;">
-      <a style="color: #565656 !important;" href="/a/{{university.url}}/forum/post/create">
-        <i style="font-size: 1.35em;" class="fas fa-search"></i>
+    <li style="width: 20%; min-width: unset; padding-top: 4px; padding-left: 0; padding-right: 0;">
+      <a style="color: #565656 !important;" href="/home">
+        <i style="font-size: 1.7em; color: #52bfea; font-weight: bolder;" class="fas fa-search"></i>
       </a>
     </li>
 
-    <li style="width: 20%; min-width: 20vw;">
-      <a style="color: #565656 !important;" href="/a/{{university.url}}/forum/post/create">
-        <i style="font-size: 1.35em;" class="fas fa-plus"></i>
+    <li style="width: 20%; min-width: unset; padding-left: 0; padding-right: 0;">
+      <a style="color: #565656 !important;" href="/home/create">
+        <i style="font-size: 1.7em;" class="fas fa-plus"></i>
       </a>
     </li>
 
-    <li style="width: 20%; min-width: 20vw;">
+    <li style="width: 20%; min-width: unset; padding-left: 0; padding-right: 0;">
       <a style="color: #565656 !important;" href="/a/{{university.url}}/forum/category/all" ng-class="forumClass">
-        <i style="font-size: 1.35em;" class="fas fa-bell"></i>
+        <i style="font-size: 1.7em;" class="fas fa-bell"></i>
       </a>
     </li>
 
-    <li style="width: 20%; color: #565656 !important; min-width: 20vw;" ng-click="premium()">
-      <i style="font-size: 1.35em;" class="fas fa-user-graduate"></i>
+    <li style="width: 20%; color: #565656 !important; min-width: unset; padding-left: 0; padding-right: 0;" ng-click="premium()">
+      <i style="font-size: 1.7em;" class="fas fa-user-graduate"></i>
     </li>
 
   </ul>

@@ -89,13 +89,15 @@ nav {
 /* navbar top */
 nav .navbar-top {
   margin-bottom: 10px;
-  overflow: hidden;
 }
 
 @media screen and (max-width: 768px) {
 
   nav .navbar-top {
     margin-bottom: 0px;
+    -webkit-box-shadow: 0px 1px 6px 0px rgba(0,0,0,0.10);
+    -moz-box-shadow: 0px 1px 6px 0px rgba(0,0,0,0.10);
+    box-shadow: 0px 1px 6px 0px rgba(0,0,0,0.10);
   }
 
 }
@@ -295,6 +297,16 @@ nav .navbar-slider {
   nav .navbar-slider {
     margin-top: 15px;
     margin-bottom: 15px;
+  }
+
+}
+
+@media screen and (max-width: 768px) {
+
+  .navbar-slider {
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    box-shadow: none !important;
   }
 
 }

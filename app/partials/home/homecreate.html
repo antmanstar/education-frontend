@@ -1,0 +1,207 @@
+<div ng-include="'partials/headerhome.html'"></div>
+
+<style>
+
+  @media screen and (max-width: 768px) {
+    .navbar-slider {
+      display: none;
+    }
+    .navbar-top-first {
+      margin-bottom: 2px;
+    }
+    .container-home {
+      padding-top: 55px !important;
+    }
+  }
+
+</style>
+
+<div class="container-fluid container-home" style="padding-bottom: 100px;">
+
+  <div class="row">
+
+    <div class="col-sm-4 col-md-3 section-menu-col animated fadeIn">
+
+      <div class="section-menu navbar-vertical">
+
+        <div class="navbar-vertical-profile" ng-if="user.name.length > 0 && user.name != undefined">
+
+          <div class="picture" ng-if="user.imageUrl == undefined" style="background-image: url('img/user/user.png');"></div>
+          <div class="picture" ng-if="user.imageUrl != undefined" style="background-image: url('{{user.imageUrl}}');"></div>
+
+          <div class="texts">
+
+            <div ng-if="user.name.length > 0 && user.name != undefined" class="name">{{user.name}}</div>
+
+          </div>
+          <!-- end texts -->
+
+        </div>
+        <!-- end navbar-vertical-profile -->
+
+        <div class="header">EXPLORAR</div>
+        <div class="option"><a href="/home"><img src="/img/icon/office/home.png" height="20px" width="35px" style="padding-right: 13px;" />Home</a></div>
+        <div class="option"><a href="/home/timeline"><img src="/img/icon/timeline.png" style="margin-right: 14px;" height="20px" width="20px">Timeline</a></div>
+        <!-- <div class="option"><a href="/home/noticias"><img src="https://png.icons8.com/office/100/000000/classroom.png" style="margin-right: 14px;" height="20px" width="20px">Sala de Aula</a></div> -->
+        <!-- <div class="option"><a href="/home/noticias"><img src="/img/icon/office/opinion.png" height="20px" width="35px" style="padding-right: 13px;" />Opinião</a></div>-->
+
+        <div class="header" style="padding-top: 30px;">UNIVERSIDADES</div>
+        <div ng-if="user.universitiesSubscribed.length == 0" class="option"><a href="/home/universidades"><img src="https://png.icons8.com/office/100/000000/plus-math.png" height="20px" width="35px" style="padding-right: 13px;" />Increver</a></div>
+        <div ng-if="user == undefined" class="option"><a href="/home/universidades"><img src="https://png.icons8.com/office/100/000000/plus-math.png" height="20px" width="35px" style="padding-right: 13px;" />Increver</a></div>
+        <timelinemenuuniversity uid="{{u.universityId}}" ng-if="u.unsubscribed == false" ng-repeat="u in user.universitiesSubscribed"></timelinemenuuniversity>
+
+        <!--
+        <div class="header" style="padding-top: 30px;">APRENDER</div>
+        <div class="option"><a href="/home/noticias"><img src="https://visualpharm.com/assets/311/Graduation%20Cap-595b40b65ba036ed117d2d97.svg" height="20px" width="35px" style="padding-right: 13px;" />Cursos</a></div>
+        <div class="option"><a href="/home/noticias"><img src="https://png.icons8.com/office/100/000000/tabletop-radio.png" height="20px" width="35px" style="padding-right: 13px;" />Podcasts</a></div>
+        <div class="option"><a href="/home/noticias"><img src="https://png.icons8.com/office/80/000000/collaboration.png" height="20px" width="35px" style="padding-right: 13px;" />Entrevistas</a></div>
+        -->
+
+        <!--
+        <div class="header" style="padding-top: 30px;">ENSINAR</div>
+        <div class="option"><a href="/home/noticias"><img src="https://png.icons8.com/office/100/000000/courses.png" height="20px" width="35px" style="padding-right: 13px;" />Criar Curso</a></div>
+        <div class="option"><a href="/home/noticias"><img src="https://png.icons8.com/office/100/000000/create-new.png" height="20px" width="35px" style="padding-right: 13px;" />Escrever Artigo</a></div>
+        <div class="option"><a href="/home/noticias"><img src="https://png.icons8.com/office/80/000000/sending-video-frames.png" height="20px" width="35px" style="padding-right: 13px;" />Subir Video</a></div>
+        <div class="option"><a href="/home/noticias"><img src="https://png.icons8.com/office/100/000000/training.png" height="20px" width="35px" style="padding-right: 13px;" />Criar Sala</a></div>
+
+        <div class="header" style="padding-top: 30px;">PERFIL</div>
+        <div class="option"><a href="/home/noticias"><img src="https://png.icons8.com/office/100/000000/id-verified.png" height="20px" width="35px" style="padding-right: 13px;" />Verificar Identidade</a></div>
+        -->
+
+      </div>
+
+    </div>
+    <!-- col-sm-4 col-md-3 section-menu-col -->
+
+    <div class="col-xs-12 col-sm-8 col-md-9 animated fadeIn">
+
+      <div style="padding-bottom: 15px;"></div>
+
+      <div class="section-header" style="width: 100%;">
+        <div class="title">Conhecimento</div>
+      </div>
+      <!-- end section-header -->
+
+      <div style="padding-bottom: 20px;"></div>
+
+      <div class="col-xs-4 col-sm-4" style="text-align: center;">
+
+        <img style="margin-bottom: 10px;" height="40px;" src="https://visualpharm.com/assets/378/Text%20Cursor-595b40b85ba036ed117dbc19.svg" />
+        <p style="font-weight: 600;">Texto</p>
+
+      </div>
+      <!-- end col-sm-6 -->
+
+      <div class="col-xs-4 col-sm-4" style="text-align: center;">
+
+        <img style="margin-bottom: 10px;" height="40px;" src="https://visualpharm.com/assets/430/Presentation-595b40b85ba036ed117da88b.svg" />
+        <p style="font-weight: 600;">Slides</p>
+
+      </div>
+      <!-- end col-sm-6 -->
+
+      <div class="col-xs-4 col-sm-4" style="text-align: center;">
+
+        <img style="margin-bottom: 10px;" height="40px;" src="https://visualpharm.com/assets/666/Book-595b40b65ba036ed117d3c91.svg" />
+        <p style="font-weight: 600;">Leitura</p>
+
+      </div>
+      <!-- end col-sm-6 -->
+
+      <div class="section-header" style="width: 100%; margin-top: 30px;">
+        <div class="title">Universidade</div>
+      </div>
+      <!-- end section-header -->
+
+      <div style="padding-bottom: 20px;"></div>
+
+      <div class="col-xs-4 col-sm-4" style="text-align: center;">
+
+        <img style="margin-bottom: 10px;" height="40px;" src="/img/icon/office/university.png" />
+        <p style="font-weight: 600;">Universidade</p>
+
+      </div>
+      <!-- end col-sm-6 -->
+
+      <div class="col-xs-4 col-sm-4" style="text-align: center;">
+
+        <img style="margin-bottom: 10px;" height="40px;" src="https://visualpharm.com/assets/765/Classroom-595b40b65ba036ed117d3dfc.svg" />
+        <p style="font-weight: 600;">Aula</p>
+
+      </div>
+      <!-- end col-sm-6 -->
+
+      <div class="col-xs-4 col-sm-4" style="text-align: center;">
+
+        <img style="margin-bottom: 10px;" height="40px;" src="https://visualpharm.com/assets/155/Course-595b40b65ba036ed117d12f7.svg" />
+        <p style="font-weight: 600;">Curso</p>
+
+      </div>
+      <!-- end col-sm-6 -->
+
+      <div style="padding-bottom: 40px;"></div>
+
+      <div class="section-header" style="width: 100%; margin-top: 30px;">
+        <div class="title">Pessoal</div>
+      </div>
+      <!-- end section-header -->
+
+      <div style="padding-bottom: 16px;"></div>
+
+      <div class="col-xs-4 col-sm-4" style="text-align: center;">
+
+        <img style="margin-bottom: 10px;" height="40px;" src="https://visualpharm.com/assets/578/Bank%20Cards-595b40b65ba036ed117d3bfb.svg" />
+        <p style="font-weight: 600;">Cartão Estudante</p>
+
+      </div>
+      <!-- end col-sm-6 -->
+
+      <div class="col-xs-4 col-sm-4" style="text-align: center;">
+
+        <img style="margin-bottom: 10px;" height="40px;" src="https://certificate.network/img/favicon.png" />
+        <p style="font-weight: 600;">Diplomas</p>
+
+      </div>
+      <!-- end col-sm-6 -->
+
+  </div>
+  <!-- col-sm-8 col-md-9 animated fadeIn -->
+
+</div>
+<!-- container-fluid container-full -->
+
+<div class="academia-footer" style="z-index: 9; background-color: #fff; box-shadow: 0px -2px 4px -1px rgba(0,0,0,0.15); -moz-box-shadow: 0px -2px 4px -1px rgba(0,0,0,0.15); -webkit-box-shadow: 0px -2px 4px -1px rgba(0,0,0,0.15);">
+
+  <ul style="width: 98%" style="color: #565656 !important;">
+
+    <li style="width: 20%; min-width: unset; padding-top: 4px; padding-left: 0; padding-right: 0;">
+      <a style="color: #565656 !important;" href="/home/timeline" ng-class="forumClass">
+        <i style="font-size: 1.7em;" class="far fa-newspaper"></i>
+      </a>
+    </li>
+
+    <li style="width: 20%; min-width: unset; padding-top: 4px; padding-left: 0; padding-right: 0;">
+      <a style="color: #565656 !important;" href="/home">
+        <i style="font-size: 1.7em;" class="fas fa-search"></i>
+      </a>
+    </li>
+
+    <li style="width: 20%; min-width: unset; padding-left: 0; padding-right: 0;">
+      <a style="color: #565656 !important;" href="/home/create">
+        <i style="font-size: 1.7em; color: #52bfea; font-weight: bolder;" class="fas fa-plus"></i>
+      </a>
+    </li>
+
+    <li style="width: 20%; min-width: unset; padding-left: 0; padding-right: 0;">
+      <a style="color: #565656 !important;" href="/a/{{university.url}}/forum/category/all" ng-class="forumClass">
+        <i style="font-size: 1.7em;" class="fas fa-bell"></i>
+      </a>
+    </li>
+
+    <li style="width: 20%; color: #565656 !important; min-width: unset; padding-left: 0; padding-right: 0;" ng-click="premium()">
+      <i style="font-size: 1.7em;" class="fas fa-user-graduate"></i>
+    </li>
+
+  </ul>
+
+</div>

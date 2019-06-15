@@ -62,7 +62,7 @@
 
     <p ng-if="studentIsTeam == true" style="font-size: 0.9em; padding-top: 15px; color: #7d7d7d; font-weight: bold;">TIME</p>
     <div class="option" style="padding-left: 0px;"><a href="/a/{{university.url}}/driver"><img src="/img/icon/driver.svg" style="margin-right: 14px;" height="20px" width="20px" />Driver</a></div>
-    
+
     <p style="font-size: 0.9em; padding-top: 15px; color: #7d7d7d; font-weight: bold;">AÇÕES</p>
 
     <button class="btn bg-primary-purple" style="margin-top: 2px; height: 29px; width: unset;" ng-hide="userSubscribed(university.members)" ng-click="subscribe()">Inscrever</button>
@@ -188,28 +188,28 @@
 
   <ul style="width: 100vw" style="color: #565656 !important;">
 
-    <li style="width: 25%;">
+    <li style="width: 25%; line-height: unset; padding-top: 10px; vertical-align: top;">
       <a style="color: #565656 !important;" href="/a/{{university.url}}/forum" ng-class="forumClass">
         <i style="font-size: 1.3em;" class="far fa-newspaper"></i>
         <div style="font-size: 0.9em; font-weight: 600;">Forum</div>
       </a>
     </li>
 
-    <li style="width: 25%;">
+    <li style="width: 25%; line-height: unset; padding-top: 10px; vertical-align: top;">
       <a style="color: #565656 !important;" href="/a/{{university.url}}/forum/post/create">
         <i style="font-size: 1.3em;" class="fas fa-pen-square"></i>
         <div style="font-size: 0.9em; font-weight: 600;">Escrever</div>
       </a>
     </li>
 
-    <li style="width: 25%;">
+    <li style="width: 25%; line-height: unset; padding-top: 10px; vertical-align: top;">
       <a style="color: #565656 !important;" href="/a/{{university.url}}/forum/category/all" ng-class="forumClass">
         <i style="font-size: 1.3em;" class="fas fa-graduation-cap"></i>
         <div style="font-size: 0.9em; font-weight: 600;">Categorias</div>
       </a>
     </li>
 
-    <li style="width: 25%; color: #565656 !important;" ng-click="premium()">
+    <li style="width: 25%; color: #565656 !important; line-height: unset; padding-top: 10px; vertical-align: top;" ng-click="premium()">
       <i style="font-size: 1.3em;" class="fas fa-star"></i>
       <div style="font-size: 0.9em; font-weight: 600;">Premium</div>
     </li>

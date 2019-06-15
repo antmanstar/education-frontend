@@ -2323,6 +2323,12 @@ angular.module('netbase')
 
 }])
 
+.controller('HomeCreateCtrl', ['$rootScope', '$scope', '$location', '$localStorage', function($rootScope, $scope, $location, $localStorage) {
+
+
+
+}])
+
 .controller('HomeCtrl', ['$rootScope', '$scope', 'ngDialog', 'University', 'Knowledge' , function($rootScope, $scope, ngDialog, University, Knowledge) {
 
   $scope.showMobileMenu = false;

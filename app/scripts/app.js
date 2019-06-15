@@ -330,6 +330,10 @@ angular.module('netbase', ['ngStorage',
             templateUrl: 'partials/home/home.html',
             controller: 'HomeCtrl',
         })
+        .when('/home/create', {
+            templateUrl: 'partials/home/homecreate.html',
+            controller: 'HomeCreateCtrl',
+        })
         .when('/home/timeline', {
             templateUrl: 'partials/home/hometimeline.html',
             controller: 'HomeTimelineCtrl',
