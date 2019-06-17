@@ -2182,6 +2182,8 @@ angular.module('netbase')
   $scope.short = "";
   $scope.text = "";
 
+  $scope.activeSection = 'conhecimento'
+
   Students.getStudentById(studentId).success(function(res) {
 
     let success = res.success;
