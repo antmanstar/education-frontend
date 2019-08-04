@@ -14,7 +14,8 @@ angular.module('netbase', ['ngStorage',
     'dibari.angular-ellipsis',
     'ngSanitize',
     'infinite-scroll',
-    'updateMeta'
+    'updateMeta',
+    'ui.carousel'
 ])
 .config(['$translateProvider', '$localStorageProvider', 'StripeElementsProvider', function ($translateProvider, $localStorageProvider, StripeElementsProvider) {
 
@@ -330,6 +331,10 @@ angular.module('netbase', ['ngStorage',
             templateUrl: 'partials/home/home.html',
             controller: 'HomeCtrl',
         })
+        .when('/apartments', {
+            templateUrl: 'partials/apartments/index.html',
+            controller: 'ApartmentsIndexCtrl',
+        })
         .when('/home/create', {
             templateUrl: 'partials/home/homecreate.html',
             controller: 'HomeCreateCtrl',
@@ -419,7 +424,7 @@ angular.module('netbase', ['ngStorage',
 
 }])
 
-.run(function($rootScope, $location, $localStorage, $http, $route, $translate) {
+.run(function($rootScope, $location, $localStorage, $http, $route, $translate, Carousel) {
 
   // Sees Index page just one time
   if ($localStorage.indexVisited == undefined) {
@@ -440,5 +445,5 @@ angular.module('netbase', ['ngStorage',
     $route.reload();
 
   };
-
+  
 });

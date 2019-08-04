@@ -2,6 +2,78 @@
 angular.module('netbase')
   //35.229.52.103
 
+  .factory('TimelineNew', ['$http', '$localStorage', function($http, $localStorage) {
+
+    //var baseUrl = "https://api.universida.de/search";
+    //var baseUrl = "https://educationalcommunity-uni.herokuapp.com";
+    var baseUrl = "http://192.168.1.7:9898"
+
+    return {
+
+      getTimelineAll: function(studentId, page) {
+
+        var url = '/timeline/home';
+        console.log($localStorage.token)
+
+        return $http({
+          method: 'GET',
+          url: baseUrl + url,
+          headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+              'x-access-token': $localStorage.token
+          }});
+
+      }
+
+    }
+
+  }])
+
+
+  .factory('Timeline', ['$http', '$localStorage', function($http, $localStorage) {
+
+    //var baseUrl = "https://api.universida.de/search";
+    var baseUrl = "https://educationalcommunity-uni.herokuapp.com";
+    //var baseUrl = "http://192.168.1.7:9003"
+
+    return {
+
+      getTimelineActivityByStudentId: function(studentId, page) {
+
+        var url = '/university/student/' + studentId + '/timeline?page=' + page;
+
+        console.log($localStorage.token)
+
+        return $http({
+          method: 'GET',
+          url: baseUrl + url,
+          headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+              'x-access-token': $localStorage.token
+          }});
+
+      },
+
+      getTimelineByStudentId: function(studentId, page) {
+
+        var url = '/university/student/' + studentId + '/timeline?page=' + page;
+
+        console.log($localStorage.token)
+
+        return $http({
+          method: 'GET',
+          url: baseUrl + url,
+          headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+              'x-access-token': $localStorage.token
+          }});
+
+      }
+
+    }
+
+  }])
+
     .factory('PokerHands', ['$http', '$localStorage', function($http, $localStorage) {
 
       var baseUrl = "https://educationalcommunity-uni.herokuapp.com";
@@ -185,9 +257,9 @@ angular.module('netbase')
 
     .factory('Forum', ['$http', '$localStorage', function($http, $localStorage) {
 
-      var baseUrl = "https://educationalcommunity-uni.herokuapp.com/university";
+      //var baseUrl = "https://educationalcommunity-uni.herokuapp.com/university";
       //var baseUrl = "https://api.universida.de/university";
-      //var baseUrl = "http://192.168.1.7:9003/university";
+      var baseUrl = "http://192.168.1.7:9003/university";
 
       return {
 
@@ -275,9 +347,9 @@ angular.module('netbase')
 
     .factory('University', ['$http', '$localStorage', function($http, $localStorage) {
 
-      var baseUrl = "https://educationalcommunity-uni.herokuapp.com/university";
+      //var baseUrl = "https://educationalcommunity-uni.herokuapp.com/university";
       //var baseUrl = "https://api.universida.de/university";
-      //var baseUrl = "http://192.168.1.7:9003/university";
+      var baseUrl = "http://192.168.1.7:9003/university";
 
       return {
 
@@ -836,33 +908,6 @@ angular.module('netbase')
 
     }])
 
-    .factory('Timeline', ['$http', '$localStorage', function($http, $localStorage) {
-
-      //var baseUrl = "https://api.universida.de/search";
-      var baseUrl = "https://educationalcommunity-uni.herokuapp.com";
-      //var baseUrl = "http://192.168.1.7:9003"
-
-      return {
-
-        getTimelineByStudentId: function(studentId, page) {
-
-          var url = '/university/student/' + studentId + '/timeline?page=' + page;
-
-          console.log($localStorage.token)
-
-          return $http({
-            method: 'GET',
-            url: baseUrl + url,
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'x-access-token': $localStorage.token
-            }});
-
-        }
-
-      }
-
-    }])
 
     .factory('Search', ['$http', function($http) {
 
