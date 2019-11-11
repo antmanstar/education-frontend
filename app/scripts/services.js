@@ -347,9 +347,9 @@ angular.module('netbase')
 
     .factory('University', ['$http', '$localStorage', function($http, $localStorage) {
 
-      //var baseUrl = "https://educationalcommunity-uni.herokuapp.com/university";
+      var baseUrl = "https://educationalcommunity-uni.herokuapp.com/university";
       //var baseUrl = "https://api.universida.de/university";
-      var baseUrl = "http://192.168.1.7:9003/university";
+      //var baseUrl = "http://192.168.1.7:9003/university";
 
       return {
 
@@ -694,7 +694,7 @@ angular.module('netbase')
 
       //var baseUrl = "https://api.universida.de/accounts/students";
       var baseUrl = "https://educationalcommunity-accounts.herokuapp.com/accounts/students";
-      //var baseUrl = "http://192.168.1.7:9000/accounts/students";
+      //var baseUrl = "http://localhost:8000/accounts/students";
 
       return {
 

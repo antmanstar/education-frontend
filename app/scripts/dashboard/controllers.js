@@ -265,9 +265,10 @@ angular.module('netbase')
   /* functions */
 
   $scope.createPlan = function () {
-
+    let amount=parseFloat(Math.round($scope.amount * 100) / 100).toFixed(2);
+    amount=(amount*100);
     let data = {
-      amount : $scope.amount,
+      amount : amount,
       name : $scope.name,
       interval : $scope.interval,
       intervalCount : $scope.intervalCount
