@@ -1,30 +1,34 @@
 <div ng-include="'partials/headerhome.html'"></div>
 
+<style>
+
+  @media screen and (max-width: 768px) {
+    .navbar-slider {
+      display: none;
+    }
+    .navbar-top-first {
+      margin-bottom: 2px;
+    }
+    .container-home {
+      padding-top: 43px !important;
+    }
+    .section-content-col {
+      padding-left: 0px;
+      padding-right: 0px;
+    }
+  }
+
+</style>
+
 <div class="container-fluid container-home">
 
-  <div class="hide-min-768" style="margin-right: -15px; margin-left: -15px; min-height: 175px; background-image: url('{{knowledge.backgroundImage}}'); background-size: cover; background-position: center; background-repeat: no-repeat">
-
-  </div>
-  <!-- col-xs-12 col-sm-6 -->
-
-  <div class="row" style="padding-top: 15px; padding-bottom: 15px;">
+  <div class="row" style="padding-bottom: 15px;">
 
     <div class="col-xs-12 col-sm-6">
 
       <div class="knowledge-meta">
 
-        <div class="knowledge-title">{{knowledge.title}}</div>
-
-        <div class="knowledge-description">{{knowledge.description}}</div>
-
-        <!--
-        <div class="knowledge-button">
-          <button class="btn btn-bluebase" ng-click="subscribe(knowledge._id)">Aprender</button>
-        </div>
-
-        -->
-
-        <!-- end section-menu -->
+        <div class="knowledge-title" style="font-size: 1.85em;">{{knowledge.title}}</div>
 
       </div>
       <!-- end knowledge-meta -->
@@ -46,10 +50,44 @@
 
     <!--<div ng-include="'partials/topic/topicmenu.html'" ng-controller="TopicMenuCtrl"></div>-->
 
+    <style>
+
+    .card-knowledge-action {
+       height: 60px; width: 80px; border-radius: 5px; text-align: center; display: inline-block; color: #fff; padding-top: 10px; margin-right: 10px; vertical-align: top;
+    }
+
+    .knowledge-title {
+      font-size: 1.7em; font-weight: bold;
+    }
+
+    </style>
+
     <div class="col-sm-9">
 
+      <div style="padding-bottom: 15px;">
+        <div class="knowledge-title">Aprender</div>
+      </div>
+
+      <!--
+      <div>
+
+        <div style="background: linear-gradient(to right, #ed213a, #93291e);" class="card-knowledge-action">
+          <i class="fas fa-brain" style="font-size: 1.5em;"></i>
+          <div style="padding-top: 5px; font-size: 0.9em;">Memoria</div>
+        </div>
+
+        <div style="background: linear-gradient(to right, #2193b0, #6dd5ed);" class="card-knowledge-action">
+          <i class="fas fa-running" style="font-size: 1.5em;"></i>
+          <div style="padding-top: 5px; font-size: 0.9em;">Desafios</div>
+        </div>
+
+      </div>
+      -->
+
       <!-- start universidades -->
-      <div class="headline-container">Universidades</div>
+      <div style="padding-bottom: 15px;">
+        <div class="knowledge-title">Universidades</div>
+      </div>
 
       <div class="section-cards" style="padding-bottom: 0px;">
 
@@ -60,9 +98,19 @@
 
       <!-- end universidades -->
 
+      <!-- start courses -->
+
+      <div style="padding-bottom: 15px;">
+        <div class="knowledge-title">Cursos</div>
+      </div>
+
+      <!-- end courses -->
+
       <!-- start posts -->
 
-      <div class="headline-container">Posts</div>
+      <div style="padding-bottom: 15px;">
+        <div class="knowledge-title">Posts</div>
+      </div>
 
       <div infinite-scroll='nextPage()' infinite-scroll-disabled='busy' infinite-scroll-distance='1'>
         <timelineposthome fp="{{fp}}" ng-repeat="fp in forumPosts"></timelinepost>
@@ -76,20 +124,38 @@
   </div>
   <!-- end row -->
 
-  <div class="section-footer">
+  <div class="academia-footer" style="z-index: 9; background-color: #fff; box-shadow: 0px -2px 4px -1px rgba(0,0,0,0.15); -moz-box-shadow: 0px -2px 4px -1px rgba(0,0,0,0.15); -webkit-box-shadow: 0px -2px 4px -1px rgba(0,0,0,0.15);">
 
-    <div class="section-footer-title"><b>Explorar</b></div>
+    <ul style="width: 98%" style="color: #565656 !important;">
 
-    <div class="section-sections">
-      <div ><i style="padding-right: 12px;" class="fas fa-home"></i>Home</div>
-      <div ><i style="padding-right: 12px;" class="fas fa-university"></i>Universidades</div>
-      <div ><i style="padding-right: 12px;" class="fas fa-pencil-alt"></i>Posts</div>
-      <div ><i style="padding-right: 12px;" class="fas fa-graduation-cap"></i>Cursos</div>
-      <div ><i style="padding-right: 12px;" class="fas fa-newspaper"></i>Notícias</div>
-    </div>
+      <li style="width: 25%; min-width: unset; padding-top: 4px; padding-left: 0; padding-right: 0;">
+        <a style="color: #565656 !important;" href="/home/timeline" ng-class="forumClass">
+          <i style="font-size: 1.7em; color: #52bfea; font-weight: bolder;" class="far fa-newspaper"></i>
+        </a>
+      </li>
+
+      <li style="width: 25%; min-width: unset; padding-top: 4px; padding-left: 0; padding-right: 0;">
+        <a style="color: #565656 !important;" href="/home">
+          <i style="font-size: 1.7em;" class="fas fa-search"></i>
+        </a>
+      </li>
+
+
+      <li style="width: 25%; min-width: unset; padding-left: 0; padding-right: 0;">
+        <a style="color: #565656 !important;" href="/a/{{university.url}}/forum/category/all" ng-class="forumClass">
+          <i style="font-size: 1.7em;" class="fas fa-bell"></i>
+        </a>
+      </li>
+
+      <li style="width: 25%; min-width: unset; padding-top: 4px; padding-left: 0; padding-right: 0;">
+        <a style="color: #565656 !important;" href="/perfil" ng-class="forumClass">
+          <i style="font-size: 1.7em;" class="fas fa-user-graduate"></i>
+        </a>
+      </li>
+
+    </ul>
 
   </div>
-  <!-- end section-footer -->
 
 </div>
 <!-- container-fluid container-full -->

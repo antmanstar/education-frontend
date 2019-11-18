@@ -1,0 +1,327 @@
+<style>
+
+.ui-carousel .track-wrapper {
+  text-align: center;
+}
+
+.apartment-options {
+
+}
+
+.apartment-options-right {
+  text-align: right;
+}
+
+.apartment-options-left {
+  text-align: left;
+}
+
+.apartment-options-img {
+
+}
+
+.apartment-options-title {
+  margin-top: 40px;
+  margin-right: 22px;
+  margin-bottom: 40px;
+  margin-left: 22px;
+  display: inline-block; padding: 7px; font-size: 1.25em;
+}
+
+/* titulo */
+
+.apartment-frontpage-title {
+  font-size: 3.8em;
+  font-weight: bold;
+}
+
+.apartment-frontpage-subtitle {
+  margin-top: 25px;
+  font-size: 1.65em;
+}
+
+/* */
+
+@media only screen and (max-width: 780px) {
+
+  .apartment-options {
+    text-align: center !important;
+  }
+
+  .apartment-options-title {
+    display: block;
+  }
+
+  .apartment-frontpage-title {
+    font-size: 2.2em;
+    font-weight: bold;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+}
+
+</style>
+
+<div class="container-fluid" style="padding-bottom: 30px;">
+
+    <div class="row">
+
+      <div class="col-xs-12" style="text-align: center; margin-top: 20px;">
+
+        <img height="28px" src="https://storage.googleapis.com/educationalcommunity/pt/img/universidade_logo.png" />
+
+      </div>
+
+      <div class="col-xs-12" style="text-align: center; margin-top: 60px; margin-bottom: 50px;">
+
+        <div class="apartment-frontpage-title">Cansado de procurar por moradia?</div>
+        <div class="apartment-frontpage-subtitle">Nós te entendemos! Oferecemos a solução mais fácil para você.</div>
+        <div class="apartment-frontpage-subtitle">Venha morar na melhor localização de Los Angeles.</div>
+
+        <button class="btn btn-bluebase" style="max-width: 60%; font-size: 1.25em; margin-top: 25px;">Reservar quarto</button>
+
+      </div>
+      <!-- -->
+
+    </div>
+
+    <div class="row">
+
+      <div class="col-xs-12">
+
+        <ui-carousel slides="slides" slides-to-show="3" slides-to-scroll="2" dots="true">
+
+        <carousel-item>
+          <!-- placed your item content here -->
+          <img height="200px" src="{{ item }}" />
+          <!-- end -->
+        </carousel-item>
+      </ui-carousel>
+
+      </div>
+
+    </div>
+
+    <div class="row" style="margin-top: 50px; margin-bottom: 30px;">
+
+      <div class="col-xs-12" style="text-align: center;">
+
+        <div style="margin-bottom: 30px; font-size: 2.6em; font-weight: bold;">Como funciona?</div>
+        <div style="font-size: 1.45em;">Bungalow combines private rooms with beautiful shared spaces and a network of like-minded community members, all in one monthly bill.</br></br>Located in prime neighborhoods in the country's biggest and most thriving cities, Bungalow gives you everything you need to enjoy city living with roommates you'll love.</div>
+
+      </div>
+
+    </div>
+
+    <div class="row" style="margin-top: 50px;">
+
+      <div class="col-xs-12" style="text-align: center;">
+
+        <div style="margin-bottom: 50px; font-size: 2.6em; font-weight: bold;">Incluso</div>
+
+      </div>
+
+    </div>
+
+    <div class="row">
+
+      <div class="col-xs-6 apartment-options apartment-options-right">
+        <img class="apartment-options-img" src="https://cdn.goprimer.com/uploads/furnished_spaces-43ac705728e203b399611dfa596c7e70.png">
+        <div class="apartment-options-title">Casa mobilhada</div>
+      </div>
+      <!-- end col-xs-6 -->
+
+      <div class="col-xs-6 apartment-options apartment-options-left">
+        <img src="https://cdn.goprimer.com/uploads/kitchen_essentials-d5eb4d12bdd9e18bf62de6c8cbeff02d.png">
+        <div class="apartment-options-title">Cozinha completa</div>
+      </div>
+      <!-- end col-xs-6 -->
+
+    </div>
+
+    <div class="row">
+
+      <div class="col-xs-6 apartment-options apartment-options-right">
+        <img src="https://cdn.goprimer.com/uploads/flexible_leasing-306b730c85a5e975f20f28cf0b538242.png">
+        <div class="apartment-options-title">Aluguel flexível</div>
+      </div>
+      <!-- end col-xs-6 -->
+
+      <div class="col-xs-6 apartment-options apartment-options-left">
+        <img src="https://cdn.goprimer.com/uploads/lightning-fast_wifi-61dc6dc4668f3d63890b9b78faab0a85.png">
+        <div class="apartment-options-title">Wifi e internet rápida</div>
+      </div>
+      <!-- end col-xs-6 -->
+
+    </div>
+
+    <div class="row">
+
+      <div class="col-xs-6 apartment-options apartment-options-right">
+        <img src="https://cdn.goprimer.com/uploads/smart_TVs-591a2b6ff4c6c4b076e370bc1853c7d8.png">
+        <div class="apartment-options-title">Smart TV</div>
+      </div>
+      <!-- end col-xs-6 -->
+
+      <div class="col-xs-6 apartment-options apartment-options-left">
+        <img src="https://cdn.goprimer.com/uploads/regular_cleaning-82af0d125799cde847c358d10a242376.png">
+        <div class="apartment-options-title">Faxineira semanal</div>
+      </div>
+      <!-- end col-xs-6 -->
+
+     </div>
+
+    </div>
+    <!-- -->
+
+    <div class="row">
+
+      <div class="col-xs-6 apartment-options apartment-options-right">
+        <img src="https://cdn.goprimer.com/uploads/private_bedrooms-d578fd1454185e9ecef5d3575db2e5ad.png">
+        <div class="apartment-options-title">Quarto privado</div>
+      </div>
+      <!-- end col-xs-6 -->
+
+      <div class="col-xs-6 apartment-options apartment-options-left">
+        <img style="width: calc(75px);" src="https://cdn.goprimer.com/uploads/community_2x-c4540a4b65d6c328e32327353fa87900.png">
+        <div class="apartment-options-title">Comunidade selecionada</div>
+      </div>
+      <!-- end col-xs-6 -->
+
+    </div>
+
+    <div class="row" style="margin-top: 50px;">
+
+      <div class="col-xs-12" style="text-align: center;">
+
+        <div style="margin-bottom: 50px; font-size: 2.3em; font-weight: bold;">Localização</div>
+
+      </div>
+
+    </div>
+
+    <div class="row" style="margin-top: 50px; margin-bottom: 50px;">
+
+      <div class="col-xs-12 col-sm-6" style="text-align: center; height: 380px;">
+
+        <div style="height: 380px;">
+          <iframe width="100%" height="100%" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d26447.361119245503!2d-118.47164774522592!3d34.04591959156311!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzTCsDAyJzQ1LjMiTiAxMTjCsDI3JzE0LjkiVw!5e0!3m2!1sen!2sbr!4v1564136132741!5m2!1sen!2sbr" frameborder="0" style="border:0; border-radius: 4px;" allowfullscreen></iframe>
+        </div>
+
+      </div>
+
+      <div class="col-xs-12 col-sm-6" style="text-align: left;">
+
+        <div style="font-size: 1.6em; padding-right: 15px; padding-left: 15px; margin-bottom: 35px;">Localizado perto da 405 com a Santa Monica Blvd.</div>
+        <div style="font-size: 1.6em; padding-right: 15px; padding-left: 15px; margin-bottom: 35px;">10 min da UCLA & 10 min da Praia (carro).</div>
+
+      </div>
+
+    </div>
+    <!-- end row -->
+
+    <div class="row" style="margin-top: 50px;">
+
+      <div class="col-xs-12" style="text-align: center;">
+
+        <div style="margin-bottom: 20px; font-size: 2.3em; font-weight: bold;">Aluguel carro</div>
+
+      </div>
+
+    </div>
+
+    <div class="row" style="margin-top: 30px; margin-bottom: 50px;">
+
+      <div class="col-xs-12 col-sm-6" style="text-align: left;">
+
+        <div style="font-size: 1.6em; padding-left: 35px; padding-right: 15px; margin-bottom: 15px;">Você pode alugar um dos carros disponíveis para os moradores da casa.</div>
+        <div style="font-size: 1.6em; padding-left: 35px; padding-right: 15px; margin-bottom: 35px;">Aluguel a partir de $195 por semana.</div>
+
+      </div>
+
+      <div class="col-xs-12 col-sm-6" style="text-align: center;">
+
+        <img width="350px" style="border-radius: 4px" src="https://hips.hearstapps.com/hmg-prod/amv-prod-cad-assets/images/13q3/524200/2013-volkswagen-jetta-tdi-test-reviews-car-and-driver-photo-525316-s-original.jpg" />
+
+      </div>
+
+    </div>
+    <!-- end row -->
+
+    <div class="row" style="margin-top: 50px;">
+
+      <div class="col-xs-12" style="text-align: center;">
+
+        <div style="margin-bottom: 20px; font-size: 2.3em; font-weight: bold;">Preço</div>
+
+      </div>
+
+    </div>
+
+    <div class="row" style="margin-top: 50px; margin-bottom: 50px;">
+
+      <div class="col-xs-12 col-sm-4" style="margin-bottom: 50px;">
+        <div style="font-size: 2em; font-weight: bold; text-align: center;">Quarto</br>compartilhado</div></br>
+        <div style="font-size: 3em; font-weight: bold; text-align: center; color: #6f6f6f;">$860/mês</div>
+      </div>
+      <!-- -->
+
+      <div class="col-xs-12 col-sm-4" style="margin-bottom: 50px;">
+        <div style="font-size: 2em; font-weight: bold; text-align: center;">Quarto</br>compartilhado plus+</div></br>
+        <div style="font-size: 3em; font-weight: bold; text-align: center; color: #6f6f6f;">$970/mês</div>
+      </div>
+      <!-- -->
+
+      <div class="col-xs-12 col-sm-4" style="margin-bottom: 50px;">
+        <div style="font-size: 2em; font-weight: bold; text-align: center;">Quarto</br>individual</div></br>
+        <div style="font-size: 3em; font-weight: bold; text-align: center; color: #6f6f6f;">$1340/mês</div>
+      </div>
+      <!-- -->
+
+    </div>
+    <!-- -->
+
+    <div class="row" style="margin-top: 50px;">
+
+      <div class="col-xs-12" style="text-align: center;">
+
+        <div style="margin-bottom: 20px; font-size: 2.3em; font-weight: bold;">Academia</div>
+
+        <div style="font-size: 1.6em; padding-left: 35px; padding-right: 15px; margin-bottom: 15px;">
+          Todos moradores da casa tem acesso ao recém inaugurado clube Collins & Katz YMCA. Lá você vai poder frequentar academia, piscina, spinning, quadra de basquete e mais! A distância do clube a casa é de 300 metros.
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="row" style="margin-top: 50px; margin-bottom: 50px;">
+
+      <div class="col-xs-12 col-sm-4" style="margin-bottom: 50px;">
+        <img width="100%;" src="https://www.ymcala.org/sites/default/files/styles/media_full/public/2018-01/YMCA_45%28H%29_0.jpg?itok=wyKxd2Zl" /></br></br>
+        <img width="100%;" src="https://pbs.twimg.com/media/D4SasBeUEAAxEc_?format=jpg&name=4096x4096" />
+      </div>
+      <!-- -->
+
+      <div class="col-xs-12 col-sm-4" style="margin-bottom: 50px;">
+        <img width="100%;" src="https://pbs.twimg.com/media/D4SarffUEAIxBAz?format=jpg&name=4096x4096" /></br></br>
+        <img width="100%;" src="https://www.oltmans.com/wp-content/plugins/soliloquy-crop/crop/crop.php?src=https://www.oltmans.com/wp-content/uploads/westside-ymca_3-2.jpg&a=c&w=845&h=460&q=100" />
+      </div>
+      <!-- -->
+
+      <div class="col-xs-12 col-sm-4" style="margin-bottom: 50px;">
+        <img width="100%;" src="https://pbs.twimg.com/media/D4SatGwUIAAQboD?format=jpg&name=4096x4096" />
+      </div>
+      <!-- -->
+
+    </div>
+    <!-- -->
+
+    <div class="row">
+
+      <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdxRs6LAm9qt9mNx0xZKUoRguxVMOtWR8oWiGNVavVKLTGTZQ/viewform?embedded=true" width="100%" height="1420" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+
+    </div>
+
+</div>
