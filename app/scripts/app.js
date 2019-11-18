@@ -15,8 +15,7 @@ angular.module('netbase', ['ngStorage',
     'ngSanitize',
     'infinite-scroll',
     'updateMeta',
-    'as.sortable',
-    'ui.swiper'
+    'as.sortable'
 ])
 .config(['$translateProvider', '$localStorageProvider', 'StripeElementsProvider', function ($translateProvider, $localStorageProvider, StripeElementsProvider) {
 

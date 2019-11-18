@@ -257,9 +257,9 @@ angular.module('netbase')
 
     .factory('Forum', ['$http', '$localStorage', function($http, $localStorage) {
 
-      //var baseUrl = "https://educationalcommunity-uni.herokuapp.com/university";
+      var baseUrl = "https://educationalcommunity-uni.herokuapp.com/university";
       //var baseUrl = "https://api.universida.de/university";
-      var baseUrl = "http://192.168.1.7:9003/university";
+      //var baseUrl = "http://192.168.1.7:9003/university";
 
       return {
 
