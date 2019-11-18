@@ -1,0 +1,228 @@
+<div class="container-fluid modal-accounts">
+
+  <div class="row">
+
+    <!-- -->
+    <div ng-show="page == 'universitySelect'">
+
+      <div class="section-cards dashboard-cards">
+
+        <div class="card" ng-repeat="university in universities">
+
+          <div class="picture" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
+          <div class="picture" ng-if="university.backgroundImage == undefined"  style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
+
+          <div class="title">{{university.name}}</div>
+          <div class="description">{{university.about}}</div>
+          <button ng-click="chooseUniversity(university._id)" style="margin-top: 15px;" class="btn btn-green">Selecionar</button>
+
+        </div>
+          <!-- end card -->
+
+      </div>
+      <!-- end section-cards -->
+
+    </div>
+    <!-- -->
+
+    <!-- MENU -->
+    <div ng-show="page == 'menu'" class="col-xs-12">
+
+      <div style="padding-bottom: 20px;"></div>
+      <div style="padding-bottom: 20px;"></div>
+
+      <div class="section-header" style="width: 100%;">
+        <div class="title">Escolha qual conteúdo você deseja criar</div>
+      </div>
+
+      <div style="padding-bottom: 20px;"></div>
+      <div style="padding-bottom: 20px;"></div>
+
+      <div class="col-xs-4 col-sm-4" ng-click="choosePage('texto')" style="text-align: center; cursor: pointer;">
+
+        <img style="margin-bottom: 10px;" height="40px;" src="https://visualpharm.com/assets/197/Documents-595b40b65ba036ed117d2bf0.svg">
+        <p style="font-weight: 600;">Texto</p>
+
+      </div>
+
+      <div class="col-xs-4 col-sm-4" ng-click="choosePage('playlists')" style="text-align: center; cursor: pointer;">
+
+        <img style="margin-bottom: 10px;" height="40px;" src="https://visualpharm.com/assets/770/Video%20File-595b40b85ba036ed117dad88.svg">
+        <p style="font-weight: 600;">Vídeo</p>
+
+      </div>
+
+      <div class="col-xs-4 col-sm-4" ng-click="choosePage('test')" style="text-align: center; cursor: pointer;">
+
+        <img style="margin-bottom: 10px;" height="40px;" src="https://visualpharm.com/assets/632/Test%20Passed-595b40b65ba036ed117d34c6.svg">
+        <p style="font-weight: 600;">Test</p>
+
+      </div>
+
+    </div>
+    <!-- end col-xs-12 -->
+
+    <!-- END MENU -->
+
+    <!-- CATEGORIES TEXT -->
+
+    <div ng-show="page == 'texto'" class="col-xs-12">
+
+      <div class="header-modal-courses">
+        <div class="title"><img style="margin-bottom: 10px;" height="40px;" src="https://visualpharm.com/assets/197/Documents-595b40b65ba036ed117d2bf0.svg"> Texto</div>
+      </div>
+
+      <!-- CATEGORIES -->
+      <div ng-repeat="category in categories" ng-click="loadForumPostCategory(category._id)" class="btn-modal-courses">
+
+        <div class="title" style="display: inline-block;">{{category.title}}</div>
+        <div class="icon"><i class="fas fa-arrow-right"></i></div>
+
+      </div>
+      <!-- END CATEGORIES -->
+
+    </div>
+    <!-- end CATEGORIES TEXT -->
+
+    <!-- TEXTO -->
+
+    <div ng-show="page == 'categoryforumposts'" class="col-xs-12">
+
+      <div class="header-modal-courses">
+        <div class="title"><img style="margin-bottom: 10px;" height="40px;" src="https://visualpharm.com/assets/197/Documents-595b40b65ba036ed117d2bf0.svg"> Texto</div>
+      </div>
+
+      <!-- CATEGORIES -->
+      <div ng-repeat="post in categoryPosts" ng-click="loadForumPost(post._id)" class="btn-modal-courses">
+
+        <div class="title col-xs-11" style="display: inline-block;">{{post.title}}</div>
+        <div class="icon col-xs-1"><i class="fas fa-arrow-right"></i></div>
+
+      </div>
+      <!-- END CATEGORIES -->
+
+    </div>
+    <!-- end TEXTO -->
+
+    <!-- CHECK OUT PAGE -->
+    <div ng-show="page == 'checkout'" class="col-xs-12">
+
+      <div class="header-modal-courses">
+        <div class="title"><img style="margin-bottom: 10px;" height="40px;" src="https://visualpharm.com/assets/197/Documents-595b40b65ba036ed117d2bf0.svg"> Texto</div>
+      </div>
+
+      <!-- inputs -->
+      <div>
+
+        <div class="headline-sub-one">Título do conteúdo</div>
+        <input class="academia-content-forum-post-create-title" placeholder="Escreva o título do conteúdo" ng-model="title"></input>
+
+        <div style="font-size: 1.8em; font-weight: bold;">Descrição</div>
+        </br></br>
+        <trix-toolbar id="my_toolbar"></trix-toolbar>
+        <trix-editor style="margin-bottom: 15px;" angular-trix toolbar="my_toolbar" ng-model="description" trix-change="trixChange(e, editor);" trix-initialize="trixInitialize(e, editor);"></trix-editor>
+
+      </div>
+      <!-- ends inputs -->
+
+      <!-- FORUM POST TEXT TYPE -->
+      <div ng-if="contentType == 'forumpost'">
+
+        <div style="font-size: 1.3em; font-weight: bold;">{{forumPost.title}}</div>
+        <div style="overflow: hidden;" ng-bind-html="forumPost.text"></div>
+
+      </div>
+      <!-- FORUM POST TEXT TYPE -->
+
+      <!-- FORUM POST TEXT TYPE -->
+      <div ng-if="contentType == 'video'">
+
+        <div style="font-size: 1.3em; font-weight: bold;">{{forumPost.title}}</div>
+        <div style="overflow: hidden;" ng-bind-html="forumPost.text"></div>
+
+      </div>
+      <!-- FORUM POST TEXT TYPE -->
+
+      <button class="btn btn-success" ng-click="save()">Criar</div>
+
+    </div>
+    <!-- END CHECK OUT PAGE -->
+
+    <!-- END MENU -->
+
+    <div ng-show="page == 'playlists'" class="col-xs-12">
+
+      <div class="header-modal-courses">
+        <div class="title"><img style="margin-bottom: 10px;" height="40px;" src="https://visualpharm.com/assets/770/Video%20File-595b40b85ba036ed117dad88.svg"> Texto</div>
+      </div>
+
+      <p ng-if="playlists.length == 0">Nenhuma playlist registrada</p>
+
+      <!-- CATEGORIES -->
+      <div ng-repeat="playlist in playlists" ng-click="loadForumPostCategory(category._id)" class="btn-modal-courses">
+
+        <div class="title" style="display: inline-block;">{{playlist.title}}</div>
+        <div class="icon"><i class="fas fa-arrow-right"></i></div>
+
+      </div>
+      <!-- END CATEGORIES -->
+
+    </div>
+    <!-- end videos -->
+
+    <div ng-show="page == 'test'" class="col-xs-12">
+
+      <p>aeee</p>
+
+    </div>
+    <!-- end page -->
+
+  </div>
+  <!-- end row -->
+
+</div>
+<!-- end container-fluid -->
+
+<style>
+
+  .header-modal-courses {
+
+  }
+
+  .header-modal-courses .title {
+    display: inline-block;
+  }
+
+  .header-modal-courses {
+
+  }
+
+  .btn-modal-courses {
+    line-height: 3em;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 5px;
+
+    cursor: pointer;
+
+  }
+
+  .btn-modal-courses .title {
+    font-weight: 600;
+    color: #437a9c;
+    font-size: 1.1em;
+  }
+
+  .btn-modal-courses .icon {
+    font-weight: 600;
+    color: #437a9c;
+    font-size: 1.1em;
+    float: right;
+    display: inline-block;
+  }
+
+  .btn-modal-courses:hover {
+    background-color: rgba(242, 250, 255, 0.6);
+  }
+
+</style>

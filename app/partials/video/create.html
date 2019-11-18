@@ -3,7 +3,9 @@
 <script type="text/javascript">
 // Initialize instances:
 
-var socket = io.connect("https://network-videosuploadsocke-prod.herokuapp.com/");
+var socket = io.connect("https://educationalcommunity-videouplo.herokuapp.com/");
+
+//var socket = io.connect("http://localhost:8585/");
 
 var siofu = new SocketIOFileUpload(socket);
 
@@ -78,7 +80,7 @@ socket.on("videopath", function(a) {
 
 </script>
 
-<div class="container-fluid container-full">
+<div class="container-fluid ">
 
   <div class="row">
 
@@ -142,7 +144,7 @@ socket.on("videopath", function(a) {
 
         </div>
 
-        <div class="academia-content-forum-post-create-premium">
+        <div class="academia-content-forum-post-create-premium" ng-hide="universityId._id == undefined">
 
           <b>A partir de qual membro esta categoria pode ser acessada?</b>
 
@@ -157,7 +159,7 @@ socket.on("videopath", function(a) {
 
         </div>
 
-        <div class="academia-content-forum-post-create-premium">
+        <div class="academia-content-forum-post-create-premium" ng-hide="universityId._id == undefined">
 
           <b>Este conteúdo é exclusivo para assinantes premium?</b>
 

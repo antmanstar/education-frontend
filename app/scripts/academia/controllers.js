@@ -22,7 +22,6 @@ angular.module('netbase')
 
 }])
 
-
 .controller('AcademiaTrainingCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Forum', '$sce', '$filter', 'ngDialog', '$window', function($rootScope, $scope, $location, $route, University, Forum, $sce, $filter, ngDialog, $window) {
 
   let universityUrl = $route.current.params.academiaName;
@@ -104,7 +103,6 @@ angular.module('netbase')
 
   }
 
-
 }])
 
 /* end landing pages */
@@ -118,6 +116,7 @@ angular.module('netbase')
     $scope.university = res.data.data;
 
   });
+  //END University.getUniversity()
 
 }])
 
@@ -146,9 +145,7 @@ angular.module('netbase')
   $scope.loaded = false;
   let displayinvite = false;
 
-
   /* Accounts suggestion */
-
   if ( University.isStoredLocal(universityUrl) ) {
 
     let universityStorage = University.retrieveStorage(universityUrl);
@@ -279,7 +276,6 @@ angular.module('netbase')
     });
 
   }
-
 
 }])
 
@@ -616,7 +612,6 @@ angular.module('netbase')
       console.log("error while loading university")
 
     }
-
 
   });
 
@@ -1953,7 +1948,7 @@ angular.module('netbase')
       /*
 
       filter: { active: true } | orderBy:'-highlight'
-      
+
       */
 
     }

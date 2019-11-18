@@ -236,6 +236,8 @@ angular.module('netbase')
 
   $scope.playlistSelect = { _id : undefined };
 
+  $scope.universityId = universityId;
+
   Playlist.getAllPlaylistByUniversityId(universityId._id).success(function(res) {
 
     $scope.playlists = res.data;
@@ -256,7 +258,6 @@ angular.module('netbase')
     let upload = true;
 
     let payload = {
-
       playlistId : $scope.playlistSelect._id,
       title : $scope.title,
       description : $scope.description,

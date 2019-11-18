@@ -1361,4 +1361,171 @@ angular.module('netbase')
 
     }])
 
+    .factory('Courses', ['$http', '$localStorage', function($http, $localStorage) {
+
+      //var baseUrl = "https://api.universida.de/search";
+
+      //var baseUrl = "https://educationalcommunity-pay.herokuapp.com";
+      var baseUrl = "http://192.168.0.22:8888/courses";
+
+      return {
+
+        getAll: function(id) {
+
+          let url = "/all";
+
+          return $http.get(baseUrl + url);
+
+        },
+
+        getById: function(id) {
+
+          let url = "/id/" + id;
+
+          return $http.get(baseUrl + url);
+
+        },
+
+        create: function(data) {
+
+          var url = '/create' ;
+
+          return $http({
+            method: 'POST',
+            data: data,
+            url: baseUrl + url,
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            }});
+
+        },
+
+        updateModuleById: function(id, data) {
+
+          var url = '/module/id/' + id;
+
+          return $http({
+            method: 'PUT',
+            data: data,
+            url: baseUrl + url,
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            }});
+
+        },
+
+        createModule: function(data) {
+
+          var url = '/module/create' ;
+
+          return $http({
+            method: 'POST',
+            data: data,
+            url: baseUrl + url,
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            }});
+
+        },
+
+        createContentModule: function(data) {
+
+          var url = '/module/content/create' ;
+
+          return $http({
+            method: 'POST',
+            data: data,
+            url: baseUrl + url,
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            }});
+
+        },
+
+        getContentModulesByAccount: function() {
+
+          var url = '/module/content/owner';
+
+          return $http({
+            method: 'GET',
+            url: baseUrl + url,
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'x-access-token': $localStorage.token
+          }})
+
+        },
+
+        getCoursesByAccount: function(universityId) {
+
+          var url = '/owner';
+
+          return $http({
+            method: 'GET',
+            url: baseUrl + url,
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'x-access-token': $localStorage.token
+          }})
+
+        },
+
+        getModuleById: function(id) {
+
+          let url = "/module/id/" + id;
+
+          return $http.get(baseUrl + url);
+
+        },
+
+        getModulesByAccount: function() {
+
+          var url = '/module/owner';
+
+          return $http({
+            method: 'GET',
+            url: baseUrl + url,
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'x-access-token': $localStorage.token
+          }})
+
+        },
+
+        getContentModuleById: function(id) {
+
+          let url = "/module/content/id/" + id;
+
+          return $http.get(baseUrl + url);
+
+        }
+
+      }
+
+    }])
+
 ;

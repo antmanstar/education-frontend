@@ -331,6 +331,13 @@ nav .navbar-slider .option {
 
 }
 
+nav .navbar-slider .option-course {
+
+  height: 33px;
+  line-height: 33px;
+
+}
+
 nav .navbar-slider .option a {
   color: #2d4255;
   text-decoration: none;
@@ -344,6 +351,16 @@ nav .navbar-slider .option.active {
 
 nav .navbar-slider .option:hover {
   border-bottom: 3px solid rgba(82, 191, 234, 0.4);
+}
+
+nav .navbar-slider .option-course.active {
+  border-left: 0.3px solid rgba(238, 87, 72, 0.2);
+  border-right: 0.3px solid rgba(238, 87, 72, 0.2);
+  border-bottom: 3px solid #ee5748;
+}
+
+nav .navbar-slider .option-course:hover {
+  border-bottom: 3px solid rgba(238, 87, 72, 0.2);
 }
 
 /* search */

@@ -9,17 +9,24 @@
 
 </style>
 
-<div class="container-fluid container-home animated fadeIn" style="padding-bottom: 90px;">
+<div class="container-fluid container-home animated fadeIn" style="padding-bottom: 30px;">
 
   <div class="row">
 
-    <div class="col-xs-12 col-sm-6 col-md-6" style="min-height: 500px;" ng-if="k.universities.length > 0" ng-repeat="k in knowledges | orderBy: '-universities.length'">
+    <div class="col-xs-12" style="padding-left: 20px; padding-right: 20px;">
+
+      <div class="headline-container" style="text-align: left">Explore as comunidades educacionais</div>
+
+    </div>
+    <!-- -->
+
+    <div class="col-xs-12 col-sm-6 col-md-6" style="margin-bottom: 15px; padding-left: 20px; padding-right: 20px;" ng-if="k.universities.length > 0" ng-repeat="k in knowledges | orderBy: '-universities.length'">
 
           <div class="headline-container">{{k.title}}</div>
 
           <div class="section-cards" style="padding-bottom: 0px !important;">
 
-            <timelineuniversitycard uid={{university.universityId}} ng-repeat="university in k.universities"></timelineuniversitycard>
+            <homeuniversitynewcard  uid={{university.universityId}} ng-repeat="university in k.universities"></homeuniversitynewcard>
 
           </div>
           <!-- end section-cards -->

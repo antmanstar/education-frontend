@@ -4,6 +4,535 @@
 
 angular.module('netbase')
 
+/* Courses */
+
+.controller('CoursesContentCreateCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'University', 'Playlist', 'Forum', 'User', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, University, Playlist, Forum, User) {
+
+  $scope.page = 'universitySelect';
+
+  let universityId;
+
+  console.log($scope.ngDialogData);
+
+  University.getUniversitiesByOwnerId(User.getId()).success(function(res) {
+
+    console.log("universities")
+    console.log(res);
+
+    if (res.success) {
+
+      $scope.universities = res.data;
+
+    }
+
+  });
+
+  /* */
+
+  $scope.chooseUniversity = function(uId) {
+    universityId = uId;
+    $scope.choosePage('menu');
+  }
+
+  /* */
+
+  $scope.choosePage = function(name) {
+
+    $scope.page = name;
+
+    if ($scope.page == 'texto') {
+      console.log("textooooooo")
+      $scope.type = 'forumpost';
+      $scope.loadForumPosts();
+    }
+
+    if ($scope.page == 'playlists') {
+      console.log("playlists")
+      $scope.loadPlaylists();
+    }
+
+  }
+
+  /* */
+
+  $scope.save = function () {
+
+    let formdata = {
+      title : $scope.title,
+      description : $scope.description,
+      contentType: "",
+      modelId : "$scope.url",
+      universityId : universityId,
+    }
+
+    if ($scope.contentType == 'forumpost') {
+      formdata.contentType = 'forumpost';
+      formdata.modelId = $scope.forumPost._id
+    }
+
+    console.log("form data is:")
+    console.log(formdata);
+
+    Courses.createContentModule(formdata).success(function(res) {
+
+      if (res.success) {
+
+        console.log(res);
+        alert("success");
+
+      } else {
+
+      }
+
+    });
+    //END Courses
+
+  }
+  //END save()
+
+  /* */
+
+  /* FORUM POST */
+  $scope.loadForumPosts = function() {
+
+    University.getUniversityById(universityId).then(function(res) {
+
+      let success = res.data.success;
+      let university = res.data.data;
+
+      console.log("get university")
+      console.log(res)
+
+      if (success) {
+
+        $scope.university = university;
+
+        Forum.getCategoriesByUniversityId($scope.university._id).success(function(resCategory) {
+
+          console.log(resCategory)
+
+          if (resCategory.success) {
+
+            $scope.categories = resCategory.data;
+
+          }
+
+        });
+        //END Forum.getCategoriesByUniversityId
+
+      } else {
+
+        console.log("error while loading university")
+
+      }
+
+    });
+
+  }
+  //END loadForumPost()
+
+  $scope.loadForumPostCategory = function(categoryId) {
+
+    $scope.page = 'categoryforumposts';
+
+    Forum.getForumPostsByCategoryId($scope.university._id, categoryId, 1).success(function(resCategory) {
+
+      console.log(resCategory)
+
+      if (resCategory.success) {
+
+        $scope.categoryPosts = resCategory.data.docs;
+
+      }
+
+    });
+    //END Forum.getForumPostsByCategoryId()
+
+  }
+  //END loadForumPostCategory
+
+  $scope.loadForumPost = function(forumpostId) {
+
+    console.log("load forum post")
+
+    $scope.page = 'checkout';
+    $scope.contentType = 'forumpost';
+
+    console.log("forumpostId : " + forumpostId);
+
+    Forum.getForumPostById(forumpostId, $scope.university._id).success(function(resForumPost) {
+
+      console.log(resForumPost)
+
+      if (resForumPost.success) {
+
+        $scope.forumPost = resForumPost.data;
+
+      }
+
+    });
+    //END Forum.getForumPostsByCategoryId()
+
+  }
+  //END Forum.loadForumPost()
+
+  /* PLAYLISTS */
+
+  $scope.loadPlaylists = function() {
+
+    Playlist.getAllPlaylistByUniversityId(universityId).success(function(res) {
+
+      console.log(res);
+
+      $scope.playlists = res.data;
+
+    });
+
+  }
+
+  /* END PLAYLISTS */
+
+}])
+
+.controller('CoursesModulosByIdCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses) {
+
+  $scope.page = false;
+
+  $scope.activeSection = "modulos";
+
+  let moduleId = $route.current.params.id;
+
+  /* */
+
+  //ngDialog.open({ template: 'partials/courses/modals/contentcreate.html', controller: 'CoursesContentCreateCtrl', className: 'ngdialog-theme-default' });
+
+  $scope.conteudocriar = function() {
+    ngDialog.open({ template: 'partials/courses/modals/contentcreate.html', controller: 'CoursesContentCreateCtrl', className: 'ngdialog-theme-default', data : { "universityId" : "fdasdfa" } });
+  }
+
+  /* save order id */
+
+  $scope.saveModule = function() {
+
+    let neworder = [];
+
+    for (let idx = 0; idx < $scope.module.content.length; idx++) {
+      let content = { order : idx, modelId : $scope.module.content[idx]._id };
+      neworder.push(content)
+    }
+
+    console.log(neworder)
+
+    let formdata = {
+      corder : JSON.stringify(neworder)
+    };
+
+    Courses.updateModuleById(moduleId, formdata).success(function(res) {
+
+      console.log(res)
+
+      if (res.success) {
+
+        console.log("success while updating")
+
+        $scope.modules = res.data;
+
+      }
+
+    });
+    //END Courses.getCoursesByAccount()
+
+  }
+
+  /* */
+  $scope.dragControlListeners = {
+    itemMoved: function (event) {
+      console.log("item moved")
+      console.log(event)
+      $scope.moduleNewOrder = event.dest.sortableScope.modelValue;
+    },
+    orderChanged: function(event) {
+      console.log("order changed")
+    },
+    containment: '#board1',
+    containerPositioning : 'relative'
+  };
+
+  $scope.dragControlListeners1 = {
+    containment: '#board2',
+    orderChanged: function(event) {
+
+      console.log("order changed: ")
+      console.log(event)
+
+    },
+    itemMoved: function (event) {
+      console.log("item moved")
+      console.log(event)
+    },
+    allowDuplicates: true,
+    containerPositioning : 'relative'
+  };
+
+  Courses.getModuleById(moduleId).success(function(res) {
+
+    console.log(res)
+
+    if (res.success) {
+
+      $scope.module = res.data;
+
+    }
+
+  });
+  //END Courses.getCoursesByAccount()
+
+  Courses.getContentModulesByAccount().success(function(res) {
+
+    console.log(res)
+
+    if (res.success) {
+
+      $scope.modulesByAccount = res.data;
+      //$location.path('/cursos/suite');
+
+    }
+
+  });
+  //END Courses.getCoursesByAccount()
+
+}])
+
+.controller('CoursesModulosCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses) {
+
+  $scope.page = false;
+
+  $scope.activeSection = "modulos";
+
+
+
+  Courses.getModulesByAccount().success(function(res) {
+
+    console.log(res)
+
+    if (res.success) {
+
+      $scope.modules = res.data;
+      //$location.path('/cursos/suite');
+
+    }
+
+  });
+  //END Courses.getCoursesByAccount()
+
+}])
+
+.controller('CoursesContentModulosCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses) {
+
+  $scope.page = false;
+
+  $scope.activeSection = "content";
+
+  Courses.getContentModulesByAccount().success(function(res) {
+
+    console.log(res)
+
+    if (res.success) {
+
+      $scope.modulesByAccount = res.data;
+      //$location.path('/cursos/suite');
+
+    }
+
+  });
+  //END Courses.getCoursesByAccount()
+
+}])
+
+.controller('CoursesOwnerCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses) {
+
+  $scope.page = false;
+
+  $scope.activeSection = "owner";
+
+  Courses.getCoursesByAccount().success(function(res) {
+
+    console.log(res)
+
+    if (res.success) {
+
+      $scope.courses = res.data;
+      //$location.path('/cursos/suite');
+
+    }
+
+  });
+  //END Courses.getCoursesByAccount()
+
+}])
+
+.controller('CoursesByIdCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses) {
+
+  $scope.page = false;
+
+  let id = $route.current.params.id;
+
+  $scope.activeSection = "comprados";
+
+  Courses.getById(id).success(function(res) {
+
+    console.log(res)
+
+    if (res.success) {
+
+      $scope.course = res.data;
+      $sce.trustAsHtml($scope.course)
+      //$location.path('/cursos/suite');
+
+    }
+
+  });
+  //END Courses.getCoursesByAccount()
+
+}])
+
+.controller('CoursesSuiteIndexCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses) {
+
+  $scope.page = false;
+
+  $scope.activeSection = "comprados";
+
+  Courses.getCoursesByAccount().success(function(res) {
+
+    console.log(res)
+
+    if (res.success) {
+
+      //$scope.courses = res.data;
+      //$location.path('/cursos/suite');
+
+    }
+
+  });
+  //END Courses.getCoursesByAccount()
+
+}])
+
+.controller('CoursesModulosCriarCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses) {
+
+  $scope.page = false;
+
+  $scope.activeSection = "modulos";
+
+  $scope.criar = function() {
+
+    /* */
+    let error = false;
+    /* */
+
+    let formdata = {
+      title : $scope.title,
+      duration : $scope.duration,
+      description : $scope.description,
+      goal : $scope.goal
+    };
+
+    console.log(formdata);
+
+    Courses.moduleCreate(formdata).success(function(res) {
+
+      console.log(res)
+
+      if (res.success) {
+
+        ngDialog.close();
+
+      }
+
+    });
+      //END Courses.create()
+
+    }
+    //END $scope.criar
+
+}])
+
+.controller('CoursesCriarCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses) {
+
+  $scope.page = false;
+
+  $scope.criar = function() {
+
+    /* */
+    let error = false;
+    /* */
+
+    let formdata = {
+      title : $scope.title,
+      description : $scope.description,
+      currency : $scope.currency
+    };
+
+    if ($scope.free == undefined) {
+      console.log("error, undefined")
+      error = true;
+    } else {
+      formdata.free = $scope.free;
+    }
+
+    if ($scope.free == false) {
+
+      if ($scope.price.length > 0) {
+        formdata.price = $scope.price;
+      } else {
+        console.log("price zero")
+      }
+
+    }
+
+    console.log(formdata);
+
+    Courses.create(formdata).success(function(res) {
+
+      console.log(res)
+
+      if (res.success) {
+
+        $location.path('/cursos/suite');
+
+      }
+
+    });
+    //END Courses.create()
+
+  }
+  //END $scope.criar
+
+}])
+
+.controller('CoursesNavBarCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Payments', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Payments) {
+
+  $scope.page = false;
+
+  let url = $route.current;
+  let originalPath = url.$$route.originalPath;
+
+  $scope.originalPath = originalPath;
+
+  console.log("hello courses nav")
+
+  $scope.coursesCreate = function() {
+    ngDialog.open({ template: 'partials/courses/modals/coursecreate.html', controller: 'CoursesCriarCtrl', className: 'ngdialog-theme-default' });
+  }
+
+  $scope.moduleCreate = function() {
+    ngDialog.open({ template: 'partials/courses/modals/modulecreate.html', controller: 'CoursesModulosCriarCtrl', className: 'ngdialog-theme-default' });
+  }
+
+}])
+
+/* */
+
 .controller('StudentProExploreCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Payments', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Payments) {
 
   $scope.step = "exhibition";
@@ -373,6 +902,26 @@ angular.module('netbase')
 
 }])
 
+/* home courses */
+
+.controller('HomeCoursesCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', '$timeout', 'Courses', '$filter', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, $timeout, Courses, $filter) {
+
+  Courses.getAll().success(function(res) {
+
+    console.log("response courses: ")
+    console.log(res);
+    $scope.courses = res.data;
+
+  });
+
+  $scope.textFilter = function(text) {
+
+    return $filter('limitHtml')(text, 350, '...')
+
+  }
+
+}])
+
 /* home - topic */
 
 .controller('TopicMenuCtrl', ['$rootScope', '$scope', '$location', 'University', 'ngDialog', 'News', '$localStorage', 'Knowledge' , function($rootScope, $scope, $location, University, ngDialog, News, $localStorage, Knowledge) {
@@ -536,8 +1085,6 @@ angular.module('netbase')
 
   let knowledgeUrl = $route.current.params.url;
 
-  console.log("politica: ")
-
   /* Load Knowledge */
 
   Knowledge.getByUrl(knowledgeUrl).success(function(res) {
@@ -548,6 +1095,7 @@ angular.module('netbase')
     $scope.knowledge = res.data;
 
   });
+  // END Knowledge.getByUrl
 
   Knowledge.getAllPostsByUrlPaginated(knowledgeUrl).success(function(res) {
 
@@ -555,6 +1103,7 @@ angular.module('netbase')
     $scope.forumPosts = res.data.docs;
 
   });
+  // END Knowledge.getAllPostsByUrlPaginated
 
 
 }])
@@ -2331,11 +2880,21 @@ angular.module('netbase')
 
 }])
 
-.controller('HomeCtrl', ['$rootScope', '$scope', 'ngDialog', 'University', 'Knowledge' , function($rootScope, $scope, ngDialog, University, Knowledge) {
+.controller('HomeCtrl', ['$rootScope', '$scope', 'ngDialog', 'University', 'Knowledge', 'Courses' , function($rootScope, $scope, ngDialog, University, Knowledge, Courses) {
 
   $scope.showMobileMenu = false;
 
   $scope.universities = [];
+
+  Courses.getAll().success(function(res) {
+
+    console.log("response courses: ")
+    console.log(res);
+    $scope.courses = res.data;
+
+  });
+
+  /* */
 
   Knowledge.getAllPaginated().success(function(res) {
 
@@ -2388,6 +2947,23 @@ angular.module('netbase')
     $scope.universities = res.data.data;
 
   });
+  //END University
+
+  /* swipe */
+  $scope.onTransitionStart = function(swiper) {
+    console.log("transition")
+    console.log(swiper.activeIndex)
+  }
+
+  /* */
+  Knowledge.getAllPostsByUrlPaginated("esportes").success(function(res) {
+
+    console.log(res.data.docs)
+    $scope.forumPosts = res.data.docs;
+    $scope.pages = res.data.pages;
+
+  });
+  //END Knowledge.getAllPostsByUrlPaginated
 
 }])
 
@@ -2518,6 +3094,23 @@ angular.module('netbase')
   }
 }])
 
+.directive('coursehomebox', ['SocialMarketPlace', function(SocialMarketPlace) {
+  return {
+    restrict: 'AE',
+    templateUrl: '../partials/directive/coursehomebox.html',
+    replace: true,
+    scope: true,
+    link: function(scope, element, attr) {
+
+      let course = JSON.parse(attr.c);
+
+      scope.course = course;
+
+
+    }
+  }
+}])
+
 .directive('smplisting', ['SocialMarketPlace', function(SocialMarketPlace) {
   return {
     restrict: 'AE',
@@ -2550,6 +3143,30 @@ angular.module('netbase')
   return function(text) {
     return $sce.trustAsHtml(text);
   };
+}])
+
+.directive('modulecontentcard', ['Courses', function(Courses) {
+  return {
+    restrict: 'AE',
+    templateUrl: '../partials/directive/modulecontentcard.html',
+    replace: true,
+    scope: true,
+    link: function(scope, element, attr) {
+
+      let modulecontent = JSON.parse(attr.mc);
+
+      Courses.getContentModuleById(modulecontent.modelId).then(function(res) {
+
+        console.log(res);
+
+        scope.modulecontent = res.data.data;
+
+      });
+
+    }
+    //END Courses.getModuleById()
+
+  }
 }])
 
 .directive('autoFocus', function($timeout) {

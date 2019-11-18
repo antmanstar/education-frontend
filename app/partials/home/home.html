@@ -57,7 +57,84 @@
     </div>
     <!-- col-sm-4 col-md-3 section-menu-col -->
 
-      <div class="col-sm-8 col-md-9 animated fadeIn" style="padding-left: 20px; padding-right: 20px;">
+
+    <div class="col-sm-8 col-md-9 animated fadeIn" style="padding-left: 20px; padding-right: 20px;">
+
+      <!--<div class="headline-container" style="padding-bottom: 10px;">Bem vindo</div>-->
+      <div class="headline-container" style="padding-bottom: 10px; line-height: 1.3em; letter-spacing: -0.5px; color: #2d4255; font-size: 1.8em;">A melhor plataforma para aprender, ensinar, debater e compartilhar conhecimento.</div>
+      <!-- ng-hide="user.name.length > 0 && user.name != undefined" -->
+
+      <div class="row" style="padding-bottom: 20px; padding-top: 10px;">
+
+        <div class="col-xs-6" style="text-align: center; padding: 0;">
+          <button style="border: none; border: 3px solid #2d4255ad; border-radius: 5px; font-size: 1.1em; color: #828282; background-color: unset; outline: none; box-shadow: 0px 2px 4px 0px rgba(97,97,97,0.15);"><i style="padding-right: 5px;" class="fas fa-user-graduate"></i> Quero aprender</button>
+        </div>
+
+        <div class="col-xs-6" style="text-align: center; padding: 0;">
+          <button style="border: none; border: 3px solid #2d4255ad; border-radius: 5px; font-size: 1.1em; color: #828282; background-color: unset; outline: none; box-shadow: 0px 2px 4px 0px rgba(97,97,97,0.15);"><i style="padding-right: 5px;" class="fas fa-chalkboard-teacher"></i> Quero educar</button>
+        </div>
+
+      </div>
+
+      <style>
+
+        .section-cards .card {
+          width: unset !important;
+        }
+
+      </style>
+
+      <p><img style="height: 25px; margin-right: 5px;" src="https://welove.education/img/icons/universidadeicon.png"> <b style="color: #616161;">Comunidades Educacionais</b></p>
+
+      <div class="section-cards" style="padding-bottom: unset;">
+
+        <!-- 5db3e7e9225728001769dc5f -->
+
+        <homeuniversitynewcard uid="5db3e7e9225728001769dc5f"></homeuniversitynewcard>
+
+        <homeuniversitynewcard uid="5cb96505ae38fe00154a34a5"></homeuniversitynewcard>
+
+        <homeuniversitynewcard uid="5d8bc148098677001707d027"></homeuniversitynewcard>
+
+        <homeuniversitynewcard uid="5db4e63ad65a7c0017ca0bc0"></homeuniversitynewcard>
+
+        <homeuniversitynewcard uid="5db682a5f820b300179311d3"></homeuniversitynewcard>
+
+        <homeuniversitynewcard uid="5db50a9ad65a7c0017ca0bc2"></homeuniversitynewcard>
+
+        <!--
+        <div ng-if="k.universities.length > 0" ng-repeat="k in knowledges | orderBy: '-universities.length' | limitTo: 2" style="margin-bottom: 10px;">
+
+          <homeuniversitynewcard uid={{university.universityId}} ng-repeat="university in k.universities"></homeuniversitynewcard>
+
+        </div>
+        -->
+
+      </div>
+      <!-- end sections-cards -->
+
+      <style>
+
+        @media screen and (max-width: 768px) {
+
+          .course-box-wrapper {
+            padding-left: 0;
+            padding-right: 0;
+          }
+
+        }
+
+      </style>
+
+      <div class="bar-sections standard animated delay-1s" style="width: 100%;">
+        <div class="bar-section active" style="color: #ee5748;">CURSOS</div>
+        <div class="bar-section">AULAS</div>
+        <div class="bar-section">TRILHAS</div>
+      </div>
+
+      <coursehomebox c="{{course._id}}" ng-repeat="course in courses"></coursehomebox>
+
+      <!-- -->
 
       <!-- Welcome -->
 
@@ -75,211 +152,299 @@
       -->
       <!-- end -->
 
-      <!--<div class="headline-container">Bem vindo</div>-->
-      <div class="headline-main" ng-hide="user.name.length > 0 && user.name != undefined" style="padding-top: 15px;">A melhor plataforma para aprender, ensinar, debater e compartilhar conhecimento.</div>
-      <!-- end Welcome -->
-
-      <div class="row" ng-hide="user.name.length > 0 && user.name != undefined" style="padding-left: 10px; padding-right: 10px; padding-top: 0px; padding-top: 0px;">
-
-        <div class="col col-xs-4 col-sm-4" style="text-align: center;">
-          <div style="background-color: #fff; border-radius: 3px; min-height: 140px; padding-top: 15px;">
-            <img width="60px" style="margin-bottom: 10px; padding: 10px;" src="https://visualpharm.com/assets/311/Graduation%20Cap-595b40b65ba036ed117d2d97.svg" /></br>
-            <b>Aprender</b>
-          </div>
-        </div>
-
-        <div class="col col-xs-4 col-sm-4" style="text-align: center;">
-          <div style="background-color: #fff; border-radius: 3px; min-height: 140px; padding-top: 15px;">
-            <img width="60px" style="margin-bottom: 10px; padding: 10px;" src="https://visualpharm.com/assets/395/University-595b40b65ba036ed117d3588.svg" /></br>
-            <b>Educar</b>
-          </div>
-        </div>
-
-        <div class="col col-xs-4 col-sm-4" style="text-align: center;">
-          <div style="background-color: #fff; border-radius: 3px; min-height: 140px; padding-top: 15px;">
-            <img width="60px" style="margin-bottom: 10px; padding: 10px;" src="https://visualpharm.com/assets/88/Class-595b40b65ba036ed117d3dfa.svg" /></br>
-            <b>Crescer</b>
-          </div>
-        </div>
-
-      </div>
-
       <!-- end row -->
 
-      <div class="mobile-show" style="text-align: right;">
-        <button ng-hide="logged" ng-click="signup()" class="btn bg-primary-green" style="margin-top: 2px; height: 29px; width: unset;">Registrar</button>
-      </div>
+      </br>
 
-      <div style="padding-bottom: 16px;"></div>
+      <style>
+        .swiper-container {
+          padding: 3px;
+          padding-bottom: 40px;
+        }
 
-      <div class="section-header">
-        <div class="title">Artigos em Destaque</div>
-        <div>Aprenda sobre pilates, calistenia, pilates, ...</div>
-        <div style="padding-bottom: 16px;"></div>
-      </div>
+        .swiper-slide {
+          text-align: left;
+        }
 
-      <div class="section-cards">
-        <div class="card" style="width: 210px; vertical-align: top;" ng-repeat="x in [1,2,3,4,5,6]">
-          <div style="color: #000; word-wrap: break-word; white-space: normal;">
-            <div style="font-weight: 600; font-size: 1.1em;"><b>Info-ricos e info-pobres</b></div>
-            <div style="font-weight: 500; font-size: 0.9em;"><b>Roberto Campos</b></div>
-            <div style="padding-bottom: 10px;"></div>
-            <div style="width: 100%;">A sociedade humana sempre foi uma "sociedade da informação", desde quando o Pitecantropo ancestral começou a comunicar-se articuladamente com os outros.</div>
-          </div>
-        </div>
+        .knowledge-card {
+          border-radius: 5px;
+          width: 45%;
+          box-shadow: 0px 0px 3px 0px rgba(97,97,97,0.15);
+          width: calc(100% / 4);
+        }
 
-      </div>
+        .knowledge-card .knowledge-card-image {
+          height: 70px; background-size: cover;
+          border-top-right-radius: 5px;
+          border-top-left-radius: 5px;
+        }
 
-      <div style="padding-bottom: 32px;"></div>
+        .knowledge-card .title {
+          height: 45px;
+          padding: 10px;
+          font-weight: bold;
+        }
 
-      <!-- Explorar universidades -->
+        .section-cards {
+          padding-bottom: 10px;
+        }
 
-      <!-- <div class="headline-container">Explorar universidades</div> -->
+        .section-cards::-webkit-scrollbar {
+            width: 0px;  /* Remove scrollbar space */
+            background: transparent;  /* Optional: just make scrollbar invisible */
+        }
+        /* Optional: show position indicator in red */
+        .section-cards::-webkit-scrollbar-thumb {
+            background: transparent;
+        }
 
-      <div class="section-cards section-cards-loading" ng-hide="universities.length > 0">
+        @media only screen and (min-width: 780px) {
 
-        <a ng-hide="universities.length > 0" ng-repeat="n in [1,2,3,4,5]">
-          <div class="card hvr-hang">
+          .swiper-slide {
+            width: 50% !important;
+          }
 
-            <div class="picture area"></div>
+        }
 
-            <div class="title"></div>
-            <div class="description"></div>
+        .bar-sections {
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+          width: 100%;
+          margin-bottom: 15px;
+          border-radius: 5px;
+          font-size: 0.95em;
+        }
 
-          </div>
-          <!-- end card -->
-        </a>
+        .bar-sections .bar-section {
+          display: flex;
+          flex-direction: column;
+          flex-basis: 100%;
+          flex: 1;
+          text-align: center;
+          font-size: 1em;
+          font-weight: bold;
+          font-size: 0.95em;
+        }
 
-      </div>
+        .bar-sections.standard {
+          box-shadow: 0px 2px 4px 0px rgba(97,97,97,0.15);
+          padding: 10px;
+        }
 
-      <div ng-if="k.universities.length > 0" ng-repeat="k in knowledges | orderBy: '-universities.length'" style="margin-bottom: 25px;">
+        .bar-sections .bar-section.active {
+          color: #000;
+        }
 
-        <div class="section-header">
-          <div class="title">{{k.title}}</div>
-          <!-- <div>Aprenda sobre pilates, calistenia, pilates, ...</div> -->
-          <div style="padding-bottom: 16px;"></div>
-          <div class="section-cards" style="padding-bottom: 10px;">
+        .bar-sections .bar-section.active {
+          border-radius: 10px;
+          font-weight: bold;
+        }
 
-            <homeuniversitynewcard uid={{university.universityId}} ng-repeat="university in k.universities"></homeuniversitynewcard>
+        .bar-sections .bar-section {
+          color: #2d4255b8;
+        }
 
-          </div>
-          <!-- end section-cards -->
+        .bar-sections.orange .bar-section.active {
+          background-color: #ef62543b;
+          border-radius: 10px;
+          color: #ee5748;
+          font-weight: bold;
+        }
 
-        </div>
-        <!-- end section-header -->
+      }
 
-      </div>
-      <!-- end -->
+      </style>
 
-      <div style="padding-bottom: 32px;"></div>
+      <style>
+
+        .course-box {
+          box-shadow: 0px 0px 17px 0px rgba(130,130,130,0.23);
+          display: inline-block;
+          border-radius: 5px;
+          width: 100%;
+          padding: 15px;
+          cursor: pointer;
+          margin-bottom: 15px;
+          overflow: auto;
+          height: 250px;
+        }
+
+        .course-box .title {
+          font-size: 1.3em;
+          font-weight: bold;
+        }
+
+        @media screen and (max-width: 860px) {
+
+          .course-box {
+            height: 190px;
+          }
+
+        }
+
+      </style>
+
+      <style>
+
+        .button-highlighter {
+          box-shadow: 0px 8px 15px rgba(48, 179, 159, 0.51);
+          transition: all 0.3s ease 0s;
+          cursor: pointer;
+        }
+
+        .course-card {
+          box-shadow: 0px 0px 3px 0px rgba(171,171,171,0.5);
+          border-radius: 4px; padding-top: 20px; padding-bottom: 20px;
+          padding-left: 20px; padding-right: 20px;
+          margin-bottom: 15px;
+        }
+
+        .course-card .topic {
+          padding-top: 10px;
+          padding-bottom: 10px;
+        }
+
+        .course-card .topic .text {
+          display: inline-block;
+          width: calc(100% - 39px);
+        }
+
+        .course-card .topic .title {
+          font-size: 1.3em;
+          display: inline-block;
+          font-weight: 500;
+        }
+
+        .course-card .topic .title {
+          font-size: 1.2em;
+          color: #3c3c3c;
+        }
+
+        .course-card .topic .subtitle {
+          color: #8c8c8c;
+        }
+
+        .course-card .topic .line {
+          width: 35px;
+          font-size: 0.5em;
+          padding-top: 7px;
+          vertical-align: top;
+          text-align: center;
+          display: inline-block;
+          color: #d8d8d8;
+        }
+
+        .instrutora {
+          margin-right: 15px;
+          display: inline-block;
+        }
+
+        .instrutora .author {
+          font-size: 1.25em;
+        }
+
+        .instrutora .author .name {
+          font-weight: 600;
+        }
+
+        .instrutora .author .title {
+          font-weight: 400;
+          font-size: 0.8em;
+        }
+
+
+        .instrutora .text {
+
+        }
+
+        .instrutora .picture {
+          margin-bottom: 10px;
+        }
+
+        @media only screen and (max-width: 768px) {
+
+          .course-card {
+
+            padding-right: 10px;
+            padding-left: 10px;
+
+          }
+
+        }
+
+      </style>
 
       <!--
-      <div class="row" ng-hide="user.membership > 0">
-
-        <div class="col-xs-12 col-sm-6">
-
-          <div>
-            <div class="headline-container" style="padding-bottom: 0;">Introduzindo Estudante <div class="student-pro" style="font-size: 0.7em !important; margin-top: 5px;">PRO</div></div>
-            <div class="headline-sub-four" style="padding-bottom: 15px;">Transforme cada novo desafio em oportunidades de aprendizado e crescimento.</div>
-
-            <div class="card-highlight" style="background-image: url('https://cdn.shopify.com/s/files/1/0374/5581/products/SUN-0454_43e1049e-6b1a-4411-ba4d-d901faca2012_2048x.jpg?v=1488258434')">
-
-              <div class="card-highlight-wrapper">
-
-                <div class="student-pro" style="font-size: 1.1em; background-color: #fff; color: #2d4255;">PRO</div></br>
-                </br>
-
-                <button class="btn bg-white" ng-click="studentProExplore()" style="width: 60%; color: #000;">Conhecer</button>
-              </div>
-
-            </div>
-
-          </div>
-
-        </div>
-
-        <div class="col-xs-12 col-sm-6">
-          <div class="headline-container" style="padding-bottom: 0;">Certificados na Blockchain</div>
-          <div class="headline-sub-four" style="padding-bottom: 15px;">Todos os diplomas e certificados emitidos na plataforma são registrados permanentemente na blockchain.</div>
-          <div style="text-align: center; padding-top: 80px; height: 300px;">
-            <img height="86px" src="https://storage.googleapis.com/networkbase-static/img/logo/network.png" />
-            <b style="font-size: 2.3em; padding-right: 10px;">+</b>
-            <img width="200px" src="https://certificate.network/img/logo.jpg" /></div>
-        </div>
-
+      <div class="bar-sections orange" style="width: 100%;">
+        <div class="bar-section active">ECONOMIA</div>
+        <div class="bar-section">INGLÊS</div>
+        <div class="bar-section">FILOSOFIA</div>
       </div>
       -->
-      <!-- end row -->
-
-      <!-- End Explorar universidades -->
-
-      <div style="padding-bottom: 32px;"></div>
-
-      <!-- Create own university -->
 
       <!--
-      <div class="section-break row">
+      <swiper onTransitionStart="onTransitionStart" dynamicBullets="true" effect="slide" on-transition-start="onTransitionStart" slidesPerView="1" slidesPerGroup="1">
 
-        <div class="col-xs-12 col-sm-6">
+        <slides>
+          <slide ng-repeat="x in forumPosts">
+            <div class="card" style="vertical-align: top; border-radius: 5px; background-color: #fff; padding: 10px; box-shadow: 0px 0px 3px 0px rgba(97,97,97,0.15);">
+              <div style="color: #000; word-wrap: break-word; white-space: normal;">
+                <div style="font-weight: 600; font-size: 0.8em;"><b>{{x.title}}</b></div>
+                <div style="font-weight: 500; font-size: 0.8em;"><b>Roberto Campos</b></div>
+                <div style="padding-bottom: 10px;"></div>
+                <div style="width: 100%; font-size: 0.8em;">A sociedade humana sempre foi uma "sociedade da informação", desde quando o Pitecantropo ancestral começou a comunicar-se articuladamente com os outros.</div>
+              </div>
+            </div>
+          </slide>
+        </slides>
 
-          <div class="section-break-image" style="background-image: url('https://www.newtimes.co.rw/sites/default/files/main/articles/2015/03/12/1426190446article-0-19012E29000005DC-414_634x400.jpg')"></div>
+        <pagination></pagination>
 
-        </div>
-
-        <div class="col-xs-12 col-sm-6">
-
-          <div style="">
-
-            <div class="section-break-title">Já pensou em criar a sua própria universidade?</div>
-            <p>Crie a sua comunidade educacional online e começe a ensinar para os seus alunos.</p>
-            <button class="btn bg-primary-green" ng-click="createUniversityRedirect()" style="width: 60%; color: #fff;">Criar universidade</button>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-    -->
+      </swiper>
+      -->
 
   </div>
+
+<!-- ng-click="createUniversityRedirect()" --
 
 </div>
 <!-- container-fluid container-full -->
 
+<!--
 <div class="academia-footer" style="z-index: 9; background-color: #fff; box-shadow: 0px -2px 4px -1px rgba(0,0,0,0.15); -moz-box-shadow: 0px -2px 4px -1px rgba(0,0,0,0.15); -webkit-box-shadow: 0px -2px 4px -1px rgba(0,0,0,0.15);">
 
   <ul style="width: 98%" style="color: #565656 !important;">
 
     <li style="width: 20%; min-width: unset; padding-top: 4px; padding-left: 0; padding-right: 0;">
-      <a style="color: #565656 !important;" href="/home/timeline" ng-class="forumClass">
+      <a style="color: rgba(86, 86, 86, 0.57) !important;" href="/home/timeline" ng-class="forumClass">
         <i style="font-size: 1.7em;" class="far fa-newspaper"></i>
       </a>
     </li>
 
     <li style="width: 20%; min-width: unset; padding-top: 4px; padding-left: 0; padding-right: 0;">
-      <a style="color: #565656 !important;" href="/home">
-        <i style="font-size: 1.7em; color: #52bfea; font-weight: bolder;" class="fas fa-search"></i>
+      <a style="color: rgba(86, 86, 86, 0.57) !important;" href="/home">
+        <i style="font-size: 1.7em; color: #383838; font-weight: bolder;" class="fas fa-search"></i>
       </a>
     </li>
 
     <li style="width: 20%; min-width: unset; padding-left: 0; padding-right: 0;">
-      <a style="color: #565656 !important;" href="/home/create">
+      <a style="color: rgba(86, 86, 86, 0.57) !important;" href="/home/create">
         <i style="font-size: 1.7em;" class="fas fa-plus"></i>
       </a>
     </li>
 
     <li style="width: 20%; min-width: unset; padding-left: 0; padding-right: 0;">
-      <a style="color: #565656 !important;" href="/a/{{university.url}}/forum/category/all" ng-class="forumClass">
+      <a style="color: rgba(86, 86, 86, 0.57) !important;" href="/a/{{university.url}}/forum/category/all" ng-class="forumClass">
         <i style="font-size: 1.7em;" class="fas fa-bell"></i>
       </a>
     </li>
 
-    <li style="width: 20%; color: #565656 !important; min-width: unset; padding-left: 0; padding-right: 0;" ng-click="premium()">
+    <li style="width: 20%; color: rgba(86, 86, 86, 0.57) !important; min-width: unset; padding-left: 0; padding-right: 0;" ng-click="premium()">
       <i style="font-size: 1.7em;" class="fas fa-user-graduate"></i>
     </li>
 
   </ul>
 
 </div>
+-->

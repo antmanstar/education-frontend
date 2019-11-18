@@ -1,6 +1,6 @@
 <tr class="active spaceUnder">
   <td class="col-sm-1 col-md-1" style="text-align: center; font-size: 1.35em;"><i class="fas fa-newspaper"></i></td>
-  <td class="col-sm-6 col-md-6"><p style="font-size: 1.35em;"><a href="/a/{{university.url}}/forum/category/id/{{category._id}}"><b>{{category.title}}</b></a></p><p>{{category.description}}</p></td>
+  <td class="col-sm-6 col-md-6"><p style="font-size: 1.35em;"><a href="/a/{{university.url}}/forum/category/id/{{category._id}}"><b>{{category.title}}</b></a></p><p ng-hide="category.description == 'undefined'">{{category.description}}</p></td>
   <td class="col-sm-2 col-md-2" style="text-align: center;"><b>{{total}}</b></td>
   <td class="col-sm-3 col-md-3" style="text-align: right;" ng-show="docs[0]._id.length > 0">
     <p><a href="/a/{{university.url}}/forum/post/id/{{docs[0]._id}}"><b>{{docs[0].title}}</b></a></p>

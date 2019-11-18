@@ -14,7 +14,9 @@ angular.module('netbase', ['ngStorage',
     'dibari.angular-ellipsis',
     'ngSanitize',
     'infinite-scroll',
-    'updateMeta'
+    'updateMeta',
+    'as.sortable',
+    'ui.swiper'
 ])
 .config(['$translateProvider', '$localStorageProvider', 'StripeElementsProvider', function ($translateProvider, $localStorageProvider, StripeElementsProvider) {
 
@@ -79,6 +81,34 @@ angular.module('netbase', ['ngStorage',
             templateUrl: 'partials/playlist/create.html',
             controller: 'PlaylistCreateCtrl',
         })
+        .when('/cursos/id/:id', {
+            templateUrl: 'partials/courses/byid.html',
+            controller: 'CoursesByIdCtrl',
+        })
+        .when('/cursos/suite/criar', {
+            templateUrl: 'partials/courses/suite/criar.html',
+            controller: 'CoursesCriarCtrl',
+        })
+        .when('/cursos/suite/', {
+            templateUrl: 'partials/courses/suite/index.html',
+            controller: 'CoursesSuiteIndexCtrl',
+        })
+        .when('/cursos/suite/modulos', {
+            templateUrl: 'partials/courses/suite/modulos.html',
+            controller: 'CoursesModulosCtrl',
+        })
+        .when('/cursos/suite/content', {
+            templateUrl: 'partials/courses/suite/content.html',
+            controller: 'CoursesContentModulosCtrl',
+        })
+        .when('/cursos/suite/modulos/id/:id', {
+            templateUrl: 'partials/courses/suite/modulosbyid.html',
+            controller: 'CoursesModulosByIdCtrl',
+        })
+        .when('/cursos/suite/owner', {
+            templateUrl: 'partials/courses/suite/owner.html',
+            controller: 'CoursesOwnerCtrl',
+        })
         .when('/v/id/:videoId', {
             templateUrl: 'partials/video/videowatch.html',
             controller: 'VideoWatchCtrl',
@@ -124,7 +154,7 @@ angular.module('netbase', ['ngStorage',
             controller: 'AcademiaForumCtrl',
         })
         .when('/a/:academiaName/cursos', {
-            templateUrl: 'partials/academia/academiacourses.html',
+            templateUrl: 'partials/academia/courses/academiacourses.html',
             controller: 'AcademiaCoursesCtrl',
         })
         .when('/a/:academiaName/timeline', {
@@ -333,6 +363,10 @@ angular.module('netbase', ['ngStorage',
         .when('/home/create', {
             templateUrl: 'partials/home/homecreate.html',
             controller: 'HomeCreateCtrl',
+        })
+        .when('/home/cursos', {
+            templateUrl: 'partials/home/homecourses.html',
+            controller: 'HomeCoursesCtrl',
         })
         .when('/home/timeline', {
             templateUrl: 'partials/home/hometimeline.html',

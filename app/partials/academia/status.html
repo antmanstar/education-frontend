@@ -1,22 +1,209 @@
 <!-- ng-controller="AcademiaStatusCtrl" -->
+
+<!--
 <div class="academia-content-mobile">
 
   <div class="academia-content-mobile-academia-title">
     <a ng-href="/a/{{university.url}}">{{university.name}}</a>
   </div>
-  <!-- academia-content-mobile -->
 
   <div class="academia-content-mobile-academia-stats">
     {{university.members.length}} members
   </div>
-  <!-- academia-content-mobile -->
 
   <button ng-hide="userSubscribed(university.members)" class="btn bg-primary-purple" style="margin-top: 2px; height: 29px; width: unset;" ng-click="subscribe()">Inscrever</button>
   <button ng-show="userSubscribed(university.members)" class="btn bg-primary-purple" style="margin-top: 2px; height: 29px; width: unset;" ng-click="subscribe()">Desinscrever</button>
 
 </div>
-<!-- academia-content-mobile -->
+-->
 
+<style>
+
+  .academia-mobile-status {
+    margin-bottom: 5px;
+  }
+
+  .academia-mobile-status-top {
+
+  }
+
+  .academia-mobile-status-top .title {
+    font-size: 1.4em;
+    font-weight: bolder;
+    display: inline-block;
+    color: #565656;
+  }
+
+  .academia-mobile-status-top .members {
+    font-size: 1em;
+    float: right;
+    display: inline-block;
+    line-height: 26px;
+    color: #6d6d6d;
+  }
+
+  @media screen and (min-width: 768px) {
+
+    .academia-mobile-status {
+      display: none;
+    }
+
+    .academia-mobile-navigation {
+      display: none;
+    }
+
+  }
+
+</style>
+
+<div class="academia-mobile-status">
+
+  <div class="academia-mobile-status-top">
+    <div class="title">{{university.name}}</div>
+    <div class="members"><i class="fas fa-users"></i> {{university.members.length}} </div>
+  </div>
+
+</div>
+
+<style>
+
+  .academia-mobile-navigation {
+    overflow-x: scroll;
+    white-space: nowrap;
+    border-radius: 5px;
+    padding-bottom: 15px;
+  }
+
+  .academia-mobile-navigation-option {
+    display: inline-block;
+    margin-right: 10px;
+    text-align: center;
+    vertical-align: top;
+  }
+
+  .academia-mobile-navigation-option-ball {
+    padding: 20px;
+    margin-bottom: 5px;
+    background-color: #e6e6e6;
+    border-radius: 50%;
+    color: #6d6d6d;
+    display: inline-flex;
+  }
+
+  .academia-mobile-navigation-option-title {
+    font-weight: 600;
+    font-size: 0.8em;
+    color: #6d6d6d;
+    line-height: 1.2em;
+  }
+
+</style>
+
+<div class="academia-mobile-navigation">
+
+  <a href="/a/{{university.url}}/timeline" ng-class="timelineClass">
+
+    <div class="academia-mobile-navigation-option">
+
+      <div class="academia-mobile-navigation-option-ball">
+        <i class="fas fa-stream"></i>
+      </div>
+
+      <div class="academia-mobile-navigation-option-title">Timeline</div>
+
+    </div>
+
+  </a>
+
+  <a href="/a/{{university.url}}/forum" ng-class="timelineClass">
+
+    <div class="academia-mobile-navigation-option">
+
+      <div class="academia-mobile-navigation-option-ball">
+        <i class="fas fa-newspaper"></i>
+      </div>
+
+      <div class="academia-mobile-navigation-option-title">Feed</div>
+
+    </div>
+
+  </a>
+
+  <a href="/a/{{university.url}}/forum/category/all" ng-class="timelineClass">
+
+    <div class="academia-mobile-navigation-option">
+
+      <div class="academia-mobile-navigation-option-ball">
+        <i class="fas fa-chalkboard"></i>
+      </div>
+
+      <div class="academia-mobile-navigation-option-title">Forum</div>
+
+    </div>
+
+  </a>
+
+  <a href="/a/{{university.url}}/playlist/all" ng-class="timelineClass">
+
+    <div class="academia-mobile-navigation-option">
+
+      <div class="academia-mobile-navigation-option-ball">
+        <i class="fas fa-video"></i>
+      </div>
+
+      <div class="academia-mobile-navigation-option-title">Videos</div>
+
+    </div>
+
+  </a>
+
+  <a href="/a/{{university.url}}/cursos" ng-class="timelineClass">
+
+    <div class="academia-mobile-navigation-option">
+
+      <div class="academia-mobile-navigation-option-ball">
+        <i class="fas fa-graduation-cap"></i>
+      </div>
+
+      <div class="academia-mobile-navigation-option-title">Cursos</div>
+
+    </div>
+
+  </a>
+
+  <!--
+  <a href="/a/{{university.url}}/timeline" ng-class="timelineClass">
+
+    <div class="academia-mobile-navigation-option">
+
+      <div class="academia-mobile-navigation-option-ball">
+        <i class="fas fa-gamepad"></i>
+      </div>
+
+      <div class="academia-mobile-navigation-option-title">Games</div>
+
+    </div>
+
+  </a>
+
+  <a href="/a/{{university.url}}/timeline" ng-class="timelineClass">
+
+    <div class="academia-mobile-navigation-option">
+
+      <div class="academia-mobile-navigation-option-ball">
+        <i class="fas fa-vr-cardboard"></i>
+      </div>
+
+      <div class="academia-mobile-navigation-option-title">VR</div>
+
+    </div>
+
+  </a>
+  -->
+
+</div>
+
+<!--
 <div class="academia-content-navigation">
 
   <div class="academia-content-navigation-option"><a href="/a/{{university.url}}/timeline" ng-class="timelineClass">timeline</a></div>
@@ -25,10 +212,11 @@
   <div ng-if="university.url == 'sambapoker'" class="academia-content-navigation-option">/ <a href="/a/{{university.url}}/handanalysis/">hand analysis </a></div>
   <div class="academia-content-navigation-option">/ <a href="/a/{{university.url}}/playlist/all" ng-class="playlistClass">playlists</a></div>
   <div class="academia-content-navigation-option">/ <a href="/a/{{university.url}}/cursos" ng-class="cursosClass">cursos</a></div>
-  <!-- <div class="academia-content-navigation-option">/ <a href="/messenger" >chat</a> /</div> -->
-  <!--<div class="academia-content-navigation-option">/ <a href="/a/{{university.url}}/marketplace" ng-class="smpClass">marketplace</a> /</div>-->
-  <!-- <div class="academia-content-navigation-option"><a href="/a/{{universityUrl}}/jobs" ng-class="jobsClass">jobs</a> /</div> -->
+  <div class="academia-content-navigation-option">/ <a href="/messenger" >chat</a> /</div>
+  <div class="academia-content-navigation-option">/ <a href="/a/{{university.url}}/marketplace" ng-class="smpClass">marketplace</a> /</div>
+  <div class="academia-content-navigation-option"><a href="/a/{{universityUrl}}/jobs" ng-class="jobsClass">jobs</a> /</div>
 </div>
+-->
 <!-- academia-content-navigation -->
 
 <div class="academia-content-actions">

@@ -82,7 +82,7 @@
 
 /* container header */
 .headline-container {
-  font-weight: 600;
+  font-weight: 700;
   font-size: 2em;
   padding-top: 15px;
   padding-bottom: 25px;
@@ -157,7 +157,7 @@
 }
 
 .card-article-large .picture {
-  height: 100px !important;
+  height: 65px !important;
   border-radius: 5px;
 }
 
