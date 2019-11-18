@@ -457,7 +457,7 @@ angular.module('netbase', ['ngStorage',
 
 }])
 
-.run(function($rootScope, $location, $localStorage, $http, $route, $translate, Carousel) {
+.run(function($rootScope, $location, $localStorage, $http, $route, $translate) {
 
   // Sees Index page just one time
   if ($localStorage.indexVisited == undefined) {
