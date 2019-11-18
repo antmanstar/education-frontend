@@ -4,7 +4,7 @@
 
 angular.module('netbase')
 
-.controller('ApartmentsIndexCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Forum', '$sce', '$filter', 'ngDialog', '$window', 'jwtHelper', '$localStorage', 'Carousel', function($rootScope, $scope, $location, $route, University, Forum, $sce, $filter, ngDialog, $window, jwtHelper, $localStorage, Carousel) {
+.controller('ApartmentsIndexCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Forum', '$sce', '$filter', 'ngDialog', '$window', 'jwtHelper', '$localStorage', function($rootScope, $scope, $location, $route, University, Forum, $sce, $filter, ngDialog, $window, jwtHelper, $localStorage) {
 
   let universityUrl = $route.current.params.academiaName;
   let studentId = jwtHelper.decodeToken($localStorage.token)._id;
