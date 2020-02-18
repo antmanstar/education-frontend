@@ -6,6 +6,173 @@ angular.module('netbase')
 
 /* Courses */
 
+.controller('CoursesDashboardMenuCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'University', 'Playlist', 'Forum', 'User', '$window', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, University, Playlist, Forum, User, $window) {
+
+  let id = $route.current.params.videoid;
+
+  $scope.courseId = id;
+
+  let url = $route.current;
+  let originalPath = url.$$route.originalPath;
+
+  $scope.originalPath = originalPath;
+
+  $scope.estudar = function() {
+    console.log("opaaa")
+    $window.open('/cursos/id/' + id + '/estudar', "popup", "width=1500,height=700,left=100,top=150");
+  }
+
+}])
+
+.controller('CoursesEstudarTypeVideoCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Videos', '$sce', 'User', 'Forum', 'Students', 'ngDialog', '$localStorage', 'jwtHelper', function($rootScope, $scope, $location, $route, University, Videos, $sce, User, Forum, Students, ngDialog, $localStorage, jwtHelper) {
+
+  let videoId = $route.current.params.videoid;
+
+  console.log("HELLLOOOOOOOO")
+
+  //let player = angular.element(element.find("video")[0]).get(0);
+
+  let viewers = {};
+
+  let logged = $rootScope.logged;
+
+  Videos.getById(videoId).success(function(res) {
+
+
+        let status = res.status;
+
+        if (status == 90010) {
+
+          //$location.path('/home');
+
+        } else {
+
+          $scope.video = res.data;
+
+          console.log($scope.video)
+
+          if ($scope.video != null && $scope.video != undefined) {
+
+            if ($scope.video.file.indexOf(".mp4") == -1 && $scope.video.file.indexOf(".wmv") == -1) {
+
+              const video = document.querySelector('video');
+
+              const player = new Plyr(video);
+
+              if (!Hls.isSupported()) {
+            		video.src = $scope.video.file;
+            	} else {
+            		// For more Hls.js options, see https://github.com/dailymotion/hls.js
+            		const hls = new Hls();
+            		hls.loadSource($scope.video.file);
+            		hls.attachMedia(video);
+              }
+
+            } else {
+
+              console.log("is mp4")
+              $("video").attr("src", $scope.video.file);
+
+            }
+
+            // Time Tracking
+
+            Students.getStudentById($scope.video.accountId).success(function(res) {
+
+              console.log("student: ")
+              console.log(res);
+              $scope.student = res.data;
+
+            });
+            /* */
+
+            viewers = $scope.video.viewers;
+
+            let timeWatched = 0;
+
+            if (logged) {
+
+              let accountId = User.getId();
+
+              if (viewers.length > 0) {
+
+                for (let idx = 0; idx < viewers.length; idx++) {
+
+                  if (viewers[idx].accountId == accountId) {
+                    timeWatched = viewers[idx].time;
+                  }
+
+                }
+
+              }
+              //END viewers
+
+            }
+            //END logged
+
+            // FIX
+
+            setInterval(function(){
+
+              let player = $("video").get(0);
+
+              if (player != undefined) {
+
+                let percentComplete = player.currentTime / player.duration;
+
+                if (timeWatched < player.currentTime) {
+
+                  timeWatched = player.currentTime;
+
+                  let payload = { timeWatched : timeWatched };
+
+                  Videos.progress(payload, videoId).success(function(res) {
+
+                    console.log("time viewed updated")
+                    console.log(res);
+
+                  });
+                  //END update progress
+
+                }
+                //END timeWatched < player.currentTime
+
+              }
+
+            }, 10000);
+            //END setInterval
+
+
+          }
+          //END if (video is null or undefined)
+
+        }
+        //END status 90010
+
+  });
+  //END Videos.getById
+
+}])
+
+.controller('CoursesEstudarTypeVideoIdCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'University', 'Playlist', 'Forum', 'User', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, University, Playlist, Forum, User) {
+
+}])
+
+
+.controller('CoursesByIdDashboardModuloCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'University', 'Playlist', 'Forum', 'User', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, University, Playlist, Forum, User) {
+
+}])
+
+.controller('CoursesEstudarCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'University', 'Playlist', 'Forum', 'User', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, University, Playlist, Forum, User) {
+
+
+
+}])
+
+.controller('CoursesByIdDashboardCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'University', 'Playlist', 'Forum', 'User', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, University, Playlist, Forum, User) {
+
+}])
+
 .controller('CoursesContentCreateCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'University', 'Playlist', 'Forum', 'User', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, University, Playlist, Forum, User) {
 
   $scope.page = 'universitySelect';
@@ -308,8 +475,6 @@ angular.module('netbase')
   $scope.page = false;
 
   $scope.activeSection = "modulos";
-
-
 
   Courses.getModulesByAccount().success(function(res) {
 

@@ -117,7 +117,7 @@ socket.on("imagepath", function(a) {
       <img class="profile-pic" ng-if="student.imageUrl != undefined" src="{{student.imageUrl}}"></img>
       <div class="profile-pic" ng-if="student.imageUrl == undefined" style="background-image: url('http://virtual-strategy.com/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png')"></div>
 
-      <!--
+      
 
       <div class="profile-manage-wrapper">
         <div ng-click="imageEdit = true" style="text-align: center;">Modificar fotografia</div>
@@ -140,7 +140,7 @@ socket.on("imagepath", function(a) {
 
       </div>
 
-      -->
+
 
     </div>
     <!-- end col-xs-12 -->
@@ -164,7 +164,7 @@ socket.on("imagepath", function(a) {
         <button style="background-color: #fff; border: none; border: 1px solid #2d4255; width: 100%;">Edit profile</button>
       </div>
 
-      <!--
+
       <div class="profile-bio">
 
         <div class="title">Biografia <button ng-click="editBio()" class="btn-clean" style="float: right;" ng-hide="edit"><span class="glyphicon glyphicon glyphicon-pencil" style="padding-right: 5px;"></span> Edit</button><button ng-show="edit" ng-click="saveBio()" class="btn-clean" style="float: right; color: #30b39f;"><i class="fas fa-check" style="padding-right: 10px;"></i>Save</button></div>
@@ -174,7 +174,7 @@ socket.on("imagepath", function(a) {
         <div class="edit" ng-show="edit"><textarea ng-model="text" class="text"></textarea></div>
 
       </div>
-      -->
+
       <!-- end profile-bio -->
 
     </div>

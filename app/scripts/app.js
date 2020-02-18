@@ -84,6 +84,22 @@ angular.module('netbase', ['ngStorage',
             templateUrl: 'partials/courses/byid.html',
             controller: 'CoursesByIdCtrl',
         })
+        .when('/cursos/id/:id/estudar', {
+            templateUrl: 'partials/courses/estudar.html',
+            controller: 'CoursesEstudarCtrl',
+        })
+        .when('/cursos/id/:id/estudar/videos/:videoid', {
+            templateUrl: 'partials/courses/estudar/videos.html',
+            controller: 'CoursesEstudarTypeVideoCtrl',
+        })
+        .when('/cursos/id/:id/timeline', {
+            templateUrl: 'partials/courses/dashboard/index.html',
+            controller: 'CoursesByIdDashboardCtrl',
+        })
+        .when('/cursos/id/:id/modulos', {
+            templateUrl: 'partials/courses/dashboard/modulo.html',
+            controller: 'CoursesByIdDashboardModuloCtrl',
+        })
         .when('/cursos/suite/criar', {
             templateUrl: 'partials/courses/suite/criar.html',
             controller: 'CoursesCriarCtrl',
