@@ -834,6 +834,13 @@ angular.module('netbase')
           data.votesCount = 0;
           data.createdAt = Math.round((new Date()).getTime() / 1000);
           $scope.forumPost.answers.push(data);
+          var timelineData = {
+            entryType: "comment",
+            modelId: $scope.forumPost._id,
+            creatorType: "user",
+            universityId: $scope.forumPost.universityId
+          }
+          University.createForumPostTimeline(timelineData).then(function(res) {})
 
         }
 
@@ -1106,11 +1113,22 @@ angular.module('netbase')
         let status = res.data.status;
         let data = res.data.data;
         let success = res.data.success;
-
+        
         if (success) {
-
-          $location.path('/a/' + university.url + '/forum/post/id/' + data._id)
-          window.scrollTo(0, 0);
+          var timelineData = {
+            entryType: "forumpost",
+            modelId: data._id,
+            universityId: data.universityId
+          }
+          University.createForumPostTimeline(timelineData).then(function(res) {
+            console.log("createForumPostTimeline", res);
+            
+            let success = res.data.success;
+            if (success) {
+              $location.path('/a/' + university.url + '/forum/post/id/' + data._id)
+              window.scrollTo(0, 0);
+            }
+          })
 
         }
 

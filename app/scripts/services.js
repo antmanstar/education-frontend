@@ -6,13 +6,29 @@ angular.module('netbase')
 
     //var baseUrl = "https://api.universida.de/search";
     //var baseUrl = "https://educationalcommunity-uni.herokuapp.com";
-    var baseUrl = "http://192.168.1.7:9898"
+    // var baseUrl = "http://api.universida.de/university"
+    var baseUrl = "http://ec2-3-94-4-199.compute-1.amazonaws.com:8080"
 
     return {
 
       getTimelineAll: function(studentId, page) {
 
-        var url = '/timeline/home';
+        var url = '/timeline';
+        console.log($localStorage.token)
+
+        return $http({
+          method: 'GET',
+          url: baseUrl + url,
+          headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+              'x-access-token': $localStorage.token
+          }});
+
+      },
+
+      getTimelineRePostCount: function(modelId) {
+
+        var url = '/timeline/repost/count?modelId='+modelId;
         console.log($localStorage.token)
 
         return $http({
@@ -506,6 +522,27 @@ angular.module('netbase')
             url: baseUrl + url,
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
+            }});
+
+        },
+
+        createForumPostTimeline: function(data) {
+
+          var url = '/timeline/forumpost';
+
+          return $http({
+            method: 'POST',
+            data: data,
+            url: "http://ec2-3-94-4-199.compute-1.amazonaws.com:8080" + url,
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+              'x-access-token': $localStorage.token
             }});
 
         },

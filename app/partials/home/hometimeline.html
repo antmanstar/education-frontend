@@ -23,7 +23,7 @@
 <div class="container-fluid container-home animated fadeIn" style="padding-bottom: 30px;">
 
   <!-- Welcome -->
-  <div class="row">
+  <div class="row" ng-controller="HomeTimelineCtrl">
 
     <div class="col-sm-4 col-md-3 section-menu-col">
 
@@ -64,146 +64,7 @@
       <div style="height: 15px"></div>
 
       <div ng-repeat="activity in activities">
-        {{activity}}
-        <timelinenewforumpost reshare="{{activity.reshare}}" like="{{activity.like}}" comments="{{activity.comments}}" cid="{{activity.contentId}}" aid="{{activity.accountId}}" uid="{{activity.universityId}}" ng-if="activity.contentType == 'forumpost'"></timelinenewforumpost>
-
-      </div>
-
-      <div style="padding-top: 10px; padding-bottom: 10px; border-bottom: 0.5px solid #ececec;">
-
-        <div style="width: 60px; display: inline-block; vertical-align: top; text-align: right;"><img style="border-radius: 50%; width: 50px; height: 50px;" src="https://storage.googleapis.com/educationalcommunity-upload/university-bg/alaskabg.webp" /></div>
-        <div style="width: calc(100% - 66px); display: inline-block; padding-left: 10px; padding-right: 10px;">
-          <div style="font-weight: 700; font-size: 1.05em; display: inline-block;">Alaska Asset Management</div> - <i style="color: #636363;">@alaskaasset</i></br>
-          <div style="color: #000; font-weight: 600; font-size: 1.05em; line-height: 1.7em; font-family: 'Noto Serif TC', serif;">
-            1. Ser value investing de verdade, não aquele simplismo folclórico de pagar múltiplo baixo, mas sim o de pagar MENOS do que vale, não é pra todo mundo. Jean-Marie Eveillard já disse para nos perguntarmos: se é tão efetivo ser value investor, porque não existem mais?
-          </div>
-          <div style="padding-top: 5px; font-size: 1.05em; text-align: center; font-weight: 700; font-size: 1.06em;"><a href="#">CONTINUAR LENDO</a></div>
-          <div style="margin-top: 10px; font-size: 1.2em; color: #717171;">
-            <div style="width: 60px; text-align: left; padding-top: 5px; display: inline-block;"><i class="far fa-comment"></i></div>
-            <div style="width: 60px; text-align: left; padding-top: 5px; display: inline-block;"><i class="fas fa-retweet"></i></div>
-            <div style="width: 60px; text-align: left; padding-top: 5px; display: inline-block;"><i class="far fa-lightbulb"></i></div>
-            <div style="width: 60px; text-align: left; padding-top: 5px; display: inline-block;"><i class="fas fa-share-alt"></i></div>
-          </div>
-        </div>
-
-      </div>
-      <!-- end -->
-
-      <div style="padding-top: 10px; padding-bottom: 10px; border-bottom: 0.5px solid #ececec;">
-
-        <div style="width: 60px; display: inline-block; vertical-align: top; text-align: right;"><img style="border-radius: 50%; width: 50px; height: 50px;" src="https://yt3.ggpht.com/a-/AN66SAxE9GzMTbYGASvTUoRSo4APlpQdICzvyKZYUw=s900-mo-c-c0xffffffff-rj-k-no" /></div>
-        <div style="width: calc(100% - 66px); display: inline-block; padding-left: 10px; padding-right: 10px;">
-          <div style="font-weight: 700; font-size: 1.05em; display: inline-block;">Calistenia Brasil</div> - <i style="color: #636363;">@calisteniabrasil</i></br>
-          <div style="color: #464646;"><b>Adicionou apresentação</b> em <b>Valuation</b></br></div>
-          <div style="margin-top: 5px; margin-bottom: 5px;">
-            <img src="https://visualpharm.com/assets/431/PDF-595b40b65ba036ed117d3144.svg" height="40px;" />
-            <div style="display: inline-block">
-            <b style="color: #757575;">How to Value a SaaS Company</b></br>
-            PDF - 1.6MB
-            </div>
-          </div>
-          <div style="margin-top: 15px; font-size: 1.2em; color: #717171;">
-            <div style="width: 60px; text-align: left; padding-top: 5px; display: inline-block;"><i class="far fa-comment"></i></div>
-            <div style="width: 60px; text-align: left; padding-top: 5px; display: inline-block;"><i class="fas fa-retweet"></i></div>
-            <div style="width: 60px; text-align: left; padding-top: 5px; display: inline-block;"><i class="far fa-lightbulb"></i></div>
-            <div style="width: 60px; text-align: left; padding-top: 5px; display: inline-block;"><i class="fas fa-share-alt"></i></div>
-          </div>
-        </div>
-
-      </div>
-      <!-- end -->
-
-      <div style="padding-top: 10px; padding-bottom: 10px; border-bottom: 0.5px solid #ececec;">
-
-        <div style="padding-left: 55px; font-size: 0.93em; color: #757575; margin-bottom: 5px;"><i class="fas fa-retweet" style="padding-right: 5px;"></i> Rodrigo Lara Compartilhou</div>
-
-        <div style="width: 60px; display: inline-block; vertical-align: top; text-align: right;"><img style="border-radius: 50%; width: 50px; height: 50px;" src="https://pbs.twimg.com/profile_images/1118002687377723392/ZHTaAv5s_bigger.jpg" /></div>
-        <div style="width: calc(100% - 66px); display: inline-block; padding-left: 10px; padding-right: 10px;">
-          <div style="font-weight: 700; font-size: 1.05em; display: inline-block;">Marcelo Pio</div> - <i style="color: #636363;">@marcelopio</i></br>
-          <div style="color: #464646;"><b>Adicionou apresentação</b> em <b>Valuation</b></br></div>
-          <div style="margin-top: 5px; margin-bottom: 5px;">
-            <img src="https://visualpharm.com/assets/431/PDF-595b40b65ba036ed117d3144.svg" height="40px;" />
-            <div style="display: inline-block">
-            <b style="color: #757575;">How to Value a SaaS Company</b></br>
-            PDF - 1.6MB
-            </div>
-          </div>
-          <div style="margin-top: 15px; font-size: 1.2em; color: #717171;">
-            <div style="width: 60px; text-align: left; padding-top: 5px; display: inline-block;"><i class="far fa-comment"></i></div>
-            <div style="width: 60px; text-align: left; padding-top: 5px; display: inline-block;"><i class="fas fa-retweet"></i></div>
-            <div style="width: 60px; text-align: left; padding-top: 5px; display: inline-block;"><i class="far fa-lightbulb"></i></div>
-            <div style="width: 60px; text-align: left; padding-top: 5px; display: inline-block;"><i class="fas fa-share-alt"></i></div>
-          </div>
-        </div>
-
-      </div>
-      <!-- end -->
-
-      <div style="padding-top: 10px; padding-bottom: 10px; border-bottom: 0.5px solid #ececec;">
-
-        <div style="padding-left: 55px; font-size: 0.93em; color: #757575; margin-bottom: 5px;"><i class="fas fa-lightbulb" style="padding-right: 5px;"></i> Rodrigo Lara Curtiu</div>
-
-        <div style="width: 60px; display: inline-block; vertical-align: top; text-align: right;"><img style="border-radius: 50%; width: 50px; height: 50px;" src="https://pbs.twimg.com/profile_images/1118002687377723392/ZHTaAv5s_bigger.jpg" /></div>
-        <div style="width: calc(100% - 66px); display: inline-block; padding-left: 10px; padding-right: 10px;">
-          <div style="font-weight: 700; font-size: 1.05em; display: inline-block;">Marcelo Pio</div> - <i style="color: #636363;">@marcelopio</i></br>
-          <div style="color: #464646;"><b>Adicionou apresentação</b> em <b>Valuation</b></br></div>
-          <div style="margin-top: 5px; margin-bottom: 5px;">
-            <img src="https://visualpharm.com/assets/431/PDF-595b40b65ba036ed117d3144.svg" height="40px;" />
-            <div style="display: inline-block">
-            <b style="color: #757575;">How to Value a SaaS Company</b></br>
-            PDF - 1.6MB
-            </div>
-          </div>
-          <div style="margin-top: 15px; font-size: 1.2em; color: #717171;">
-            <div style="width: 60px; text-align: left; padding-top: 5px; display: inline-block;"><i class="far fa-comment"></i></div>
-            <div style="width: 60px; text-align: left; padding-top: 5px; display: inline-block;"><i class="fas fa-retweet"></i></div>
-            <div style="width: 60px; text-align: left; padding-top: 5px; display: inline-block;"><i class="far fa-lightbulb"></i></div>
-            <div style="width: 60px; text-align: left; padding-top: 5px; display: inline-block;"><i class="fas fa-share-alt"></i></div>
-          </div>
-        </div>
-
-      </div>
-      <!-- end -->
-
-      <div style="padding-top: 10px; padding-bottom: 10px; border-bottom: 0.5px solid #ececec;">
-
-        <div style="width: 60px; display: inline-block; vertical-align: top; text-align: right;"><img style="border-radius: 50%; width: 50px; height: 50px;" src="https://scontent-lhr3-1.xx.fbcdn.net/v/t1.0-1/p160x160/51880952_10156308739763721_6833850252827557888_n.jpg?_nc_cat=111&_nc_ht=scontent-lhr3-1.xx&oh=659115f10244768065b4c7bd345adc40&oe=5D82D40E" /></div>
-        <div style="width: calc(100% - 66px); display: inline-block; padding-left: 10px; padding-right: 10px;">
-          <div style="font-weight: 700; font-size: 1.05em; display: inline-block;">Rodrigo Lara</div> - <i style="color: #636363;">@rlara</i></br>
-          <div style="color: #464646;"><b>Adicionou apresentação</b> em <b>Investimentos</b></br></div>
-          <div style="margin-top: 5px; margin-bottom: 5px;">
-            <img src="https://visualpharm.com/assets/431/PDF-595b40b65ba036ed117d3144.svg" height="40px;" />
-            <div style="display: inline-block">
-            <b style="color: #757575;">Business Plan & Valuation</b></br>
-            PDF - 2.3MB
-            </div>
-          </div>
-          <div style="margin-top: 15px; font-size: 1.2em; color: #717171;">
-            <div style="width: 60px; text-align: left; padding-top: 5px; display: inline-block;"><i class="far fa-comment"></i></div>
-            <div style="width: 60px; text-align: left; padding-top: 5px; display: inline-block;"><i class="fas fa-retweet"></i></div>
-            <div style="width: 60px; text-align: left; padding-top: 5px; display: inline-block;"><i class="far fa-lightbulb"></i></div>
-            <div style="width: 60px; text-align: left; padding-top: 5px; display: inline-block;"><i class="fas fa-share-alt"></i></div>
-          </div>
-        </div>
-
-      </div>
-
-      <div style="padding-top: 10px; padding-bottom: 10px; border-bottom: 0.5px solid #ececec;">
-
-        <div style="width: 60px; display: inline-block; vertical-align: top; text-align: right;"><img style="border-radius: 50%; width: 50px; height: 50px;" src="https://scontent-lhr3-1.xx.fbcdn.net/v/t1.0-1/p160x160/51880952_10156308739763721_6833850252827557888_n.jpg?_nc_cat=111&_nc_ht=scontent-lhr3-1.xx&oh=659115f10244768065b4c7bd345adc40&oe=5D82D40E" /></div>
-        <div style="width: calc(100% - 66px); display: inline-block; padding-left: 10px; padding-right: 10px;">
-          <div style="font-weight: 700; font-size: 1.05em; display: inline-block;">Rodrigo Lara</div> - <i style="color: #636363;">@rlara</i></br>
-          For hazardous journey.</br>
-          Small wages, bitter cold, long months of complete darkness</br>
-          Men wanted for hazardous journey.</br>Low wages, bitter cold, long hours of complete darkness.</br>Safe return doubtful. Honour and recognition in event of success.
-          <div style="margin-top: 15px; font-size: 1.2em; color: #717171;">
-            <div style="width: 60px; text-align: left; padding-top: 5px; display: inline-block;"><i class="far fa-comment"></i></div>
-            <div style="width: 60px; text-align: left; padding-top: 5px; display: inline-block;"><i class="fas fa-retweet"></i></div>
-            <div style="width: 60px; text-align: left; padding-top: 5px; display: inline-block;"><i class="far fa-lightbulb"></i></div>
-            <div style="width: 60px; text-align: left; padding-top: 5px; display: inline-block;"><i class="fas fa-share-alt"></i></div>
-          </div>
-        </div>
-
+        <timelinenewforumpost ng-if="activity.entryType != 'comment'" reshare="{{activity.reshare}}" like="{{activity.like}}" comments="{{activity.comments}}" cid="{{activity.modelId}}" aid="{{activity.creatorId}}" uid="{{activity.universityId}}"></timelinenewforumpost>
       </div>
 
       <div ng-if="user.universitiesSubscribed.length > 0" infinite-scroll='nextPage()' infinite-scroll-disabled='busy' infinite-scroll-distance='1'>
