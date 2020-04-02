@@ -1,0 +1,160 @@
+<div ng-include="'partials/headerhome.html'"></div>
+
+<style>
+
+.section-cards .card .description {
+  height: unset !important;
+  max-height: 125px;
+}
+
+.university-row {
+  border-bottom: 1px solid #e6e6e6;
+  position: relative;
+  padding-bottom: 8px;
+  padding-top: 8px;
+}
+
+.university-row .activity-count {
+  position: absolute;
+  right: 15px;
+  top: 5px;
+  padding: 4px;
+  background-color: #ee5748;
+  color: #fff;
+  border-radius: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.university-row .activity-count i {
+  padding-right: 3px;
+}
+
+.university-row .bg img {
+  border-radius: 50%;
+}
+
+.university-row .bg {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.university-row .text {
+  display: inline-block;
+  vertical-align: top;
+  padding-left: 15px;
+}
+
+.university-row .text .title {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.university-row .text .activity {
+
+}
+
+
+</style>
+
+<div class="container-fluid container-home animated fadeIn" style="padding-bottom: 30px;">
+
+  <div class="row">
+
+    <div class="col-xs-12" style="margin-bottom: 15px; padding-top: 10px;">
+
+      <div class="university-row">
+
+        <div class="bg">
+          <img height="60px" width="60px" src="https://storage.googleapis.com/educationalcommunity-upload/images/1572071357/a39.jpg" />
+        </div>
+
+        <div class="text">
+
+          <div class="title">Tiago Camilo</div>
+          <div class="activity" style="padding-top: 4px;"><div style="font-size: 1.12em; color: #757575; margin-bottom: 5px;"><i class="fas fa-retweet" style="padding-right: 5px;"></i> Rodrigo Lara shared a post</div></div>
+
+        </div>
+        <!-- end text -->
+
+        <div class="activity-count"><i class="fas fa-bell"></i> 5</div>
+
+      </div>
+      <!-- end university-row -->
+
+      <div class="university-row">
+
+        <div class="bg">
+          <img height="60px" width="60px" src='https://storage.googleapis.com/educationalcommunity-upload/images/1569439961/a11.png' />
+        </div>
+
+        <div class="text">
+
+          <div class="title">Blockchain Academy</div>
+          <div class="activity" style="padding-top: 4px;"><div style="font-size: 1.12em; color: #757575; margin-bottom: 5px;"><i class="fas fa-retweet" style="padding-right: 5px;"></i> Rodrigo Lara shared a post</div></div>
+
+        </div>
+        <!-- end text -->
+
+        <div class="activity-count"><i class="fas fa-bell"></i> 5</div>
+
+      </div>
+      <!-- end university-row -->
+
+    </div>
+    <!-- end col-sm-8 -->
+
+  </div>
+  <!-- end row -->
+
+  <!--
+  <div class="section-footer">
+
+    <div class="section-footer-title" style="width: 125px;"><b>Conhecimentos</b></div>
+
+    <div class="section-sections" style="padding-left: 125px;">
+      <div ng-repeat="k in knowledges"><a href="/home/c/{{k.url}}">{{k.title}}</a></div>
+    </div>
+
+  </div>
+  -->
+  <!-- end news-footer -->
+
+</div>
+<!-- container-fluid container-full -->
+
+<div class="academia-footer" style="z-index: 9; background-color: #fff; box-shadow: 0px -2px 4px -1px rgba(0,0,0,0.15); -moz-box-shadow: 0px -2px 4px -1px rgba(0,0,0,0.15); -webkit-box-shadow: 0px -2px 4px -1px rgba(0,0,0,0.15);">
+
+  <ul style="width: 98%" style="color: #565656 !important;">
+
+    <li style="width: 20%; min-width: unset; padding-top: 4px; padding-left: 0; padding-right: 0;">
+      <a style="color: #565656 !important;" href="/home/timeline" ng-class="forumClass">
+        <i style="font-size: 1.7em; font-weight: bolder;" class="far fa-newspaper"></i>
+      </a>
+    </li><!--
+
+    --><li style="width: 20%; min-width: unset; padding-top: 4px; padding-left: 0; padding-right: 0;">
+      <a style="color: #565656 !important;" href="/home">
+        <i style="font-size: 1.7em;" class="fas fa-search"></i>
+      </a>
+    </li><!--
+
+    --><li ng-click="open()" style="width: 20%; min-width: unset; padding-left: 0; padding-right: 0;">
+      <img height="53px" src="/img/universidade_actionbutton.png" />
+    </li><!--
+
+    --><li style="width: 20%; min-width: unset; padding-left: 0; padding-right: 0;">
+      <a style="color: #565656 !important;" href="/a/{{university.url}}/forum/category/all" ng-class="forumClass">
+        <i style="font-size: 1.7em; color: #52bfea; " class="fas fa-university"></i>
+      </a>
+    </li><!--
+
+    --><li style="width: 20%; min-width: unset; padding-top: 4px; padding-left: 0; padding-right: 0;">
+      <a style="color: #565656 !important;" href="/perfil" ng-class="forumClass">
+        <i style="font-size: 1.7em;" class="fas fa-user-graduate"></i>
+      </a>
+    </li>
+
+  </ul>
+
+</div>

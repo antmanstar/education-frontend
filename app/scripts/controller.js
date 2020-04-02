@@ -6,6 +6,49 @@ angular.module('netbase')
 
 /* Courses */
 
+.controller('HomeExploreCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'University', 'Playlist', 'Forum', 'User', '$window', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, University, Playlist, Forum, User, $window) {
+
+  let id = $route.current.params.videoid;
+
+  $scope.courseId = id;
+
+  let url = $route.current;
+  let originalPath = url.$$route.originalPath;
+
+  $scope.originalPath = originalPath;
+
+  University.getUniversities().then(function(res) {
+
+    $scope.universities = res.data.data;
+
+  });
+
+  Courses.getAll().success(function(res) {
+
+    console.log("response courses: ")
+    console.log(res);
+    $scope.courses = res.data;
+
+  });
+
+  /* */
+  $scope.actionMenuDisplay = false;
+
+  $scope.open = function() {
+
+    if ($scope.actionMenuDisplay) {
+      $scope.actionMenuDisplay = false;
+    } else {
+      $scope.actionMenuDisplay = true;
+    }
+
+  }
+
+  /* */
+
+
+}])
+
 .controller('CoursesDashboardMenuCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'University', 'Playlist', 'Forum', 'User', '$window', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, University, Playlist, Forum, User, $window) {
 
   let id = $route.current.params.videoid;
@@ -604,7 +647,7 @@ angular.module('netbase')
 
     console.log(formdata);
 
-    Courses.moduleCreate(formdata).success(function(res) {
+    Courses.createModule(formdata).success(function(res) {
 
       console.log(res)
 
@@ -1478,6 +1521,18 @@ angular.module('netbase')
 }])
 
 /* home - universidades */
+.controller('HomeUserUniversidadesCtrl', ['$rootScope', '$scope', '$location', 'University', 'Knowledge' , function($rootScope, $scope, $location, University, Knowledge) {
+
+  University.getUniversities().then(function(res) {
+
+    console.log(res);
+
+    $scope.universities = res.data.data;
+
+  });
+
+}])
+
 .controller('HomeUniversidadesCtrl', ['$rootScope', '$scope', '$location', 'University', 'Knowledge' , function($rootScope, $scope, $location, University, Knowledge) {
 
   Knowledge.getAllPaginated().success(function(res) {

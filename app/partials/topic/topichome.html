@@ -22,15 +22,21 @@
 
 <div class="container-fluid container-home">
 
+  <div style="height: 250px; margin-left: -15px; margin-right: -15px; position: relative; background-position: center center; background-size: cover; background-image:url('https://wakefield.apsva.us/wp-content/uploads/sites/37/2019/07/sport-1.jpg')">
+    <div class="knowledge-title" style="font-size: 1.55em; position: absolute; bottom: 15px; left: 15px; background-color: #fff; border-radius: 5px; padding: 5px; padding-left: 15px; padding-right: 15px;">{{knowledge.title}}</div>
+  </div>
+
   <div class="row" style="padding-bottom: 15px;">
 
     <div class="col-xs-12 col-sm-6">
 
+      <!--
       <div class="knowledge-meta">
 
         <div class="knowledge-title" style="font-size: 1.85em;">{{knowledge.title}}</div>
 
       </div>
+      -->
       <!-- end knowledge-meta -->
 
     </div>
@@ -64,34 +70,14 @@
 
     <div class="col-sm-9">
 
-      <div style="padding-bottom: 15px;">
-        <div class="knowledge-title">Aprender</div>
-      </div>
-
-      <!--
-      <div>
-
-        <div style="background: linear-gradient(to right, #ed213a, #93291e);" class="card-knowledge-action">
-          <i class="fas fa-brain" style="font-size: 1.5em;"></i>
-          <div style="padding-top: 5px; font-size: 0.9em;">Memoria</div>
-        </div>
-
-        <div style="background: linear-gradient(to right, #2193b0, #6dd5ed);" class="card-knowledge-action">
-          <i class="fas fa-running" style="font-size: 1.5em;"></i>
-          <div style="padding-top: 5px; font-size: 0.9em;">Desafios</div>
-        </div>
-
-      </div>
-      -->
-
       <!-- start universidades -->
       <div style="padding-bottom: 15px;">
-        <div class="knowledge-title">Universidades</div>
+        <div class="knowledge-title" style="padding-top: 0;">Universidades</div>
       </div>
 
-      <div class="section-cards" style="padding-bottom: 0px;">
+      <div class="section-cards" style="padding-bottom: 5px; margin-top: 8px; padding-left: 0px;">
 
-        <timelineuniversitycard uid={{university.universityId}} ng-repeat="university in knowledge.universities"></timelineuniversitycard>
+        <homeuniversitynewcard uid={{university.universityId}} ng-repeat="university in knowledge.universities"></homeuniversitynewcard>
 
       </div>
       <!-- end section-cards -->
@@ -103,6 +89,8 @@
       <div style="padding-bottom: 15px;">
         <div class="knowledge-title">Cursos</div>
       </div>
+
+      <coursehomebox c="5dd229986d7c71000419c5ce"></coursehomebox>
 
       <!-- end courses -->
 
@@ -126,28 +114,31 @@
 
   <div class="academia-footer" style="z-index: 9; background-color: #fff; box-shadow: 0px -2px 4px -1px rgba(0,0,0,0.15); -moz-box-shadow: 0px -2px 4px -1px rgba(0,0,0,0.15); -webkit-box-shadow: 0px -2px 4px -1px rgba(0,0,0,0.15);">
 
-    <ul style="width: 98%" style="color: #565656 !important;">
+    <ul style="width: 100%" style="color: #565656 !important;">
 
-      <li style="width: 25%; min-width: unset; padding-top: 4px; padding-left: 0; padding-right: 0;">
+      <li style="width: 20%; min-width: unset; padding-top: 4px; padding-left: 0; padding-right: 0;">
         <a style="color: #565656 !important;" href="/home/timeline" ng-class="forumClass">
           <i style="font-size: 1.7em; color: #52bfea; font-weight: bolder;" class="far fa-newspaper"></i>
         </a>
-      </li>
+      </li><!--
 
-      <li style="width: 25%; min-width: unset; padding-top: 4px; padding-left: 0; padding-right: 0;">
+      --><li style="width: 20%; min-width: unset; padding-top: 4px; padding-left: 0; padding-right: 0;">
         <a style="color: #565656 !important;" href="/home">
           <i style="font-size: 1.7em;" class="fas fa-search"></i>
         </a>
-      </li>
+      </li><!--
 
+      --><li ng-click="open()" style="width: 20%; min-width: unset; padding-left: 0; padding-right: 0;">
+        <img height="53px" src="/img/universidade_actionbutton.png" />
+      </li><!--
 
-      <li style="width: 25%; min-width: unset; padding-left: 0; padding-right: 0;">
+      --><li style="width: 20%; min-width: unset; padding-left: 0; padding-right: 0;">
         <a style="color: #565656 !important;" href="/a/{{university.url}}/forum/category/all" ng-class="forumClass">
-          <i style="font-size: 1.7em;" class="fas fa-bell"></i>
+          <i style="font-size: 1.7em;" class="fas fa-university"></i>
         </a>
-      </li>
+      </li><!--
 
-      <li style="width: 25%; min-width: unset; padding-top: 4px; padding-left: 0; padding-right: 0;">
+      --><li style="width: 20%; min-width: unset; padding-top: 4px; padding-left: 0; padding-right: 0;">
         <a style="color: #565656 !important;" href="/perfil" ng-class="forumClass">
           <i style="font-size: 1.7em;" class="fas fa-user-graduate"></i>
         </a>
@@ -159,3 +150,223 @@
 
 </div>
 <!-- container-fluid container-full -->
+
+
+<style>
+  .swiper-container {
+    padding: 3px;
+    padding-bottom: 40px;
+  }
+
+  .swiper-slide {
+    text-align: left;
+  }
+
+  .knowledge-card {
+    border-radius: 5px;
+    width: 45%;
+    box-shadow: 0px 0px 3px 0px rgba(97,97,97,0.15);
+    width: calc(100% / 4);
+  }
+
+  .knowledge-card .knowledge-card-image {
+    height: 70px; background-size: cover;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+  }
+
+  .knowledge-card .title {
+    height: 45px;
+    padding: 10px;
+    font-weight: bold;
+  }
+
+  .section-cards {
+    padding-bottom: 10px;
+  }
+
+  .section-cards::-webkit-scrollbar {
+      width: 0px;  /* Remove scrollbar space */
+      background: transparent;  /* Optional: just make scrollbar invisible */
+  }
+  /* Optional: show position indicator in red */
+  .section-cards::-webkit-scrollbar-thumb {
+      background: transparent;
+  }
+
+  @media only screen and (min-width: 780px) {
+
+    .swiper-slide {
+      width: 50% !important;
+    }
+
+  }
+
+  .bar-sections {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    font-size: 0.95em;
+  }
+
+  .bar-sections .bar-section {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 100%;
+    flex: 1;
+    text-align: center;
+    font-size: 1em;
+    font-weight: bold;
+    font-size: 0.95em;
+  }
+
+  .bar-sections.standard {
+    box-shadow: 0px 2px 4px 0px rgba(97,97,97,0.15);
+    padding: 10px;
+  }
+
+  .bar-sections .bar-section.active {
+    color: #000;
+  }
+
+  .bar-sections .bar-section.active {
+    border-radius: 10px;
+    font-weight: bold;
+  }
+
+  .bar-sections .bar-section {
+    color: #2d4255b8;
+  }
+
+  .bar-sections.orange .bar-section.active {
+    background-color: #ef62543b;
+    border-radius: 10px;
+    color: #ee5748;
+    font-weight: bold;
+  }
+
+}
+
+</style>
+
+<style>
+
+  .course-box {
+    box-shadow: 0px 0px 17px 0px rgba(130,130,130,0.23);
+    display: inline-block;
+    border-radius: 5px;
+    width: 100%;
+    padding: 15px;
+    cursor: pointer;
+    margin-bottom: 15px;
+    overflow: auto;
+    height: 250px;
+  }
+
+  .course-box .title {
+    font-size: 1.3em;
+    font-weight: bold;
+  }
+
+  @media screen and (max-width: 860px) {
+
+    .course-box {
+      height: 190px;
+    }
+
+  }
+
+</style>
+
+<style>
+
+  .button-highlighter {
+    box-shadow: 0px 8px 15px rgba(48, 179, 159, 0.51);
+    transition: all 0.3s ease 0s;
+    cursor: pointer;
+  }
+
+  .course-card {
+    box-shadow: 0px 0px 3px 0px rgba(171,171,171,0.5);
+    border-radius: 4px; padding-top: 20px; padding-bottom: 20px;
+    padding-left: 20px; padding-right: 20px;
+    margin-bottom: 15px;
+  }
+
+  .course-card .topic {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .course-card .topic .text {
+    display: inline-block;
+    width: calc(100% - 39px);
+  }
+
+  .course-card .topic .title {
+    font-size: 1.3em;
+    display: inline-block;
+    font-weight: 500;
+  }
+
+  .course-card .topic .title {
+    font-size: 1.2em;
+    color: #3c3c3c;
+  }
+
+  .course-card .topic .subtitle {
+    color: #8c8c8c;
+  }
+
+  .course-card .topic .line {
+    width: 35px;
+    font-size: 0.5em;
+    padding-top: 7px;
+    vertical-align: top;
+    text-align: center;
+    display: inline-block;
+    color: #d8d8d8;
+  }
+
+  .instrutora {
+    margin-right: 15px;
+    display: inline-block;
+  }
+
+  .instrutora .author {
+    font-size: 1.25em;
+  }
+
+  .instrutora .author .name {
+    font-weight: 600;
+  }
+
+  .instrutora .author .title {
+    font-weight: 400;
+    font-size: 0.8em;
+  }
+
+
+  .instrutora .text {
+
+  }
+
+  .instrutora .picture {
+    margin-bottom: 10px;
+  }
+
+  @media only screen and (max-width: 768px) {
+
+    .course-card {
+
+      padding-right: 10px;
+      padding-left: 10px;
+
+    }
+
+  }
+
+</style>

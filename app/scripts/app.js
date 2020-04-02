@@ -387,6 +387,10 @@ angular.module('netbase', ['ngStorage',
             templateUrl: 'partials/home/homecourses.html',
             controller: 'HomeCoursesCtrl',
         })
+        .when('/home/explore', {
+            templateUrl: 'partials/home/homestudentexplore.html',
+            controller: 'HomeExploreCtrl'
+        })
         .when('/home/timeline', {
             templateUrl: 'partials/home/hometimeline.html',
             controller: 'HomeTimelineCtrl',
@@ -431,6 +435,10 @@ angular.module('netbase', ['ngStorage',
         .when('/home/universidades/', {
             templateUrl: 'partials/home/homeuniversidades.html',
             controller: 'HomeUniversidadesCtrl',
+        })
+        .when('/home/universidades/user', {
+            templateUrl: 'partials/home/homeuseruniversidades.html',
+            controller: 'HomeUserUniversidadesCtrl',
         })
         .when('/home/smp', {
             templateUrl: 'partials/home/homesocialmarketplace.html',
