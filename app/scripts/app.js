@@ -1,6 +1,8 @@
 'use strict';
 
-angular.module('netbase', ['ngStorage',
+angular.module('netbase', [
+    '720kb.socialshare',
+    'ngStorage',
     'ngRoute',
     'pascalprecht.translate',
     'ngDialog',
