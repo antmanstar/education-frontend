@@ -75,7 +75,15 @@ angular.module('netbase', [
         }
 
    };
-//AcademiaCursosCtrl
+
+   /*
+
+   .when('/home', {
+       templateUrl: 'partials/home/home.html',
+       controller: 'HomeCtrl',
+   })
+
+   */
 
     $routeProvider.
         when('/p/create', {
@@ -373,10 +381,6 @@ angular.module('netbase', [
             templateUrl: 'partials/search.html',
             controller: 'SearchCtrl',
         })
-        .when('/home', {
-            templateUrl: 'partials/home/home.html',
-            controller: 'HomeCtrl',
-        })
         .when('/apartments', {
             templateUrl: 'partials/apartments/index.html',
             controller: 'ApartmentsIndexCtrl',
@@ -455,7 +459,7 @@ angular.module('netbase', [
             controller: 'IndexCtrl',
         })
         .otherwise({
-          redirectTo: '/home'
+          redirectTo: '/home/explore'
         });
 
         if(window.history && window.history.pushState){
@@ -499,7 +503,7 @@ angular.module('netbase', [
     $localStorage.logged = false;
     $localStorage.token = undefined;
 
-    $location.path('/home');
+    $location.path('/home/explore');
     $route.reload();
 
   };

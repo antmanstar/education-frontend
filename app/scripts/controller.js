@@ -6,7 +6,57 @@ angular.module('netbase')
 
 /* Courses */
 
-.controller('HomeExploreCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'University', 'Playlist', 'Forum', 'User', '$window', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, University, Playlist, Forum, User, $window) {
+.directive('footermobile', ['$route', function($route) {
+  return {
+    restrict: 'AE',
+    templateUrl: '../partials/footer/footer.html',
+    replace: false,
+    scope: true,
+    link: function(scope, element, attr) {
+
+      let url = $route.current;
+      let originalPath = url.$$route.originalPath;
+
+      console.log("ORIGINAL PATHHHHHH")
+      console.log(originalPath)
+
+      scope.originalPath = originalPath;
+
+      scope.actionMenu = false;
+
+      scope.actionMenuToggle = function() {
+
+        console.log("Open action menu")
+
+        if (scope.actionMenu) {
+          scope.actionMenu = false;
+        } else {
+          scope.actionMenu = true;
+        }
+
+      }
+
+    }
+    //END Courses.getModuleById()
+
+  }
+}])
+
+.controller('FooterCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'University', 'Playlist', 'Forum', 'User', '$window', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, University, Playlist, Forum, User, $window) {
+
+  console.log("Fooooterr");
+
+  let url = $route.current;
+  let originalPath = url.$$route.originalPath;
+
+  console.log("ORIGINAL PATHHHHHH")
+  console.log(originalPath)
+
+  $scope.originalPath = originalPath;
+
+}])
+
+.controller('HomeExploreCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'University', 'Playlist', 'Forum', 'User', '$window', 'Knowledge', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, University, Playlist, Forum, User, $window, Knowledge) {
 
   let id = $route.current.params.videoid;
 
@@ -16,6 +66,16 @@ angular.module('netbase')
   let originalPath = url.$$route.originalPath;
 
   $scope.originalPath = originalPath;
+
+  Knowledge.getAllPaginated().success(function(res) {
+
+    let data = res.data;
+    let success = res.success;
+    let docs = data.docs;
+
+    $scope.knowledges = docs;
+
+  });
 
   University.getUniversities().then(function(res) {
 
@@ -817,7 +877,7 @@ angular.module('netbase')
       redirectUrl = $scope.ngDialogData.redirectUrl;
     }
   } catch(e) {
-    redirectUrl = "";
+    redirectUrl = "/home/timeline";
   }
 
   // Messages
@@ -3087,7 +3147,7 @@ angular.module('netbase')
     //$location.path("/home");
     $location.path("/home/timeline");
   } else {
-    $location.path("/home");
+    $location.path("/home/explore");
   }
 
   $localStorage.indexVisited = true;

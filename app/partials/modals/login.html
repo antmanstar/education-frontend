@@ -1,5 +1,18 @@
 <div class="container-fluid modal-accounts">
 
+  <style>
+
+    .input-email {
+      text-transform: lowercase;
+    }
+
+    .input-email::-webkit-input-placeholder {
+      text-transform: capitalize;
+    }
+
+
+  </style>
+
   <div class="row">
 
     <div class="col-xs-12">
@@ -12,13 +25,13 @@
 
         <div class="form-group">
           <i class="fas fa-envelope"></i>
-          <input ng-model="loginEmail" placeholder="Email Address" type="text" />
+          <input class="input-email" ng-model="loginEmail" placeholder="Email" type="text" />
         </div>
         <!-- end form group -->
 
         <div class="form-group">
           <i class="fas fa-key"></i>
-          <input ng-keypress="($event.which === 13)?login():0" ng-model="loginPassword" placeholder="Password" type="password" />
+          <input ng-keypress="($event.which === 13)?login():0" ng-model="loginPassword" placeholder="Senha" type="password" />
         </div>
         <!-- end form group -->
 
