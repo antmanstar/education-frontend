@@ -10,9 +10,9 @@
 .add-classroom-btn {
     margin-top: 30px;
     border-radius: 3px;
-    height: 34px;
-    width: 235px;
-    font-size: 15px;
+    height: 35px;
+    width: 216px;
+    font-size: 14px;
     background-color: #437130;
     color: white;
 }
@@ -40,7 +40,7 @@
 }
 
 .classroom-modal-main {
-    margin-top: 116px;
+    margin-top: 82px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -234,7 +234,7 @@
 }
 
 .classroom-modal-caption {
-    font-size: 30px;
+    font-size: 26px;
 }
 
 .classroom-name-container {
@@ -285,7 +285,6 @@
 
 .confirm-create-classroom-btn {
     width: 300px;
-    margin-top: 30px;
     background-color: #6d3862;
     border-radius: 3px;
     color: white;
@@ -301,13 +300,17 @@
     padding-bottom: 50px;
 }
 
+.classroom-modal-main>.row>div {
+    margin-left: -31px;
+}
+
 .classroom-modal {
-    padding-bottom: 15vh;
-    padding-top: 13vh;
+    padding-bottom: 21vh !important;
+    padding-top: 10vh !important;
 }
 
 .classroom-modal .ngdialog-content {
-    width: 450px !important;
+    width: 385px !important;
 }
 
 .classroom-modal-main input[disabled] {
