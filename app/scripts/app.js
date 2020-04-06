@@ -182,6 +182,10 @@ angular.module('netbase', [
             templateUrl: 'partials/academia/courses/academiacourses.html',
             controller: 'AcademiaCoursesCtrl',
         })
+        .when('/a/:academiaName/classroom', {
+            templateUrl: 'partials/academia/classrooms/academiaclassrooms.html',
+            controller: 'AcademiaClassroomsCtrl',
+        })
         .when('/a/:academiaName/timeline', {
             templateUrl: 'partials/academia/academiatimeline.html',
             controller: 'AcademiaTimelineCtrl',
@@ -461,6 +465,9 @@ angular.module('netbase', [
         .otherwise({
           redirectTo: '/home/explore'
         });
+        //.otherwise({
+        //  redirectTo: '/home'
+        //});
 
         if(window.history && window.history.pushState){
           $locationProvider.html5Mode(true);
