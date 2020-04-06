@@ -120,14 +120,15 @@ angular.module('netbase')
 
 }])
 
-.controller('AcademiaClassroomsCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Classroom', 'Students', 'ngDialog', '$localStorage', function($rootScope, $scope, $location, $route, University, Classroom, Students, ngDialog, $localStorage) {
+.controller('AcademiaClassroomsCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Classroom', 'Students', 'ngDialog', '$localStorage', '$window', function($rootScope, $scope, $location, $route, University, Classroom, Students, ngDialog, $localStorage, $window) {
 
 	let universityUrl = $route.current.params.academiaName;
 
 	$scope.administrator = [];
 	$scope.participants = [];
+	$scope.fullScreen = false;
 
-	$scope.currentLocalParticipant = null;
+	//$scope.currentLocalParticipant = null;
 	$scope.currentViedeRoom = null;
 	$scope.wholeClassroomList = [];
 	//console.log($route);
@@ -150,6 +151,9 @@ angular.module('netbase')
 		$scope.getAllClassrooms();
 	});
 
+	angular.element($window).bind('resize', function(){
+		$scope.videoSizeSet();
+	});    
 
 	/******************** GET ALL Classrooms ******************/
 
@@ -240,25 +244,73 @@ angular.module('netbase')
 	$scope.videoSizeSet = function() {
 		var i;
 		var videoContainer = document.getElementById('twilio');
-		if(videoContainer.childElementCount == 1){
-			videoContainer.children[0].style.width="634px";
-			videoContainer.children[0].style.height="502px";
-			videoContainer.children[0].children[0].style.width = '634px';
+		var mainWidth;
+		var mainHeight;
+		var none_display_count = 0;
+		for(i = 0; i < videoContainer.childElementCount; i++){
+			if(videoContainer.children[i].style.display == 'none') none_display_count++;
 		}
-		else if(videoContainer.childElementCount > 1 && videoContainer.childElementCount < 5){
-			for(i = 0; i < videoContainer.childElementCount; i++){
-				videoContainer.children[i].style.width="317px";
-				videoContainer.children[i].style.height="225px";
-				videoContainer.children[i].children[0].style.width = '317px';
+		if(!$scope.isMobile()) {
+			console.log('this is not mobile device');
+			mainWidth = parseInt(videoContainer.style.width || videoContainer.offsetWidth);
+			mainWidth -= 100;
+			mainHeight = parseInt(videoContainer.style.height || videoContainer.offsetHeight);
+			mainHeight -= 100;
+			if(mainHeight > mainWidth / 4 * 3) mainHeight = mainWidth / 4 * 3;
+			console.log(videoContainer.style.width || videoContainer.width);
+			console.log(mainWidth);
+			console.log(mainHeight);
+			let px = 'px';
+			if(videoContainer.childElementCount - none_display_count == 1 || videoContainer.childElementCount == 2) {
+				for(i = 0; i < videoContainer.childElementCount; i+=2) {
+					if(videoContainer.children[i].style.display == 'none') continue;
+					videoContainer.children[i].style.width = mainWidth + px;
+					videoContainer.children[i].style.height = mainHeight + px;
+					videoContainer.children[i + 1].style.width = mainWidth + px;
+					videoContainer.children[i + 1].style.height = '20px';
+					videoContainer.children[i + 1].style.left = videoContainer.children[i].offsetLeft + px;
+					videoContainer.children[i + 1].style.top = videoContainer.children[i].offsetTop 
+						+ videoContainer.children[0].offsetHeight -19 + px;
+				}
+			}
+			else if(videoContainer.childElementCount - none_display_count > 2 && videoContainer.childElementCount - none_display_count < 10){
+				for(i = 0; i < videoContainer.childElementCount; i+=2) {
+					videoContainer.children[i].style.width = (mainWidth / 2) + px;
+					videoContainer.children[i].style.height= (mainHeight / 2) + px;
+					videoContainer.children[i + 1].style.width = (mainWidth / 2) + px;
+					videoContainer.children[i + 1].style.height = '20px';
+					videoContainer.children[i + 1].style.left = videoContainer.children[i].offsetLeft + px;
+					videoContainer.children[i + 1].style.top = videoContainer.children[i].offsetTop 
+						+ videoContainer.children[0].offsetHeight -19 + px;
+				}
+			}
+			else {
+				for(i = 0; i < videoContainer.childElementCount; i+=2) {
+					videoContainer.children[i].style.width = (mainWidth / 3) + px;
+					videoContainer.children[i].style.height = (mainHeight / 3) + px;
+					videoContainer.children[i + 1].style.width = (mainWidth / 3) + px;
+					videoContainer.children[i + 1].style.height = '20px';
+					videoContainer.children[i + 1].style.left = videoContainer.children[i].offsetLeft + px;
+					videoContainer.children[i + 1].style.top = videoContainer.children[i].offsetTop 
+						+ videoContainer.children[0].offsetHeight - 19 + px;
+				}
 			}
 		}
-		else {
-			for(i = 0; i < videoContainer.childElementCount; i++){
-				videoContainer.children[i].style.width="211px";
-				videoContainer.children[i].style.height="170px";
-				videoContainer.children[i].children[0].style.width = '211px';
-			}
+	}
+	  
+	$scope.disconnectClassroom = function(){
+		var mainDom = document.getElementById('twilio');
+		var i;
+		for(i = mainDom.childElementCount - 1; i >=0  ; i--){
+			mainDom.children[i].remove();
+			console.log(mainDom.children[i]);
 		}
+		if($scope.currentViedeRoom != null) $scope.currentViedeRoom.disconnect();
+	}
+  
+	$scope.isMobile = function() {
+		try{ document.createEvent("TouchEvent"); return true; }
+		catch(e){ return false; }
 	}
 
 	$scope.connectClassroom = function(token, roomName, screenTrack = null) {
@@ -289,8 +341,10 @@ angular.module('netbase')
 			console.log('Here local participant');
 			console.log(localParticipant);
 
-			$scope.currentLocalParticipant = localParticipant;
-			if($scope.currentViedeRoom != null) $scope.currentViedeRoom.disconnect();
+			//$scope.currentLocalParticipant = localParticipant;
+			
+			//$scope.disconnectClassroom();
+
 			$scope.currentViedeRoom = room;
 			if(screenTrack != null) {
 				room.localParticipant.publishTrack(screenTrack);
@@ -299,55 +353,89 @@ angular.module('netbase')
 				console.log('publication');
 				console.log(publication);
 				const track = publication.track;
-				if(document.getElementById('my_local_video') != null){
-					document.getElementById('my_local_video').remove();
-				}
+				console.log('tract');
+				console.log(track);
+				//if(document.getElementById('my_local_video') != null){
+				//	document.getElementById('my_local_video').remove();
+				//}
 				var mainVideoDom = document.getElementById('twilio');
-				var subVideoDom = document.createElement('div');
-				subVideoDom.setAttribute('id', 'my_local_video');
-				subVideoDom.style.position = 'absolute';
-				subVideoDom.innerText = $scope.administrator[$scope.administrator.length - 1].username;
-				subVideoDom.onclick = function(e) {
-					if( e.target.style.width < 200 ){
-						e.target.style.position = 'absolute';
-						e.target.style.width = 635;
-						e.target.style.height = 450;
-						e.target.firstElementChild.style.width = 485;
-					}
-					else {
-						e.target.style.position = 'absolute';
-						e.target.style.width = 210;
-						e.target.style.height = 170;
-						e.target.firstElementChild.style.width = 210;
-					}
-				}
-				/*
-				var i;
-				for(i = 0; i < 10; i++){
-					var ss = document.createElement('div');
-					ss.setAttribute('id', 'my_local_video');
-					ss.style.position = 'absolute';
-					ss.onclick = function(e) {
-						if( e.target.style.width < 200 ){
-							e.target.style.position = 'absolute';
-							e.target.style.width = 485;
-							e.target.style.height = 350;
-							e.target.firstElementChild.style.width = 485;
+				var videoTitle = document.createElement('div');
+				videoTitle.setAttribute('id', 'my_local_video');
+				videoTitle.style.position = 'absolute';
+				videoTitle.innerText = $scope.administrator[$scope.administrator.length - 1].username;
+        
+				/********************* Screen Full Screen *********************/
+				
+				/*videoTitle.onclick = function(e) {
+							if( e.target.style.width < 200 ){
+								e.target.style.position = 'absolute';
+								e.target.style.width = 635;
+								e.target.style.height = 450;
+								e.target.firstElementChild.style.width = 485;
+							}
+							else {
+								e.target.style.position = 'absolute';
+								e.target.style.width = 210;
+								e.target.style.height = 170;
+								e.target.firstElementChild.style.width = 210;
+							}
+				}*/
+				
+						/*
+						var i;
+						for(i = 0; i < 10; i++){
+							var ss = document.createElement('div');
+							ss.setAttribute('id', 'my_local_video');
+							ss.style.position = 'absolute';
+							ss.onclick = function(e) {
+								if( e.target.style.width < 200 ){
+									e.target.style.position = 'absolute';
+									e.target.style.width = 485;
+									e.target.style.height = 350;
+									e.target.firstElementChild.style.width = 485;
+								}
+								else {
+									e.target.style.position = 'absolute';
+									e.target.style.width = 210;
+									e.target.style.height = 170;
+									e.target.firstElementChild.style.width = 210;
+								}
+							}
+							mainVideoDom.appendChild(ss);
 						}
-						else {
-							e.target.style.position = 'absolute';
-							e.target.style.width = 210;
-							e.target.style.height = 170;
-							e.target.firstElementChild.style.width = 210;
-						}
-					}
-					mainVideoDom.appendChild(ss);
-				}
 				*/
-				mainVideoDom.appendChild(subVideoDom);
-				subVideoDom.appendChild(track.attach());
+        
+				angular.element(mainVideoDom.appendChild(track.attach())).bind('click', (e) => {
+					var i;
+					let mainDom = document.getElementById('twilio');
+					if($scope.fullScreen){
+						for(i = 0; i < mainDom.childElementCount; i++){
+							mainDom.children[i].style.display = 'initial';
+						}
+						$scope.videoSizeSet();
+						setTimeout(()=>{
+							$window.dispatchEvent(new Event("resize"));}, 
+						100);
+					}
+					else{
+						for(i = 0; i < mainDom.childElementCount; i++){
+							if(mainDom.children[i] != e.target){
+								mainDom.children[i].style.display = 'none';
+							}
+						}
+						$scope.videoSizeSet();
+						setTimeout(()=>{
+							$window.dispatchEvent(new Event("resize"));}, 
+						100);
+					}
+					$scope.fullScreen = !$scope.fullScreen;
+				});
+				mainVideoDom.appendChild(videoTitle);
 				
 				$scope.videoSizeSet();
+				setTimeout(()=>{
+					$window.dispatchEvent(new Event("resize"));}, 
+				100);
 			});
 
 			room.participants.forEach(participantConnected);
@@ -366,14 +454,14 @@ angular.module('netbase')
 				console.log('Participant "%s" connected', participant.identity);
 			
 				var mainVideoDom = document.getElementById('twilio');
-				var subVideoDom = document.createElement('div');
+				var subTitleDom = document.createElement('div');
 
-				subVideoDom.id = participant.sid;
-				subVideoDom.innerText = $scope.participants.username;
-				mainVideoDom.appendChild(subVideoDom);
+				subTitleDom.id = participant.sid;
+				subTitleDom.innerText = $scope.participants.username;
+				//mainVideoDom.appendChild(subVideoDom);
 			
-				participant.on('trackSubscribed', track => trackSubscribed(subVideoDom, track));
-				//participant.on('trackSubscribed', track => trackSubscribed(mainVideoDom, track));
+				participant.on('trackSubscribed', track => trackSubscribed(mainVideoDom, subTitleDom, track));
+				//participant.on('trackSubscribed', track => trackSubscribed(mainVideoDom, subTitleDom, track));
 
 				participant.on('trackUnsubscribed', trackUnsubscribed);
 			
@@ -391,9 +479,39 @@ angular.module('netbase')
 			document.getElementById(participant.sid).remove();
 		}
 		
-		function trackSubscribed(ele, track) {
-			ele.appendChild(track.attach());
+		function trackSubscribed(main, ele, track) {
+			
+			angular.element(main.appendChild(track.attach())).bind('click', (e) => {
+				var i;
+				let mainDom = document.getElementById('twilio');
+				if($scope.fullScreen){
+					for(i = 0; i < mainDom.childElementCount; i++){
+						mainDom.children[i].style.display = 'initial';
+					}
+					$scope.videoSizeSet();
+					setTimeout(()=>{
+						$window.dispatchEvent(new Event("resize"));}, 
+					100);
+				}
+				else{
+					for(i = 0; i < mainDom.childElementCount; i++){
+						if(mainDom.children[i] != e.target){
+							mainDom.children[i].style.display = 'none';
+						}
+					}
+					$scope.videoSizeSet();
+					setTimeout(()=>{
+						$window.dispatchEvent(new Event("resize"));}, 
+					100);
+				}
+				$scope.fullScreen = !$scope.fullScreen;
+			});
+			main.appendChild(ele);
 			$scope.videoSizeSet();
+			
+			setTimeout(()=>{
+				$window.dispatchEvent(new Event("resize"));}, 
+			100);
 		}
 		
 		function trackUnsubscribed(track) {
@@ -405,7 +523,7 @@ angular.module('netbase')
 		$scope.classroomView = 0;
 		$scope.administrator = [];
 		$scope.participants = [];
-		$scope.currentViedeRoom.disconnect();
+		$scope.disconnectClassroom();
 		//leave room
 	}
 
@@ -438,30 +556,30 @@ angular.module('netbase')
 	}
 
 	$scope.shareScreen = function() {
-		if($scope.currentLocalParticipant == null){
-			alert("Error");
-			return;
-		}
+		//if($scope.currentLocalParticipant == null){
+		//	alert("Error");
+		//	return;
+		//}
 
 		navigator.mediaDevices.getDisplayMedia().then((stream)=>{
 			const screenTrack = stream.getTracks()[0];
 
 			screenTrack.onended = function(e) {
-				$scope.currentViedeRoom.disconnect();
+				$scope.disconnectClassroom();
 				$scope.connectClassroom($scope.currentRoomToken, $scope.currentRoomName);
 			}
 			
 			
 			//$scope.currentViedeRoom.localParticipant.publishTrack(screenTrack);
 			
-			$scope.currentViedeRoom.disconnect();
+			$scope.disconnectClassroom();
 			
 			console.log('screen track');
 			console.log(screenTrack);
 			$scope.connectClassroom($scope.currentRoomToken, $scope.currentRoomName, screenTrack);
 			/*
 			screenTrack.onended = function(e) {
-				$scope.currentViedeRoom.disconnect();
+				$scope.disconnectClassroom();
 
 			}
 
