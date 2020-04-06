@@ -89,9 +89,10 @@ angular.module('netbase')
       scope.commentSection = false;
       scope.status = { reshare : reshare, like : like, comments : comments };
       scope.sharePost = false;
-      TimelineNew.getTimelineRePostCount(contentId).success(function(res) {
-        scope.rePostCount = res.data.count-1;
-      });
+      scope.rePostCount = reshare;
+      // TimelineNew.getTimelineRePostCount(contentId).success(function(res) {
+      //   scope.rePostCount = res.data.count-1;
+      // });
 
       console.log("universityId: ")
       console.log(universityId)
@@ -240,8 +241,9 @@ angular.module('netbase')
           if (success) {
             var timelineData = {
               entryType: "repost",
-              modelId: data._id,
-              universityId: data.universityId
+              modelId: contentId,
+              universityId: universityId,
+              rePost: reshare
             }
             University.createForumPostTimeline(timelineData).then(function(res) {
               console.log("createForumPostTimeline", res);
