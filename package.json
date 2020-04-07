@@ -12,6 +12,7 @@
   "dependencies": {
     "angular-socialshare": "^2.3.11",
     "compression": "^1.6.2",
+    "cors": "^2.8.5",
     "express": "^4.15.3",
     "express-https-redirect": "^1.0.0",
     "morgan": "^1.8.2",

@@ -141,9 +141,9 @@ angular.module('netbase')
 	console.log(localVideo);
 
 	$scope.classroomView = 0;
-	
+
 	//var baseUrl = "http://localhost:9000"; //Back-end server base url
-	var baseUrl = "http://localhost:9001"; //Back-end server base url
+	var baseUrl = "https://educationalcommunity-classroom.herokuapp.com"; //Back-end server base url
 	University.getUniversity(universityUrl).then(function(res) {
 		console.log('here university');
 		console.log(res);
@@ -153,12 +153,12 @@ angular.module('netbase')
 
 	angular.element($window).bind('resize', function(){
 		$scope.videoSizeSet();
-	});    
+	});
 
 	/******************** GET ALL Classrooms ******************/
 
 	$scope.getAllClassrooms = function() {
-		
+
 		let url = '/classroom/university/' + $scope.university._id + '/all'
 		Classroom.getAllClassroomsByUniversity(baseUrl + url).then((data)=>{
 			$scope.wholeClassroomList = data;
@@ -184,13 +184,13 @@ angular.module('netbase')
 		donation: -1
 	}
 
-	
+
 	$scope.createNewClassroom = function () {
 		ngDialog.open({ template: 'partials/modals/classroom_modal.html', className: 'ngdialog-theme-default classroom-modal' });
 	};
 
 	$scope.confirmCreateClassroom = function() {
-		
+
 		let token = $localStorage.token;
 		let title = $scope.addingClassroom.uniqueName ? $scope.addingClassroom.uniqueName : '';
 		let url = '/classroom/university/' + $scope.university._id + '/room/' + title;
@@ -211,7 +211,7 @@ angular.module('netbase')
 	}
 
 	$scope.joinClassroom = function(classroom) {
-		
+
 		$scope.currentClassroom = classroom;
 
 		Students.getStudentById(classroom.accountSid).then((res) => {
@@ -226,7 +226,7 @@ angular.module('netbase')
 		Classroom.joinClassroom(baseUrl + url).then((data) => {
 
 			$scope.classroomView = 1;
-			
+
 
 			url = '/classroom/classroom/' + classroom.uniqueName + '/token/'
 			Classroom.getAccessToken(baseUrl + url).then((data) => {
@@ -244,7 +244,7 @@ angular.module('netbase')
 				$scope.connectClassroom(data, classroom.uniqueName);
 				$scope.connectClassroom(data, classroom.uniqueName);
 			});
-			
+
 		})
 		.catch((err) => {
 			alert('Join Error.');
@@ -280,7 +280,7 @@ angular.module('netbase')
 					videoContainer.children[i + 1].style.width = mainWidth + px;
 					videoContainer.children[i + 1].style.height = '20px';
 					videoContainer.children[i + 1].style.left = videoContainer.children[i].offsetLeft + px;
-					videoContainer.children[i + 1].style.top = videoContainer.children[i].offsetTop 
+					videoContainer.children[i + 1].style.top = videoContainer.children[i].offsetTop
 						+ videoContainer.children[0].offsetHeight -19 + px;
 				}
 			}
@@ -291,7 +291,7 @@ angular.module('netbase')
 					videoContainer.children[i + 1].style.width = (mainWidth / 2) + px;
 					videoContainer.children[i + 1].style.height = '20px';
 					videoContainer.children[i + 1].style.left = videoContainer.children[i].offsetLeft + px;
-					videoContainer.children[i + 1].style.top = videoContainer.children[i].offsetTop 
+					videoContainer.children[i + 1].style.top = videoContainer.children[i].offsetTop
 						+ videoContainer.children[0].offsetHeight -19 + px;
 				}
 			}
@@ -302,7 +302,7 @@ angular.module('netbase')
 					videoContainer.children[i + 1].style.width = (mainWidth / 3) + px;
 					videoContainer.children[i + 1].style.height = '20px';
 					videoContainer.children[i + 1].style.left = videoContainer.children[i].offsetLeft + px;
-					videoContainer.children[i + 1].style.top = videoContainer.children[i].offsetTop 
+					videoContainer.children[i + 1].style.top = videoContainer.children[i].offsetTop
 						+ videoContainer.children[0].offsetHeight - 19 + px;
 				}
 			}
@@ -330,7 +330,7 @@ angular.module('netbase')
 			console.log(mainHeight);
 			let px = 'px';
 			if(videoDom.length == 1) {
-				
+
 				videoDom[0].style.width = mainWidth + px;
 				videoDom[0].style.height = mainHeight + px;
 				//videoDom.children[0].style.width = mainWidth + px;
@@ -358,7 +358,7 @@ angular.module('netbase')
 			}
 		}
 	}
-	  
+
 	$scope.disconnectClassroom = function(){
 		var mainDom = document.getElementById('twilio');
 		var i;
@@ -368,7 +368,7 @@ angular.module('netbase')
 		}
 		if($scope.currentViedeRoom != null) $scope.currentViedeRoom.disconnect();
 	}
-  
+
 	$scope.isMobile = function() {
 		try{ document.createEvent("TouchEvent"); return true; }
 		catch(e){ return false; }
@@ -393,7 +393,7 @@ angular.module('netbase')
 				name: roomName
 			}
 		}
-		
+
 		video.connect(token, room_t).then(room => {
 			console.log('Connected to Room "%s"', room.name);
 			console.log(room);
@@ -404,7 +404,7 @@ angular.module('netbase')
 			console.log(localParticipant);
 
 			//$scope.currentLocalParticipant = localParticipant;
-			
+
 			//$scope.disconnectClassroom();
 
 			$scope.currentViedeRoom = room;
@@ -425,9 +425,9 @@ angular.module('netbase')
 				//videoTitle.setAttribute('id', 'my_local_video');
 				//videoTitle.style.position = 'absolute';
 				//videoTitle.innerText = $scope.administrator[$scope.administrator.length - 1].username;
-        
+
 				/********************* Screen Full Screen *********************/
-				
+
 				/*videoTitle.onclick = function(e) {
 							if( e.target.style.width < 200 ){
 								e.target.style.position = 'absolute';
@@ -442,7 +442,7 @@ angular.module('netbase')
 								e.target.firstElementChild.style.width = 210;
 							}
 				}*/
-				
+
 						/*
 						var i;
 						for(i = 0; i < 10; i++){
@@ -477,7 +477,7 @@ angular.module('netbase')
 						}
 						$scope.videoSizeSet();
 						setTimeout(()=>{
-							$window.dispatchEvent(new Event("resize"));}, 
+							$window.dispatchEvent(new Event("resize"));},
 						100);
 					}
 					else{
@@ -488,47 +488,47 @@ angular.module('netbase')
 						}
 						$scope.videoSizeSet();
 						setTimeout(()=>{
-							$window.dispatchEvent(new Event("resize"));}, 
+							$window.dispatchEvent(new Event("resize"));},
 						100);
 					}
 					$scope.fullScreen = !$scope.fullScreen;
 				});
 				*/
 				//mainVideoDom.appendChild(videoTitle);
-				
+
 				$scope.videoSizeSet();
 				setTimeout(()=>{
-					$window.dispatchEvent(new Event("resize"));}, 
+					$window.dispatchEvent(new Event("resize"));},
 				100);
 			});
 
 			room.participants.forEach(participantConnected);
 			room.on('participantConnected', participantConnected);
-		
+
 			room.on('participantDisconnected', participantDisconnected);
 			room.once('disconnected', error => room.participants.forEach(participantDisconnected));
 		});
-		
+
 		function participantConnected(participant) {
 
 			Students.getStudentById(participant.identity).then((res) => {
 				$scope.participants.push(res.data.data);
-			
+
 
 				console.log('Participant "%s" connected', participant.identity);
-			
+
 				var mainVideoDom = document.getElementById('twilio');
 				var subTitleDom = document.createElement('div');
 
 				//subTitleDom.id = participant.sid;
 				//subTitleDom.innerText = $scope.participants.username;
 				//mainVideoDom.appendChild(subVideoDom);
-			
+
 				participant.on('trackSubscribed', track => trackSubscribed(mainVideoDom, subTitleDom, track));
 				//participant.on('trackSubscribed', track => trackSubscribed(mainVideoDom, subTitleDom, track));
 
 				participant.on('trackUnsubscribed', trackUnsubscribed);
-			
+
 				participant.tracks.forEach(publication => {
 					if (publication.isSubscribed) {
 						trackSubscribed(mainVideoDom, subTitleDom, publication.track);
@@ -537,12 +537,12 @@ angular.module('netbase')
 			});
 			//document.body.appendChild(videoDom);
 		}
-		
+
 		function participantDisconnected(participant) {
 			console.log('Participant "%s" disconnected', participant.identity);
 			document.getElementById(participant.sid).remove();
 		}
-		
+
 		function trackSubscribed(main, ele, track) {
 			main.appendChild(track.attach());
 			/*angular.element(main.appendChild(track.attach())).bind('click', (e) => {
@@ -554,7 +554,7 @@ angular.module('netbase')
 					}
 					$scope.videoSizeSet();
 					setTimeout(()=>{
-						$window.dispatchEvent(new Event("resize"));}, 
+						$window.dispatchEvent(new Event("resize"));},
 					100);
 				}
 				else{
@@ -565,19 +565,19 @@ angular.module('netbase')
 					}
 					$scope.videoSizeSet();
 					setTimeout(()=>{
-						$window.dispatchEvent(new Event("resize"));}, 
+						$window.dispatchEvent(new Event("resize"));},
 					100);
 				}
 				$scope.fullScreen = !$scope.fullScreen;
 			});*/
 			//main.appendChild(ele);
 			$scope.videoSizeSet();
-			
+
 			setTimeout(()=>{
-				$window.dispatchEvent(new Event("resize"));}, 
+				$window.dispatchEvent(new Event("resize"));},
 			100);
 		}
-		
+
 		function trackUnsubscribed(track) {
 			track.detach().forEach(element => element.remove());
 		}
@@ -632,12 +632,12 @@ angular.module('netbase')
 				$scope.disconnectClassroom();
 				$scope.connectClassroom($scope.currentRoomToken, $scope.currentRoomName);
 			}
-			
-			
+
+
 			//$scope.currentViedeRoom.localParticipant.publishTrack(screenTrack);
-			
+
 			$scope.disconnectClassroom();
-			
+
 			console.log('screen track');
 			console.log(screenTrack);
 			$scope.connectClassroom($scope.currentRoomToken, $scope.currentRoomName, screenTrack);
@@ -661,18 +661,18 @@ angular.module('netbase')
 					var mainVideoDom = document.getElementById('twilio');
 					var subVideoDom = document.createElement('div');
 					subVideoDom.setAttribute('id', 'my_local_video');
-					
+
 					mainVideoDom.appendChild(subVideoDom);
-					
+
 					subVideoDom.appendChild(track.attach());
 				});
 
 			});
 			*/
-			
+
 		});
 		//const screenTrack = new LocalVideoTrack(stream.getTracks()[0]);
-		
+
 	}
 
 }])
@@ -1670,7 +1670,7 @@ angular.module('netbase')
         let status = res.data.status;
         let data = res.data.data;
         let success = res.data.success;
-        
+
         if (success) {
           var timelineData = {
             entryType: "forumpost",
@@ -1679,7 +1679,7 @@ angular.module('netbase')
           }
           University.createForumPostTimeline(timelineData).then(function(res) {
             console.log("createForumPostTimeline", res);
-            
+
             let success = res.data.success;
             if (success) {
               $location.path('/a/' + university.url + '/forum/post/id/' + data._id)

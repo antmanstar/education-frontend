@@ -43,12 +43,14 @@
 
     <div class="col-sm-2 col-md-2 section-menu-col">
 
+      <!--
       <div ng-show="logged" class="section-menu-title">Universidades</div>
 
       <div ng-show="logged" class="section-menu">
         <timelinemenuuniversity uid="{{u.universityId}}" ng-if="u.unsubscribed == false" ng-repeat="u in user.universitiesSubscribed"></timelinemenuuniversity>
         <div ng-if="user.universitiesSubscribed.length == 0" class="option">Você não esta registrado em nenhuma Universidade</div>
       </div>
+      -->
 
     </div>
     <!-- col-sm-8 -->
@@ -110,7 +112,7 @@
 
       <div style="height: 7px"></div>
 
-      <div class="section-cards" style="margin-left: 15px; padding-right: 15px; overflow-x: scroll; height: 70px; white-space: nowrap; ">
+      <div class="section-cards" style="margin-left: 15px; padding-right: 15px; overflow-x: scroll; overflow-y: hidden; height: 70px; white-space: nowrap; ">
 
         <style>
 
@@ -194,19 +196,20 @@
   </div>
   <!-- end row -->
 
-  <div class="col-xs-12" style="margin-top: 30px; border-top: 1px solid #2d4255; padding-top: 10px; line-height: 30px;">
+  <div class="col-xs-12" style="margin-top: 30px; border-top: 1px solid #2d425524; padding-top: 35px; padding-bottom: 20px; line-height: 25px; font-size: 0.95em;">
 
     <div class="col-xs-4">
-      <b style="color: #2d4255;">© 2020 Universidade</b>
+      <div style="color: #2d4255; display: inline-block; padding-right: 10px;">© 2020 Universidade</div>
+      <div style="display: inline-block;"><a>Ajuda</a></div>
     </div>
 
     <div class="col-xs-4" style="text-align: center;">
-      <img height="30px" src="https://storage.googleapis.com/educationalcommunity/pt/img/universidade_icon.png" />
+      <img height="25px" src="https://storage.googleapis.com/educationalcommunity/pt/img/universidade_icon.png" />
     </div>
 
     <div class="col-xs-4" style="text-align: right;">
-      <div style="display: inline-block; margin-right: 25px;"><a style="font-weight: bold; color: #000;" href="/ensinar">Para educadores</a></div>
-      <div style="display: inline-block; margin-right: 25px;"><a style="font-weight: bold; color: #000;" href="#">Para estudantes</a></div>
+      <div style="display: inline-block; margin-right: 25px;"><a href="/ensinar">Para educadores</a></div>
+      <div style="display: inline-block; margin-right: 25px;"><a href="#">Para estudantes</a></div>
     </div>
 
   </div>
