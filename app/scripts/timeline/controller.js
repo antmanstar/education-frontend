@@ -21,8 +21,8 @@ angular.module('netbase')
 
 }])
 
-.controller('HomeTimelineCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Timeline', '$localStorage', 'jwtHelper', 'TimelineNew', function($rootScope, $scope, $location, $route, University, Timeline, $localStorage, jwtHelper, TimelineNew) {
-
+.controller('HomeTimelineCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Students', 'Timeline', '$localStorage', 'jwtHelper', 'TimelineNew', function($rootScope, $scope, $location, $route, University, Students, Timeline, $localStorage, jwtHelper, TimelineNew) {
+  // $scope = $rootScope;
   $scope.page = 1;
   $scope.pages = 1;
 
@@ -30,6 +30,15 @@ angular.module('netbase')
 
   if ($localStorage.token != undefined && $localStorage.token != null) {
     studentId = jwtHelper.decodeToken($localStorage.token)._id;
+    Students.getStudentById(studentId).then(function(res) {
+
+      console.log("header get student by id")
+      console.log(res);
+
+      let data = res.data.data;
+      $scope.user = data;
+
+    })
   }
 
   $scope.forumPosts = [];
@@ -107,8 +116,9 @@ angular.module('netbase')
         scope.university = universityStorage[universityId];
         console.log("scope.university", scope.university)
         for (let i=0; i < scope.university.members.length; i++) {
-          if (inputArray[i].accountId === sid && inputArray[i].unsubscribed===false) {
-              scope.showUniversity = true;
+          if (scope.university.members[i].accountId === sid && scope.university.members[i].unsubscribed===false) {
+            console.log("scope.university.members", scope.university.members[i]);
+            scope.showUniversity = true;
           }
         }
 
@@ -150,9 +160,11 @@ angular.module('netbase')
 
           scope.university = res.data;
           University.storeLocal(scope.university);
+          console.log("scope.university", scope.university)
           for (let i=0; i < scope.university.members.length; i++) {
-            if (inputArray[i].accountId === sid && inputArray[i].unsubscribed===false) {
-                scope.showUniversity = true;
+            if (scope.university.members[i].accountId === sid && scope.university.members[i].unsubscribed===false) {
+              console.log("scope.university.members", scope.university.members[i]);
+              scope.showUniversity = true;
             }
           }
           /* get post */

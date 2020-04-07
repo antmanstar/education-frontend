@@ -119,7 +119,7 @@
       </div>
 
       <div ng-repeat="activity in activities" ng-if="user.universitiesSubscribed.length > 0">
-        <timelinenewforumpost ng-if="activity.entryType != 'comment'" reshare="{{activity.reshare}}" like="{{activity.like}}" comments="{{activity.comments}}" cid="{{activity.modelId}}" aid="{{activity.creatorId}}" uid="{{activity.universityId}}"></timelinenewforumpost>
+        <timelinenewforumpost ng-if="activity.entryType != 'comment'" reshare="{{activity.rePost}}" like="{{activity.like}}" comments="{{activity.comments}}" cid="{{activity.modelId}}" aid="{{activity.creatorId}}" uid="{{activity.universityId}}"></timelinenewforumpost>
       </div>
 
       <div ng-if="user.universitiesSubscribed.length > 0" infinite-scroll='nextPage()' infinite-scroll-disabled='busy' infinite-scroll-distance='1'>

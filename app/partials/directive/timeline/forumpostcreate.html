@@ -1,83 +1,85 @@
-<div ng-if="showUniversity" style="padding-top: 10px; padding-bottom: 10px; border-bottom: 0.5px solid #ececec;">
-  <div style="width: 60px; display: inline-block; vertical-align: top; text-align: right;">
-    <img style="border-radius: 50%; width: 50px; height: 50px;" ng-if="university.backgroundImage != undefined" src="{{university.backgroundImage}}" />
-    <img style="border-radius: 50%; width: 50px; height: 50px;" ng-if="university.backgroundImage == undefined" src="/img/misc/noimageacademia.jpg" />
-  </div>
-  <div style="width: calc(100% - 66px); display: inline-block; padding-left: 10px; padding-right: 10px;">
-    <div style="font-weight: 700; font-size: 1.05em; display: inline-block;">{{university.name}}</div> - <i style="color: #636363;">@{{university.url}}</i></br>
-    <div style="max-height: 110px; overflow: hidden; color: #000; font-weight: 600; font-size: 1.05em; line-height: 1.7em; font-family: 'Noto Serif TC', serif; overflow-wrap: break-word;" ng-bind-html="forumPost.text"></div>
-    <div style="padding-top: 5px; font-size: 1.05em; text-align: center; font-weight: 700; font-size: 1.06em;"><a href="/a/{{university.url}}/forum/post/id/{{activity.modelId}}">CONTINUAR LENDO</a></div>
-    <div style="margin-top: 10px; font-size: 1.2em; color: #717171;">
-      <div title="Comments" style="width: 60px; text-align: left; padding-top: 5px; display: inline-block;"><i class="far fa-comment" style="cursor: pointer;" ng-click="handleCommentSection()"></i> {{forumPost.answers.length || 0}}</div>
-      <div title="Votes" style="width: 60px; text-align: left; padding-top: 5px; display: inline-block;"><i class="far fa-lightbulb" style="cursor: pointer;" ng-click="upvoteForumPost()"></i> {{forumPost.votes.length || 0}}</div>
-      <div title="Re-Post" style="width: 60px; text-align: left; padding-top: 5px; display: inline-block;"><i class="fas fa-retweet" style="cursor: pointer;" ng-click="rePost(activity.entryType)"> {{rePostCount || 0}} </i></div>
-      <div title="Share" style="width: 60px; text-align: left; padding-top: 5px; display: inline-block;"><i class="fas fa-share-alt" style="cursor: pointer;" ng-click="handleSharePost()"></i></div>
+<div>
+  <div ng-if="showUniversity==true" style="padding-top: 10px; padding-bottom: 10px; border-bottom: 0.5px solid #ececec;">
+    <div style="width: 60px; display: inline-block; vertical-align: top; text-align: right;">
+      <img style="border-radius: 50%; width: 50px; height: 50px;" ng-if="university.backgroundImage != undefined" src="{{university.backgroundImage}}" />
+      <img style="border-radius: 50%; width: 50px; height: 50px;" ng-if="university.backgroundImage == undefined" src="/img/misc/noimageacademia.jpg" />
     </div>
-    <div ng-if="commentSection">
-      <div class="academia-content-forum-answer-box">
-  
-        <style>
-        .ta-toolbar {
-          background-color: #f0f0f0;
-          padding-bottom: 5px;
-          padding-top: 5px;
-        }
-        </style>
-  
-        <trix-editor angular-trix ng-model="answer"></trix-editor>
-  
+    <div style="width: calc(100% - 66px); display: inline-block; padding-left: 10px; padding-right: 10px;">
+      <div style="font-weight: 700; font-size: 1.05em; display: inline-block;">{{university.name}}</div> - <i style="color: #636363;">@{{university.url}}</i></br>
+      <div style="max-height: 110px; overflow: hidden; color: #000; font-weight: 600; font-size: 1.05em; line-height: 1.7em; font-family: 'Noto Serif TC', serif; overflow-wrap: break-word;" ng-bind-html="forumPost.text"></div>
+      <div style="padding-top: 5px; font-size: 1.05em; text-align: center; font-weight: 700; font-size: 1.06em;"><a href="/a/{{university.url}}/forum/post/id/{{activity.modelId}}">CONTINUAR LENDO</a></div>
+      <div style="margin-top: 10px; font-size: 1.2em; color: #717171;">
+        <div title="Comments" style="width: 60px; text-align: left; padding-top: 5px; display: inline-block;"><i class="far fa-comment" style="cursor: pointer;" ng-click="handleCommentSection()"></i> {{forumPost.answers.length || 0}}</div>
+        <div title="Votes" style="width: 60px; text-align: left; padding-top: 5px; display: inline-block;"><i class="far fa-lightbulb" style="cursor: pointer;" ng-click="upvoteForumPost()"></i> {{forumPost.votes.length || 0}}</div>
+        <div title="Re-Post" style="width: 60px; text-align: left; padding-top: 5px; display: inline-block;"><i class="fas fa-retweet" style="cursor: pointer;" ng-click="rePost(activity.entryType)"> {{rePostCount || 0}} </i></div>
+        <div title="Share" style="width: 60px; text-align: left; padding-top: 5px; display: inline-block;"><i class="fas fa-share-alt" style="cursor: pointer;" ng-click="handleSharePost()"></i></div>
       </div>
-      <!-- academia-content-forum-answer-box -->
-  
-      <div class="academia-content-forum-answer-action">
-        <button class="btn btn-blue" ng-click="createAnswerPost(answer)">Responder</button>
+      <div ng-if="commentSection">
+        <div class="academia-content-forum-answer-box">
+    
+          <style>
+          .ta-toolbar {
+            background-color: #f0f0f0;
+            padding-bottom: 5px;
+            padding-top: 5px;
+          }
+          </style>
+    
+          <trix-editor angular-trix ng-model="answer"></trix-editor>
+    
+        </div>
+        <!-- academia-content-forum-answer-box -->
+    
+        <div class="academia-content-forum-answer-action">
+          <button class="btn btn-blue" ng-click="createAnswerPost(answer)">Responder</button>
+        </div>
       </div>
-    </div>
-    <div class="social__container" ng-if="sharePost">   
+      <div class="social__container" ng-if="sharePost">   
 
-      <!-- social__item linkedin -->
-      <div class="social__item">
-              <a class="social__icon--linkedin" href="#"
-              socialshare
-              socialshare-provider="linkedin"
-              socialshare-text="{{forumPost.text}}"
-              socialshare-hashtags="{{forumPost.title}}, Universidades"
-              socialshare-url="https://universida.de/a/{{university.url}}/forum/post/id/{{activity.modelId}}"><i class="icon--linkedin"></i></a>
-      </div>
-      <!-- /social__item linkedin -->
-  
-      <!-- social__item twitter -->
-      <div class="social__item">
-              <a class="social__icon--twitter" href="#"
-              socialshare
-              socialshare-provider="twitter"
-              socialshare-text="{{forumPost.text}}"
-              socialshare-hashtags="{{forumPost.title}}, Universidades"
-              socialshare-url="https://universida.de/a/{{university.url}}/forum/post/id/{{activity.modelId}}"><i class="icon--twitter"></i></a>
-      </div>
-      <!-- /social__item twiter -->
-  
-      <!-- social__item google+ -->
-      <div class="social__item">
-              <a class="social__icon--googleplus" href="#"
-              socialshare
-              socialshare-provider="google"
-              socialshare-text="{{forumPost.text}}"
-              socialshare-hashtags="{{forumPost.title}}, Universidades"
-              socialshare-url="https://universida.de/a/{{university.url}}/forum/post/id/{{activity.modelId}}"><i class="icon--googleplus"></i></a>
-      </div>
-      <!-- /social__item google+ -->
+        <!-- social__item linkedin -->
+        <div class="social__item">
+                <a class="social__icon--linkedin" href="#"
+                socialshare
+                socialshare-provider="linkedin"
+                socialshare-text="{{forumPost.text}}"
+                socialshare-hashtags="{{forumPost.title}}, Universidades"
+                socialshare-url="https://universida.de/a/{{university.url}}/forum/post/id/{{activity.modelId}}"><i class="icon--linkedin"></i></a>
+        </div>
+        <!-- /social__item linkedin -->
+    
+        <!-- social__item twitter -->
+        <div class="social__item">
+                <a class="social__icon--twitter" href="#"
+                socialshare
+                socialshare-provider="twitter"
+                socialshare-text="{{forumPost.text}}"
+                socialshare-hashtags="{{forumPost.title}}, Universidades"
+                socialshare-url="https://universida.de/a/{{university.url}}/forum/post/id/{{activity.modelId}}"><i class="icon--twitter"></i></a>
+        </div>
+        <!-- /social__item twiter -->
+    
+        <!-- social__item google+ -->
+        <div class="social__item">
+                <a class="social__icon--googleplus" href="#"
+                socialshare
+                socialshare-provider="google"
+                socialshare-text="{{forumPost.text}}"
+                socialshare-hashtags="{{forumPost.title}}, Universidades"
+                socialshare-url="https://universida.de/a/{{university.url}}/forum/post/id/{{activity.modelId}}"><i class="icon--googleplus"></i></a>
+        </div>
+        <!-- /social__item google+ -->
 
-      <!-- social__item facebook -->
-      <div class="social__item">
-              <a class="social__icon--facebook" href="#"
-              socialshare
-              socialshare-provider="facebook"
-              socialshare-text="{{forumPost.text}}"
-              socialshare-hashtags="{{forumPost.title}}, Universidades"
-              socialshare-url="https://universida.de/a/{{university.url}}/forum/post/id/{{activity.modelId}}"><i class="icon--facebook"></i></a>
+        <!-- social__item facebook -->
+        <div class="social__item">
+                <a class="social__icon--facebook" href="#"
+                socialshare
+                socialshare-provider="facebook"
+                socialshare-text="{{forumPost.text}}"
+                socialshare-hashtags="{{forumPost.title}}, Universidades"
+                socialshare-url="https://universida.de/a/{{university.url}}/forum/post/id/{{activity.modelId}}"><i class="icon--facebook"></i></a>
+        </div>
+        <!-- /social__item facebook -->  
       </div>
-      <!-- /social__item facebook -->  
     </div>
   </div>
 </div>
