@@ -120,6 +120,563 @@ angular.module('netbase')
 
 }])
 
+.controller('AcademiaClassroomsCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Classroom', 'Students', 'ngDialog', '$localStorage', '$window', function($rootScope, $scope, $location, $route, University, Classroom, Students, ngDialog, $localStorage, $window) {
+
+	let universityUrl = $route.current.params.academiaName;
+
+	$scope.administrator = [];
+	$scope.participants = [];
+	$scope.fullScreen = false;
+
+	//$scope.currentLocalParticipant = null;
+	$scope.currentViedeRoom = null;
+	$scope.wholeClassroomList = [];
+	//console.log($route);
+	//console.log("$$$$$$$$$");
+	//console.log(Twilio.Video);
+	//console.log("$$$$$$$$$");
+	var video = Twilio.Video;
+	var localVideo = Twilio.createLocalTracks;
+	console.log('here local video');
+	console.log(localVideo);
+
+	$scope.classroomView = 0;
+
+	//var baseUrl = "http://localhost:9000"; //Back-end server base url
+	var baseUrl = "https://educationalcommunity-classroom.herokuapp.com"; //Back-end server base url
+	University.getUniversity(universityUrl).then(function(res) {
+		console.log('here university');
+		console.log(res);
+		$scope.university = res.data.data;
+		$scope.getAllClassrooms();
+	});
+
+	angular.element($window).bind('resize', function(){
+		$scope.videoSizeSet();
+	});
+
+	/******************** GET ALL Classrooms ******************/
+
+	$scope.getAllClassrooms = function() {
+
+		let url = '/classroom/university/' + $scope.university._id + '/all'
+		Classroom.getAllClassroomsByUniversity(baseUrl + url).then((data)=>{
+			$scope.wholeClassroomList = data;
+			console.log('Classroom.getAllClassrooms');
+			console.log($scope.wholeClassroomList);
+		});
+	}
+
+
+	$scope.addingClassroom = {
+		uniqueName: '',
+		active: '',
+		roomType: 0,
+		publicRoom: {
+			type: 0,
+			payPerView: 0
+		},
+		privateRoom: {
+			invite: -1,
+			share: -1
+		},
+		chat: -1,
+		donation: -1
+	}
+
+
+	$scope.createNewClassroom = function () {
+		ngDialog.open({ template: 'partials/modals/classroom_modal.html', className: 'ngdialog-theme-default classroom-modal' });
+	};
+
+	$scope.confirmCreateClassroom = function() {
+
+		let token = $localStorage.token;
+		let title = $scope.addingClassroom.uniqueName ? $scope.addingClassroom.uniqueName : '';
+		let url = '/classroom/university/' + $scope.university._id + '/room/' + title;
+		Classroom.createNewClassroom(baseUrl + url, title).then((data) => {
+			//$scope.getAllClassrooms();
+			let url = '/classroom/university/' + $scope.university._id + '/all'
+			Classroom.getAllClassroomsByUniversity(baseUrl + url).then((data)=>{
+				$scope.wholeClassroomList = data;
+				console.log('Classroom.getAllClassrooms');
+				console.log($scope.wholeClassroomList);
+				$route.reload();
+			});
+			ngDialog.close();
+		})
+		.catch((err) => {
+			alert('Error');
+		});
+	}
+
+	$scope.joinClassroom = function(classroom) {
+
+		$scope.currentClassroom = classroom;
+
+		Students.getStudentById(classroom.accountSid).then((res) => {
+			$scope.administrator.push(res.data.data);
+		})
+
+		console.log('administrator');
+		console.log($scope.administrator);
+			console.log('current classroom');
+			console.log($scope.currentClassroom);
+		let url = '/classroom/' + classroom.roomSID + '/join/';
+		Classroom.joinClassroom(baseUrl + url).then((data) => {
+
+			$scope.classroomView = 1;
+
+
+			url = '/classroom/classroom/' + classroom.uniqueName + '/token/'
+			Classroom.getAccessToken(baseUrl + url).then((data) => {
+				console.log('here access token');
+				console.log(data);
+				$scope.connectClassroom(data, classroom.uniqueName);
+				$scope.connectClassroom(data, classroom.uniqueName);
+				$scope.connectClassroom(data, classroom.uniqueName);
+				$scope.connectClassroom(data, classroom.uniqueName);
+				$scope.connectClassroom(data, classroom.uniqueName);
+				$scope.connectClassroom(data, classroom.uniqueName);
+				$scope.connectClassroom(data, classroom.uniqueName);
+				$scope.connectClassroom(data, classroom.uniqueName);
+				$scope.connectClassroom(data, classroom.uniqueName);
+				$scope.connectClassroom(data, classroom.uniqueName);
+				$scope.connectClassroom(data, classroom.uniqueName);
+			});
+
+		})
+		.catch((err) => {
+			alert('Join Error.');
+		})
+	}
+
+	/*$scope.videoSizeSet = function() {
+		var i;
+		var videoContainer = document.getElementById('twilio');
+		var videoDom = document.getElementsByTagName('video');
+		var mainWidth;
+		var mainHeight;
+		var none_display_count = 0;
+		for(i = 0; i < videoContainer.childElementCount; i++){
+			if(videoContainer.children[i].style.display == 'none') none_display_count++;
+		}
+		if(!$scope.isMobile()) {
+			console.log('this is not mobile device');
+			mainWidth = parseInt(videoContainer.style.width || videoContainer.offsetWidth);
+			mainWidth -= 100;
+			mainHeight = parseInt(videoContainer.style.height || videoContainer.offsetHeight);
+			mainHeight -= 100;
+			if(mainHeight > mainWidth / 4 * 3) mainHeight = mainWidth / 4 * 3;
+			console.log(videoContainer.style.width || videoContainer.width);
+			console.log(mainWidth);
+			console.log(mainHeight);
+			let px = 'px';
+			if(videoContainer.childElementCount - none_display_count == 1 || videoContainer.childElementCount == 2) {
+				for(i = 0; i < videoContainer.childElementCount; i+=2) {
+					if(videoContainer.children[i].style.display == 'none') continue;
+					videoContainer.children[i].style.width = mainWidth + px;
+					videoContainer.children[i].style.height = mainHeight + px;
+					videoContainer.children[i + 1].style.width = mainWidth + px;
+					videoContainer.children[i + 1].style.height = '20px';
+					videoContainer.children[i + 1].style.left = videoContainer.children[i].offsetLeft + px;
+					videoContainer.children[i + 1].style.top = videoContainer.children[i].offsetTop
+						+ videoContainer.children[0].offsetHeight -19 + px;
+				}
+			}
+			else if(videoContainer.childElementCount - none_display_count > 2 && videoContainer.childElementCount - none_display_count < 10){
+				for(i = 0; i < videoContainer.childElementCount; i+=2) {
+					videoContainer.children[i].style.width = (mainWidth / 2) + px;
+					videoContainer.children[i].style.height= (mainHeight / 2) + px;
+					videoContainer.children[i + 1].style.width = (mainWidth / 2) + px;
+					videoContainer.children[i + 1].style.height = '20px';
+					videoContainer.children[i + 1].style.left = videoContainer.children[i].offsetLeft + px;
+					videoContainer.children[i + 1].style.top = videoContainer.children[i].offsetTop
+						+ videoContainer.children[0].offsetHeight -19 + px;
+				}
+			}
+			else {
+				for(i = 0; i < videoContainer.childElementCount; i+=2) {
+					videoContainer.children[i].style.width = (mainWidth / 3) + px;
+					videoContainer.children[i].style.height = (mainHeight / 3) + px;
+					videoContainer.children[i + 1].style.width = (mainWidth / 3) + px;
+					videoContainer.children[i + 1].style.height = '20px';
+					videoContainer.children[i + 1].style.left = videoContainer.children[i].offsetLeft + px;
+					videoContainer.children[i + 1].style.top = videoContainer.children[i].offsetTop
+						+ videoContainer.children[0].offsetHeight - 19 + px;
+				}
+			}
+		}
+	}*/
+
+	$scope.videoSizeSet = function() {
+		var i;
+		var videoContainer = document.getElementById('twilio');
+		var videoDom = document.getElementsByTagName('video');
+		var mainWidth;
+		var mainHeight;
+		for(i = 0; i < videoContainer.childElementCount; i++){
+			if(videoContainer.children[i].style.display == 'none') none_display_count++;
+		}
+		if(!$scope.isMobile()) {
+			console.log('this is not mobile device');
+			mainWidth = parseInt(videoContainer.style.width || videoContainer.offsetWidth);
+			mainWidth -= 100;
+			mainHeight = parseInt(videoContainer.style.height || videoContainer.offsetHeight);
+			mainHeight -= 100;
+			if(mainHeight > mainWidth / 4 * 3) mainHeight = mainWidth / 4 * 3;
+			console.log(videoContainer.style.width || videoContainer.width);
+			console.log(mainWidth);
+			console.log(mainHeight);
+			let px = 'px';
+			if(videoDom.length == 1) {
+
+				videoDom[0].style.width = mainWidth + px;
+				videoDom[0].style.height = mainHeight + px;
+				//videoDom.children[0].style.width = mainWidth + px;
+				//videoDom.children[0].style.height = mainHeight + px - 20;
+			}
+			else if(videoDom.length > 1 && videoDom.length < 5){
+				for(i = 0; i < videoDom.length; i+=1) {
+					videoDom[i].style.width = (mainWidth / 2) + px;
+					videoDom[i].style.height= (mainHeight / 2) + px;
+					//videoDom[i].children[0].style.width = (mainWidth / 2) + px;
+					//videoDom[i].children[0].style.height = (mainHeight / 2) - 20 + px;
+					//videoDom[i].children[0].style.left = videoDom[i].children[0].offsetLeft + px;
+					//videoDom[i].children[0].style.top = videoDom[i].children[0].offsetTop -19 + px;
+				}
+			}
+			else {
+				for(i = 0; i < videoDom.length; i+=1) {
+					videoDom[i].style.width = (mainWidth / 3) + px;
+					videoDom[i].style.height= (mainHeight / 3) + px;
+					//videoDom[i].children[0].style.width = (mainWidth / 3) + px;
+					//videoDom[i].children[0].style.height = (mainHeight / 3) - 20 + px;
+					//videoDom[i].children[0].style.left = videoDom[i].children[0].offsetLeft + px;
+					//videoDom[i].children[0].style.top = videoDom[i].children[0].offsetTop -19 + px;
+				}
+			}
+		}
+	}
+
+	$scope.disconnectClassroom = function(){
+		var mainDom = document.getElementById('twilio');
+		var i;
+		for(i = mainDom.childElementCount - 1; i >=0  ; i--){
+			mainDom.children[i].remove();
+			console.log(mainDom.children[i]);
+		}
+		if($scope.currentViedeRoom != null) $scope.currentViedeRoom.disconnect();
+	}
+
+	$scope.isMobile = function() {
+		try{ document.createEvent("TouchEvent"); return true; }
+		catch(e){ return false; }
+	}
+
+	$scope.connectClassroom = function(token, roomName, screenTrack = null) {
+
+		//localVideo.connect()
+		$scope.currentShareScreen = screenTrack;
+		$scope.currentRoomToken = token;
+		$scope.currentRoomName = roomName;
+
+		var room_t;
+		if(screenTrack != null){
+			room_t = {
+				name: roomName,
+				tracks: [screenTrack]
+			}
+		}
+		else {
+			room_t = {
+				name: roomName
+			}
+		}
+
+		video.connect(token, room_t).then(room => {
+			console.log('Connected to Room "%s"', room.name);
+			console.log(room);
+			console.log(room.participants);
+			const localParticipant = room.localParticipant;
+
+			console.log('Here local participant');
+			console.log(localParticipant);
+
+			//$scope.currentLocalParticipant = localParticipant;
+
+			//$scope.disconnectClassroom();
+
+			$scope.currentViedeRoom = room;
+			if($scope.currentShareScreen != null) {
+				room.localParticipant.publishTrack($scope.currentShareScreen);
+			}
+			localParticipant.videoTracks.forEach(publication => {
+				console.log('publication');
+				console.log(publication);
+				const track = publication.track;
+				console.log('tract');
+				console.log(track);
+				//if(document.getElementById('my_local_video') != null){
+				//	document.getElementById('my_local_video').remove();
+				//}
+				var mainVideoDom = document.getElementById('twilio');
+				var videoTitle = document.createElement('div');
+				//videoTitle.setAttribute('id', 'my_local_video');
+				//videoTitle.style.position = 'absolute';
+				//videoTitle.innerText = $scope.administrator[$scope.administrator.length - 1].username;
+
+				/********************* Screen Full Screen *********************/
+
+				/*videoTitle.onclick = function(e) {
+							if( e.target.style.width < 200 ){
+								e.target.style.position = 'absolute';
+								e.target.style.width = 635;
+								e.target.style.height = 450;
+								e.target.firstElementChild.style.width = 485;
+							}
+							else {
+								e.target.style.position = 'absolute';
+								e.target.style.width = 210;
+								e.target.style.height = 170;
+								e.target.firstElementChild.style.width = 210;
+							}
+				}*/
+
+						/*
+						var i;
+						for(i = 0; i < 10; i++){
+							var ss = document.createElement('div');
+							ss.setAttribute('id', 'my_local_video');
+							ss.style.position = 'absolute';
+							ss.onclick = function(e) {
+								if( e.target.style.width < 200 ){
+									e.target.style.position = 'absolute';
+									e.target.style.width = 485;
+									e.target.style.height = 350;
+									e.target.firstElementChild.style.width = 485;
+								}
+								else {
+									e.target.style.position = 'absolute';
+									e.target.style.width = 210;
+									e.target.style.height = 170;
+									e.target.firstElementChild.style.width = 210;
+								}
+							}
+							mainVideoDom.appendChild(ss);
+						}
+				*/
+				mainVideoDom.appendChild(track.attach());
+				/*
+				angular.element(mainVideoDom.appendChild(track.attach())).bind('click', (e) => {
+					var i;
+					let mainDom = document.getElementById('twilio');
+					if($scope.fullScreen){
+						for(i = 0; i < mainDom.childElementCount; i++){
+							mainDom.children[i].style.display = 'initial';
+						}
+						$scope.videoSizeSet();
+						setTimeout(()=>{
+							$window.dispatchEvent(new Event("resize"));},
+						100);
+					}
+					else{
+						for(i = 0; i < mainDom.childElementCount; i++){
+							if(mainDom.children[i] != e.target){
+								mainDom.children[i].style.display = 'none';
+							}
+						}
+						$scope.videoSizeSet();
+						setTimeout(()=>{
+							$window.dispatchEvent(new Event("resize"));},
+						100);
+					}
+					$scope.fullScreen = !$scope.fullScreen;
+				});
+				*/
+				//mainVideoDom.appendChild(videoTitle);
+
+				$scope.videoSizeSet();
+				setTimeout(()=>{
+					$window.dispatchEvent(new Event("resize"));},
+				100);
+			});
+
+			room.participants.forEach(participantConnected);
+			room.on('participantConnected', participantConnected);
+
+			room.on('participantDisconnected', participantDisconnected);
+			room.once('disconnected', error => room.participants.forEach(participantDisconnected));
+		});
+
+		function participantConnected(participant) {
+
+			Students.getStudentById(participant.identity).then((res) => {
+				$scope.participants.push(res.data.data);
+
+
+				console.log('Participant "%s" connected', participant.identity);
+
+				var mainVideoDom = document.getElementById('twilio');
+				var subTitleDom = document.createElement('div');
+
+				//subTitleDom.id = participant.sid;
+				//subTitleDom.innerText = $scope.participants.username;
+				//mainVideoDom.appendChild(subVideoDom);
+
+				participant.on('trackSubscribed', track => trackSubscribed(mainVideoDom, subTitleDom, track));
+				//participant.on('trackSubscribed', track => trackSubscribed(mainVideoDom, subTitleDom, track));
+
+				participant.on('trackUnsubscribed', trackUnsubscribed);
+
+				participant.tracks.forEach(publication => {
+					if (publication.isSubscribed) {
+						trackSubscribed(mainVideoDom, subTitleDom, publication.track);
+					}
+				});
+			});
+			//document.body.appendChild(videoDom);
+		}
+
+		function participantDisconnected(participant) {
+			console.log('Participant "%s" disconnected', participant.identity);
+			document.getElementById(participant.sid).remove();
+		}
+
+		function trackSubscribed(main, ele, track) {
+			main.appendChild(track.attach());
+			/*angular.element(main.appendChild(track.attach())).bind('click', (e) => {
+				var i;
+				let mainDom = document.getElementById('twilio');
+				if($scope.fullScreen){
+					for(i = 0; i < mainDom.childElementCount; i++){
+						mainDom.children[i].style.display = 'initial';
+					}
+					$scope.videoSizeSet();
+					setTimeout(()=>{
+						$window.dispatchEvent(new Event("resize"));},
+					100);
+				}
+				else{
+					for(i = 0; i < mainDom.childElementCount; i++){
+						if(mainDom.children[i] != e.target){
+							mainDom.children[i].style.display = 'none';
+						}
+					}
+					$scope.videoSizeSet();
+					setTimeout(()=>{
+						$window.dispatchEvent(new Event("resize"));},
+					100);
+				}
+				$scope.fullScreen = !$scope.fullScreen;
+			});*/
+			//main.appendChild(ele);
+			$scope.videoSizeSet();
+
+			setTimeout(()=>{
+				$window.dispatchEvent(new Event("resize"));},
+			100);
+		}
+
+		function trackUnsubscribed(track) {
+			track.detach().forEach(element => element.remove());
+		}
+	}
+
+	$scope.returnBack = function() {
+		$scope.classroomView = 0;
+		$scope.administrator = [];
+		$scope.participants = [];
+		$scope.disconnectClassroom();
+		//leave room
+	}
+
+	$scope.recordVideo = function(){
+		let API_KEY_SID = "SK1a798d2be5f6c189daea5ff4e126793b";
+		let API_KEY_SECRET = "iY7eTh3rYYR4matfxuZVNKJcPRpPOBtH";
+		let ACCOUNT_SID = "AC49c057053ba1660bf1304758c0a3218d";
+
+		//const client = new Twilio(API_KEY_SID, API_KEY_SECRET, {accountSid: ACCOUNT_SID});
+
+		Twilio.Video.compositions.
+		create({
+			roomSid: $scope.currentClassroom._id,
+			videoLayout: {
+			grid : {
+				max_rows: 1,
+				video_sources: [
+					"RTAAAA",
+					"MTBBBB",
+					"teacher-webcast"
+				]
+			}
+			},
+			statusCallback: 'http://localhost:8080/callbacks',
+			format: 'mp4'
+		})
+		.then(composition =>{
+			console.log('Created Composition with SID=' + composition.sid);
+		});
+	}
+
+	$scope.shareScreen = function() {
+		//if($scope.currentLocalParticipant == null){
+		//	alert("Error");
+		//	return;
+		//}
+
+		navigator.mediaDevices.getDisplayMedia().then((stream)=>{
+			const screenTrack = stream.getTracks()[0];
+
+			screenTrack.onended = function(e) {
+				$scope.disconnectClassroom();
+				$scope.connectClassroom($scope.currentRoomToken, $scope.currentRoomName);
+			}
+
+
+			//$scope.currentViedeRoom.localParticipant.publishTrack(screenTrack);
+
+			$scope.disconnectClassroom();
+
+			console.log('screen track');
+			console.log(screenTrack);
+			$scope.connectClassroom($scope.currentRoomToken, $scope.currentRoomName, screenTrack);
+			/*
+			screenTrack.onended = function(e) {
+				$scope.disconnectClassroom();
+
+			}
+
+			video.connect($scope.currentRoomToken, {
+				name: $scope.currentRoomName,
+				tracks: [screenTrack]
+			}).then((room) => {
+				$scope.currentViedeRoom = room;
+				room.localParticipant.publishTrack(screenTrack);
+				room.localParticipant.videoTracks.forEach(publication => {
+					console.log('publication1');
+					console.log(publication);
+					const track = publication.track;
+					document.getElementById('my_local_video').remove();
+					var mainVideoDom = document.getElementById('twilio');
+					var subVideoDom = document.createElement('div');
+					subVideoDom.setAttribute('id', 'my_local_video');
+
+					mainVideoDom.appendChild(subVideoDom);
+
+					subVideoDom.appendChild(track.attach());
+				});
+
+			});
+			*/
+
+		});
+		//const screenTrack = new LocalVideoTrack(stream.getTracks()[0]);
+
+	}
+
+}])
+
 .controller('AcademiaCtrl', ['$rootScope', '$scope', '$location', '$route', 'University' , function($rootScope, $scope, $location, $route, University) {
 
   let universityUrl = $route.current.params.url;
@@ -632,13 +1189,13 @@ angular.module('netbase')
 
   $scope.universityUrl = universityUrl
   $scope.controllerActive = controllerActive;
-  $scope.forumClass = "";
-  $scope.timelineClass = "";
-  $scope.smpClass = "";
-  $scope.jobsClass = "";
+  $scope.forumClass = '';
+  $scope.timelineClass = '';
+  $scope.smpClass = '';
+  $scope.jobsClass = '';
   $scope.actionPostButton = false;
 
-  $scope.buttonActionUrl = "";
+  $scope.buttonActionUrl = '';
 
   if (controllerActive == "AcademiaForumCtrl") {
     $scope.forumClass = "active";
@@ -897,9 +1454,9 @@ angular.module('netbase')
 
 .controller('AcademiaForumPostCreateOptionCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'ngDialog', 'Videos', '$sce', function($rootScope, $scope, $location, $route, University, ngDialog, Videos, $sce) {
 
-  $scope.youtubeLink = "";
-  $scope.title = "";
-  $scope.form = { iconClass : "", placeholder : "" };
+  $scope.youtubeLink = '';
+  $scope.title = '';
+  $scope.form = { iconClass : '', placeholder : '' };
 
   let type = $scope.ngDialogData.type;
   $scope.type = type;
@@ -911,7 +1468,7 @@ angular.module('netbase')
     $scope.form.placeholder = "SoundCloud embed link";
     $scope.form.button = "Add SoundCloud embed";
 
-    $scope.imagePush = "";
+    $scope.imagePush = '';
 
     $scope.$watch('link', function() {
 
@@ -941,7 +1498,7 @@ angular.module('netbase')
     $scope.form.placeholder = "Image link";
     $scope.form.button = "Adicionar imagem";
 
-    $scope.imagePush = "";
+    $scope.imagePush = '';
 
     $scope.$watch('link', function() {
 
@@ -1113,7 +1670,7 @@ angular.module('netbase')
         let status = res.data.status;
         let data = res.data.data;
         let success = res.data.success;
-        
+
         if (success) {
           var timelineData = {
             entryType: "forumpost",
@@ -1122,7 +1679,7 @@ angular.module('netbase')
           }
           University.createForumPostTimeline(timelineData).then(function(res) {
             console.log("createForumPostTimeline", res);
-            
+
             let success = res.data.success;
             if (success) {
               $location.path('/a/' + university.url + '/forum/post/id/' + data._id)
@@ -1278,15 +1835,15 @@ angular.module('netbase')
       let controllerActive = $route.current.$$route.controller;
 
       scope.controllerActive = controllerActive;
-      scope.forumClass = "";
-      scope.smpClass = "";
-      scope.jobsClass = "";
-      scope.timelineClass = "";
-      scope.playlistClass = "";
-      scope.cursosClass = "";
+      scope.forumClass = '';
+      scope.smpClass = '';
+      scope.jobsClass = '';
+      scope.timelineClass = '';
+      scope.playlistClass = '';
+      scope.cursosClass = '';
       scope.actionPostButton = false;
 
-      scope.buttonActionUrl = "";
+      scope.buttonActionUrl = '';
 
       if (controllerActive == "AcademiaForumCtrl" || controllerActive == "AcademiaForumPostCreateCtrl" || controllerActive == "AcademiaForumPostCtrl") {
         scope.forumClass = "active";

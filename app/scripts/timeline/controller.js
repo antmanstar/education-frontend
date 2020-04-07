@@ -100,9 +100,6 @@ angular.module('netbase')
       //   scope.rePostCount = res.data.count-1;
       // });
 
-      console.log("universityId: ")
-      console.log(universityId)
-
       if ( University.isStoredLocal(universityId) ) {
 
         let universityStorage = University.retrieveStorage(universityId);
@@ -114,14 +111,13 @@ angular.module('netbase')
               scope.showUniversity = true;
           }
         }
+
         /* get post */
         Forum.getForumPostById(contentId, scope.university._id).then(function(res) {
 
           let status = res.data.status;
           let data = res.data.data;
           let success = res.data.success;
-
-          console.log(res)
 
           if (status != 90010) {
 
@@ -144,8 +140,6 @@ angular.module('netbase')
         /* get account id */
         Students.getStudentById(accountId).then(function(res) {
 
-          console.log("response student: ");
-          console.log(res);
           scope.student = res.data.data;
 
         });
@@ -155,7 +149,6 @@ angular.module('netbase')
         University.getUniversityById(universityId).success(function(res) {
 
           scope.university = res.data;
-          console.log("scope.university", scope.university)
           University.storeLocal(scope.university);
           for (let i=0; i < scope.university.members.length; i++) {
             if (inputArray[i].accountId === sid && inputArray[i].unsubscribed===false) {
@@ -206,17 +199,17 @@ angular.module('netbase')
       scope.createAnswerPost = function(answer) {
         console.log(answer);
         var data = { text : answer };
-    
+
         if ($localStorage.token != undefined || $localStorage.token != null) {
           Forum.postAnswerByForumPostId(contentId, data).then(function(res) {
-    
+
             let status = res.data.status;
             let data = res.data.data;
             let success = res.data.success;
-    
+
             if (success) {
               scope.commentSection = !scope.commentSection;
-              
+
               data.votesCount = 0;
               data.createdAt = Math.round((new Date()).getTime() / 1000);
               scope.forumPost.answers.push(data);
@@ -226,15 +219,15 @@ angular.module('netbase')
                 universityId: universityId
               }
               University.createForumPostTimeline(timelineData).then(function(res) {})
-    
+
             }
-    
+
           });
         } else {
           ngDialog.open({ template: 'partials/modals/login.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
         }
-    
-    
+
+
       };
       scope.premium = { value : "0" };
       scope.rePost = function(entryType) {
@@ -243,15 +236,15 @@ angular.module('netbase')
           title : scope.forumPost.title,
           premium : scope.forumPost.premium==false ? "0" : "1",
           categoryId : scope.forumPost.categoryId
-        };    
-    
+        };
+
         University.createForumPost(universityId, data).then(function(res) {
-  
+
           let status = res.data.status;
           let data = res.data.data;
           let success = res.data.success;
           console.log("createForumPost", res);
-          
+
           if (success) {
             var timelineData = {
               entryType: "repost",
@@ -265,33 +258,33 @@ angular.module('netbase')
               window.location.reload();
               window.scrollTo(0, 0);
             })
-  
+
           }
-  
+
         });
         //END University.createForumPost
       };
-      
-      scope.upvoteForumPost = function() {        
+
+      scope.upvoteForumPost = function() {
           University.upvoteForumPost(universityId, contentId).then(function(res) {
             if (res.data.success) {
               scope.votesCount = res.data.data.votesCount;
               scope.forumPost.votes = res.data.data.votes;
             }
-          });          
+          });
       };
       // NO Need This Function Now
 
       // scope.downvoteForumPost = function() {
-    
+
       //   University.downvoteForumPost(universityId, contentId).then(function(res) {
-    
+
       //     if (res.data.success) {
       //       scope.votesCount -= 1;
       //     }
-    
+
       //   });
-    
+
       // };
     }
 

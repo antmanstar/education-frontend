@@ -75,10 +75,22 @@ angular.module('netbase', [
         }
 
    };
-//AcademiaCursosCtrl
+
+   /*
+
+   .when('/home', {
+       templateUrl: 'partials/home/home.html',
+       controller: 'HomeCtrl',
+   })
+
+   */
 
     $routeProvider.
-        when('/p/create', {
+        when('/onboarding/universities', {
+            templateUrl: 'partials/onboarding/universities.html',
+            controller: 'OnboardingUniversitiesScreenCtrl',
+        })
+        .when('/p/create', {
             templateUrl: 'partials/playlist/create.html',
             controller: 'PlaylistCreateCtrl',
         })
@@ -173,6 +185,10 @@ angular.module('netbase', [
         .when('/a/:academiaName/cursos', {
             templateUrl: 'partials/academia/courses/academiacourses.html',
             controller: 'AcademiaCoursesCtrl',
+        })
+        .when('/a/:academiaName/classroom', {
+            templateUrl: 'partials/academia/classrooms/academiaclassrooms.html',
+            controller: 'AcademiaClassroomsCtrl',
         })
         .when('/a/:academiaName/timeline', {
             templateUrl: 'partials/academia/academiatimeline.html',
@@ -373,10 +389,6 @@ angular.module('netbase', [
             templateUrl: 'partials/search.html',
             controller: 'SearchCtrl',
         })
-        .when('/home', {
-            templateUrl: 'partials/home/home.html',
-            controller: 'HomeCtrl',
-        })
         .when('/apartments', {
             templateUrl: 'partials/apartments/index.html',
             controller: 'ApartmentsIndexCtrl',
@@ -388,6 +400,10 @@ angular.module('netbase', [
         .when('/home/cursos', {
             templateUrl: 'partials/home/homecourses.html',
             controller: 'HomeCoursesCtrl',
+        })
+        .when('/home/explore', {
+            templateUrl: 'partials/home/homestudentexplore.html',
+            controller: 'HomeExploreCtrl'
         })
         .when('/home/timeline', {
             templateUrl: 'partials/home/hometimeline.html',
@@ -434,6 +450,10 @@ angular.module('netbase', [
             templateUrl: 'partials/home/homeuniversidades.html',
             controller: 'HomeUniversidadesCtrl',
         })
+        .when('/home/universidades/user', {
+            templateUrl: 'partials/home/homeuseruniversidades.html',
+            controller: 'HomeUserUniversidadesCtrl',
+        })
         .when('/home/smp', {
             templateUrl: 'partials/home/homesocialmarketplace.html',
             controller: 'HomeSocialMarketPlaceCtrl',
@@ -447,8 +467,11 @@ angular.module('netbase', [
             controller: 'IndexCtrl',
         })
         .otherwise({
-          redirectTo: '/home'
+          redirectTo: '/home/explore'
         });
+        //.otherwise({
+        //  redirectTo: '/home'
+        //});
 
         if(window.history && window.history.pushState){
           $locationProvider.html5Mode(true);
@@ -491,7 +514,7 @@ angular.module('netbase', [
     $localStorage.logged = false;
     $localStorage.token = undefined;
 
-    $location.path('/home');
+    $location.path('/home/explore');
     $route.reload();
 
   };

@@ -727,6 +727,137 @@ angular.module('netbase')
 
     }])
 
+    .factory('Classroom', ['$http', '$localStorage', function($http, $localStorage) {
+		
+		console.log('here entered.');
+		return {
+			getAllClassroomsByUniversity: function(url) {
+				return new Promise((resolve, reject) => {
+					let token = $localStorage.token;
+					console.log('loacl storage token');
+					console.log(token);
+					/*
+					var req = {
+						method: 'GET',
+						url: url,
+						headers: {
+							'x-access-token': token,
+							'query': token
+						},
+						params: {token: token },
+					}
+					
+					var result = Array();
+					
+					$http(req).then((res) => {
+						var i;
+						console.log('hahhee we we we we ');
+						console.log(res);
+						for(i = 0; i < res.data.data.length; i++) {
+							let classRoom = res.data.data[i];
+							result.push(classRoom);
+						}
+						console.log(result);
+						resolve(result);
+					});
+					*/
+					var req = {
+						token: token,
+					}
+					
+					var result = Array();
+					
+					$http.get(url + "?token=" + token).then((res) => {
+						var i;
+						console.log('hahhee we we we we ');
+						console.log(res);
+						for(i = 0; i < res.data.data.length; i++) {
+							let classRoom = res.data.data[i];
+							result.push(classRoom);
+						}
+						console.log(result);
+						resolve(result);
+					});
+				});
+			},
+			createNewClassroom: function(url, title){
+				return new Promise((resolve, reject) => {
+					let token = $localStorage.token;
+					var req = {
+						method: 'POST',
+						url: url,
+						headers: {
+							'x-access-token': token,
+						},
+						params: {
+							token: token,
+							title: title,
+						},
+						body: {
+							title: title,
+						}
+					}
+					$http(req).then((res) => {
+						console.log('create success');
+						console.log(res);
+						if(res.data.success == true){
+							resolve(res.data);
+						}
+						else {
+							reject('err');
+						}
+					});
+				});
+			},
+			joinClassroom: function(url) {
+				return new Promise((resolve, reject) => {
+					let token = $localStorage.token;
+
+					var req = {
+						method: 'POST',
+						url: url,
+						headers: {
+							'x-access-token': token,
+						},
+						params: { token: token }
+					}
+					$http(req).then((res) => {
+						console.log(res);
+						if(res.data.success){
+							resolve(res.data.data);
+						}
+						else {
+							reject('err');
+						}
+					});
+				});
+			},
+			getAccessToken: function(url) {
+				return new Promise((resolve, reject) => {
+					let token = $localStorage.token;
+					var req = {
+						method: 'GET',
+						url: url,
+						headers: {
+							'Access-Control-Allow-Origin': '*',
+							'x-access-token': token,
+						},
+						params: { token: token }
+					}
+					$http(req).then((res) => {
+						console.log(res);
+						if(res.data.success){
+							resolve(res.data.token);
+						}
+						else {
+							reject('err');
+						}
+					});
+				})
+			}
+		}
+    }])
+
     .factory('Students', ['$http', '$localStorage', function($http, $localStorage) {
 
       //var baseUrl = "https://api.universida.de/accounts/students";

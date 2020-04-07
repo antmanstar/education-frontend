@@ -6,6 +6,109 @@ angular.module('netbase')
 
 /* Courses */
 
+.directive('footermobile', ['$route', function($route) {
+  return {
+    restrict: 'AE',
+    templateUrl: '../partials/footer/footer.html',
+    replace: false,
+    scope: true,
+    link: function(scope, element, attr) {
+
+      let url = $route.current;
+      let originalPath = url.$$route.originalPath;
+
+      console.log("ORIGINAL PATHHHHHH")
+      console.log(originalPath)
+
+      scope.originalPath = originalPath;
+
+      scope.actionMenu = false;
+
+      scope.actionMenuToggle = function() {
+
+        console.log("Open action menu")
+
+        if (scope.actionMenu) {
+          scope.actionMenu = false;
+        } else {
+          scope.actionMenu = true;
+        }
+
+      }
+
+    }
+    //END Courses.getModuleById()
+
+  }
+}])
+
+.controller('FooterCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'University', 'Playlist', 'Forum', 'User', '$window', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, University, Playlist, Forum, User, $window) {
+
+  console.log("Fooooterr");
+
+  let url = $route.current;
+  let originalPath = url.$$route.originalPath;
+
+  console.log("ORIGINAL PATHHHHHH")
+  console.log(originalPath)
+
+  $scope.originalPath = originalPath;
+
+}])
+
+.controller('HomeExploreCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'University', 'Playlist', 'Forum', 'User', '$window', 'Knowledge', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, University, Playlist, Forum, User, $window, Knowledge) {
+
+  let id = $route.current.params.videoid;
+
+  $scope.courseId = id;
+
+  let url = $route.current;
+  let originalPath = url.$$route.originalPath;
+
+  $scope.originalPath = originalPath;
+
+  Knowledge.getAllPaginated().success(function(res) {
+
+    let data = res.data;
+    let success = res.success;
+    let docs = data.docs;
+
+    $scope.knowledges = docs;
+
+  });
+
+  University.getUniversities().then(function(res) {
+
+    $scope.universities = res.data.data;
+
+  });
+
+  Courses.getAll().success(function(res) {
+
+    console.log("response courses: ")
+    console.log(res);
+    $scope.courses = res.data;
+
+  });
+
+  /* */
+  $scope.actionMenuDisplay = false;
+
+  $scope.open = function() {
+
+    if ($scope.actionMenuDisplay) {
+      $scope.actionMenuDisplay = false;
+    } else {
+      $scope.actionMenuDisplay = true;
+    }
+
+  }
+
+  /* */
+
+
+}])
+
 .controller('CoursesDashboardMenuCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'University', 'Playlist', 'Forum', 'User', '$window', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, University, Playlist, Forum, User, $window) {
 
   let id = $route.current.params.videoid;
@@ -604,7 +707,7 @@ angular.module('netbase')
 
     console.log(formdata);
 
-    Courses.moduleCreate(formdata).success(function(res) {
+    Courses.createModule(formdata).success(function(res) {
 
       console.log(res)
 
@@ -774,7 +877,7 @@ angular.module('netbase')
       redirectUrl = $scope.ngDialogData.redirectUrl;
     }
   } catch(e) {
-    redirectUrl = "";
+    redirectUrl = "/home/timeline";
   }
 
   // Messages
@@ -818,6 +921,10 @@ angular.module('netbase')
         let token = res.data.token;
 
         if (success) {
+
+          console.log('121212121212 account token 1212121212');
+        console.log(res.data);
+        console.log('121212121212 account token 1212121212');
 
           $localStorage.token = token;
           $localStorage.logged = true;
@@ -905,8 +1012,8 @@ angular.module('netbase')
           console.log($location.path().search("landing"))
           console.log($location.path())
           if ($location.path().search("landing") == -1) {
-            console.log($location.path().search("landing"))
-            ngDialog.open({ template: 'partials/modals/onboarding.html', className: 'ngdialog-theme-default ngdialog-student-pro', controller: 'OnboardingScreenCtrl' });
+            $location.path('/home/timeline')
+            ngDialog.close();
           } else {
             ngDialog.close();
           }
@@ -1478,6 +1585,18 @@ angular.module('netbase')
 }])
 
 /* home - universidades */
+.controller('HomeUserUniversidadesCtrl', ['$rootScope', '$scope', '$location', 'University', 'Knowledge' , function($rootScope, $scope, $location, University, Knowledge) {
+
+  University.getUniversities().then(function(res) {
+
+    console.log(res);
+
+    $scope.universities = res.data.data;
+
+  });
+
+}])
+
 .controller('HomeUniversidadesCtrl', ['$rootScope', '$scope', '$location', 'University', 'Knowledge' , function($rootScope, $scope, $location, University, Knowledge) {
 
   Knowledge.getAllPaginated().success(function(res) {
@@ -3032,7 +3151,7 @@ angular.module('netbase')
     //$location.path("/home");
     $location.path("/home/timeline");
   } else {
-    $location.path("/home");
+    $location.path("/home/explore");
   }
 
   $localStorage.indexVisited = true;
