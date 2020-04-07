@@ -72,7 +72,7 @@ angular.module('netbase')
 
 }])
 
-.directive('timelinenewforumpost', ['University', 'Students', '$filter', '$sce', '$location', 'Forum', '$localStorage', "TimelineNew", function(University, Students, $filter, $sce, $location, Forum, $localStorage, TimelineNew) {
+.directive('timelinenewforumpost', ['University', 'Students', '$filter', '$sce', '$location', 'Forum', '$localStorage', "TimelineNew", 'jwtHelper', function(University, Students, $filter, $sce, $location, Forum, $localStorage, TimelineNew, jwtHelper) {
   return {
     restrict: 'E',
     templateUrl:  '../../partials/directive/timeline/forumpostcreate.html',
@@ -86,10 +86,16 @@ angular.module('netbase')
       let reshare = attr.reshare;
       let like = attr.like;
       let comments = attr.comments;
+      let sid="";
+      if ($localStorage.token != undefined && $localStorage.token != null) {
+        sid = jwtHelper.decodeToken($localStorage.token)._id;
+      }
+
       scope.commentSection = false;
       scope.status = { reshare : reshare, like : like, comments : comments };
       scope.sharePost = false;
       scope.rePostCount = reshare;
+      scope.showUniversity = false;
       // TimelineNew.getTimelineRePostCount(contentId).success(function(res) {
       //   scope.rePostCount = res.data.count-1;
       // });
@@ -103,7 +109,11 @@ angular.module('netbase')
 
         scope.university = universityStorage[universityId];
         console.log("scope.university", scope.university)
-
+        for (let i=0; i < scope.university.members.length; i++) {
+          if (inputArray[i].accountId === sid && inputArray[i].unsubscribed===false) {
+              scope.showUniversity = true;
+          }
+        }
         /* get post */
         Forum.getForumPostById(contentId, scope.university._id).then(function(res) {
 
@@ -147,7 +157,11 @@ angular.module('netbase')
           scope.university = res.data;
           console.log("scope.university", scope.university)
           University.storeLocal(scope.university);
-
+          for (let i=0; i < scope.university.members.length; i++) {
+            if (inputArray[i].accountId === sid && inputArray[i].unsubscribed===false) {
+                scope.showUniversity = true;
+            }
+          }
           /* get post */
           Forum.getForumPostById(contentId, scope.university._id).then(function(res) {
 
