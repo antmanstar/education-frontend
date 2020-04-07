@@ -1012,8 +1012,8 @@ angular.module('netbase')
           console.log($location.path().search("landing"))
           console.log($location.path())
           if ($location.path().search("landing") == -1) {
-            console.log($location.path().search("landing"))
-            ngDialog.open({ template: 'partials/modals/onboarding.html', className: 'ngdialog-theme-default ngdialog-student-pro', controller: 'OnboardingScreenCtrl' });
+            $location.path('/home/timeline')
+            ngDialog.close();
           } else {
             ngDialog.close();
           }

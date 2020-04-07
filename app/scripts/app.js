@@ -86,7 +86,11 @@ angular.module('netbase', [
    */
 
     $routeProvider.
-        when('/p/create', {
+        when('/onboarding/universities', {
+            templateUrl: 'partials/onboarding/universities.html',
+            controller: 'OnboardingUniversitiesScreenCtrl',
+        })
+        .when('/p/create', {
             templateUrl: 'partials/playlist/create.html',
             controller: 'PlaylistCreateCtrl',
         })
