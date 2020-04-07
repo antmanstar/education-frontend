@@ -922,6 +922,10 @@ angular.module('netbase')
 
         if (success) {
 
+          console.log('121212121212 account token 1212121212');
+        console.log(res.data);
+        console.log('121212121212 account token 1212121212');
+
           $localStorage.token = token;
           $localStorage.logged = true;
           $rootScope.logged = true;

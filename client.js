@@ -2,6 +2,8 @@
 var express    = require("express");
 var morgan     = require("morgan");
 var compression = require('compression');
+var cors = require("cors");
+
 var app        = express();
 var httpsRedirect = require('express-https-redirect');
 
