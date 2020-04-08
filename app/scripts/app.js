@@ -453,6 +453,7 @@ angular.module('netbase', [
         .when('/home/universidades/user', {
             templateUrl: 'partials/home/homeuseruniversidades.html',
             controller: 'HomeUserUniversidadesCtrl',
+            resolve: auth,
         })
         .when('/home/smp', {
             templateUrl: 'partials/home/homesocialmarketplace.html',
