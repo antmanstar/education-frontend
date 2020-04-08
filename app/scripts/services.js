@@ -7,7 +7,7 @@ angular.module('netbase')
     //var baseUrl = "https://api.universida.de/search";
     //var baseUrl = "https://educationalcommunity-uni.herokuapp.com";
     // var baseUrl = "http://api.universida.de/university"
-    var baseUrl = "http://ec2-3-94-4-199.compute-1.amazonaws.com:8080"
+    var baseUrl = "http://ec2-3-94-4-199.compute-1.amazonaws.com:8080";
 
     return {
 
@@ -731,7 +731,7 @@ angular.module('netbase')
 		
 		console.log('here entered.');
 		return {
-			getAllClassroomsByUniversity: function(url) {
+			getAllClassroomsByUniversity_J: function(url) {
 				return new Promise((resolve, reject) => {
 					let token = $localStorage.token;
 					console.log('loacl storage token');
@@ -777,8 +777,16 @@ angular.module('netbase')
 						}
 						console.log(result);
 						resolve(result);
-					});
+          });
+          
 				});
+      },
+      getAllClassroomsByUniversity: function(url) {
+				
+					let token = $localStorage.token;
+					console.log('loacl storage token');
+					console.log(token);
+          return $http.get(url + "?token=" + token);
 			},
 			createNewClassroom: function(url, title){
 				return new Promise((resolve, reject) => {
@@ -1062,6 +1070,20 @@ angular.module('netbase')
 
           return $http.get(baseUrl + url);
 
+        },
+
+        getStudentById_J: function(id) {
+          var url = '/id/' + id;
+          return new Promise((resolve, reject) => {
+            $http.get(baseUrl + url).then((res) => {
+              console.log('here000000000000');
+              console.log(res);
+              resolve(res.data.data);
+            })
+            .catch((err) => {
+              reject(err);
+            });
+          });
         },
 
         getStudentByUsername: function(id) {
