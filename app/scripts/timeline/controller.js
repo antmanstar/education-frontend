@@ -70,6 +70,11 @@ angular.module('netbase')
 
   };
 
+  /* */
+  $scope.openTimelineEntry = function() {
+    alert("hello moto")
+  }
+
 }])
 
 .directive('timelinenewforumpost', ['University', 'Students', '$filter', '$sce', '$location', 'Forum', '$localStorage', "TimelineNew", function(University, Students, $filter, $sce, $location, Forum, $localStorage, TimelineNew) {
@@ -86,9 +91,18 @@ angular.module('netbase')
       let reshare = attr.reshare;
       let like = attr.like;
       let comments = attr.comments;
+
       scope.commentSection = false;
       scope.status = { reshare : reshare, like : like, comments : comments };
       scope.sharePost = false;
+
+      scope.openTimelineEntry = function() {
+        let url = '/a/' + universityId + '/forum/post/id/' + contentId;
+        $loaction.path(url)
+      }
+
+      //
+
       TimelineNew.getTimelineRePostCount(contentId).success(function(res) {
         scope.rePostCount = res.data.count-1;
       });
@@ -170,8 +184,12 @@ angular.module('netbase')
       }
 
       scope.handleCommentSection = function() {
+        /*
         scope.sharePost = false;
         scope.commentSection = !scope.commentSection;
+        */
+        let url = '/a/' + scope.university.url + '/forum/post/id/' + contentId;
+        $location.path(url)
       }
 
       scope.handleSharePost = function() {

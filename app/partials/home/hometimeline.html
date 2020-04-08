@@ -116,7 +116,7 @@
 
       </div>
 
-      <div ng-repeat="activity in activities" ng-if="user.universitiesSubscribed.length > 0">
+      <div ng-repeat="activity in activities | orderBy: '-createdAt'" ng-if="user.universitiesSubscribed.length > 0">
         <timelinenewforumpost ng-if="activity.entryType != 'comment'" reshare="{{activity.reshare}}" like="{{activity.like}}" comments="{{activity.comments}}" cid="{{activity.modelId}}" aid="{{activity.creatorId}}" uid="{{activity.universityId}}"></timelinenewforumpost>
       </div>
 
