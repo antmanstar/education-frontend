@@ -79,11 +79,6 @@ angular.module('netbase')
 
   };
 
-  /* */
-  $scope.openTimelineEntry = function() {
-    alert("hello moto")
-  }
-
 }])
 
 .directive('timelinenewforumpost', ['University', 'Students', '$filter', '$sce', '$location', 'Forum', '$localStorage', "TimelineNew", 'jwtHelper', function(University, Students, $filter, $sce, $location, Forum, $localStorage, TimelineNew, jwtHelper) {
@@ -100,7 +95,6 @@ angular.module('netbase')
       let reshare = attr.reshare;
       let like = attr.like;
       let comments = attr.comments;
-
       let sid="";
       if ($localStorage.token != undefined && $localStorage.token != null) {
         sid = jwtHelper.decodeToken($localStorage.token)._id;
@@ -114,17 +108,6 @@ angular.module('netbase')
       // TimelineNew.getTimelineRePostCount(contentId).success(function(res) {
       //   scope.rePostCount = res.data.count-1;
       // });
-
-      scope.openTimelineEntry = function() {
-        let url = '/a/' + universityId + '/forum/post/id/' + contentId;
-        $loaction.path(url)
-      }
-
-      //
-
-      TimelineNew.getTimelineRePostCount(contentId).success(function(res) {
-        scope.rePostCount = res.data.count-1;
-      });
 
       if ( University.isStoredLocal(universityId) ) {
 
@@ -216,12 +199,8 @@ angular.module('netbase')
       }
 
       scope.handleCommentSection = function() {
-        /*
         scope.sharePost = false;
         scope.commentSection = !scope.commentSection;
-        */
-        let url = '/a/' + scope.university.url + '/forum/post/id/' + contentId;
-        $location.path(url)
       }
 
       scope.handleSharePost = function() {
