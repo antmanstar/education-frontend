@@ -65,6 +65,8 @@
 
       <div style="height: 15px"></div>
 
+      <div ng-repeat="activity in activities">
+        <timelinenewforumpost ng-if="activity.entryType != 'comment'" reshare="{{activity.rePost}}" like="{{activity.like}}" comments="{{activity.comments}}" cid="{{activity.modelId}}" aid="{{activity.creatorId}}" uid="{{activity.universityId}}"></timelinenewforumpost>
       -->
 
       <style>
