@@ -18,160 +18,165 @@
 -->
 
 <style>
-
-  .academia-mobile-status {
-    margin-bottom: 5px;
-  }
-
-  .academia-mobile-status-top {
-
-  }
-
-  .academia-mobile-status-top .title {
-    font-size: 1.4em;
-    font-weight: bolder;
-    display: inline-block;
-    color: #565656;
-  }
-
-  .academia-mobile-status-top .members {
-    font-size: 1em;
-    float: right;
-    display: inline-block;
-    line-height: 26px;
-    color: #6d6d6d;
-  }
-
-  @media screen and (min-width: 768px) {
-
     .academia-mobile-status {
-      display: none;
+        margin-bottom: 5px;
     }
-
-    .academia-mobile-navigation {
-      display: none;
+    
+    .academia-mobile-status-top {}
+    
+    .academia-mobile-status-top .title {
+        font-size: 1.4em;
+        font-weight: bolder;
+        display: inline-block;
+        color: #565656;
     }
-
-  }
-
+    
+    .academia-mobile-status-top .members {
+        font-size: 1em;
+        float: right;
+        display: inline-block;
+        line-height: 26px;
+        color: #6d6d6d;
+    }
+    
+    @media screen and (min-width: 768px) {
+        .academia-mobile-status {
+            display: none;
+        }
+        .academia-mobile-navigation {
+            display: none;
+        }
+    }
 </style>
 
 <div class="academia-mobile-status">
 
-  <div class="academia-mobile-status-top">
-    <div class="title">{{university.name}}</div>
-    <div class="members"><i class="fas fa-users"></i> {{university.members.length}} </div>
-  </div>
+    <div class="academia-mobile-status-top">
+        <div class="title">{{university.name}}</div>
+        <div class="members"><i class="fas fa-users"></i> {{university.members.length}} </div>
+    </div>
 
 </div>
 
 <style>
-
-  .academia-mobile-navigation {
-    overflow-x: scroll;
-    white-space: nowrap;
-    border-radius: 5px;
-    padding-bottom: 15px;
-  }
-
-  .academia-mobile-navigation-option {
-    display: inline-block;
-    margin-right: 10px;
-    text-align: center;
-    vertical-align: top;
-  }
-
-  .academia-mobile-navigation-option-ball {
-    padding: 20px;
-    margin-bottom: 5px;
-    background-color: #e6e6e6;
-    border-radius: 50%;
-    color: #6d6d6d;
-    display: inline-flex;
-  }
-
-  .academia-mobile-navigation-option-title {
-    font-weight: 600;
-    font-size: 0.8em;
-    color: #6d6d6d;
-    line-height: 1.2em;
-  }
-
+    .academia-mobile-navigation {
+        overflow-x: scroll;
+        white-space: nowrap;
+        border-radius: 5px;
+        padding-bottom: 15px;
+    }
+    
+    .academia-mobile-navigation-option {
+        display: inline-block;
+        margin-right: 10px;
+        text-align: center;
+        vertical-align: top;
+    }
+    
+    .academia-mobile-navigation-option-ball {
+        padding: 20px;
+        margin-bottom: 5px;
+        background-color: #e6e6e6;
+        border-radius: 50%;
+        color: #6d6d6d;
+        display: inline-flex;
+    }
+    
+    .academia-mobile-navigation-option-title {
+        font-weight: 600;
+        font-size: 0.8em;
+        color: #6d6d6d;
+        line-height: 1.2em;
+    }
 </style>
 
 <div class="academia-mobile-navigation">
 
-  <a href="/a/{{university.url}}/timeline" ng-class="timelineClass">
+    <a href="/a/{{university.url}}/timeline" ng-class="timelineClass">
 
-    <div class="academia-mobile-navigation-option">
+        <div class="academia-mobile-navigation-option">
 
-      <div class="academia-mobile-navigation-option-ball">
-        <i class="fas fa-stream"></i>
-      </div>
+            <div class="academia-mobile-navigation-option-ball">
+                <i class="fas fa-stream"></i>
+            </div>
 
-      <div class="academia-mobile-navigation-option-title">Timeline</div>
+            <div class="academia-mobile-navigation-option-title">Timeline</div>
 
-    </div>
+        </div>
 
-  </a>
+    </a>
 
-  <a href="/a/{{university.url}}/forum" ng-class="timelineClass">
+    <a href="/a/{{university.url}}/forum" ng-class="timelineClass">
 
-    <div class="academia-mobile-navigation-option">
+        <div class="academia-mobile-navigation-option">
 
-      <div class="academia-mobile-navigation-option-ball">
-        <i class="fas fa-newspaper"></i>
-      </div>
+            <div class="academia-mobile-navigation-option-ball">
+                <i class="fas fa-newspaper"></i>
+            </div>
 
-      <div class="academia-mobile-navigation-option-title">Feed</div>
+            <div class="academia-mobile-navigation-option-title">Feed</div>
 
-    </div>
+        </div>
 
-  </a>
+    </a>
 
-  <a href="/a/{{university.url}}/forum/category/all" ng-class="timelineClass">
+    <a href="/a/{{university.url}}/forum/category/all" ng-class="timelineClass">
 
-    <div class="academia-mobile-navigation-option">
+        <div class="academia-mobile-navigation-option">
 
-      <div class="academia-mobile-navigation-option-ball">
-        <i class="fas fa-chalkboard"></i>
-      </div>
+            <div class="academia-mobile-navigation-option-ball">
+                <i class="fas fa-chalkboard"></i>
+            </div>
 
-      <div class="academia-mobile-navigation-option-title">Forum</div>
+            <div class="academia-mobile-navigation-option-title">Forum</div>
 
-    </div>
+        </div>
 
-  </a>
+    </a>
 
-  <a href="/a/{{university.url}}/playlist/all" ng-class="timelineClass">
+    <a href="/a/{{university.url}}/playlist/all" ng-class="timelineClass">
 
-    <div class="academia-mobile-navigation-option">
+        <div class="academia-mobile-navigation-option">
 
-      <div class="academia-mobile-navigation-option-ball">
-        <i class="fas fa-video"></i>
-      </div>
+            <div class="academia-mobile-navigation-option-ball">
+                <i class="fas fa-video"></i>
+            </div>
 
-      <div class="academia-mobile-navigation-option-title">Videos</div>
+            <div class="academia-mobile-navigation-option-title">Videos</div>
 
-    </div>
+        </div>
 
-  </a>
+    </a>
 
-  <a href="/a/{{university.url}}/cursos" ng-class="timelineClass">
+    <a href="/a/{{university.url}}/cursos" ng-class="timelineClass">
 
-    <div class="academia-mobile-navigation-option">
+        <div class="academia-mobile-navigation-option">
 
-      <div class="academia-mobile-navigation-option-ball">
-        <i class="fas fa-graduation-cap"></i>
-      </div>
+            <div class="academia-mobile-navigation-option-ball">
+                <i class="fas fa-graduation-cap"></i>
+            </div>
 
-      <div class="academia-mobile-navigation-option-title">Cursos</div>
+            <div class="academia-mobile-navigation-option-title">Cursos</div>
 
-    </div>
+        </div>
 
-  </a>
+    </a>
 
-  <!--
+    <a href="/a/{{university.url}}/classroom" ng-class="timelineClass">
+
+        <div class="academia-mobile-navigation-option">
+
+            <div class="academia-mobile-navigation-option-ball">
+                <i class="fas fa-chalkboard-teacher"></i>
+            </div>
+
+            <div class="academia-mobile-navigation-option-title">Classroom</div>
+
+        </div>
+
+    </a>
+
+    <!--
   <a href="/a/{{university.url}}/timeline" ng-class="timelineClass">
 
     <div class="academia-mobile-navigation-option">
@@ -186,19 +191,19 @@
 
   </a>
   -->
-  <a href="/a/{{university.url}}/timeline" ng-class="timelineClass">
+    <a href="/a/{{university.url}}/timeline" ng-class="timelineClass">
 
-    <div class="academia-mobile-navigation-option">
+        <div class="academia-mobile-navigation-option">
 
-      <div class="academia-mobile-navigation-option-ball">
-        <i class="fas fa-vr-cardboard"></i>
-      </div>
+            <div class="academia-mobile-navigation-option-ball">
+                <i class="fas fa-vr-cardboard"></i>
+            </div>
 
-      <div class="academia-mobile-navigation-option-title">VR</div>
+            <div class="academia-mobile-navigation-option-title">VR</div>
 
-    </div>
+        </div>
 
-  </a>
+    </a>
 
 
 </div>
@@ -221,12 +226,12 @@
 
 <div class="academia-content-actions">
 
-  <!--
+    <!--
   <div class="academia-content-actions-action">
     <a ng-show="controllerActive == 'AcademiaForumCtrl'" href="/a/{{university.url}}/forum/post/create">create new post</a>
   </div>
   -->
-  <!-- academia-content-actions-action -->
+    <!-- academia-content-actions-action -->
 
 </div>
 <!-- academia-content-actions-->

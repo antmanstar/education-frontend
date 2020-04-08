@@ -1,6 +1,6 @@
 .classroom-container {
     margin-top: 30px;
-    display: flex;
+    /* display: flex; */
 }
 
 .active {
@@ -8,13 +8,13 @@
 }
 
 .add-classroom-btn {
-    margin-top: 30px;
     border-radius: 3px;
     height: 35px;
-    width: 216px;
     font-size: 14px;
     background-color: #437130;
     color: white;
+    width: 100%;
+    margin: 30px auto;
 }
 
 .classroom-list {
@@ -33,10 +33,11 @@
     flex-direction: column;
     border-width: thin;
     border-radius: 10px;
+    align-self: center;
 }
 
 .classroom-btn-container {
-    /*text-align: center;*/
+    align-items: center;
 }
 
 .classroom-modal-main {
@@ -341,13 +342,11 @@
 
 .display-container {
     display: flex;
+    /* display: inline-block; */
 }
 
 .controller-container {
-    display: flex;
-    align-items: center;
     margin-top: 30px;
-    margin-left: 30px;
 }
 
 .controller-container div {
@@ -373,9 +372,6 @@
     padding-left: 50px;
     padding-top: 35px;
     flex-wrap: wrap;
-    /*justify-content: center;*/
-    /* align-items: center; */
-    /* border-radius: 3px; */
     align-content: flex-start;
 }
 
@@ -484,9 +480,11 @@
 }
 
 .screen-controller {
-    margin-left: 10px;
     font-weight: 500;
     cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .screen-controller i {
