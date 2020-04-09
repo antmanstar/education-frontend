@@ -98,6 +98,20 @@ angular.module('netbase')
       let sid="";
       if ($localStorage.token != undefined && $localStorage.token != null) {
         sid = jwtHelper.decodeToken($localStorage.token)._id;
+        Students.getStudentById(sid).then(function(res) {
+
+          console.log("header get student by id")
+          console.log(res);
+    
+          let data = res.data.data;
+          scope.user = data;
+          
+          for (let i=0; i < data.universitiesSubscribed.length; i++) {
+            if (data.universitiesSubscribed[i].universityId === universityId && data.universitiesSubscribed[i].unsubscribed===false) {
+              scope.showUniversity = true;
+            }
+          }
+        })
       }
 
       scope.commentSection = false;
@@ -115,12 +129,6 @@ angular.module('netbase')
 
         scope.university = universityStorage[universityId];
         console.log("scope.university", scope.university)
-        for (let i=0; i < scope.university.members.length; i++) {
-          if (scope.university.members[i].accountId === sid && scope.university.members[i].unsubscribed===false) {
-            console.log("scope.university.members", scope.university.members[i]);
-            scope.showUniversity = true;
-          }
-        }
 
         /* get post */
         Forum.getForumPostById(contentId, scope.university._id).then(function(res) {
@@ -161,12 +169,7 @@ angular.module('netbase')
           scope.university = res.data;
           University.storeLocal(scope.university);
           console.log("scope.university", scope.university)
-          for (let i=0; i < scope.university.members.length; i++) {
-            if (scope.university.members[i].accountId === sid && scope.university.members[i].unsubscribed===false) {
-              console.log("scope.university.members", scope.university.members[i]);
-              scope.showUniversity = true;
-            }
-          }
+          
           /* get post */
           Forum.getForumPostById(contentId, scope.university._id).then(function(res) {
 
