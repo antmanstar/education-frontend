@@ -485,6 +485,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
 }
 
 .screen-controller i {
@@ -494,4 +495,50 @@
 .admin-active {
     border-width: 3px;
     border-color: #fbff00;
+}
+
+.mobile-participants {
+    display: none;
+}
+
+.Sharing {
+    cursor: not-allowed;
+    color: gray;
+}
+
+.Sharing i {
+    cursor: not-allowed !important;
+    color: gray !important;
+}
+
+@media screen and (max-width: 468px) {
+    .classroom-video-container {
+        padding-left: 0px;
+        padding-top: 0px;
+        overflow-y: scroll;
+    }
+
+    .classroom-list-title {
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+
+    .classroom-list {
+        margin: 10px;
+        font-size: 16px;
+    }
+
+    .mobile-participants {
+        height: 40px;
+        width: 40px;
+        position: absolute;
+        border-radius: 50%;
+        justify-content: center;
+        text-align: center;
+        z-index: 10;
+        background: #e8e8e8;
+        opacity: 0.7;
+        color: #b7b7b7;
+    }
 }
