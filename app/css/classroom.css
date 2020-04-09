@@ -1,6 +1,6 @@
 .classroom-container {
     margin-top: 30px;
-    display: flex;
+    /* display: flex; */
 }
 
 .active {
@@ -8,13 +8,13 @@
 }
 
 .add-classroom-btn {
-    margin-top: 30px;
     border-radius: 3px;
     height: 35px;
-    width: 216px;
     font-size: 14px;
     background-color: #437130;
     color: white;
+    width: 100%;
+    margin: 30px auto;
 }
 
 .classroom-list {
@@ -33,10 +33,11 @@
     flex-direction: column;
     border-width: thin;
     border-radius: 10px;
+    align-self: center;
 }
 
 .classroom-btn-container {
-    /*text-align: center;*/
+    align-items: center;
 }
 
 .classroom-modal-main {
@@ -341,13 +342,15 @@
 
 .display-container {
     display: flex;
+    /* display: inline-block; */
 }
 
 .controller-container {
-    display: flex;
-    align-items: center;
     margin-top: 30px;
-    margin-left: 30px;
+}
+
+.controller-container div {
+    display: flex;
 }
 
 .classroom-participants-container {
@@ -363,15 +366,13 @@
     display: flex;
     border-width: thin;
     background-color: #3C454C;
-    min-height: 503px;
     border: solid 1px black;
     border-right: 0;
     position: relative;
-    padding: 35px;
+    padding-left: 50px;
+    padding-top: 35px;
     flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    border-radius: 3px;
+    align-content: flex-start;
 }
 
 .classroom-chat-container {
@@ -436,6 +437,7 @@
     opacity: 0.7;
     color: white;
     padding-left: 15px;
+    position: absolute;
 }
 
 .classroom-list-title {
@@ -477,3 +479,66 @@
     color: white;
 }
 
+.screen-controller {
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.screen-controller i {
+    margin-right: 5px;
+}
+
+.admin-active {
+    border-width: 3px;
+    border-color: #fbff00;
+}
+
+.mobile-participants {
+    display: none;
+}
+
+.Sharing {
+    cursor: not-allowed;
+    color: gray;
+}
+
+.Sharing i {
+    cursor: not-allowed !important;
+    color: gray !important;
+}
+
+@media screen and (max-width: 468px) {
+    .classroom-video-container {
+        padding-left: 0px;
+        padding-top: 0px;
+        overflow-y: scroll;
+    }
+
+    .classroom-list-title {
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+
+    .classroom-list {
+        margin: 10px;
+        font-size: 16px;
+    }
+
+    .mobile-participants {
+        height: 40px;
+        width: 40px;
+        position: absolute;
+        border-radius: 50%;
+        justify-content: center;
+        text-align: center;
+        z-index: 10;
+        background: #e8e8e8;
+        opacity: 0.7;
+        color: #b7b7b7;
+    }
+}

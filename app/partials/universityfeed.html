@@ -2,86 +2,90 @@
 
 <div class="dashboard container-fluid">
 
-  <div class="row">
+    <div class="row">
 
-    <!-- dashboard menu -->
-    <div ng-include="'partials/dashboardmenu.html'" ng-controller="DashboardMenuCtrl"></div>
+        <!-- dashboard menu -->
+        <div ng-include="'partials/dashboardmenu.html'" ng-controller="DashboardMenuCtrl"></div>
 
-    <div class="col-xs-12 col-sm-9 col-sm-offset-3 col-md-offset-3 col-lg-offset-2 col-lg-10 dashboard-content university-feed">
+        <div class="col-xs-12 col-sm-9 col-sm-offset-3 col-md-offset-3 col-lg-offset-2 col-lg-10 dashboard-content university-feed">
 
-      <div class="university-feed-block" ng-repeat="n in [1,2,3,4,5]">
+            <div class="university-feed-block" ng-repeat="n in [1,2,3,4,5]">
 
-        <div class="university-feed-block-university">
-          <span style="margin-right: 15px;" class="glyphicon glyphicon-globe" />UCLA
+                <div class="university-feed-block-university">
+                    <span style="margin-right: 15px;" class="glyphicon glyphicon-globe" />UCLA
+                </div>
+                <!-- university-feed-block-university -->
+
+                <div class="academia-content-forum-post">
+
+                    <div class="academia-content-forum-post-stats">
+
+                        <div class="academia-content-forum-post-stats-votes">
+
+                            <div class="academia-content-forum-post-stats-upvote">
+                                <span class="glyphicon glyphicon-triangle-top" />
+                            </div>
+                            <!-- academia-content-forum-post-stats-ranking-votes -->
+
+                            <div class="academia-content-forum-post-stats-votes-number">3</div>
+                            <!-- academia-content-forum-post-stats-ranking-votes -->
+
+                            <div class="academia-content-forum-post-stats-downvote">
+                                <span class="glyphicon glyphicon-triangle-bottom" />
+                            </div>
+                            <!-- academia-content-forum-post-stats-ranking-votes -->
+
+                        </div>
+                        <!-- academia-content-forum-post-stats-ranking-votes -->
+
+                    </div>
+                    <!-- academia-content-forum-post-stats -->
+
+                    <div class="academia-content-forum-post-info">
+
+                        <div class="academia-content-forum-post-info-title">
+                            How do Startup Founders get audience with Venture Capitalists?
+                        </div>
+                        <!-- academia-content-forum-post-info -->
+
+                        <div class="academia-content-forum-post-info-stats">
+                            submitter 9 hours ago by Marcelo Pio
+                        </div>
+                        <!-- academia-content-forum-post-info -->
+
+                        <div class="academia-content-forum-post-info-text">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sit amet faucibus nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nunc accumsan bibendum ullamcorper. Vestibulum vitae cursus dui. Suspendisse tempor
+                            elementum tortor, ut eleifend velit tristique nec. Proin imperdiet turpis sed feugiat lobortis. In hac habitasse platea dictumst. Phasellus dictum leo sed nibh laoreet feugiat. Mauris malesuada dictum nulla, eget facilisis
+                            arcu laoreet eleifend. Nulla leo lorem, suscipit nec elit eu, rhoncus tincidunt libero. Duis nec risus commodo, faucibus libero bibendum, feugiat massa. Fusce placerat, neque ut ullamcorper mattis, odio est ultricies dui, at
+                            faucibus nisl magna ut magna. Proin id dolor eu ipsum molestie aliquam. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Maecenas non lorem libero.
+                        </div>
+                        <!-- academia-content-forum-post-info -->
+
+                        <div class="academia-content-forum-post-info-actions">
+                            <a class="action">2 comments</a>
+                            <a class="action">report</a>
+                        </div>
+                        <!-- academia-content-forum-post-info -->
+
+                    </div>
+                    <!-- academia-content-forum-post-info -->
+
+                </div>
+                <!-- academia-content-forum-post -->
+
+                <div class="university-feed-block-actions">
+                    <button><span class="glyphicon glyphicon-pencil" style="margin-right: 5px;"/>Answer</button>
+                </div>
+                <!-- end university-feed-block-actions -->
+
+            </div>
+            <!-- university-feed-block -->
+
         </div>
-        <!-- university-feed-block-university -->
-
-        <div class="academia-content-forum-post">
-
-          <div class="academia-content-forum-post-stats">
-
-            <div class="academia-content-forum-post-stats-votes">
-
-              <div class="academia-content-forum-post-stats-upvote">
-                <span class="glyphicon glyphicon-triangle-top" />
-              </div>
-              <!-- academia-content-forum-post-stats-ranking-votes -->
-
-              <div class="academia-content-forum-post-stats-votes-number">3</div>
-              <!-- academia-content-forum-post-stats-ranking-votes -->
-
-              <div class="academia-content-forum-post-stats-downvote">
-                <span class="glyphicon glyphicon-triangle-bottom" />
-              </div>
-              <!-- academia-content-forum-post-stats-ranking-votes -->
-
-            </div>
-            <!-- academia-content-forum-post-stats-ranking-votes -->
-
-          </div>
-          <!-- academia-content-forum-post-stats -->
-
-          <div class="academia-content-forum-post-info">
-
-            <div class="academia-content-forum-post-info-title">
-              How do Startup Founders get audience with Venture Capitalists?
-            </div>
-            <!-- academia-content-forum-post-info -->
-
-            <div class="academia-content-forum-post-info-stats">
-              submitter 9 hours ago by Marcelo Pio
-            </div>
-            <!-- academia-content-forum-post-info -->
-
-            <div class="academia-content-forum-post-info-text">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sit amet faucibus nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nunc accumsan bibendum ullamcorper. Vestibulum vitae cursus dui. Suspendisse tempor elementum tortor, ut eleifend velit tristique nec. Proin imperdiet turpis sed feugiat lobortis. In hac habitasse platea dictumst. Phasellus dictum leo sed nibh laoreet feugiat. Mauris malesuada dictum nulla, eget facilisis arcu laoreet eleifend. Nulla leo lorem, suscipit nec elit eu, rhoncus tincidunt libero. Duis nec risus commodo, faucibus libero bibendum, feugiat massa. Fusce placerat, neque ut ullamcorper mattis, odio est ultricies dui, at faucibus nisl magna ut magna. Proin id dolor eu ipsum molestie aliquam. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Maecenas non lorem libero.
-            </div>
-            <!-- academia-content-forum-post-info -->
-
-            <div class="academia-content-forum-post-info-actions">
-              <a class="action">2 comments</a>
-              <a class="action">report</a>
-            </div>
-            <!-- academia-content-forum-post-info -->
-
-          </div>
-          <!-- academia-content-forum-post-info -->
-
-        </div>
-        <!-- academia-content-forum-post -->
-
-        <div class="university-feed-block-actions">
-          <button><span class="glyphicon glyphicon-pencil" style="margin-right: 5px;"/>Answer</button>
-        </div>
-        <!-- end university-feed-block-actions -->
-
-      </div>
-      <!-- university-feed-block -->
+        <!-- col-sm-9 -->
 
     </div>
-    <!-- col-sm-9 -->
-
-  </div>
-  <!-- end row -->
+    <!    -- end row -->
 
 </div>
+}); } } } }
