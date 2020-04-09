@@ -32,9 +32,6 @@ angular.module('netbase')
     studentId = jwtHelper.decodeToken($localStorage.token)._id;
     Students.getStudentById(studentId).then(function(res) {
 
-      console.log("header get student by id")
-      console.log(res);
-
       let data = res.data.data;
       $scope.user = data;
 
@@ -42,13 +39,11 @@ angular.module('netbase')
   }
 
   $scope.forumPosts = [];
-  console.log("timeline controller");
+  
   TimelineNew.getTimelineAll(studentId, $scope.page).success(function(res) {
 
-    console.log("timeline controller response");
-    console.log(res)
     let forumPosts = res.data.docs;
-    console.log(forumPosts)
+    
     $scope.activities = forumPosts;
     $scope.pages = res.data.pages;
 
@@ -100,9 +95,6 @@ angular.module('netbase')
         sid = jwtHelper.decodeToken($localStorage.token)._id;
         Students.getStudentById(sid).then(function(res) {
 
-          console.log("header get student by id")
-          console.log(res);
-    
           let data = res.data.data;
           scope.user = data;
           
@@ -128,8 +120,7 @@ angular.module('netbase')
         let universityStorage = University.retrieveStorage(universityId);
 
         scope.university = universityStorage[universityId];
-        console.log("scope.university", scope.university)
-
+        
         /* get post */
         Forum.getForumPostById(contentId, scope.university._id).then(function(res) {
 
@@ -168,7 +159,6 @@ angular.module('netbase')
 
           scope.university = res.data;
           University.storeLocal(scope.university);
-          console.log("scope.university", scope.university)
           
           /* get post */
           Forum.getForumPostById(contentId, scope.university._id).then(function(res) {
@@ -258,7 +248,6 @@ angular.module('netbase')
           let status = res.data.status;
           let data = res.data.data;
           let success = res.data.success;
-          console.log("createForumPost", res);
 
           if (success) {
             var timelineData = {
@@ -268,7 +257,6 @@ angular.module('netbase')
               rePost: reshare
             }
             University.createForumPostTimeline(timelineData).then(function(res) {
-              console.log("createForumPostTimeline", res);
               // $location.path('/home/timeline')
               window.location.reload();
               window.scrollTo(0, 0);

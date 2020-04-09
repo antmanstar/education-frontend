@@ -1982,15 +1982,7 @@ angular.module('netbase')
 
           /* chat services */
 
-          console.log("university get channels 1")
-
-          console.log(university._id)
-
           Students.getStudentById(studentId).then(function(res) {
-
-            console.log("header get student by id")
-            console.log(res.data.data);
-      
             let data = res.data.data;
             
             for (let i=0; i < data.universitiesSubscribed.length; i++) {
@@ -2000,16 +1992,10 @@ angular.module('netbase')
               if (data.universitiesSubscribed[i].universityId == university._id && data.universitiesSubscribed[i].unsubscribed===true) {
                 scope.showSubscribe = true;
               }
-              if(data.universitiesSubscribed.length==i+1){
-                console.log("scope.showSubscribe", scope.showSubscribe);
-              }
             }
           })
 
           Chat.getUniversityChannels(university._id).success(function(res) {
-
-            console.log("chat get channels :: ")
-            console.log(res.data)
 
             if (res.success) {
 
@@ -2018,17 +2004,11 @@ angular.module('netbase')
               const chatClient = new Twilio.Chat.Client($localStorage.tokenTwilio);
 
               chatClient.on('channelJoined', function(channel) {
-                console.log('Joined channel ' + channel.friendlyName);
               });
 
-              console.log("hey")
-
               chatClient.getSubscribedChannels().then(function(paginator) {
-                console.log("paginator: ")
-                console.log(paginator)
                 for (let i = 0; i < paginator.items.length; i++) {
                   const channel = paginator.items[i];
-                  console.log('Channel: ' + channel.friendlyName);
                 }
               });
 
@@ -2150,9 +2130,6 @@ angular.module('netbase')
         let studentIdMembersLocation = userMembersLocation(array);
 
         if (studentIdMembersLocation != -1) {
-
-          console.log("array student id member location");
-          console.log(array[studentIdMembersLocation].unsubscribed)
 
           if (array[studentIdMembersLocation].unsubscribed) {
             return false;
