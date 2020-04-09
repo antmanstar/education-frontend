@@ -46,7 +46,6 @@ angular.module('netbase')
 
   }])
 
-
   .factory('Timeline', ['$http', '$localStorage', function($http, $localStorage) {
 
     //var baseUrl = "https://api.universida.de/search";
@@ -91,7 +90,7 @@ angular.module('netbase')
 
   }])
 
-    .factory('PokerHands', ['$http', '$localStorage', function($http, $localStorage) {
+  .factory('PokerHands', ['$http', '$localStorage', function($http, $localStorage) {
 
       var baseUrl = "https://educationalcommunity-uni.herokuapp.com";
       //var baseUrl = "http://localhost:9003";
@@ -184,7 +183,7 @@ angular.module('netbase')
 
     }])
 
-    .factory('Chat', ['$http', '$localStorage', function($http, $localStorage) {
+  .factory('Chat', ['$http', '$localStorage', function($http, $localStorage) {
 
       //var baseUrl = "";
       var baseUrl = "http://localhost:6969";
@@ -217,7 +216,7 @@ angular.module('netbase')
 
     }])
 
-    .factory('Playlist', ['$http', function($http) {
+  .factory('Playlist', ['$http', function($http) {
 
       var baseUrl = "https://educationalcommunity-uni.herokuapp.com/university";
       //var baseUrl = "https://api.universida.de/university";
@@ -272,7 +271,7 @@ angular.module('netbase')
 
     }])
 
-    .factory('Forum', ['$http', '$localStorage', function($http, $localStorage) {
+  .factory('Forum', ['$http', '$localStorage', function($http, $localStorage) {
 
       var baseUrl = "https://educationalcommunity-uni.herokuapp.com/university";
       //var baseUrl = "https://api.universida.de/university";
@@ -362,7 +361,7 @@ angular.module('netbase')
 
     }])
 
-    .factory('University', ['$http', '$localStorage', function($http, $localStorage) {
+  .factory('University', ['$http', '$localStorage', function($http, $localStorage) {
 
       var baseUrl = "https://educationalcommunity-uni.herokuapp.com/university";
       //var baseUrl = "https://api.universida.de/university";
@@ -728,8 +727,8 @@ angular.module('netbase')
 
     }])
 
-    .factory('Classroom', ['$http', '$localStorage', function($http, $localStorage) {
-		
+  .factory('Classroom', ['$http', '$localStorage', function($http, $localStorage) {
+
 		console.log('here entered.');
 		return {
 			getAllClassroomsByUniversity_J: function(url) {
@@ -747,9 +746,9 @@ angular.module('netbase')
 						},
 						params: {token: token },
 					}
-					
+
 					var result = Array();
-					
+
 					$http(req).then((res) => {
 						var i;
 						console.log('hahhee we we we we ');
@@ -765,9 +764,9 @@ angular.module('netbase')
 					var req = {
 						token: token,
 					}
-					
+
 					var result = Array();
-					
+
 					$http.get(url + "?token=" + token).then((res) => {
 						var i;
 						console.log('hahhee we we we we ');
@@ -779,11 +778,11 @@ angular.module('netbase')
 						console.log(result);
 						resolve(result);
           });
-          
+
 				});
       },
       getAllClassroomsByUniversity: function(url) {
-				
+
 					let token = $localStorage.token;
 					console.log('loacl storage token');
 					console.log(token);
@@ -867,7 +866,7 @@ angular.module('netbase')
 		}
     }])
 
-    .factory('Students', ['$http', '$localStorage', function($http, $localStorage) {
+  .factory('Students', ['$http', '$localStorage', function($http, $localStorage) {
 
       //var baseUrl = "https://api.universida.de/accounts/students";
       var baseUrl = "https://educationalcommunity-accounts.herokuapp.com/accounts/students";
@@ -1099,8 +1098,7 @@ angular.module('netbase')
 
     }])
 
-
-    .factory('Search', ['$http', function($http) {
+  .factory('Search', ['$http', function($http) {
 
       //var baseUrl = "https://api.universida.de/search";
       var baseUrl = "https://network-search-prod.herokuapp.com/search";
@@ -1119,7 +1117,7 @@ angular.module('netbase')
 
     }])
 
-    .factory('Knowledge', ['$http', '$localStorage', function($http, $localStorage) {
+  .factory('Knowledge', ['$http', '$localStorage', function($http, $localStorage) {
 
       //var baseUrl = "https://api.universida.de/search";
       //var baseUrl = "http://192.168.1.7:9003/knowledge";
@@ -1197,7 +1195,7 @@ angular.module('netbase')
 
     }])
 
-    .factory('Videos', ['$http', function($http) {
+  .factory('Videos', ['$http', function($http) {
 
       var baseUrl = "https://educationalcommunity-uni.herokuapp.com/university";
       //var baseUrl = "http://192.168.1.7:9003/university";
@@ -1271,7 +1269,7 @@ angular.module('netbase')
 
     }])
 
-    .factory('SocialMarketPlace', ['$http', '$localStorage', 'jwtHelper', function($http, $localStorage, jwtHelper) {
+  .factory('SocialMarketPlace', ['$http', '$localStorage', 'jwtHelper', function($http, $localStorage, jwtHelper) {
 
       //var baseUrl = "https://api.universida.de/listing";
       var baseUrl = "https://network-socialmarketplace-prod.herokuapp.com/listing";
@@ -1368,7 +1366,7 @@ angular.module('netbase')
 
     }])
 
-    .factory('Uploads', ['$http', function($http) {
+  .factory('Uploads', ['$http', function($http) {
 
       var baseUrl = "http://35.229.52.103:9007/images/college";
 
@@ -1392,7 +1390,7 @@ angular.module('netbase')
 
     }])
 
-    .factory("User", ['$localStorage', 'jwtHelper', function($localStorage, jwtHelper) {
+  .factory("User", ['$localStorage', 'jwtHelper', function($localStorage, jwtHelper) {
 
       return {
 
@@ -1406,7 +1404,7 @@ angular.module('netbase')
 
     }])
 
-    .factory('Payments', ['$http', function($http) {
+  .factory('Payments', ['$http', function($http) {
 
       //var baseUrl = "https://api.universida.de/search";
 
@@ -1469,7 +1467,7 @@ angular.module('netbase')
 
     }])
 
-    .factory('News', ['$http', function($http) {
+  .factory('News', ['$http', function($http) {
 
       //var baseUrl = "https://api.universida.de/search";
 
@@ -1568,7 +1566,7 @@ angular.module('netbase')
 
     }])
 
-    .factory('Sales', ['$http', function($http) {
+  .factory('Sales', ['$http', function($http) {
 
       //var baseUrl = "https://api.universida.de/search";
 
@@ -1597,7 +1595,7 @@ angular.module('netbase')
 
     }])
 
-    .factory('Courses', ['$http', '$localStorage', function($http, $localStorage) {
+  .factory('Courses', ['$http', '$localStorage', function($http, $localStorage) {
 
       //var baseUrl = "https://api.universida.de/search";
 
