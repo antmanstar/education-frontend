@@ -33,7 +33,7 @@
             <div ng-if="classroomView == 1" class="classroom-page-container">
 
                 <div class="display-container">
-					<button class='mobile-participants'> {{mobileToggleParticipantsBtn}} </button>
+					<button ng-click='aaaa()' class='mobile-participants'> {{mobileToggleParticipantsBtn}} </button>
                     <div ng-class='mobileToggleParticipantsList' class="classroom-participants-container col-xs-7 col-sm-3 col-md-3 col-lg-3">
                         <div class='classroom-students-title'>Administrators</div>
                         <div ng-repeat="admin in administrator" class='classroom-administrator-container'>
