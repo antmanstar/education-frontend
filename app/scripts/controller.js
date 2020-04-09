@@ -1012,8 +1012,8 @@ angular.module('netbase')
           console.log($location.path().search("landing"))
           console.log($location.path())
           if ($location.path().search("landing") == -1) {
-            console.log($location.path().search("landing"))
-            ngDialog.open({ template: 'partials/modals/onboarding.html', className: 'ngdialog-theme-default ngdialog-student-pro', controller: 'OnboardingScreenCtrl' });
+            $location.path('/home/timeline')
+            ngDialog.close();
           } else {
             ngDialog.close();
           }
@@ -1594,6 +1594,54 @@ angular.module('netbase')
     $scope.universities = res.data.data;
 
   });
+  //END University.getUniversities
+
+  $scope.openUniversity = function(url) {
+    console.log("open universityyyyy: ")
+    console.log(url)
+    $location.path('/a/' + url)
+  }
+
+
+}])
+
+.directive('universityuserrow', ['University', 'Students', '$filter', '$sce', '$location', function(University, Students, $filter, $sce, $location) {
+  return {
+    restrict: 'E',
+    templateUrl:  '../../partials/directive/universityuserrow.html',
+    replace: true,
+    scope: true,
+    link: function(scope, element, attr) {
+
+      let universityId = attr.uid;
+
+      scope.openUniversity = function(url) {
+        console.log("open universityyyyy: ")
+        console.log(url)
+        $location.path('/a/' + url)
+      }
+
+      if ( University.isStoredLocal(universityId) ) {
+
+        let universityStorage = University.retrieveStorage(universityId);
+
+        scope.university = universityStorage[universityId];
+        console.log(scope.university)
+
+      } else {
+
+        University.getUniversityById(universityId).success(function(res) {
+
+          scope.university = res.data;
+
+          University.storeLocal(scope.university);
+
+        });
+
+      }
+
+    }
+  }
 
 }])
 

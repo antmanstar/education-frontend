@@ -21,8 +21,8 @@ angular.module('netbase')
 
 }])
 
-.controller('HomeTimelineCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Timeline', '$localStorage', 'jwtHelper', 'TimelineNew', function($rootScope, $scope, $location, $route, University, Timeline, $localStorage, jwtHelper, TimelineNew) {
-
+.controller('HomeTimelineCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Students', 'Timeline', '$localStorage', 'jwtHelper', 'TimelineNew', function($rootScope, $scope, $location, $route, University, Students, Timeline, $localStorage, jwtHelper, TimelineNew) {
+  // $scope = $rootScope;
   $scope.page = 1;
   $scope.pages = 1;
 
@@ -30,6 +30,15 @@ angular.module('netbase')
 
   if ($localStorage.token != undefined && $localStorage.token != null) {
     studentId = jwtHelper.decodeToken($localStorage.token)._id;
+    Students.getStudentById(studentId).then(function(res) {
+
+      console.log("header get student by id")
+      console.log(res);
+
+      let data = res.data.data;
+      $scope.user = data;
+
+    })
   }
 
   $scope.forumPosts = [];
@@ -72,7 +81,7 @@ angular.module('netbase')
 
 }])
 
-.directive('timelinenewforumpost', ['University', 'Students', '$filter', '$sce', '$location', 'Forum', '$localStorage', "TimelineNew", function(University, Students, $filter, $sce, $location, Forum, $localStorage, TimelineNew) {
+.directive('timelinenewforumpost', ['University', 'Students', '$filter', '$sce', '$location', 'Forum', '$localStorage', "TimelineNew", 'jwtHelper', function(University, Students, $filter, $sce, $location, Forum, $localStorage, TimelineNew, jwtHelper) {
   return {
     restrict: 'E',
     templateUrl:  '../../partials/directive/timeline/forumpostcreate.html',
@@ -86,18 +95,32 @@ angular.module('netbase')
       let reshare = attr.reshare;
       let like = attr.like;
       let comments = attr.comments;
+      let sid="";
+      if ($localStorage.token != undefined && $localStorage.token != null) {
+        sid = jwtHelper.decodeToken($localStorage.token)._id;
+      }
+
       scope.commentSection = false;
       scope.status = { reshare : reshare, like : like, comments : comments };
       scope.sharePost = false;
-      TimelineNew.getTimelineRePostCount(contentId).success(function(res) {
-        scope.rePostCount = res.data.count-1;
-      });
+      scope.rePostCount = reshare;
+      scope.showUniversity = false;
+      // TimelineNew.getTimelineRePostCount(contentId).success(function(res) {
+      //   scope.rePostCount = res.data.count-1;
+      // });
 
       if ( University.isStoredLocal(universityId) ) {
 
         let universityStorage = University.retrieveStorage(universityId);
 
         scope.university = universityStorage[universityId];
+        console.log("scope.university", scope.university)
+        for (let i=0; i < scope.university.members.length; i++) {
+          if (scope.university.members[i].accountId === sid && scope.university.members[i].unsubscribed===false) {
+            console.log("scope.university.members", scope.university.members[i]);
+            scope.showUniversity = true;
+          }
+        }
 
         /* get post */
         Forum.getForumPostById(contentId, scope.university._id).then(function(res) {
@@ -137,7 +160,13 @@ angular.module('netbase')
 
           scope.university = res.data;
           University.storeLocal(scope.university);
-
+          console.log("scope.university", scope.university)
+          for (let i=0; i < scope.university.members.length; i++) {
+            if (scope.university.members[i].accountId === sid && scope.university.members[i].unsubscribed===false) {
+              console.log("scope.university.members", scope.university.members[i]);
+              scope.showUniversity = true;
+            }
+          }
           /* get post */
           Forum.getForumPostById(contentId, scope.university._id).then(function(res) {
 
@@ -231,8 +260,9 @@ angular.module('netbase')
           if (success) {
             var timelineData = {
               entryType: "repost",
-              modelId: data._id,
-              universityId: data.universityId
+              modelId: contentId,
+              universityId: universityId,
+              rePost: reshare
             }
             University.createForumPostTimeline(timelineData).then(function(res) {
               console.log("createForumPostTimeline", res);

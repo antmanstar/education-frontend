@@ -86,7 +86,11 @@ angular.module('netbase', [
    */
 
     $routeProvider.
-        when('/p/create', {
+        when('/onboarding/universities', {
+            templateUrl: 'partials/onboarding/universities.html',
+            controller: 'OnboardingUniversitiesScreenCtrl',
+        })
+        .when('/p/create', {
             templateUrl: 'partials/playlist/create.html',
             controller: 'PlaylistCreateCtrl',
         })
@@ -449,6 +453,7 @@ angular.module('netbase', [
         .when('/home/universidades/user', {
             templateUrl: 'partials/home/homeuseruniversidades.html',
             controller: 'HomeUserUniversidadesCtrl',
+            resolve: auth,
         })
         .when('/home/smp', {
             templateUrl: 'partials/home/homesocialmarketplace.html',
