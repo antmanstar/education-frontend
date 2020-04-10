@@ -94,7 +94,7 @@ angular.module('netbase', [
             templateUrl: 'partials/onboarding/universitycreate/create.html',
             controller: 'OnboardingUniversityCreateCtrl',
         })
-        .when('/onboarding/signup/', {
+        .when('/onboarding/signup', {
             templateUrl: 'partials/onboarding/signupstep1.html',
             controller: 'OnboardingSignUpScreenCtrl',
         })

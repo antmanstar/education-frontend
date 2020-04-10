@@ -877,7 +877,7 @@ angular.module('netbase')
       redirectUrl = $scope.ngDialogData.redirectUrl;
     }
   } catch(e) {
-    redirectUrl = "/home/timeline";
+    redirectUrl = "/onboarding/signup";
   }
 
   // Messages
