@@ -15,6 +15,11 @@
     color: white;
     width: 100%;
     margin: 30px auto;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    display: flex;
+    padding: 10px;
 }
 
 .classroom-list {
@@ -515,6 +520,38 @@
     color: white;
     opacity: 0.6;
     width: 100%;
+}
+
+
+.classroom-list-menu {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.classroom-list-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.classroom-arrange-iconview {
+    display: flex;
+}
+
+.list-view-style {
+    cursor: pointer;
+    height: 36px;
+    width: 19px;
+    object-fit: cover;
+}
+
+.grid-view-style {
+    margin-left: 5px;
+    cursor: pointer;
 }
 
 @media screen and (max-width: 468px) {
