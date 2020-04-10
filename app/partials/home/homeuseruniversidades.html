@@ -16,7 +16,7 @@
 
 .university-row .activity-count {
   position: absolute;
-  right: 15px;
+  right: 0px;
   top: 5px;
   padding: 4px;
   background-color: #ee5748;
@@ -54,52 +54,34 @@
 
 }
 
+@media screen and (max-width: 768px) {
+
+  #universitiesList {
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0 !important;
+  }
+
+  .university-row {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .university-row .activity-count {
+    right: 15px;
+  }
+
+}
 
 </style>
 
-<div class="container-fluid container-home animated fadeIn" style="padding-bottom: 30px;">
+<div class="container-fluid container-full animated fadeIn" style="padding-bottom: 60px;">
 
   <div class="row">
 
-    <div class="col-xs-12" style="margin-bottom: 15px; padding-top: 10px;">
+    <div class="col-xs-12" id="universitiesList" style="margin-bottom: 15px; padding-top: 10px;">
 
-      <div class="university-row">
-
-        <div class="bg">
-          <img height="60px" width="60px" src="https://storage.googleapis.com/educationalcommunity-upload/images/1572071357/a39.jpg" />
-        </div>
-
-        <div class="text">
-
-          <div class="title">Tiago Camilo</div>
-          <div class="activity" style="padding-top: 4px;"><div style="font-size: 1.12em; color: #757575; margin-bottom: 5px;"><i class="fas fa-retweet" style="padding-right: 5px;"></i> Rodrigo Lara shared a post</div></div>
-
-        </div>
-        <!-- end text -->
-
-        <div class="activity-count"><i class="fas fa-bell"></i> 5</div>
-
-      </div>
-      <!-- end university-row -->
-
-      <div class="university-row">
-
-        <div class="bg">
-          <img height="60px" width="60px" src='https://storage.googleapis.com/educationalcommunity-upload/images/1569439961/a11.png' />
-        </div>
-
-        <div class="text">
-
-          <div class="title">Blockchain Academy</div>
-          <div class="activity" style="padding-top: 4px;"><div style="font-size: 1.12em; color: #757575; margin-bottom: 5px;"><i class="fas fa-retweet" style="padding-right: 5px;"></i> Rodrigo Lara shared a post</div></div>
-
-        </div>
-        <!-- end text -->
-
-        <div class="activity-count"><i class="fas fa-bell"></i> 5</div>
-
-      </div>
-      <!-- end university-row -->
+      <universityuserrow uid="{{u.universityId}}" ng-if="u.unsubscribed == false" ng-repeat="u in user.universitiesSubscribed"></universityuserrow>
 
     </div>
     <!-- end col-sm-8 -->
