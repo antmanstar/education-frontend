@@ -3144,14 +3144,23 @@ angular.module('netbase')
 
 }])
 
-.controller('IndexCtrl', ['$rootScope', '$scope', '$location', '$localStorage', function($rootScope, $scope, $location, $localStorage) {
+.controller('IndexCtrl', ['$rootScope', '$scope', '$location', '$localStorage', '$route', function($rootScope, $scope, $location, $localStorage, $route) {
 
   // If isn't the first visit, redirects to home
   if ($localStorage.logged) {
     //$location.path("/home");
     $location.path("/home/timeline");
   } else {
-    $location.path("/home/explore");
+    console.log('here redirected 1')
+    let universityUrl = $route.current.params.academiaName;
+    let roomSID = $route.current.params.roomSID;
+    let accountSid = $route.current.params.accountSid;
+    let redirectUrl;
+    if(universityUrl != null && roomSID != null && accountSid != null)
+      redirectUrl = $route.params.url;
+    else
+      redirectUrl = "/home/explore";
+    $location.path(redirectUrl);
   }
 
   $localStorage.indexVisited = true;

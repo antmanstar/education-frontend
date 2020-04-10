@@ -123,6 +123,7 @@ angular.module('netbase')
   let universityUrl = $route.current.params.academiaName;
   let roomSID = $route.current.params.roomSID;
   let accountSid = $route.current.params.accountSid;
+  let roomName = $route.current.params.roomName;
   $scope.administrator = [];
 	$scope.participants = [];
 	$scope.fullScreen = false;
@@ -134,12 +135,13 @@ angular.module('netbase')
   var video = Twilio.Video;
   var localVideo = Twilio.createLocalTracks;
   var baseUrl = "https://educationalcommunity-classroom.herokuapp.com";
-  University.getUniversity(universityUrl).then(function(res) {
-		console.log('here university');
-		console.log(res);
-		$scope.university = res.data.data;
-		$scope.getAllClassrooms();
-	});
+  //var baseUrl = "http://localhost:8080/";
+  // University.getUniversity(universityUrl).then(function(res) {
+	// 	console.log('here university');
+	// 	console.log(res);
+	// 	$scope.university = res.data.data;
+	// 	$scope.getAllClassrooms();
+	// });
 
 	angular.element($window).bind('resize', function(){
 		$scope.videoSizeSet();
@@ -147,9 +149,8 @@ angular.module('netbase')
 
 	$scope.joinClassroom = function() {
 
-		$scope.currentClassroom = classroom;
 		
-		Students.getStudentById(classroom.accountSid).then((res) => {
+		Students.getStudentById(accountSid).then((res) => {
 			if($scope.administrator.length == 0){
 				$scope.administrator.push(res.data.data);
 			}
@@ -157,19 +158,17 @@ angular.module('netbase')
 
 		console.log('administrator');
 		console.log($scope.administrator);
-			console.log('current classroom');
-			console.log($scope.currentClassroom);
-		let url = '/classroom/' + classroom.roomSID + '/join/';
+    console.log('current classroom');
+    console.log($scope.currentClassroom);
+
+		let url = '/classroom/' + roomSID + '/join/';
 		Classroom.joinClassroom(baseUrl + url).then((data) => {
 
-			$scope.classroomView = 1;
-			
-
-			url = '/classroom/classroom/' + classroom.uniqueName + '/token/'
+			url = '/classroom/classroom/' + roomName + '/token/'
 			Classroom.getAccessToken(baseUrl + url).then((data) => {
 				console.log('here access token');
 				console.log(data);
-				$scope.connectClassroom(data, classroom.uniqueName);
+				$scope.connectClassroom(data, roomName);
 			});
 			
 		})
@@ -660,7 +659,8 @@ angular.module('netbase')
 	
 	//var baseUrl = "http://localhost:9000"; //Back-end server base url
 	var baseUrl = "http://localhost:9001"; //Back-end server base url
-	var baseUrl = "https://educationalcommunity-classroom.herokuapp.com";
+  var baseUrl = "https://educationalcommunity-classroom.herokuapp.com";
+  
 
 	University.getUniversity(universityUrl).then(function(res) {
 		console.log('here university');
@@ -726,12 +726,21 @@ angular.module('netbase')
 		.catch((err) => {
 			alert('Error');
 		});
-	}
+  }
+  
+  $scope.copyLink = function(classroom) {
+    let text = "https://classroom-app-frontend.herokuapp.com/a/"+ universityUrl + "/" + classroom.roomSID + "/" + classroom.accountSid + "/" + classroom.uniqueName + "/";
+    navigator.clipboard.writeText(text).then(function() {
+      console.log('Copied link to clipboard');
+    }, function(err) {
+      console.error('Could not copy link to the clipboard ', err);
+    });
+  }
 
 	
 	$scope.joinClassroom = function(classroom) {
 
-    window.open("https://classroom-app-frontend.herokuapp.com/a/"+ universityUrl + "/" + classroom.roomSID + "/" + classroom.accountSid + "/");
+    window.open("https://classroom-app-frontend.herokuapp.com/a/"+ universityUrl + "/" + classroom.roomSID + "/" + classroom.accountSid + "/" + classroom.uniqueName + "/");
   }
 }])
 
