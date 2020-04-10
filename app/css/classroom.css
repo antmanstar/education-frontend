@@ -1,6 +1,6 @@
 .classroom-container {
     margin-top: 30px;
-    /* display: flex; */
+    padding-left: 30px;
 }
 
 .active {
@@ -9,26 +9,35 @@
 
 .add-classroom-btn {
     border-radius: 3px;
-    height: 35px;
-    font-size: 14px;
+    font-size: 12px;
     background-color: #437130;
     color: white;
     width: 100%;
-    margin: 30px auto;
+    padding: 3px 15px;
+    cursor: pointer;
+    font-family: 'Times New Roman';
 }
 
 .classroom-list {
-    margin: 10px;
+    padding-top: 15px;
     font-size: 20px;
 }
 
 .classroom-list:hover {
     background-color: #bbecbb;
-    cursor: pointer;
 }
 
-.classroom-list-container {
-    margin-top: 30px;
+.classroom-list-menu {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.classroom-list-view {
     display: flex;
     flex-direction: column;
     border-width: thin;
@@ -36,7 +45,7 @@
     align-self: center;
 }
 
-.classroom-btn-container {
+.classroom-btn-view {
     align-items: center;
 }
 
@@ -441,9 +450,9 @@
 }
 
 .classroom-list-title {
-    font-size: 25px;
+    font-size: 18px;
     font-weight: 700;
-    margin-bottom: 10px;
+    line-height: 5px;
 }
 
 .accessibility-caption {
@@ -511,24 +520,42 @@
     color: gray !important;
 }
 
+.classroom-list-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.classroom-arrange-iconview {
+    display: flex;
+}
+
+.list-view-style {
+    cursor: pointer;
+    height: 36px;
+    width: 19px;
+    object-fit: cover;
+}
+
+.grid-view-style {
+    margin-left: 5px;
+    cursor: pointer;
+}
+
 @media screen and (max-width: 468px) {
     .classroom-video-container {
         padding-left: 0px;
         padding-top: 0px;
         overflow-y: scroll;
     }
-
     .classroom-list-title {
         font-size: 18px;
         font-weight: 700;
         margin-bottom: 10px;
     }
-
     .classroom-list {
         margin: 10px;
         font-size: 16px;
     }
-
     .mobile-participants {
         height: 40px;
         width: 40px;
