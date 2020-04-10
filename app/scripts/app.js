@@ -186,6 +186,10 @@ angular.module('netbase', [
             templateUrl: 'partials/academia/classrooms/academiaclassrooms.html',
             controller: 'AcademiaClassroomsCtrl',
         })
+        .when("/a/:academiaName/:roomSID/:accountSid/", {
+            templateUrl: 'partials/academia/classrooms/academiaclassroom.html',
+            controller: 'AcademiaClassroomCtrl',
+        })
         .when('/a/:academiaName/timeline', {
             templateUrl: 'partials/academia/academiatimeline.html',
             controller: 'AcademiaTimelineCtrl',

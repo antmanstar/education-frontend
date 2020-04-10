@@ -119,38 +119,22 @@ angular.module('netbase')
   //END University.getUniversity()
 
 }])
-
-.controller('AcademiaClassroomsCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Classroom', 'Students', 'ngDialog', '$localStorage', '$window', function($rootScope, $scope, $location, $route, University, Classroom, Students, ngDialog, $localStorage, $window) {
-
-	let universityUrl = $route.current.params.academiaName;
-
-	$scope.administrator = [];
+.controller('AcademiaClassroomCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Classroom', 'Students', 'ngDialog', '$localStorage', '$window', function($rootScope, $scope, $location, $route, University, Classroom, Students, ngDialog, $localStorage, $window) {
+  let universityUrl = $route.current.params.academiaName;
+  let roomSID = $route.current.params.roomSID;
+  let accountSid = $route.current.params.accountSid;
+  $scope.administrator = [];
 	$scope.participants = [];
 	$scope.fullScreen = false;
-	$scope.isJoined = 0;
-
-	//$scope.currentLocalParticipant = null;
-	$scope.currentVideoRoom = null;
+  $scope.currentVideoRoom = null;
 	$scope.wholeClassroomList = [];
   $scope.localParticipantUserName = "";
   $scope.showingParticipants = [];
   $scope.shareScreenCaption = "Share Screen";
-	//console.log($route);
-	//console.log("$$$$$$$$$");
-	//console.log(Twilio.Video);
-	//console.log("$$$$$$$$$");
-	var video = Twilio.Video;
-	var localVideo = Twilio.createLocalTracks;
-	console.log('here local video');
-	console.log(localVideo);
-
-	$scope.classroomView = 0;
-	
-	//var baseUrl = "http://localhost:9000"; //Back-end server base url
-	var baseUrl = "http://localhost:9001"; //Back-end server base url
-	var baseUrl = "https://educationalcommunity-classroom.herokuapp.com";
-
-	University.getUniversity(universityUrl).then(function(res) {
+  var video = Twilio.Video;
+  var localVideo = Twilio.createLocalTracks;
+  var baseUrl = "https://educationalcommunity-classroom.herokuapp.com";
+  University.getUniversity(universityUrl).then(function(res) {
 		console.log('here university');
 		console.log(res);
 		$scope.university = res.data.data;
@@ -161,68 +145,7 @@ angular.module('netbase')
 		$scope.videoSizeSet();
 	});    
 
-	/******************** GET ALL Classrooms ******************/
-
-	$scope.getAllClassrooms = function() {
-		
-		let url = '/classroom/university/' + $scope.university._id + '/all'
-		Classroom.getAllClassroomsByUniversity(baseUrl + url).then((res)=>{
-			$scope.wholeClassroomList = res.data.data;
-			console.log('Classroom.getAllClassrooms');
-			console.log($scope.wholeClassroomList);
-		});
-	}
-
-
-	$scope.addingClassroom = {
-		uniqueName: '',
-		active: '',
-		roomType: 0,
-		publicRoom: {
-			type: 0,
-			payPerView: 0
-		},
-		privateRoom: {
-			invite: -1,
-			share: -1
-		},
-		chat: -1,
-		donation: -1
-	}
-
-	
-	$scope.createNewClassroom = function () {
-		ngDialog.open({ template: 'partials/modals/classroom_modal.html', className: 'ngdialog-theme-default classroom-modal' });
-	};
-
-	$scope.confirmCreateClassroom = function() {
-		
-		let token = $localStorage.token;
-		let title = $scope.addingClassroom.uniqueName ? $scope.addingClassroom.uniqueName : '';
-		let url = '/classroom/university/' + $scope.university._id + '/room/' + title;
-		Classroom.createNewClassroom(baseUrl + url, title).then((data) => {
-			//$scope.getAllClassrooms();
-			let url = '/classroom/university/' + $scope.university._id + '/all'
-			Classroom.getAllClassroomsByUniversity(baseUrl + url).then((data)=>{
-				$scope.wholeClassroomList = data;
-				console.log('Classroom.getAllClassrooms');
-				console.log($scope.wholeClassroomList);
-				$route.reload();
-			});
-			ngDialog.close();
-		})
-		.catch((err) => {
-			alert('Error');
-		});
-	}
-
-	$scope.joinClassroom = function(classroom) {
-		
-		if($scope.isJoined == 1){
-			return;
-		}
-
-		$scope.isJoined = 1;
+	$scope.joinClassroom = function() {
 
 		$scope.currentClassroom = classroom;
 		
@@ -632,14 +555,13 @@ angular.module('netbase')
     });
   }
 
-	  $scope.returnBack = function() {
+	$scope.returnBack = function() {
 		$scope.classroomView = 0;
 		$scope.administrator = [];
     $scope.participants = [];
 		$scope.showingParticipants = [];
 		$scope.shareScreenCaption = 'Share Screen';
 		$scope.disconnectClassroom();
-    $scope.isJoined = 0;
     $scope.adminActive = '';
 		//leave room
 	}
@@ -709,6 +631,108 @@ angular.module('netbase')
 		
 	}
 
+}])
+
+.controller('AcademiaClassroomsCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Classroom', 'Students', 'ngDialog', '$localStorage', '$window', function($rootScope, $scope, $location, $route, University, Classroom, Students, ngDialog, $localStorage, $window) {
+
+	let universityUrl = $route.current.params.academiaName;
+
+	$scope.administrator = [];
+	$scope.participants = [];
+	$scope.fullScreen = false;
+
+	//$scope.currentLocalParticipant = null;
+	$scope.currentVideoRoom = null;
+	$scope.wholeClassroomList = [];
+  $scope.localParticipantUserName = "";
+  $scope.showingParticipants = [];
+  $scope.shareScreenCaption = "Share Screen";
+	//console.log($route);
+	//console.log("$$$$$$$$$");
+	//console.log(Twilio.Video);
+	//console.log("$$$$$$$$$");
+	var video = Twilio.Video;
+	var localVideo = Twilio.createLocalTracks;
+	console.log('here local video');
+	console.log(localVideo);
+
+	$scope.classroomView = 0;
+	
+	//var baseUrl = "http://localhost:9000"; //Back-end server base url
+	var baseUrl = "http://localhost:9001"; //Back-end server base url
+	var baseUrl = "https://educationalcommunity-classroom.herokuapp.com";
+
+	University.getUniversity(universityUrl).then(function(res) {
+		console.log('here university');
+		console.log(res);
+		$scope.university = res.data.data;
+		$scope.getAllClassrooms();
+	});
+
+	angular.element($window).bind('resize', function(){
+		$scope.videoSizeSet();
+	});    
+
+	/******************** GET ALL Classrooms ******************/
+
+	$scope.getAllClassrooms = function() {
+		
+		let url = '/classroom/university/' + $scope.university._id + '/all'
+		Classroom.getAllClassroomsByUniversity(baseUrl + url).then((res)=>{
+			$scope.wholeClassroomList = res.data.data;
+			console.log('Classroom.getAllClassrooms');
+			console.log($scope.wholeClassroomList);
+		});
+	}
+
+
+	$scope.addingClassroom = {
+		uniqueName: '',
+		active: '',
+		roomType: 0,
+		publicRoom: {
+			type: 0,
+			payPerView: 0
+		},
+		privateRoom: {
+			invite: -1,
+			share: -1
+		},
+		chat: -1,
+		donation: -1
+	}
+
+	
+	$scope.createNewClassroom = function () {
+		ngDialog.open({ template: 'partials/modals/classroom_modal.html', className: 'ngdialog-theme-default classroom-modal' });
+	};
+
+	$scope.confirmCreateClassroom = function() {
+		
+		let token = $localStorage.token;
+		let title = $scope.addingClassroom.uniqueName ? $scope.addingClassroom.uniqueName : '';
+		let url = '/classroom/university/' + $scope.university._id + '/room/' + title;
+		Classroom.createNewClassroom(baseUrl + url, title).then((data) => {
+			//$scope.getAllClassrooms();
+			let url = '/classroom/university/' + $scope.university._id + '/all'
+			Classroom.getAllClassroomsByUniversity(baseUrl + url).then((data)=>{
+				$scope.wholeClassroomList = data;
+				console.log('Classroom.getAllClassrooms');
+				console.log($scope.wholeClassroomList);
+				$route.reload();
+			});
+			ngDialog.close();
+		})
+		.catch((err) => {
+			alert('Error');
+		});
+	}
+
+	
+	$scope.joinClassroom = function(classroom) {
+
+    window.open("https://classroom-app-frontend.herokuapp.com/a/"+ universityUrl + "/" + classroom.roomSID + "/" + classroom.accountSid + "/");
+  }
 }])
 
 .controller('AcademiaCtrl', ['$rootScope', '$scope', '$location', '$route', 'University' , function($rootScope, $scope, $location, $route, University) {
