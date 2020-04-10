@@ -130,18 +130,18 @@ angular.module('netbase')
   $scope.currentVideoRoom = null;
 	$scope.wholeClassroomList = [];
   $scope.localParticipantUserName = "";
+  $scope.currentLocalparticipant = null;
   $scope.showingParticipants = [];
   $scope.shareScreenCaption = "Share Screen";
+  $scope.voiceToggle = 'fas fa-microphone-alt';
+  $scope.voiceStatus = "Mute";
+  $scope.videoToggle = 'fas fa-video';
+  $scope.videoStatus = 'Stop Video';
+  
   var video = Twilio.Video;
   var localVideo = Twilio.createLocalTracks;
+
   var baseUrl = "https://educationalcommunity-classroom.herokuapp.com";
-  //var baseUrl = "http://localhost:8080/";
-  // University.getUniversity(universityUrl).then(function(res) {
-	// 	console.log('here university');
-	// 	console.log(res);
-	// 	$scope.university = res.data.data;
-	// 	$scope.getAllClassrooms();
-	// });
 
 	angular.element($window).bind('resize', function(){
 		$scope.videoSizeSet();
@@ -149,6 +149,12 @@ angular.module('netbase')
 
 	$scope.joinClassroom = function() {
 
+    let token = $localStorage.token;
+    
+    if(token == null || token == undefined){
+      alert('You are an unlogged user. Please login first and use the copied url to join this room.');
+      return;
+    }
 		
 		Students.getStudentById(accountSid).then((res) => {
 			if($scope.administrator.length == 0){
@@ -297,7 +303,7 @@ angular.module('netbase')
       $scope.participants = [];
       $scope.showingParticipants = [];
 		//});
-		
+		$scope.currentLocalparticipant = null;
 		if($scope.currentVideoRoom != null) $scope.currentVideoRoom.disconnect();
 		$scope.currentVideoRoom = null;
 	}
@@ -332,6 +338,7 @@ angular.module('netbase')
 		
 		video.connect(token, room_t).then(room => {
       const localParticipant = room.localParticipant;
+      $scope.currentLocalparticipant = localParticipant;
       
 			$scope.currentVideoRoom = room;
 			if($scope.currentShareScreen != null) {
@@ -562,6 +569,7 @@ angular.module('netbase')
 		$scope.shareScreenCaption = 'Share Screen';
 		$scope.disconnectClassroom();
     $scope.adminActive = '';
+    window.close();
 		//leave room
 	}
 
@@ -628,7 +636,59 @@ angular.module('netbase')
 		});
 		//const screenTrack = new LocalVideoTrack(stream.getTracks()[0]);
 		
-	}
+  }
+  
+  $scope.toggleVoice = function(){
+    if($scope.voiceStatus == "Mute"){
+      $scope.currentLocalparticipant.audioTracks.forEach(function(audioTrack) {
+        console.log(audioTrack);
+        audioTrack.track.disable();
+      });  
+      $scope.voiceToggle = 'fas fa-microphone-alt-slash';
+      $scope.voiceStatus = "Unmute";
+    }
+    else{
+      $scope.currentLocalparticipant.audioTracks.forEach(function(audioTrack) {
+        console.log(audioTrack);
+        audioTrack.track.enable();
+      });
+      $scope.voiceToggle = 'fas fa-microphone-alt';
+      $scope.voiceStatus = "Mute";
+    }
+  }
+
+  $scope.toggleVideo = function(){
+    if($scope.videoStatus == "Stop Video"){
+      $scope.currentLocalparticipant.videoTracks.forEach(function(videoTrack) {
+        console.log(videoTrack);
+        videoTrack.track.disable();
+      });  
+      $scope.videoToggle = 'fas fa-video-slash';
+      $scope.videoStatus = "Start Video";
+    }
+    else{
+      $scope.currentLocalparticipant.videoTracks.forEach(function(videoTrack) {
+        console.log(videoTrack);
+        videoTrack.track.enable();
+      });
+      $scope.videoToggle = 'fas fa-video';
+      $scope.videoStatus = "Stop Video";
+    }
+  }
+
+  $scope.copyLink = function(){
+    let universityUrl = $route.current.params.academiaName;
+    let roomSID = $route.current.params.roomSID;
+    let accountSid = $route.current.params.accountSid;
+    let roomName = $route.current.params.roomName;
+    let text = "https://classroom-app-frontend.herokuapp.com/a/"+ universityUrl + "/" + roomSID + "/" + accountSid + "/" + roomName + "/";
+    navigator.clipboard.writeText(text).then(function() {
+      console.log('Copied link to clipboard');
+    }, function(err) {
+      console.error('Could not copy link to the clipboard ', err);
+    });
+  }
+  
 
 }])
 
