@@ -474,7 +474,6 @@ angular.module('netbase')
     }
 
     $scope.connectClassroom = function(token, roomName, screenTrack = null) {
-
         //localVideo.connect()
         $scope.currentShareScreen = screenTrack;
         $scope.currentRoomToken = token;
@@ -2168,7 +2167,6 @@ angular.module('netbase')
 
                                     });
                                     //END socket.on('universityVisitsTodayList')
-
                                 }
                                 //END if (studentId.length > 0)
 
