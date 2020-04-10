@@ -1,0 +1,247 @@
+<div class="container-fluid">
+
+  <div class="row" style="margin-top: 20px; margin-bottom: 20px;">
+
+    <div class="col-xs-4"></div>
+
+    <div class="col-xs-4" style="text-align: center;">
+
+      <a href="/home/explore">
+        <img src="https://storage.googleapis.com/educationalcommunity/pt/img/universidade_icon.png" height="30px" />
+      </a>
+
+    </div>
+
+    <div class="col-xs-4" style="text-align: right; line-height: 30px;">
+
+      <!--
+      <a href="/home/timeline">
+        <button class="btn btn-success" style="height: 30px; width: unset; font-size: 0.75em; font-weight: bold;">Concluir</button>
+      </a>
+      -->
+
+    </div>
+
+  </div>
+  <!-- end row -->
+
+  <div class="row" style="margin-bottom: 40px;">
+
+    <div class="col-xs-12">
+
+      <div style="width: 100%; text-align: center;">
+
+        <div style="font-weight: bolder; font-size: 1.8em; color: #2d4255;">Eu tenho interesse em</div>
+
+      </div>
+
+    </div>
+    <!-- end COL XS 12 -->
+
+  </div>
+  <!-- end ROW -->
+
+  <div class="row" style="margin-bottom: 25px;">
+
+    <div class="col-xs-12">
+
+      <div class="user-collections">
+
+        <div class="collection" ng-click="selectMode('learn')" ng-class="{'active-option': mode == 'learn'}">
+
+          <div class="dot" style="background-color: #000;"></div>
+
+          <div style="font-size: 1.2em; font-weight: bold;">Aprender</div>
+          <!--<div style="color: #909090;">4 items</div>-->
+
+        </div>
+
+        <div class="collection" ng-click="selectMode('teach')" ng-class="{'active-option': mode == 'teach'}">
+
+          <div class="dot" style="background-color: #000;"></div>
+
+          <div style="font-size: 1.2em; font-weight: bold;">Ensinar</div>
+          <!--<div style="color: #909090;">4 items</div>-->
+
+        </div>
+
+      </div>
+      <!-- end user-collections -->
+
+    </div>
+    <!-- end COL XS 12 -->
+
+  </div>
+  <!-- end ROW -->
+
+  <div class="row animated fadeIn" ng-show="mode == 'teach'">
+
+    <div class="col-xs-12">
+
+      <div style="font-weight: bold; font-size: 1.4em; color: #2d4255;">Crie uma comunidade educacional para:</div>
+
+      <div class="user-collections" style="margin-top: 30px;">
+
+        <div style="height: unset;" ng-class="{'active-usercollection-professor': 'Professor' == universityType}" ng-click="selectUniversityType('Professor')" class="collection teaching-option option">
+
+          <div class="dot" style="background-color: #52bfea;"></div>
+
+          <div style="font-size: 1.2em; font-weight: bold;">Professor</div>
+          <div style="color: #909090;">Ambiente educacional dedicado ao ensino e aprendizado dos seus alunos</div>
+
+        </div>
+        <!-- -->
+
+      </div>
+      <!-- end user-collections -->
+
+      <div class="user-collections" style="margin-top: 30px;">
+
+        <div style="height: unset;" ng-class="{'active-usercollection-ff': 'Amigos e Família' == universityType}" ng-click="selectUniversityType('Amigos e Família')" class="collection teaching-option option">
+
+          <div class="dot" style="background-color: #30b39f;"></div>
+
+          <div style="font-size: 1.2em; font-weight: bold;">Amigos e Família</div>
+          <div style="color: #909090;">Inicie um grupo de estudos e troca de conhecimento</div>
+
+        </div>
+        <!-- -->
+
+      </div>
+      <!-- end user-collections -->
+
+      <div class="user-collections" style="margin-top: 30px;">
+
+        <div style="height: unset;" ng-class="{'active-usercollection-edinstitution': 'Instituição de Ensino' == universityType}" ng-click="selectUniversityType('Instituição de Ensino')" class="collection teaching-option option">
+
+          <div class="dot" style="background-color: #aa2c26;"></div>
+
+          <div style="font-size: 1.2em; font-weight: bold;">Instituição de Ensino</div>
+          <div style="color: #909090;">Empodere os seus alunos com soluções educacional integradas</div>
+
+        </div>
+        <!-- -->
+
+      </div>
+      <!-- end user-collections -->
+
+      <div class="user-collections" style="margin-top: 30px;">
+
+        <div style="height: unset;" ng-class="{'active-usercollection-company': 'Empresa' == universityType}" ng-click="selectUniversityType('Empresa')"  class="collection teaching-option option">
+
+          <div class="dot" style="background-color: #30b39f;"></div>
+
+          <div style="font-size: 1.2em; font-weight: bold;">Empresa</div>
+          <div style="color: #909090;">Treinamento interno e armazenamento do know-how operacional </div>
+
+        </div>
+        <!-- -->
+
+      </div>
+      <!-- end user-collections -->
+
+      <div class="user-collections" style="margin-top: 30px;">
+
+        <div style="height: unset;" ng-class="{'active-usercollection-kids': 'Criancas' == universityType}" ng-click="selectUniversityType('Criancas')" class="collection teaching-option option">
+
+          <div class="dot" style="background-color: #ee5748;"></div>
+
+          <div style="font-size: 1.2em; font-weight: bold;">Crianças</div>
+          <div style="color: #909090;">Plataforma educacional dedicada a crianças de 3 até 8 anos</div>
+
+        </div>
+        <!-- -->
+
+      </div>
+      <!-- end user-collections -->
+
+    </div>
+    <!-- -->
+
+  </div>
+  <!-- end row -->
+
+  <style>
+
+    .onboarding-knowledge {
+      padding-bottom: 10px;
+      border-bottom: 1px solid #cdcdcd;
+      margin-bottom: 10px;
+    }
+
+    .onboarding-knowledge .title {
+      font-size: 1.5em;
+      display: inline-block;
+      font-weight: bolder;
+      color: #2d4255;
+    }
+
+    .onboarding-knowledge .icon {
+      float: right;
+      font-size: 1.5em;
+      display: inline-block;
+      vertical-align: top;
+    }
+
+    .onboarding-knowledge-university-row {
+
+    }
+
+    .onboarding-knowledge-university-row .name {
+      display: inline-block;
+      font-weight: bolder;
+      font-size: 1.2em;
+      padding-left: 10px;
+    }
+
+    .onboarding-knowledge-university-row .logo-bg {
+      display: inline-block;
+    }
+
+    .onboarding-knowledge-university-row .buttons {
+      text-align: right; float: right; vertical-align: top;
+      line-height: 60px;
+      font-size: 0.7em;
+    }
+
+    .footer-onboarding {
+
+    }
+
+    .active-usercollection-professor {
+      border: 3px solid #52bfea;
+    }
+
+    .active-usercollection-edinstitution {
+      border: 3px solid #aa2c26;
+    }
+
+    .active-usercollection-ff {
+      border: 3px solid #30b39f;
+    }
+
+    .active-usercollection-edinstitution {
+      border: 3px solid #aa2c26;
+    }
+
+    .active-usercollection-kids {
+      border: 3px solid #ee5748;
+    }
+
+  </style>
+
+
+  <div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+    <div class="col-xs-12" ng-show="mode == 'teach'">
+      <button class="btn btn-success" ng-click="teaching()" style="font-size: 1.15em; font-weight: bold;">Continuar</button>
+    </div>
+    <!-- -->
+    <div class="col-xs-12" ng-show="mode == 'learn'">
+      <button class="btn btn-success" ng-click="learning()" style="font-size: 1.15em; font-weight: bold;">Continuar</button>
+    </div>
+    <!-- -->
+  </div>
+  <!-- -->
+
+</div>
+<!-- end container fluid -->

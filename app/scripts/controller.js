@@ -922,10 +922,6 @@ angular.module('netbase')
 
         if (success) {
 
-          console.log('121212121212 account token 1212121212');
-        console.log(res.data);
-        console.log('121212121212 account token 1212121212');
-
           $localStorage.token = token;
           $localStorage.logged = true;
           $rootScope.logged = true;
@@ -1001,6 +997,8 @@ angular.module('netbase')
         let success = res.data.success;
         let token = res.data.token;
 
+        console.log(res)
+
         if (success) {
 
           $localStorage.token = token;
@@ -1012,7 +1010,7 @@ angular.module('netbase')
           console.log($location.path().search("landing"))
           console.log($location.path())
           if ($location.path().search("landing") == -1) {
-            $location.path('/home/timeline')
+            $location.path('/onboarding/signup')
             ngDialog.close();
           } else {
             ngDialog.close();
@@ -1030,7 +1028,7 @@ angular.module('netbase')
 
           if (statusCode == 5002) {
             $scope.createMessageBox = true;
-            $scope.createMessage = "Email already registered.";
+            $scope.createMessage = "Email já cadastrado.";
           } else if (statusCode == 5003) {
             $scope.createMessageBox = true;
             $scope.createMessage = "xxx.";
@@ -1053,16 +1051,16 @@ angular.module('netbase')
       console.log(e);
 
       if (e == "EMAILINVALIDATED") {
-        $scope.createMessage = "Please, type a valid email.";
+        $scope.createMessage = "Por favor, escreva um email válido.";
         $scope.createMessageBox = true;
       } else if (e == "NAMEINVALIDATED") {
-        $scope.createMessage = "Please, type a name larger than 2 character.";
+        $scope.createMessage = "Por favor, escreva um nome com mais de dois caracteres.";
         $scope.createMessageBox = true;
       } else if (e == "PASSWORDNOTMATCH") {
-        $scope.createMessage = "Please, password must match.";
+        $scope.createMessage = "As senhas precisam ser iguais. Digite novamente";
         $scope.createMessageBox = true;
       } else if (e == "PASSWORDLESSTHANSIX") {
-        $scope.createMessage = "Please, password contain at least 6 characters.";
+        $scope.createMessage = "Por favor, a senha deve ter no mínimo 6 caracteres.";
         $scope.createMessageBox = true;
       } else {
         $scope.createMessage = "";
