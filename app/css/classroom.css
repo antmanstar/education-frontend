@@ -1,3 +1,8 @@
+body {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
 .classroom-container {
     margin-top: 30px;
     padding-left: 30px;
@@ -15,7 +20,7 @@
     width: 210px;
     height: 35px;
     text-align: center;
-    padding-top: 5px;
+    padding-top: 7px;
     cursor: pointer;
     font-family: 'roboto';
 }
@@ -355,18 +360,23 @@
 }
 
 .classroom-page-cotainer {
-    margin-top: 30px;
+    margin-top: 50px !important;
     display: flex;
     flex-direction: column;
 }
 
 .display-container {
     display: flex;
-    /* display: inline-block; */
+    background-color: #3C454C;
+    justify-content: space-between;
+    margin-top: 50px;
 }
 
 .controller-container {
     margin-top: 30px;
+    width: 600px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .controller-container div {
@@ -374,34 +384,44 @@
 }
 
 .classroom-participants-container {
-    margin-top: 30px;
     display: flex;
     flex-direction: column;
-    border-width: thin;
-    border-radius: 10px;
+    background-color: white;
+    padding-top: 30px;
+    padding-left: 20px;
+}
+
+.classroom-participants-container-none {
+    background-color: #3C454C;
 }
 
 .classroom-video-container {
-    margin-top: 30px;
+    margin-top: 15px;
     display: flex;
-    border-width: thin;
     background-color: #3C454C;
-    border: solid 1px black;
-    border-right: 0;
     position: relative;
     padding: 0px;
     flex-wrap: wrap;
     align-content: flex-start;
     align-content: center;
     justify-content: center;
+    min-height: 500px;
+}
+
+.classroom-video-container-wrapper {
+    width: 500px;
+    height: 400px;
+    background-color: #3C454C;
 }
 
 .classroom-chat-container {
-    margin-left: 20px;
-    margin-top: 30px;
     display: flex;
     flex-direction: column;
-    border-width: thin;
+    background-color: white;
+}
+
+.classroom-chat-container-none {
+    background-color: #3C454C;
 }
 
 .avatar-container {
@@ -410,13 +430,13 @@
 }
 
 .ava1 {
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
     border: 1px solid #cbcbcb;
     background: #fff;
-    -webkit-border-radius: 16px;
-    -moz-border-radius: 16px;
-    border-radius: 16px;
+    -webkit-border-radius: 18x;
+    -moz-border-radius: 18px;
+    border-radius: 18px;
 }
 
 .userinfo {
@@ -424,13 +444,12 @@
 }
 
 .username {
-    margin-left: 10px;
-    font-size: 18px;
+    font-size: 16px;
 }
 
 .privilege {
     margin-left: 10px;
-    font-size: 8px;
+    font-size: 12px;
     display: flex;
     color: white;
 }
@@ -484,6 +503,8 @@
 .classroom-students-title {
     font-size: 17px;
     margin-bottom: 5px;
+    font-weight: 700;
+    letter-spacing: -0.9px;
 }
 
 .top-margin-20 {
@@ -504,10 +525,9 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
-}
-
-.screen-controller i {
-    margin-right: 5px;
+    color: white;
+    font-size: 26px;
+    width: 50px;
 }
 
 .admin-active {
@@ -568,6 +588,19 @@
 .grid-view-style {
     margin-left: 5px;
     cursor: pointer;
+}
+
+.icon-container-bottom {
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
+    background-color: dimgray;
+    margin-bottom: 5px;
+    align-items: center;
+}
+
+.func-name {
+    font-size: 12px;
 }
 
 @media screen and (max-width: 468px) {
