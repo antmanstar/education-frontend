@@ -1,6 +1,6 @@
 <div ng-include="'partials/headerhome.html'"></div>
 
-<div class="container-fluid container-full">
+<div ng-init="isMobile()" class="container-fluid container-full">
 
     <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
     <div class="row academia-coverimage" ng-if="university.backgroundImage == undefined" style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
@@ -13,8 +13,8 @@
 
             <div academiastatus university="{{university}}"></div>
 
-            <div ng-if="classroomView == 0" class="classroom-list-container">
-                <div class="classroom-list-header">
+            <div class="classroom-list-container">
+                <div ng-if="classroomViewMode==false" class="classroom-list-header">
                     <div>
                         <div class='classroom-list-title'>
                             Classroom List
@@ -30,21 +30,25 @@
                         </div>
                     </div>
                 </div>
-                <div class="classroom-list-view">
+                <div class="classroom-list-view" ng-style="maxHeight">
                     <div style="width: 100%; height: 1px; background-color: rgba(192, 192, 192, 0.7);"></div>
-                    <div ng-repeat='classroom in wholeClassroomList' class="{{classroom.active}} classroom-list">
+                    <div ng-repeat='classroom in wholeClassroomList' class="{{classroom.active}} classroom-list" ng-class="{ 'classroom-list': classroomViewMode==false, 'classroom-list-mobile': classroomViewMode==true }">
                         <div style="display: flex; justify-content: space-between;">
                             <div style="display: flex; align-items: center;">
                                 <i class="fas fa-chalkboard-teacher" style="padding-right:10px; color: #4986bf;"></i>
-                                <div style="font-size: 12px;">{{classroom.uniqueName}}</div>
+                                <div ng-if="classroomViewMode==true" style="font-size: 12px;">
+                                    {{ classroom.uniqueName | limitTo: 30 }}{{classroom.uniqueName.length > 30 ? '...' : ''}}
+                                </div>
+                                <div ng-if="classroomViewMode==false" style="font-size: 12px;">{{classroom.uniqueName}}
+                                </div>
                             </div>
                             <div style="display: flex;">
-                                <div ng-if="classroom.active != ''" ng-click="recordVideo()" class="classroom-list-menu">
+                                <div ng-if="classroomViewMode==false" class="classroom-list-menu">
                                     <div style="margin-top: 3px; width: 12px; height: 12px; border-radius: 50%; background-color:#4986bf; cursor: pointer;">
                                     </div>
                                     <div style="font-size: 12px; margin-top: 3px;">Active</div>
                                 </div>
-                                <div ng-click="joinClassroom(classroom)" ng-class="shareScreenCaption" class="classroom-list-menu">
+                                <div ng-click="joinClassroom(classroom)" class="classroom-list-menu">
                                     <i class="material-icons" style="font-size: 18px; color:#4986bf; cursor:pointer;">person_add</i>
                                     <div style="font-size: 12px;">Join Class</div>
                                 </div>
@@ -54,12 +58,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div style="width: 100%; height: 1px; margin-top: 15px; background-color: rgba(192, 192, 192, 0.7);">
+                        <div ng-class="{'classroom-list-divider': classroomViewMode==false, 'classroom-list-divider-mobile': classroomViewMode==true}">
                         </div>
                     </div>
                 </div>
             </div>
-            
+
 
             <!--button ng-click="getAllClassrooms()">get all</button-->
 
@@ -68,6 +72,6 @@
 
     </div>
     <!-- end row -->
-
+    <footermobile></footermobile>
 </div>
 <!-- container-full -->
