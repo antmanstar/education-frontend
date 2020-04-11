@@ -406,6 +406,7 @@ body {
     align-content: center;
     justify-content: center;
     min-height: 500px;
+    width: 700px;
 }
 
 .classroom-video-container-wrapper {
@@ -607,6 +608,7 @@ body {
 
 @media screen and (max-width: 468px) {
     .classroom-video-container {
+        width: 300px;
         padding: 0px;
         overflow-y: scroll;
     }
