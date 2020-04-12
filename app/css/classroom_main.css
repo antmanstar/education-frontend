@@ -1,0 +1,116 @@
+
+.participant-menu-icon {
+    color: white !important;
+}
+
+.participant-menu-icon>i {
+    font-size: 30px;
+}
+
+.calssroom-logo>div {
+    font-size: 17px; 
+    color: white;
+}
+
+.chat-menu-icon {
+    color: white !important;
+}
+
+.chat-menu-icon>i {
+    font-size: 30px;
+}
+
+.bottom-controller-container {
+    margin-bottom: 30px;
+}
+
+.icon-container-bottom>div {
+    width: 100%;
+    justify-content: center;
+}
+
+.meeting-controller-icon {
+    text-align: center; 
+    width: 100%;
+}
+
+.chat-admin-label {
+    background-color:rgb(30, 235, 115); 
+    border-radius: 2px; 
+    padding: 4px;
+}
+
+.chat-admin-role-label {
+    background-color:rgb(102, 6, 102); 
+    border-radius: 2px; 
+    margin-left: 5px; 
+    padding: 4px;
+}
+
+.chat-main-label {
+    font-size: 17px; 
+    font-weight:700; 
+    margin-top: 10px; 
+    letter-spacing: -0.9px;
+}
+
+.meeting-display-container {
+    display: flex;
+    background-color: #3C454C;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+.fixed-position {
+    position: fixed;
+}
+
+.drag-in-left-right {
+    left: 0px !important;
+    height: 100%;
+    transition: left 0.5s ease-in-out;
+    -webkit-transition: left 0.5s ease-in-out; /** Chrome & Safari **/
+    -moz-transition: left 0.5s ease-in-out; /** Firefox **/
+    -o-transition: left 0.5s ease-in-out;
+}
+
+.drag-out-right-left {
+    left: -281px !important;
+    height: 100%;
+    transition: left 0.5s ease-in-out;
+    -webkit-transition: left 0.5s ease-in-out; /** Chrome & Safari **/
+    -moz-transition: left 0.5s ease-in-out; /** Firefox **/
+    -o-transition: left 0.5s ease-in-out;
+}
+
+.classroom-participants-initial {
+    width: 280px;
+    left: -281px;
+    height: 100%;
+    z-index: 30;
+}
+
+.classroom-chatbox-initial {
+    width: 280px;
+    right: -281px;
+    height: 100%;
+    z-index: 30;
+}
+
+.drag-in-right-left {
+    right: 0px !important;
+    height: 100%;
+    transition: right 0.5s ease-in-out;
+    -webkit-transition: right 0.5s ease-in-out; /** Chrome & Safari **/
+    -moz-transition: right 0.5s ease-in-out; /** Firefox **/
+    -o-transition: right 0.5s ease-in-out;
+}
+
+.drag-out-left-right {
+    right: -281px !important;
+    height: 100%;
+    transition: right 0.5s ease-in-out;
+    -webkit-transition: right 0.5s ease-in-out; /** Chrome & Safari **/
+    -moz-transition: right 0.5s ease-in-out; /** Firefox **/
+    -o-transition: right 0.5s ease-in-out;
+}
