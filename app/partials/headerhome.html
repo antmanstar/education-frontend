@@ -70,6 +70,14 @@
             padding-top: 5px;
           }
 
+          @media only screen and (max-width: 768px) {
+
+            .hide-mobile {
+              display: none;
+            }
+
+          }
+
         </style>
 
         <div class="search-bar-mobile animated fadeIn" style="width: 100%;" ng-show="searchBarDisplay">
@@ -79,7 +87,7 @@
         </div>
         <!-- search-bar-mobile -->
 
-        <div class="navbar-slider" ng-hide="originalPath.indexOf('/dashboard') != -1">
+        <div class="navbar-slider hide-mobile" ng-hide="originalPath.indexOf('/dashboard') != -1">
 
           <div class="option unselectable" ng-if="logged" ng-class="{'active': originalPath == '/home/timeline' || originalPath == '/home/timeline/'}"><a href="/home/timeline">Timeline</a></div>
           <div class="option unselectable" ng-class="{'active': originalPath == '/home/explore' || originalPath == '/home/explore/'}"><a href="/home/explore">Explorar</a></div>
