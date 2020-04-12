@@ -1,4 +1,3 @@
-    
 <!--
     - Classroom name
     - Accessibility 
@@ -13,59 +12,24 @@
         Boolean, to allow donations to be sent
     - Chat
         Boolean, to allow chat usage
--->    
+-->
 <div ng-controller='AcademiaClassroomsCtrl' class='classroom-modal-main'>
-    <div class='row col-xs-12 col-sm-8 col-md-8 col-lg-8 classroom-name-container'>
-        <label class='classroom-modal-caption'>Classroom Name </label><br>
-        <input ng-model='addingClassroom.uniqueName' />
+    <label class='classroom-modal-caption' style="margin-top: 50px;">Classroom Name </label>
+    <input class="classroom-modal-input" ng-model='addingClassroom.uniqueName' />
+    <label class='classroom-modal-caption'>Accessibility</label>
+    <div class="classroom-modal-radio-group-container">
+        <div class='inputGroup-radio'>
+            <input id='i1' name='room_type' type='radio' ng-model='addingClassroom.roomType' value=0 checked />
+            <label for='i1'>&nbsp;&nbsp;Public Room</label>
+        </div>
+        <div class='inputGroup-radio'>
+            <input id='i4' name='room_type' type='radio' ng-model='addingClassroom.roomType' value=1 />
+            <label for='i4'>&nbsp;&nbsp;Private Room</label>
+        </div>
     </div>
-    <div class='row col-xs-12 col-sm-8 col-md-8 col-lg-8'>
-        <label class='classroom-modal-caption accessibility-caption'>Accessibility</label>
-        <div>
-            <div class='row inputGroup-radio'>
-                <input id='i1' name='room_type' type='radio' ng-model='addingClassroom.roomType' value=0 checked />
-                <label for='i1'>&nbsp;&nbsp;Public Room</label>
-            </div>
-            
-            <!--div ng-class="{'row':true, 'left-margin-50':true, 'inner':true, 'disabled':addingClassroom.roomType!=0}">
-                <div  class='row inputGroup-radio'>
-                    <input id='i2' type='radio' name='public_room_type' ng-model='addingClassroom.publicRoom.type' value=0 ng-disabled="addingClassroom.roomType != 0" checked />
-                    <label for='i2'>&nbsp;&nbsp;For Free</label>
-                </div>
-                <div  class='row inputGroup-radio'>
-                    <input id='i3' type='radio' name='public_room_type' ng-model='addingClassroom.publicRoom.type' value=1 ng-disabled="addingClassroom.roomType != 0" />
-                    <label for='i3'>&nbsp;&nbsp;Pay Per View</label>
-                </div>
-                <div class='row left-margin-100'>
-                    <input ng-model='addingClassroom.publicRoom.payPerView' placeholder='price/hr' ng-disabled="addingClassroom.roomType != 0 || addingClassroom.publicRoom.type != 1" type="number" />
-                </div>
-            </div-->
-            <div class='row inputGroup-radio'>
-                <input id='i4' name='room_type' type='radio' ng-model='addingClassroom.roomType' value=1 />
-                <label for='i4'>&nbsp;&nbsp;Private Room</label>
-            </div>
-        
-            <!--div ng-class="{'row':true, 'left-margin-50':true, 'inner':true, disabled:addingClassroom.roomType!=1}">
-                <div class='inputGroup-checkbox'>
-                    <input id='i5' type='checkbox' name='private_room_type' ng-model='addingClassroom.privateRoom.invite' value=0
-                            ng-disabled="addingClassroom.roomType != 1" />
-                    <label for='i5'>&nbsp;&nbsp;Able to Invite users</label>
-                </div>
-                <div class='inputGroup-checkbox'>
-                    <input id='i6' type='checkbox' name='private_room_type' ng-model='addingClassroom.privateRoom.share' value=0
-                            ng-disabled="addingClassroom.roomType != 1" />
-                    <label for='i6'>&nbsp;&nbsp;Able to Share to Guests</label>
-                </div>
-            </div-->
-        </div> 
+    <div class="classroom-btn-view">
+        <div ng-click="confirmCreateClassroom()" class="confirm-create-classroom-btn">
+            CREAT CLASSROOM
+        </div>
     </div>
-    <!--div class='row inputGroup-checkbox col-xs-12 col-sm-8 col-md-8 col-lg-8'>
-        <input id='i7' name='donation' type='checkbox' ng-model='addingClassroom.donation' />
-        <label for='i7'>&nbsp;&nbsp;Donation</label>
-    </div>
-    <div class='row inputGroup-checkbox col-xs-12 col-sm-8 col-md-8 col-lg-8'>
-        <input id='i8' name='chat' type='checkbox' ng-model='addingClassroom.chat' />
-        <label for='i8'>&nbsp;&nbsp;Chat</label>
-    </div-->
-    <button ng-click='confirmCreateClassroom()' class='confirm-create-classroom-btn'>CREATE CLASSROOM</button>
 </div>

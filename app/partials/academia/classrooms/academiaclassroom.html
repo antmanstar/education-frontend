@@ -1,0 +1,108 @@
+<div ng-init="joinClassroom()" class="classroom-page-container">
+    <div class="meeting-display-container">
+        <div ng-class='mobileToggleParticipantsList' class="fixed-position classroom-participants-initial classroom-participants-container col-xs-7 col-sm-3 col-md-2 col-lg-2">
+            <div class='classroom-students-title'>Administrators</div>
+            <div ng-repeat="admin in administrator" class='classroom-administrator-container'>
+                <img ng-class="adminActive" src="/img/icon/human.png" alt="HN" title="User Avatar" class="ava1"> {{admin.username}}
+            </div>
+            <div class='classroom-students-title top-margin-20'>Participants</div>
+            <div ng-model='showingParticipants' data-ng-repeat="part in showingParticipants" class='classroom-administrator-container'>
+                <img src="/img/icon/human.png" alt="HN" title="User Avatar" class="ava1"> {{part.username}}
+            </div>
+        </div>
+        <!--div ng-if="participantsStatus==false" ng-class='mobileToggleParticipantsList' class="classroom-participants-container-none col-xs-7 col-sm-3 col-md-2 col-lg-2"> </div-->
+        <div style="display: flex; flex-direction: column; align-items: center;" class="col-xs-12 col-sm-6 col-md-7 col-lg-7">
+            <div class="controller-container">
+                <div ng-click="toggleParticipantsBox()" class="screen-controller participant-menu-icon" >
+                    <i class="fas fa-bars"></i>
+                </div>
+                <div class="calssroom-logo">
+                    <div>Universidade</div>
+                </div>
+                <div ng-click="toggleChatBox()" class="screen-controller chat-menu-icon">
+                    <i class="far fa-comment-alt"></i>
+                </div>
+            </div>
+            <div id='twilio' class="classroom-video-container">
+            </div>
+            <div class="controller-container bottom-controller-container" >
+                <div ng-click="toggleVideo()" class="screen-controller">
+                    <div class="icon-container-bottom">
+                        <div >
+                            <i ng-class="videoToggle" class="meeting-controller-icon" >
+                            </i>
+                        </div>
+                    </div>
+                    <div class='func-name' style=" white-space: pre;">{{videoStatus}}</div>
+                </div>
+                <div ng-click="toggleVoice()" class="screen-controller">
+                    <div class="icon-container-bottom">
+                        <div >
+                            <i ng-class="voiceToggle" ></i>
+                        </div>
+                    </div>
+                    <div class='func-name'>{{voiceStatus}}</div>
+                </div>
+                <div ng-click="copyLink()" class="screen-controller">
+                    <div class="icon-container-bottom">
+                        <div >
+                            <i class="fa fa-link" ></i>
+                        </div>
+                    </div>
+                    <div class='func-name'>Copy&nbsp;Link</div>
+                </div>
+                <div ng-click="recordVideo()" class="screen-controller">
+                    <div class="icon-container-bottom">
+                        <div >
+                            <i ng-class="recordToggle" ></i>
+                        </div>
+                    </div>
+                    <div class='func-name'>Recording</div>
+                </div>
+
+                <div ng-click="shareScreen()" ng-class="shareScreenCaption" class="screen-controller">
+                    <div class="icon-container-bottom">
+                        <div >
+                            <i class="far fa-clone" ></i>
+                        </div>
+                    </div>
+                    <div class='func-name'>Share&nbsp;Screen</div>
+                </div>
+                <div ng-click="returnBack()" class="screen-controller">
+                    <div class="icon-container-bottom" style="background-color: red !important;">
+                        <div >
+                            <i class="fas fa-phone-slash" ></i>
+                        </div>
+                    </div>
+                    <div class='func-name'>Leave&nbsp;Meeting</div>
+                </div>
+            </div>
+        </div>
+        <div ng-class="chatboxContainer" class="fixed-position classroom-chatbox-initial classroom-chat-container col-xs-12 col-sm-4 col-md-3 col-lg-2">
+            <div class="avatar-container">
+                <img src="/img/icon/human.png" alt="HN" title="User Avatar" width="100" height="100" class="ava1">
+                <div class="userinfo">
+                    <div class="username"> &nbsp; {{administrator[0].username}}</div>
+                    <div class="privilege">
+                        <div class="chat-admin-label" >
+                            Administrator
+                        </div>
+                        <div class="chat-admin-role-label" >
+                            Pro
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="chat-main-label" >
+                Chat
+            </div>
+            <div class="video-audio-chat">
+                <!-- <i class="material-icons" style="font-size: 15px">videocam</i> -->
+                <!-- <div style="margin-left: 10px; font-weight: 500;">JOIN&nbsp;VIDEO</div> -->
+                <!-- <i class="material-icons" style="font-size: 13px; margin-left: 20px;">phone</i> -->
+                <!-- <div style="margin-left: 10px; font-weight: 500;">JOIN&nbsp;AUDIO</div> -->
+            </div>
+        </div>
+        <!--div ng-if="chatStatus==false" class="classroom-chat-container-none col-xs-12 col-sm-4 col-md-3 col-lg-2"></div-->
+    </div>
+</div>

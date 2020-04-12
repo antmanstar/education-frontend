@@ -58,7 +58,7 @@ angular.module('netbase', [
 
     let auth = {
 
-        app: function($q, $location, $localStorage) {
+        app: function($q, $location, $localStorage, $route) {
 
           var deferred = $q.defer();
 
@@ -67,7 +67,12 @@ angular.module('netbase', [
           let logged = $localStorage.logged;
 
           if (!logged) {
-             $location.path('/');
+            let universityUrl = $route.current.params.academiaName;
+            let roomSID = $route.current.params.roomSID;
+            let accountSid = $route.current.params.accountSid;
+            if(universityUrl != null && roomSID != null && accountSid != null)
+                $location.path($route.params.url);
+            $location.path('/');
           }
 
           return deferred.promise;
@@ -197,6 +202,10 @@ angular.module('netbase', [
         .when('/a/:academiaName/classroom', {
             templateUrl: 'partials/academia/classrooms/academiaclassrooms.html',
             controller: 'AcademiaClassroomsCtrl',
+        })
+        .when("/a/:academiaName/:roomSID/:accountSid/:roomName", {
+            templateUrl: 'partials/academia/classrooms/academiaclassroom.html',
+            controller: 'AcademiaClassroomCtrl',
         })
         .when('/a/:academiaName/timeline', {
             templateUrl: 'partials/academia/academiatimeline.html',
@@ -461,7 +470,6 @@ angular.module('netbase', [
         .when('/home/universidades/user', {
             templateUrl: 'partials/home/homeuseruniversidades.html',
             controller: 'HomeUserUniversidadesCtrl',
-            resolve: auth,
         })
         .when('/home/smp', {
             templateUrl: 'partials/home/homesocialmarketplace.html',
