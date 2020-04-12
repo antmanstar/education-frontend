@@ -641,6 +641,7 @@ body {
         overflow-y: scroll;
         min-height: unset;
         justify-content: left;
+        width: 100%;
     }
 
     .classroom-list-title {

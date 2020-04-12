@@ -457,7 +457,7 @@ angular.module('netbase')
                     $scope.showingParticipants.push(res.data.data);
                 }
                 $scope.participants.push(res.data.data);
-                //$scope.videoSizeSet();
+                $scope.videoSizeSet();
                 setTimeout(() => {
                         $window.dispatchEvent(new Event("resize"));
                     },
