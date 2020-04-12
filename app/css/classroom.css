@@ -423,6 +423,7 @@ body {
     align-content: center;
     justify-content: center;
     min-height: 500px;
+    width: 800px;
 }
 
 .classroom-video-container-wrapper {
@@ -638,15 +639,20 @@ body {
     .classroom-video-container {
         padding: 0px;
         overflow-y: scroll;
+        min-height: unset;
+        justify-content: left;
     }
+
     .classroom-list-title {
         font-size: 18px;
         font-weight: 700;
         margin-bottom: 10px;
     }
+
     .classroom-list {
         font-size: 16px;
     }
+
     .mobile-participants {
         height: 40px;
         width: 40px;
@@ -658,5 +664,22 @@ body {
         background: #e8e8e8;
         opacity: 0.7;
         color: #b7b7b7;
+    }
+
+    .func-name {
+        display: none !important;
+    }
+
+    .controller-container {
+        margin-top: 10px;
+    }
+
+    .icon-container-bottom {
+        width: 40px;
+        height: 40px;
+    }
+
+    .call-end-icon {
+        font-size: 24px;
     }
 }

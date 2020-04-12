@@ -114,3 +114,68 @@
     -moz-transition: right 0.5s ease-in-out; /** Firefox **/
     -o-transition: right 0.5s ease-in-out;
 }
+
+.meeting-classroom-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.participant-close-btn {
+    width: 30px;
+    height: 30px;
+    font-size: 25px;
+    position: absolute;
+    left: 250px;
+    top: 0px;
+    border: none;
+}
+
+
+.chatbox-close-btn {
+    right: 0px;
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    font-size: 25px;
+    border: none;
+}
+
+.mobile-visible {
+    display: none !important;
+}
+
+@media screen and (max-width: 468px) {
+    .meeting-display-container {
+        margin-top: 0px;
+        position: fixed;
+        height: 100%;
+        width: 100%;
+    }
+
+    .meeting-classroom-main {
+        padding: 0px;
+    }
+    
+    .controller-container {
+        width: 100%;
+    }
+
+    .bottom-controller-container {
+        margin-bottom: 10px;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .classroom-chat-container>.avatar-container {
+        margin-top: 25px;
+    }
+
+    .mobile-invisible {
+        display: none !important;
+    }
+
+    .mobile-visible {
+        display: flex !important;
+    }
+}
