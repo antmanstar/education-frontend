@@ -75,9 +75,63 @@
 
 </style>
 
+<style>
+
+    .onboarding-knowledge {
+      padding-bottom: 20px;
+      border-bottom: 1px solid #cdcdcd;
+      margin-bottom: 10px;
+      text-align: center;
+      padding-top: 20px;
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+
+    .onboarding-knowledge p  {
+      font-size: 1.1em;
+      margin-bottom: 15px;
+    }
+
+    .onboarding-knowledge .picture {
+
+    }
+
+    .onboarding-knowledge .title {
+      font-size: 1.3em;
+      display: inline-block;
+      font-weight: bolder;
+      color: #2d4255;
+      margin-bottom: 15px;
+    }
+
+    .onboarding-knowledge .buttons {
+      text-align: center;
+    }
+
+
+</style>
+
 <div class="container-fluid container-full animated fadeIn" style="padding-bottom: 60px;">
 
   <div class="row">
+
+    <div class="col-xs-12" ng-if="user.universitiesSubscribed.length == 0">
+
+      <div class="onboarding-knowledge" ng-show="user.universitiesSubscribed.length == 0">
+
+        <div class="picture"><img src="/img/vr/vr_animation.gif" height="120px;" /></div>
+        <div class="title">Novo! Inscreva-se nas Universidades</div>
+        <p><b>Siga educadores</b> Começe aprender em comunidade</p>
+        <p><b>Customize a timeline</b> Acesse o conteúdo que você tem interesse</p>
+        <p><b>Aprenda e ensine</b> Você pode participar de diversas maneiras</p>
+        <div class="buttons">
+          <a href="/onboarding/universities"><button class="btn btn-success" style="max-width: 180px;">Seguir Universidades</button></a>
+        </div>
+
+      </div>
+
+    </div>
+    <!-- -->
 
     <div class="col-xs-12" id="universitiesList" style="margin-bottom: 15px; padding-top: 10px;">
 

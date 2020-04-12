@@ -103,8 +103,11 @@ angular.module('netbase')
     }
 
   }
-
   /* */
+
+
+  /* LEARNING TAB */
+  $scope.learningTabActive = 'paths';
 
 
 }])
@@ -877,7 +880,7 @@ angular.module('netbase')
       redirectUrl = $scope.ngDialogData.redirectUrl;
     }
   } catch(e) {
-    redirectUrl = "/onboarding/signup";
+    redirectUrl = "/home/timeline";
   }
 
   // Messages
@@ -1016,8 +1019,10 @@ angular.module('netbase')
             ngDialog.close();
           }
 
+          // I must change path below to redirectURL
+
           if (redirectUrl.length > 0) {
-            $location.path(redirectUrl)
+            $location.path("/onboarding/signup")
           } else {
             $route.reload();
           }
@@ -2019,7 +2024,18 @@ angular.module('netbase')
   /* header variables */
   let logged = $rootScope.logged;
 
+  $scope.searchBarDisplay = false;
+
   /* functions */
+
+  $scope.searchBarToggle = function() {
+    if ($scope.searchBarDisplay) {
+      $scope.searchBarDisplay = false;
+    } else {
+      $scope.searchBarDisplay = true;
+    }
+  }
+
   $scope.login = function() {
     console.log("login")
     $timeout.cancel($rootScope.accountSuggestion);
