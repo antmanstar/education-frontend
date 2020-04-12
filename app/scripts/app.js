@@ -91,7 +91,19 @@ angular.module('netbase', [
    */
 
     $routeProvider.
-        when('/p/create', {
+        when('/onboarding/universities', {
+            templateUrl: 'partials/onboarding/universities.html',
+            controller: 'OnboardingUniversitiesScreenCtrl',
+        })
+        .when('/onboarding/universities/create', {
+            templateUrl: 'partials/onboarding/universitycreate/create.html',
+            controller: 'OnboardingUniversityCreateCtrl',
+        })
+        .when('/onboarding/signup', {
+            templateUrl: 'partials/onboarding/signupstep1.html',
+            controller: 'OnboardingSignUpScreenCtrl',
+        })
+        .when('/p/create', {
             templateUrl: 'partials/playlist/create.html',
             controller: 'PlaylistCreateCtrl',
         })
