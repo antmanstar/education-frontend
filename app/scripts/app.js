@@ -248,7 +248,7 @@ angular.module('netbase', [
             templateUrl: 'partials/academia/academiajobs.html',
             controller: 'AcademiaJobsCtrl',
         })
-        .when("/a/:academiaName/:roomSID/:accountSid/:roomName", {
+        .when("/a/university/:academiaName/roomid/:roomSID/accountid/:accountSid/roomname/:roomName", {
             templateUrl: 'partials/academia/classrooms/academiaclassroom.html',
             controller: 'AcademiaClassroomCtrl',
         })

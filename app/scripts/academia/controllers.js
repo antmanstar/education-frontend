@@ -447,6 +447,8 @@ angular.module('netbase')
             mainVideoDom.appendChild(videoTitle);
 
             Students.getStudentById(localParticipant.identity).then((res) => {
+                console.log('Local Participant');
+                console.log(res.data);
                 $scope.localParticipantUserName = res.data.data.name;
                 if (document.getElementById('my_local_video') != null) {
                     document.getElementById('my_local_video').innerText = $scope.localParticipantUserName;
@@ -749,7 +751,7 @@ angular.module('netbase')
         let roomSID = $route.current.params.roomSID;
         let accountSid = $route.current.params.accountSid;
         let roomName = $route.current.params.roomName;
-        let text = domain + "/a/" + universityUrl + "/" + roomSID + "/" + accountSid + "/" + roomName + "/";
+        let text = domain + "/a/university/" + universityUrl + "/roomid/" + roomSID + "/accountid/" + accountSid + "/roomname/" + roomName + "/";
         navigator.clipboard.writeText(text).then(function() {
             $window.alert('Copied link to clipboard');
         }, function(err) {
@@ -886,7 +888,7 @@ angular.module('netbase')
     }
 
     $scope.copyLink = function(classroom) {
-        let text = domain + "/a/" + universityUrl + "/" + classroom.roomSID + "/" + classroom.accountSid + "/" + classroom.uniqueName + "/";
+        let text = domain + "/a/university/" + universityUrl + "/roomid/" + classroom.roomSID + "/accountid/" + classroom.accountSid + "/roomname/" + classroom.uniqueName + "/";
         navigator.clipboard.writeText(text).then(function() {
             $window.alert('Copied link to clipboard');
         }, function(err) {
@@ -896,7 +898,8 @@ angular.module('netbase')
 
 
     $scope.joinClassroom = function(classroom) {
-        window.open(domain + "/a/" + universityUrl + "/" + classroom.roomSID + "/" + classroom.accountSid + "/" + classroom.uniqueName + "/");
+        //"/a/university/:academiaName/roomid/:roomSID/accountid/:accountSid/roomname/:roomName"
+        window.open(domain + "/a/university/" + universityUrl + "/roomid/" + classroom.roomSID + "/accountid/" + classroom.accountSid + "/roomname/" + classroom.uniqueName + "/");
     }
 }])
 
