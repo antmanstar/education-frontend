@@ -129,6 +129,7 @@
     left: 250px;
     top: 0px;
     border: none;
+    background-color: white;
 }
 
 
@@ -139,6 +140,7 @@
     height: 30px;
     font-size: 25px;
     border: none;
+    background-color: white;
 }
 
 .mobile-visible {

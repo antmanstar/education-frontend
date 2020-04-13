@@ -67,11 +67,6 @@ angular.module('netbase', [
           let logged = $localStorage.logged;
 
           if (!logged) {
-            let universityUrl = $route.current.params.academiaName;
-            let roomSID = $route.current.params.roomSID;
-            let accountSid = $route.current.params.accountSid;
-            if(universityUrl != null && roomSID != null && accountSid != null)
-                $location.path($route.params.url);
             $location.path('/');
           }
 
