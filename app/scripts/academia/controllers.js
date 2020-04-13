@@ -2136,17 +2136,16 @@ angular.module('netbase')
 
                 attr.$observe('university', function(value) {
 
-                    /* socket io */
+                  /* REAL TIME MODULE */
+
+                    /*
                     var socket = io("https://educationalcommunity-realtime.herokuapp.com");
 
-                    // userId
                     let student = { _id: studentId };
 
                     if (value) {
 
                         university = JSON.parse(value);
-
-                        /* chat services */
 
                         console.log("university get channels 1")
 
@@ -2183,9 +2182,9 @@ angular.module('netbase')
                             }
 
                         });
+                        */
 
-                        /* real time connect */
-
+                        /*
                         socket.on('connect', function(data) {
 
                             console.log(data)
@@ -2212,24 +2211,26 @@ angular.module('netbase')
                         });
                         //END socket.on('connect')
 
-                        /* check if student is a premium member */
-                        for (let idx = 0; idx < university.members.length; idx++) {
+                      */
 
-                            var member = university.members[idx];
+                      /* check if student is a premium member */
+                      for (let idx = 0; idx < university.members.length; idx++) {
 
-                            if (studentId != undefined && member.accountId == studentId && member.privilege >= 10) {
-                                scope.studentIsPremium = true;
-                            }
+                          var member = university.members[idx];
 
-                            if (studentId != undefined && member.accountId == studentId && member.privilege >= 50) {
-                                scope.studentIsTeam = true;
-                            }
+                          if (studentId != undefined && member.accountId == studentId && member.privilege >= 10) {
+                              scope.studentIsPremium = true;
+                          }
 
-                            if (studentId != undefined && member.accountId == studentId && member.privilege == 99) {
+                          if (studentId != undefined && member.accountId == studentId && member.privilege >= 50) {
+                              scope.studentIsTeam = true;
+                          }
+
+                          if (studentId != undefined && member.accountId == studentId && member.privilege == 99) {
                                 scope.studentIsAdmin = true;
-                            }
+                          }
 
-                        }
+                      }
 
                         function userMembersLocation(array) {
 
@@ -2258,8 +2259,6 @@ angular.module('netbase')
                             }
 
                         };
-
-                    }
 
                 });
                 //END attr.$observe('university')

@@ -94,7 +94,7 @@
 <!-- col-sm-8 col-md-9 animated fadeIn -->
 </div>
 
-<div class="academia-footer" style="z-index: 9; background-color: #fff; box-shadow: 0px -2px 4px -1px rgba(0,0,0,0.15); -moz-box-shadow: 0px -2px 4px -1px rgba(0,0,0,0.15); -webkit-box-shadow: 0px -2px 4px -1px rgba(0,0,0,0.15);">
+<div class="academia-footer" style="-ms-overflow-style: none; overflow: -moz-scrollbars-nonez-index: 9; background-color: #fff; box-shadow: 0px -2px 4px -1px rgba(0,0,0,0.15); -moz-box-shadow: 0px -2px 4px -1px rgba(0,0,0,0.15); -webkit-box-shadow: 0px -2px 4px -1px rgba(0,0,0,0.15);">
 
   <style>
     .footer-active {
@@ -106,13 +106,13 @@
 
     <li style="width: 20%; min-width: unset; padding-top: 4px; padding-left: 0; padding-right: 0;">
       <a style="color: #565656 !important;" href="/home/timeline" ng-class="forumClass">
-        <i ng-class="{'footer-active': originalPath == '/home/timeline' || footer-active == '/home/timeline/'}" style="font-size: 1.7em;" class="far fa-newspaper"></i>
+        <i ng-class="{'footer-active': originalPath == '/home/timeline' || originalPath == '/home/timeline/'}" style="font-size: 1.7em;" class="far fa-newspaper"></i>
       </a>
     </li><!--
 
     --><li style="width: 20%; min-width: unset; padding-top: 4px; padding-left: 0; padding-right: 0;">
       <a style="color: #565656 !important;" href="/home/explore">
-        <i ng-class="{'footer-active': originalPath == '/home/explore' || footer-active == '/home/explore/'}" style="font-size: 1.7em;" class="fas fa-search"></i>
+        <i ng-class="{'footer-active': originalPath == '/home/explore' || originalPath == '/home/explore/'}" style="font-size: 1.7em;" class="fas fa-search"></i>
       </a>
     </li><!--
 
@@ -122,13 +122,13 @@
 
     --><li style="width: 20%; min-width: unset; padding-left: 0; padding-right: 0;">
       <a style="color: #565656 !important;" href="/home/universidades/user">
-        <i style="font-size: 1.7em;" ng-class="{'footer-active': originalPath.indexOf('/a') != -1 || footer-active == '/home/universidades/user'} || footer-active == '/home/universidades'" class="fa fa-university"></i>
+        <i style="font-size: 1.7em;" ng-class="{'footer-active': originalPath.indexOf('/a') != -1 || originalPath == '/home/universidades/user'} || originalPath == '/home/universidades'" class="fa fa-university"></i>
       </a>
     </li><!--
 
     --><li style="width: 20%; min-width: unset; padding-top: 4px; padding-left: 0; padding-right: 0;">
       <a style="color: #565656 !important;" href="/perfil" ng-class="forumClass">
-        <i style="font-size: 1.7em;" class="fas fa-user-graduate"></i>
+        <i style="font-size: 1.7em;" ng-class="{'footer-active': originalPath == '/perfil' || originalPath == '/perfil/'}" class="fas fa-user-graduate"></i>
       </a>
     </li>
 
