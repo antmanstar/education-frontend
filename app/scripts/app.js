@@ -198,10 +198,6 @@ angular.module('netbase', [
             templateUrl: 'partials/academia/classrooms/academiaclassrooms.html',
             controller: 'AcademiaClassroomsCtrl',
         })
-        .when("/a/:academiaName/:roomSID/:accountSid/:roomName", {
-            templateUrl: 'partials/academia/classrooms/academiaclassroom.html',
-            controller: 'AcademiaClassroomCtrl',
-        })
         .when('/a/:academiaName/timeline', {
             templateUrl: 'partials/academia/academiatimeline.html',
             controller: 'AcademiaTimelineCtrl',
@@ -251,6 +247,10 @@ angular.module('netbase', [
         .when('/a/:academiaName/jobs', {
             templateUrl: 'partials/academia/academiajobs.html',
             controller: 'AcademiaJobsCtrl',
+        })
+        .when("/a/:academiaName/:roomSID/:accountSid/:roomName", {
+            templateUrl: 'partials/academia/classrooms/academiaclassroom.html',
+            controller: 'AcademiaClassroomCtrl',
         })
         .when('/ensinar', {
             templateUrl: 'partials/teach/home.html',
