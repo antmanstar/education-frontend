@@ -37,16 +37,17 @@
 
       <div style="color: #2f4457; font-size: 2.5em; margin-bottom: 5px; font-weight: bolder;  margin-bottom: 80px;">{{course.title}}</div>
       <ng-container ng-if="course.module.length>0">
-      <ng-container ng-if="c.moduleId.title">
+      
       <ng-container ng-repeat="m in course.module">
+      <ng-container ng-if="m.moduleId.title">
       <div style="font-size: 1.6em; margin-bottom: 15px; font-weight: bold;">{{$index+1}}. {{m.moduleId.title}}</div>
 
-      <ng-containner ng-if="c.moduleId.length>0" coursemodulecontentmodulo courseid="{{course._id}}"  mc="{{m.moduleId.content}}"></ng-containner>
-     
+      <ng-containner  coursemodulecontentmodulo courseid="{{course._id}}"  mc="{{m.moduleId.content}}"></ng-containner>
+     </ng-container>
       <!-- -->
 
       </br></br></br>
-      </ng-container>
+      
       </ng-container>
       </ng-container>
       <!-- -->
