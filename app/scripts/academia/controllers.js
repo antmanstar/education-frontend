@@ -695,6 +695,7 @@ angular.module('netbase')
         $scope.participantsStatus = !$scope.participantsStatus;
         if($scope.participantsStatus){
           $scope.mobileToggleParticipantsList = 'drag-in-left-right';
+          $scope.chatboxContainer = "drag-out-left-right";
         }
         else {
           $scope.mobileToggleParticipantsList = 'drag-out-right-left';
@@ -705,6 +706,7 @@ angular.module('netbase')
         $scope.chatStatus = !$scope.chatStatus;
         if($scope.chatStatus){
           $scope.chatboxContainer = "drag-in-right-left";
+          $scope.mobileToggleParticipantsList = 'drag-out-right-left';
         }
         else{
           $scope.chatboxContainer = "drag-out-left-right";
