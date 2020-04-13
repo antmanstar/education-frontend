@@ -1,3 +1,7 @@
+.classroom-page-container {
+    background-color: #3C454C;
+    height: 100vh !important;
+}
 
 .participant-menu-icon {
     color: white !important;
@@ -8,7 +12,7 @@
 }
 
 .calssroom-logo>div {
-    font-size: 17px; 
+    font-size: 17px;
     color: white;
 }
 
@@ -30,27 +34,27 @@
 }
 
 .meeting-controller-icon {
-    text-align: center; 
+    text-align: center;
     width: 100%;
 }
 
 .chat-admin-label {
-    background-color:rgb(30, 235, 115); 
-    border-radius: 2px; 
+    background-color: rgb(30, 235, 115);
+    border-radius: 2px;
     padding: 4px;
 }
 
 .chat-admin-role-label {
-    background-color:rgb(102, 6, 102); 
-    border-radius: 2px; 
-    margin-left: 5px; 
+    background-color: rgb(102, 6, 102);
+    border-radius: 2px;
+    margin-left: 5px;
     padding: 4px;
 }
 
 .chat-main-label {
-    font-size: 17px; 
-    font-weight:700; 
-    margin-top: 10px; 
+    font-size: 17px;
+    font-weight: 700;
+    margin-top: 10px;
     letter-spacing: -0.9px;
 }
 
@@ -58,7 +62,6 @@
     display: flex;
     background-color: #3C454C;
     justify-content: center;
-    margin-top: 12px;
 }
 
 .fixed-position {
@@ -69,8 +72,10 @@
     left: 0px !important;
     height: 100%;
     transition: left 0.5s ease-in-out;
-    -webkit-transition: left 0.5s ease-in-out; /** Chrome & Safari **/
-    -moz-transition: left 0.5s ease-in-out; /** Firefox **/
+    -webkit-transition: left 0.5s ease-in-out;
+    /** Chrome & Safari **/
+    -moz-transition: left 0.5s ease-in-out;
+    /** Firefox **/
     -o-transition: left 0.5s ease-in-out;
 }
 
@@ -78,8 +83,10 @@
     left: -281px !important;
     height: 100%;
     transition: left 0.5s ease-in-out;
-    -webkit-transition: left 0.5s ease-in-out; /** Chrome & Safari **/
-    -moz-transition: left 0.5s ease-in-out; /** Firefox **/
+    -webkit-transition: left 0.5s ease-in-out;
+    /** Chrome & Safari **/
+    -moz-transition: left 0.5s ease-in-out;
+    /** Firefox **/
     -o-transition: left 0.5s ease-in-out;
 }
 
@@ -101,8 +108,10 @@
     right: 0px !important;
     height: 100%;
     transition: right 0.5s ease-in-out;
-    -webkit-transition: right 0.5s ease-in-out; /** Chrome & Safari **/
-    -moz-transition: right 0.5s ease-in-out; /** Firefox **/
+    -webkit-transition: right 0.5s ease-in-out;
+    /** Chrome & Safari **/
+    -moz-transition: right 0.5s ease-in-out;
+    /** Firefox **/
     -o-transition: right 0.5s ease-in-out;
 }
 
@@ -110,8 +119,10 @@
     right: -281px !important;
     height: 100%;
     transition: right 0.5s ease-in-out;
-    -webkit-transition: right 0.5s ease-in-out; /** Chrome & Safari **/
-    -moz-transition: right 0.5s ease-in-out; /** Firefox **/
+    -webkit-transition: right 0.5s ease-in-out;
+    /** Chrome & Safari **/
+    -moz-transition: right 0.5s ease-in-out;
+    /** Firefox **/
     -o-transition: right 0.5s ease-in-out;
 }
 
@@ -119,6 +130,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 100px;
 }
 
 .participant-close-btn {
@@ -131,7 +143,6 @@
     border: none;
     background-color: white;
 }
-
 
 .chatbox-close-btn {
     right: 0px;
@@ -154,29 +165,24 @@
         height: 100%;
         width: 100%;
     }
-
     .meeting-classroom-main {
         padding: 0px;
+        margin-top: 0px;
     }
-    
     .controller-container {
         width: 100%;
     }
-
     .bottom-controller-container {
         margin-bottom: 10px;
         padding-left: 15px;
         padding-right: 15px;
     }
-
     .classroom-chat-container>.avatar-container {
         margin-top: 25px;
     }
-
     .mobile-invisible {
         display: none !important;
     }
-
     .mobile-visible {
         display: flex !important;
     }

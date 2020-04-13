@@ -1,6 +1,6 @@
 <div ng-include="'partials/headerhome.html'"></div>
 
-<div ng-init="isMobile()" class="container-fluid container-full">
+<div class="container-fluid container-full">
 
     <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
     <div class="row academia-coverimage" ng-if="university.backgroundImage == undefined" style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
@@ -14,7 +14,7 @@
             <div academiastatus university="{{university}}"></div>
 
             <div class="classroom-list-container">
-                <div ng-if="classroomViewMode==false" class="classroom-list-header">
+                <div class="classroom-list-header disp-mobile-none">
                     <div>
                         <div class='classroom-list-title'>
                             Classroom List
@@ -32,18 +32,16 @@
                 </div>
                 <div class="classroom-list-view" ng-style="maxHeight">
                     <div style="width: 100%; height: 1px; background-color: rgba(192, 192, 192, 0.7);"></div>
-                    <div ng-repeat='classroom in wholeClassroomList' class="{{classroom.active}} classroom-list" ng-class="{ 'classroom-list': classroomViewMode==false, 'classroom-list-mobile': classroomViewMode==true }">
+                    <div ng-repeat='classroom in wholeClassroomList' class="classroom-list">
                         <div style="display: flex; justify-content: space-between;">
                             <div style="display: flex; align-items: center;">
                                 <i class="fas fa-chalkboard-teacher" style="padding-right:10px; color: #4986bf;"></i>
-                                <div ng-if="classroomViewMode==true" style="font-size: 12px;">
+                                <div style="font-size: 12px;">
                                     {{ classroom.uniqueName | limitTo: 30 }}{{classroom.uniqueName.length > 30 ? '...' : ''}}
-                                </div>
-                                <div ng-if="classroomViewMode==false" style="font-size: 12px;">{{classroom.uniqueName}}
                                 </div>
                             </div>
                             <div style="display: flex;">
-                                <div ng-if="classroomViewMode==false" class="classroom-list-menu">
+                                <div class="classroom-list-menu disp-mobile-none">
                                     <div style="margin-top: 3px; width: 12px; height: 12px; border-radius: 50%; background-color:#4986bf; cursor: pointer;">
                                     </div>
                                     <div style="font-size: 12px; margin-top: 3px;">Active</div>
@@ -58,7 +56,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div ng-class="{'classroom-list-divider': classroomViewMode==false, 'classroom-list-divider-mobile': classroomViewMode==true}">
+                        <div class="classroom-list-divider">
                         </div>
                     </div>
                 </div>
