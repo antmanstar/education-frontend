@@ -41,39 +41,32 @@
 
 </style>
 
-<div class="container-fluid container-home">
+<div class="container-fluid container-home" ng-if="access">
 
   <div class="row academia-content" style="margin-bottom: 30px;">
 
     <div class="col-xs-12 col-sm-9 col-lg-7">
 
-      <div style="color: #2f4457; font-size: 2.5em; margin-bottom: 5px; font-weight: bolder;  margin-bottom: 80px;">Blockchain & Legal Immersion</div>
+      <div style="color: #2f4457; font-size: 2.5em; margin-bottom: 5px; font-weight: bolder;  margin-bottom: 80px;">{{course.title}}</div>
 
       <!-- -->
       <div class="course-card" style="border: 1px solid #ababab; box-shadow: unset; width: 100%; padding: 0px; padding-top; 1px;padding-left: 1px; padding-right: 1px;">
 
-        <textarea style="font-size: 1.2em; width: 100%; border: none; outline: none; resize: none; min-height: 100px; padding-top: 5px; padding-left: 5px; padding-right: 5px;"></textarea>
-        <div class="card-text-editor-options" style='font-size: 1.3em; padding: 5px;'>
-          <i class="fas fa-bold icon"></i>
-          <i class="fas fa-italic icon"></i>
-          <i class="fas fa-list icon"></i>
-          <i class="fas fa-list-ol icon"></i>
-          <i style="float: right;" class="fas fa-paperclip icon"></i>
-        </div>
-
+      
+        <trix-editor style="margin-bottom: 15px;"   class="trix-content" ng-model="description" angular-trix trix-initialize="trixInitialize(e, editor);" trix-change="trixChange(e, editor);" trix-selection-change="trixSelectionChange(e, editor);" trix-focus="trixFocus(e, editor);" trix-blur="trixBlur(e, editor);" ></trix-editor>
+        <button ng-click="save(description)" type="button" class="btn btn-info">Submit</button>
       </div>
+     
       <!-- -->
 
-      <div class="course-card">
+      <div class="course-card" ng-repeat="t in timelines">
 
-        <div class="user-image" style="line-height: 30px; margin-bottom: 10px;">
-          <img height="30px" style="border-radius: 5px;" src="https://storage.googleapis.com/educationalcommunity-upload/images/1569441207/a0.jpg" />
-          <b style="font-size: 1.2em; padding-left: 5px;">Rosine Kadamani</b>
+        <div class="user-image" style="line-height: 30px; margin-bottom: 10px;" studentinfosmall sid="{{t.accountId}}">
+          
         </div>
 
-        <div style="font-size: 1.2em;">
-          É preciso evoluir com uma conceituação mais específica das espécies de criptoativos.
-          Em maio deste ano, a Receita Federal publicou a Instrução Normativa nº 1.888, que estabeleceu obrigações de comunicação sobre operações com criptoativos a pessoas naturais e jurídicas em geral.
+        <div style="font-size: 1.2em;" ng-bind-html="t.description">
+         
         </div>
 
       </div>

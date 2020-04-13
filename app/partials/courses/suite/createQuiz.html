@@ -1,0 +1,125 @@
+<div ng-include="'partials/headerhome.html'"></div>
+
+<div class="container-fluid ">
+  <div class="row" style="margin-top: 15px;">
+
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+      <div class="title" style="font-size: 3em; font-weight: bold;">Cursos</div>
+
+      <div ng-include="'/partials/courses/suite/navbar.html'"></div>
+
+    </div>
+  </div>
+
+  <div class="container-fluid" style="margin-top: 15px; margin-bottom: 30px;">
+    <div class="row">
+      <div class="col-md-8">
+
+        <h3 class="quiz-heading">ADD QUIZ</h3>
+
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <form>
+              <input class="form-control input-lg" type="text" placeholder="Quiz Title"><br>
+
+              <textarea class="form-control" name="description" id="desc" cols="30" rows="6" placeholder="Description"
+                style="resize: none;"></textarea>
+
+              <br>
+
+              <ul class="list-inline">
+                <li class="pull-left">
+                  <button class="btn btn-small btn-green">SAVE</button>
+                </li>
+                <li class="pull-right">
+                  <button class="btn btn-small btn-bluebase">ADD QUESTION</button>
+                </li>
+              </ul>
+            </form>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <form class="form-horizontal">
+              <select class="form-control" style="width: 25%;">
+                <option selected>Select Option Type</option>
+                <option>Option 1</option>
+                <option>Option 2</option>
+              </select>
+              <br>
+              <input type="text" class="form-control input-lg" placeholder="Question">
+
+              <div class="form-group">
+                <div class="col-sm-6 options">
+                  <input type="text" class="form-control" placeholder="option 1">
+                </div>
+                <div class="col-sm-6 options">
+                  <input type="text" class="form-control" placeholder="option 2">
+                </div>
+                <div class="col-sm-6 options">
+                  <input type="text" class="form-control" placeholder="option 3">
+                </div>
+                <div class="col-sm-6 options">
+                  <input type="text" class="form-control" placeholder="option 4">
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-2">
+                  <h5>Select Answer:</h5>
+                </div>
+
+                <div class="col-md-2 radio">
+                  <label><input type="radio" name="optionsRadios"> Option 1</label>
+                </div>
+
+                <div class="col-md-2 radio">
+                  <label><input type="radio" name="optionsRadios"> Option 2</label>
+                </div>
+
+                <div class="col-md-2 radio">
+                  <label><input type="radio" name="optionsRadios"> Option 3</label>
+                </div>
+
+                <div class="col-md-2 radio">
+                  <label><input type="radio" name="optionsRadios"> Option 4</label>
+                </div>
+              </div>
+              <br><br>
+
+              <ul class="list-inline">
+                <li class="pull-left">
+                  <button class="btn btn-small btn-green">SAVE</button>
+                </li>
+                <li class="pull-right">
+                  <button class="btn btn-small btn-bluebase">PREVIOUS QUESTION</button>
+                  <button class="btn btn-small btn-bluebase">ADD NEW QUESTION</button>
+                </li>
+              </ul>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .panel {
+    border-bottom: 1px solid #eee;
+    padding: 10px;
+  }
+
+  .form-group {
+    padding: 20px;
+  }
+
+  .options {
+    margin-bottom: 10px;
+  }
+
+  .quiz-heading {
+    font-weight: bold;
+  }
+</style>

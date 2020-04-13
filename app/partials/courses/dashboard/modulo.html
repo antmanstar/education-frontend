@@ -29,28 +29,26 @@
 
 </style>
 
-<div class="container-fluid container-home">
+<div class="container-fluid container-home" ng-if="access">
 
   <div class="row academia-content" style="margin-bottom: 30px;">
 
     <div class="col-xs-12 col-sm-9 col-lg-7">
 
-      <div style="color: #2f4457; font-size: 2.5em; margin-bottom: 5px; font-weight: bolder;  margin-bottom: 80px;">Blockchain & Legal Immersion</div>
+      <div style="color: #2f4457; font-size: 2.5em; margin-bottom: 5px; font-weight: bolder;  margin-bottom: 80px;">{{course.title}}</div>
+      <ng-container ng-if="course.module.length>0">
+      <ng-container ng-if="c.moduleId.title">
+      <ng-container ng-repeat="m in course.module">
+      <div style="font-size: 1.6em; margin-bottom: 15px; font-weight: bold;">{{$index+1}}. {{m.moduleId.title}}</div>
 
-      <div style="font-size: 1.6em; margin-bottom: 15px; font-weight: bold;">1. Blockchain Immersion</div>
-      <div style="font-size: 1.4em;"><i class="fas fa-file-alt" style="padding-right: 5px;"></i> Histórico</div>
-      <div style="font-size: 1.4em;"><i class="fas fa-file-alt" style="padding-right: 5px;"></i> Aspectos Técnicos</div>
-      <div style="font-size: 1.4em;"><i class="fas fa-file-alt" style="padding-right: 5px;"></i> Especulação</div>
-      <div style="font-size: 1.4em;"><i class="fas fa-file-alt" style="padding-right: 5px;"></i> Infraestruturas inspiradas no Blockchain</div>
+      <ng-containner ng-if="c.moduleId.length>0" coursemodulecontentmodulo courseid="{{course._id}}"  mc="{{m.moduleId.content}}"></ng-containner>
+     
       <!-- -->
 
       </br></br></br>
-
-      <div style="font-size: 1.6em; margin-bottom: 15px; font-weight: bold;">2. The Legal of Blockchain</div>
-      <div style="font-size: 1.4em;"><i class="fas fa-file-alt" style="padding-right: 5px;"></i> Histórico</div>
-      <div style="font-size: 1.4em;"><i class="fas fa-file-alt" style="padding-right: 5px;"></i> Aspectos Técnicos</div>
-      <div style="font-size: 1.4em;"><i class="fas fa-file-alt" style="padding-right: 5px;"></i> Especulação</div>
-      <div style="font-size: 1.4em;"><i class="fas fa-file-alt" style="padding-right: 5px;"></i> Infraestruturas inspiradas no Blockchain</div>
+      </ng-container>
+      </ng-container>
+      </ng-container>
       <!-- -->
 
     </div>

@@ -1,0 +1,11 @@
+         <div class="topic" ng-repeat="c in modulecontent">
+         <div class="line" style="font-size: 1em;">
+            <i ng-if="c.contentType=='video'" class="fas fa-video"></i>
+            <i ng-if="c.contentType=='forumpost'" class="fas fa-file"></i>
+            <i ng-if="c.contentType!='forumpost' && c.contentType!='video'" class="fas fa-book"></i>
+          </div>
+
+          <div class="text">
+            {{c.title}}</br>{{c.contentType}}
+          </div>
+        </div>

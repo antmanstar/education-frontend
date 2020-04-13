@@ -1,4 +1,4 @@
-<div class="container-fluid modal-accounts">
+<div class="container-fluid modal-accounts" style="padding: 35px;">
 
   <div class="row">
 
@@ -13,13 +13,18 @@
         font-weight: bolder;
       }
 
+      trix-editor {
+        min-height: 100px;
+        border: none;
+      }
+
     </style>
 
     <div class="col-xs-12">
 
-      <div class="headline-sub-one">Nome do curso</div>
+      <h3>Nome do curso</h3>
 
-      <input class="academia-content-forum-post-create-title" placeholder="Escreva o título do seu curso" ng-model="title"></input>
+      <input class="form-control input-lg" placeholder="Escreva o título do seu curso" ng-model="title"></input>
 
       <style>
 
@@ -37,8 +42,7 @@
       <div class="row" style="padding-top: 10px; padding-bottom: 10px;">
 
         <div class="col-xs-12">
-          <div style="font-size: 1.8em; font-weight: bold;">O curso é</div>
-          </br></br>
+          <h3>O curso é</h3>
         </div>
 
         <div class="col-xs-6 col-sm-6" style="text-align: center;">
@@ -62,12 +66,13 @@
 
       </div>
       <!-- -->
-      </br></br>
+
       <div class="row">
 
         <div class="col-xs-12" ng-show="free == false">
-          <div>
-            <div style="display: inline-block; font-size: 1.8em; font-weight: bold;"><b style="padding-right: 20px;">Preço do curso:</b></div><input class="academia-content-forum-post-create-title" style="max-width: 230px; display: inline-block; padding-left: 15px;" placeholder="0.00" ng-model="preco"></input>
+          <div class="text-center">
+            <h2 style="display: inline-block; padding-right: 20px;">Preço do curso:</h2>
+            <input class="academia-content-forum-post-create-title" style="max-width: 230px; display: inline-block; padding-left: 15px;" placeholder="0.00" ng-model="preco"></input>
           </div>
         </div>
 
@@ -77,11 +82,16 @@
 
         <div class="col-xs-12 col-sm-12">
 
-          <div style="font-size: 1.8em; font-weight: bold;">Descrição</div>
-          </br></br>
-          <trix-toolbar id="my_toolbar"></trix-toolbar>
-          <trix-editor style="margin-bottom: 15px;" angular-trix toolbar="my_toolbar" ng-model="description" trix-change="trixChange(e, editor);" trix-initialize="trixInitialize(e, editor);"></trix-editor>
+          <h3>Descrição</h3>
 
+          <div class="panel panel-default">
+            <div class="panel-heading"  style="background-color: #fff;">
+              <trix-toolbar id="my_toolbar"></trix-toolbar>
+            </div>
+            <div class="panel-body">
+              <trix-editor placeholder="Escreva aqui a descrição" angular-trix toolbar="my_toolbar" ng-model="description" trix-change="trixChange(e, editor);" trix-initialize="trixInitialize(e, editor);"></trix-editor>
+            </div>
+          </div>
         </div>
         <!-- end col-xs-12 -->
 
@@ -92,7 +102,7 @@
 
         <div class="col-xs-12 col-sm-12">
 
-          <button class="btn btn-bluebase" ng-click="criar()">Criar curso</button>
+          <button class="btn btn-green" ng-click="criar()">Criar curso</button>
 
         </div>
         <!-- -->
