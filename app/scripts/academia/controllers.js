@@ -736,7 +736,7 @@ angular.module('netbase')
     $scope.classroomViewMode = false;
 
     //var baseUrl = "http://localhost:9000"; //Back-end server base url
-    var baseUrl = "http://localhost:9001"; //Back-end server base url
+    //var baseUrl = "http://localhost:9001"; //Back-end server base url
     var baseUrl = "https://educationalcommunity-classroom.herokuapp.com";
 
     var arr = $window.location.href.split("/");
@@ -839,7 +839,7 @@ angular.module('netbase')
 
 
     $scope.joinClassroom = function(classroom) {
-        window.open(domain + "/a/" + universityUrl + "/" + classroom.roomSID + "/" + classroom.accountSid + "/" + classroom.uniqueName + "/");
+        window.open(domain + "/a/" + universityUrl + "/roomid/" + classroom.roomSID + "/" + classroom.accountSid + "/" + classroom.uniqueName + "/");
     }
 }])
 
