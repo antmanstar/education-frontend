@@ -358,7 +358,7 @@ body {
     margin-top: 100px !important;
 }
 
-.ngdialog-close {
+.classroom-modal .ngdialog-close {
     position: absolute !important;
     top: 0px !important;
     left: 440px !important;

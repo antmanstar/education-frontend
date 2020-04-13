@@ -875,6 +875,7 @@ angular.module('netbase')
   try {
     if ($scope.ngDialogData.redirectUrl != null) {
       redirectUrl = $scope.ngDialogData.redirectUrl;
+      console.log(redirectUrl + '1111111');
     }
   } catch(e) {
     redirectUrl = "/onboarding/signup";
@@ -929,6 +930,7 @@ angular.module('netbase')
           $rootScope.$applyAsync();
           ngDialog.close();
 
+          console.log(redirectUrl);
           if (redirectUrl.length > 0) {
             $location.path(redirectUrl)
           } else {
@@ -3153,8 +3155,10 @@ angular.module('netbase')
     let roomSID = $route.current.params.roomSID;
     let accountSid = $route.current.params.accountSid;
     let redirectUrl;
-    if(universityUrl != null && roomSID != null && accountSid != null)
+    if(universityUrl != null && roomSID != null && accountSid != null){
+      console.log($route.params.url);
       redirectUrl = $route.params.url;
+    }
     else
       redirectUrl = "/home/explore";
     $location.path(redirectUrl);

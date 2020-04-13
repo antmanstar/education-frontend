@@ -161,7 +161,8 @@ angular.module('netbase')
         let token = $localStorage.token;
 
         if (token == null || token == undefined) {
-            alert('You are an unlogged user. Please login first and use the copied url to join this room.');
+            let redirectUrl = '/a/university/' + universityUrl + '/roomid/' + roomSID + '/accountid/' + accountSid + '/roomname/' + roomName + '/';
+            ngDialog.open({ template: 'partials/modals/login.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default', data: { redirectUrl: redirectUrl } });
             return;
         }
 
