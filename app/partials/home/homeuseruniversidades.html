@@ -16,7 +16,7 @@
 
 .university-row .activity-count {
   position: absolute;
-  right: 15px;
+  right: 0px;
   top: 5px;
   padding: 4px;
   background-color: #ee5748;
@@ -54,52 +54,88 @@
 
 }
 
+@media screen and (max-width: 768px) {
+
+  #universitiesList {
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0 !important;
+  }
+
+  .university-row {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .university-row .activity-count {
+    right: 15px;
+  }
+
+}
 
 </style>
 
-<div class="container-fluid container-home animated fadeIn" style="padding-bottom: 30px;">
+<style>
+
+    .onboarding-knowledge {
+      padding-bottom: 20px;
+      border-bottom: 1px solid #cdcdcd;
+      margin-bottom: 10px;
+      text-align: center;
+      padding-top: 20px;
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+
+    .onboarding-knowledge p  {
+      font-size: 1.1em;
+      margin-bottom: 15px;
+    }
+
+    .onboarding-knowledge .picture {
+
+    }
+
+    .onboarding-knowledge .title {
+      font-size: 1.3em;
+      display: inline-block;
+      font-weight: bolder;
+      color: #2d4255;
+      margin-bottom: 15px;
+    }
+
+    .onboarding-knowledge .buttons {
+      text-align: center;
+    }
+
+
+</style>
+
+<div class="container-fluid container-full animated fadeIn" style="padding-bottom: 60px;">
 
   <div class="row">
 
-    <div class="col-xs-12" style="margin-bottom: 15px; padding-top: 10px;">
+    <div class="col-xs-12" ng-if="user.universitiesSubscribed.length == 0">
 
-      <div class="university-row">
+      <div class="onboarding-knowledge" ng-show="user.universitiesSubscribed.length == 0">
 
-        <div class="bg">
-          <img height="60px" width="60px" src="https://storage.googleapis.com/educationalcommunity-upload/images/1572071357/a39.jpg" />
+        <div class="picture"><img src="/img/vr/vr_animation.gif" height="120px;" /></div>
+        <div class="title">Novo! Inscreva-se nas Universidades</div>
+        <p><b>Siga educadores</b> Começe aprender em comunidade</p>
+        <p><b>Customize a timeline</b> Acesse o conteúdo que você tem interesse</p>
+        <p><b>Aprenda e ensine</b> Você pode participar de diversas maneiras</p>
+        <div class="buttons">
+          <a href="/onboarding/universities"><button class="btn btn-success" style="max-width: 180px;">Seguir Universidades</button></a>
         </div>
-
-        <div class="text">
-
-          <div class="title">Tiago Camilo</div>
-          <div class="activity" style="padding-top: 4px;"><div style="font-size: 1.12em; color: #757575; margin-bottom: 5px;"><i class="fas fa-retweet" style="padding-right: 5px;"></i> Rodrigo Lara shared a post</div></div>
-
-        </div>
-        <!-- end text -->
-
-        <div class="activity-count"><i class="fas fa-bell"></i> 5</div>
 
       </div>
-      <!-- end university-row -->
 
-      <div class="university-row">
+    </div>
+    <!-- -->
 
-        <div class="bg">
-          <img height="60px" width="60px" src='https://storage.googleapis.com/educationalcommunity-upload/images/1569439961/a11.png' />
-        </div>
+    <div class="col-xs-12" id="universitiesList" style="margin-bottom: 15px; padding-top: 10px;">
 
-        <div class="text">
-
-          <div class="title">Blockchain Academy</div>
-          <div class="activity" style="padding-top: 4px;"><div style="font-size: 1.12em; color: #757575; margin-bottom: 5px;"><i class="fas fa-retweet" style="padding-right: 5px;"></i> Rodrigo Lara shared a post</div></div>
-
-        </div>
-        <!-- end text -->
-
-        <div class="activity-count"><i class="fas fa-bell"></i> 5</div>
-
-      </div>
-      <!-- end university-row -->
+      <universityuserrow uid="{{u.universityId}}" ng-if="u.unsubscribed == false" ng-repeat="u in user.universitiesSubscribed"></universityuserrow>
 
     </div>
     <!-- end col-sm-8 -->
@@ -123,38 +159,4 @@
 </div>
 <!-- container-fluid container-full -->
 
-<div class="academia-footer" style="z-index: 9; background-color: #fff; box-shadow: 0px -2px 4px -1px rgba(0,0,0,0.15); -moz-box-shadow: 0px -2px 4px -1px rgba(0,0,0,0.15); -webkit-box-shadow: 0px -2px 4px -1px rgba(0,0,0,0.15);">
-
-  <ul style="width: 98%" style="color: #565656 !important;">
-
-    <li style="width: 20%; min-width: unset; padding-top: 4px; padding-left: 0; padding-right: 0;">
-      <a style="color: #565656 !important;" href="/home/timeline" ng-class="forumClass">
-        <i style="font-size: 1.7em; font-weight: bolder;" class="far fa-newspaper"></i>
-      </a>
-    </li><!--
-
-    --><li style="width: 20%; min-width: unset; padding-top: 4px; padding-left: 0; padding-right: 0;">
-      <a style="color: #565656 !important;" href="/home">
-        <i style="font-size: 1.7em;" class="fas fa-search"></i>
-      </a>
-    </li><!--
-
-    --><li ng-click="open()" style="width: 20%; min-width: unset; padding-left: 0; padding-right: 0;">
-      <img height="53px" src="/img/universidade_actionbutton.png" />
-    </li><!--
-
-    --><li style="width: 20%; min-width: unset; padding-left: 0; padding-right: 0;">
-      <a style="color: #565656 !important;" href="/a/{{university.url}}/forum/category/all" ng-class="forumClass">
-        <i style="font-size: 1.7em; color: #52bfea; " class="fas fa-university"></i>
-      </a>
-    </li><!--
-
-    --><li style="width: 20%; min-width: unset; padding-top: 4px; padding-left: 0; padding-right: 0;">
-      <a style="color: #565656 !important;" href="/perfil" ng-class="forumClass">
-        <i style="font-size: 1.7em;" class="fas fa-user-graduate"></i>
-      </a>
-    </li>
-
-  </ul>
-
-</div>
+<footermobile></footermobile>

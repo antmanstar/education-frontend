@@ -1,3 +1,4 @@
+
 html {
     --scrollbarBG: #CFD8DC;
     --thumbBG: #90A4AE;
@@ -761,6 +762,7 @@ video {
         opacity: 0.7;
         color: #b7b7b7;
     }
+
     .func-name {
         display: none !important;
     }
@@ -778,4 +780,5 @@ video {
         width: 35px;
         height: 35px;
     } 
+
 }

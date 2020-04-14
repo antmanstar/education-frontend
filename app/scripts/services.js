@@ -7,7 +7,7 @@ angular.module('netbase')
     //var baseUrl = "https://api.universida.de/search";
     //var baseUrl = "https://educationalcommunity-uni.herokuapp.com";
     // var baseUrl = "http://api.universida.de/university"
-    var baseUrl = "http://ec2-3-94-4-199.compute-1.amazonaws.com:8080";
+    var baseUrl = "https://educationalcommunity-timeline.herokuapp.com";
 
     return {
 
@@ -532,7 +532,7 @@ angular.module('netbase')
           return $http({
             method: 'POST',
             data: data,
-            url: "http://ec2-3-94-4-199.compute-1.amazonaws.com:8080" + url,
+            url: "https://educationalcommunity-timeline.herokuapp.com" + url,
             transformRequest: function(obj) {
                 var str = [];
                 for(var p in obj)

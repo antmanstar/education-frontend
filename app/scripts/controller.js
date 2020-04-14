@@ -103,8 +103,11 @@ angular.module('netbase')
     }
 
   }
-
   /* */
+
+
+  /* LEARNING TAB */
+  $scope.learningTabActive = 'paths';
 
 
 }])
@@ -878,7 +881,7 @@ angular.module('netbase')
       console.log(redirectUrl + '1111111');
     }
   } catch(e) {
-    redirectUrl = "/onboarding/signup";
+    redirectUrl = "/home/timeline";
   }
 
   // Messages
@@ -1018,8 +1021,10 @@ angular.module('netbase')
             ngDialog.close();
           }
 
+          // I must change path below to redirectURL
+
           if (redirectUrl.length > 0) {
-            $location.path(redirectUrl)
+            $location.path("/onboarding/signup")
           } else {
             $route.reload();
           }
@@ -1597,6 +1602,46 @@ angular.module('netbase')
 
 }])
 
+.directive('universityuserrow', ['University', 'Students', '$filter', '$sce', '$location', function(University, Students, $filter, $sce, $location) {
+  return {
+    restrict: 'E',
+    templateUrl:  '../../partials/directive/universityuserrow.html',
+    replace: true,
+    scope: true,
+    link: function(scope, element, attr) {
+
+      let universityId = attr.uid;
+
+      scope.openUniversity = function(url) {
+        console.log("open universityyyyy: ")
+        console.log(url)
+        $location.path('/a/' + url)
+      }
+
+      if ( University.isStoredLocal(universityId) ) {
+
+        let universityStorage = University.retrieveStorage(universityId);
+
+        scope.university = universityStorage[universityId];
+        console.log(scope.university)
+
+      } else {
+
+        University.getUniversityById(universityId).success(function(res) {
+
+          scope.university = res.data;
+
+          University.storeLocal(scope.university);
+
+        });
+
+      }
+
+    }
+  }
+
+}])
+
 .controller('HomeUniversidadesCtrl', ['$rootScope', '$scope', '$location', 'University', 'Knowledge' , function($rootScope, $scope, $location, University, Knowledge) {
 
   Knowledge.getAllPaginated().success(function(res) {
@@ -1973,7 +2018,18 @@ angular.module('netbase')
   /* header variables */
   let logged = $rootScope.logged;
 
+  $scope.searchBarDisplay = false;
+
   /* functions */
+
+  $scope.searchBarToggle = function() {
+    if ($scope.searchBarDisplay) {
+      $scope.searchBarDisplay = false;
+    } else {
+      $scope.searchBarDisplay = true;
+    }
+  }
+
   $scope.login = function() {
     console.log("login")
     $timeout.cancel($rootScope.accountSuggestion);
