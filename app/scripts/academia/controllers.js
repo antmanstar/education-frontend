@@ -279,7 +279,7 @@ angular.module('netbase')
                       }
                   }
                   titleDom[i].style.width = "49.9%";
-                  titleDom[i].style.height = "50%";
+                  titleDom[i].style.height = mainHeight / 2 + 'px';
                   titleDom[i].style.position = 'relative';
               }
           } 
@@ -292,8 +292,8 @@ angular.module('netbase')
                         titleDom[i].children[k].style.height = "100%";
                     }
                 }
-                titleDom[i].style.width = "33.333%";
-                titleDom[i].style.height = "33%";
+                titleDom[i].style.width = mainWidth / 3 + 'px';
+                titleDom[i].style.height = mainHeight / 3 + 'px';
                 titleDom[i].style.position = 'relative';
             }
           }
@@ -337,7 +337,7 @@ angular.module('netbase')
                       }
                   }
                   titleDom[i].style.width = "100%";
-                  titleDom[i].style.height = "50%";
+                  titleDom[i].style.height = mainHeight / 2 + 'px';
               }
           } 
           else if (videoDom.length > 2 && countOfNone != 1) {
@@ -349,8 +349,8 @@ angular.module('netbase')
                         titleDom[i].children[k].style.height = "100%";
                     }
                 }
-                titleDom[i].style.width = "50%";
-                titleDom[i].style.height = "50%";
+                titleDom[i].style.width = mainWidth / 2 + 'px';
+                titleDom[i].style.height = mainHeight / 2 + 'px';
             }
           }
         }
