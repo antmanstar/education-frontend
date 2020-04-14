@@ -148,7 +148,8 @@ angular.module('netbase')
     var video = Twilio.Video;
     var localVideo = Twilio.createLocalTracks;
 
-    var baseUrl = "https://educationalcommunity-classroom.herokuapp.com";
+    // var baseUrl = "https://educationalcommunity-classroom.herokuapp.com";
+    var baseUrl = 'http://c395e03d.ngrok.io';
     var arr = $window.location.href.split("/");
     var domain = arr[0] + "//" + arr[2];
 
@@ -787,8 +788,8 @@ angular.module('netbase')
     console.log(localVideo);
 
     //var baseUrl = "http://localhost:9000"; //Back-end server base url
-    var baseUrl = "http://localhost:9001"; //Back-end server base url
-    var baseUrl = "https://educationalcommunity-classroom.herokuapp.com";
+    var baseUrl = "http://c395e03d.ngrok.io"; //Back-end server base url
+    // var baseUrl = "https://educationalcommunity-classroom.herokuapp.com";
 
     var arr = $window.location.href.split("/");
     var domain = arr[0] + "//" + arr[2];
