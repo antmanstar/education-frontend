@@ -161,7 +161,8 @@ angular.module('netbase')
         let token = $localStorage.token;
 
         if (token == null || token == undefined) {
-            alert('You are an unlogged user. Please login first and use the copied url to join this room.');
+            let redirectUrl = '/a/university/' + universityUrl + '/roomid/' + roomSID + '/accountid/' + accountSid + '/roomname/' + roomName + '/';
+            ngDialog.open({ template: 'partials/modals/login.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default', data: { redirectUrl: redirectUrl } });
             return;
         }
 
@@ -226,119 +227,132 @@ angular.module('netbase')
                 }
             }
         }
-        if (!$scope.isMobile()) {
-            console.log('this is not mobile device');
-            mainWidth = parseInt(videoContainer.offsetWidth);
-            videoContainer.style.height = mainWidth / 4 * 3 + 'px';
-            mainHeight = mainWidth / 4 * 3;
-            //mainWidth -= 100;
-            //mainHeight -= 75;
-            let px = 'px';
-            if (titleDom.length == 1 || countOfNone == 1) {
-                titleDom[0].style.width = "100%";
-                titleDom[0].style.height = "100%";
-                //titleDom[0].style.left = '50px';
-                //titleDom[0].style.top = '37.5px';
+        if(!$scope.isMobile()) {
+          console.log('this is not mobile device');
+          mainWidth = parseInt(videoContainer.offsetWidth);
+          videoContainer.style.height = mainWidth / 4 * 3 + 'px';
+          mainHeight = mainWidth / 4 * 3;
+          //mainWidth -= 100;
+          //mainHeight -= 75;
+          let px = 'px';
+          if((videoDom.length == 2 || videoDom.length == 5 || videoDom.length == 6) && countOfNone != 1){
+            videoContainer.setAttribute('style', 'align-content: center !important')
+          }
+          else {
+            videoContainer.setAttribute('style', 'align-content: top');
+          }
+          if (titleDom.length == 1 || countOfNone == 1) {
+              titleDom[0].style.width = "99.9%";
+              titleDom[0].style.height = "99.9%";
+              titleDom[0].style.position = 'absolute';
+              //titleDom[0].style.left = '50px';
+              //titleDom[0].style.top = '37.5px';
+              let k;
+              for (k = 0; k < titleDom[0].childElementCount; k++) {
+                  if (titleDom[0].children[k].tagName == 'VIDEO') {
+  
+                      titleDom[0].children[k].style.width = "100%";
+                      titleDom[0].children[k].style.height = "100%";
+                  }
+              }
+  
+              showingTitle.style.width = "99.9%";
+              showingTitle.style.height = "99%";
+              showingTitle.style.position = 'absolute';
+              for (k = 0; k < showingTitle.childElementCount; k++) {
+                  if (showingTitle.children[k].tagName == 'VIDEO') {
+  
+                      showingTitle.children[k].style.width = "100%";
+                      showingTitle.children[k].style.height = "100%";
+                  }
+              }
+              //showingTitle.style.left = '50px';
+              //showingTitle.style.top = '37.5px';
+  
+          } else if (videoDom.length > 1 && videoDom.length < 5 && countOfNone != 1) {
+              for (i = 0; i < titleDom.length; i += 1) {
+                  let k;
+                  for (k = 0; k < titleDom[i].childElementCount; k++) {
+                      if (titleDom[i].children[k].tagName == 'VIDEO') {
+                          titleDom[i].children[k].style.width = "100%";
+                          titleDom[i].children[k].style.height = "100%";
+                      }
+                  }
+                  titleDom[i].style.width = "49.9%";
+                  titleDom[i].style.height = "50%";
+                  titleDom[i].style.position = 'relative';
+              }
+          } 
+          else if (videoDom.length > 4 && countOfNone != 1) {
+            for (i = 0; i < titleDom.length; i += 1) {
                 let k;
-                for (k = 0; k < titleDom[0].childElementCount; k++) {
-                    if (titleDom[0].children[k].tagName == 'VIDEO') {
-
-                        titleDom[0].children[k].style.width = "100%";
-                        titleDom[0].children[k].style.height = "100%";
+                for (k = 0; k < titleDom[i].childElementCount; k++) {
+                    if (titleDom[i].children[k].tagName == 'VIDEO') {
+                        titleDom[i].children[k].style.width = "100%";
+                        titleDom[i].children[k].style.height = "100%";
                     }
                 }
+                titleDom[i].style.width = "33.333%";
+                titleDom[i].style.height = "33%";
+                titleDom[i].style.position = 'relative';
+            }
+          }
+        }
+        else if ($scope.isMobile()) {
+          console.log("this is a mobile device");
+          videoContainer.style.height = parseInt(screen.height) - 102 + 'px';
+          if (titleDom.length == 1 || countOfNone == 1) {
+            titleDom[0].style.width = "100%";
+            titleDom[0].style.height = "100%";
+            //titleDom[0].style.left = '50px';
+            //titleDom[0].style.top = '37.5px';
+            let k;
+            for (k = 0; k < titleDom[0].childElementCount; k++) {
+                if (titleDom[0].children[k].tagName == 'VIDEO') {
 
-                showingTitle.style.width = "100%";
-                showingTitle.style.height = "100%";
-                for (k = 0; k < showingTitle.childElementCount; k++) {
-                    if (showingTitle.children[k].tagName == 'VIDEO') {
-
-                        showingTitle.children[k].style.width = "100%";
-                        showingTitle.children[k].style.height = "100%";
-                    }
-                }
-                //showingTitle.style.left = '50px';
-                //showingTitle.style.top = '37.5px';
-
-            } else if (videoDom.length > 1 && videoDom.length < 5 && countOfNone != 1) {
-                for (i = 0; i < titleDom.length; i += 1) {
-                    let k;
-                    for (k = 0; k < titleDom[i].childElementCount; k++) {
-                        if (titleDom[i].children[k].tagName == 'VIDEO') {
-                            titleDom[i].children[k].style.width = "100%";
-                            titleDom[i].children[k].style.height = "100%";
-                        }
-                    }
-                    titleDom[i].style.width = "50%";
-                    titleDom[i].style.height = "50%";
-                }
-            } else if (videoDom.length > 4 && countOfNone != 1) {
-                for (i = 0; i < titleDom.length; i += 1) {
-                    let k;
-                    for (k = 0; k < titleDom[i].childElementCount; k++) {
-                        if (titleDom[i].children[k].tagName == 'VIDEO') {
-                            titleDom[i].children[k].style.width = "100%";
-                            titleDom[i].children[k].style.height = "100%";
-                        }
-                    }
-                    titleDom[i].style.width = "33.333%";
-                    titleDom[i].style.height = "33.333%";
+                    titleDom[0].children[k].style.width = "100%";
+                    titleDom[0].children[k].style.height = "100%";
                 }
             }
-        } else if ($scope.isMobile()) {
-            console.log("this is a mobile device");
-            videoContainer.style.height = parseInt(screen.height) - 102 + 'px';
-            if (titleDom.length == 1 || countOfNone == 1) {
-                titleDom[0].style.width = "100%";
-                titleDom[0].style.height = "100%";
-                //titleDom[0].style.left = '50px';
-                //titleDom[0].style.top = '37.5px';
-                let k;
-                for (k = 0; k < titleDom[0].childElementCount; k++) {
-                    if (titleDom[0].children[k].tagName == 'VIDEO') {
 
-                        titleDom[0].children[k].style.width = "100%";
-                        titleDom[0].children[k].style.height = "100%";
-                    }
-                }
+            showingTitle.style.width = "100%";
+            showingTitle.style.height = "100%";
+            for (k = 0; k < showingTitle.childElementCount; k++) {
+                if (showingTitle.children[k].tagName == 'VIDEO') {
 
-                showingTitle.style.width = "100%";
-                showingTitle.style.height = "100%";
-                for (k = 0; k < showingTitle.childElementCount; k++) {
-                    if (showingTitle.children[k].tagName == 'VIDEO') {
-
-                        showingTitle.children[k].style.width = "100%";
-                        showingTitle.children[k].style.height = "100%";
-                    }
-                }
-                //showingTitle.style.left = '50px';
-                //showingTitle.style.top = '37.5px';
-
-            } else if (videoDom.length == 2 && countOfNone != 1) {
-                for (i = 0; i < titleDom.length; i += 1) {
-                    let k;
-                    for (k = 0; k < titleDom[i].childElementCount; k++) {
-                        if (titleDom[i].children[k].tagName == 'VIDEO') {
-                            titleDom[i].children[k].style.width = "100%";
-                            titleDom[i].children[k].style.height = "100%";
-                        }
-                    }
-                    titleDom[i].style.width = "100%";
-                    titleDom[i].style.height = "50%";
-                }
-            } else if (videoDom.length > 2 && countOfNone != 1) {
-                for (i = 0; i < titleDom.length; i += 1) {
-                    let k;
-                    for (k = 0; k < titleDom[i].childElementCount; k++) {
-                        if (titleDom[i].children[k].tagName == 'VIDEO') {
-                            titleDom[i].children[k].style.width = "100%";
-                            titleDom[i].children[k].style.height = "100%";
-                        }
-                    }
-                    titleDom[i].style.width = "50%";
-                    titleDom[i].style.height = "50%";
+                    showingTitle.children[k].style.width = "100%";
+                    showingTitle.children[k].style.height = "100%";
                 }
             }
+            //showingTitle.style.left = '50px';
+            //showingTitle.style.top = '37.5px';
+
+          } else if (videoDom.length ==2 && countOfNone != 1) {
+              for (i = 0; i < titleDom.length; i += 1) {
+                  let k;
+                  for (k = 0; k < titleDom[i].childElementCount; k++) {
+                      if (titleDom[i].children[k].tagName == 'VIDEO') {
+                          titleDom[i].children[k].style.width = "100%";
+                          titleDom[i].children[k].style.height = "100%";
+                      }
+                  }
+                  titleDom[i].style.width = "100%";
+                  titleDom[i].style.height = "50%";
+              }
+          } 
+          else if (videoDom.length > 2 && countOfNone != 1) {
+            for (i = 0; i < titleDom.length; i += 1) {
+                let k;
+                for (k = 0; k < titleDom[i].childElementCount; k++) {
+                    if (titleDom[i].children[k].tagName == 'VIDEO') {
+                        titleDom[i].children[k].style.width = "100%";
+                        titleDom[i].children[k].style.height = "100%";
+                    }
+                }
+                titleDom[i].style.width = "50%";
+                titleDom[i].style.height = "50%";
+            }
+          }
         }
     }
 
@@ -360,7 +374,7 @@ angular.module('netbase')
     $scope.isMobile = function() {
         var check = false;
         (function(a) { if (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino|android|ipad|playbook|silk/i.test(a) || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0, 4))) check = true; })(navigator.userAgent || navigator.vendor || window.opera);
-        if (screen.width < 500) check = true;
+        if(screen.width < 500) check = true;
         return check;
     }
 
@@ -452,7 +466,7 @@ angular.module('netbase')
                 }
                 if (res.data.data._id == $scope.administrator[0]._id) {
                     $scope.adminActive = 'admin-active';
-                } else {
+                } else {        
                     $scope.showingParticipants.push(res.data.data);
                 }
                 $scope.participants.push(res.data.data);
@@ -689,19 +703,27 @@ angular.module('netbase')
 
     $scope.toggleParticipantsBox = function() {
         $scope.participantsStatus = !$scope.participantsStatus;
-        if ($scope.participantsStatus) {
-            $scope.mobileToggleParticipantsList = 'drag-in-left-right';
-        } else {
-            $scope.mobileToggleParticipantsList = 'drag-out-right-left';
+        if($scope.participantsStatus){
+          $scope.mobileToggleParticipantsList = 'drag-in-left-right';
+          if($scope.isMobile() == true && $scope.chatStatus == true){
+            $scope.toggleChatBox();
+          }
+        }
+        else {
+          $scope.mobileToggleParticipantsList = 'drag-out-right-left';
         }
     }
 
     $scope.toggleChatBox = function() {
         $scope.chatStatus = !$scope.chatStatus;
-        if ($scope.chatStatus) {
-            $scope.chatboxContainer = "drag-in-right-left";
-        } else {
-            $scope.chatboxContainer = "drag-out-left-right";
+        if($scope.chatStatus){
+          $scope.chatboxContainer = "drag-in-right-left";
+          if($scope.isMobile() == true && $scope.participantsStatus == true){
+            $scope.toggleParticipantsBox();
+          }
+        }
+        else{
+          $scope.chatboxContainer = "drag-out-left-right";
         }
     }
 
@@ -747,24 +769,46 @@ angular.module('netbase')
         let accountSid = $route.current.params.accountSid;
         let roomName = $route.current.params.roomName;
         let text = domain + "/a/university/" + universityUrl + "/roomid/" + roomSID + "/accountid/" + accountSid + "/roomname/" + roomName + "/";
-        navigator.clipboard.writeText(text).then(function() {
-            $window.alert('Copied link to clipboard');
-        }, function(err) {
-            console.error('Could not copy link to the clipboard ', err);
-        });
+        /*
+        if (navigator.clipboard != undefined) {//Chrome
+            navigator.clipboard.writeText(text).then(function() {
+                ngDialog.open({ template: 'partials/modals/classroom_alert_modal.html', controller: "AcademiaClassroomsAlertCtrl", className: 'ngdialog-theme-default classroom-alert-modal', data: {type: "Universidade", msg: 'Copied link to clipboard'}});
+            }, function(err) {
+                ngDialog.open({ template: 'partials/modals/classroom_alert_modal.html', controller: "AcademiaClassroomsAlertCtrl", className: 'ngdialog-theme-default classroom-alert-modal', data: {type: "ERROR", msg: 'Could not copy link to the clipboard '}});
+            });
+        }
+        else if(window.clipboardData) { // Internet Explorer
+            window.clipboardData.setData("Text", text);
+        }
+        */
+    
+        Clipboard.copy(text);
+        ngDialog.open({ template: 'partials/modals/classroom_alert_modal.html', controller: "AcademiaClassroomsAlertCtrl", className: 'ngdialog-theme-default classroom-alert-modal', data: {type: "Universidade", msg: 'Copied link to clipboard'}});
     }
 
+    
+    
+
     $scope.toggleAllControllers = function() {
-        if ($scope.mobileVisibleToggle == 'mobile-invisible') {
-            $scope.mobileVisibleToggle = 'mobile-visible';
-        } else {
-            $scope.mobileVisibleToggle = 'mobile-invisible';
-        }
+      if($scope.mobileVisibleToggle == 'mobile-invisible'){
+        $scope.mobileVisibleToggle = 'mobile-visible';
+      }
+      else {
+        $scope.mobileVisibleToggle = 'mobile-invisible';
+      }
     }
 }])
 
-.controller('AcademiaClassroomsCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Classroom', 'Students', 'ngDialog', '$localStorage', '$window', function($rootScope, $scope, $location, $route, University, Classroom, Students, ngDialog, $localStorage, $window) {
+.controller('AcademiaClassroomsAlertCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Classroom', 'Students', 'ngDialog', 'jwtHelper', '$localStorage', '$window', function($rootScope, $scope, $location, $route, University, Classroom, Students, ngDialog, jwtHelper, $localStorage, $window) {
+    $scope.alertMsg = $scope.ngDialogData.msg;
+    $scope.alertType = $scope.ngDialogData.type;
+    $scope.confirm = function() {
+        ngDialog.close();
+    }
+}])
 
+.controller('AcademiaClassroomsCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Classroom', 'Students', 'ngDialog', 'jwtHelper', '$localStorage', '$window', function($rootScope, $scope, $location, $route, University, Classroom, Students, ngDialog, jwtHelper, $localStorage, $window) {
+    
     let universityUrl = $route.current.params.academiaName;
 
     $scope.administrator = [];
@@ -777,6 +821,7 @@ angular.module('netbase')
     $scope.localParticipantUserName = "";
     $scope.showingParticipants = [];
     $scope.shareScreenCaption = "Share Screen";
+    $scope.confirmDelete = false;
     //console.log($route);
     //console.log("$$$$$$$$$");
     //console.log(Twilio.Video);
@@ -785,6 +830,8 @@ angular.module('netbase')
     var localVideo = Twilio.createLocalTracks;
     console.log('here local video');
     console.log(localVideo);
+
+    $scope.classroomViewMode = false;
 
     //var baseUrl = "http://localhost:9000"; //Back-end server base url
     var baseUrl = "http://localhost:9001"; //Back-end server base url
@@ -806,8 +853,23 @@ angular.module('netbase')
         //$scope.isMobile();
     });
 
+    /****************** Mobile / Web **************************/
+
+    $scope.isMobile = function() {
+        var check = false;
+        (function(a) { if (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino|android|ipad|playbook|silk/i.test(a) || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0, 4))) check = true; })(navigator.userAgent || navigator.vendor || window.opera);
+        $scope.classroomViewMode = check;
+        return check;
+    }
+
+    // $scope.maxHeight = function() {
+    //     if ($scope.classroomViewMode == true)
+    //         return { "max-height": '500px' }
+    //     else return { 'max-height': '600px' }
+    // }
+
     $scope.maxHeight = {
-        "max-height": '600px'
+        "max-height": '500px'
     }
 
     /******************** GET ALL Classrooms ******************/
@@ -840,43 +902,127 @@ angular.module('netbase')
     }
 
     $scope.createNewClassroom = function() {
+
         ngDialog.open({ template: 'partials/modals/classroom_modal.html', className: 'ngdialog-theme-default classroom-modal' });
+        
     };
 
     $scope.confirmCreateClassroom = function() {
-
+        let studentId;
+        
         let token = $localStorage.token;
         let title = $scope.addingClassroom.uniqueName ? $scope.addingClassroom.uniqueName : '';
-        let url = '/classroom/university/' + $scope.university._id + '/room/' + title;
-        Classroom.createNewClassroom(baseUrl + url, title).then((data) => {
-                //$scope.getAllClassrooms();
-                let url = '/classroom/university/' + $scope.university._id + '/all'
-                Classroom.getAllClassroomsByUniversity(baseUrl + url).then((data) => {
-                    $scope.wholeClassroomList = data;
-                    console.log('Classroom.getAllClassrooms');
-                    console.log($scope.wholeClassroomList);
-                    $route.reload();
-                });
-                ngDialog.close();
-            })
-            .catch((err) => {
-                alert('Error');
+        //let url = '/classroom/university/' + $scope.university._id + '/room/' + title;
+        let url = '/classroom/university/';
+        
+        if ($localStorage.token != undefined && $localStorage.token != null) {
+            studentId = jwtHelper.decodeToken($localStorage.token)._id;
+        }
+        console.log("here studentId" + studentId);
+        console.log('here university');
+        console.log($scope.university);
+        var i;
+        var privilege = 0;
+        for (i = 0; i < $scope.university.members.length; i++) {
+            var member = $scope.university.members[i];
+            if (studentId != undefined && member.accountId == studentId) {
+                privilege = member.privilege; break;
+            }
+        }
+        Classroom.createNewClassroom(baseUrl + url, title, privilege, $scope.university._id).then((data) => {
+            //$scope.getAllClassrooms();
+            let url = '/classroom/university/' + $scope.university._id + '/all'
+            Classroom.getAllClassroomsByUniversity(baseUrl + url).then((data) => {
+                $scope.wholeClassroomList = data;
+                console.log('Classroom.getAllClassrooms');
+                console.log($scope.wholeClassroomList);
+                $route.reload();
             });
+            ngDialog.close();
+        })
+        .catch((err) => {
+
+            ngDialog.close();
+            ngDialog.open({ template: 'partials/modals/classroom_alert_modal.html', controller: "AcademiaClassroomsAlertCtrl", className: 'ngdialog-theme-default classroom-alert-modal', data: {type: "ERROR", msg: err}});
+
+        });
     }
 
     $scope.copyLink = function(classroom) {
         let text = domain + "/a/university/" + universityUrl + "/roomid/" + classroom.roomSID + "/accountid/" + classroom.accountSid + "/roomname/" + classroom.uniqueName + "/";
-        navigator.clipboard.writeText(text).then(function() {
-            $window.alert('Copied link to clipboard');
-        }, function(err) {
-            console.error('Could not copy link to the clipboard ', err);
-        });
+        /*if (navigator.clipboard != undefined) {//Chrome
+            navigator.clipboard.writeText(text).then(function() {
+                ngDialog.open({ template: 'partials/modals/classroom_alert_modal.html', controller: "AcademiaClassroomsAlertCtrl", className: 'ngdialog-theme-default classroom-alert-modal', data: {type: "Universidade", msg: 'Copied link to clipboard'}});
+            }, function(err) {
+                ngDialog.open({ template: 'partials/modals/classroom_alert_modal.html', controller: "AcademiaClassroomsAlertCtrl", className: 'ngdialog-theme-default classroom-alert-modal', data: {type: "ERROR", msg: 'Could not copy link to the clipboard '}});
+            });
+        }
+        else if(window.clipboardData) { // Internet Explorer
+            window.clipboardData.setData("Text", text);
+        }*/
+
+        Clipboard.copy(text);
+        ngDialog.open({ template: 'partials/modals/classroom_alert_modal.html', controller: "AcademiaClassroomsAlertCtrl", className: 'ngdialog-theme-default classroom-alert-modal', data: {type: "Universidade", msg: 'Copied link to clipboard'}});
     }
 
 
     $scope.joinClassroom = function(classroom) {
         //"/a/university/:academiaName/roomid/:roomSID/accountid/:accountSid/roomname/:roomName"
         window.open(domain + "/a/university/" + universityUrl + "/roomid/" + classroom.roomSID + "/accountid/" + classroom.accountSid + "/roomname/" + classroom.uniqueName + "/");
+    }
+
+    $scope.deleteClassroom = function(classroom) {
+        $rootScope.deleteRoom = classroom;
+        console.log('deleteroom');
+        console.log(classroom);
+        ngDialog.open({ template: 'partials/modals/classroom_confirm_delete_modal.html', controller: "AcademiaClassroomsCtrl", className: 'ngdialog-theme-default classroom-alert-modal'});
+    }
+
+    $scope.confirmDelete = function() {
+        let token = $localStorage.token;
+        
+        console.log('here university');
+        console.log($scope.university);
+        let url = '/classroom/end/';
+        var i;
+        var privilege = 0;
+        let studentId;
+        if ($localStorage.token != undefined && $localStorage.token != null) {
+            studentId = jwtHelper.decodeToken($localStorage.token)._id;
+        }
+        for (i = 0; i < $scope.university.members.length; i++) {
+            var member = $scope.university.members[i];
+            if (studentId != undefined && member.accountId == studentId) {
+                privilege = member.privilege; break;
+            }
+        }
+        privilege = 99;
+        console.log('delete classroom');
+        console.log($rootScope.deleteRoom);
+        var roomId = $rootScope.deleteRoom.roomSID;
+        Classroom.deleteClassroom(baseUrl + url, roomId, privilege).then((data) => {
+            //$scope.getAllClassrooms();
+            let url = '/classroom/university/' + $scope.university._id + '/all';
+            Classroom.getAllClassroomsByUniversity(baseUrl + url).then((data) => {
+                ngDialog.close();
+                $scope.wholeClassroomList = data;
+                console.log('Classroom.getAllClassrooms');
+                console.log($scope.wholeClassroomList);
+                $route.reload();
+            });
+        })
+        .catch((err) => {
+
+            ngDialog.close();
+            ngDialog.open({ template: 'partials/modals/classroom_alert_modal.html', controller: "AcademiaClassroomsAlertCtrl", className: 'ngdialog-theme-default classroom-alert-modal', data: {type: "ERROR", msg: err}});
+
+        });
+    }
+
+    $scope.cancelDelete = function() {
+        $scope.deleteRoom = null;
+
+        ngDialog.close();
     }
 }])
 
@@ -2967,3 +3113,4 @@ angular.module('netbase')
 })
 
 .filter('unsafe', function($sce) { return $sce.trustAsHtml; });
+

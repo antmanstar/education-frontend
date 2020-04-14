@@ -42,7 +42,7 @@
                             </div>
                             <div style="display: flex;">
                                 <div class="classroom-list-menu disp-mobile-none">
-                                    <div style="margin-top: 3px; width: 12px; height: 12px; border-radius: 50%; background-color:#4986bf; cursor: pointer;">
+                                    <div style="margin-top: 3px; width: 12px; height: 12px; border-radius: 50%; background-color:#00ff39; cursor: pointer;">
                                     </div>
                                     <div style="font-size: 12px; margin-top: 3px;">Active</div>
                                 </div>
@@ -53,6 +53,10 @@
                                 <div ng-click="copyLink(classroom)" class="classroom-list-menu">
                                     <img src="/img/icon/copylink.svg" style="width: 15px; height: 15px; cursor:pointer;" />
                                     <div style="font-size: 12px; margin-top: 2px;">Copy Link</div>
+                                </div>
+                                <div ng-click="deleteClassroom(classroom)" class="classroom-list-menu">
+                                    <i class="fas fa-trash-alt" style="font-size: 18px; color:#4986bf; cursor:pointer;"></i>
+                                    <div style="font-size: 12px;">Delete Class</div>
                                 </div>
                             </div>
                         </div>

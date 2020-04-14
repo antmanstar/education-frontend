@@ -158,6 +158,35 @@
     display: none !important;
 }
 
+.alert-confirm-ok-btn {
+    position: absolute;
+    left: 70px;
+    bottom: 10px;
+    width: 100px;
+    border-radius: 3px;
+    background: lime;
+    color: white;
+}
+
+.alert-confirm-cancel-btn {
+    position: absolute;
+    right: 70px;
+    bottom: 10px;
+    width: 100px;
+    border-radius: 3px;
+    background: #0a290a;
+    color: white;
+}
+
+.section-menu {
+    margin-left: 20px;
+}
+
+.academia-supportcol-info {
+    margin-left: 20px;
+}
+
+
 @media screen and (max-width: 468px) {
     .meeting-display-container {
         margin-top: 0px;
