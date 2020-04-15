@@ -1,0 +1,64 @@
+<!-- select content section start -->
+<div class="container-fluid">
+  <div class="row select-content-section">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <h3 class="text-center">Select Content Type</h3>
+
+      <div class="panel panel-default select-section">
+        <div class="panel-body text-center">
+          <a href="/cursos/suite/createPage/{{moduleId}}">
+            <i class="far fa-file-alt text-primary" aria-hidden="true">
+              <h4>Page</h4>
+            </i>
+          </a>
+          <a href="/cursos/suite/createQuiz/{{moduleId}}">
+            <i class="far fa-question-circle text-success" aria-hidden="true">
+              <h4>Quiz</h4>
+            </i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- select content section end -->
+
+<style>
+  .select-content-section {
+    margin-top: 100px;
+    padding-bottom: 60px;
+  }
+
+  .select-section {
+    padding-top: 60px;
+    padding-bottom: 60px;
+  }
+
+  .select-section i {
+    font-size: 50px;
+    padding: 60px;
+    cursor: pointer;
+  }
+
+  trix-editor {
+    min-height: 150px;
+    border: none;
+  }
+
+  .quiz-section {
+    border-bottom: 1px solid #eee;
+    padding: 10px;
+  }
+
+  .form-group {
+    padding: 20px;
+  }
+
+  .options {
+    margin-bottom: 10px;
+  }
+
+  .quiz-heading {
+    font-weight: bold;
+  }
+</style>

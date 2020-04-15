@@ -1619,7 +1619,7 @@ angular.module('netbase')
 
       //var baseUrl = "https://educationalcommunity-pay.herokuapp.com";
       var baseUrl = "https://educationalcommunity-courses.herokuapp.com/courses";
-      // var baseUrl="http://localhost:9000/courses"
+       var baseUrl="http://localhost:9000/courses"
       return {
 
         getAll: function(id) {
@@ -1629,7 +1629,10 @@ angular.module('netbase')
           return $http.get(baseUrl + url);
 
         },
-   
+        fileUploadUrl:function(){
+          let url = baseUrl+"/jwt";
+          return $http.post(url,{});
+        },
         getById: function(id) {
 
           let url = "/id/" + id;
@@ -1637,6 +1640,39 @@ angular.module('netbase')
           return $http.get(baseUrl + url);
 
         },
+        createQuiz: function(data) {
+
+          var url = '/module/content/create';
+
+          return $http({
+            method: 'POST',
+            url: baseUrl + url,
+            data : data,
+            transformRequest: function(obj) {
+              var str = [];
+              for(var p in obj)
+              str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+              return str.join("&");
+            },
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            }});
+        },
+
+        addQuizQuestions: function(contentId, data) {
+
+          var url = '/quiz/questions/' + contentId;
+
+          return $http({
+            method: 'POST',
+            url: baseUrl + url,
+            data : data,
+            headers: {
+                'Content-Type': 'application/json',
+            }});
+        },
+
+     
         getContentModulesByIdmultiple: function(post) {
 
           let url = "/module/content/all/id";
@@ -1654,6 +1690,25 @@ angular.module('netbase')
                 'Content-Type': 'application/x-www-form-urlencoded',
             }});
          },
+         createPage: function(data) {
+
+          var url = '/module/content/create' ;
+
+          return $http({
+            method: 'POST',
+            data: data,
+            url: baseUrl + url,
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            }});
+
+        },
         create: function(data) {
 
           var url = '/create' ;
@@ -1758,7 +1813,16 @@ angular.module('netbase')
             }});
 
         },
-
+        getMediaModulesByAccount: function() {
+          var url = '/my/';
+          return $http({
+            method: 'GET',
+            url: baseUrl + url,
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'x-access-token': $localStorage.token
+          }})
+        },
         getContentModulesByAccount: function() {
 
           var url = '/module/content/owner';

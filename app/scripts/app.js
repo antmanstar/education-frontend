@@ -5,6 +5,7 @@ angular.module('netbase', [
     'ngStorage',
     'ngRoute',
     'ngCookies',
+    'ui.tinymce',
     'pascalprecht.translate',
     'ngDialog',
     'angular-jwt',
@@ -116,10 +117,7 @@ angular.module('netbase', [
             templateUrl: 'partials/courses/estudar.html',
             controller: 'CoursesEstudarCtrl',
         })
-        .when('/cursos/id/watch/videos/:id/:videoid/:post_id', {
-            templateUrl: 'partials/courses/estudar/videos.html',
-            controller: 'CoursesEstudarTypeVideoCtrl',
-        })
+        
         .when('/cursos/id/view/document/:id/:videoid/:post_id', {
             templateUrl: 'partials/courses/estudar/document.html',
             controller: 'CoursesEstudarTypeDocumentCtrl',
@@ -151,6 +149,14 @@ angular.module('netbase', [
         .when('/cursos/suite/owner/view/:id', {
             templateUrl: 'partials/courses/suite/modulos-course.html',
             controller: 'CoursesModulossingleCtrl',
+        })
+        .when('/cursos/suite/createPage/:id', {
+          templateUrl: 'partials/courses/suite/createPage.html',
+          controller: 'CoursesCreatePageCtrl',
+        })
+        .when('/cursos/suite/createQuiz/:id', {
+          templateUrl: 'partials/courses/suite/createQuiz.html',
+          controller: 'CoursesCreateQuizCtrl',
         })
         .when('/cursos/suite/content', {
             templateUrl: 'partials/courses/suite/content.html',

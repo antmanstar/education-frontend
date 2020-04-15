@@ -1,100 +1,135 @@
 <div ng-include="'partials/headerhome.html'"></div>
 
 <div class="container-fluid ">
-  <div class="row" style="margin-top: 15px;">
-
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-
-      <div class="title" style="font-size: 3em; font-weight: bold;">Cursos</div>
-
-      <div ng-include="'/partials/courses/suite/navbar.html'"></div>
-
-    </div>
-  </div>
 
   <div class="container-fluid" style="margin-top: 15px; margin-bottom: 30px;">
     <div class="row">
-      <div class="col-md-8">
+      <div class="col-md-12">
 
-        <h3 class="quiz-heading">ADD QUIZ</h3>
+        <!-- show this section before creating the quiz -->
+        <div  ng-show="addQuestions == undefined">
+          <h3 class="quiz-heading text-center">ADD QUIZ</h3>
+          <br>
 
-        <div class="panel panel-default">
-          <div class="panel-body">
-            <form>
-              <input class="form-control input-lg" type="text" placeholder="Quiz Title"><br>
-
-              <textarea class="form-control" name="description" id="desc" cols="30" rows="6" placeholder="Description"
-                style="resize: none;"></textarea>
-
-              <br>
-
-              <ul class="list-inline">
-                <li class="pull-left">
-                  <button class="btn btn-small btn-green">SAVE</button>
-                </li>
-                <li class="pull-right">
-                  <button class="btn btn-small btn-bluebase">ADD QUESTION</button>
-                </li>
-              </ul>
-            </form>
+          <!-- create quiz section start -->
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <form name="createQuizForm" novalidate ng-submit="createQuizForm.$valid">
+                <input class="form-control input-lg" name="quizTitleName" type="text" placeholder="Enter Quiz Title" required ng-model="quizTitle"><br>
+                <span class="text-danger" ng-show="createQuizForm.quizTitleName.$error.required && createQuizForm.$submitted">Quiz title is required.</span>
+  
+                  <div class="panel panel-default">
+                    <div class="panel-heading"  style="background-color: #fff;">
+                      <trix-toolbar id="my_toolbar"></trix-toolbar>
+                    </div>
+                    <div class="panel-body">
+                      <trix-editor placeholder="Escreva aqui a descrição" angular-trix toolbar="my_toolbar"name="quizDescriptionName" aria-required="true" ng-model="quizDescription" trix-change="trixChange(e, editor);" trix-initialize="trixInitialize(e, editor);"></trix-editor>
+                      <span class="text-danger" ng-show="(quizDescription == undefined || quizDescription == '') && createQuizForm.$submitted">Quiz description is required.</span>
+                    </div>
+                  </div>
+    
+                <div class="text-center">
+                  <button type="submit" class="btn btn-small btn-green" ng-disabled="createQuizLoading" ng-click="createQuiz()">CREATE QUIZ <img style="width: 15px;" ng-show="createQuizLoading == true" src="img/misc/loading.gif"/></button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
-        <div class="panel panel-default">
+        <!-- create quiz section end -->
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+
+        <!-- show this section after creating the quiz -->
+        <div class="panel panel-default" ng-show="addQuestions == true">
+          <h3 class="quiz-heading text-capitalize text-center text-success">Add Questions to "{{quizTitle}}" Quiz</h3>
+
+          <div class="text-center" style="padding-top: 20px;">
+            <button ng-show="quesArr.length == 0" class="btn btn-small btn-bluebase" ng-click="addNewQues()">ADD QUESTION</button>
+          </div>
           <div class="panel-body">
-            <form class="form-horizontal">
-              <select class="form-control" style="width: 25%;">
-                <option selected>Select Option Type</option>
-                <option>Option 1</option>
-                <option>Option 2</option>
-              </select>
-              <br>
-              <input type="text" class="form-control input-lg" placeholder="Question">
+            <form name="quizForm" class="form-horizontal" novalidate ng-submit="quizForm.$valid">
+              <div ng-repeat="ques in quesArr track by $index">
+                <h3>Ques. {{$index+1}}</h3>
+                <ul class="list-inline">
+                  <li>Select Question Type:</li>
+                  <li>
+                    <select class="form-control" style="width: 100%;" required name="quesType{{$index}}" ng-model="ques.title_type" ng-change="selectType(ques.title_type, $index)">
+                      <option value="mcq">MCQ</option>
+                      <option value="descriptive">Descriptive</option>
+                    </select>
+                  </li>
+                </ul>
+                <!-- <span class="text-danger" ng-show="quizForm.quesType{{$index}}.$error.required && quizForm.$submitted">select one.</span> -->
+                <br>
+                <input type="text" ng-show="ques.title_type != ''" class="form-control input-lg" name="quesTitle{{$index}}" placeholder="enter question here" required ng-model="ques.title">
+                <span class="text-danger" ng-show="quizForm.quesTitle{{$index}}.$error.required && quizForm.$submitted">The ques is required.</span>
 
-              <div class="form-group">
-                <div class="col-sm-6 options">
-                  <input type="text" class="form-control" placeholder="option 1">
+                <!-- show options if type is mcq -->
+                <div class="form-group" ng-show="ques.title_type == 'mcq'">
+                  <div class="col-sm-6 options">
+                    <input type="text" class="form-control" name="op1{{$index}}" placeholder="option 1" required ng-model="ques.ques_options[0].title">
+                    <span class="text-danger" ng-show="quizForm.op1{{$index}}.$error.required && quizForm.$submitted">Option is required.</span>
+                  </div>
+                  <div class="col-sm-6 options">
+                    <input type="text" class="form-control" name="op2{{$index}}" placeholder="option 2" required ng-model="ques.ques_options[1].title">
+                    <span class="text-danger" ng-show="quizForm.op2{{$index}}.$error.required && quizForm.$submitted">Option is required.</span>
+                  </div>
+                  <div class="col-sm-6 options">
+                    <input type="text" class="form-control" name="op3{{$index}}" placeholder="option 3" required ng-model="ques.ques_options[2].title">
+                    <span class="text-danger" ng-show="quizForm.op3{{$index}}.$error.required && quizForm.$submitted">Option is required.</span>
+                  </div>
+                  <div class="col-sm-6 options">
+                    <input type="text" class="form-control" name="op4{{$index}}" placeholder="option 4" required ng-model="ques.ques_options[3].title">
+                    <span class="text-danger" ng-show="quizForm.op4{{$index}}.$error.required && quizForm.$submitted">Option is required.</span>
+                  </div>
                 </div>
-                <div class="col-sm-6 options">
-                  <input type="text" class="form-control" placeholder="option 2">
+
+                <br>
+
+                <!-- show radio options if ques type is mcq -->
+                <div class="row" ng-show="ques.title_type == 'mcq'">
+                  <div class="col-md-2">
+                    <h5>Select Answer:</h5>
+                  </div>
+
+                  <div class="col-md-2 radio">
+                    <label><input type="radio" name="optionsRadios{{$index}}" ng-required="!ques.answer" ng-model="ques.answer" value="1"> Option 1</label>
+                  </div>
+
+                  <div class="col-md-2 radio">
+                    <label><input type="radio" name="optionsRadios{{$index}}" ng-required="!ques.answer" ng-model="ques.answer" value="2"> Option 2</label>
+                  </div>
+
+                  <div class="col-md-2 radio">
+                    <label><input type="radio" name="optionsRadios{{$index}}" ng-required="!ques.answer" ng-model="ques.answer" value="3"> Option 3</label>
+                  </div>
+
+                  <div class="col-md-2 radio">
+                    <label><input type="radio" name="optionsRadios{{$index}}" ng-required="!ques.answer" ng-model="ques.answer" value="4"> Option 4</label>
+                  </div>
+                  <div class="col-md-12 text-center">
+                    <span class="text-danger" ng-show="quizForm.optionsRadios{{$index}}.$error.required && quizForm.$submitted">Please select correct answer.</span>
+                  </div>
                 </div>
-                <div class="col-sm-6 options">
-                  <input type="text" class="form-control" placeholder="option 3">
+
+                <!-- show if ques type is descriptive -->
+                <div ng-show="ques.title_type == 'descriptive'">
+                  <input class="form-control" type="text" name="descrAns{{$index}}" required ng-model="ques.answer" placeholder="enter correct answer">
+                  <span class="text-danger" ng-show="quizForm.descrAns{{$index}}.$error.required && quizForm.$submitted">Type an anwer please.</span>
                 </div>
-                <div class="col-sm-6 options">
-                  <input type="text" class="form-control" placeholder="option 4">
-                </div>
+                <br><br>
               </div>
 
-              <div class="row">
-                <div class="col-md-2">
-                  <h5>Select Answer:</h5>
-                </div>
-
-                <div class="col-md-2 radio">
-                  <label><input type="radio" name="optionsRadios"> Option 1</label>
-                </div>
-
-                <div class="col-md-2 radio">
-                  <label><input type="radio" name="optionsRadios"> Option 2</label>
-                </div>
-
-                <div class="col-md-2 radio">
-                  <label><input type="radio" name="optionsRadios"> Option 3</label>
-                </div>
-
-                <div class="col-md-2 radio">
-                  <label><input type="radio" name="optionsRadios"> Option 4</label>
-                </div>
-              </div>
-              <br><br>
-
-              <ul class="list-inline">
+              <ul class="list-inline" ng-show="quesArr.length > 0 && ques.title_type != ''">
                 <li class="pull-left">
-                  <button class="btn btn-small btn-green">SAVE</button>
+                  <button type="submit" class="btn btn-small btn-green" ng-disabled="addQuesLoading" ng-click="saveQuiz()">SAVE <img style="width: 15px;" ng-show="addQuesLoading == true" src="img/misc/loading.gif"/></button>
                 </li>
                 <li class="pull-right">
-                  <button class="btn btn-small btn-bluebase">PREVIOUS QUESTION</button>
-                  <button class="btn btn-small btn-bluebase">ADD NEW QUESTION</button>
+                  <button class="btn btn-small btn-bluebase" ng-click="addNewQues()">ADD NEW QUESTION</button>
+                  
                 </li>
               </ul>
             </form>
