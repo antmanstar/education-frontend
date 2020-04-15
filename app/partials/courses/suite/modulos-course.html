@@ -113,9 +113,9 @@
 
   <div class="row" style="margin-top: 15px;">
 
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom: 15px;">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
-      <div class="title" style="font-size: 3em; font-weight: bold;">Cursos</div>
+      <div class="title" style="font-size: 3em; font-weight: bold;">Modulos</div>
 
       <div ng-include="'/partials/courses/suite/navbar.html'"></div>
 
@@ -124,42 +124,67 @@
     </div>
     <!-- end col-xs-12 -->
 
-    <style>
-      #board1 {
-        min-height: 150px;
-        border: 1px solid #cdcdcd;
-      }
-    </style>
+    <div class="col-xs-12 col-sm-4" style="margin-top: 15px;" ng-repeat="module in modules.module">
 
-    <div class="col-xs-12 col-sm-12">
+      <a href="/cursos/suite/modulos/id/{{module.moduleId._id}}">
+      <div class="course-card" style="cursor: pointer;">
 
-      <div style="padding-top: 10px;">
-        <div style="font-size: 2em; display: inline-block;">Conteudo</div>
-        <!--<div style="float: right;"><button  class="btn btn-green" style="margin-top: 2px; height: 29px; width: unset;" ng-click="conteudocriar()">Criar conteúdo</button></div>-->
-      </div>
-      <!-- -->
+        <div class="title" style="line-height: 35px;">
 
-      <div>Todos | Vídeos | Artigos | Testes</div>
-    </div>
-    <!-- end col-xs-12 -->
-  </div>
-  <!-- end row -->
+          <div class="c100 p50 small center green" style="display: inline-block; font-size: 35px;">
+            <div class="slice"><div class="bar"></div><div class="fill"></div></div>
+          </div>
 
-  <div class="row" style="margin-top: 10px;">
-    <div class="col-md-6" ng-repeat="item in modulesByAccount"  style="cursor: pointer;">
-      <div style="border-bottom: 1px solid #cccc; padding: 20px;">
-        <div style="display: inline-block; padding-right: 5px;">
-
-          <img ng-if="item.contentType=='video'" width="30px" height="30px" src="https://visualpharm.com/assets/770/Video%20File-595b40b85ba036ed117dad88.svg" />
-          <img ng-if="item.contentType=='forumpost'" width="30px" height="30px" src="https://visualpharm.com/assets/197/Documents-595b40b65ba036ed117d2bf0.svg">
-          <img ng-if="item.contentType!='forumpost' && item.contentType!='video'" style="width:30px; height:30px;" src="https://visualpharm.com/assets/632/Test%20Passed-595b40b65ba036ed117d34c6.svg">
+          <div style="font-size: 1.4em; display: inline-block; vertical-align: top; padding-left: 10px; color: #2f4457; font-weight: bold;">{{module.moduleId.title}}</div>
 
         </div>
-        <div style="display: inline-block; line-height: 30px; vertical-align: top; font-size: 1.1em; color: #536473; font-weight: bold;">{{item.title}}</div>
-        <span class="pull-right"><i class="far fa-trash-alt text-danger" aria-hidden="true"></i></span>
+
+        <div class="topic">
+
+          <div class="line" style="font-size: 1em;">
+            <i class="fas fa-bullseye"></i>
+          </div>
+
+          <div class="text">
+            OBJETIVO</br>{{module.moduleId.goal}}
+          </div>
+
+        </div>
+
+        <div class="topic">
+
+          <div class="line" style="font-size: 1em;">
+            <i class="fas fa-clock"></i>
+          </div>
+
+          <div class="text">
+            DURAÇÃO</br>{{module.moduleId.duration}}
+          </div>
+
+        </div>
+
+       
+        <div class="topic">
+
+          <div class="line">
+            <i class="fas fa-circle"></i>
+          </div>
+
+          <div class="text">
+            <div class="title">Total Content</div>
+            <div class="subtitle">{{module.moduleId.content.length}}</div>
+          </div>
+
+        </div>
+        
+        
       </div>
+      <!-- end course-card -->
+      </a>
+
     </div>
-    <!-- end col-md-6 -->
+    <!-- -->
+
   </div>
   <!-- end row -->
 

@@ -1,0 +1,12 @@
+<div class="menu-content-option" ng-repeat="c in modulecontent">
+        <div ng-click="openContent(courseid,c.contentType,c._id,c.modelId)" class="pretty p-icon p-round p-smooth">
+          <input type="checkbox" />
+          <div class="state p-success">
+              <i class="icon mdi mdi-check"></i>
+              <label>{{count}}.{{$index}} {{c.title}}</label>
+          </div>
+        </div>
+        
+</div>
+
+    

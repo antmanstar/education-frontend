@@ -76,7 +76,7 @@
 
       <div style="height: 0px"></div>
 
-      <div class="section-cards" style="padding-bottom: unset; margin-top: 5px; padding-left: 15px;">
+      <div class="section-cards" style="padding-bottom: unset; margin-top: 5px; padding-left: 15px; padding-top: 4px;">
 
         <!-- 5db3e7e9225728001769dc5f -->
 
@@ -94,7 +94,7 @@
 
       </div>
 
-      <div class="animated flipInX delay-5s slower" style="height: 52px; background-color: #e8e8e8; padding-left: 15px; position: relative; margin-bottom: 5px;">
+      <div ng-if="!logged" class="animated flipInX delay-5s slower" style="height: 52px; background-color: #e8e8e8; padding-left: 15px; position: relative; margin-bottom: 5px;">
 
         <div style="position: absolute; right: 15px; top: 17px;"><i class="fas fa-chevron-right"></i></div>
         <div style="font-weight: bold; letter-spacing: -0.5px; color: #2d4255; font-size: 1.6em; line-height: 1.1em; padding-top: 6px;">Novo na Universidade?</div>
@@ -112,7 +112,7 @@
 
       <div style="height: 7px"></div>
 
-      <div class="section-cards" style="margin-left: 15px; padding-right: 15px; overflow-x: scroll; overflow-y: hidden; height: 70px; white-space: nowrap; ">
+      <div class="section-cards" style="padding-left: 15px; padding-right: 15px; overflow-x: scroll; overflow-y: hidden; height: 70px; white-space: nowrap; ">
 
         <style>
 
@@ -153,19 +153,24 @@
 
     </div>
 
+    <style>
+      .active-learningtab {
+        color: #ee5748 !important;
+      }
+    </style>
+
       <div style="padding-left: 15px; padding-right: 15px;">
         <div class="bar-sections standard animated delay-1s" style="width: 100%;">
-          <div class="bar-section">CURSOS</div>
-          <div class="bar-section">AULAS</div>
-          <div class="bar-section active" style="color: #ee5748;">TRILHAS</div>
+                    <div ng-click="learningTabActive = 'paths'" style="cursor: pointer;" ng-class="{'active-learningtab': learningTabActive == 'paths'}" class="bar-section">TRILHAS</div>
+          <div ng-click="learningTabActive = 'courses'" style="cursor: pointer;" ng-class="{'active-learningtab': learningTabActive == 'courses'}" class="bar-section">CURSOS</div>
         </div>
       </div>
 
-      <div class="section-cards" style="padding-left: 15px; padding-right: 15px; padding-top: 5px; padding-bottom: 5px;">
+      <div class="section-cards" ng-show="learningTabActive == 'paths'" style="padding-left: 15px; padding-right: 15px; padding-top: 5px; padding-bottom: 5px;">
 
         <div class="card card-article-large" style="padding: 10px; height: 170px; word-wrap: break-word; white-space: initial; border-radius: 5px; display: inline-block; box-shadow: 0px 0px 3px 0px rgba(158,158,158,0.4);">
           <img height="35px" width="35px" style="margin-bottom: 15px;" src="https://image.flaticon.com/icons/svg/1149/1149168.svg" />
-          <div style="font-size: 1em; font-weight: bold; color: #2d4255; width: 100%;">Introdução a programação</div>
+          <div style="font-size: 1em; font-weight: bold; color: #2d4255; width: 100%;">Introdução ao Python</div>
         </div>
         <!-- end card -->
 
@@ -186,7 +191,7 @@
 
       <div style="height: 15px"></div>
 
-      <div style="padding-left: 15px; padding-right: 15px;">
+      <div ng-show="learningTabActive == 'courses'" style="padding-left: 15px; padding-right: 15px;">
 
         <coursehomebox c="{{course._id}}" ng-repeat="course in courses"></coursehomebox>
 
@@ -196,11 +201,11 @@
   </div>
   <!-- end row -->
 
-  <div class="col-xs-12" style="margin-top: 30px; border-top: 1px solid #2d425524; padding-top: 35px; padding-bottom: 20px; line-height: 25px; font-size: 0.95em;">
+  <div class="col-xs-12 hide-mobile" style="margin-top: 30px; border-top: 1px solid #2d425524; padding-top: 35px; padding-bottom: 20px; line-height: 25px; font-size: 0.95em;">
 
     <div class="col-xs-4">
-      <div style="color: #2d4255; display: inline-block; padding-right: 10px;">© 2020 Universidade</div>
-      <div style="display: inline-block;"><a>Ajuda</a></div>
+      <div style="color: #2d4255; display: inline-block; padding-right: 10px;"><b>© 2020 Universidade</b></div>
+      <div style="display: inline-block;"><a><b>Ajuda</b></a></div>
     </div>
 
     <div class="col-xs-4" style="text-align: center;">
@@ -208,8 +213,8 @@
     </div>
 
     <div class="col-xs-4" style="text-align: right;">
-      <div style="display: inline-block; margin-right: 25px;"><a href="/ensinar">Para educadores</a></div>
-      <div style="display: inline-block; margin-right: 25px;"><a href="#">Para estudantes</a></div>
+      <div style="display: inline-block; margin-right: 25px;"><a href="/ensinar"><b>Para educadores</b></a></div>
+      <div style="display: inline-block; margin-right: 25px;"><a href="#"><b>Para estudantes</b></a></div>
     </div>
 
   </div>

@@ -103,18 +103,25 @@ angular.module('netbase')
     }
 
   }
-
   /* */
+
+
+  /* LEARNING TAB */
+  $scope.learningTabActive = 'paths';
 
 
 }])
 
-.controller('CoursesDashboardMenuCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'University', 'Playlist', 'Forum', 'User', '$window', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, University, Playlist, Forum, User, $window) {
+/* course module */
 
-  let id = $route.current.params.videoid;
+.controller('CoursesDashboardMenuCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'University', 'Playlist', 'Forum', 'User', '$window', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, University, Playlist, Forum, User, $window) {
+  
+  //let id = $route.current.params.videoid;
+  let id = $route.current.params.id; 
+  //if(!$attrs.model)  $scope.courseId=id; else $scope.courseId=$attrs
 
   $scope.courseId = id;
-
+  $rootScope.courseId = id;
   let url = $route.current;
   let originalPath = url.$$route.originalPath;
 
@@ -126,9 +133,179 @@ angular.module('netbase')
   }
 
 }])
+.controller('CoursesCreateContentCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 
+function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses) {
+  $scope.moduleId = $scope.ngDialogData.moduleId;
+  console.log('$scope', $scope.moduleId);
+  
+}])
+.controller('CoursesCreatePageCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses) {
 
-.controller('CoursesEstudarTypeVideoCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Videos', '$sce', 'User', 'Forum', 'Students', 'ngDialog', '$localStorage', 'jwtHelper', function($rootScope, $scope, $location, $route, University, Videos, $sce, User, Forum, Students, ngDialog, $localStorage, jwtHelper) {
+}])
 
+.controller('CoursesEstudarTypeDocumentCtrl', ['Courses','$rootScope', '$scope', '$location', '$route', 'University', 'Videos', '$sce', 'User', 'Forum', 'Students', 'ngDialog', '$localStorage', 'jwtHelper', function(Courses,$rootScope, $scope, $location, $route, University, Videos, $sce, User, Forum, Students, ngDialog, $localStorage, jwtHelper) {
+
+  let id = $route.current.params.id;
+   $scope.courseId=id;
+   $scope.access=false;
+   Courses.getById(id).success(function(msg){
+     console.log(msg)
+     $scope.course=msg.data;
+     if(msg.data.free==true) $scope.access=true;
+     let mem=msg.data.members;
+     if(mem.indexOf(User.getId())>=0)
+     $scope.access=true;
+     if($scope.access==false)
+       $location.path('/cursos/id/'+res.data._id);
+   },function error(response) {
+     $location.path('/home/cursos');
+   })
+  let videoId = $route.current.params.videoid;
+  let post_id = $route.current.params.post_id;
+  console.log("HELLLOOOOOOOO")
+
+  //let player = angular.element(element.find("video")[0]).get(0);
+
+  let viewers = {};
+
+  let logged = $rootScope.logged;
+  Courses.getContentModuleById(videoId).success(function(res) {
+      $scope.contentData=res.data;
+  
+  Forum.getForumPostById(post_id,$scope.contentData.universityId).success(function(res) {
+
+
+        let status = res.status;
+
+        if (status == 90010) {
+
+          //$location.path('/home');
+
+        } else {
+
+          $scope.video = res.data;
+
+          console.log($scope.video)
+
+          if ($scope.video != null && $scope.video != undefined) {
+
+            if ($scope.video.file.indexOf(".mp4") == -1 && $scope.video.file.indexOf(".wmv") == -1) {
+
+              const video = document.querySelector('video');
+
+              const player = new Plyr(video);
+
+              if (!Hls.isSupported()) {
+                video.src = $scope.video.file;
+              } else {
+                // For more Hls.js options, see https://github.com/dailymotion/hls.js
+                const hls = new Hls();
+                hls.loadSource($scope.video.file);
+                hls.attachMedia(video);
+              }
+
+            } else {
+
+              console.log("is mp4")
+              $("video").attr("src", $scope.video.file);
+
+            }
+
+            // Time Tracking
+
+            Students.getStudentById($scope.video.accountId).success(function(res) {
+
+              console.log("student: ")
+              console.log(res);
+              $scope.student = res.data;
+
+            });
+            /* */
+
+            viewers = $scope.video.viewers;
+
+            let timeWatched = 0;
+
+            if (logged) {
+
+              let accountId = User.getId();
+
+              if (viewers.length > 0) {
+
+                for (let idx = 0; idx < viewers.length; idx++) {
+
+                  if (viewers[idx].accountId == accountId) {
+                    timeWatched = viewers[idx].time;
+                  }
+
+                }
+
+              }
+              //END viewers
+
+            }
+            //END logged
+
+            // FIX
+
+            setInterval(function(){
+
+              let player = $("video").get(0);
+
+              if (player != undefined) {
+
+                let percentComplete = player.currentTime / player.duration;
+
+                if (timeWatched < player.currentTime) {
+
+                  timeWatched = player.currentTime;
+
+                  let payload = { timeWatched : timeWatched };
+
+                  Videos.progress(payload, videoId).success(function(res) {
+
+                    console.log("time viewed updated")
+                    console.log(res);
+
+                  });
+                  //END update progress
+
+                }
+                //END timeWatched < player.currentTime
+
+              }
+
+            }, 10000);
+            //END setInterval
+
+
+          }
+          //END if (video is null or undefined)
+
+        }
+        //END status 90010
+   });
+  });
+  //END Videos.getById
+
+}])
+.controller('CoursesEstudarTypeQuizCtrl', ['Courses','$rootScope', '$scope', '$location', '$route', 'University', 'Videos', '$sce', 'User', 'Forum', 'Students', 'ngDialog', '$localStorage', 'jwtHelper', function(Courses,$rootScope, $scope, $location, $route, University, Videos, $sce, User, Forum, Students, ngDialog, $localStorage, jwtHelper) {
+
+  let id = $route.current.params.id;
+   $scope.courseId=id;
+   $scope.access=false;
+   Courses.getById(id).success(function(msg){
+     console.log(msg)
+     $scope.course=msg.data;
+     if(msg.data.free==true) $scope.access=true;
+     let mem=msg.data.members;
+     if(mem.indexOf(User.getId())>=0)
+     $scope.access=true;
+     if($scope.access==false)
+       $location.path('/cursos/id/'+res.data._id);
+   },function error(response) {
+     $location.path('/home/cursos');
+   })
   let videoId = $route.current.params.videoid;
 
   console.log("HELLLOOOOOOOO")
@@ -163,12 +340,12 @@ angular.module('netbase')
               const player = new Plyr(video);
 
               if (!Hls.isSupported()) {
-            		video.src = $scope.video.file;
-            	} else {
-            		// For more Hls.js options, see https://github.com/dailymotion/hls.js
-            		const hls = new Hls();
-            		hls.loadSource($scope.video.file);
-            		hls.attachMedia(video);
+                video.src = $scope.video.file;
+              } else {
+                // For more Hls.js options, see https://github.com/dailymotion/hls.js
+                const hls = new Hls();
+                hls.loadSource($scope.video.file);
+                hls.attachMedia(video);
               }
 
             } else {
@@ -256,27 +433,118 @@ angular.module('netbase')
   //END Videos.getById
 
 }])
-
 .controller('CoursesEstudarTypeVideoIdCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'University', 'Playlist', 'Forum', 'User', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, University, Playlist, Forum, User) {
-
+   let id = $route.current.params.id;
+   $scope.courseId=id;
+   $scope.access=false;
+   Courses.getById(id).success(function(msg){
+     $scope.course=msg.data;
+     if(msg.data.free==true) $scope.access=true;
+     let mem=msg.data.members;
+     if(mem.indexOf(User.getId())>=0)
+     $scope.access=true;
+     if($scope.access==false)
+       $location.path('/cursos/id/'+res.data._id);
+   },function error(response) {
+     $location.path('/home/cursos');
+   })
 }])
 
 
 .controller('CoursesByIdDashboardModuloCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'University', 'Playlist', 'Forum', 'User', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, University, Playlist, Forum, User) {
-
+   let id = $route.current.params.id;
+   $scope.courseId=id;
+   $scope.access=false;
+   Courses.getById(id).success(function(msg){
+     $scope.course=msg.data;
+     if(msg.data.free==true) $scope.access=true;
+     let mem=msg.data.members;
+     if(mem.indexOf(User.getId())>=0)
+     $scope.access=true;
+     if($scope.access==false)
+       $location.path('/cursos/id/'+res.data._id);
+   },function error(response) {
+     $location.path('/home/cursos');
+   })
 }])
 
-.controller('CoursesEstudarCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'University', 'Playlist', 'Forum', 'User', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, University, Playlist, Forum, User) {
+.controller('CoursesEstudarCtrl', ['$cookies','User','$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'University', 'Playlist', 'Forum', 'User',function($cookies,User,$rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, University, Playlist, Forum, Users) {
+  let id = $route.current.params.id;
+  
+   $scope.courseId=id;
+   $scope.access=false;
 
-
-
+   let type=$cookies.get("type");
+   let cid=$cookies.get("content_id");
+   let post_id=$cookies.get("post_id");
+   var url="/cursos/id/";
+   
+   if(type=="videos")
+     url=url+"watch/videos/"
+   else if(type=="document")
+     url=url+"view/document/"
+   else
+     url=url+"test/quiz/"
+   $scope.url=url+$scope.courseId+"/"+cid+"/"+post_id
+   Courses.getById(id).success(function(msg){
+     $scope.course=msg.data;
+     if(msg.data.free==true) $scope.access=true;
+     let mem=msg.data.members;
+     if(mem.indexOf(User.getId())>=0)
+     $scope.access=true;
+     if($scope.access==false)
+     $location.path('/cursos/id/'+res.data._id);
+   
+   },function error(response) {
+     $location.path('/home/cursos');
+   })
 }])
 
-.controller('CoursesByIdDashboardCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'University', 'Playlist', 'Forum', 'User', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, University, Playlist, Forum, User) {
+.controller('CoursesByIdDashboardCtrl', ['$document','$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'University', 'Playlist', 'Forum', 'User', function($document,$rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, University, Playlist, Forum, User) {
+   let id = $route.current.params.id;
+   $scope.courseId=id;
+   $scope.access=false;
+   
+   $scope.timelines=[];
+   $scope.course={}
+   Courses.getById(id).success(function(msg){
+     if(msg.data.free==true) $scope.access=true;
+     let mem=msg.data.members;
+     if(mem.indexOf(User.getId())>=0)
+     $scope.access=true;
+     if($scope.access==false)
+       $location.path('/cursos/id/'+res.data._id);
+       $scope.course=msg.data;
+        $scope.get();
+   },function error(response) {
+     $location.path('/home/cursos');
+   })
+   $scope.get= function()
+   {
+     Courses.getTimeline($scope.courseId).success(function(res){
+          $scope.timelines=res.data;
+     }).error(function(msg){
 
+            alert("request alert")
+     })
+   }
+
+   $scope.save= function(dd)
+   {
+     //$scope.description=angular.element('#trix-input-1').val()
+     
+     Courses.insertTimeline($scope.courseId,{description:dd}).success(function(res){
+          $scope.timelines.unshift(res.data)
+          angular.element( 
+                   $document[0].querySelector('trix-editor')).find("div").html(''); 
+          
+     }).error(function(msg){
+        alert("request alert")
+     })
+   }
 }])
 
-.controller('CoursesContentCreateCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'University', 'Playlist', 'Forum', 'User', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, University, Playlist, Forum, User) {
+.controller('CoursesContentCreateCtrl', ['Videos','$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'University', 'Playlist', 'Forum', 'User', function(Videos,$rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, University, Playlist, Forum, User) {
 
   $scope.page = 'universitySelect';
 
@@ -284,183 +552,7 @@ angular.module('netbase')
 
   console.log($scope.ngDialogData);
 
-  University.getUniversitiesByOwnerId(User.getId()).success(function(res) {
 
-    console.log("universities")
-    console.log(res);
-
-    if (res.success) {
-
-      $scope.universities = res.data;
-
-    }
-
-  });
-
-  /* */
-
-  $scope.chooseUniversity = function(uId) {
-    universityId = uId;
-    $scope.choosePage('menu');
-  }
-
-  /* */
-
-  $scope.choosePage = function(name) {
-
-    $scope.page = name;
-
-    if ($scope.page == 'texto') {
-      console.log("textooooooo")
-      $scope.type = 'forumpost';
-      $scope.loadForumPosts();
-    }
-
-    if ($scope.page == 'playlists') {
-      console.log("playlists")
-      $scope.loadPlaylists();
-    }
-
-  }
-
-  /* */
-
-  $scope.save = function () {
-
-    let formdata = {
-      title : $scope.title,
-      description : $scope.description,
-      contentType: "",
-      modelId : "$scope.url",
-      universityId : universityId,
-    }
-
-    if ($scope.contentType == 'forumpost') {
-      formdata.contentType = 'forumpost';
-      formdata.modelId = $scope.forumPost._id
-    }
-
-    console.log("form data is:")
-    console.log(formdata);
-
-    Courses.createContentModule(formdata).success(function(res) {
-
-      if (res.success) {
-
-        console.log(res);
-        alert("success");
-
-      } else {
-
-      }
-
-    });
-    //END Courses
-
-  }
-  //END save()
-
-  /* */
-
-  /* FORUM POST */
-  $scope.loadForumPosts = function() {
-
-    University.getUniversityById(universityId).then(function(res) {
-
-      let success = res.data.success;
-      let university = res.data.data;
-
-      console.log("get university")
-      console.log(res)
-
-      if (success) {
-
-        $scope.university = university;
-
-        Forum.getCategoriesByUniversityId($scope.university._id).success(function(resCategory) {
-
-          console.log(resCategory)
-
-          if (resCategory.success) {
-
-            $scope.categories = resCategory.data;
-
-          }
-
-        });
-        //END Forum.getCategoriesByUniversityId
-
-      } else {
-
-        console.log("error while loading university")
-
-      }
-
-    });
-
-  }
-  //END loadForumPost()
-
-  $scope.loadForumPostCategory = function(categoryId) {
-
-    $scope.page = 'categoryforumposts';
-
-    Forum.getForumPostsByCategoryId($scope.university._id, categoryId, 1).success(function(resCategory) {
-
-      console.log(resCategory)
-
-      if (resCategory.success) {
-
-        $scope.categoryPosts = resCategory.data.docs;
-
-      }
-
-    });
-    //END Forum.getForumPostsByCategoryId()
-
-  }
-  //END loadForumPostCategory
-
-  $scope.loadForumPost = function(forumpostId) {
-
-    console.log("load forum post")
-
-    $scope.page = 'checkout';
-    $scope.contentType = 'forumpost';
-
-    console.log("forumpostId : " + forumpostId);
-
-    Forum.getForumPostById(forumpostId, $scope.university._id).success(function(resForumPost) {
-
-      console.log(resForumPost)
-
-      if (resForumPost.success) {
-
-        $scope.forumPost = resForumPost.data;
-
-      }
-
-    });
-    //END Forum.getForumPostsByCategoryId()
-
-  }
-  //END Forum.loadForumPost()
-
-  /* PLAYLISTS */
-
-  $scope.loadPlaylists = function() {
-
-    Playlist.getAllPlaylistByUniversityId(universityId).success(function(res) {
-
-      console.log(res);
-
-      $scope.playlists = res.data;
-
-    });
-
-  }
-
-  /* END PLAYLISTS */
 
 }])
 
@@ -477,7 +569,18 @@ angular.module('netbase')
   //ngDialog.open({ template: 'partials/courses/modals/contentcreate.html', controller: 'CoursesContentCreateCtrl', className: 'ngdialog-theme-default' });
 
   $scope.conteudocriar = function() {
-    ngDialog.open({ template: 'partials/courses/modals/contentcreate.html', controller: 'CoursesContentCreateCtrl', className: 'ngdialog-theme-default', data : { "universityId" : "fdasdfa" } });
+    
+    ngDialog.open({
+      template: 'partials/courses/modals/createContent.html',
+      controller: 'CoursesCreateContentCtrl',
+      className: 'ngdialog-theme-default',
+      data : { "universityId" : "fdasdfa" },
+      closeByNavigation: true,
+      width: '70%',
+      data: {
+        moduleId: moduleId
+      }
+    });
   }
 
   /* save order id */
@@ -503,7 +606,7 @@ angular.module('netbase')
 
       if (res.success) {
 
-        console.log("success while updating")
+        alert("success while updating")
 
         $scope.modules = res.data;
 
@@ -532,12 +635,12 @@ angular.module('netbase')
     containment: '#board2',
     orderChanged: function(event) {
 
-      console.log("order changed: ")
+      console.log("order changed 2 ")
       console.log(event)
 
     },
     itemMoved: function (event) {
-      console.log("item moved")
+      console.log("item moved 2")
       console.log(event)
     },
     allowDuplicates: true,
@@ -594,20 +697,44 @@ angular.module('netbase')
   //END Courses.getCoursesByAccount()
 
 }])
+.controller('CoursesModulossingleCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses) {
 
+  $scope.page = false;
+
+  $scope.activeSection = "modulos";
+
+  let id = $route.current.params.id;
+  Courses.getById(id).success(function(res) {
+
+    console.log(res)
+
+    if (res.success) {
+
+      $scope.modules = res.data;
+      //$location.path('/cursos/suite');
+
+    }
+
+  });
+  //END Courses.getCoursesByAccount()
+
+}])
 .controller('CoursesContentModulosCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses) {
 
   $scope.page = false;
 
   $scope.activeSection = "content";
-
-  Courses.getContentModulesByAccount().success(function(res) {
+  $scope.conteudocriar = function() {
+    ngDialog.open({ template: 'partials/courses/modals/contentcreate.html', controller: 'CoursesContentCreateCtrl', className: 'ngdialog-theme-default', data : { "universityId" : "fdasdfa" } });
+  }
+  Courses.getMediaModulesByAccount().success(function(res) {
 
     console.log(res)
 
     if (res.success) {
 
       $scope.modulesByAccount = res.data;
+      console.log(res.data)
       //$location.path('/cursos/suite');
 
     }
@@ -622,6 +749,10 @@ angular.module('netbase')
   $scope.page = false;
 
   $scope.activeSection = "owner";
+  $scope.moduleCreate = function(id) {
+    
+    ngDialog.open({ template: 'partials/courses/modals/modulecreate.html',data:{id:id}, controller: 'CoursesModulosCriarCtrl', className: 'ngdialog-theme-default' });
+  }
 
   Courses.getCoursesByAccount().success(function(res) {
 
@@ -639,21 +770,186 @@ angular.module('netbase')
 
 }])
 
-.controller('CoursesByIdCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses) {
+.controller('CoursesCreatePageCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses) {
+  $scope.activeSection = "createPage";
+  $scope.tinymceModel = 'Initial content';
+
+  
+
+  $scope.saveContent = function() {
+     
+     Courses.createPage({text:$scope.tinymceModel,contentType:'page',title:$scope.title,moduleId:$route.current.params.id}).
+     success(function(res){
+         $location.path("/cursos/suite/modulos/id/"+$route.current.params.id)
+     }).error(function(er){
+        alert(er)
+     })
+  };
+  
+  $scope.tinymceOptions = {
+  file_picker_types: 'file image media',
+  tinydrive_token_provider: function (success, failure) {
+     Courses.fileUploadUrl().success(function(msg){
+
+
+     success({ token: msg.token });
+     })
+     // failure('Could not create a jwt token')
+  },
+  tinydrive_google_drive_key:"carbisa-document-upload@carbisa.iam.gserviceaccount.com",
+  tinydrive_google_drive_client_id:'102507978919142111240',
+  plugins: 'print preview powerpaste casechange importcss tinydrive searchreplace autolink autosave save directionality advcode visualblocks visualchars fullscreen image link media mediaembed  codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists checklist wordcount tinymcespellchecker a11ychecker textpattern noneditable help formatpainter pageembed charmap mentions quickbars linkchecker emoticons advtable',
+  toolbar: 'insertfile|undo redo | bold italic | alignleft aligncenter alignright | code|styleselect|outdent indent|link image'
+  };
+}])
+
+.controller('CoursesCreateQuizCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses) {
+  $scope.activeSection = "createQuiz";
+  $scope.quesArr = [];
+  $scope.quesNumber = 0;
+  $scope.q = null;
+
+  let moduleId = $route.current.params.id;
+
+  console.log('moduleId', moduleId);
+
+  $scope.createQuiz = function() {
+    console.log('create quiz valid', $scope.createQuizForm.$valid);
+    console.log('description valid', ($scope.quizDescription != undefined && $scope.quizDescription != ''));
+
+
+    if(($scope.quizDescription != undefined && $scope.quizDescription != '') && $scope.createQuizForm.$valid) {
+      $scope.createQuizLoading = true;
+
+      let data = {
+        modleId: moduleId,
+        title: $scope.quizTitle,
+        contentType: 'quiz',
+        description: $scope.quizDescription
+      }
+      console.log('quiz data', data);
+
+      Courses.createQuiz(data).success(function(res){
+        console.log('create quiz res', res);
+        if(res.success) {
+          $scope.createQuizLoading = false;
+          $scope.addQuestions = true;
+          console.log('quiz id created', res.data._id);
+          $scope.contentId = res.data._id;
+        }
+
+      });
+    }
+  }
+
+  $scope.selectType = function(type, index) {
+    console.log('selectType', type, index);
+
+    if(type == 'mcq'){
+      console.log('mcq part');
+
+       $scope.q = {
+        title: '',
+        answer: '',
+        title_type: '',
+        ques_options: [
+          { title: '' },
+          { title: '' },
+          { title: '' },
+          { title: '' }
+      ],
+      }
+    } else if (type == 'descriptive') {
+      console.log('descriptive part');
+
+      // $scope.
+      $scope.quesArr[index].ques_options[0].title = 'not_available'
+      $scope.quesArr[index].ques_options[1].title = 'not_available'
+      $scope.quesArr[index].ques_options[2].title = 'not_available'
+      $scope.quesArr[index].ques_options[3].title = 'not_available'
+
+      $scope.q = {
+        title: '',
+        answer: '',
+        title_type: '',
+      }
+    }
+  }
+
+  // add new question one by one
+  $scope.addNewQues = function() {
+    console.log('add new question valid', $scope.quizForm.$valid);
+
+    // console.log('form valid', $scope.quizForm.$valid);
+    $scope.showSelection = "true"
+
+    if($scope.quizForm.$valid) {
+      console.log('add question');
+      $scope.quesNumber++;
+
+      let q = {
+        title: '',
+        answer: '',
+        title_type: 'mcq',
+        ques_options: [
+          { title: '' },
+          { title: '' },
+          { title: '' },
+          { title: '' }
+      ],
+      }
+
+      $scope.$evalAsync(function(){
+
+        $scope.quesArr.push(q);
+
+        console.log('array', $scope.quesArr);
+      })
+    }
+  }
+
+  $scope.saveQuiz = function() {
+    console.log('save valid', $scope.quizForm.$valid);
+
+    if($scope.quizForm.$valid) {
+      $scope.addQuesLoading = true;
+
+      console.log('final questions', $scope.quesArr);
+
+      let quesData = {
+        data: $scope.quesArr
+      }
+
+      Courses.addQuizQuestions($scope.contentId, quesData).success(function(res){
+        console.log('ques api res', res);
+
+        if(res.success) {
+          $scope.addQuesLoading = false;
+          $location.path('/cursos/suite/content');
+        }
+      });
+    }
+  }
+}])
+
+.controller('CoursesByIdCtrl', ['$sce','User','$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', function($sce,User,$rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses) {
 
   $scope.page = false;
 
   let id = $route.current.params.id;
 
   $scope.activeSection = "comprados";
-
+  $scope.useraccess=false
   Courses.getById(id).success(function(res) {
 
-    console.log(res)
+    console.log('course res', res)
 
     if (res.success) {
 
       $scope.course = res.data;
+      let mem=res.data.members;
+      if(mem.indexOf(User.getId())>=0)
+        $scope.useraccess=true;
       $sce.trustAsHtml($scope.course)
       //$location.path('/cursos/suite');
 
@@ -661,6 +957,21 @@ angular.module('netbase')
 
   });
   //END Courses.getCoursesByAccount()
+  
+  $scope.openPaymentDialog = function() {
+    let plan = { amount : $scope.course.price, currency : $scope.course.currency, name : $scope.course.title };
+
+    console.log('open dialog');
+      ngDialog.open({
+        template: 'partials/courses/modals/payments.html',
+        controller: 'CoursesPaymentsCtrl',
+        className: 'ngdialog-theme-default',
+        closeByDocument: false,
+        closeByEscape: false,
+        closeByNavigation: true,
+        data : { plan : plan, course: $scope.course, accountId: $scope.course.accountId }
+      });
+  }
 
 }])
 
@@ -687,7 +998,7 @@ angular.module('netbase')
 }])
 
 .controller('CoursesModulosCriarCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses) {
-
+ 
   $scope.page = false;
 
   $scope.activeSection = "modulos";
@@ -702,7 +1013,8 @@ angular.module('netbase')
       title : $scope.title,
       duration : $scope.duration,
       description : $scope.description,
-      goal : $scope.goal
+      goal : $scope.goal,
+      course_id:$scope.ngDialogData.id
     };
 
     console.log(formdata);
@@ -714,6 +1026,7 @@ angular.module('netbase')
       if (res.success) {
 
         ngDialog.close();
+        $location.path('/cursos/suite/modulos');
 
       }
 
@@ -725,10 +1038,14 @@ angular.module('netbase')
 
 }])
 
-.controller('CoursesCriarCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses) {
-
+.controller('CoursesCriarCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'Knowledge', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, Knowledge) {
+  $scope.universityId = $scope.ngDialogData.universityId;
   $scope.page = false;
-
+  Knowledge.getAllPaginated().success(function(res){
+    if(res.success){
+      $scope.knowledge = res.data.docs;
+    }
+  }); 
   $scope.criar = function() {
 
     /* */
@@ -738,7 +1055,10 @@ angular.module('netbase')
     let formdata = {
       title : $scope.title,
       description : $scope.description,
-      currency : $scope.currency
+      currency : $scope.currency,
+      // currency : $scope.currency,
+      knowledgeId: $scope.selectedKnowledge,
+      university: $scope.universityId
     };
 
     if ($scope.free == undefined) {
@@ -750,8 +1070,8 @@ angular.module('netbase')
 
     if ($scope.free == false) {
 
-      if ($scope.price.length > 0) {
-        formdata.price = $scope.price;
+      if ($scope.preco.length > 0) {
+        formdata.price = $scope.preco;
       } else {
         console.log("price zero")
       }
@@ -766,7 +1086,8 @@ angular.module('netbase')
 
       if (res.success) {
 
-        $location.path('/cursos/suite');
+        ngDialog.close();
+       $location.path('/cursos/suite/owner')
 
       }
 
@@ -789,16 +1110,13 @@ angular.module('netbase')
 
   console.log("hello courses nav")
 
-  $scope.coursesCreate = function() {
-    ngDialog.open({ template: 'partials/courses/modals/coursecreate.html', controller: 'CoursesCriarCtrl', className: 'ngdialog-theme-default' });
+  $scope.coursesCreate = function(universityId) {
+
+    ngDialog.open({ template: 'partials/courses/modals/coursecreate.html', controller: 'CoursesCriarCtrl', className: 'ngdialog-theme-default',data: { universityId: universityId}, closeByNavigation: true });
   }
 
-  $scope.moduleCreate = function() {
-    ngDialog.open({ template: 'partials/courses/modals/modulecreate.html', controller: 'CoursesModulosCriarCtrl', className: 'ngdialog-theme-default' });
-  }
-
+  
 }])
-
 /* */
 
 .controller('StudentProExploreCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Payments', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Payments) {
@@ -877,7 +1195,7 @@ angular.module('netbase')
       redirectUrl = $scope.ngDialogData.redirectUrl;
     }
   } catch(e) {
-    redirectUrl = "/onboarding/signup";
+    redirectUrl = "/home/timeline";
   }
 
   // Messages
@@ -1016,8 +1334,10 @@ angular.module('netbase')
             ngDialog.close();
           }
 
+          // I must change path below to redirectURL
+
           if (redirectUrl.length > 0) {
-            $location.path(redirectUrl)
+            $location.path("/onboarding/signup")
           } else {
             $route.reload();
           }
@@ -1174,16 +1494,27 @@ angular.module('netbase')
 
 /* home courses */
 
-.controller('HomeCoursesCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', '$timeout', 'Courses', '$filter', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, $timeout, Courses, $filter) {
+.controller('HomeCoursesCtrl', ['Knowledge','User','University','$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', '$timeout', 'Courses', '$filter', function(Knowledge,User,University,$rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, $timeout, Courses, $filter) {
+  $scope.universities=0;
+  University.getUniversitiesByAdminMembers().success(function(res) {
+   if (res.success) {
 
-  Courses.getAll().success(function(res) {
+      $scope.universities = res.data.length;
+      
+    }
+
+  });
+Courses.getAll().success(function(res) {
 
     console.log("response courses: ")
     console.log(res);
     $scope.courses = res.data;
 
   });
-
+   Knowledge.getAllPaginated().success(function(res){
+    console.log('knowledge res', res);
+    $scope.knowledge = res.data.docs;
+  });
   $scope.textFilter = function(text) {
 
     return $filter('limitHtml')(text, 350, '...')
@@ -1595,6 +1926,46 @@ angular.module('netbase')
 
 }])
 
+.directive('universityuserrow', ['University', 'Students', '$filter', '$sce', '$location', function(University, Students, $filter, $sce, $location) {
+  return {
+    restrict: 'E',
+    templateUrl:  '../../partials/directive/universityuserrow.html',
+    replace: true,
+    scope: true,
+    link: function(scope, element, attr) {
+
+      let universityId = attr.uid;
+
+      scope.openUniversity = function(url) {
+        console.log("open universityyyyy: ")
+        console.log(url)
+        $location.path('/a/' + url)
+      }
+
+      if ( University.isStoredLocal(universityId) ) {
+
+        let universityStorage = University.retrieveStorage(universityId);
+
+        scope.university = universityStorage[universityId];
+        console.log(scope.university)
+
+      } else {
+
+        University.getUniversityById(universityId).success(function(res) {
+
+          scope.university = res.data;
+
+          University.storeLocal(scope.university);
+
+        });
+
+      }
+
+    }
+  }
+
+}])
+
 .controller('HomeUniversidadesCtrl', ['$rootScope', '$scope', '$location', 'University', 'Knowledge' , function($rootScope, $scope, $location, University, Knowledge) {
 
   Knowledge.getAllPaginated().success(function(res) {
@@ -1971,7 +2342,18 @@ angular.module('netbase')
   /* header variables */
   let logged = $rootScope.logged;
 
+  $scope.searchBarDisplay = false;
+
   /* functions */
+
+  $scope.searchBarToggle = function() {
+    if ($scope.searchBarDisplay) {
+      $scope.searchBarDisplay = false;
+    } else {
+      $scope.searchBarDisplay = true;
+    }
+  }
+
   $scope.login = function() {
     console.log("login")
     $timeout.cancel($rootScope.accountSuggestion);
@@ -3444,7 +3826,8 @@ angular.module('netbase')
     link: function(scope, element, attr) {
 
       let modulecontent = JSON.parse(attr.mc);
-
+      console.log(modulecontent)
+     if(modulecontent.modelId)
       Courses.getContentModuleById(modulecontent.modelId).then(function(res) {
 
         console.log(res);
@@ -3452,13 +3835,110 @@ angular.module('netbase')
         scope.modulecontent = res.data.data;
 
       });
+    else
+       scope.modulecontent=modulecontent
 
     }
     //END Courses.getModuleById()
 
   }
 }])
+.directive('coursemodulecontent', ['Courses', function(Courses) {
+  return {
+    restrict: 'AE',
+    templateUrl: '../partials/directive/coursemodulecontent.html',
+    
+    link: function(scope, element, attr) {
+      scope.courseid=attr.courseid
+      let modulecontent = JSON.parse(attr.mc);
+     
+      let id=[];
+      for(let i=0;i<modulecontent.length;i++)
+      {
+        //id[]=modulecontent[i]['modelId'];
+        id.push(modulecontent[i]['modelId'])
+      }
+     
+      Courses.getContentModulesByIdmultiple(id).then(function(res) {
+          scope.modulecontent =res.data.data;
+       
+      });
 
+    }
+    //END Courses.getModuleById()
+
+  }
+}])
+.directive('coursemodulecontentmoduloview', ['$window','$cookies','Courses','$location', function($window,$cookies,Courses,$location) {
+  return {
+    restrict: 'AE',
+    templateUrl: '../partials/directive/coursemodulecontentmoduloview.html',
+   
+    link: function(scope, element, attr) {
+      scope.courseid=attr.courseid
+      scope.count=attr.in
+      let modulecontent = JSON.parse(attr.mc);
+     
+      let id=[];
+      for(let i=0;i<modulecontent.length;i++)
+      {
+        //id[]=modulecontent[i]['modelId'];
+        id.push(modulecontent[i]['modelId'])
+      }
+     
+      Courses.getContentModulesByIdmultiple(id).then(function(res) {
+          scope.modulecontent =res.data.data;
+       
+      });
+      scope.openContent=function(course,type,type_id,post_id)
+      {
+        
+        var t='quiz';
+        if(type=="video") t="videos";
+        if(type=="forumpost") t="document"
+        $cookies.put("content_id",type_id)
+        $cookies.put("type",type)
+        $cookies.put("post_id",post_id)
+        $window.location.href="/cursos/id/"+course+"/estudar";
+       
+      }
+    }
+    //END Courses.getModuleById()
+
+  }
+}])
+.directive('coursemodulecontentmodulo', ['$window','Courses','$cookies','$location', function($window,Courses,$cookies,$location) {
+  return {
+    restrict: 'AE',
+    templateUrl: '../partials/directive/coursemodulecontentmodulo.html',
+    
+    link: function(scope, element, attr) {
+
+      let modulecontent = JSON.parse(attr.mc);
+      scope.courseid=attr.courseid
+      let id=[];
+      for(let i=0;i<modulecontent.length;i++)
+      {
+        //id[]=modulecontent[i]['modelId'];
+        id.push(modulecontent[i]['modelId'])
+      }
+      Courses.getContentModulesByIdmultiple(id).then(function(res) {
+          scope.modulecontent =res.data.data;
+       
+      });
+       scope.openContent=function(course,type,type_id,post_id)
+      {
+        $cookies.put("content_id",type_id)
+        $cookies.put("type",type)
+        $cookies.put("post_id",post_id)
+        $window.open('/cursos/id/' + course + '/estudar', "_blank", "width=1500,height=700,left=100,top=150");
+ 
+      }
+    }
+    //END Courses.getModuleById()
+
+  }
+}])
 .directive('autoFocus', function($timeout) {
     return {
         restrict: 'AC',

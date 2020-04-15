@@ -788,8 +788,8 @@ angular.module('netbase')
     console.log(localVideo);
 
     //var baseUrl = "http://localhost:9000"; //Back-end server base url
-    var baseUrl = "http://c395e03d.ngrok.io"; //Back-end server base url
-    // var baseUrl = "https://educationalcommunity-classroom.herokuapp.com";
+    //var baseUrl = "http://localhost:9001"; //Back-end server base url
+    var baseUrl = "https://educationalcommunity-classroom.herokuapp.com";
 
     var arr = $window.location.href.split("/");
     var domain = arr[0] + "//" + arr[2];
@@ -876,8 +876,9 @@ angular.module('netbase')
 
 
     $scope.joinClassroom = function(classroom) {
-        //"/a/university/:academiaName/roomid/:roomSID/accountid/:accountSid/roomname/:roomName"
-        window.open(domain + "/a/university/" + universityUrl + "/roomid/" + classroom.roomSID + "/accountid/" + classroom.accountSid + "/roomname/" + classroom.uniqueName + "/");
+
+       window.open(domain + "/a/" + universityUrl + "/roomid/" + classroom.roomSID + "/" + classroom.accountSid + "/" + classroom.uniqueName + "/");
+
     }
 }])
 
@@ -2174,17 +2175,16 @@ angular.module('netbase')
 
                 attr.$observe('university', function(value) {
 
-                    /* socket io */
+                  /* REAL TIME MODULE */
+
+                    /*
                     var socket = io("https://educationalcommunity-realtime.herokuapp.com");
 
-                    // userId
                     let student = { _id: studentId };
 
                     if (value) {
 
                         university = JSON.parse(value);
-
-                        /* chat services */
 
                         console.log("university get channels 1")
 
@@ -2221,9 +2221,9 @@ angular.module('netbase')
                             }
 
                         });
+                        */
 
-                        /* real time connect */
-
+                        /*
                         socket.on('connect', function(data) {
 
                             console.log(data)
@@ -2250,24 +2250,26 @@ angular.module('netbase')
                         });
                         //END socket.on('connect')
 
-                        /* check if student is a premium member */
-                        for (let idx = 0; idx < university.members.length; idx++) {
+                      */
 
-                            var member = university.members[idx];
+                      /* check if student is a premium member */
+                      for (let idx = 0; idx < university.members.length; idx++) {
 
-                            if (studentId != undefined && member.accountId == studentId && member.privilege >= 10) {
-                                scope.studentIsPremium = true;
-                            }
+                          var member = university.members[idx];
 
-                            if (studentId != undefined && member.accountId == studentId && member.privilege >= 50) {
-                                scope.studentIsTeam = true;
-                            }
+                          if (studentId != undefined && member.accountId == studentId && member.privilege >= 10) {
+                              scope.studentIsPremium = true;
+                          }
 
-                            if (studentId != undefined && member.accountId == studentId && member.privilege == 99) {
+                          if (studentId != undefined && member.accountId == studentId && member.privilege >= 50) {
+                              scope.studentIsTeam = true;
+                          }
+
+                          if (studentId != undefined && member.accountId == studentId && member.privilege == 99) {
                                 scope.studentIsAdmin = true;
-                            }
+                          }
 
-                        }
+                      }
 
                         function userMembersLocation(array) {
 
@@ -2296,8 +2298,6 @@ angular.module('netbase')
                             }
 
                         };
-
-                    }
 
                 });
                 //END attr.$observe('university')

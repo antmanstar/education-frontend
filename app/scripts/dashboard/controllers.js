@@ -2,6 +2,47 @@
 
 angular.module('netbase')
 
+.controller('WalletCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Payments', '$localStorage', 'jwtHelper', 'Students', 'ngDialog', '$window', function($rootScope, $scope, $location, $route, University, Payments, $localStorage, jwtHelper, Students, ngDialog, $window) {
+
+  let studentId;
+
+  if ($localStorage.token != undefined && $localStorage.token != null) {
+    studentId = jwtHelper.decodeToken($localStorage.token)._id;
+  }
+
+  Students.getCards().success(function(res) {
+
+    let data = res.data;
+    let success = res.success;
+
+    console.log(data)
+
+    if (success) {
+
+      $scope.cards = data.sources.data;
+
+    }
+
+  });
+  //END Students.getCards()
+
+  $scope.lastpageReturn = function() {
+    $window.history.back();
+  }
+
+  $scope.addCard = function () {
+    ngDialog.open({ template: 'partials/modals/payments.html', controller: 'PaymentsCtrl', className: 'ngdialog-theme-default', data : { flow : "addCard", page : "cardAdd" } });
+  }
+
+  Payments.getAllOrders(studentId).success(function(res) {
+
+    $scope.orders = res.data;
+
+  });
+  //END Payments.getAllOrders()
+
+}])
+
 .controller('DashboardOrdersCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Payments', '$localStorage', 'jwtHelper' , function($rootScope, $scope, $location, $route, University, Payments, $localStorage, jwtHelper) {
 
   let studentId;
