@@ -1,0 +1,51 @@
+<div class="container-fluid modal-accounts">
+
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="headline-sub-one">Confirmar pedido</div>
+      <div style="padding-top: 15px;">
+
+        <div>
+          <label style="padding-bottom: 15px;">Seu pedido</label>
+        </div>
+
+        <div>
+          Assinatura {{plan.name}}
+          <div style="float: right;">
+            <div style="display: inline-block;" ng-if="plan.currency == 'brl'">R$</div> <div style="display: inline-block" ng-if="plan.currency == 'usd'">$</div> <div style="display: inline-block">{{planAmount(plan.amount)}}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form">
+        <div class="form-group">
+          <div class="row">  
+            <div class="col-xs-12">
+              <!-- <div class="headline-sub-one" style="margin-bottom: 30px;">Adicionar cartão</div> -->
+              <div class="alert bg-primary-red" ng-show="validationError != undefined">{{validationError}}</div>
+              <div class="alert bg-primary-red" ng-show="errorMsg != undefined">{{errorMsg}}</div>
+
+              <form ng-model="form" ng-submit="handleSubmit()">
+        
+                <div class="form-group">
+                  <label>Nome no cartão</label>
+                  <input ng-model="cardName" required placeholder="Escreva o seu nome no cartão" type="text" />
+                </div>
+        
+                <div class="form-group">
+                  <label>Cartão</label>
+                  <stripe-element instance="card"></stripe-element>
+                </div>
+
+                <div>
+                  <button ng-hide="successMsg != undefined" type="submit" ng-disabled="loading" class="btn btn-green"><b ng-hide="loading">Confirmar</b><img style="width: 30px;" ng-show="loading" src="img/misc/loading.gif" /></button>
+                  <div class="alert bg-primary-green text-center" ng-show="successMsg != undefined">{{successMsg}}</div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

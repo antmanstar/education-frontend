@@ -33,36 +33,27 @@ body {
 
 </style>
 
-<div class="container-fluid">
+<div class="container-fluid" ng-if="access">
 
   <div class="row">
 
     <div class="col-xs-12 col-sm-8 scene-col">
 
-      <iframe style="border: none;" width="100%" height="100%;" src="http://localhost:8080/cursos/id/aaa/estudar/videos/5dd205b83f803b8273321909"></iframe>
+      <iframe style="border: none;" width="100%" height="100%;" src="{{url}}"></iframe>
 
     </div>
     <!-- end col-xs-12 col-sm-9 -->
 
-    <div class="col-xs-12 col-sm-4 menu-col">
-
+    <div class="col-xs-12 col-sm-4 menu-col" ng-if="course.module.length>0">
+     <ng-containner ng-repeat="c in course.module">
       <div class="menu-content-option">
-        <div class="module-title">1.0 Blockchain Immersion</div>
+        <div class="module-title">{{$index+1}} {{c.moduleId.title}}</div>
       </div>
       <!-- END menu-option -->
 
-      <div class="menu-content-option">
-        <div class="pretty p-icon p-round p-smooth">
-          <input type="checkbox" />
-          <div class="state p-success">
-              <i class="icon mdi mdi-check"></i>
-              <label></label>
-          </div>
-        </div>
-        <div class="content-title">1.1 Histórico</div>
-      </div>
+      <ng-containner ng-if="c.moduleId.length>0" coursemodulecontentmoduloview mc="{{c.moduleId.content}}" in="{{$index+1}}" courseid="{{course._id}}"></ng-containner>
       <!-- END menu-option -->
-
+    </ng-containner>
     </div>
     <!-- end col-xs-12 col-sm-9 -->
 

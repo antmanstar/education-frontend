@@ -3,12 +3,18 @@
 <div class="container-fluid container-home" style="padding-bottom: 30px;">
 
   <div class="row">
-
+    <ng-containner ng-if="universities>0">
+    <div class='col-sm-12' ng-include="'/partials/courses/suite/navbar.html'"></div>
+    </ng-containner>
     <div class="col-sm-4 col-md-3 section-menu-col animated fadeIn">
 
       <div class="section-menu navbar-vertical">
-
-        <div class="header" style="font-size: 1.1em; font-weight: bold; border-bottom: 1px solid rgba(113, 113, 113, 0.5)"><i class="fas fa-microchip" style="padding-right: 5px;"></i> TECNOLOGIA</div>
+        <div ng-repeat="k in knowledge">
+          <div class="header" style="font-size: 1.1em; font-weight: bold; border-bottom: 1px solid rgba(113, 113, 113, 0.5)"><i class="fas fa-microchip" style="padding-right: 5px;"></i>{{k.title}}</div>
+           <homeuniversitynewcard ng-repeat="u in k.universities" uid="{{u.universityId}}"></homeuniversitynewcard>
+         
+        </div>
+        <!--<div class="header" style="font-size: 1.1em; font-weight: bold; border-bottom: 1px solid rgba(113, 113, 113, 0.5)"><i class="fas fa-microchip" style="padding-right: 5px;"></i> TECNOLOGIA</div>
         <div class="option" style="font-size: 1.2em !important;"><a href="/home">Engenharia de Software</a></div>
         <div class="option" style="font-size: 1.2em !important;"><a href="/home">Blockchain</a></div>
 
@@ -16,9 +22,9 @@
 
         <div class="header" style="font-size: 1.1em; font-weight: bold; border-bottom: 1px solid rgba(113, 113, 113, 0.5)"><i class="fas fa-volleyball-ball" style="padding-right: 5px;"></i> ESPORTES</div>
         <div class="option" style="font-size: 1.2em !important;"><a href="/home">Judo</a></div>
-        <div class="option" style="font-size: 1.2em !important;"><a href="/home">Jiu Jitsu</a></div>
+        <div class="option" style="font-size: 1.2em !important;"><a href="/home">Jiu Jitsu</a></div>-->
 
-      </div>
+         </div>
 
     </div>
     <!-- col-sm-4 col-md-3 section-menu-col -->
