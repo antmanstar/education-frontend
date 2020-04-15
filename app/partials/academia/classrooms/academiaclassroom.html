@@ -34,8 +34,12 @@
                 </div>
             </div>
             <div id='twilio' class="classroom-video-container">
+                <!--div ng-click="toggleFullScreen()" ng-class='fullScreenVisible' class="mobile-invisible full-screen-icon">
+                    <i ng-class="fullScreenToggle" aria-hidden="true"></i>
+                    
+                </div-->
             </div>
-            <div class="controller-container bottom-controller-container" >
+            <div class="controller-container bottom-controller-container" ng-class='fullScreenStatus'>
                 <div ng-click="toggleVideo()" ng-class="mobileVisibleToggle" class="screen-controller">
                     <div class="icon-container-bottom">
                         <div >
@@ -76,8 +80,19 @@
                             <i class="far fa-clone" ></i>
                         </div>
                     </div>
-                    <div class='func-name'>Share&nbsp;Screen</div>
+                    <div class='func-name'>{{shareScreenCaption}}</div>
                 </div>
+                
+                <div ng-click="toggleFullScreen()"  class="screen-controller mobile-invisible">
+                    <div class="icon-container-bottom">
+                        <div >
+                            <i ng-class="fullScreenToggle" aria-hidden="true"></i>
+                        </div>
+                        
+                    </div>
+                    <div class='func-name'>Full&nbsp;Screen</div>
+                </div>
+
                 <div ng-click="returnBack()" class="screen-controller">
                     <div class="icon-container-bottom" style="background-color: red !important;">
                         <div >

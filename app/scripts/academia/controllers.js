@@ -127,7 +127,7 @@ angular.module('netbase')
     let roomName = $route.current.params.roomName;
     $scope.administrator = [];
     $scope.participants = [];
-    $scope.fullScreen = false;
+    $scope.selectedOne = false;
     $scope.currentVideoRoom = null;
     $scope.wholeClassroomList = [];
     $scope.localParticipantUserName = "";
@@ -143,6 +143,11 @@ angular.module('netbase')
     $scope.participantsStatus = false;
     $scope.chatStatus = false;
     $scope.mobileVisibleToggle = 'mobile-invisible';
+    $scope.isFullScreen = false;
+    $scope.fullScreenStatus = '';
+    $scope.fullScreenToggle = "fa fa-expand";
+    $scope.fullScreenIconPos = ' absolute';
+    $scope.localConnected = 'false';
     // $scope.isMobile = false;
 
     var video = Twilio.Video;
@@ -206,6 +211,17 @@ angular.module('netbase')
         var showingTitle;
         var countOfNone = 0;
 
+        if($scope.isFullScreen){
+            videoContainer.style.position = 'fixed';
+            videoContainer.style.left = '0px';
+            videoContainer.style.top = '0px';
+            videoContainer.style.width = '100%';
+            videoContainer.style.height = '100%';
+        } else {
+            videoContainer.style.position = 'initial';
+            videoContainer.style.width = '600px';
+        }
+
         for (i = 0; i < titleDom.length; i++) {
             if (titleDom[i].style.display != 'none') {
                 showingTitle = titleDom[i];
@@ -227,76 +243,104 @@ angular.module('netbase')
                 }
             }
         }
+        console.log('showing title');
+        console.log(showingTitle);
         if(!$scope.isMobile()) {
           console.log('this is not mobile device');
           mainWidth = parseInt(videoContainer.offsetWidth);
-          videoContainer.style.height = mainWidth / 4 * 3 + 'px';
-          mainHeight = mainWidth / 4 * 3;
-          //mainWidth -= 100;
-          //mainHeight -= 75;
-          let px = 'px';
-          if((videoDom.length == 2 || videoDom.length == 5 || videoDom.length == 6) && countOfNone != 1){
-            videoContainer.setAttribute('style', 'align-content: center !important')
+          if(!$scope.isFullScreen){
+            videoContainer.style.height = mainWidth / 4 * 3 + 'px';
+            mainHeight = mainWidth / 4 * 3;
           }
           else {
-            videoContainer.setAttribute('style', 'align-content: top');
+            mainHeight = videoContainer.style.height;
           }
-          if (titleDom.length == 1 || countOfNone == 1) {
-              titleDom[0].style.width = "99.9%";
-              titleDom[0].style.height = "99.9%";
-              titleDom[0].style.position = 'absolute';
-              //titleDom[0].style.left = '50px';
-              //titleDom[0].style.top = '37.5px';
-              let k;
-              for (k = 0; k < titleDom[0].childElementCount; k++) {
-                  if (titleDom[0].children[k].tagName == 'VIDEO') {
-  
-                      titleDom[0].children[k].style.width = "100%";
-                      titleDom[0].children[k].style.height = "100%";
-                  }
-              }
-  
-              showingTitle.style.width = "99.9%";
-              showingTitle.style.height = "99%";
-              showingTitle.style.position = 'absolute';
-              for (k = 0; k < showingTitle.childElementCount; k++) {
-                  if (showingTitle.children[k].tagName == 'VIDEO') {
-  
-                      showingTitle.children[k].style.width = "100%";
-                      showingTitle.children[k].style.height = "100%";
-                  }
-              }
-              //showingTitle.style.left = '50px';
-              //showingTitle.style.top = '37.5px';
-  
-          } else if (videoDom.length > 1 && videoDom.length < 5 && countOfNone != 1) {
-              for (i = 0; i < titleDom.length; i += 1) {
-                  let k;
-                  for (k = 0; k < titleDom[i].childElementCount; k++) {
-                      if (titleDom[i].children[k].tagName == 'VIDEO') {
-                          titleDom[i].children[k].style.width = "100%";
-                          titleDom[i].children[k].style.height = "100%";
-                      }
-                  }
-                  titleDom[i].style.width = "49.9%";
-                  titleDom[i].style.height = mainHeight / 2 + 'px';
-                  titleDom[i].style.position = 'relative';
-              }
-          } 
-          else if (videoDom.length > 4 && countOfNone != 1) {
-            for (i = 0; i < titleDom.length; i += 1) {
-                let k;
-                for (k = 0; k < titleDom[i].childElementCount; k++) {
-                    if (titleDom[i].children[k].tagName == 'VIDEO') {
-                        titleDom[i].children[k].style.width = "100%";
-                        titleDom[i].children[k].style.height = "100%";
-                    }
-                }
-                titleDom[i].style.width = mainWidth / 3 + 'px';
-                titleDom[i].style.height = mainHeight / 3 + 'px';
-                titleDom[i].style.position = 'relative';
+            
+          let px = 'px';
+          
+        //   if (titleDom.length == 1 || countOfNone == 1) {
+        //       $scope.$apply(()=>{
+        //         $scope.fullScreenVisible = "visible";
+        //         console.log($scope.fullScreenVisible);
+        //       });
+        //   }
+        //   else {
+        //     $scope.$apply(()=>{
+        //         $scope.fullScreenVisible = "invisible";
+        //     });
+        //   }
+
+        if (titleDom.length == 1 || countOfNone == 1) {
+
+            titleDom[0].style.width = "99.9%";
+            titleDom[0].style.height = "99.9%";
+            if($scope.isFullScreen) {
+                titleDom[0].style.position = 'absolute';
             }
-          }
+            else {
+                titleDom[0].style.position = 'relative';
+            }
+                
+            let k;
+            for (k = 0; k < titleDom[0].childElementCount; k++) {
+                if (titleDom[0].children[k].tagName == 'VIDEO') {
+
+                    titleDom[0].children[k].style.width = "100%";
+                    titleDom[0].children[k].style.height = "100%";
+                    
+                }
+            }
+
+            showingTitle.style.width = "99.9%";
+            showingTitle.style.height = "99%";
+            if($scope.isFullScreen) {
+                showingTitle.style.position = 'absolute';
+            }
+            else {
+                showingTitle.style.position = 'relative';
+            }
+            for (k = 0; k < showingTitle.childElementCount; k++) {
+                if (showingTitle.children[k].tagName == 'VIDEO') {
+
+                    showingTitle.children[k].style.width = "100%";
+                    showingTitle.children[k].style.height = "100%";
+                    
+                }
+            }
+              
+  
+            } else if (videoDom.length > 1 && videoDom.length < 5 && countOfNone != 1) {
+                for (i = 0; i < titleDom.length; i += 1) {
+                    let k;
+                    for (k = 0; k < titleDom[i].childElementCount; k++) {
+                        if (titleDom[i].children[k].tagName == 'VIDEO') {
+                            titleDom[i].children[k].style.width = "100%";
+                            titleDom[i].children[k].style.height = "100%";
+                            titleDom[i].children[k].style.position = 'initial';
+                        }
+                    }
+                    titleDom[i].style.width = "49.9%";
+                    titleDom[i].style.height = '50%';
+                    titleDom[i].style.position = 'relative';
+                }
+                if(!$scope.isFullScreen) $scope.fullScreenStatus = '';
+            } 
+            else if (videoDom.length > 4 && countOfNone != 1) {
+                for (i = 0; i < titleDom.length; i += 1) {
+                    let k;
+                    for (k = 0; k < titleDom[i].childElementCount; k++) {
+                        if (titleDom[i].children[k].tagName == 'VIDEO') {
+                            titleDom[i].children[k].style.width = "100%";
+                            titleDom[i].children[k].style.height = "100%";
+                            titleDom[i].children[k].style.position = 'initial';
+                        }
+                    }
+                    titleDom[i].style.width = '33%';
+                    titleDom[i].style.height = '33%';
+                    titleDom[i].style.position = 'relative';
+                }
+                if(!$scope.isFullScreen) $scope.fullScreenStatus = '';
+            }
         }
         else if ($scope.isMobile()) {
           console.log("this is a mobile device");
@@ -359,14 +403,20 @@ angular.module('netbase')
     $scope.disconnectClassroom = function() {
         var mainDom = document.getElementById('twilio');
         var i;
-        for (i = mainDom.childElementCount - 1; i >= 0; i--) {
-            mainDom.children[i].remove();
+        //for (i = mainDom.childElementCount - 1; i >= 0; i--) {
+        //    mainDom.children[i].remove();
+        //}
+        var videos = document.getElementsByClassName('sub-video-title');
+        for(i = videos.length - 1; i >= 0;  i--){
+            videos[i].remove();
         }
         //$scope.$apply(()=>{
         $scope.participants = [];
         $scope.showingParticipants = [];
         //});
+        console.log('herererererere');
         $scope.currentLocalparticipant = null;
+        $scope.localConnected = false;
         if ($scope.currentVideoRoom != null) $scope.currentVideoRoom.disconnect();
         $scope.currentVideoRoom = null;
     }
@@ -381,6 +431,8 @@ angular.module('netbase')
     $scope.connectClassroom = function(token, roomName, screenTrack = null) {
 
         //localVideo.connect()
+        $scope.disconnectClassroom();
+
         $scope.currentShareScreen = screenTrack;
         $scope.currentRoomToken = token;
         $scope.currentRoomName = roomName;
@@ -401,8 +453,9 @@ angular.module('netbase')
 
         video.connect(token, room_t).then(room => {
             const localParticipant = room.localParticipant;
-            $scope.currentLocalparticipant = localParticipant;
-
+            
+            $scope.currentLocalparticipant = room.localParticipant;
+            $scope.localConnected = true;
             $scope.currentVideoRoom = room;
             if ($scope.currentShareScreen != null) {
                 room.localParticipant.publishTrack($scope.currentShareScreen);
@@ -419,12 +472,12 @@ angular.module('netbase')
 
                 /********************* Screen Full Screen *********************/
 
-
+                console.log($scope.currentLocalparticipant);
                 angular.element(videoTitle.appendChild(track.attach())).bind('click', (e) => {
                     var i;
 
                     let mainDom = document.getElementById('twilio');
-                    if ($scope.fullScreen) {
+                    if ($scope.selectedOne) {
                         for (i = 0; i < mainDom.childElementCount; i++) {
                             mainDom.children[i].style.display = 'initial';
                         }
@@ -452,7 +505,7 @@ angular.module('netbase')
                             },
                             100);
                     }
-                    $scope.fullScreen = !$scope.fullScreen;
+                    $scope.selectedOne = !$scope.selectedOne;
                 });
             });
             mainVideoDom.appendChild(videoTitle);
@@ -470,7 +523,7 @@ angular.module('netbase')
                     $scope.showingParticipants.push(res.data.data);
                 }
                 $scope.participants.push(res.data.data);
-                $scope.videoSizeSet();
+                
                 setTimeout(() => {
                         $window.dispatchEvent(new Event("resize"));
                     },
@@ -530,7 +583,7 @@ angular.module('netbase')
             var i;
             //if(e.target.tagName != 'VIDEO') return;
             let mainDom = document.getElementById('twilio');
-            if ($scope.fullScreen) {
+            if ($scope.selectedOne) {
                 for (i = 0; i < mainDom.childElementCount; i++) {
                     mainDom.children[i].style.display = 'initial';
                 }
@@ -558,7 +611,7 @@ angular.module('netbase')
                     },
                     100);
             }
-            $scope.fullScreen = !$scope.fullScreen;
+            $scope.selectedOne = !$scope.selectedOne;
         });
         main.appendChild(ele);
 
@@ -669,35 +722,41 @@ angular.module('netbase')
     }
 
     $scope.shareScreen = function() {
-        //if($scope.currentLocalParticipant == null){
-        //	alert("Error");
-        //	return;
-        //}
-        if ($scope.shareScreenCaption == 'Sharing') {
-
+        console.log($scope.currentLocalparticipant.audioTracks);
+        console.log($scope.currentLocalParticipant);
+        if($scope.localParticipant == false){
+            //alert("Error");
             return;
         }
+        
+        if ($scope.shareScreenCaption == 'Share Screen') {
 
-        $scope.shareScreenCaption = 'Sharing';
+            $scope.shareScreenCaption = 'Stop Sharing';
 
-        navigator.mediaDevices.getDisplayMedia().then((stream) => {
-            const screenTrack = stream.getTracks()[0];
-            screenTrack.onended = function(e) {
-                console.log('stop sharing........');
+            navigator.mediaDevices.getDisplayMedia({audio: true, video: true}).then((stream) => {
+                const screenTrack = stream.getTracks()[0];
+                screenTrack.onended = function(e) {
+                    if(!$scope.localConnected) return;
+                    console.log('stop sharing........');
+                    $scope.disconnectClassroom();
+                    $scope.shareScreenCaption = 'Share Screen';
+                    $scope.connectClassroom($scope.currentRoomToken, $scope.currentRoomName);
+                }
+
                 $scope.disconnectClassroom();
-                $scope.shareScreenCaption = 'Share Screen';
-                $scope.connectClassroom($scope.currentRoomToken, $scope.currentRoomName);
-            }
 
-            $scope.disconnectClassroom();
-
-            console.log('screen track');
-            console.log(screenTrack);
-            $scope.connectClassroom($scope.currentRoomToken, $scope.currentRoomName, screenTrack);
+                console.log('screen track');
+                console.log(screenTrack);
+                $scope.connectClassroom($scope.currentRoomToken, $scope.currentRoomName, screenTrack);
 
 
-        });
-        //const screenTrack = new LocalVideoTrack(stream.getTracks()[0]);
+            });
+        }
+        else {
+            if($scope.currentShareScreen != null) $scope.currentShareScreen.stop();
+            $scope.shareScreenCaption = 'Share Screen';
+            $scope.connectClassroom($scope.currentRoomToken, $scope.currentRoomName);
+        }
 
     }
 
@@ -797,6 +856,25 @@ angular.module('netbase')
         $scope.mobileVisibleToggle = 'mobile-invisible';
       }
     }
+
+    $scope.toggleFullScreen = function() {
+        $scope.isFullScreen = !$scope.isFullScreen;
+        
+        if($scope.isFullScreen) {
+            $scope.fullScreenToggle = "fa fa-compress";
+            $scope.fullScreenIconPos = ' fixed';
+            $scope.fullScreenStatus = 'bottom-controllers-fullscreen-show';
+        }
+        else {
+            $scope.fullScreenToggle = "fa fa-expand";
+            $scope.fullScreenIconPos = ' absolute';
+            $scope.fullScreenStatus = '';
+        }
+        setTimeout(() => {
+            $window.dispatchEvent(new Event("resize"));
+        },
+        100);
+    }
 }])
 
 .controller('AcademiaClassroomsAlertCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Classroom', 'Students', 'ngDialog', 'jwtHelper', '$localStorage', '$window', function($rootScope, $scope, $location, $route, University, Classroom, Students, ngDialog, jwtHelper, $localStorage, $window) {
@@ -813,7 +891,7 @@ angular.module('netbase')
 
     $scope.administrator = [];
     $scope.participants = [];
-    $scope.fullScreen = false;
+    $scope.selectedOne = false;
 
     //$scope.currentLocalParticipant = null;
     $scope.currentVideoRoom = null;
