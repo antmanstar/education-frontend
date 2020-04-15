@@ -279,6 +279,10 @@ angular.module('netbase', [
             templateUrl: 'partials/academia/academiajobs.html',
             controller: 'AcademiaJobsCtrl',
         })
+        .when("/a/university/:academiaName/roomid/:roomSID/accountid/:accountSid/roomname/:roomName", {
+            templateUrl: 'partials/academia/classrooms/academiaclassroom.html',
+            controller: 'AcademiaClassroomCtrl',
+        })
         .when('/ensinar', {
             templateUrl: 'partials/teach/home.html',
             controller: 'TeachSalesCtrl',

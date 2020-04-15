@@ -3531,7 +3531,6 @@ Courses.getAll().success(function(res) {
     //$location.path("/home");
     $location.path("/home/timeline");
   } else {
-    console.log('here redirected 1')
     let universityUrl = $route.current.params.academiaName;
     let roomSID = $route.current.params.roomSID;
     let accountSid = $route.current.params.accountSid;
