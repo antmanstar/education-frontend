@@ -206,7 +206,7 @@
     <ng-containner ng-if="course.module.length>0">
     <div class="col-xs-12 col-sm-4" ng-repeat="c in course.module">
 
-      <div class="course-card" ng-if='c.moduleId.title' >
+      <div class="course-card" >
 
         <div class="title" style="line-height: 35px;">
 
@@ -240,7 +240,7 @@
           </div>
 
         </div>
-        <ng-containner ng-if="c.moduleId.length>0" coursemodulecontent courseid="{{course._id}}" mc="{{c.moduleId.content}}">
+        <ng-containner ng-if="c.moduleId.content.length>0" coursemodulecontent courseid="{{course._id}}" mc="{{c.moduleId.content}}">
         
         </ng-containner>
         
