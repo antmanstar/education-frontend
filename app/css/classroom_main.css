@@ -58,6 +58,10 @@
     font-weight: 700;
     margin-top: 10px;
     letter-spacing: -0.9px;
+    border: solid;
+    border-width: thin;
+    border-radius: 5px;
+    height: 67%;
 }
 
 .meeting-display-container {
@@ -222,6 +226,38 @@
 .bottom-controllers-fullscreen-show {
     position: fixed;
     bottom: 5px;
+}
+
+.chat-sending-input-container {
+    bottom: 0px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 0px;
+    height: 17%;
+    margin-top: 10px;
+}
+
+.chat-sending-input-container textarea {
+    height: 80px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.chat-sending-input-container button {
+    height: 28px;
+    font-size: 17px;
+    border-radius: 3px;
+    background-color: green;
+    color: white;
+    float: right;
+}
+
+.friend-select {
+    margin-top: 10px;
+    height: 30px;
+    border: solid;
+    border-width: thin;
 }
 
 @media screen and (max-width: 468px) {

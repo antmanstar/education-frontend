@@ -110,32 +110,8 @@
                 </div>
             </div>
         </div>
-        <div ng-class="chatboxContainer" class="fixed-position classroom-chatbox-initial classroom-chat-container col-xs-12 col-sm-4 col-md-3 col-lg-2">
-            <button class="chatbox-close-btn" ng-click="toggleChatBox()"><i class="fas fa-times"></i></button>
-            <div class="avatar-container">
-                <img src="/img/icon/human.png" alt="HN" title="User Avatar" width="100" height="100" class="ava1">
-                <div class="userinfo">
-                    <div class="username"> &nbsp; {{administrator[0].username}}</div>
-                    <div class="privilege">
-                        <div class="chat-admin-label" >
-                            Administrator
-                        </div>
-                        <div class="chat-admin-role-label" >
-                            Pro
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="chat-main-label" >
-                Chat
-            </div>
-            <div class="video-audio-chat">
-                <!-- <i class="material-icons" style="font-size: 15px">videocam</i> -->
-                <!-- <div style="margin-left: 10px; font-weight: 500;">JOIN&nbsp;VIDEO</div> -->
-                <!-- <i class="material-icons" style="font-size: 13px; margin-left: 20px;">phone</i> -->
-                <!-- <div style="margin-left: 10px; font-weight: 500;">JOIN&nbsp;AUDIO</div> -->
-            </div>
-        </div>
+        <div ng-include="'partials/academia/classrooms/classroom_chatbox.html'"></div>
+        
         <!--div ng-if="chatStatus==false" class="classroom-chat-container-none col-xs-12 col-sm-4 col-md-3 col-lg-2"></div-->
     </div>
 </div>

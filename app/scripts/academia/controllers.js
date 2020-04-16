@@ -120,6 +120,114 @@ angular.module('netbase')
 
 }])
 
+.controller('AcademiaClassroomChatCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Classroom', 'Students', 'ngDialog', 'jwtHelper', '$localStorage', '$window', function($rootScope, $scope, $location, $route, University, Classroom, Students, ngDialog, jwtHelper, $localStorage, $window) {
+    
+    var GENERAL_CHANNEL_UNIQUE_NAME;
+    var GENERAL_CHANNEL_NAME;
+
+    $scope.channels = [];
+    $scope.messagingClient = null;
+    $scope.generalChannel = null;
+
+    var baseUrl = "https://educationalcommunity-classroom.herokuapp.com";
+
+    if ($localStorage.token != undefined && $localStorage.token != null) {
+        GENERAL_CHANNEL_UNIQUE_NAME = jwtHelper.decodeToken($localStorage.token)._id;
+        Students.getStudentById(GENERAL_CHANNEL_UNIQUE_NAME).then(res => {
+            
+            GENERAL_CHANNEL_NAME = res.data.data.name;
+            let url = '/classroom/chat_token/';
+            Classroom.getChatAccessToken(baseUrl + url).then((res) => {
+                console.log('here chat access token');
+                console.log(res.data);
+                if(res.data.success == false){
+                    $scope.openDialog("ERROR", res.data.msg);
+                }
+                else {
+                    $scope.chatCreate(res.data.token);
+                }
+            }).catch(err => {
+                $scope.openDialog('ERROR', err);
+            });
+        });
+    }
+
+    $scope.openDialog = function(type, msg) {
+        ngDialog.open({ 
+            template: 'partials/modals/classroom_alert_modal.html',
+            controller: "AcademiaClassroomsAlertCtrl",
+            className: 'ngdialog-theme-default classroom-alert-modal', 
+            data: {
+                type: "ERROR", 
+                msg: res.data.msg
+            }
+        });    
+    }
+
+    $scope.chatCreate = function(token) {
+        Twilio.Chat.Client.create(token).then(function(client) {
+            $scope.messagingClient = client;
+            updateConnectedUI();
+            $scope.joinGeneralChannel();
+            $scope.messagingClient.on('channelAdded', throttle($scope.loadChannelList));
+            $scope.messagingClient.on('channelRemoved', throttle($scope.loadChannelList));
+            $scope.messagingClient.on('tokenExpired', throttle($scope.chatCreate));
+        });
+    }
+
+    function updateConnectedUI() {
+
+    }
+
+    $scope.loadChannelList = function() {
+        if ($scope.messagingClient == null) {
+            $scope.openDialog('ERROR', 'Client is not initialized.');
+            return;
+        }
+      
+        $scope.messagingClient.getPublicChannelDescriptors().then(function(channels) {
+            $scope.channels = channels.items;
+            
+        });
+    }
+
+    $scope.joinGeneralChannel = function() {
+        if ($scope.generalChannel == null) {
+            // If it doesn't exist, let's create it
+            $scope.messagingClient.createChannel({
+                uniqueName: GENERAL_CHANNEL_UNIQUE_NAME,
+                friendlyName: GENERAL_CHANNEL_NAME
+            }).then(function(channel) {
+                console.log('Created general channel');
+                $scope.generalChannel = channel;
+                $scope.loadChannelList();
+            });
+        }
+        else {
+            console.log('Found general channel:');
+            //setupChannel(tc.generalChannel);
+        }
+    }
+
+    $scope.loadMessages = function() {
+        let i;
+        for(i = 0; i < $scope.channels.lenght; i++) {
+            if($scope.channels[i].uniqueName == $scope.selected.uniqueName) {
+                $scope.currentChannel = $scope.channels[i];
+                break;
+            }
+        }
+        $scope.currentChannel.getMessages(50).then(function (messages) {
+            messages.items.forEach($scope.addMessageToList);
+        });
+    }
+
+    $scope.addMessageToList = function() {
+
+    }
+
+}])
+
 .controller('AcademiaClassroomCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Classroom', 'Students', 'ngDialog', '$localStorage', '$window', function($rootScope, $scope, $location, $route, University, Classroom, Students, ngDialog, $localStorage, $window) {
     let universityUrl = $route.current.params.academiaName;
     let roomSID = $route.current.params.roomSID;
@@ -148,6 +256,8 @@ angular.module('netbase')
     $scope.fullScreenToggle = "fa fa-expand";
     $scope.fullScreenIconPos = ' absolute';
     $scope.localConnected = 'false';
+
+    $rootScope.localMessager = null;
     // $scope.isMobile = false;
 
     var video = Twilio.Video;
@@ -515,6 +625,12 @@ angular.module('netbase')
                 console.log('Local Participant');
                 console.log(res.data);
                 $scope.localParticipantUserName = res.data.data.name;
+
+                $rootScope.localMessager = {
+                    id: res.data.data._id,
+                    name: res.data.data.name
+                }
+
                 if (document.getElementById('my_local_video') != null) {
                     document.getElementById('my_local_video').innerText = $scope.localParticipantUserName;
                 }
@@ -690,6 +806,8 @@ angular.module('netbase')
         $scope.shareScreenCaption = 'Share Screen';
         $scope.disconnectClassroom();
         $scope.adminActive = '';
+
+        $rootScope.localMessager = null;
         //leave room
         $window.close();
     }
