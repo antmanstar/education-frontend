@@ -793,31 +793,69 @@ angular.module('netbase')
 					console.log(token);
           return $http.get(url + "?token=" + token);
 			},
-			createNewClassroom: function(url, title){
+			createNewClassroom: function(url, title, privilege, universityId){
 				return new Promise((resolve, reject) => {
 					let token = $localStorage.token;
 					var req = {
 						method: 'POST',
 						url: url,
 						headers: {
-							'x-access-token': token,
+              'x-access-token': token,
+              'content-type': 'application/json'
 						},
 						params: {
-							token: token,
-							title: title,
-						},
-						body: {
-							title: title,
-						}
+							token: token
+            },
+            data: {
+              id: universityId,
+              roomName: title,
+              privilege: 99,
+            }
 					}
 					$http(req).then((res) => {
 						console.log('create success');
 						console.log(res);
 						if(res.data.success == true){
 							resolve(res.data);
-						} else {
-              console.log(res)
-							reject('err');
+						}
+						else {
+							reject(res.data.msg);
+						}
+					});
+				});
+      },
+      deleteClassroom: function(url, roomId, privilege){
+        console.log('here check');
+        console.log(url);
+        console.log(roomId);
+        console.log(privilege);
+				return new Promise((resolve, reject) => {
+					let token = $localStorage.token;
+					var req = {
+						method: 'DELETE',
+						url: url,
+						headers: {
+              'x-access-token': token,
+              'content-type': 'application/json'
+						},
+						params: {
+							token: token
+            },
+            data: {
+              id: roomId,
+              privilege: privilege
+            }
+					}
+					$http(req).then((res) => {
+						console.log('delete success');
+						console.log(res);
+						if(res.data.success == true){
+							resolve(res.data);
+						}
+						else {
+              console.log('delete error');
+              console.log(res.data);
+							reject(res.data.msg);
 						}
 					});
 				});
