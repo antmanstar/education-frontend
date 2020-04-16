@@ -25,11 +25,6 @@
     font-size: 20px;
 }
 
-.classroom-list-mobile {
-    padding-top: 5px;
-    font-size: 20px;
-}
-
 .classroom-list:hover {
     background-color: #bbecbb;
 }
@@ -417,6 +412,7 @@
     align-content: center;
     justify-content: center;
     min-height: 500px;
+    width: 800px;
 }
 
 .classroom-video-container-wrapper {
@@ -585,13 +581,6 @@
     background-color: rgba(192, 192, 192, 0.7);
 }
 
-.classroom-list-divider-mobile {
-    width: 100%;
-    height: 1px;
-    margin-top: 5px;
-    background-color: rgba(192, 192, 192, 0.7);
-}
-
 .classroom-list-header {
     display: flex;
     justify-content: space-between;
@@ -632,6 +621,12 @@
     .classroom-video-container {
         padding: 0px;
         overflow-y: scroll;
+        min-height: unset;
+        justify-content: left;
+        width: 100%;
+    }
+    .disp-mobile-none {
+        display: none;
     }
     .classroom-list-title {
         font-size: 18px;
@@ -639,7 +634,13 @@
         margin-bottom: 10px;
     }
     .classroom-list {
-        font-size: 16px;
+        padding-top: 5px;
+    }
+    .classroom-list-divider {
+        width: 100%;
+        height: 1px;
+        margin-top: 5px;
+        background-color: rgba(192, 192, 192, 0.7);
     }
     .mobile-participants {
         height: 40px;
@@ -653,4 +654,5 @@
         opacity: 0.7;
         color: #b7b7b7;
     }
+
 }

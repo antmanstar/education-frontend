@@ -23,8 +23,8 @@ angular.module('netbase', [
 ])
 .config(['$translateProvider', '$localStorageProvider', 'StripeElementsProvider', function ($translateProvider, $localStorageProvider, StripeElementsProvider) {
 
-  let stripeKey = "pk_live_ZBmOf7GNQ13AIEGeP9WkPv3M";
-  //let stripeKey = "pk_test_2XclbP1INDqkspKrbRn6oBZR";
+  //let stripeKey = "pk_live_ZBmOf7GNQ13AIEGeP9WkPv3M";
+  let stripeKey = "pk_test_2XclbP1INDqkspKrbRn6oBZR";
 
   //AnalyticsProvider.setAccount('UA-125408424-1');
 
@@ -60,26 +60,21 @@ angular.module('netbase', [
 
     let auth = {
 
-        app: function($q, $location, $localStorage, $route) {
+      app: function($q, $location, $localStorage) {
 
-          var deferred = $q.defer();
+        var deferred = $q.defer();
 
-          deferred.resolve();
+        deferred.resolve();
 
-          let logged = $localStorage.logged;
+        let logged = $localStorage.logged;
 
-          if (!logged) {
-            let universityUrl = $route.current.params.academiaName;
-            let roomSID = $route.current.params.roomSID;
-            let accountSid = $route.current.params.accountSid;
-            if(universityUrl != null && roomSID != null && accountSid != null)
-                $location.path($route.params.url);
-            $location.path('/');
-          }
-
-          return deferred.promise;
-
+        if (!logged) {
+          $location.path('/home/explore');
         }
+
+        return deferred.promise;
+
+      }
 
    };
 
@@ -230,7 +225,7 @@ angular.module('netbase', [
             templateUrl: 'partials/academia/classrooms/academiaclassrooms.html',
             controller: 'AcademiaClassroomsCtrl',
         })
-        .when("/a/:academiaName/:roomSID/:accountSid/:roomName", {
+        .when("/a/:academiaName/roomid/:roomSID/:accountSid/:roomName", {
             templateUrl: 'partials/academia/classrooms/academiaclassroom.html',
             controller: 'AcademiaClassroomCtrl',
         })
@@ -283,6 +278,10 @@ angular.module('netbase', [
         .when('/a/:academiaName/jobs', {
             templateUrl: 'partials/academia/academiajobs.html',
             controller: 'AcademiaJobsCtrl',
+        })
+        .when("/a/university/:academiaName/roomid/:roomSID/accountid/:accountSid/roomname/:roomName", {
+            templateUrl: 'partials/academia/classrooms/academiaclassroom.html',
+            controller: 'AcademiaClassroomCtrl',
         })
         .when('/ensinar', {
             templateUrl: 'partials/teach/home.html',
@@ -387,6 +386,11 @@ angular.module('netbase', [
         .when('/dashboard/a/manage/id/:id/users/id/:userId', {
             templateUrl: 'partials/dashboard/academia/managebyidusersbyid.html',
             controller: 'DashboardAcademiaManageByIdUsersByIdCtrl',
+            resolve: auth
+        })
+        .when('/wallet', {
+            templateUrl: 'partials/dashboard/wallet/wallet.html',
+            controller: 'WalletCtrl',
             resolve: auth
         })
         .when('/dashboard/orders', {
@@ -497,6 +501,7 @@ angular.module('netbase', [
         .when('/home/universidades/user', {
             templateUrl: 'partials/home/homeuseruniversidades.html',
             controller: 'HomeUserUniversidadesCtrl',
+            resolve : auth
         })
         .when('/home/smp', {
             templateUrl: 'partials/home/homesocialmarketplace.html',
