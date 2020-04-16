@@ -133,13 +133,13 @@ angular.module('netbase')
     $scope.localParticipantUserName = "";
     $scope.currentLocalparticipant = null;
     $scope.showingParticipants = [];
-    $scope.shareScreenCaption = "Share Screen";
+    $scope.shareScreenCaption = "Compartilhar Tela";
     $scope.voiceToggle = 'fas fa-microphone-alt';
     $scope.voiceStatus = "Mute";
     $scope.videoToggle = 'fas fa-video';
     $scope.videoStatus = 'Stop Video';
     $scope.recordToggle = 'fas fa-record-vinyl'
-    $scope.recordStatus = 'Record Video';
+    $scope.recordStatus = 'Gravar vídeo';
     $scope.participantsStatus = false;
     $scope.chatStatus = false;
     $scope.mobileVisibleToggle = 'mobile-invisible';
@@ -148,8 +148,8 @@ angular.module('netbase')
     var video = Twilio.Video;
     var localVideo = Twilio.createLocalTracks;
 
-    // var baseUrl = "https://educationalcommunity-classroom.herokuapp.com";
-    var baseUrl = 'http://c395e03d.ngrok.io';
+     var baseUrl = "https://educationalcommunity-classroom.herokuapp.com";
+    //var baseUrl = 'http://c395e03d.ngrok.io';
     var arr = $window.location.href.split("/");
     var domain = arr[0] + "//" + arr[2];
 
@@ -794,7 +794,6 @@ angular.module('netbase')
     var arr = $window.location.href.split("/");
     var domain = arr[0] + "//" + arr[2];
 
-
     University.getUniversity(universityUrl).then(function(res) {
         console.log('here university');
         console.log(res);
@@ -841,7 +840,7 @@ angular.module('netbase')
     }
 
     $scope.createNewClassroom = function() {
-        ngDialog.open({ template: 'partials/modals/classroom_modal.html', className: 'ngdialog-theme-default classroom-modal' });
+        ngDialog.open({ controller: 'AcademiaClassroomsCtrl', template: 'partials/modals/classroom_modal.html', className: 'ngdialog-theme-default classroom-modal' });
     };
 
     $scope.confirmCreateClassroom = function() {

@@ -815,8 +815,8 @@ angular.module('netbase')
 						console.log(res);
 						if(res.data.success == true){
 							resolve(res.data);
-						}
-						else {
+						} else {
+              console.log(res)
 							reject('err');
 						}
 					});
@@ -1471,7 +1471,7 @@ angular.module('netbase')
                 'Content-Type': 'application/json'
             }});
         },
-      
+
         getAllOrders: function(id) {
 
           var url = '/students/id/' + id + '/orders';
@@ -1672,7 +1672,7 @@ angular.module('netbase')
             }});
         },
 
-     
+
         getContentModulesByIdmultiple: function(post) {
 
           let url = "/module/content/all/id";
@@ -1858,7 +1858,7 @@ angular.module('netbase')
           return $http.get(baseUrl + url);
 
         },
-        
+
         getModulesByAccount: function() {
 
           var url = '/module/owner';
