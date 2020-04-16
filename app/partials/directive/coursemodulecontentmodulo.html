@@ -1,7 +1,7 @@
 <div style="font-size: 1.4em;" ng-repeat="c in modulecontent">
 	
-	<a ng-if="c.contentType=='page'" ng-click="openContent(courseid,'document',c._id,c.modelId)"><i class="fas fa-file" style="padding-right: 5px;"></i>{{c.title}}</a>
-	<a ng-if="c.contentType=='quiz'" ng-click="openContent(courseid,'quiz',c._id,c.modelId)"><i class="fas fa-book" style="padding-right: 5px;"></i>{{c.title}}</a>
+	<a ng-if="c.contentType=='page'" ng-click="openContent(courseid,c.contentType,c._id,c.modelId)"><i class="fas fa-file" style="padding-right: 5px;"></i>{{c.title}}</a>
+	<a ng-if="c.contentType=='quiz'" ng-click="openContent(courseid,c.contentType,c._id,c.modelId)"><i class="fas fa-book" style="padding-right: 5px;"></i>{{c.title}}</a>
 	
 </div>
     

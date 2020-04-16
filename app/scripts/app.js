@@ -108,6 +108,10 @@ angular.module('netbase', [
             templateUrl: 'partials/courses/byid.html',
             controller: 'CoursesByIdCtrl',
         })
+        .when('/quiz-result/:qid/:rid/:uid', {
+            templateUrl: 'partials/courses/quiz/quizResult.html',
+            controller: 'CoursesQuizResultCtrl',
+        })
         .when('/cursos/id/:id/estudar', {
             templateUrl: 'partials/courses/estudar.html',
             controller: 'CoursesEstudarCtrl',

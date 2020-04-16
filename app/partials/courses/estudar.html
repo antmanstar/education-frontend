@@ -38,10 +38,8 @@ body {
   <div class="row">
 
     <div class="col-xs-12 col-sm-8 scene-col">
-
-      <!--<iframe style="border: none;" width="100%" height="100%;" src="{{url}}"></iframe>-->
-       
-       <ng-containner ng-if="type=='document' || type=='page'">
+     
+     <ng-containner ng-if="type=='document' || type=='page'">
         
        <div ng-controller="CoursesEstudarTypeDocumentCtrl">
         <div  ng-include="'partials/courses/estudar/document.html'"></div>

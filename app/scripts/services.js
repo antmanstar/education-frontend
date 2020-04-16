@@ -1619,7 +1619,7 @@ angular.module('netbase')
 
       //var baseUrl = "https://educationalcommunity-pay.herokuapp.com";
       var baseUrl = "https://educationalcommunity-courses.herokuapp.com/courses";
-       var baseUrl="http://localhost:9000/courses"
+      //var baseUrl="http://localhost:9000/courses"
       return {
 
         getAll: function(id) {
@@ -1629,6 +1629,46 @@ angular.module('netbase')
           return $http.get(baseUrl + url);
 
         },
+        getquizResult: function(qid,uid,rid) {
+
+          let url = "/quiz-result/"+qid+"/"+uid+"/"+rid;
+
+          return $http.get(baseUrl + url);
+
+        },
+         saveQuizResult: function(payload) {
+          
+           var url = "/quiz/id/submit";
+
+          return $http({
+            method: 'PUT',
+            url: baseUrl + url,
+            data : payload,
+            headers: {
+                'Content-Type': 'application/json',
+            }});
+          
+        },
+        progress: function(payload, videoid) {
+
+          var url = '/page/id/' + videoid + "/progress";
+
+          return $http({
+            method: 'PUT',
+            url: baseUrl + url,
+            data : payload,
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }});
+
+        },
+
         fileUploadUrl:function(){
           let url = baseUrl+"/jwt";
           return $http.post(url,{});
@@ -1811,6 +1851,13 @@ angular.module('netbase')
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
             }});
+
+        },
+        getQuestionsByQuizId: function(id) {
+
+          let url = "/quiz/questions/" + id;
+
+          return $http.get(baseUrl + url);
 
         },
         getMediaModulesByAccount: function() {
