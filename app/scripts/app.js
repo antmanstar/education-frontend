@@ -4,6 +4,8 @@ angular.module('netbase', [
     '720kb.socialshare',
     'ngStorage',
     'ngRoute',
+    'ngCookies',
+    'ui.tinymce',
     'pascalprecht.translate',
     'ngDialog',
     'angular-jwt',
@@ -110,9 +112,14 @@ angular.module('netbase', [
             templateUrl: 'partials/courses/estudar.html',
             controller: 'CoursesEstudarCtrl',
         })
-        .when('/cursos/id/:id/estudar/videos/:videoid', {
-            templateUrl: 'partials/courses/estudar/videos.html',
-            controller: 'CoursesEstudarTypeVideoCtrl',
+
+        .when('/cursos/id/view/document/:id/:videoid/:post_id', {
+            templateUrl: 'partials/courses/estudar/document.html',
+            controller: 'CoursesEstudarTypeDocumentCtrl',
+        })
+        .when('/cursos/id/test/quiz/:id/:videoid/:post_id', {
+            templateUrl: 'partials/courses/estudar/quiz.html',
+            controller: 'CoursesEstudarTypeQuizCtrl',
         })
         .when('/cursos/id/:id/timeline', {
             templateUrl: 'partials/courses/dashboard/index.html',
@@ -134,6 +141,18 @@ angular.module('netbase', [
             templateUrl: 'partials/courses/suite/modulos.html',
             controller: 'CoursesModulosCtrl',
         })
+        .when('/cursos/suite/owner/view/:id', {
+            templateUrl: 'partials/courses/suite/modulos-course.html',
+            controller: 'CoursesModulossingleCtrl',
+        })
+        .when('/cursos/suite/createPage/:id', {
+          templateUrl: 'partials/courses/suite/createPage.html',
+          controller: 'CoursesCreatePageCtrl',
+        })
+        .when('/cursos/suite/createQuiz/:id', {
+          templateUrl: 'partials/courses/suite/createQuiz.html',
+          controller: 'CoursesCreateQuizCtrl',
+        })
         .when('/cursos/suite/content', {
             templateUrl: 'partials/courses/suite/content.html',
             controller: 'CoursesContentModulosCtrl',
@@ -145,6 +164,14 @@ angular.module('netbase', [
         .when('/cursos/suite/owner', {
             templateUrl: 'partials/courses/suite/owner.html',
             controller: 'CoursesOwnerCtrl',
+        })
+        .when('/cursos/suite/createPage', {
+          templateUrl: 'partials/courses/suite/createPage.html',
+          controller: 'CoursesCreatePageCtrl',
+        })
+        .when('/cursos/suite/createQuiz', {
+          templateUrl: 'partials/courses/suite/createQuiz.html',
+          controller: 'CoursesCreateQuizCtrl',
         })
         .when('/v/id/:videoId', {
             templateUrl: 'partials/video/videowatch.html',
@@ -425,6 +452,10 @@ angular.module('netbase', [
         .when('/home/explore', {
             templateUrl: 'partials/home/homestudentexplore.html',
             controller: 'HomeExploreCtrl'
+        })
+        .when('/home/calls', {
+            templateUrl: 'partials/home/userclassrooms.html',
+            controller: 'HomePersonalClassroom'
         })
         .when('/home/timeline', {
             templateUrl: 'partials/home/hometimeline.html',

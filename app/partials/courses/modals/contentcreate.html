@@ -120,6 +120,7 @@
         <div style="font-size: 1.8em; font-weight: bold;">Descrição</div>
         </br></br>
         <trix-toolbar id="my_toolbar"></trix-toolbar>
+        <trix-toolbar id="my_toolbar"></trix-toolbar>
         <trix-editor style="margin-bottom: 15px;" angular-trix toolbar="my_toolbar" ng-model="description" trix-change="trixChange(e, editor);" trix-initialize="trixInitialize(e, editor);"></trix-editor>
 
       </div>
@@ -153,13 +154,15 @@
     <div ng-show="page == 'playlists'" class="col-xs-12">
 
       <div class="header-modal-courses">
-        <div class="title"><img style="margin-bottom: 10px;" height="40px;" src="https://visualpharm.com/assets/770/Video%20File-595b40b85ba036ed117dad88.svg"> Texto</div>
+
+        <div class="title"><img style="margin-bottom: 10px;" height="40px;" src="https://visualpharm.com/assets/770/Video%20File-595b40b85ba036ed117dad88.svg">
+        <p style="font-weight: 600;">Playlist</p></div>
       </div>
 
       <p ng-if="playlists.length == 0">Nenhuma playlist registrada</p>
 
       <!-- CATEGORIES -->
-      <div ng-repeat="playlist in playlists" ng-click="loadForumPostCategory(category._id)" class="btn-modal-courses">
+      <div ng-repeat="playlist in playlists" ng-click="loadVideos(playlist._id)" class="btn-modal-courses">
 
         <div class="title" style="display: inline-block;">{{playlist.title}}</div>
         <div class="icon"><i class="fas fa-arrow-right"></i></div>
@@ -168,8 +171,27 @@
       <!-- END CATEGORIES -->
 
     </div>
-    <!-- end videos -->
+    <!-- end playlist -->
+    <div ng-show="page == 'videolist'" class="col-xs-12">
 
+      <div class="header-modal-courses">
+        <div class="title"> <img style="margin-bottom: 10px;" height="40px;" src="https://visualpharm.com/assets/770/Video%20File-595b40b85ba036ed117dad88.svg">
+        <p style="font-weight: 600;">Vídeo</p></div>
+      </div>
+
+      <p ng-if="videolist.length == 0">Nenhuma playlist registrada</p>
+
+      <!-- CATEGORIES -->
+      
+         <div ng-repeat="video in videolist" ng-click="savePlay(video)" class="btn-modal-courses">
+        <div class="title" style="display: inline-block;">{{video.title}}</div>
+        <div class="icon"><i class="fas fa-arrow-right"></i></div>
+
+      </div>
+      <!-- END CATEGORIES -->
+
+    </div>
+    <!-- END VIDEOS-->
     <div ng-show="page == 'test'" class="col-xs-12">
 
       <p>aeee</p>

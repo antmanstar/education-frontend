@@ -26,6 +26,8 @@ angular.module('netbase')
   $scope.page = 1;
   $scope.pages = 1;
 
+  $scope.loading = true;
+
   var studentId;
 
   if ($localStorage.token != undefined && $localStorage.token != null) {
@@ -33,15 +35,15 @@ angular.module('netbase')
   }
 
   $scope.forumPosts = [];
-  console.log("timeline controller");
+
   TimelineNew.getTimelineAll(studentId, $scope.page).success(function(res) {
 
-    console.log("timeline controller response");
-    console.log(res)
     let forumPosts = res.data.docs;
-    console.log(forumPosts)
+
     $scope.activities = forumPosts;
     $scope.pages = res.data.pages;
+
+    $scope.loading = false;
 
   });
   //END Timeline.getTimelineByStudentId()
