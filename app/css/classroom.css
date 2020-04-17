@@ -523,8 +523,8 @@ video {
 }
 
 .ava1 {
-    width: 45px;
-    height: 45px;
+    width: 55px;
+    height: 55px;
     border: 1px solid #cbcbcb;
     background: #fff;
     -webkit-border-radius: 18x;
@@ -758,8 +758,8 @@ video {
         font-size: 24px;
     }
     .ava1 {
-        width: 35px;
-        height: 35px;
+        width: 60px;
+        height: 60px;
     } 
 
 }

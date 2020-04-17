@@ -1,6 +1,5 @@
 window.Clipboard = (function(window, document, navigator) {
-    var textArea,
-        copy;
+    var textArea, copy;
 
     function isOS() {
         return navigator.userAgent.match(/ipad|iphone/i);
