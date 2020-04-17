@@ -620,7 +620,39 @@ function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialo
       }
     });
   }
+ $scope.openDeletePopup = function() {
+    console.log('delete module', moduleId);
 
+    ngDialog.open({
+      template: 'deleteModulePopup',
+      controller: 'CoursesModulosByIdCtrl',
+      width: '50%',
+      height: '40%',
+      className: 'ngdialog-theme-default'
+    });    
+  }
+
+  $scope.deleteModule = function() {
+    console.log('delete course', moduleId);
+    $scope.deleteLoading = true;
+
+    Courses.deleteModuleById(moduleId).success(function(res) {
+      console.log('delete module res', res);
+
+      if(res.success) {
+        $scope.deleteLoading = false;
+        ngDialog.close();
+        $location.path('/cursos/suite/modulos');
+      }
+    });
+
+
+  }
+
+  $scope.closePopup = function() {
+    console.log('close');
+    ngDialog.close();
+  }
   /* save order id */
 
   $scope.saveModule = function() {
@@ -733,7 +765,11 @@ function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialo
 
   });
   //END Courses.getCoursesByAccount()
+  $scope.updateModule = function(moduleData) {
+    console.log('module data', moduleData);
 
+    ngDialog.open({ template: 'partials/courses/modals/updateModule.html',data:{moduleData: moduleData}, controller: 'CoursesUpdateModuleCtrl', className: 'ngdialog-theme-default' });
+  }
 }])
 .controller('CoursesModulossingleCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses) {
 
@@ -765,7 +801,7 @@ function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialo
   $scope.conteudocriar = function() {
     ngDialog.open({ template: 'partials/courses/modals/contentcreate.html', controller: 'CoursesContentCreateCtrl', className: 'ngdialog-theme-default', data : { "universityId" : "fdasdfa" } });
   }
-  Courses.getMediaModulesByAccount().success(function(res) {
+  Courses.getContentModulesByAccount().success(function(res) {
 
     console.log(res)
 
@@ -779,6 +815,53 @@ function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialo
 
   });
   //END Courses.getCoursesByAccount()
+  $scope.updateContent = function(contentData) {
+    console.log('content data', contentData);
+    if(contentData.contentType == 'page') {
+      $location.path("/cursos/suite/editPage/"+contentData._id)
+    }
+    if(contentData.contentType == 'quiz') {
+      console.log('quiz');
+
+      localStorage.setItem('updateQuizData', JSON.stringify(contentData));
+      $location.path('/cursos/suite/updateQuiz/'+ contentData._id);
+    }
+  }
+  $scope.openDeletePopup = function(contentId) {
+    console.log('delete content', contentId);
+    $scope.contentId = contentId;
+
+      $scope.modulesByAccount = res.data;
+      console.log(res)
+    ngDialog.open({
+      template: 'deleteContentPopup',
+      controller: 'CoursesContentModulosCtrl',
+      data: {contentId: contentId},
+      width: '50%',
+      height: '40%',
+      className: 'ngdialog-theme-default'
+    });
+  }
+$scope.deleteContent = function() {
+    let contentId = $scope.ngDialogData.contentId;
+    console.log('delete content', contentId);
+    $scope.deleteLoading = true;
+    Courses.deleteContentById(contentId).success(function(res) {
+      console.log('delete content res', res);
+
+      if(res.success) {
+        $scope.deleteLoading = false;
+        ngDialog.close();
+        $route.reload();
+      }
+    });
+  }
+
+  $scope.closePopup = function() {
+    console.log('close');
+    ngDialog.close();
+  }
+
 
 }])
 
@@ -791,7 +874,56 @@ function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialo
     
     ngDialog.open({ template: 'partials/courses/modals/modulecreate.html',data:{id:id}, controller: 'CoursesModulosCriarCtrl', className: 'ngdialog-theme-default' });
   }
+   $scope.addInstructors = function(universityId, courseId,members) {
+    console.log('add instructor', universityId);
+    console.log('add courseid', courseId);
 
+
+    ngDialog.open({ template: 'partials/courses/modals/addInstructors.html',data:{universityId: universityId, courseId: courseId,members:members}, controller: 'CoursesAddInstructorsCtrl', className: 'ngdialog-theme-default' });
+
+  }
+
+  $scope.editCourse = function(courseData) {
+    console.log('add courseid', courseData);
+
+    ngDialog.open({ template: 'partials/courses/modals/updateCourse.html',data:{courseData: courseData}, controller: 'CoursesUpdateCtrl', className: 'ngdialog-theme-default' });
+
+  }
+  $scope.openDeletePopup = function(courseId) {
+    console.log('delete course', courseId);
+
+    ngDialog.open({
+      template: 'deleteCoursePopup',
+      controller: 'CoursesOwnerCtrl',
+      data: {courseId: courseId},
+      width: '50%',
+      height: '40%',
+      className: 'ngdialog-theme-default'
+    });    
+
+  }
+
+  $scope.deleteCourse = function() {
+    let courseId = $scope.ngDialogData.courseId
+    console.log('delete course', courseId);
+    $scope.deleteLoading = true;
+
+    Courses.deleteCourseById(courseId).success(function(res) {
+      console.log('delete course res', res);
+
+      if(res.success) {
+        $scope.deleteLoading = false;
+        ngDialog.close();
+        $route.reload();
+      }
+    });
+
+  }
+
+  $scope.closePopup = function() {
+    console.log('close');
+    ngDialog.close();
+  }
   Courses.getCoursesByAccount().success(function(res) {
 
     console.log(res)
@@ -807,7 +939,186 @@ function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialo
   //END Courses.getCoursesByAccount()
 
 }])
+.controller('CoursesAddInstructorsCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'ngDialog', 'Courses', 'University', function($rootScope, $scope, $location, $route, $localStorage, ngDialog, Courses, University) {
+  
+  let universityId = $scope.ngDialogData.universityId;
+  let courseId = $scope.ngDialogData.courseId;
+  $scope.selectedMember=$scope.ngDialogData.members
+  if(!$scope.selectedMember) $scope.selectedMember=[];
+  console.log($scope.selectedMember);
+ 
+  University.getUniversityById(universityId).success(function(res) {
 
+    console.log('university res', res)
+
+    if (res.success) {
+
+      $scope.university = res.data;
+
+    }
+  });
+  $scope.pushMembers=function(mem,t)
+  {
+    //$scope.selectedMember.inArray(mem);
+    let inn=$scope.selectedMember.indexOf(mem);
+    if(inn<0)
+    $scope.selectedMember.push(mem)
+    else
+    {
+      $scope.selectedMember.splice(inn,1)
+    }
+  }
+  $scope.save = function() {
+    
+    if($scope.selectedMember != undefined && $scope.selectedMember.length>0) {
+      Courses.addInstructor(courseId, $scope.selectedMember).success(function(res) {
+        console.log('instructor res', res);
+
+        if(res.success) {
+          ngDialog.close();
+        }
+
+      });
+    }
+  }
+
+}])
+
+.controller('CoursesUpdateCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'Knowledge', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, Knowledge) {
+  console.log('update course controller');
+  $scope.courseData = $scope.ngDialogData.courseData;
+
+  console.log('cData', $scope.courseData);
+
+  $scope.title = $scope.courseData.title;
+
+  $scope.selectedKnowledge = $scope.courseData.knowledgeId;
+
+  if($scope.courseData.free == false){
+    $scope.free = false;
+    $scope.preco = $scope.courseData.price;
+  } else {
+    $scope.free = true;
+  }
+
+  $scope.description = $scope.courseData.description;
+
+  Knowledge.getAllPaginated().success(function(res){
+    console.log('knowledge res', res);
+
+    if(res.success){
+      $scope.knowledge = res.data.docs;
+    }
+  });
+
+  $scope.updateCourse = function() {
+    let formdata = {
+      title : $scope.title,
+      description : $scope.description,
+      knowledgeId: $scope.selectedKnowledge,
+      // university: $scope.courseData.university
+    };
+
+    if ($scope.free == undefined) {
+      console.log("error, undefined")
+      error = true;
+    } else {
+      formdata.free = $scope.free;
+    }
+
+    if ($scope.free == false) {
+      formdata.price = $scope.preco;
+    }
+
+    console.log('updated data', formdata);
+
+    Courses.updateCourse($scope.courseData._id, formdata).success(function(res) {
+      console.log('update course res', res);
+
+      if(res.success == true) {
+        ngDialog.close();
+        $route.reload();
+      }
+    });
+
+  }
+
+}])
+
+.controller('CoursesUpdateModuleCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses) {
+  console.log('update module controller');
+  $scope.moduleData = $scope.ngDialogData.moduleData;
+
+  console.log('mData', $scope.moduleData);
+
+  $scope.title = $scope.moduleData.title;
+  $scope.duration = $scope.moduleData.duration;
+  $scope.goal = $scope.moduleData.goal;
+  $scope.description = $scope.moduleData.description;
+
+  $scope.updateModule = function() {
+    let formData = {
+      title: $scope.title,
+      description: $scope.description,
+      goal: $scope.goal,
+      duration: $scope.duration
+    }
+
+    console.log('updated data', formData, $scope.moduleData._id);
+
+    Courses.updateModule($scope.moduleData._id, formData).success(function(res) {
+      console.log('module update res', res);
+
+      if(res.success == true) {
+        ngDialog.close();
+        $route.reload();
+      }
+    });
+  }
+
+}])
+.controller('CoursesEditPageCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses) {
+  let id=$route.current.params.id;
+  $scope.activeSection = "createPage";
+  $scope.idd='';
+  Courses.getContentModuleById(id).success(function(res){
+  $scope.tinymceModel = res.data.text
+  $scope.title=res.data.title;
+  $scope.idd=res.data.moduleId;
+  $scope.tinymceOptions = {
+  file_picker_types: 'file image media',
+  tinydrive_token_provider: function (success, failure) {
+     Courses.fileUploadUrl().success(function(msg){
+
+
+     success({ token: msg.token });
+     })
+     // failure('Could not create a jwt token')
+  },
+  tinydrive_google_drive_key:"carbisa-document-upload@carbisa.iam.gserviceaccount.com",
+  tinydrive_google_drive_client_id:'102507978919142111240',
+  plugins: 'print preview powerpaste casechange importcss tinydrive searchreplace autolink autosave save directionality advcode visualblocks visualchars fullscreen image link media mediaembed  codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists checklist wordcount tinymcespellchecker a11ychecker textpattern noneditable help formatpainter pageembed charmap mentions quickbars linkchecker emoticons advtable',
+  toolbar: 'insertfile|undo redo | bold italic | alignleft aligncenter alignright | code|styleselect|outdent indent|link image'
+  };
+  }).error(function(msg){
+     alert("Error")
+     $location.path("/home/cursos")
+  })
+  
+  
+
+  $scope.saveContent = function() {
+     
+     Courses.savePage({text:$scope.tinymceModel,contentType:'page',title:$scope.title},id).
+     success(function(res){
+         $location.path("/cursos/suite/content")
+     }).error(function(er){
+        alert(er)
+     })
+  };
+  
+  
+}])
 .controller('CoursesCreatePageCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses) {
   $scope.activeSection = "createPage";
   $scope.tinymceModel = 'Initial content';
@@ -968,6 +1279,139 @@ function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialo
       });
     }
   }
+}])
+.controller('CoursesUpdateQuizCtrl', ['$sce','User','$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', function($sce,User,$rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses) {
+
+  $scope.quizData = JSON.parse(localStorage.getItem('updateQuizData'));
+
+  $scope.quizTitle = $scope.quizData.title;
+  $scope.quizDescription = $scope.quizData.description;
+
+  $scope.updateQuiz = function() {
+    console.log('update quiz title', );
+
+    if(($scope.quizDescription != undefined && $scope.quizDescription != '') && $scope.createQuizForm.$valid) {
+      $scope.createQuizLoading = true;
+
+      let data = {
+        title: $scope.quizTitle,
+        description: $scope.quizDescription
+      }
+      console.log('updated quiz data', data);
+
+      Courses.updateQuiz($scope.quizData._id, data).success(function(res){
+        console.log('create quiz res', res);
+        if(res.success) {
+          $scope.createQuizLoading = false;
+          $scope.addQuestions = true;
+          console.log('quiz id created', res.data._id);
+          // $scope.contentId = res.data._id;
+
+          for(let i=0; i < $scope.quizData.questions.length; i++) {
+            $scope.quizData.questions[i]['ques_options'] = $scope.quizData.questions[i]['qes_options'];
+            delete $scope.quizData.questions[i]['qes_options'];
+            $scope.quizData.questions[i].answer = $scope.quizData.answers[i].answer;
+          }
+
+          $scope.quesArr = $scope.quizData;
+          console.log('quiz data fetch', $scope.quizData);
+
+        }
+
+      });
+    }
+  }
+
+
+  $scope.selectType = function(type, index) {
+    console.log('selectType', type, index);
+
+    if(type == 'mcq'){
+      console.log('mcq part');
+
+       $scope.q = {
+        title: '',
+        answer: '',
+        title_type: '',
+        ques_options: [
+          { title: '' },
+          { title: '' },
+          { title: '' },
+          { title: '' }
+      ],
+      }
+    } else if (type == 'descriptive') {
+      console.log('descriptive part');
+
+      // $scope.
+      $scope.quesArr.questions[index].ques_options[0].title = 'not_available'
+      $scope.quesArr.questions[index].ques_options[1].title = 'not_available'
+      $scope.quesArr.questions[index].ques_options[2].title = 'not_available'
+      $scope.quesArr.questions[index].ques_options[3].title = 'not_available'
+
+      $scope.q = {
+        title: '',
+        answer: '',
+        title_type: '',
+      }
+    }
+  }
+
+  // add new question one by one
+  $scope.addNewQues = function() {
+    console.log('add new question valid', $scope.quizForm.$valid);
+
+    // console.log('form valid', $scope.quizForm.$valid);
+    $scope.showSelection = "true"
+
+    if($scope.quizForm.$valid) {
+      console.log('add question');
+      $scope.quesNumber++;
+
+      let q = {
+        title: '',
+        answer: '',
+        title_type: 'mcq',
+        ques_options: [
+          { title: '' },
+          { title: '' },
+          { title: '' },
+          { title: '' }
+      ],
+      }
+
+      $scope.$evalAsync(function(){
+
+        $scope.quesArr.questions.push(q);
+
+        console.log('array', $scope.quesArr.questions);
+      })
+    }
+  }
+
+  $scope.saveQuiz = function() {
+    console.log('save valid', $scope.quizForm.$valid);
+
+    if($scope.quizForm.$valid) {
+      $scope.addQuesLoading = true;
+
+      console.log('final questions', $scope.quesArr.questions);
+
+      let quesData = {
+        data: $scope.quesArr.questions
+      }
+
+      Courses.addQuizQuestions($scope.quizData._id, quesData).success(function(res){
+        console.log('ques api res', res);
+
+        if(res.success) {
+          $scope.addQuesLoading = false;
+          $location.path('/cursos/suite/content');
+        }
+      });
+    }
+  }
+
 }])
 
 .controller('CoursesByIdCtrl', ['$sce','User','$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', function($sce,User,$rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses) {
