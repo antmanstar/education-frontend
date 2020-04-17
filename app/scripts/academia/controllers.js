@@ -2373,114 +2373,29 @@ angular.module('netbase')
                 scope.studentIsPremium = false;
                 scope.studentIsAdmin = false;
                 scope.studentIsTeam = false;
+          
+            Students.getStudentById(studentId).then(function(res) {
+              let data = res.data.data;
 
-                /* chat */
-
-                scope.chatDisplay = true;
-
-                /* chat functions */
-
-                scope.chatToggle = function() {
-
-                    console.log("ae")
-
-                    if (scope.chatDisplay) {
-                        scope.chatDisplay = false;
-                    } else {
-                        scope.chatDisplay = true;
-                    }
-
+              for (let i=0; i < data.universitiesSubscribed.length; i++) {
+                if (data.universitiesSubscribed[i].universityId == university._id && data.universitiesSubscribed[i].unsubscribed===false) {
+                  scope.showSubscribe = false;
                 }
+                if (data.universitiesSubscribed[i].universityId == university._id && data.universitiesSubscribed[i].unsubscribed===true) {
+                  scope.showSubscribe = true;
+                }
+              }
+            })
 
-                /* */
+          
+          /* check if student is a premium member */
+          for (let idx = 0; idx < university.members.length; idx++) {
 
-                attr.$observe('university', function(value) {
+                  var member = university.members[idx];
 
-                  /* REAL TIME MODULE */
-
-                    /*
-                    var socket = io("https://educationalcommunity-realtime.herokuapp.com");
-
-                    let student = { _id: studentId };
-
-                    if (value) {
-
-                        university = JSON.parse(value);
-
-                        console.log("university get channels 1")
-
-                        console.log(university._id)
-
-                        Chat.getUniversityChannels(university._id).success(function(res) {
-
-                            console.log("chat get channels :: ")
-                            console.log(res.data)
-
-                            if (res.success) {
-
-                                scope.channels = res.data;
-
-                                const chatClient = new Twilio.Chat.Client($localStorage.tokenTwilio);
-
-                                chatClient.on('channelJoined', function(channel) {
-                                    console.log('Joined channel ' + channel.friendlyName);
-                                });
-
-                                console.log("hey")
-
-                                chatClient.getSubscribedChannels().then(function(paginator) {
-                                    console.log("paginator: ")
-                                    console.log(paginator)
-                                    for (let i = 0; i < paginator.items.length; i++) {
-                                        const channel = paginator.items[i];
-                                        console.log('Channel: ' + channel.friendlyName);
-                                    }
-                                });
-
-                            } else {
-
-                            }
-
-                        });
-                        */
-
-                        /*
-                        socket.on('connect', function(data) {
-
-                            console.log(data)
-
-                            if (studentId != undefined) {
-
-                                if (studentId.length > 0) {
-
-                                    socket.emit('universityVisit', { universityUrl: university.url, student: student });
-
-                                    socket.on('universityVisitsTodayList', function(data) {
-
-                                        scope.universityVisitsTodayList = data;
-
-                                    });
-                                    //END socket.on('universityVisitsTodayList')
-
-                                }
-                                //END if (studentId.length > 0)
-
-                            }
-                            //END studentId
-
-                        });
-                        //END socket.on('connect')
-
-                      */
-
-                      /* check if student is a premium member */
-                      for (let idx = 0; idx < university.members.length; idx++) {
-
-                          var member = university.members[idx];
-
-                          if (studentId != undefined && member.accountId == studentId && member.privilege >= 10) {
-                              scope.studentIsPremium = true;
-                          }
+                  if (studentId != undefined && member.accountId == studentId && member.privilege >= 10) {
+                    scope.studentIsPremium = true;
+                  }
 
                           if (studentId != undefined && member.accountId == studentId && member.privilege >= 50) {
                               scope.studentIsTeam = true;
@@ -2555,6 +2470,7 @@ angular.module('netbase')
                     let studentIdMembersLocation = userMembersLocation(array);
 
                     if (studentIdMembersLocation != -1) {
+
 
                         console.log("array student id member location");
                         console.log(array[studentIdMembersLocation].unsubscribed)

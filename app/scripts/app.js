@@ -19,8 +19,10 @@ angular.module('netbase', [
     'ngSanitize',
     'infinite-scroll',
     'updateMeta',
-    'as.sortable'
+    'as.sortable',
+    'oc.lazyLoad'
 ])
+
 .config(['$translateProvider', '$localStorageProvider', 'StripeElementsProvider', function ($translateProvider, $localStorageProvider, StripeElementsProvider) {
 
   //let stripeKey = "pk_live_ZBmOf7GNQ13AIEGeP9WkPv3M";
@@ -53,6 +55,7 @@ angular.module('netbase', [
   });
 
   $translateProvider.preferredLanguage('en');
+
 
 }])
 
@@ -128,6 +131,11 @@ angular.module('netbase', [
         .when('/cursos/id/:id/timeline', {
             templateUrl: 'partials/courses/dashboard/index.html',
             controller: 'CoursesByIdDashboardCtrl',
+            resolve: {
+                LazyLoadCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                    return $ocLazyLoad.load('CourseTimelineController'); // Resolve promise and load before view 
+                }]
+            },
         })
         .when('/cursos/id/:id/modulos', {
             templateUrl: 'partials/courses/dashboard/modulo.html',
@@ -236,6 +244,11 @@ angular.module('netbase', [
         .when('/a/:academiaName/timeline', {
             templateUrl: 'partials/academia/academiatimeline.html',
             controller: 'AcademiaTimelineCtrl',
+            resolve: {
+                LazyLoadCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                    return $ocLazyLoad.load('UniversityTimelineController'); // Resolve promise and load before view 
+                }]
+            },
         })
         .when('/a/:academiaName/playlist/all', {
             templateUrl: 'partials/academia/academiaplaylist.html',
@@ -464,7 +477,12 @@ angular.module('netbase', [
         .when('/home/timeline', {
             templateUrl: 'partials/home/hometimeline.html',
             controller: 'HomeTimelineCtrl',
-            resolve: auth
+            resolve: {
+                auth: auth.app,
+                LazyLoadCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                    return $ocLazyLoad.load('HomeTimelineController'); // Resolve promise and load before view 
+                }]
+             },
         })
         .when('/home/noticias', {
             templateUrl: 'partials/home/homenews.html',
