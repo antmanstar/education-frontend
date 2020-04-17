@@ -38,9 +38,20 @@ body {
   <div class="row">
 
     <div class="col-xs-12 col-sm-8 scene-col">
+     
+     <ng-containner ng-if="type=='document' || type=='page'">
+        
+       <div ng-controller="CoursesEstudarTypeDocumentCtrl">
+        <div  ng-include="'partials/courses/estudar/document.html'"></div>
+       </div>
+      </ng-containner>
 
-      <iframe style="border: none;" width="100%" height="100%;" src="{{url}}"></iframe>
-
+      <ng-containner ng-if="type=='quiz'">
+      
+       <div ng-controller="CoursesEstudarTypeQuizCtrl">
+        <div mc="{{type}}" ng-include="'partials/courses/estudar/quiz.html'"></div>
+       </div>
+       </ng-containner>
     </div>
     <!-- end col-xs-12 col-sm-9 -->
 
@@ -51,7 +62,7 @@ body {
       </div>
       <!-- END menu-option -->
 
-      <ng-containner ng-if="c.moduleId.length>0" coursemodulecontentmoduloview mc="{{c.moduleId.content}}" in="{{$index+1}}" courseid="{{course._id}}"></ng-containner>
+      <ng-containner ng-if="c.moduleId.content.length>0" coursemodulecontentmoduloview mc="{{c.moduleId.content}}" in="{{$index+1}}" courseid="{{course._id}}"></ng-containner>
       <!-- END menu-option -->
     </ng-containner>
     </div>

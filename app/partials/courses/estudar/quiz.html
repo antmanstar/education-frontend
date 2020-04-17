@@ -1,4 +1,4 @@
-<style>
+<!-- <style>
   .player-area {
     padding: 0;
   }
@@ -14,15 +14,15 @@
   <p style="margin-bottom: 50px;"><a href="https://universida.de/v/id/{{video._id}}">https://universida.de/v/id/{{video._id}}</p></a>
 
   <h1>O seu vídeo esta sendo processado.</h1>
-  <h4>Aguarde alguns instantes. O seu vídeo vai estar disponível para todos.</h4>
+  <h4>Aguarde alguns instantes. O seu vídeo vai estar disponível para todos.</h4> -->
 
-  <!--
+<!--
   <div class="alert bg-primary-green">Este vídeo esta sendo processado.</div>
   -->
 
-</div>
+<!-- </div> -->
 <!-- end container-fluid -->
-
+<!-- 
 <style>
   .plyr {
     height: 100% !important;
@@ -36,4 +36,161 @@
 
   <video id="video" controls></video>
 
+</div> -->
+
+<div class="row">
+<div class="col-sm-12">
+  <br><br>
+
+  <div class="panel panel-default quiz-panel quiz-box" ng-show="quesArr.length > 0">
+    <div class="row">
+      <div class="col-sm-2">
+        <span class="pull-left label1">{{quesNo+1}}/{{quesArr.length}}</span>
+      </div>
+      <div class="col-sm-8 text-center">
+        <h2 style="margin-top: 20px">Quiz Title</h2>
+      </div>
+      <div class="col-sm-2 text-right">
+        <button ng-click="saveQuizSubmit(descriptiveAnswer)" ng-disabled="!finalquestion" class="btn pull-right label2">Save progress</button>
+      </div>
+    </div>
+
+    <div class="panel-body quiz-panel">
+      <span>Ques. {{quesNo+1}}</span>
+      <h4 class="text-uppercase">{{question.title}}</h4>
+      <div class="row options-row">
+        <div ng-show="question.title_type == 'mcq'" class="col-md-6" ng-repeat="quesOption in question.qes_options track by $index">
+          <div class="quiz-options" id="op{{$index+1}}" ng-click="selectOption($index+1)">
+            <span><i ng-class="selectedOption == $index+1 ? 'far fa-check-square' : 'far fa-square'"></i>{{quesOption.title}}</span>
+          </div>
+        </div>
+        <div ng-show="question.title_type == 'descriptive'" class="col-md-12">
+          <input class="form-control" type="text" placeholder="enter your answer" ng-model="descriptiveAnswer">
+        </div>
+        <!-- <div class="col-md-6">
+          <div class="quiz-options" id="op2" ng-click="selectOption(2)">
+            <span><i ng-class="selectedOption == '2' ? 'far fa-check-square' : 'far fa-square'"></i>option2</span>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="quiz-options" id="op3" ng-click="selectOption(3)">
+            <span><i ng-class="selectedOption == '3' ? 'far fa-check-square' : 'far fa-square'"></i>option3</span>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="quiz-options" id="op4" ng-click="selectOption(4)">
+            <span><i ng-class="selectedOption == '4' ? 'far fa-check-square' : 'far fa-square'"></i>option4</span>
+          </div>
+        </div> -->
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-3" ng-click="prevQues()">
+        <button class="btn btn-primary pull-left label3" ng-disabled="quesNo == 0">Prevous Question</button>
+      </div>
+      <div class="col-sm-6 text-center">
+        <span style="padding-top: 20px;">
+          <!-- <div class="progress">
+            <div class="progress-bar progress-bar-striped active" role="progressbar"
+              aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:40%">
+              40%
+            </div>
+          </div> -->
+        </span>
+      </div>
+      <div class="col-sm-3 text-right" ng-click="nextQues()">
+        <button class="btn btn-success pull-right label4" ng-disabled="(selectedOption == undefined && descriptiveAnswer == undefined)|| finalquestion">Next Question <i class="fas fa-chevron-right"></i></button>
+      </div>
+    </div>
+
+  </div>
 </div>
+</div>
+<style>
+  .quiz-panel {
+    border-radius: 50px;
+    min-height: 350px;
+    width: 75%;
+    margin-left: 50px;
+    border: none;
+  }
+
+  .quiz-box {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  }
+
+  .label1 {
+    background-color: #37383d;
+    border-top-left-radius: 15px;
+    text-align: center;
+    color: white;
+    margin-left: 1px;
+    padding: 10px;
+    width: 74px;
+    height: 40px;
+    vertical-align: middle;
+  }
+
+  .label2 {
+    background-color: #37383d;
+    border-top-right-radius: 15px;
+    text-align: center;
+    color: white;
+    margin-left: 1px;
+    padding: 10px;
+    width: 130px;
+    height: 40px;
+    vertical-align: middle;
+    cursor: pointer;
+  }
+
+  .label3 {
+    /* background-color: #37383d; */
+    border-bottom-left-radius: 15px;
+    text-align: center;
+    color: white;
+    margin-left: 1px;
+    padding: 10px;
+    width: 130px;
+    height: 40px;
+    vertical-align: middle;
+    cursor: pointer;
+  }
+
+  .label4 {
+    background-color: #3c6839;
+    border-bottom-right-radius: 15px;
+    text-align: center;
+    color: white;
+    margin-left: 1px;
+    padding: 10px;
+    width: 130px;
+    height: 40px;
+    vertical-align: middle;
+    cursor: pointer;
+  }
+
+  .options-row {
+    padding: 20px;
+    margin-left: 30px;
+  }
+
+  .quiz-options {
+    background-color: #f5f5f5;
+    padding: 20px;
+    margin: 5px;
+    border-radius: 5px;
+    font-size: large;
+    color: black;
+    cursor: pointer;
+  }
+
+  .quiz-options i {
+    color: black;
+    font-size: 25px;
+    margin-right: 10px;
+    vertical-align: middle;
+  }
+
+</style>
