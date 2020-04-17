@@ -116,7 +116,7 @@ angular.module('netbase', [
             templateUrl: 'partials/courses/estudar.html',
             controller: 'CoursesEstudarCtrl',
         })
-        
+
         .when('/cursos/id/view/document/:id/:videoid/:post_id', {
             templateUrl: 'partials/courses/estudar/document.html',
             controller: 'CoursesEstudarTypeDocumentCtrl',
@@ -229,7 +229,7 @@ angular.module('netbase', [
             templateUrl: 'partials/academia/classrooms/academiaclassrooms.html',
             controller: 'AcademiaClassroomsCtrl',
         })
-        .when("/a/:academiaName/roomid/:roomSID/:accountSid/:roomName", {
+        .when("/a/university/:academiaName/roomid/:roomSID/accountid/:accountSid/roomname/:roomName", {
             templateUrl: 'partials/academia/classrooms/academiaclassroom.html',
             controller: 'AcademiaClassroomCtrl',
         })
@@ -456,6 +456,10 @@ angular.module('netbase', [
         .when('/home/explore', {
             templateUrl: 'partials/home/homestudentexplore.html',
             controller: 'HomeExploreCtrl'
+        })
+        .when('/home/calls', {
+            templateUrl: 'partials/home/userclassrooms.html',
+            controller: 'HomePersonalClassroom'
         })
         .when('/home/timeline', {
             templateUrl: 'partials/home/hometimeline.html',

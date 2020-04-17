@@ -1,6 +1,6 @@
 <!--
     - Classroom name
-    - Accessibility 
+    - Accessibility
         . Public room
             ` For free
             ` Options for pay-per-view 1-1
@@ -12,8 +12,10 @@
         Boolean, to allow donations to be sent
     - Chat
         Boolean, to allow chat usage
+        
+        ng-controller='AcademiaClassroomsCtrl'
 -->
-<div ng-controller='AcademiaClassroomsCtrl' class='classroom-modal-main'>
+<div class='classroom-modal-main'>
     <label class='classroom-modal-caption' style="margin-top: 50px;">Classroom Name </label>
     <input class="classroom-modal-input" ng-model='addingClassroom.uniqueName' />
     <label class='classroom-modal-caption'>Accessibility</label>
@@ -29,7 +31,7 @@
     </div>
     <div class="classroom-btn-view">
         <div ng-click="confirmCreateClassroom()" class="confirm-create-classroom-btn">
-            CREAT CLASSROOM
+            CREATE CLASSROOM
         </div>
     </div>
 </div>
