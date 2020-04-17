@@ -2224,6 +2224,29 @@ angular.module('netbase')
 
 /* end academia */
 
+.directive('instructorinfo', ['University', '$localStorage', '$route', 'jwtHelper', 'Students', function(University, $localStorage, $route, jwtHelper, Students) {
+    return {
+        restrict: 'EA',
+        templateUrl: '../partials/directive/instructorinfo.html',
+        replace: false,
+        scope: true,
+        link: function(scope, element, attr) {
+
+            let studentId = attr.sid;
+
+            Students.getStudentById(studentId).then(function(res) {
+
+                console.log("response student: ");
+                console.log(res);
+                scope.student = res.data.data;
+
+            });
+
+        }
+
+    }
+
+}])
 .directive('studentinfo', ['University', '$localStorage', '$route', 'jwtHelper', 'Students', function(University, $localStorage, $route, jwtHelper, Students) {
     return {
         restrict: 'EA',
@@ -2247,7 +2270,33 @@ angular.module('netbase')
     }
 
 }])
+.directive('studentinfooption', ['University', '$localStorage', '$route', 'jwtHelper', 'Students', function(University, $localStorage, $route, jwtHelper, Students) {
+    return {
+        restrict: 'EA',
+        templateUrl: '../partials/directive/studentinfooption.html',
+        replace: false,
+        scope: true,
+        link: function(scope, element, attr) {
 
+            let studentId = attr.sid;
+
+            Students.getStudentById(studentId).then(function(res) {
+
+                console.log("response student: ");
+                
+                scope.student_id=studentId;
+                if(res.sucess)
+                scope.student = res.data.data;
+                else
+                   scope.student={_id:studentId,"name":"test"}
+                
+            });
+
+        }
+
+    }
+
+}])
 .directive('academiastatus', ['University', '$localStorage', '$route', 'jwtHelper', function(University, $localStorage, $route, jwtHelper) {
     return {
         restrict: 'EA',

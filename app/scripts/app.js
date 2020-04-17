@@ -113,6 +113,10 @@ angular.module('netbase', [
             templateUrl: 'partials/courses/quiz/quizResult.html',
             controller: 'CoursesQuizResultCtrl',
         })
+        .when('/cursos/suite/updateQuiz/:id', {
+          templateUrl: 'partials/courses/suite/updateQuiz.html',
+          controller: 'CoursesUpdateQuizCtrl',
+        })
         .when('/cursos/id/:id/estudar', {
             templateUrl: 'partials/courses/estudar.html',
             controller: 'CoursesEstudarCtrl',
@@ -153,6 +157,10 @@ angular.module('netbase', [
         .when('/cursos/suite/createPage/:id', {
           templateUrl: 'partials/courses/suite/createPage.html',
           controller: 'CoursesCreatePageCtrl',
+        })
+        .when('/cursos/suite/editPage/:id', {
+          templateUrl: 'partials/courses/suite/createPage.html',
+          controller: 'CoursesEditPageCtrl',
         })
         .when('/cursos/suite/createQuiz/:id', {
           templateUrl: 'partials/courses/suite/createQuiz.html',

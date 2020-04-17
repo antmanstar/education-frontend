@@ -95,7 +95,20 @@
   .instrutora .picture {
     margin-bottom: 10px;
   }
+.delete-buttons-div {
+    display: inline-flex;
+    width: 50%;
+  }
 
+  .delete-buttons-div button {
+    margin-top: 20px;
+    margin-right: 20px;
+    width: 50%;
+  }
+
+  .delete-container {
+    margin-top: 70px;
+  }
   @media only screen and (max-width: 768px) {
 
     .course-card {
@@ -161,7 +174,9 @@
           </div>
 
         </div>
-
+<div class="pull-right" style="cursor: pointer;">
+          <i class="far fa-trash-alt text-danger" aria-hidden="true" ng-click="openDeletePopup()"></i>
+        </div><br>
       </div>
       <!-- end course-card -->
       <h1>Drop your Conteudo here</h1>
@@ -227,3 +242,13 @@
 
 </div>
 <!-- container-full -->
+<!-- delete popup -->
+<script type="text/ng-template" id="deleteModulePopup">
+  <div class="container-fluid text-center delete-container">
+    <h3>Are you sure you want to delete this Module?</h3>
+    <div class="delete-buttons-div">
+      <button class="btn btn-danger" ng-disabled="deleteLoading" ng-click="deleteModule()">Delete <img style="width: 15px;" ng-show="deleteLoading == true" src="img/misc/loading.gif"/></button>
+      <button class="btn btn-dark" ng-click="closePopup()">Cancel</button>
+    </div>
+  </div>
+</script>

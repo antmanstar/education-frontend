@@ -1674,6 +1674,56 @@ angular.module('netbase')
           return $http.get(baseUrl + url);
 
         },
+         updateQuiz: function(quizId, data) {
+
+          var url = '/module/content/update/' + quizId;
+
+          return $http({
+            method: 'PUT',
+            url: baseUrl + url,
+            data : data,
+            transformRequest: function(obj) {
+              var str = [];
+              for(var p in obj)
+              str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+              return str.join("&");
+            },
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            }});
+        },
+        deleteCourseById: function(courseId) {
+          var url = '/courses/' + courseId;
+
+          return $http({
+            method: 'DELETE',
+            url: baseUrl + url,
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            }});
+        },
+
+        deleteModuleById: function(moduleId) {
+          var url = '/modulo/' + moduleId;
+
+          return $http({
+            method: 'DELETE',
+            url: baseUrl + url,
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            }});
+        },
+
+        deleteContentById: function(moduleId) {
+          var url = '/content/' + moduleId;
+
+          return $http({
+            method: 'DELETE',
+            url: baseUrl + url,
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            }});
+        },
          saveQuizResult: function(payload) {
           
            var url = "/quiz/id/submit";
@@ -1710,6 +1760,57 @@ angular.module('netbase')
         fileUploadUrl:function(){
           let url = baseUrl+"/jwt";
           return $http.post(url,{});
+        },
+        addInstructor: function(courseId, instructorId ) {
+
+          var url = '/instructor/' + courseId;
+
+          
+          return $http({
+            method: 'PUT',
+            url: baseUrl + url,
+            data : {instructors:instructorId},
+            headers: {
+                'Content-Type': 'application/json',
+            }});
+        },
+
+        updateCourse: function(courseId, data) {
+
+          var url = '/update/' + courseId;
+
+          return $http({
+            method: 'PUT',
+            url: baseUrl + url,
+            data : data,
+            transformRequest: function(obj) {
+              var str = [];
+              for(var p in obj)
+              str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+              return str.join("&");
+            },
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            }});
+        },
+
+        updateModule: function(moduleId, data) {
+
+          var url = '/module/update/' + moduleId;
+
+          return $http({
+            method: 'PUT',
+            url: baseUrl + url,
+            data : data,
+            transformRequest: function(obj) {
+              var str = [];
+              for(var p in obj)
+              str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+              return str.join("&");
+            },
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            }});
         },
         getById: function(id) {
 
@@ -1774,6 +1875,25 @@ angular.module('netbase')
 
           return $http({
             method: 'POST',
+            data: data,
+            url: baseUrl + url,
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            }});
+
+        },
+         savePage: function(data,id) {
+
+          var url = '/module/content/update/'+id ;
+
+          return $http({
+            method: 'PUT',
             data: data,
             url: baseUrl + url,
             transformRequest: function(obj) {
