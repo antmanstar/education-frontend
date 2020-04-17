@@ -66,8 +66,8 @@
 
     <p style="font-size: 0.9em; padding-top: 15px; color: #7d7d7d; font-weight: bold;">AÇÕES</p>
 
-    <button class="btn bg-primary-purple" style="margin-top: 2px; height: 29px; width: unset;" ng-if="showSubscribe==true" ng-click="subscribe()">Inscrever</button>
-    <button class="btn bg-primary-purple" style="margin-top: 2px; height: 29px; width: unset;" ng-if="showSubscribe==false" ng-click="subscribe()">Desinscrever</button>
+    <button class="btn bg-primary-purple" style="margin-top: 2px; height: 29px; width: unset;" ng-hide="userSubscribed(university.members)" ng-click="subscribe()">Inscrever</button>
+    <button class="btn bg-primary-purple" style="margin-top: 2px; height: 29px; width: unset;" ng-show="userSubscribed(university.members)" ng-click="subscribe()">Desinscrever</button>
     <button class="btn bg-base" style="margin-top: 2px; height: 29px; width: unset;" ng-click="createPost(university.url)">Criar postagem</button>
 
     <div style="height: 5px"></div>
