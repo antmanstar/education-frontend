@@ -19,7 +19,8 @@ angular.module('netbase', [
     'ngSanitize',
     'infinite-scroll',
     'updateMeta',
-    'as.sortable'
+    'as.sortable',
+    'oc.lazyLoad'
 ])
 .config(['$translateProvider', '$localStorageProvider', 'StripeElementsProvider', function ($translateProvider, $localStorageProvider, StripeElementsProvider) {
 
@@ -464,7 +465,7 @@ angular.module('netbase', [
         .when('/home/timeline', {
             templateUrl: 'partials/home/hometimeline.html',
             controller: 'HomeTimelineCtrl',
-            resolve: auth
+            resolve: auth,
         })
         .when('/home/noticias', {
             templateUrl: 'partials/home/homenews.html',
