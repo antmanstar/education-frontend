@@ -4,6 +4,8 @@ angular.module('netbase', [
     '720kb.socialshare',
     'ngStorage',
     'ngRoute',
+    'ngCookies',
+    'ui.tinymce',
     'pascalprecht.translate',
     'ngDialog',
     'angular-jwt',
@@ -20,53 +22,40 @@ angular.module('netbase', [
     'as.sortable',
     'oc.lazyLoad'
 ])
-.config(['$translateProvider', '$localStorageProvider', "$ocLazyLoadProvider", 'StripeElementsProvider', function ($translateProvider, $localStorageProvider, $ocLazyLoadProvider, StripeElementsProvider) {
 
-    let stripeKey = "pk_live_ZBmOf7GNQ13AIEGeP9WkPv3M";
-    //let stripeKey = "pk_test_2XclbP1INDqkspKrbRn6oBZR";
+.config(['$translateProvider', '$localStorageProvider', 'StripeElementsProvider', function ($translateProvider, $localStorageProvider, StripeElementsProvider) {
 
-    //AnalyticsProvider.setAccount('UA-125408424-1');
+  //let stripeKey = "pk_live_ZBmOf7GNQ13AIEGeP9WkPv3M";
+  let stripeKey = "pk_test_2XclbP1INDqkspKrbRn6oBZR";
 
-    StripeElementsProvider.setAPIKey(stripeKey);
+  //AnalyticsProvider.setAccount('UA-125408424-1');
 
-    $translateProvider.translations('en', {
-        HOME_TITLE: 'YOUR CAMPUS ONLINE',
-        HOME_SUBTITLE: 'Welcome to the biggest college market online',
-        MYSTORE_MENU: 'my store',
-        BUTTON_LANG_EN: 'english',
-        CREATE_YOUR_STORE: 'create store',
-        CATEGORY_BOOKS_TITLE: 'Books',
-        CATEGORY_CELLPHONE_TITLE: 'Mobile phones'
-    });
+  StripeElementsProvider.setAPIKey(stripeKey);
 
-    $translateProvider.translations('pt', {
-        HOME_TITLE: 'SEU CAMPUS ONLINE',
-        HOME_SUBTITLE: 'Bem vindo ao maior mercado universitÃ¡rio online',
-        MYSTORE_MENU: 'minha loja',
-        BUTTON_LANG_EN: 'englisch',
-        BUTTON_LANG_DE: 'deutsch',
-        CREATE_YOUR_STORE: 'criar loja',
-        CATEGORY_BOOKS_TITLE: 'Livros',
-        CATEGORY_CELLPHONE_TITLE: 'Celulares',
-        CATEGORY_HEADPHONES_TITLE: 'Fone'
-    });
+  $translateProvider.translations('en', {
+    HOME_TITLE: 'YOUR CAMPUS ONLINE',
+    HOME_SUBTITLE: 'Welcome to the biggest college market online',
+    MYSTORE_MENU: 'my store',
+    BUTTON_LANG_EN: 'english',
+    CREATE_YOUR_STORE: 'create store',
+    CATEGORY_BOOKS_TITLE: 'Books',
+    CATEGORY_CELLPHONE_TITLE: 'Mobile phones'
+  });
 
-    $translateProvider.preferredLanguage('en');
+  $translateProvider.translations('pt', {
+    HOME_TITLE: 'SEU CAMPUS ONLINE',
+    HOME_SUBTITLE: 'Bem vindo ao maior mercado universitÃ¡rio online',
+    MYSTORE_MENU: 'minha loja',
+    BUTTON_LANG_EN: 'englisch',
+    BUTTON_LANG_DE: 'deutsch',
+    CREATE_YOUR_STORE: 'criar loja',
+    CATEGORY_BOOKS_TITLE: 'Livros',
+    CATEGORY_CELLPHONE_TITLE: 'Celulares',
+    CATEGORY_HEADPHONES_TITLE: 'Fone'
+  });
 
-    $ocLazyLoadProvider.config({
-        'debug': true, // For debugging 'true/false'
-        'events': true, // For Event 'true/false'
-        'modules': [{
-            name : 'HomeTimelineController',
-            files: ['app/scripts/timeline/controller.js']
-        },{
-            name : 'CourseTimelineController',
-            files: ['app/scripts/controller.js']
-        },{
-            name : 'UniversityTimelineController',
-            files: ['app/scripts/academia/controllers.js']
-        }]
-    });
+  $translateProvider.preferredLanguage('en');
+
 
 }])
 
@@ -74,21 +63,21 @@ angular.module('netbase', [
 
     let auth = {
 
-        app: function($q, $location, $localStorage) {
+      app: function($q, $location, $localStorage) {
 
-          var deferred = $q.defer();
+        var deferred = $q.defer();
 
-          deferred.resolve();
+        deferred.resolve();
 
-          let logged = $localStorage.logged;
+        let logged = $localStorage.logged;
 
-          if (!logged) {
-             $location.path('/');
-          }
-
-          return deferred.promise;
-
+        if (!logged) {
+          $location.path('/home/explore');
         }
+
+        return deferred.promise;
+
+      }
 
    };
 
@@ -106,6 +95,14 @@ angular.module('netbase', [
             templateUrl: 'partials/onboarding/universities.html',
             controller: 'OnboardingUniversitiesScreenCtrl',
         })
+        .when('/onboarding/universities/create', {
+            templateUrl: 'partials/onboarding/universitycreate/create.html',
+            controller: 'OnboardingUniversityCreateCtrl',
+        })
+        .when('/onboarding/signup', {
+            templateUrl: 'partials/onboarding/signupstep1.html',
+            controller: 'OnboardingSignUpScreenCtrl',
+        })
         .when('/p/create', {
             templateUrl: 'partials/playlist/create.html',
             controller: 'PlaylistCreateCtrl',
@@ -114,13 +111,22 @@ angular.module('netbase', [
             templateUrl: 'partials/courses/byid.html',
             controller: 'CoursesByIdCtrl',
         })
+        .when('/quiz-result/:qid/:rid/:uid', {
+            templateUrl: 'partials/courses/quiz/quizResult.html',
+            controller: 'CoursesQuizResultCtrl',
+        })
         .when('/cursos/id/:id/estudar', {
             templateUrl: 'partials/courses/estudar.html',
             controller: 'CoursesEstudarCtrl',
         })
-        .when('/cursos/id/:id/estudar/videos/:videoid', {
-            templateUrl: 'partials/courses/estudar/videos.html',
-            controller: 'CoursesEstudarTypeVideoCtrl',
+
+        .when('/cursos/id/view/document/:id/:videoid/:post_id', {
+            templateUrl: 'partials/courses/estudar/document.html',
+            controller: 'CoursesEstudarTypeDocumentCtrl',
+        })
+        .when('/cursos/id/test/quiz/:id/:videoid/:post_id', {
+            templateUrl: 'partials/courses/estudar/quiz.html',
+            controller: 'CoursesEstudarTypeQuizCtrl',
         })
         .when('/cursos/id/:id/timeline', {
             templateUrl: 'partials/courses/dashboard/index.html',
@@ -147,6 +153,18 @@ angular.module('netbase', [
             templateUrl: 'partials/courses/suite/modulos.html',
             controller: 'CoursesModulosCtrl',
         })
+        .when('/cursos/suite/owner/view/:id', {
+            templateUrl: 'partials/courses/suite/modulos-course.html',
+            controller: 'CoursesModulossingleCtrl',
+        })
+        .when('/cursos/suite/createPage/:id', {
+          templateUrl: 'partials/courses/suite/createPage.html',
+          controller: 'CoursesCreatePageCtrl',
+        })
+        .when('/cursos/suite/createQuiz/:id', {
+          templateUrl: 'partials/courses/suite/createQuiz.html',
+          controller: 'CoursesCreateQuizCtrl',
+        })
         .when('/cursos/suite/content', {
             templateUrl: 'partials/courses/suite/content.html',
             controller: 'CoursesContentModulosCtrl',
@@ -158,6 +176,14 @@ angular.module('netbase', [
         .when('/cursos/suite/owner', {
             templateUrl: 'partials/courses/suite/owner.html',
             controller: 'CoursesOwnerCtrl',
+        })
+        .when('/cursos/suite/createPage', {
+          templateUrl: 'partials/courses/suite/createPage.html',
+          controller: 'CoursesCreatePageCtrl',
+        })
+        .when('/cursos/suite/createQuiz', {
+          templateUrl: 'partials/courses/suite/createQuiz.html',
+          controller: 'CoursesCreateQuizCtrl',
         })
         .when('/v/id/:videoId', {
             templateUrl: 'partials/video/videowatch.html',
@@ -210,6 +236,10 @@ angular.module('netbase', [
         .when('/a/:academiaName/classroom', {
             templateUrl: 'partials/academia/classrooms/academiaclassrooms.html',
             controller: 'AcademiaClassroomsCtrl',
+        })
+        .when("/a/university/:academiaName/roomid/:roomSID/accountid/:accountSid/roomname/:roomName", {
+            templateUrl: 'partials/academia/classrooms/academiaclassroom.html',
+            controller: 'AcademiaClassroomCtrl',
         })
         .when('/a/:academiaName/timeline', {
             templateUrl: 'partials/academia/academiatimeline.html',
@@ -265,6 +295,10 @@ angular.module('netbase', [
         .when('/a/:academiaName/jobs', {
             templateUrl: 'partials/academia/academiajobs.html',
             controller: 'AcademiaJobsCtrl',
+        })
+        .when("/a/university/:academiaName/roomid/:roomSID/accountid/:accountSid/roomname/:roomName", {
+            templateUrl: 'partials/academia/classrooms/academiaclassroom.html',
+            controller: 'AcademiaClassroomCtrl',
         })
         .when('/ensinar', {
             templateUrl: 'partials/teach/home.html',
@@ -371,6 +405,11 @@ angular.module('netbase', [
             controller: 'DashboardAcademiaManageByIdUsersByIdCtrl',
             resolve: auth
         })
+        .when('/wallet', {
+            templateUrl: 'partials/dashboard/wallet/wallet.html',
+            controller: 'WalletCtrl',
+            resolve: auth
+        })
         .when('/dashboard/orders', {
             templateUrl: 'partials/dashboard/orders/orders.html',
             controller: 'DashboardOrdersCtrl',
@@ -431,6 +470,10 @@ angular.module('netbase', [
             templateUrl: 'partials/home/homestudentexplore.html',
             controller: 'HomeExploreCtrl'
         })
+        .when('/home/calls', {
+            templateUrl: 'partials/home/userclassrooms.html',
+            controller: 'HomePersonalClassroom'
+        })
         .when('/home/timeline', {
             templateUrl: 'partials/home/hometimeline.html',
             controller: 'HomeTimelineCtrl',
@@ -484,7 +527,7 @@ angular.module('netbase', [
         .when('/home/universidades/user', {
             templateUrl: 'partials/home/homeuseruniversidades.html',
             controller: 'HomeUserUniversidadesCtrl',
-            resolve: auth,
+            resolve : auth
         })
         .when('/home/smp', {
             templateUrl: 'partials/home/homesocialmarketplace.html',

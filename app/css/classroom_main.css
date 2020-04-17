@@ -1,0 +1,255 @@
+.classroom-page-container {
+    background-color: #3C454C;
+    height: 100vh !important;
+}
+
+.participant-menu-icon {
+    color: white !important;
+}
+
+.participant-menu-icon>i {
+    font-size: 30px;
+}
+
+.calssroom-logo>div {
+    font-size: 17px;
+    color: white;
+}
+
+.chat-menu-icon {
+    color: white !important;
+}
+
+.chat-menu-icon>i {
+    font-size: 30px;
+}
+
+.bottom-controller-container {
+    margin-bottom: 30px;
+    z-index: 30;
+}
+
+.icon-container-bottom>div {
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.meeting-controller-icon {
+    text-align: center;
+    width: 100%;
+}
+
+.chat-admin-label {
+    background-color: rgb(30, 235, 115);
+    border-radius: 2px;
+    padding: 4px;
+}
+
+.chat-admin-role-label {
+    background-color: rgb(102, 6, 102);
+    border-radius: 2px;
+    margin-left: 5px;
+    padding: 4px;
+}
+
+.chat-main-label {
+    font-size: 17px;
+    font-weight: 700;
+    margin-top: 10px;
+    letter-spacing: -0.9px;
+}
+
+.meeting-display-container {
+    display: flex;
+    background-color: #3C454C;
+    justify-content: center;
+}
+
+.fixed-position {
+    position: fixed;
+}
+
+.drag-in-left-right {
+    left: 0px !important;
+    height: 100%;
+    transition: left 0.5s ease-in-out;
+    -webkit-transition: left 0.5s ease-in-out;
+    /** Chrome & Safari **/
+    -moz-transition: left 0.5s ease-in-out;
+    /** Firefox **/
+    -o-transition: left 0.5s ease-in-out;
+}
+
+.drag-out-right-left {
+    left: -281px !important;
+    height: 100%;
+    transition: left 0.5s ease-in-out;
+    -webkit-transition: left 0.5s ease-in-out;
+    /** Chrome & Safari **/
+    -moz-transition: left 0.5s ease-in-out;
+    /** Firefox **/
+    -o-transition: left 0.5s ease-in-out;
+}
+
+.classroom-participants-initial {
+    width: 280px;
+    left: -281px;
+    height: 100%;
+    z-index: 30;
+}
+
+.classroom-chatbox-initial {
+    width: 280px;
+    right: -281px;
+    height: 100%;
+    z-index: 30;
+}
+
+.drag-in-right-left {
+    right: 0px !important;
+    height: 100%;
+    transition: right 0.5s ease-in-out;
+    -webkit-transition: right 0.5s ease-in-out;
+    /** Chrome & Safari **/
+    -moz-transition: right 0.5s ease-in-out;
+    /** Firefox **/
+    -o-transition: right 0.5s ease-in-out;
+}
+
+.drag-out-left-right {
+    right: -281px !important;
+    height: 100%;
+    transition: right 0.5s ease-in-out;
+    -webkit-transition: right 0.5s ease-in-out;
+    /** Chrome & Safari **/
+    -moz-transition: right 0.5s ease-in-out;
+    /** Firefox **/
+    -o-transition: right 0.5s ease-in-out;
+}
+
+.meeting-classroom-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 45px;
+}
+
+.participant-close-btn {
+    width: 30px;
+    height: 30px;
+    font-size: 25px;
+    position: absolute;
+    left: 250px;
+    top: 0px;
+    border: none;
+    background-color: white;
+}
+
+.chatbox-close-btn {
+    right: 0px;
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    font-size: 25px;
+    border: none;
+    background-color: white;
+}
+
+.mobile-visible {
+    display: none !important;
+}
+
+.alert-confirm-ok-btn {
+    position: absolute;
+    left: 70px;
+    bottom: 10px;
+    width: 100px;
+    border-radius: 3px;
+    background: lime;
+    color: white;
+}
+
+.alert-confirm-cancel-btn {
+    position: absolute;
+    right: 70px;
+    bottom: 10px;
+    width: 100px;
+    border-radius: 3px;
+    background: #0a290a;
+    color: white;
+}
+
+.section-menu {
+    margin-left: 20px;
+}
+
+.academia-supportcol-info {
+    margin-left: 20px;
+}
+
+.full-screen-icon {
+    position: absolute;
+    right: 0px;
+    width: 30px;
+    height: 30px;
+    z-index: 20;
+}
+
+.full-screen-icon i {
+    width: 30px;
+    height: 30px;
+    font-size: 30px;
+    color: white;
+}
+
+.absolute {
+    position: absolute !important;
+}
+
+.fixed {
+    position: fixed !important;
+}
+
+.visible {
+    display: initial;
+}
+
+.invisible {
+    display: none;
+}
+
+.bottom-controllers-fullscreen-show {
+    position: fixed;
+    bottom: 5px;
+}
+
+@media screen and (max-width: 468px) {
+    .meeting-display-container {
+        margin-top: 0px;
+        position: fixed;
+        height: 100%;
+        width: 100%;
+    }
+    .meeting-classroom-main {
+        padding: 0px;
+        margin-top: 0px;
+    }
+    .controller-container {
+        width: 100%;
+    }
+    .bottom-controller-container {
+        margin-bottom: 10px;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    .classroom-chat-container>.avatar-container {
+        margin-top: 25px;
+    }
+    .mobile-invisible {
+        display: none !important;
+    }
+    .mobile-visible {
+        display: flex !important;
+    }
+}

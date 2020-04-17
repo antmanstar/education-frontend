@@ -2,102 +2,78 @@
 
 <div class="container-fluid container-full">
 
-	<div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
-	<div class="row academia-coverimage" ng-if="university.backgroundImage == undefined"  style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
+    <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
+    <div class="row academia-coverimage" ng-if="university.backgroundImage == undefined" style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
 
-	<div class="row">
+    <div class="row">
 
-		<div academiarightcolumn university="{{university}}"></div>
+        <div academiarightcolumn university="{{university}}"></div>
 
-		<div class="col-xs-12 col-sm-8 col-md-8 col-lg-9 academia-content">
+        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9 academia-content">
 
-		<div academiastatus university="{{university}}"></div>
+            <div academiastatus university="{{university}}"></div>
 
-		<div ng-if="classroomView == 0" class="classroom-container">
-		
-			<div class="classroom-list-container col-xs-12 col-sm-4 col-md-4 col-lg-4">
-				<div class='classroom-list-title'> 
-					Classroom List
-				</div>
-				<div ng-repeat='classroom in wholeClassroomList' ng-if="classroom.active != ''" class="{{classroom.active}} classroom-list" ng-click="joinClassroom(classroom)" >
-					<i class="fas fa-chalkboard-teacher" style="padding-right:15px;color: #4986bf;"></i> {{classroom.uniqueName}}
-				</div>
-				<div ng-repeat='classroom in wholeClassroomList' ng-if="classroom.active == ''" class="{{classroom.active}} classroom-list" ng-click="joinClassroom(classroom)" >
-					<i class="fas fa-chalkboard-teacher" style="padding-right:15px;color: #4986bf;"></i> {{classroom.uniqueName}}
-				</div>
-			</div>
-			<div class="classroom-btn-container col-xs-12 col-sm-5 col-md-5 col-lg-5">
-				<button ng-click="createNewClassroom()" class="add-classroom-btn">CREATE NEW CLASSROOM</button>
-			</div>
-		</div>
-		<div ng-if="classroomView == 1" class="classroom-page-container">
-			
-			<div class="display-container">
-				<div class="classroom-participants-container col-xs-12 col-sm-2 col-md-2 col-lg-2">
-					<div class='classroom-students-title'>Administrators</div>
-					<div ng-repeat="admin in administrator" class='classroom-administrator-container'> 
-						<img src="https://i2.wp.com/brookfieldsschool.org/wp-content/uploads/2019/03/blank-profile-picture-973460_960_720.png" 
-							alt="HN" title="User Avatar" width="80" height="80" class="ava1">
-						{{admin.username}}
-					</div>
-					<div class='classroom-students-title top-margin-20'>Participants</div>
-					<div ng-repeat="part in participants" class='classroom-administrator-container'>
-						<img src="https://i2.wp.com/brookfieldsschool.org/wp-content/uploads/2019/03/blank-profile-picture-973460_960_720.png" 
-							alt="HN" title="User Avatar" width="80" height="80" class="ava1">
-						{{part.username}}
-					</div>
-				</div>
-				<div id='twilio' class="classroom-video-container col-xs-12 col-sm-6 col-md-7 col-lg-8">
-				</div>
-				<div class="classroom-chat-container col-xs-12 col-sm-4 col-md-3 col-lg-2">
-					<div class="avatar-container">
-						<img src="https://i2.wp.com/brookfieldsschool.org/wp-content/uploads/2019/03/blank-profile-picture-973460_960_720.png" alt="HN" title="User Avatar" width="80" height="80" class="ava1">
-						<div class="userinfo">
-							<div class="username"> &nbsp; </div>
-							<div class="privilege">
-								<div style="background-color:cyan; border-radius: 2px; padding: 4px;">ADMINISTRATOR</div>
-								<div style="background-color:darkmagenta; border-radius: 2px; margin-left: 5px; padding: 4px;">PRO
-								</div>
-							</div>
-						</div>
-					</div>
-					<div style="font-size: 12px; font-weight:bolder; margin-top: 20px">
-						Chat
-					</div>
-					<div class="video-audio-chat">
-						<i class="material-icons" style="font-size: 15px">videocam</i>
-						<div style="margin-left: 10px; 
-					font-weight: 500;">JOIN&nbsp;VIDEO</div>
-						<i class="material-icons" style="font-size: 13px; margin-left: 20px;">phone</i>
-						<div style="margin-left: 10px; 
-					font-weight: 500;">JOIN&nbsp;AUDIO</div>
-					</div>
-				</div>
-				
-			</div>
-			<div class="controller-container">
-				<i ng-click="recordVideo()" class="material-icons" style="font-size: 15px; color: red; cursor: pointer;">radio_button_checked</i>
-				<div style="margin-left: 10px; 
-			font-weight: 500;">RECORD</div>
-				<i ng-click="shareScreen()" class="material-icons" style="font-size: 13px; margin-left: 70px; color:turquoise; cursor:pointer;">desktop_windows</i>
-				<div style="margin-left: 10px; 
-			font-weight: 500;">SHARE&nbsp;SCREEN</div>
-			</div>
+            <div class="classroom-list-container">
+                <div class="classroom-list-header disp-mobile-none">
+                    <div>
+                        <div class='classroom-list-title'>
+                            Classroom List
+                        </div>
+                        <div class='classroom-arrange-iconview'>
+                            <!-- <img src="/img/icon/listview.svg" class="list-view-style" /> -->
+                            <!-- <img src="/img/icon/gridview.svg" class="grid-view-style" /> -->
+                        </div>
+                    </div>
+                    <div class="classroom-btn-view">
+                        <div ng-click="createNewClassroom()" class="add-classroom-btn">
+                            CREAT A NEW CLASS
+                        </div>
+                    </div>
+                </div>
+                <div class="classroom-list-view" ng-style="maxHeight">
+                    <div style="width: 100%; height: 1px; background-color: rgba(192, 192, 192, 0.7);"></div>
+                    <div ng-repeat='classroom in wholeClassroomList' class="classroom-list">
+                        <div style="display: flex; justify-content: space-between;">
+                            <div style="display: flex; align-items: center;">
+                                <i class="fas fa-chalkboard-teacher" style="padding-right:10px; color: #4986bf;"></i>
+                                <div style="font-size: 12px;">
+                                    {{ classroom.uniqueName | limitTo: 30 }}{{classroom.uniqueName.length > 30 ? '...' : ''}}
+                                </div>
+                            </div>
+                            <div style="display: flex;">
+                                <div class="classroom-list-menu disp-mobile-none">
+                                    <div style="margin-top: 3px; width: 12px; height: 12px; border-radius: 50%; background-color:#00ff39; cursor: pointer;">
+                                    </div>
+                                    <div style="font-size: 12px; margin-top: 3px;">Active</div>
+                                </div>
+                                <div ng-click="joinClassroom(classroom)" class="classroom-list-menu">
+                                    <i class="material-icons" style="font-size: 18px; color:#4986bf; cursor:pointer;">person_add</i>
+                                    <div style="font-size: 12px;">Join Class</div>
+                                </div>
+                                <div ng-click="copyLink(classroom)" class="classroom-list-menu">
+                                    <img src="/img/icon/copylink.svg" style="width: 15px; height: 15px; cursor:pointer;" />
+                                    <div style="font-size: 12px; margin-top: 2px;">Copy Link</div>
+                                </div>
+                                <div ng-click="deleteClassroom(classroom)" class="classroom-list-menu">
+                                    <i class="fas fa-trash-alt" style="font-size: 18px; color:#4986bf; cursor:pointer;"></i>
+                                    <div style="font-size: 12px;">Delete Class</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="classroom-list-divider">
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-			<!--div id='local_video' class="classroom-participants-container col-xs-12 col-sm-4 col-md-4 col-lg-4"></div-->
-			
-			<div class='row' style='text-align: center;'>
-				<button ng-click='returnBack()' class='classroom-return-btn' >Return</button>
-			</div>
-		</div>
 
-		<!--button ng-click="getAllClassrooms()">get all</button-->
+            <!--button ng-click="getAllClassrooms()">get all</button-->
 
-		</div>
-		<!-- end col-xs-12 -->
+        </div>
+        <!-- end col-xs-12 -->
 
-	</div>
-	<!-- end row -->
-
+    </div>
+    <!-- end row -->
+    <footermobile></footermobile>
 </div>
 <!-- container-full -->

@@ -91,7 +91,7 @@
 
   </div>
 
-  <div class="academia-supportcol-info">
+  <div class="academia-supportcol-info" ng-controller="CoursesNavBarCtrl">
 
     <div class="academia-supportcol-info-title" ng-if="studentIsAdmin == true">
       administração
@@ -100,6 +100,7 @@
     <a href="/a/{{university.url}}/forum/category/create" ng-if="studentIsAdmin == true"><button class="btn bg-base" style="margin-top: 2px; height: 29px; width: unset;">Criar categoria</button></a>
     <a href="/v/create?universityId={{university._id}}" ng-if="studentIsAdmin == true"><button class="btn bg-base" style="margin-top: 2px; height: 29px; width: unset;">Criar video</button></a>
     <a href="/p/create?universityId={{university._id}}" ng-if="studentIsAdmin == true"><button class="btn bg-base" style="margin-top: 2px; height: 29px; width: unset;">Criar playlist</button></a>
+    <a href="" ng-if="studentIsAdmin == true"><button class="btn bg-base" style="margin-top: 2px; height: 29px; width: unset;" ng-click="coursesCreate(university._id)">Criar curso</button></a>
 
   </div>
 

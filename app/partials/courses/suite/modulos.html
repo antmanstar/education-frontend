@@ -17,6 +17,10 @@
     font-weight: bold;
   }
 
+  .pt {
+    padding-top: 7px;
+  }
+
 </style>
 
 <style>
@@ -126,41 +130,63 @@
 
     <div class="col-xs-12 col-sm-4" style="margin-top: 15px;" ng-repeat="module in modules">
 
-      <a href="/cursos/suite/modulos/id/{{module._id}}">
       <div class="course-card" style="cursor: pointer;">
+        <a href="/cursos/suite/modulos/id/{{module._id}}">
 
-        <div class="title" style="line-height: 35px;">
+          <div class="title" style="line-height: 35px;">
 
-          <div class="c100 p50 small center green" style="display: inline-block; font-size: 35px;">
-            <div class="slice"><div class="bar"></div><div class="fill"></div></div>
+            <div class="c100 p50 small center green" style="display: inline-block; font-size: 35px;">
+              <div class="slice"><div class="bar"></div><div class="fill"></div></div>
+            </div>
+
+            <div class="text-capitalize" style="font-size: 1.4em; display: inline-block; vertical-align: top; padding-left: 10px; color: #2f4457; font-weight: bold;">{{module.title}}</div>
+
           </div>
 
-          <div style="font-size: 1.4em; display: inline-block; vertical-align: top; padding-left: 10px; color: #2f4457; font-weight: bold;">{{module.title}}</div>
+          <div class="topic">
 
-        </div>
+            <div class="line" style="font-size: 1em;">
+              <i class="fas fa-bullseye"></i>
+            </div>
 
-        <div class="topic">
+            <div class="text">
+              OBJETIVO</br>{{module.goal}}
+            </div>
 
-          <div class="line" style="font-size: 1em;">
-            <i class="fas fa-bullseye"></i>
           </div>
 
-          <div class="text">
-            OBJETIVO</br>{{module.goal}}
+          <div class="topic">
+
+            <div class="line" style="font-size: 1em;">
+              <i class="fas fa-clock"></i>
+            </div>
+
+            <div class="text">
+              DURAÇÃO</br>{{module.duration}}
+            </div>
+
           </div>
 
-        </div>
+          <div class="topic">
 
-        <div class="topic">
+            <div class="line" style="font-size: 1em;">
+              <i class="fa fa-file"></i>
+            </div>
 
-          <div class="line" style="font-size: 1em;">
-            <i class="fas fa-clock"></i>
+            <div class="text pt">
+              <span>TOTAL CONTENT</span>
+              <span class="pull-right">{{module.content.length}}</span>
+            </div>
+
           </div>
+        </a>
+        
+        <hr>
 
-          <div class="text">
-            DURAÇÃO</br>{{module.duration}}
-          </div>
-
+        <div class="text-right">
+          <a href="">
+            <i class="fa fa-pencil-square-o text-success" aria-hidden="true"></i>
+          </a>
         </div>
 
         <!--
@@ -180,7 +206,6 @@
         
       </div>
       <!-- end course-card -->
-      </a>
 
     </div>
     <!-- -->

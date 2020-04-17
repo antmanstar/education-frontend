@@ -7,13 +7,20 @@
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
       <div style="color: #2f4457; font-size: 2.5em; margin-bottom: 5px; font-weight: bolder;">{{course.title}}</div>
+    <ng-containner ng-if="course.free==true || useraccess==true">
+      <div  style="float: right; text-align: right;">
+      <a href="/cursos/id/{{course._id}}/timeline" class="btn btn-green button-highlighter" style="font-size: 1em;float:right"><b>Access the courses</b></a>
+    </div>
+    </ng-containner>
+    <ng-containner ng-if="course.free!=true">
+      <div  style="float: right; text-align: right;">
+        <div style="font-size: 1.8em; color: #2f4457f7;"><b>R${{course.price}}</b></div>
 
-      <div style="float: right; text-align: right;">
-        <div style="font-size: 1.8em; color: #2f4457f7;"><b>R$1800</b></div>
-        <div style="padding-bottom: 10px; font-size: 0.9em; color: #616161;">OU 12x R$150</div>
-        <button class="btn btn-green button-highlighter" style="font-size: 1em;"><b>Iniciar o curso</b></button>
+        <div style="padding-bottom: 10px; font-size: 0.9em; color: #616161;">OU 12x R${{course.price/12}}</div>
+        <button class="btn btn-green button-highlighter" style="font-size: 1em;" ng-click="openPaymentDialog()"><b>Iniciar o curso</b></button>
+
       </div>
-
+    </ng-containner>
       <div style="font-size: 1.15em; margin-bottom: 15px;">
         <div style="display: inline-block; margin-right: 10px; margin-bottom: 5px;"><i class="fas fa-clock" style="padding-right: 5px;"></i> 24 horas</div>
         <div style="display: inline-block;"><i class="fas fa-chart-bar" style="padding-right: 5px;"></i> Introdutório a Intermediário</div>
@@ -196,10 +203,10 @@
       <div style="font-size: 1.8em; margin-bottom: 15px; font-weight: 600; color: #2f4457;">Programa</div>
     </div>
     <!-- end -->
+    <ng-containner ng-if="course.module.length>0">
+    <div class="col-xs-12 col-sm-4" ng-repeat="c in course.module">
 
-    <div class="col-xs-12 col-sm-4">
-
-      <div class="course-card">
+      <div class="course-card" >
 
         <div class="title" style="line-height: 35px;">
 
@@ -207,7 +214,7 @@
             <div class="slice"><div class="bar"></div><div class="fill"></div></div>
           </div>
 
-          <div style="font-size: 1.4em; display: inline-block; vertical-align: top; padding-left: 10px; color: #2f4457; font-weight: bold;">Blockchain Immersion</div>
+          <div style="font-size: 1.4em; display: inline-block; vertical-align: top; padding-left: 10px; color: #2f4457; font-weight: bold;">{{c.moduleId.title}}</div>
 
         </div>
 
@@ -218,11 +225,10 @@
           </div>
 
           <div class="text">
-            OBJETIVO</br>Apresentação inicial do Bitcoin & Blockchain
+            OBJETIVO</br>{{c.moduleId.goal}}
           </div>
-
+        
         </div>
-
         <div class="topic">
 
           <div class="line" style="font-size: 1em;">
@@ -230,260 +236,25 @@
           </div>
 
           <div class="text">
-            DURAÇÃO</br>4 horas
+            DURAÇÃO</br>{{c.moduleId.duration}}
           </div>
 
         </div>
-
-        <div class="topic">
-
-          <div class="line">
-            <i class="fas fa-circle"></i>
-          </div>
-
-          <div class="text">
-            <div class="title">Histórico</div>
-            <div class="subtitle">O desenvolvimento da blockchain</div>
-          </div>
-
-        </div>
-
-        <div class="topic">
-
-          <div class="line">
-            <i class="fas fa-circle"></i>
-          </div>
-
-          <div class="text">
-            <div class="title">Aspectos Técnicos</div>
-            <div class="subtitle">O desenvolvimento da blockchain</div>
-          </div>
-
-        </div>
-
-        <div class="topic">
-
-          <div class="line">
-            <i class="fas fa-circle"></i>
-          </div>
-
-          <div class="text">
-            <div class="title">Especulação</div>
-            <div class="subtitle">O desenvolvimento da blockchain</div>
-          </div>
-
-        </div>
-
-        <div class="topic">
-
-          <div class="line">
-            <i class="fas fa-circle"></i>
-          </div>
-
-          <div class="text">
-            <div class="title">Infraestruturas inspiradas no Blockchain</div>
-            <div class="subtitle">O desenvolvimento da blockchain</div>
-          </div>
-
-        </div>
+        <ng-containner ng-if="c.moduleId.content.length>0" coursemodulecontent courseid="{{course._id}}" mc="{{c.moduleId.content}}">
+        
+        </ng-containner>
+        
+        
         <!-- -->
 
       </div>
       <!-- end course-card -->
 
     </div>
+  </ng-containner>
     <!-- -->
 
-    <div class="col-xs-12 col-sm-4">
-
-      <div class="course-card">
-
-        <div class="title" style="line-height: 35px;">
-
-          <div class="c100 p50 small center green" style="display: inline-block; font-size: 35px;">
-            <div class="slice"><div class="bar"></div><div class="fill"></div></div>
-          </div>
-
-          <div style="font-size: 1.4em; display: inline-block; vertical-align: top; padding-left: 10px; color: #2f4457; font-weight: bold;">Blockchain Immersion - 2</div>
-
-        </div>
-
-        <div class="topic">
-
-          <div class="line" style="font-size: 1em;">
-            <i class="fas fa-bullseye"></i>
-          </div>
-
-          <div class="text">
-            OBJETIVO</br>Apresentação inicial do Bitcoin & Blockchain
-          </div>
-
-        </div>
-
-        <div class="topic">
-
-          <div class="line" style="font-size: 1em;">
-            <i class="fas fa-clock"></i>
-          </div>
-
-          <div class="text">
-            DURAÇÃO</br>4 horas
-          </div>
-
-        </div>
-
-        <div class="topic">
-
-          <div class="line">
-            <i class="fas fa-circle"></i>
-          </div>
-
-          <div class="text">
-            <div class="title">Histórico</div>
-            <div class="subtitle">O desenvolvimento da blockchain</div>
-          </div>
-
-        </div>
-
-        <div class="topic">
-
-          <div class="line">
-            <i class="fas fa-circle"></i>
-          </div>
-
-          <div class="text">
-            <div class="title">Aspectos Técnicos</div>
-            <div class="subtitle">O desenvolvimento da blockchain</div>
-          </div>
-
-        </div>
-
-        <div class="topic">
-
-          <div class="line">
-            <i class="fas fa-circle"></i>
-          </div>
-
-          <div class="text">
-            <div class="title">Especulação</div>
-            <div class="subtitle">O desenvolvimento da blockchain</div>
-          </div>
-
-        </div>
-
-        <div class="topic">
-
-          <div class="line">
-            <i class="fas fa-circle"></i>
-          </div>
-
-          <div class="text">
-            <div class="title">Infraestruturas inspiradas no Blockchain</div>
-            <div class="subtitle">O desenvolvimento da blockchain</div>
-          </div>
-
-        </div>
-        <!-- -->
-
-      </div>
-      <!-- end course-card -->
-
-    </div>
-    <!-- -->
-
-    <div class="col-xs-12 col-sm-4">
-
-      <div class="course-card">
-
-        <div class="title" style="line-height: 35px;">
-
-          <div class="c100 p50 small center green" style="display: inline-block; font-size: 35px;">
-            <div class="slice"><div class="bar"></div><div class="fill"></div></div>
-          </div>
-
-          <div style="font-size: 1.4em; display: inline-block; vertical-align: top; padding-left: 10px; color: #2f4457; font-weight: bold;">The Legal of Blockchain</div>
-
-        </div>
-
-        <div class="topic">
-
-          <div class="line" style="font-size: 1em;">
-            <i class="fas fa-bullseye"></i>
-          </div>
-
-          <div class="text">
-            OBJETIVO</br>Apresentação inicial do Bitcoin & Blockchain
-          </div>
-
-        </div>
-
-        <div class="topic">
-
-          <div class="line" style="font-size: 1em;">
-            <i class="fas fa-clock"></i>
-          </div>
-
-          <div class="text">
-            DURAÇÃO</br>4 horas
-          </div>
-
-        </div>
-
-        <div class="topic">
-
-          <div class="line">
-            <i class="fas fa-circle"></i>
-          </div>
-
-          <div class="text">
-            <div class="title">Histórico</div>
-            <div class="subtitle">O desenvolvimento da blockchain</div>
-          </div>
-
-        </div>
-
-        <div class="topic">
-
-          <div class="line">
-            <i class="fas fa-circle"></i>
-          </div>
-
-          <div class="text">
-            <div class="title">Aspectos Técnicos</div>
-            <div class="subtitle">O desenvolvimento da blockchain</div>
-          </div>
-
-        </div>
-
-        <div class="topic">
-
-          <div class="line">
-            <i class="fas fa-circle"></i>
-          </div>
-
-          <div class="text">
-            <div class="title">Especulação</div>
-            <div class="subtitle">O desenvolvimento da blockchain</div>
-          </div>
-
-        </div>
-
-        <div class="topic">
-
-          <div class="line">
-            <i class="fas fa-circle"></i>
-          </div>
-
-          <div class="text">
-            <div class="title">Infraestruturas inspiradas no Blockchain</div>
-            <div class="subtitle">O desenvolvimento da blockchain</div>
-          </div>
-
-        </div>
-        <!-- -->
-
-      </div>
-      <!-- end course-card -->
+    
 
     </div>
     <!-- -->

@@ -31,7 +31,7 @@
         <div class="row navbar-top-first" style="height: 40px; line-height: 40px; padding-bottom: 2px; padding-top: 6px;">
           <div id="logomaster" class="col-xs-3 col-sm-4" style="padding: 3px; height: 100%; padding-left: 15px;"><img height="100%" src="https://storage.googleapis.com/educationalcommunity/pt/img/universidade_icon.png" /><span style="margin-left: 8px; font-size: 1.15em;"><i class="fas fa-angle-down" style="vertical-align: top; padding-top: 6px;"></i></span></div>
           <div class="col-xs-6 col-sm-4" style="text-align: center; padding: 6px; height: 100%;"><a href="/home/explore"><img height="100%" src="https://storage.googleapis.com/educationalcommunity/pt/img/universidade_logo.png" /></a></div>
-          <div class="col-xs-3 col-sm-4" id="mobile-credentials" ng-show="logged" ng-click="searchbar()" style="text-align: right; height: 100%; padding-right: 10px; line-height: 32px;"><div style="font-size: 1.4em; padding-bottom: 3px;"><i class="fas fa-search"></i></div></div>
+          <div class="col-xs-3 col-sm-4" id="mobile-credentials" ng-show="logged" ng-click="searchbar()" style="text-align: right; height: 100%; padding-right: 10px; line-height: 32px;"><div ng-click="searchBarToggle()" style="font-size: 1.4em; padding-bottom: 3px;"><i class="fas fa-search"></i></div></div>
           <div class="col-xs-3 col-sm-4" id="mobile-credentials" ng-hide="logged" ng-click="login()" style="padding: 3px; text-align: right; height: 100%; padding-right: 10px;"><img height="100%" src="https://visualpharm.com/assets/880/Customer-595b40b65ba036ed117d413a.svg" /></div>
           <div class="col-xs-3 col-sm-4" id="desktop-credentials" style="height: 40px;">
 
@@ -63,21 +63,43 @@
         </div>
         <!-- end row -->
 
-        <!-- NAVBAR SLIDES
-        <div class="navbar-slider" ng-hide="originalPath.indexOf('/dashboard') != -1">
+        <style>
+
+          .search-bar-mobile {
+            padding-bottom: 5px;
+            padding-top: 5px;
+          }
+
+          @media only screen and (max-width: 768px) {
+
+            .hide-mobile {
+              display: none;
+            }
+
+          }
+
+        </style>
+
+        <div class="search-bar-mobile animated fadeIn" style="width: 100%;" ng-show="searchBarDisplay">
+
+          <input style="width: calc(100% - 59px);" type="text"></input><!--
+          --><div style="display: inline-block; width: 55px; text-align: right; height: 26px;"><button style="border: none;">Go!</button></div>
+
+        </div>
+        <!-- search-bar-mobile -->
+
+        <div class="navbar-slider hide-mobile" ng-hide="originalPath.indexOf('/dashboard') != -1">
 
           <div class="option unselectable" ng-if="logged" ng-class="{'active': originalPath == '/home/timeline' || originalPath == '/home/timeline/'}"><a href="/home/timeline">Timeline</a></div>
           <div class="option unselectable" ng-class="{'active': originalPath == '/home/explore' || originalPath == '/home/explore/'}"><a href="/home/explore">Explorar</a></div>
           <div class="option unselectable" ng-class="{'active': originalPath == '/home/universidades' || originalPath == '/home/universidades/' || originalPath.indexOf('/a/') != -1 }"><a href="/home/universidades">Universidades</a></div>
-          <!--<div class="option unselectable" ng-class="{'active': originalPath == '/home/noticias' || originalPath == '/home/noticias/'}"><a href="/home/noticias">Opinião</a></div>
-          <!--<div class="option unselectable" ng-class="{'active': originalPath.indexOf('/home/conhecimento') != -1 }"><a href="/home/conhecimento">Conhecimento</a></div>
           <div class="option unselectable" ng-class="{'active': originalPath == '/cursos' || originalPath.indexOf('/cursos') >= 0}"><a href="/home/cursos">Cursos</a></div>
+          <div class="option unselectable" ng-class="{'active': originalPath == '/cursos' || originalPath.indexOf('/cursos') >= 0}"><a href="/home/">Sala Virtual</a></div>
+          <div class="option unselectable" ng-class="{'active': originalPath.indexOf('/home/conhecimento') != -1 }"><a href="/home/conhecimento">Conhecimento</a></div>
 
         </div>
 
-        END NAVBAR SLIDES
 
-        -->
 
         <!--
         <div class="menu-right">
