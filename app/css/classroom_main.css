@@ -26,11 +26,13 @@
 
 .bottom-controller-container {
     margin-bottom: 30px;
+    z-index: 30;
 }
 
 .icon-container-bottom>div {
     width: 100%;
     justify-content: center;
+    align-items: center;
 }
 
 .meeting-controller-icon {
@@ -130,7 +132,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 100px;
+    margin-top: 45px;
 }
 
 .participant-close-btn {
@@ -156,6 +158,70 @@
 
 .mobile-visible {
     display: none !important;
+}
+
+.alert-confirm-ok-btn {
+    position: absolute;
+    left: 70px;
+    bottom: 10px;
+    width: 100px;
+    border-radius: 3px;
+    background: lime;
+    color: white;
+}
+
+.alert-confirm-cancel-btn {
+    position: absolute;
+    right: 70px;
+    bottom: 10px;
+    width: 100px;
+    border-radius: 3px;
+    background: #0a290a;
+    color: white;
+}
+
+.section-menu {
+    margin-left: 20px;
+}
+
+.academia-supportcol-info {
+    margin-left: 20px;
+}
+
+.full-screen-icon {
+    position: absolute;
+    right: 0px;
+    width: 30px;
+    height: 30px;
+    z-index: 20;
+}
+
+.full-screen-icon i {
+    width: 30px;
+    height: 30px;
+    font-size: 30px;
+    color: white;
+}
+
+.absolute {
+    position: absolute !important;
+}
+
+.fixed {
+    position: fixed !important;
+}
+
+.visible {
+    display: initial;
+}
+
+.invisible {
+    display: none;
+}
+
+.bottom-controllers-fullscreen-show {
+    position: fixed;
+    bottom: 5px;
 }
 
 @media screen and (max-width: 468px) {
