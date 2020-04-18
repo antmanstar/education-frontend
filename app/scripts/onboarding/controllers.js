@@ -121,6 +121,37 @@ angular.module('netbase')
 
 }])
 
+.controller('OnboardingSignUpScreenCtrl', ['$rootScope', '$scope', 'ngDialog', 'University', 'Knowledge', '$location' , function($rootScope, $scope, ngDialog, University, Knowledge, $location) {
+
+  /* */
+  $scope.mode = "";
+  /* */
+
+  $scope.selectMode = function(mode) {
+    $scope.mode = mode;
+  }
+
+  $scope.selectUniversityType = function(name) {
+
+    console.log(name)
+
+    $scope.universityType = name;
+
+  }
+
+  $scope.learning = function() {
+    $location.path('/home/timeline');
+  }
+
+  $scope.teaching = function() {
+    $location.path('/onboarding/universities/create');
+  }
+
+  $scope.videocalling = function() {
+    $location.path('/home/calls');
+  }
+
+}])
 
 .controller('OnboardingScreenCtrl', ['$rootScope', '$scope', 'ngDialog', 'University', 'Knowledge' , function($rootScope, $scope, ngDialog, University, Knowledge) {
 
