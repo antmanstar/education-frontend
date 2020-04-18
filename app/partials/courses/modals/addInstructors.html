@@ -4,11 +4,12 @@
       <label>Select Instructor: </label><br>
       
       <div class="col-sm-4" ng-repeat="member in university.members" >
-        <div  studentinfooption sid="{{member._id}}"> </div>
-        <div><center><input ng-click="pushMembers(member._id)" ng-if="selectedMember.indexOf(member._id)>=0" type="checkbox"  checked />
-        <input ng-if="selectedMember.indexOf(member._id)<0" type="checkbox" ng-click="pushMembers(member._id)" />
+        <div  studentinfooption sid="{{member.accountId}}"> </div>
+        <div><center><input ng-click="pushMembers(member.accountId)" ng-if="selectedMember.indexOf(member.accountId)>=0" type="checkbox"  checked />
+        <input ng-if="selectedMember.indexOf(member.accountId)<0" type="checkbox" ng-click="pushMembers(member.accountId)" />
         </center></div>
      </div>
+     <br clear="all" />
       <span class="text-danger" ng-show="selectedMember.length==0 || selectedMember == undefined">Select Member</span>
       <br>
       <div class="text-center">

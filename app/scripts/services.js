@@ -1656,8 +1656,8 @@ angular.module('netbase')
       //var baseUrl = "https://api.universida.de/search";
 
       //var baseUrl = "https://educationalcommunity-pay.herokuapp.com";
-      var baseUrl = "https://educationalcommunity-courses.herokuapp.com/courses";
-      //var baseUrl="http://localhost:9000/courses"
+      //var baseUrl = "https://educationalcommunity-courses.herokuapp.com/courses";
+      var baseUrl="http://localhost:9000/courses"
       return {
 
         getAll: function(id) {
@@ -2041,7 +2041,19 @@ angular.module('netbase')
           }})
 
         },
+        getKnowledgeId: function(universityId) {
+        
+          var url = '/knowledge/'+universityId;
 
+          return $http({
+            method: 'GET',
+            url: baseUrl + url,
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'x-access-token': $localStorage.token
+          }})
+
+        },
         getCoursesByAccount: function(universityId) {
 
           var url = '/owner';

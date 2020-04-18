@@ -1028,8 +1028,7 @@ function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialo
     console.log('delete content', contentId);
     $scope.contentId = contentId;
 
-      $scope.modulesByAccount = res.data;
-      console.log(res)
+      
     ngDialog.open({
       template: 'deleteContentPopup',
       controller: 'CoursesContentModulosCtrl',

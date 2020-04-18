@@ -27,12 +27,7 @@
       <input class="form-control input-lg" placeholder="Escreva o título do seu curso" ng-model="title"></input>
       <br>
       <label>Select Knowledge</label>
-      <select class="form-control" style="width: 50%;" required name="" ng-model="selectedKnowledge">  
-        <option disabled value="">Select Knowledge</option>
-        <option ng-repeat="k in knowledge" value="{{k._id}}">{{k.title}}</option>
-      </select><br>
-      <label>Select Knowledge</label>
-      <select class="form-control" style="width: 50%;" required name="" ng-model="selectedKnowledge">  
+      <select class="form-control input-lg"  required name="" ng-model="selectedKnowledge">  
         <option disabled value="">Select Knowledge</option>
         <option ng-repeat="k in knowledge" value="{{k._id}}">{{k.title}}</option>
       </select>

@@ -2282,14 +2282,18 @@ angular.module('netbase')
 
             Students.getStudentById(studentId).then(function(res) {
 
-                console.log("response student: ");
+                console.log("response student: "+res);
                 
                 scope.student_id=studentId;
-                if(res.sucess)
+                if(res.data.success)
+                {
+                    console.log(res.data.success)
                 scope.student = res.data.data;
-                else
-                   scope.student={_id:studentId,"name":"test"}
-                
+                }
+                else{
+                    console.log(res.data.success)
+                scope.student={_id:studentId,"name":"test"}
+                }
             });
 
         }
@@ -2444,6 +2448,7 @@ angular.module('netbase')
                 /* */
 
                 attr.$observe('university', function(value) {
+                university = JSON.parse(value);
 
                   /* REAL TIME MODULE */
 
@@ -3003,7 +3008,32 @@ angular.module('netbase')
         }
     }
 }])
+.directive('knowledgecoursecard', ['Courses','University', '$rootScope', 'Students', function(Courses,University, $rootScope, Students) {
+    return {
+        restrict: 'EA',
+        templateUrl: '../partials/directive/knowledgecoursecard.html',
+        
+        link: function(scope, element, attr) {
 
+            let universityId = attr.uid;
+
+            Courses.getKnowledgeId(universityId).success(function(res) {
+
+                console.log(res);
+
+                scope.university = res.data;
+
+            });
+
+            /*
+
+            filter: { active: true } | orderBy:'-highlight'
+
+            */
+
+        }
+    }
+}])
 .directive('timelineuniversitycard', ['University', '$rootScope', 'Students', function(University, $rootScope, Students) {
     return {
         restrict: 'E',
