@@ -127,13 +127,18 @@ angular.module('netbase')
         }
         Classroom.createNewClassroom(baseUrl + url, title, privilege, $scope.university._id).then((data) => {
             //$scope.getAllClassrooms();
+            let newClassroom = data.data;
+            console.log("new classroom: ")
+            console.log(data)
             let url = '/classroom/university/' + $scope.university._id + '/all'
             Classroom.getAllClassroomsByUniversity(baseUrl + url).then((data) => {
                 $scope.wholeClassroomList = data;
                 console.log('Classroom.getAllClassrooms');
                 console.log($scope.wholeClassroomList);
-                let text = domain + "/a/university/" + universityUrl + "/roomid/" + classroom.roomSID + "/accountid/" + classroom.accountSid + "/roomname/" + classroom.uniqueName + "/";
-                window.open(text);
+                let text = "/a/university/" + universityUrl + "/roomid/" + newClassroom.id + "/accountid/" + newClassroom.sid + "/roomname/" + $scope.addingClassroom.uniqueName + "/";
+                console.log("text")
+                //$location.path(text);
+                $route.reload();
             });
             ngDialog.close();
         })
