@@ -12,26 +12,53 @@
         Boolean, to allow donations to be sent
     - Chat
         Boolean, to allow chat usage
-        
+
         ng-controller='AcademiaClassroomsCtrl'
 -->
-<div class='classroom-modal-main'>
-    <label class='classroom-modal-caption' style="margin-top: 50px;">Classroom Name </label>
-    <input class="classroom-modal-input" ng-model='addingClassroom.uniqueName' />
-    <label class='classroom-modal-caption'>Accessibility</label>
-    <div class="classroom-modal-radio-group-container">
-        <div class='inputGroup-radio'>
-            <input id='i1' name='room_type' type='radio' ng-model='addingClassroom.roomType' value=0 checked />
-            <label for='i1'>&nbsp;&nbsp;Public Room</label>
+<div class="container-fluid modal-accounts">
+
+  <div class="row">
+
+    <div class="col-xs-12">
+
+      <div class="headline-sub-one">Criar Videoconferência</div>
+
+      <div class="form">
+
+        <div class="form-group">
+          <i class="fas fa-video"></i>
+          <input class="input-email" ng-model='addingClassroom.uniqueName' placeholder="Nome da Sala" type="text" />
         </div>
-        <div class='inputGroup-radio'>
-            <input id='i4' name='room_type' type='radio' ng-model='addingClassroom.roomType' value=1 />
-            <label for='i4'>&nbsp;&nbsp;Private Room</label>
+        <!-- end form group -->
+
+        <div class="row">
+
+          <div class="col-xs-6">
+            <div class='inputGroup-radio'>
+                <input id='i1' name='room_type' type='radio' ng-model='addingClassroom.roomType' value=0 checked />
+                <label style="font-size: 14px;" for='i1'>&nbsp;&nbsp;Sala Publica</label>
+            </div>
+          </div>
+
+          <div class="col-xs-6">
+            <div class='inputGroup-radio'>
+                <input id='i4' name='room_type' type='radio' ng-model='addingClassroom.roomType' value=1 />
+                <label style="font-size: 14px;" for='i4'>&nbsp;&nbsp;Sala Privada</label>
+            </div>
+          </div>
+
         </div>
+
+        <div style="height: 15px"></div>
+        <button ng-click="confirmCreateClassroom()" class="btn btn-bluebase">Criar sala</button>
+
+      </div>
+      <!-- end form -->
+
     </div>
-    <div class="classroom-btn-view">
-        <div ng-click="confirmCreateClassroom()" class="confirm-create-classroom-btn">
-            CREATE CLASSROOM
-        </div>
-    </div>
+    <!-- end col-xs-12 -->
+
+  </div>
+  <!-- end row -->
+
 </div>
