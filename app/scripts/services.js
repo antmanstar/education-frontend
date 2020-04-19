@@ -1656,8 +1656,8 @@ angular.module('netbase')
       //var baseUrl = "https://api.universida.de/search";
 
       //var baseUrl = "https://educationalcommunity-pay.herokuapp.com";
-      //var baseUrl = "https://educationalcommunity-courses.herokuapp.com/courses";
-      var baseUrl="http://localhost:9000/courses"
+      var baseUrl = "https://educationalcommunity-courses.herokuapp.com/courses";
+      //var baseUrl="http://localhost:9000/courses"
       return {
 
         getAll: function(id) {
