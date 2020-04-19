@@ -8,10 +8,12 @@ angular.module('netbase')
 
     let studentId = jwtHelper.decodeToken($localStorage.token)._id;
     $scope.studentId = studentId;
+
     let universityUrl = studentId;
 
     $scope.administrator = [];
     $scope.participants = [];
+
     $scope.selectedOne = false;
 
     //$scope.currentLocalParticipant = null;
@@ -81,7 +83,6 @@ angular.module('netbase')
             console.log($scope.wholeClassroomList);
         });
     }
-
 
     $scope.addingClassroom = {
         uniqueName: '',
@@ -224,7 +225,6 @@ angular.module('netbase')
 
     $scope.cancelDelete = function() {
         $scope.deleteRoom = null;
-
         ngDialog.close();
     }
 
@@ -495,7 +495,6 @@ function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialo
           }
 
               // FIX
-
 
               let payload = { timeWatched : timeWatched };
 
@@ -1121,8 +1120,7 @@ function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialo
     console.log('delete content', contentId);
     $scope.contentId = contentId;
 
-      $scope.modulesByAccount = res.data;
-      console.log(res)
+      
     ngDialog.open({
       template: 'deleteContentPopup',
       controller: 'CoursesContentModulosCtrl',

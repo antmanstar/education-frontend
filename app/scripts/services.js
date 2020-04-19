@@ -2041,7 +2041,19 @@ angular.module('netbase')
           }})
 
         },
+        getKnowledgeId: function(universityId) {
+        
+          var url = '/knowledge/'+universityId;
 
+          return $http({
+            method: 'GET',
+            url: baseUrl + url,
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'x-access-token': $localStorage.token
+          }})
+
+        },
         getCoursesByAccount: function(universityId) {
 
           var url = '/owner';

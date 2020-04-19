@@ -750,10 +750,9 @@ angular.module('netbase')
                 console.log(screenTrack);
                 $scope.connectClassroom($scope.currentRoomToken, $scope.currentRoomName, screenTrack);
 
-
             });
-        }
-        else {
+        
+        } else {
             if($scope.currentShareScreen != null) $scope.currentShareScreen.stop();
             $scope.shareScreenCaption = 'Share Screen';
             $scope.connectClassroom($scope.currentRoomToken, $scope.currentRoomName);
@@ -845,6 +844,9 @@ angular.module('netbase')
         Clipboard.copy(text);
         ngDialog.open({ template: 'partials/modals/classroom_alert_modal.html', controller: "AcademiaClassroomsAlertCtrl", className: 'ngdialog-theme-default classroom-alert-modal', data: {type: "Universidade", msg: 'Copied link to clipboard'}});
     }
+
+
+
 
     $scope.toggleAllControllers = function() {
       if($scope.mobileVisibleToggle == 'mobile-invisible'){
@@ -2283,16 +2285,21 @@ angular.module('netbase')
                 console.log("response student: ");
 
                 scope.student_id=studentId;
-                if(res.sucess)
-                scope.student = res.data.data;
-                else
-                   scope.student={_id:studentId,"name":"test"}
+                if(res.data.success) {
+                   console.log(res.data.success)
+                   scope.student = res.data.data;
+                } else {
+                   scope.student = {_id:studentId,"name":"test"};
+                }
 
             });
+           //END Students.getStudentById
 
         }
+      //END LINK
 
     }
+    //END RETURN
 
 }])
 .directive('academiastatus', ['University', '$localStorage', '$route', 'jwtHelper', function(University, $localStorage, $route, jwtHelper) {
@@ -2442,6 +2449,7 @@ angular.module('netbase')
                 /* */
 
                 attr.$observe('university', function(value) {
+                university = JSON.parse(value);
 
                   /* REAL TIME MODULE */
 
@@ -3001,7 +3009,32 @@ angular.module('netbase')
         }
     }
 }])
+.directive('knowledgecoursecard', ['Courses','University', '$rootScope', 'Students', function(Courses,University, $rootScope, Students) {
+    return {
+        restrict: 'EA',
+        templateUrl: '../partials/directive/knowledgecoursecard.html',
+        
+        link: function(scope, element, attr) {
 
+            let universityId = attr.uid;
+
+            Courses.getKnowledgeId(universityId).success(function(res) {
+
+                console.log(res);
+
+                scope.university = res.data;
+
+            });
+
+            /*
+
+            filter: { active: true } | orderBy:'-highlight'
+
+            */
+
+        }
+    }
+}])
 .directive('timelineuniversitycard', ['University', '$rootScope', 'Students', function(University, $rootScope, Students) {
     return {
         restrict: 'E',
