@@ -1120,7 +1120,7 @@ function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialo
     console.log('delete content', contentId);
     $scope.contentId = contentId;
 
-      
+
     ngDialog.open({
       template: 'deleteContentPopup',
       controller: 'CoursesContentModulosCtrl',
@@ -2688,6 +2688,10 @@ Courses.getAll().success(function(res) {
 /* home - universidades */
 .controller('HomeUserUniversidadesCtrl', ['$rootScope', '$scope', '$location', 'University', 'Knowledge' , function($rootScope, $scope, $location, University, Knowledge) {
 
+  $scope.activeSection = 'seguindo';
+
+  /* */
+
   University.getUniversities().then(function(res) {
 
     console.log(res);
@@ -2695,6 +2699,9 @@ Courses.getAll().success(function(res) {
     $scope.universities = res.data.data;
 
   });
+
+  /* */
+
 
 }])
 
