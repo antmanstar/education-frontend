@@ -79,15 +79,6 @@ angular.module('netbase', [
 
    };
 
-   /*
-
-   .when('/home', {
-       templateUrl: 'partials/home/home.html',
-       controller: 'HomeCtrl',
-   })
-
-   */
-
     $routeProvider.
         when('/onboarding/universities', {
             templateUrl: 'partials/onboarding/universities.html',

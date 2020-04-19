@@ -4,19 +4,17 @@
 
 angular.module('netbase')
 
-.controller('HomePersonalClassroom', ['$rootScope', '$scope', '$location', '$route', 'University', 'Classroom', 'Students', 'ngDialog', '$localStorage', '$window', 'jwtHelper', function($rootScope, $scope, $location, $route, University, Classroom, Students, ngDialog, $localStorage, $window, jwtHelper) {
+.controller('HomePersonalClassroom', ['$rootScope', '$scope', '$location', '$route', 'University', 'Classroom', 'Students', 'ngDialog', 'jwtHelper', '$localStorage', '$window', function($rootScope, $scope, $location, $route, University, Classroom, Students, ngDialog, jwtHelper, $localStorage, $window) {
 
     let studentId = jwtHelper.decodeToken($localStorage.token)._id;
-
     $scope.studentId = studentId;
-
-    console.log(studentId)
 
     let universityUrl = studentId;
 
     $scope.administrator = [];
     $scope.participants = [];
-    $scope.fullScreen = false;
+
+    $scope.selectedOne = false;
 
     //$scope.currentLocalParticipant = null;
     $scope.currentVideoRoom = null;
@@ -24,6 +22,7 @@ angular.module('netbase')
     $scope.localParticipantUserName = "";
     $scope.showingParticipants = [];
     $scope.shareScreenCaption = "Share Screen";
+    $scope.confirmDelete = false;
     //console.log($route);
     //console.log("$$$$$$$$$");
     //console.log(Twilio.Video);
@@ -33,6 +32,8 @@ angular.module('netbase')
     console.log('here local video');
     console.log(localVideo);
 
+    $scope.classroomViewMode = false;
+
     //var baseUrl = "http://localhost:9000"; //Back-end server base url
     //var baseUrl = "http://localhost:9001"; //Back-end server base url
     var baseUrl = "https://educationalcommunity-classroom.herokuapp.com";
@@ -40,7 +41,7 @@ angular.module('netbase')
     var arr = $window.location.href.split("/");
     var domain = arr[0] + "//" + arr[2];
 
-    University.getUniversity(studentId).then(function(res) {
+    University.getUniversity(universityUrl).then(function(res) {
         console.log('here university');
         console.log(res);
         $scope.university = res.data.data;
@@ -52,8 +53,23 @@ angular.module('netbase')
         //$scope.isMobile();
     });
 
+    /****************** Mobile / Web **************************/
+
+    $scope.isMobile = function() {
+        var check = false;
+        (function(a) { if (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino|android|ipad|playbook|silk/i.test(a) || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0, 4))) check = true; })(navigator.userAgent || navigator.vendor || window.opera);
+        $scope.classroomViewMode = check;
+        return check;
+    }
+
+    // $scope.maxHeight = function() {
+    //     if ($scope.classroomViewMode == true)
+    //         return { "max-height": '500px' }
+    //     else return { 'max-height': '600px' }
+    // }
+
     $scope.maxHeight = {
-        "max-height": '600px'
+        "max-height": '500px'
     }
 
     /******************** GET ALL Classrooms ******************/
@@ -85,54 +101,131 @@ angular.module('netbase')
     }
 
     $scope.createNewClassroom = function() {
-        ngDialog.open({ controller: 'HomePersonalClassroom', template: 'partials/modals/classroom_modal.html', className: 'ngdialog-theme-default classroom-modal' });
+        ngDialog.open({ controller: 'HomePersonalClassroom', template: 'partials/modals/classroom_modal.html', className: 'ngdialog-theme-default' });
     };
 
     $scope.confirmCreateClassroom = function() {
+        let studentId;
 
         let token = $localStorage.token;
         let title = $scope.addingClassroom.uniqueName ? $scope.addingClassroom.uniqueName : '';
-        let url = '/classroom/university/' + $scope.university._id + '/room/' + title;
+        //let url = '/classroom/university/' + $scope.university._id + '/room/' + title;
+        let url = '/classroom/university/';
 
-        console.log("CREATE CLASSROOM")
-
-        console.log(url)
-
-        Classroom.createNewClassroom(baseUrl + url, title).then((data) => {
-                //$scope.getAllClassrooms();
-                console.log("response: ")
-                console.log(data)
-                let url = '/classroom/university/' + $scope.university._id + '/all'
-                Classroom.getAllClassroomsByUniversity(baseUrl + url).then((data) => {
-                    $scope.wholeClassroomList = data;
-                    console.log('Classroom.getAllClassrooms');
-                    console.log($scope.wholeClassroomList);
-                    $route.reload();
-                });
-                ngDialog.close();
-            })
-            .catch((err) => {
-                alert('Error');
-                console.log(err)
+        if ($localStorage.token != undefined && $localStorage.token != null) {
+            studentId = jwtHelper.decodeToken($localStorage.token)._id;
+        }
+        console.log("here studentId" + studentId);
+        console.log('here university');
+        console.log($scope.university);
+        var i;
+        var privilege = 0;
+        for (i = 0; i < $scope.university.members.length; i++) {
+            var member = $scope.university.members[i];
+            if (studentId != undefined && member.accountId == studentId) {
+                privilege = member.privilege; break;
+            }
+        }
+        Classroom.createNewClassroom(baseUrl + url, title, privilege, $scope.university._id).then((data) => {
+            //$scope.getAllClassrooms();
+            let newClassroom = data.data;
+            console.log("new classroom: ")
+            console.log(data)
+            let url = '/classroom/university/' + $scope.university._id + '/all'
+            Classroom.getAllClassroomsByUniversity(baseUrl + url).then((data) => {
+                $scope.wholeClassroomList = data;
+                console.log('Classroom.getAllClassrooms');
+                console.log($scope.wholeClassroomList);
+                let text = "/a/university/" + universityUrl + "/roomid/" + newClassroom.id + "/accountid/" + newClassroom.sid + "/roomname/" + $scope.addingClassroom.uniqueName + "/";
+                console.log("text")
+                //$location.path(text);
+                $route.reload();
             });
-        //END Classroom.createNewClassroom()
+            ngDialog.close();
+        })
+        .catch((err) => {
 
+            ngDialog.close();
+            ngDialog.open({ template: 'partials/modals/classroom_alert_modal.html', controller: "AcademiaClassroomsAlertCtrl", className: 'ngdialog-theme-default classroom-alert-modal', data: {type: "ERROR", msg: err}});
+
+        });
     }
 
     $scope.copyLink = function(classroom) {
         let text = domain + "/a/university/" + universityUrl + "/roomid/" + classroom.roomSID + "/accountid/" + classroom.accountSid + "/roomname/" + classroom.uniqueName + "/";
-        navigator.clipboard.writeText(text).then(function() {
-            $window.alert('Copied link to clipboard');
-        }, function(err) {
-            console.error('Could not copy link to the clipboard ', err);
-        });
-    }
+        /*if (navigator.clipboard != undefined) {//Chrome
+            navigator.clipboard.writeText(text).then(function() {
+                ngDialog.open({ template: 'partials/modals/classroom_alert_modal.html', controller: "AcademiaClassroomsAlertCtrl", className: 'ngdialog-theme-default classroom-alert-modal', data: {type: "Universidade", msg: 'Copied link to clipboard'}});
+            }, function(err) {
+                ngDialog.open({ template: 'partials/modals/classroom_alert_modal.html', controller: "AcademiaClassroomsAlertCtrl", className: 'ngdialog-theme-default classroom-alert-modal', data: {type: "ERROR", msg: 'Could not copy link to the clipboard '}});
+            });
+        }
+        else if(window.clipboardData) { // Internet Explorer
+            window.clipboardData.setData("Text", text);
+        }*/
 
+        Clipboard.copy(text);
+        ngDialog.open({ template: 'partials/modals/classroom_alert_modal.html', controller: "AcademiaClassroomsAlertCtrl", className: 'ngdialog-theme-default classroom-alert-modal', data: {type: "Universidade", msg: 'Copied link to clipboard'}});
+    }
 
     $scope.joinClassroom = function(classroom) {
 
-       window.open(domain + "/a/" + universityUrl + "/roomid/" + classroom.roomSID + "/" + classroom.accountSid + "/" + classroom.uniqueName + "/");
+      let text = domain + "/a/university/" + universityUrl + "/roomid/" + classroom.roomSID + "/accountid/" + classroom.accountSid + "/roomname/" + classroom.uniqueName + "/";
+      window.open(text);
 
+    }
+
+    $scope.deleteClassroom = function(classroom) {
+        $rootScope.deleteRoom = classroom;
+        console.log('deleteroom');
+        console.log(classroom);
+        ngDialog.open({ template: 'partials/modals/classroom_confirm_delete_modal.html', controller: "AcademiaClassroomsCtrl", className: 'ngdialog-theme-default classroom-alert-modal'});
+    }
+
+    $scope.confirmDelete = function() {
+        let token = $localStorage.token;
+
+        console.log('here university');
+        console.log($scope.university);
+        let url = '/classroom/end/';
+        var i;
+        var privilege = 0;
+        let studentId;
+        if ($localStorage.token != undefined && $localStorage.token != null) {
+            studentId = jwtHelper.decodeToken($localStorage.token)._id;
+        }
+        for (i = 0; i < $scope.university.members.length; i++) {
+            var member = $scope.university.members[i];
+            if (studentId != undefined && member.accountId == studentId) {
+                privilege = member.privilege; break;
+            }
+        }
+        privilege = 99;
+        console.log('delete classroom');
+        console.log($rootScope.deleteRoom);
+        var roomId = $rootScope.deleteRoom.roomSID;
+        Classroom.deleteClassroom(baseUrl + url, roomId, privilege).then((data) => {
+            //$scope.getAllClassrooms();
+            let url = '/classroom/university/' + $scope.university._id + '/all';
+            Classroom.getAllClassroomsByUniversity(baseUrl + url).then((data) => {
+                ngDialog.close();
+                $scope.wholeClassroomList = data;
+                console.log('Classroom.getAllClassrooms');
+                console.log($scope.wholeClassroomList);
+                $route.reload();
+            });
+        })
+        .catch((err) => {
+
+            ngDialog.close();
+            ngDialog.open({ template: 'partials/modals/classroom_alert_modal.html', controller: "AcademiaClassroomsAlertCtrl", className: 'ngdialog-theme-default classroom-alert-modal', data: {type: "ERROR", msg: err}});
+
+        });
+    }
+
+    $scope.cancelDelete = function() {
+        $scope.deleteRoom = null;
+        ngDialog.close();
     }
 
 }])
@@ -402,7 +495,6 @@ function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialo
           }
 
               // FIX
-
 
               let payload = { timeWatched : timeWatched };
 
@@ -826,7 +918,7 @@ function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialo
       width: '50%',
       height: '40%',
       className: 'ngdialog-theme-default'
-    });    
+    });
   }
 
   $scope.deleteModule = function() {
@@ -1095,7 +1187,7 @@ $scope.deleteContent = function() {
       width: '50%',
       height: '40%',
       className: 'ngdialog-theme-default'
-    });    
+    });
 
   }
 
@@ -1136,13 +1228,13 @@ $scope.deleteContent = function() {
 
 }])
 .controller('CoursesAddInstructorsCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'ngDialog', 'Courses', 'University', function($rootScope, $scope, $location, $route, $localStorage, ngDialog, Courses, University) {
-  
+
   let universityId = $scope.ngDialogData.universityId;
   let courseId = $scope.ngDialogData.courseId;
   $scope.selectedMember=$scope.ngDialogData.members
   if(!$scope.selectedMember) $scope.selectedMember=[];
   console.log($scope.selectedMember);
- 
+
   University.getUniversityById(universityId).success(function(res) {
 
     console.log('university res', res)
@@ -1165,7 +1257,7 @@ $scope.deleteContent = function() {
     }
   }
   $scope.save = function() {
-    
+
     if($scope.selectedMember != undefined && $scope.selectedMember.length>0) {
       Courses.addInstructor(courseId, $scope.selectedMember).success(function(res) {
         console.log('instructor res', res);
@@ -1300,11 +1392,11 @@ $scope.deleteContent = function() {
      alert("Error")
      $location.path("/home/cursos")
   })
-  
-  
+
+
 
   $scope.saveContent = function() {
-     
+
      Courses.savePage({text:$scope.tinymceModel,contentType:'page',title:$scope.title},id).
      success(function(res){
          $location.path("/cursos/suite/content")
@@ -1312,8 +1404,8 @@ $scope.deleteContent = function() {
         alert(er)
      })
   };
-  
-  
+
+
 }])
 .controller('CoursesCreatePageCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses) {
   $scope.activeSection = "createPage";

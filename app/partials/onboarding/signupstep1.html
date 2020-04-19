@@ -49,7 +49,7 @@
 
         <div class="collection" ng-click="selectMode('learn')" ng-class="{'active-option': mode == 'learn'}">
 
-          <div class="dot" style="background-color: #000;"></div>
+          <div class="dot"><i class="fas fa-graduation-cap"></i></div>
 
           <div style="font-size: 1.2em; font-weight: bold;">Aprender</div>
           <!--<div style="color: #909090;">4 items</div>-->
@@ -58,9 +58,18 @@
 
         <div class="collection" ng-click="selectMode('teach')" ng-class="{'active-option': mode == 'teach'}">
 
-          <div class="dot" style="background-color: #000;"></div>
+          <div class="dot"><i class="fas fa-chalkboard-teacher"></i></div>
 
           <div style="font-size: 1.2em; font-weight: bold;">Ensinar</div>
+          <!--<div style="color: #909090;">4 items</div>-->
+
+        </div>
+
+        <div class="collection" ng-click="selectMode('video')" ng-class="{'active-option': mode == 'video'}">
+
+          <div class="dot"><i class="fas fa-video"></i></div>
+
+          <div style="font-size: 1.2em; font-weight: bold;">Videoconferência</div>
           <!--<div style="color: #909090;">4 items</div>-->
 
         </div>
@@ -230,7 +239,6 @@
 
   </style>
 
-
   <div class="row" style="margin-top: 15px; margin-bottom: 15px;">
     <div class="col-xs-12" ng-show="mode == 'teach'">
       <button class="btn btn-success" ng-click="teaching()" style="font-size: 1.15em; font-weight: bold;">Continuar</button>
@@ -238,6 +246,10 @@
     <!-- -->
     <div class="col-xs-12" ng-show="mode == 'learn'">
       <button class="btn btn-success" ng-click="learning()" style="font-size: 1.15em; font-weight: bold;">Continuar</button>
+    </div>
+    <!-- -->
+    <div class="col-xs-12" ng-show="mode == 'video'">
+      <button class="btn btn-success" ng-click="videocalling()" style="font-size: 1.15em; font-weight: bold;">Continuar</button>
     </div>
     <!-- -->
   </div>

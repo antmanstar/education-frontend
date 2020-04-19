@@ -750,10 +750,9 @@ angular.module('netbase')
                 console.log(screenTrack);
                 $scope.connectClassroom($scope.currentRoomToken, $scope.currentRoomName, screenTrack);
 
-
             });
-        }
-        else {
+        
+        } else {
             if($scope.currentShareScreen != null) $scope.currentShareScreen.stop();
             $scope.shareScreenCaption = 'Share Screen';
             $scope.connectClassroom($scope.currentRoomToken, $scope.currentRoomName);
@@ -980,7 +979,7 @@ angular.module('netbase')
     }
 
     $scope.createNewClassroom = function() {
-        ngDialog.open({ controller: 'AcademiaClassroomsCtrl', template: 'partials/modals/classroom_modal.html', className: 'ngdialog-theme-default classroom-modal' });
+        ngDialog.open({ controller: 'AcademiaClassroomsCtrl', template: 'partials/modals/classroom_modal.html', className: 'ngdialog-theme-default' });
     };
 
     $scope.confirmCreateClassroom = function() {
@@ -1044,7 +1043,8 @@ angular.module('netbase')
 
     $scope.joinClassroom = function(classroom) {
 
-       window.open(domain + "/a/" + universityUrl + "/roomid/" + classroom.roomSID + "/" + classroom.accountSid + "/" + classroom.uniqueName + "/");
+      let text = domain + "/a/university/" + universityUrl + "/roomid/" + classroom.roomSID + "/accountid/" + classroom.accountSid + "/roomname/" + classroom.uniqueName + "/";
+      window.open(text);
 
     }
 
@@ -2282,23 +2282,24 @@ angular.module('netbase')
 
             Students.getStudentById(studentId).then(function(res) {
 
-                console.log("response student: "+res);
-                
+                console.log("response student: ");
+
                 scope.student_id=studentId;
-                if(res.data.success)
-                {
-                    console.log(res.data.success)
-                scope.student = res.data.data;
+                if(res.data.success) {
+                   console.log(res.data.success)
+                   scope.student = res.data.data;
+                } else {
+                   scope.student = {_id:studentId,"name":"test"};
                 }
-                else{
-                    console.log(res.data.success)
-                scope.student={_id:studentId,"name":"test"}
-                }
+
             });
+           //END Students.getStudentById
 
         }
+      //END LINK
 
     }
+    //END RETURN
 
 }])
 .directive('academiastatus', ['University', '$localStorage', '$route', 'jwtHelper', function(University, $localStorage, $route, jwtHelper) {
