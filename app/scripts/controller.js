@@ -363,7 +363,7 @@ angular.module('netbase')
 function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses) {
   $scope.moduleId = $scope.ngDialogData.moduleId;
   console.log('$scope', $scope.moduleId);
-
+    alert("ananth")
 }])
 .controller('CoursesCreatePageCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses) {
 
@@ -896,7 +896,7 @@ function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialo
   //ngDialog.open({ template: 'partials/courses/modals/contentcreate.html', controller: 'CoursesContentCreateCtrl', className: 'ngdialog-theme-default' });
 
   $scope.conteudocriar = function() {
-
+alert('f')
     ngDialog.open({
       template: 'partials/courses/modals/createContent.html',
       controller: 'CoursesCreateContentCtrl',
@@ -1088,7 +1088,7 @@ function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialo
 
   $scope.activeSection = "content";
   $scope.conteudocriar = function() {
-    ngDialog.open({ template: 'partials/courses/modals/contentcreate.html', controller: 'CoursesContentCreateCtrl', className: 'ngdialog-theme-default', data : { "universityId" : "fdasdfa" } });
+    ngDialog.open({width: '70%', template: 'partials/courses/modals/createContent.html', controller: 'CoursesContentCreateCtrl', className: 'ngdialog-theme-default', data : { "universityId" : "fdasdfa" } });
   }
   Courses.getContentModulesByAccount().success(function(res) {
 
@@ -2272,7 +2272,7 @@ $scope.deleteContent = function() {
    if (res.success) {
 
       $scope.universities = res.data.length;
-
+     
     }
 
   });

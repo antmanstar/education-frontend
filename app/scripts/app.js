@@ -169,6 +169,10 @@ angular.module('netbase', [
             templateUrl: 'partials/courses/suite/owner.html',
             controller: 'CoursesOwnerCtrl',
         })
+         .when('/cursos/suite/createContent', {
+          templateUrl: 'partials/courses/suite/createPage.html',
+          controller: 'CoursesCreateContentCtrl',
+        })
         .when('/cursos/suite/createPage', {
           templateUrl: 'partials/courses/suite/createPage.html',
           controller: 'CoursesCreatePageCtrl',
