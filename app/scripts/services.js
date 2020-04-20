@@ -809,7 +809,7 @@ angular.module('netbase')
             data: {
               id: universityId,
               roomName: title,
-              privilege: 99,
+              privilege: privilege,
             }
 					}
 					$http(req).then((res) => {

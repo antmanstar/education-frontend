@@ -6,6 +6,7 @@
 
 .participant-menu-icon {
     color: white !important;
+    z-index: 40;
 }
 
 .participant-menu-icon>i {
@@ -19,6 +20,7 @@
 
 .chat-menu-icon {
     color: white !important;
+    z-index: 40;
 }
 
 .chat-menu-icon>i {
@@ -112,7 +114,7 @@
     width: 350px;
     right: -351px;
     height: 100%;
-    z-index: 30;
+    z-index: 50;
 }
 
 .drag-in-right-left {
@@ -149,7 +151,7 @@
     height: 30px;
     font-size: 25px;
     position: absolute;
-    left: 250px;
+    right: 0px;
     top: 0px;
     border: none;
     background-color: white;
@@ -309,8 +311,8 @@
 .chat-item-st.mine .chat-main-st
 {
     border-top-right-radius: 0px;
-    background-color: #92b0fe;
-    color: white;
+    background-color: #ddf6ff;
+    color: black;
 }
 
 .chat-item-st.other .chat-main-st
@@ -366,7 +368,7 @@
         width: 100%;
         right: -100%;
         height: 100%;
-        z-index: 30;
+        z-index: 50;
     }
 
     .drag-in-right-left {
@@ -377,5 +379,23 @@
     .drag-out-left-right {
         right: -100% !important;
         height: 100%;
+    }
+
+    .drag-in-left-right {
+        left: 0px !important;
+        height: 100%;
+    }
+    
+    .drag-out-right-left {
+        left: -100% !important;
+        width: 100%;
+        height: 100%;
+    }
+    
+    .classroom-participants-initial {
+        width: 100%;
+        left: -100%;
+        height: 100%;
+        z-index: 50;
     }
 }

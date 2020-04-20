@@ -368,7 +368,7 @@
 
 .classroom-alert-modal .ngdialog-content {
     width: 480px !important;
-    height: 200px !important;
+    height: 141px !important;
     margin-top: 100px !important;
 }
 
@@ -509,6 +509,7 @@ video {
     display: flex;
     flex-direction: column;
     background-color: white;
+    z-index: 50;
 }
 
 .classroom-chat-container-none {
@@ -641,6 +642,7 @@ video {
     color: white;
     opacity: 0.6;
     width: 100%;
+    bottom: 0px;
 }
 
 .classroom-list-menu {
@@ -761,5 +763,10 @@ video {
         width: 60px;
         height: 60px;
     } 
+
+    .classroom-alert-modal {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
 
 }
