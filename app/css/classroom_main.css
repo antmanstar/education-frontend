@@ -69,6 +69,8 @@
     border-radius: 5px;
     height: 111%;
     overflow-y: auto;
+    background-color: white;
+    padding: 5px;
 }
 
 .meeting-display-container {
@@ -115,6 +117,7 @@
     right: -351px;
     height: 100%;
     z-index: 50;
+    background-color: #f4f3f3;
 }
 
 .drag-in-right-left {
@@ -164,7 +167,7 @@
     height: 30px;
     font-size: 25px;
     border: none;
-    background-color: white;
+    background-color: #f4f3f3;
 }
 
 .mobile-visible {
@@ -236,28 +239,41 @@
 }
 
 .chat-sending-input-container {
+    position: relative;
     bottom: 0px;
+    height: auto;
+    width: 110%;
+    margin-left: -15px;
+    border-radius: 0px;
     display: flex;
-    width: 100%;
-    padding: 0px;
-    height: 17%;
-    margin-top: 10px;
 }
 
 .chat-sending-input-container textarea {
     height: 50px;
-    border-radius: 5px;
-    margin-bottom: 10px;
     width: 90%;
+    border: none;
+    background-color: #dddddd;
+}
+
+.chat-sending-input-container textarea:focus {
+    border-color: black;
+    border-style: solid;
+    outline: none;
 }
 
 .chat-sending-input-container button {
-    height: 49px;
+    height: 50px;
     font-size: 35px;
-    border-radius: 3px;
+    /* border-radius: 3px; */
     background-color: #35c6ff;
     color: white;
     float: right;
+    margin-left: -3px;
+    z-index: 3;
+}
+
+.chat-sending-input-container button>i {
+    transform: rotate(262deg);
 }
 
 .friend-select {
@@ -269,17 +285,12 @@
 
 .chat-item-st {
     margin-bottom: 10px;
-}
-
-.chat-title-st img {
-    width: 30px;
-    height: 30px;
-    margin-right: 10px;
+    
 }
 
 .chat-title-st {
-    display: flex;
-    align-items: center;
+    width: 66%;
+    margin-left: 60px;
 }
 
 .chat-main-st {
@@ -302,16 +313,10 @@
     color: black;
 }
 
-.chat-item-st.mine .chat-title-st {
-    display: flex;
-    justify-content: flex-end;
-    margin-right: 10px;
-}
-
 .chat-item-st.mine .chat-main-st
 {
     border-top-right-radius: 0px;
-    background-color: #ddf6ff;
+    background-color: #52bfea;
     color: black;
 }
 
@@ -325,13 +330,142 @@
 .chat-time-st {
     letter-spacing: 0.1px;
     font-size: 12px;
+    float: right;
 }
 
 .chat-name-st {
     margin-bottom: -6px;
+    float: left;
+    font-size: 12px;
+}
+
+.chat-body-st {
+    display: flex;
+    flex-direction: row;
+}
+
+.chat-body-st>img {
+    width: 40px;
+    height: 40px;
+}
+
+.chat-item-st.other .chat-body-st>div {
+    position: relative;
+    width: 64%;
+    background-color: #dddddd;
+    padding: 5px;
+    border-radius: 5px;
+    margin-left: 20px;
+    word-break: break-all;
+}
+
+.chat-item-st.mine .chat-body-st>div {
+    position: relative;
+    width: 64%;
+    background-color: #52bfea;
+    padding: 5px;
+    border-radius: 5px;
+    margin-right: 20px;
+    margin-left: 59px;
+    word-break: break-all;
+}
+
+.chat-item-st.mine .chat-body-st>div:before {
+    content: "";
+    position: absolute;
+    width: 0;
+    /* height: 10%; */
+    right: -19px;
+    top: 6px;
+    border: 6px solid transparent;
+    border-left: 16px solid #52bfea;
+    /* border-left: 32px solid rgba(193,193,193,0.5); */
+    z-index: 2;
+}
+
+.chat-item-st.other .chat-body-st>div:before {
+    content: "";
+    position: absolute;
+    width: 0;
+    /* height: 10%; */
+    left: -20px;
+    top: 6px;
+    border: 7px solid transparent;
+    border-right: 17px solid rgb(221, 221, 221);
+    /* border-left: 32px solid rgba(193,193,193,0.5); */
+    z-index: 2;
 }
 
 @media screen and (max-width: 468px) {
+    .classroom-page-container {
+        margin-top: 0px;
+    }
+
+    .meeting-display-container {
+        margin-top: 0px;
+        position: fixed;
+        height: 100%;
+        width: 100%;
+    }
+    .meeting-classroom-main {
+        padding: 0px;
+        margin-top: 0px;
+    }
+    .controller-container {
+        width: 100%;
+    }
+    .bottom-controller-container {
+        margin-bottom: 10px;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    .classroom-chat-container>.avatar-container {
+        margin-top: 25px;
+    }
+    .mobile-invisible {
+        display: none !important;
+    }
+    .mobile-visible {
+        display: flex !important;
+    }
+
+    .classroom-chatbox-initial {
+        width: 100%;
+        right: -100%;
+        height: 100%;
+        z-index: 50;
+    }
+
+    .drag-in-right-left {
+        right: 0px !important;
+        height: 100%;
+    }
+
+    .drag-out-left-right {
+        right: -100% !important;
+        height: 100%;
+    }
+
+    .drag-in-left-right {
+        left: 0px !important;
+        height: 100%;
+    }
+    
+    .drag-out-right-left {
+        left: -100% !important;
+        width: 100%;
+        height: 100%;
+    }
+    
+    .classroom-participants-initial {
+        width: 100%;
+        left: -100%;
+        height: 100%;
+        z-index: 50;
+    }
+}
+
+@media screen and (max-width: 800px) {
     .classroom-page-container {
         margin-top: 0px;
     }

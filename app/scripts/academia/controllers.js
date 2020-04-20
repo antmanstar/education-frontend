@@ -413,43 +413,47 @@ angular.module('netbase')
 
     $scope.applyMessage = function(message, currentMember, id) {
         var messageListDom = document.getElementById('chat_list');
-        var messageMainDom = document.createElement('div');
         var messageTitleDom = document.createElement('div');
         var messageTimeDom = document.createElement('div');
         var messageBodyDom = document.createElement('div');
         var messageItemDom = document.createElement('div');
-        var messageInfoDom = document.createElement('div');
         
         messageItemDom.setAttribute('id', id);
+        
+        messageTitleDom.setAttribute('class', 'chat-title-st row');
+        messageBodyDom.setAttribute('class', 'chat-body-st');
+        messageTimeDom.setAttribute('class', 'chat-time-st');
+
+        let sentTime = message.body.substring(0, message.body.indexOf('::sent_time::'));
+        let messageBody = message.body.replace(sentTime + '::sent_time::', '');
+        //messageBodyDom.innerText = messageBody;
+        let messageBodyTextDom = document.createElement('div');
+        messageBodyTextDom.innerText = messageBody;
+
+        let avatar = document.createElement('img');
+        avatar.setAttribute('src', '/img/user/user.png');
+        
+        let nameDom = document.createElement('div');
+        nameDom.innerText = currentMember;
+        nameDom.setAttribute('class', 'chat-name-st');
+        messageTimeDom.innerText = sentTime;
+
+        messageTitleDom.appendChild(nameDom);
+        messageTitleDom.appendChild(messageTimeDom);
+
         if(GENERAL_CHANNEL_UNIQUE_NAME == message.author){
             messageItemDom.setAttribute('class', 'chat-item-st mine');
+            messageBodyDom.appendChild(messageBodyTextDom);
+            messageBodyDom.appendChild(avatar);
         }
         else{
             messageItemDom.setAttribute('class', 'chat-item-st other');
+            messageBodyDom.appendChild(avatar);
+            messageBodyDom.appendChild(messageBodyTextDom);
         }
-        messageMainDom.setAttribute('class', 'chat-main-st');
-        messageTitleDom.setAttribute('class', 'chat-title-st');
-        messageBodyDom.setAttribute('class', 'chat-body-st');
-        messageTimeDom.setAttribute('class', 'chat-time-st');
-        messageInfoDom.setAttribute('class', 'chat-info-st');
 
-        var sentTime = message.body.substring(0, message.body.indexOf('::sent_time::'));
-        var messageBody = message.body.replace(sentTime + '::sent_time::', '');
-        messageBodyDom.innerText = messageBody;
-        var avatar = document.createElement('img');
-        avatar.setAttribute('src', '/img/user/user.png');
-        messageTitleDom.appendChild(avatar);
-        var nameDom = document.createElement('div');
-        nameDom.innerText = currentMember;
-        nameDom.setAttribute('class', 'chat-name-st');
-        messageInfoDom.appendChild(nameDom);
-        messageTimeDom.innerText = sentTime;
-        messageInfoDom.appendChild(messageTimeDom);
-        
-        messageMainDom.appendChild(messageBodyDom);
-        messageTitleDom.appendChild(messageInfoDom);
+        messageItemDom.appendChild(messageBodyDom);
         messageItemDom.appendChild(messageTitleDom);
-        messageItemDom.appendChild(messageMainDom);
         messageListDom.appendChild(messageItemDom);
         $scope.scrollToMessageListBottom();
     }
@@ -558,7 +562,7 @@ angular.module('netbase')
     $scope.localParticipantUserName = "";
     $scope.currentLocalparticipant = null;
     $scope.showingParticipants = [];
-    $scope.shareScreenCaption = "Compartilhar Tela";
+    $scope.shareScreenCaption = "Share Screen";
     $scope.voiceToggle = 'fas fa-microphone-alt';
     $scope.voiceStatus = "Mute";
     $scope.videoToggle = 'fas fa-video';
@@ -667,7 +671,9 @@ angular.module('netbase')
             let participantMenu = document.getElementsByClassName('participant-menu-icon');
             let chatMenu = document.getElementsByClassName('chat-menu-icon');
             mainWidth = parseInt(videoContainer.offsetWidth);
-            if(!$scope.isFullScreen){
+            let msgMenuDom = document.getElementById('msg_menu_ctrl');
+            let participantMenuDom = document.getElementById('paticipant_menu_ctrl');
+            if(!$scope.isFullScreen) {
                 videoContainer.style.height = mainWidth / 4 * 3 + 'px';
                 mainHeight = mainWidth / 4 * 3;
                 participantMenu[0].style.position = 'initial';
@@ -722,41 +728,40 @@ angular.module('netbase')
                         
                     }
                 }
-                
-
-                } else if (videoDom.length > 1 && videoDom.length < 5 && countOfNone != 1) {
-                    for (i = 0; i < titleDom.length; i += 1) {
-                        let k;
-                        for (k = 0; k < titleDom[i].childElementCount; k++) {
-                            if (titleDom[i].children[k].tagName == 'VIDEO') {
-                                titleDom[i].children[k].style.width = "100%";
-                                titleDom[i].children[k].style.height = "100%";
-                                titleDom[i].children[k].style.position = 'initial';
-                            }
+            } 
+            else if (videoDom.length > 1 && videoDom.length < 5 && countOfNone != 1) {
+                for (i = 0; i < titleDom.length; i += 1) {
+                    let k;
+                    for (k = 0; k < titleDom[i].childElementCount; k++) {
+                        if (titleDom[i].children[k].tagName == 'VIDEO') {
+                            titleDom[i].children[k].style.width = "100%";
+                            titleDom[i].children[k].style.height = "100%";
+                            titleDom[i].children[k].style.position = 'initial';
                         }
-                        titleDom[i].style.width = "49.9%";
-                        titleDom[i].style.height = '50%';
-                        titleDom[i].style.position = 'relative';
                     }
-                    if(!$scope.isFullScreen) $scope.fullScreenStatus = '';
-                } 
-                else if (videoDom.length > 4 && countOfNone != 1) {
-                    for (i = 0; i < titleDom.length; i += 1) {
-                        let k;
-                        for (k = 0; k < titleDom[i].childElementCount; k++) {
-                            if (titleDom[i].children[k].tagName == 'VIDEO') {
-                                titleDom[i].children[k].style.width = "100%";
-                                titleDom[i].children[k].style.height = "100%";
-                                titleDom[i].children[k].style.position = 'initial';
-                            }
-                        }
-                        titleDom[i].style.width = '33%';
-                        titleDom[i].style.height = '33%';
-                        titleDom[i].style.position = 'relative';
-                    }
-                    if(!$scope.isFullScreen) $scope.fullScreenStatus = '';
+                    titleDom[i].style.width = "49.9%";
+                    titleDom[i].style.height = '50%';
+                    titleDom[i].style.position = 'relative';
                 }
+                if(!$scope.isFullScreen) $scope.fullScreenStatus = '';
+            } 
+            else if (videoDom.length > 4 && countOfNone != 1) {
+                for (i = 0; i < titleDom.length; i += 1) {
+                    let k;
+                    for (k = 0; k < titleDom[i].childElementCount; k++) {
+                        if (titleDom[i].children[k].tagName == 'VIDEO') {
+                            titleDom[i].children[k].style.width = "100%";
+                            titleDom[i].children[k].style.height = "100%";
+                            titleDom[i].children[k].style.position = 'initial';
+                        }
+                    }
+                    titleDom[i].style.width = '33%';
+                    titleDom[i].style.height = '33%';
+                    titleDom[i].style.position = 'relative';
+                }
+                if(!$scope.isFullScreen) $scope.fullScreenStatus = '';
             }
+        }
         else if ($scope.isMobile()) {
             videoContainer.style.height = parseInt(screen.height) - 102 + 'px';
             if (titleDom.length == 1 || countOfNone == 1) {
@@ -827,7 +832,7 @@ angular.module('netbase')
         $scope.showingParticipants = [];
         $scope.currentLocalparticipant = null;
         $scope.localConnected = false;
-        if ($scope.currentVideoRoom != null) $scope.currentVideoRoom.disconnect();
+        //if ($scope.currentVideoRoom != null) $scope.currentVideoRoom.disconnect();
         $scope.currentVideoRoom = null;
     }
 
@@ -840,17 +845,19 @@ angular.module('netbase')
 
     $scope.connectClassroom = function(token, roomName, screenTrack = null) {
 
-        $scope.disconnectClassroom();
+        //$scope.disconnectClassroom();
 
         $scope.currentShareScreen = screenTrack;
         $scope.currentRoomToken = token;
         $scope.currentRoomName = roomName;
 
+        console.log(screenTrack);
+
         var room_t;
         if (screenTrack != null) {
             room_t = {
                 name: roomName,
-                tracks: [screenTrack]
+                tracks: [screenTrack[0], screenTrack[1]]
             }
         } else {
             room_t = {
@@ -864,11 +871,12 @@ angular.module('netbase')
             const localParticipant = room.localParticipant;
             
             $scope.currentLocalparticipant = room.localParticipant;
+            $scope.currentLocalparticipant.audioTracks.forEach(function(audioTrack) {
+                $scope.currentLoaclAudioTrack = audioTrack;
+                console.log($scope.currentLoaclAudioTrack);
+            });
             $scope.localConnected = true;
             $scope.currentVideoRoom = room;
-            if ($scope.currentShareScreen != null) {
-                room.localParticipant.publishTrack($scope.currentShareScreen);
-            }
 
             var mainVideoDom = document.getElementById('twilio');
             var videoTitle = document.createElement('div');
@@ -876,20 +884,27 @@ angular.module('netbase')
             videoTitle.setAttribute('class', 'sub-video-title');
             videoTitle.style.position = 'relative';
 
+            $scope.localVideoContainer = videoTitle;
+
             localParticipant.videoTracks.forEach(publication => {
+
                 const track = publication.track;
 
-                /********************* Screen Full Screen *********************/
+                $scope.currentLocalScreen = track;
+                $scope.attachVideo(track, videoTitle);
 
-                console.log($scope.currentLocalparticipant);
-                $scope.attachVideo(videoTitle, track);
-                
+            });
+            localParticipant.audioTracks.forEach(publication => {
+
+                const track = publication.track;
+
+                //$scope.currentLocalScreen = track;
+                $scope.attachVideo(track, videoTitle);
+
             });
             mainVideoDom.appendChild(videoTitle);
 
             Students.getStudentById(localParticipant.identity).then((res) => {
-                console.log('Local Participant');
-                console.log(res.data);
                 $scope.localParticipantUserName = res.data.data.name;
 
                 $rootScope.localMessager = {
@@ -929,12 +944,15 @@ angular.module('netbase')
 
         subTitleDom.setAttribute('class', 'sub-video-title');
 
-        participant.on('trackSubscribed', track => $scope.trackSubscribed(mainVideoDom, subTitleDom, track));
+        participant.on('trackSubscribed', track => {
+            //if(track.isStarted) 
+                $scope.trackSubscribed(mainVideoDom, subTitleDom, track)
+        });
 
         participant.on('trackUnsubscribed', $scope.trackUnsubscribed);
 
         participant.tracks.forEach(publication => {
-            if (publication.isSubscribed) {
+            if (publication.isSubscribed ) {
                 $scope.trackSubscribed(mainVideoDom, subTitleDom, publication.track);
             }
         });
@@ -954,46 +972,9 @@ angular.module('netbase')
         });
     }
 
-    $scope.attachVideo = function(ele, track) {
-        angular.element(ele.appendChild(track.attach())).bind('click', (e) => {
-            let i;
-            
-            let mainDom = document.getElementById('twilio');
-            if ($scope.selectedOne) {
-                for (i = 0; i < mainDom.childElementCount; i++) {
-                    mainDom.children[i].style.display = 'initial';
-                }
-                $scope.videoSizeSet();
-                setTimeout(() => {
-                        $window.dispatchEvent(new Event("resize"));
-                    },
-                    100);
-            } else {
-                let elements = document.getElementsByClassName('sub-video-title');
-
-                for (i = 0; i < elements.length; i++) {
-                    let flag = false;
-                    let k;
-                    for (k = 0; k < elements[i].childElementCount; k++) {
-                        if (elements[i].children[k] == e.target) flag = true;
-                    }
-                    if (!flag) {
-                        elements[i].style.display = 'none';
-                    }
-                }
-                //$scope.videoSizeSet();
-                setTimeout(() => {
-                        $window.dispatchEvent(new Event("resize"));
-                    },
-                    100);
-            }
-            $scope.selectedOne = !$scope.selectedOne;
-        });
-    }
-
     $scope.trackSubscribed = function(main, ele, track) {
 
-        $scope.attachVideo(ele, track);
+        $scope.attachVideo(track, ele);
         main.appendChild(ele);
 
         setTimeout(() => {
@@ -1099,9 +1080,49 @@ angular.module('netbase')
         });
     }
 
+    $scope.attachVideo = function(track, videoContainer) {
+
+        console.log(track);
+        console.log(videoContainer);
+        console.log(track.isStopped);
+        console.log(track.isStarted);
+
+        //if((track.isStopped != undefined && !track.isStopped) || (track.isStopped == undefined && track.isStarted)){
+            angular.element(videoContainer.appendChild(track.attach())).bind('click', (e) => {
+                var i;
+
+                let mainDom = document.getElementById('twilio');
+                if ($scope.selectedOne) {
+                    for (i = 0; i < mainDom.childElementCount; i++) {
+                        mainDom.children[i].style.display = 'initial';
+                    }
+
+                } else {
+
+                    let elements = document.getElementsByClassName('sub-video-title');
+                    for (i = 0; i < elements.length; i++) {
+                        let flag = false;
+                        let k;
+                        for (k = 0; k < elements[i].childElementCount; k++) {
+                            if (elements[i].children[k] == e.target) flag = true;
+                        }
+                        if (!flag) {
+                            elements[i].style.display = 'none';
+                        }
+                    }
+                }
+                setTimeout(() => {
+                    $window.dispatchEvent(new Event("resize"));
+                },
+                100);
+                $scope.selectedOne = !$scope.selectedOne;
+            });
+        //}
+    }
+
     $scope.shareScreen = function() {
 
-        if($scope.localParticipant == false){
+        if($scope.localConnected == false){
             //alert("Error");
             return;
         }
@@ -1111,22 +1132,53 @@ angular.module('netbase')
             $scope.shareScreenCaption = 'Stop Sharing';
 
             navigator.mediaDevices.getDisplayMedia({audio: true, video: true}).then((stream) => {
+                
                 const screenTrack = stream.getTracks()[0];
+                console.log('media track');
+                console.log(stream);
+                console.log(screenTrack);
+                console.log(stream.getTracks());
+                
                 screenTrack.onended = function(e) {
                     if(!$scope.localConnected) return;
                     $scope.disconnectClassroom();
                     $scope.shareScreenCaption = 'Share Screen';
                     $scope.connectClassroom($scope.currentRoomToken, $scope.currentRoomName);
+                    // $scope.currentShareScreen.stop();
+                    // $scope.currentLocalScreen.start();
                 }
 
-                $scope.disconnectClassroom();
-                $scope.connectClassroom($scope.currentRoomToken, $scope.currentRoomName, screenTrack);
-
-
+                $scope.currentShareScreen = screenTrack;
+                
+                $scope.currentVideoRoom.localParticipant.audioTracks.forEach(publication => {
+                    // const track = publication.track;
+                    // track.stop();
+                    
+                    // track.detach().forEach(element => {
+                    
+                    //     element.remove();
+                    //     $scope.currentVideoRoom.localParticipant.publishTrack(screenTrack).then(() => {
+                    //         $scope.currentVideoRoom.localParticipant.videoTracks.forEach(publication => {
+                    //             const track = publication.track;
+                    //             $scope.attachVideo(track, $scope.localVideoContainer);
+                    //         });
+                    //         setTimeout(() => {
+                    //             $window.dispatchEvent(new Event("resize"));
+                    //         },
+                    //         100);
+                    //     });
+                    // });
+                    $scope.disconnectClassroom();
+                    console.log('local audio track');
+                    console.log(publication.track);
+                    $scope.connectClassroom($scope.currentRoomToken, $scope.currentRoomName, [publication.track, screenTrack]);
+                    //break;
+                });
             });
         }
         else {
-            if($scope.currentShareScreen != null) $scope.currentShareScreen.stop();
+            $scope.disconnectClassroom();
+            //if($scope.currentShareScreen != null) $scope.currentShareScreen.stop();
             $scope.shareScreenCaption = 'Share Screen';
             $scope.connectClassroom($scope.currentRoomToken, $scope.currentRoomName);
         }
@@ -1200,6 +1252,7 @@ angular.module('netbase')
     
         Clipboard.copy(text);
         ngDialog.open({ template: 'partials/modals/classroom_alert_modal.html', controller: "AcademiaClassroomsAlertCtrl", className: 'ngdialog-theme-default classroom-alert-modal', data: {type: "Universidade", msg: 'Copied link to clipboard'}});
+        
     }
 
     $scope.toggleAllControllers = function() {
@@ -1228,6 +1281,9 @@ angular.module('netbase')
             $window.dispatchEvent(new Event("resize"));
         },
         100);
+    }
+    $scope.confirm = function() {
+        ngDialog.closeAll();
     }
 }])
 
