@@ -142,7 +142,7 @@ angular.module('netbase')
 
     var baseUrl = "https://educationalcommunity-classroom.herokuapp.com";
 
-    $scope.openDialog = function(type, msg) {
+    $scope.openDialog = function(type, msg) {  // Opens Error Dialogs
         ngDialog.open({ 
             template: 'partials/modals/classroom_alert_modal.html',
             controller: "AcademiaClassroomsAlertCtrl",
@@ -154,14 +154,14 @@ angular.module('netbase')
         });    
     }
 
-    if ($localStorage.token != undefined && $localStorage.token != null) {
-        GENERAL_CHANNEL_UNIQUE_NAME = jwtHelper.decodeToken($localStorage.token)._id;
+    if ($localStorage.token != undefined && $localStorage.token != null) {              // Check if logged in user
+        GENERAL_CHANNEL_UNIQUE_NAME = jwtHelper.decodeToken($localStorage.token)._id;   // chat member unique name(= user identity)
         Students.getStudentById(GENERAL_CHANNEL_UNIQUE_NAME).then(res => {
             
-            GENERAL_CHANNEL_NAME = res.data.data.name;
+            GENERAL_CHANNEL_NAME = res.data.data.name;                                  // chat friendly name
             let url = '/classroom/chat_token/';
-            Classroom.getChatAccessToken(baseUrl + url).then((res) => {
-                if(res.data.success == false){
+            Classroom.getChatAccessToken(baseUrl + url).then((res) => {                 // Get chat access token(obtained by user identity
+                if(res.data.success == false){                                          // and device Id)
                     $scope.openDialog("ERROR", res.data.msg);
                 }
                 else {
@@ -174,19 +174,19 @@ angular.module('netbase')
         });
     }
 
-    $scope.chatCreate = function(token) {
+    $scope.chatCreate = function(token) {                                                           // Create chat client
         Twilio.Chat.Client.create(token).then(function(client) {
             $scope.messagingClient = client;
             updateConnectedUI();
             
-            $scope.loadChannelList().then(() => {
-                $scope.messagingClient.on('channelAdded', $scope.loadChannelList);
+            $scope.loadChannelList().then(() => {                                                   // Load current acive channels and define 
+                $scope.messagingClient.on('channelAdded', $scope.loadChannelList);                  // events
                 $scope.messagingClient.on('channelRemoved', $scope.loadChannelList);
                 $scope.messagingClient.on('tokenExpired', $scope.chatCreate);
                 console.log('admin channel joined');
             })
-            .catch((err) => {
-                console.log('load channel list first failed.');
+            .catch((err) => {                                                                       // If there's no channels first create the Admin
+                console.log('load channel list first failed.');                                     // channel and reload channel list and define events
                 $scope.createAdminChannel().then(() => {
                     console.log('create admin channel success');
                     $scope.loadChannelList().then(() => {
@@ -209,10 +209,10 @@ angular.module('netbase')
     }
 
     function updateConnectedUI() {
-
+        //
     }
 
-    $scope.loadChannelList = function() {
+    $scope.loadChannelList = function() {                                           // Load published channel lists and join user into the admin channel.
         return new Promise((resolve, reject) => {
             
             if ($scope.messagingClient == null) {
@@ -239,18 +239,16 @@ angular.module('netbase')
         });
     }
 
-    $scope.createAdminChannel = function() {
-        return new Promise((resolve, reject) => {
-            let studentId = jwtHelper.decodeToken($localStorage.token)._id;
-            if(studentId == accountSid) { // check if admin
-                $scope.messagingClient.createChannel({ //create admin channel
+    $scope.createAdminChannel = function() {                                        // Create Admin Channel( every chat channel created by roomSId so
+        return new Promise((resolve, reject) => {                                   // as to be identical to every video chat room, and here roomSid
+            let studentId = jwtHelper.decodeToken($localStorage.token)._id;         // varible is the admin roomSid.
+            if(studentId == accountSid) {                                           // check if admin, so the user is not admin user, he can't create channel
+                $scope.messagingClient.createChannel({                              // create admin channel
                     uniqueName: roomSID,
                     friendlyName: GENERAL_CHANNEL_NAME
                 }).then((channel) => {
                     $scope.currentChannel = channel;
-                    //$scope.loadChannelList().then(() => {
-                        resolve();
-                    //});
+                    resolve();
                 }).catch(() => {
                     reject(new Error('already exists'));
                 })
@@ -263,8 +261,8 @@ angular.module('netbase')
         return $scope.setupChannel();
     }
 
-    $scope.setupChannel = function() {
-        return new Promise((resolve, reject) => {
+    $scope.setupChannel = function() {                                              // After create admin channel and join into it, should initialize the 
+        return new Promise((resolve, reject) => {                                   // channel and define channel events
             if($scope.currentChannel.status == 'joined'){
                 $scope.leaveCurrentChannel().then(() => {
                     return $scope.initChannel($scope.currentChannel);
@@ -298,14 +296,12 @@ angular.module('netbase')
     $scope.joinChannel = function(channel) {
         return channel.join()
         .then(function(joinedChannel) {
-            //updateChannelUI(_channel);
             $scope.currentChannel = joinedChannel;
             $scope.loadMessages();
             return joinedChannel;
         })
         .catch(function(err) {
             if (channel.status == 'joined') {
-                //updateChannelUI(_channel);
                 $scope.loadMessages();
                 return channel;    
             } 
@@ -321,16 +317,15 @@ angular.module('netbase')
         $scope.currentChannel.on('typingEnded', $scope.hideTypingStarted);
         $scope.currentChannel.on('memberJoined', $scope.notifyMemberJoined);
         $scope.currentChannel.on('memberLeft', $scope.notifyMemberLeft);
-        //$inputText.prop('disabled', false).focus();
     }
 
     $scope.sendMSG = function() {
-        var currentDate = new Date();
-        var month = currentDate.getMonth();
-        var day = currentDate.getDate();
-        var hour = currentDate.getHours();
-        var minute = currentDate.getMinutes();
-        var second = currentDate.getSeconds();
+        let currentDate = new Date();
+        let month = currentDate.getMonth();
+        let day = currentDate.getDate();
+        let hour = currentDate.getHours();
+        let minute = currentDate.getMinutes();
+        let second = currentDate.getSeconds();
         $scope.sendingMessage = $scope.months[month] + ' ' + day + ' ' + hour + ':' + minute + ':' + second + '::sent_time::' + $scope.sendingMessage;
         $scope.currentChannel.sendMessage($scope.sendingMessage);
         $scope.sendingMessage = '';
@@ -391,10 +386,8 @@ angular.module('netbase')
     $scope.loadMessages = function() {
         let i;
         $scope.currentChannel.getMessages(MAX_LOAD_MESSAGE_COUNT).then(function (messages) {
-            var messageArr = messages.items;
-            //messages.items.forEach($scope.addMessageToList);
+            let messageArr = messages.items;
             messageArr.sort(msgSortFunc2);
-            //messageArr = msgSortFunc1(messageArr);
             let promise = messageArr.reduce( (accumulatorPromise, nextID) => {
                 return accumulatorPromise.then(() => {
                     return $scope.addMember(nextID);
@@ -407,11 +400,11 @@ angular.module('netbase')
     }
 
     $scope.applyMessage = function(message, currentMember, id) {
-        var messageListDom = document.getElementById('chat_list');
-        var messageTitleDom = document.createElement('div');
-        var messageTimeDom = document.createElement('div');
-        var messageBodyDom = document.createElement('div');
-        var messageItemDom = document.createElement('div');
+        let messageListDom = document.getElementById('chat_list');
+        let messageTitleDom = document.createElement('div');
+        let messageTimeDom = document.createElement('div');
+        let messageBodyDom = document.createElement('div');
+        let messageItemDom = document.createElement('div');
         
         messageItemDom.setAttribute('id', id);
         
@@ -421,7 +414,6 @@ angular.module('netbase')
 
         let sentTime = message.body.substring(0, message.body.indexOf('::sent_time::'));
         let messageBody = message.body.replace(sentTime + '::sent_time::', '');
-        //messageBodyDom.innerText = messageBody;
         let messageBodyTextDom = document.createElement('div');
         messageBodyTextDom.innerText = messageBody;
 
@@ -574,12 +566,10 @@ angular.module('netbase')
     $scope.localConnected = 'false';
 
     $rootScope.localMessager = null;
-    // $scope.isMobile = false;
 
     var video = Twilio.Video;
-    var localVideo = Twilio.createLocalTracks;
 
-     var baseUrl = "https://educationalcommunity-classroom.herokuapp.com";
+    var baseUrl = "https://educationalcommunity-classroom.herokuapp.com";
     //var baseUrl = 'http://c395e03d.ngrok.io';
     var arr = $window.location.href.split("/");
     var domain = arr[0] + "//" + arr[2];
@@ -627,7 +617,6 @@ angular.module('netbase')
         var titleDom = document.getElementsByClassName('sub-video-title');
         var mainWidth;
         var mainHeight;
-        var showingVideo;
         var showingTitle;
         var countOfNone = 0;
 
@@ -756,7 +745,7 @@ angular.module('netbase')
                 if(!$scope.isFullScreen) $scope.fullScreenStatus = '';
             }
         }
-        else if ($scope.isMobile()) {
+        else {
             videoContainer.style.height = parseInt(screen.height) - 102 + 'px';
             if (titleDom.length == 1 || countOfNone == 1) {
                 titleDom[0].style.width = "100%";

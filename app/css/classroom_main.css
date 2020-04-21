@@ -86,23 +86,23 @@
 .drag-in-left-right {
     left: 0px !important;
     height: 100%;
-    transition: left 0.5s ease-in-out;
-    -webkit-transition: left 0.5s ease-in-out;
+    transition: left 0.3s ease-in-out;
+    -webkit-transition: left 0.3s ease-in-out;
     /** Chrome & Safari **/
-    -moz-transition: left 0.5s ease-in-out;
+    -moz-transition: left 0.3s ease-in-out;
     /** Firefox **/
-    -o-transition: left 0.5s ease-in-out;
+    -o-transition: left 0.3s ease-in-out;
 }
 
 .drag-out-right-left {
     left: -281px !important;
     height: 100%;
-    transition: left 0.5s ease-in-out;
-    -webkit-transition: left 0.5s ease-in-out;
+    transition: left 0.3s ease-in-out;
+    -webkit-transition: left 0.3s ease-in-out;
     /** Chrome & Safari **/
-    -moz-transition: left 0.5s ease-in-out;
+    -moz-transition: left 0.3s ease-in-out;
     /** Firefox **/
-    -o-transition: left 0.5s ease-in-out;
+    -o-transition: left 0.3s ease-in-out;
 }
 
 .classroom-participants-initial {
@@ -123,23 +123,23 @@
 .drag-in-right-left {
     right: 0px !important;
     height: 100%;
-    transition: right 0.5s ease-in-out;
-    -webkit-transition: right 0.5s ease-in-out;
+    transition: right 0.3s ease-in-out;
+    -webkit-transition: right 0.3s ease-in-out;
     /** Chrome & Safari **/
-    -moz-transition: right 0.5s ease-in-out;
+    -moz-transition: right 0.3s ease-in-out;
     /** Firefox **/
-    -o-transition: right 0.5s ease-in-out;
+    -o-transition: right 0.3s ease-in-out;
 }
 
 .drag-out-left-right {
     right: -351px !important;
     height: 100%;
-    transition: right 0.5s ease-in-out;
-    -webkit-transition: right 0.5s ease-in-out;
+    transition: right 0.3s ease-in-out;
+    -webkit-transition: right 0.3s ease-in-out;
     /** Chrome & Safari **/
-    -moz-transition: right 0.5s ease-in-out;
+    -moz-transition: right 0.3s ease-in-out;
     /** Firefox **/
-    -o-transition: right 0.5s ease-in-out;
+    -o-transition: right 0.3s ease-in-out;
 }
 
 .meeting-classroom-main {
@@ -256,8 +256,6 @@
 }
 
 .chat-sending-input-container textarea:focus {
-    border-color: black;
-    border-style: solid;
     outline: none;
 }
 
@@ -442,7 +440,7 @@
     }
 
     .drag-out-left-right {
-        right: -100% !important;
+        right: -105% !important;
         height: 100%;
     }
 
@@ -452,7 +450,7 @@
     }
     
     .drag-out-right-left {
-        left: -100% !important;
+        left: -105% !important;
         width: 100%;
         height: 100%;
     }
@@ -511,7 +509,7 @@
     }
 
     .drag-out-left-right {
-        right: -100% !important;
+        right: -105% !important;
         height: 100%;
     }
 
@@ -521,7 +519,7 @@
     }
     
     .drag-out-right-left {
-        left: -100% !important;
+        left: -105% !important;
         width: 100%;
         height: 100%;
     }
