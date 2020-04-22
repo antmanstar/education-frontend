@@ -1092,8 +1092,8 @@ angular.module('netbase')
 
             $scope.shareScreenCaption = 'Stop Sharing';
 
-            navigator.mediaDevices.getDisplayMedia({audio: true, video: true}).then((stream) => {
-                
+            navigator.mediaDevices.getDisplayMedia({audio: false, video: true}).then((stream) => {
+                console.log(navigator.mediaDevices.getSupportedConstraints());
                 const screenTrack = stream.getTracks()[0];
                 
                 screenTrack.onended = function(e) {
@@ -1114,8 +1114,6 @@ angular.module('netbase')
                 .then((deviceInfos) => {
                     for (let i = 0; i !== deviceInfos.length; ++i) {
                         const deviceInfo = deviceInfos[i];
-                        const option = document.createElement('option');
-                        option.value = deviceInfo.deviceId;
                         if (deviceInfo.kind === 'audioinput') {
                             console.log(deviceInfo);
                             const constraints = {

@@ -349,23 +349,25 @@
 
 .chat-item-st.other .chat-body-st>div {
     position: relative;
-    width: 64%;
+    width: 74%;
     background-color: #dddddd;
     padding: 5px;
     border-radius: 5px;
-    margin-left: 20px;
+    margin-left: 9px;
     word-break: break-all;
+    font-weight: 300;
 }
 
 .chat-item-st.mine .chat-body-st>div {
     position: relative;
-    width: 64%;
+    width: 72%;
     background-color: #52bfea;
     padding: 5px;
     border-radius: 5px;
-    margin-right: 20px;
-    margin-left: 59px;
+    margin-right: 11px;
+    margin-left: 39px;
     word-break: break-all;
+    font-weight: 300;
 }
 
 .chat-item-st.mine .chat-body-st>div:before {
@@ -373,10 +375,10 @@
     position: absolute;
     width: 0;
     /* height: 10%; */
-    right: -19px;
-    top: 6px;
-    border: 6px solid transparent;
-    border-left: 16px solid #52bfea;
+    right: -12px;
+    top: 16px;
+    border: 3px solid transparent;
+    border-left: 10px solid #52bfea;
     /* border-left: 32px solid rgba(193,193,193,0.5); */
     z-index: 2;
 }
@@ -386,10 +388,10 @@
     position: absolute;
     width: 0;
     /* height: 10%; */
-    left: -20px;
-    top: 6px;
-    border: 7px solid transparent;
-    border-right: 17px solid rgb(221, 221, 221);
+    left: -13px;
+    top: 16px;
+    border: 3px solid transparent;
+    border-right: 11px solid rgb(221, 221, 221);
     /* border-left: 32px solid rgba(193,193,193,0.5); */
     z-index: 2;
 }
