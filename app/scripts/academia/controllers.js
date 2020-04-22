@@ -311,7 +311,7 @@ angular.module('netbase')
         });
     }
 
-    $scope.initChannelEvents = function() {
+    $scope.initChannelEvents = function() {                                     // Define channel events
         $scope.currentChannel.on('messageAdded', $scope.addMessageToList);
         $scope.currentChannel.on('typingStarted', $scope.showTypingStarted);
         $scope.currentChannel.on('typingEnded', $scope.hideTypingStarted);
@@ -319,7 +319,7 @@ angular.module('netbase')
         $scope.currentChannel.on('memberLeft', $scope.notifyMemberLeft);
     }
 
-    $scope.sendMSG = function() {
+    $scope.sendMSG = function() {                                               // Send message
         let currentDate = new Date();
         let month = currentDate.getMonth();
         let day = currentDate.getDate();
@@ -537,37 +537,37 @@ angular.module('netbase')
 }])
 
 .controller('AcademiaClassroomCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Classroom', 'Students', 'ngDialog', '$localStorage', '$window', function($rootScope, $scope, $location, $route, University, Classroom, Students, ngDialog, $localStorage, $window) {
-    let universityUrl = $route.current.params.academiaName;
-    let roomSID = $route.current.params.roomSID;
-    let accountSid = $route.current.params.accountSid;
-    let roomName = $route.current.params.roomName;
-    $scope.administrator = [];
-    $scope.participants = [];
-    $scope.selectedOne = false;
-    $scope.currentVideoRoom = null;
-    $scope.wholeClassroomList = [];
-    $scope.localParticipantUserName = "";
-    $scope.currentLocalparticipant = null;
-    $scope.showingParticipants = [];
-    $scope.shareScreenCaption = "Share Screen";
-    $scope.voiceToggle = 'fas fa-microphone-alt';
-    $scope.voiceStatus = "Mute";
-    $scope.videoToggle = 'fas fa-video';
-    $scope.videoStatus = 'Stop Video';
+    let universityUrl = $route.current.params.academiaName;         // Current university
+    let roomSID = $route.current.params.roomSID;                    // Current roomsid
+    let accountSid = $route.current.params.accountSid;              // Admin user id ( = null if unlogged user)
+    let roomName = $route.current.params.roomName;                  // Current room name
+    $scope.administrator = [];                                      // Array of administrators
+    $scope.participants = [];                                       // Array of participants
+    $scope.selectedOne = false;                                     // Flag varible showing if one participant's video selected by user
+    $scope.currentVideoRoom = null;                                 // Current Twilio video room vairble
+    $scope.wholeClassroomList = [];                                 // 
+    $scope.localParticipantUserName = "";                           // Current user name
+    $scope.currentLocalparticipant = null;                          // Current Twilio local participant varible
+    $scope.showingParticipants = [];                                // Array of participants should be shown below the administrators
+    $scope.shareScreenCaption = "Share Screen";                     // Toggling caption of share screen button
+    $scope.voiceToggle = 'fas fa-microphone-alt';                   // Fontawesome class name toggled by voice mute button status
+    $scope.voiceStatus = "Mute";                                    // Voice status
+    $scope.videoToggle = 'fas fa-video';                            // Fontawesome class name toggled by video mute button status
+    $scope.videoStatus = 'Stop Video';                              // Video status
     $scope.recordToggle = 'fas fa-record-vinyl'
     $scope.recordStatus = 'Gravar vídeo';
-    $scope.participantsStatus = false;
-    $scope.chatStatus = false;
-    $scope.mobileVisibleToggle = 'mobile-invisible';
-    $scope.isFullScreen = false;
-    $scope.fullScreenStatus = '';
-    $scope.fullScreenToggle = "fa fa-expand";
+    $scope.participantsStatus = false;                              // Participants Menu showing status
+    $scope.chatStatus = false;                                      // Chat box showing status
+    $scope.mobileVisibleToggle = 'mobile-invisible';                // Bottom controllers mobile visible classNames
+    $scope.isFullScreen = false;                                    // Full screen status
+    $scope.fullScreenStatus = '';                                   // Bottom controllers container showing classNames while full screen
+    $scope.fullScreenToggle = "fa fa-expand";                       // Full screen button's toggling classNames
     $scope.fullScreenIconPos = ' absolute';
-    $scope.localConnected = 'false';
+    $scope.localConnected = 'false';                                // Flag varible showing the current user connected video room
 
     $rootScope.localMessager = null;
 
-    var video = Twilio.Video;
+    var video = Twilio.Video;                                       // Twilio video 
 
     var baseUrl = "https://educationalcommunity-classroom.herokuapp.com";
     //var baseUrl = 'http://c395e03d.ngrok.io';
@@ -586,16 +586,16 @@ angular.module('netbase')
             let redirectUrl = '/a/university/' + universityUrl + '/roomid/' + roomSID + '/accountid/' + accountSid + '/roomname/' + roomName + '/';
             ngDialog.open({ template: 'partials/modals/login.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default', data: { redirectUrl: redirectUrl } });
             return;
-        }
+        } // Check if logged user, and showing login dialog. This needed because unlogged users can't join the classroom
 
-        Students.getStudentById(accountSid).then((res) => {
+        Students.getStudentById(accountSid).then((res) => {             // Get admin user data
             if ($scope.administrator.length == 0) {
                 $scope.administrator.push(res.data.data);
             }
         });
 
         let url = '/classroom/' + roomSID + '/join/';
-        Classroom.joinClassroom(baseUrl + url).then((data) => {
+        Classroom.joinClassroom(baseUrl + url).then((data) => {         // Join and get access token
 
             url = '/classroom/classroom/' + roomName + '/token/'
             Classroom.getAccessToken(baseUrl + url).then((data) => {
@@ -608,9 +608,7 @@ angular.module('netbase')
         });
     }
 
-
-
-    $scope.videoSizeSet = function() {
+    $scope.videoSizeSet = function() {                                  // Participants' video layout
         var i;
         var videoContainer = document.getElementById('twilio');
         var videoDom = document.getElementsByTagName('video');
@@ -847,7 +845,7 @@ angular.module('netbase')
 
         $scope.videoSizeSet();
 
-        video.connect(token, room_t).then(room => {
+        video.connect(token, room_t).then(room => {                         // Video room connect
             const localParticipant = room.localParticipant;
             
             $scope.currentLocalparticipant = room.localParticipant;
@@ -867,24 +865,17 @@ angular.module('netbase')
             $scope.localVideoContainer = videoTitle;
 
             localParticipant.videoTracks.forEach(publication => {
-
-                const track = publication.track;
-
-                $scope.currentLocalScreen = track;
-                $scope.attachVideo(track, videoTitle);
-
+                $scope.currentLocalScreen = publication.track;
+                $scope.attachVideo(publication.track, videoTitle);
             });
+
             localParticipant.audioTracks.forEach(publication => {
-
-                const track = publication.track;
-
-                //$scope.currentLocalScreen = track;
-                $scope.attachVideo(track, videoTitle);
-
+                $scope.attachVideo(publication.track, videoTitle);
             });
+
             mainVideoDom.appendChild(videoTitle);
 
-            Students.getStudentById(localParticipant.identity).then((res) => {
+            Students.getStudentById(localParticipant.identity).then((res) => {          // Check the user if admin and push the data into admin array
                 $scope.localParticipantUserName = res.data.data.name;
 
                 $rootScope.localMessager = {
@@ -916,7 +907,7 @@ angular.module('netbase')
         });
     }
 
-    $scope.participantConnected = function(participant) {
+    $scope.participantConnected = function(participant) {               // Participant connected event handler
         var mainVideoDom = document.getElementById('twilio');
         var subTitleDom = document.createElement('div');
         subTitleDom.setAttribute('id', participant.identity);
@@ -950,7 +941,7 @@ angular.module('netbase')
         });
     }
 
-    $scope.trackSubscribed = function(main, ele, track) {
+    $scope.trackSubscribed = function(main, ele, track) {           // Track subscribed event handler
 
         $scope.attachVideo(track, ele);
         main.appendChild(ele);
@@ -961,7 +952,7 @@ angular.module('netbase')
         100);
     }
 
-    $scope.participantDisconnected = function(participant) {
+    $scope.participantDisconnected = function(participant) {        // Participant disconnected event handler
         
         var i;
         for (i = 0; i < $scope.participants.length; i++) {
@@ -978,7 +969,7 @@ angular.module('netbase')
         }
     }
 
-    $scope.trackUnsubscribed = function(track) {
+    $scope.trackUnsubscribed = function(track) {                    // Track unsubscribed event handler
         track.detach().forEach(element => {
 
             var i;
@@ -1030,7 +1021,7 @@ angular.module('netbase')
         $window.close();
     }
 
-    $scope.recordVideo = function() {
+    $scope.recordVideo = function() {                                   // not working current version
         let API_KEY_SID = "SK1a798d2be5f6c189daea5ff4e126793b";
         let API_KEY_SECRET = "iY7eTh3rYYR4matfxuZVNKJcPRpPOBtH";
         let ACCOUNT_SID = "AC49c057053ba1660bf1304758c0a3218d";
@@ -1058,7 +1049,7 @@ angular.module('netbase')
         });
     }
 
-    $scope.attachVideo = function(track, videoContainer) {
+    $scope.attachVideo = function(track, videoContainer) {              // Attach participant's video to dom
 
         angular.element(videoContainer.appendChild(track.attach())).bind('click', (e) => {
             var i;
@@ -1091,7 +1082,7 @@ angular.module('netbase')
         });
     }
 
-    $scope.shareScreen = function() {
+    $scope.shareScreen = function() {                   // Share screen event handler(toggle share screen)
 
         if($scope.localConnected == false) {
             return;
@@ -1160,7 +1151,7 @@ angular.module('netbase')
 
     }
 
-    $scope.toggleParticipantsBox = function() {
+    $scope.toggleParticipantsBox = function() {                                 // Participant menu button event handler
         $scope.participantsStatus = !$scope.participantsStatus;
         if($scope.participantsStatus){
           $scope.mobileToggleParticipantsList = 'drag-in-left-right';
@@ -1173,7 +1164,7 @@ angular.module('netbase')
         }
     }
 
-    $scope.toggleChatBox = function() {
+    $scope.toggleChatBox = function() {                                         // Chatbox showing button event handler
         $scope.chatStatus = !$scope.chatStatus;
         if($scope.chatStatus){
           $scope.chatboxContainer = "drag-in-right-left";
@@ -1186,7 +1177,7 @@ angular.module('netbase')
         }
     }
 
-    $scope.toggleVoice = function() {
+    $scope.toggleVoice = function() {                                           // Voice toggle event handler
         if ($scope.voiceStatus == "Mute") {
             $scope.currentLocalparticipant.audioTracks.forEach(function(audioTrack) {
                 audioTrack.track.disable();
@@ -1202,7 +1193,7 @@ angular.module('netbase')
         }
     }
 
-    $scope.toggleVideo = function() {
+    $scope.toggleVideo = function() {                                           // Video toggle button event handler
         if ($scope.videoStatus == "Stop Video") {
             $scope.currentLocalparticipant.videoTracks.forEach(function(videoTrack) {
                 videoTrack.track.disable();
@@ -1218,14 +1209,14 @@ angular.module('netbase')
         }
     }
 
-    $scope.copyLink = function() {
+    $scope.copyLink = function() {                                              // Copy link button event handler
         let universityUrl = $route.current.params.academiaName;
         let roomSID = $route.current.params.roomSID;
         let accountSid = $route.current.params.accountSid;
         let roomName = $route.current.params.roomName;
         let text = domain + "/a/university/" + universityUrl + "/roomid/" + roomSID + "/accountid/" + accountSid + "/roomname/" + roomName + "/";
     
-        Clipboard.copy(text);
+        Clipboard.copy(text);           // Clipboard func is defined app/js/clipboard_func.js file
         ngDialog.open({ template: 'partials/modals/classroom_alert_modal.html', controller: "AcademiaClassroomsAlertCtrl", className: 'ngdialog-theme-default classroom-alert-modal', data: {type: "Universidade", msg: 'Copied link to clipboard'}});
         
     }
@@ -1271,7 +1262,7 @@ angular.module('netbase')
 }])
 
 .controller('AcademiaClassroomsCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Classroom', 'Students', 'ngDialog', 'jwtHelper', '$localStorage', '$window', function($rootScope, $scope, $location, $route, University, Classroom, Students, ngDialog, jwtHelper, $localStorage, $window) {
-    
+    /* SHOWING CLASSROOM LIST PAGE */
     let universityUrl = $route.current.params.academiaName;
 
     $scope.administrator = [];
