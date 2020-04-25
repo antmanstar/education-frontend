@@ -555,7 +555,7 @@ angular.module('netbase')
     $scope.videoToggle = 'fas fa-video';                            // Fontawesome class name toggled by video mute button status
     $scope.videoStatus = 'Stop Video';                              // Video status
     $scope.recordToggle = 'fas fa-record-vinyl'
-    $scope.recordStatus = 'Gravar vídeo';
+    $scope.recordStatus = false;
     $scope.participantsStatus = false;                              // Participants Menu showing status
     $scope.chatStatus = false;                                      // Chat box showing status
     $scope.mobileVisibleToggle = 'mobile-invisible';                // Bottom controllers mobile visible classNames
@@ -564,8 +564,10 @@ angular.module('netbase')
     $scope.fullScreenToggle = "fa fa-expand";                       // Full screen button's toggling classNames
     $scope.fullScreenIconPos = ' absolute';
     $scope.localConnected = 'false';                                // Flag varible showing the current user connected video room
-
+    $scope.recordToggleCaption = 'record';
+    
     $rootScope.localMessager = null;
+    $scope.recorder = null;
 
     var video = Twilio.Video;                                       // Twilio video 
 
@@ -1021,32 +1023,71 @@ angular.module('netbase')
         $window.close();
     }
 
-    $scope.recordVideo = function() {                                   // not working current version
-        let API_KEY_SID = "SK1a798d2be5f6c189daea5ff4e126793b";
-        let API_KEY_SECRET = "iY7eTh3rYYR4matfxuZVNKJcPRpPOBtH";
-        let ACCOUNT_SID = "AC49c057053ba1660bf1304758c0a3218d";
+    $scope.recordVideo = function() {            // Works only chrome browser, not using Twilio api, instead of it, using MediaRecorder
+        if($scope.recordStatus == false) {
+            $scope.videoRecordStream = [];
+            $scope.recorder = [];
+            $scope.audioRecordStream = new MediaStream();
+            let videos = document.getElementsByTagName('video');
+            let audios = document.getElementsByTagName('audio');
+            let i;
 
-        //const client = new Twilio(API_KEY_SID, API_KEY_SECRET, {accountSid: ACCOUNT_SID});
+            
+            for(i = 0; i < audios.length; i++) {
+                $scope.audioRecordStream.addTrack(audios[i].captureStream().getAudioTracks()[0]);
+            }
+            
+            for(i = 0; i < videos.length; i++) {
+                let videoS = new MediaStream(); 
+                videoS.addTrack(videos[i].captureStream().getVideoTracks()[0]);
+                $scope.videoRecordStream.push(videoS);
+           
+                var outputStream = new MediaStream();
+                [$scope.audioRecordStream, videoS].forEach((s) => {
+                    s.getTracks().forEach((t) => {
+                        outputStream.addTrack(t);
+                    })
+                });
 
-        Twilio.Video.compositions.
-        create({
-            roomSid: $scope.currentClassroom._id,
-            videoLayout: {
-                grid: {
-                    max_rows: 1,
-                    video_sources: [
-                        "RTAAAA",
-                        "MTBBBB",
-                        "teacher-webcast"
-                    ]
+                let recorder = new MediaRecorder(outputStream);
+                recorder.start();
+                $scope.recorder.push(recorder);
+            }
+
+            $scope.recordStatus = true;
+            $scope.recordToggle = 'fas fa-record-vinyl recording';
+            $scope.recordToggleCaption = 'stop recording';
+        }
+        else {
+            let i;
+            $scope.tempScene = [];
+            let promise = new Promise((resolve, reject) => {
+                for(i = 0; i < $scope.recorder.length; i++){
+                    
+                    $scope.recorder[i].ondataavailable = e => {
+                        $scope.tempScene.push(e.data);
+                        //if($scope.tempScene.length == $scope.recorder.length) resolve();
+                    };
+                    $scope.recorder[i].stop();
                 }
-            },
-            statusCallback: 'http://localhost:8080/callbacks',
-            format: 'mp4'
-        })
-        .then(composition => {
-            console.log('Created Composition with SID=' + composition.sid);
-        });
+
+                setTimeout(() => {
+                    resolve();
+                }, 500);
+            });
+            
+            promise.then(() => {
+                var a = document.createElement('a');
+                a.download = ['video_', (new Date() + '').slice(4, 28), '.webm'].join('');
+                a.href = URL.createObjectURL($scope.tempScene[0]);
+                a.textContent = a.download;
+                a.click();
+            })
+
+            $scope.recordStatus = false;
+            $scope.recordToggle = 'fas fa-record-vinyl';
+            $scope.recordToggleCaption = 'record';
+        }
     }
 
     $scope.attachVideo = function(track, videoContainer) {              // Attach participant's video to dom

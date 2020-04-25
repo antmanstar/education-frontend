@@ -396,6 +396,10 @@
     z-index: 2;
 }
 
+.recording {
+    color: red;
+}
+
 @media screen and (max-width: 468px) {
     .classroom-page-container {
         margin-top: 0px;
