@@ -1,79 +1,27 @@
-<div class="container-fluid modal-accounts">
+<div ng-include="'partials/headerhome.html'"></div>
+<div class="container-fluid ">
 
   <div class="row">
 
-    <!-- -->
-    <div ng-show="page == 'universitySelect'">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom: 15px;">
 
-      <div class="section-cards dashboard-cards">
+      <div class="title" style="font-size: 3em; font-weight: bold;">Cursos</div>
 
-        <div class="card" ng-repeat="university in universities">
+      <div ng-include="'/partials/courses/suite/navbar.html'"></div>
 
-          <div class="picture" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
-          <div class="picture" ng-if="university.backgroundImage == undefined"  style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
-
-          <div class="title">{{university.name}}</div>
-          <div class="description">{{university.about}}</div>
-          <button ng-click="chooseUniversity(university._id)" style="margin-top: 15px;" class="btn btn-green">Selecionar</button>
-
-        </div>
-          <!-- end card -->
-
-      </div>
-      <!-- end section-cards -->
+      <!-- -->
 
     </div>
-    <!-- -->
-
-    <!-- MENU -->
-    <div ng-show="page == 'menu'" class="col-xs-12">
-
-      <div style="padding-bottom: 20px;"></div>
-      <div style="padding-bottom: 20px;"></div>
-
-      <div class="section-header" style="width: 100%;">
-        <div class="title">Escolha qual conteúdo você deseja criar</div>
-      </div>
-
-      <div style="padding-bottom: 20px;"></div>
-      <div style="padding-bottom: 20px;"></div>
-
-      <div class="col-xs-4 col-sm-4" ng-click="choosePage('texto')" style="text-align: center; cursor: pointer;">
-
-        <img style="margin-bottom: 10px;" height="40px;" src="https://visualpharm.com/assets/197/Documents-595b40b65ba036ed117d2bf0.svg">
-        <p style="font-weight: 600;">Texto</p>
-
-      </div>
-
-      <div class="col-xs-4 col-sm-4" ng-click="choosePage('playlists')" style="text-align: center; cursor: pointer;">
-
-        <img style="margin-bottom: 10px;" height="40px;" src="https://visualpharm.com/assets/770/Video%20File-595b40b85ba036ed117dad88.svg">
-        <p style="font-weight: 600;">Vídeo</p>
-
-      </div>
-
-      <div class="col-xs-4 col-sm-4" ng-click="choosePage('test')" style="text-align: center; cursor: pointer;">
-
-        <img style="margin-bottom: 10px;" height="40px;" src="https://visualpharm.com/assets/632/Test%20Passed-595b40b65ba036ed117d34c6.svg">
-        <p style="font-weight: 600;">Test</p>
-
-      </div>
-
-    </div>
-    <!-- end col-xs-12 -->
-
-    <!-- END MENU -->
-
     <!-- CATEGORIES TEXT -->
 
-    <div ng-show="page == 'texto'" class="col-xs-12">
+    <div ng-show="page == 'post'" class="col-xs-12">
 
       <div class="header-modal-courses">
         <div class="title"><img style="margin-bottom: 10px;" height="40px;" src="https://visualpharm.com/assets/197/Documents-595b40b65ba036ed117d2bf0.svg"> Texto</div>
       </div>
 
       <!-- CATEGORIES -->
-      <div ng-repeat="category in categories" ng-click="loadForumPostCategory(category._id)" class="btn-modal-courses">
+      <div ng-repeat="category in categories" ng-click="loadForumPostCategory(category.universityId,category._id)" class="btn-modal-courses">
 
         <div class="title" style="display: inline-block;">{{category.title}}</div>
         <div class="icon"><i class="fas fa-arrow-right"></i></div>
@@ -151,25 +99,27 @@
 
     <!-- END MENU -->
 
-    <div ng-show="page == 'playlists'" class="col-xs-12">
+    <div ng-show="page == 'video'" class="col-xs-12">
 
       <div class="header-modal-courses">
 
         <div class="title"><img style="margin-bottom: 10px;" height="40px;" src="https://visualpharm.com/assets/770/Video%20File-595b40b85ba036ed117dad88.svg">
         <p style="font-weight: 600;">Playlist</p></div>
       </div>
-
-      <p ng-if="playlists.length == 0">Nenhuma playlist registrada</p>
+      <p ng-if="universities.length>cusloading">please wait</p>
+      
+      <ng-containner ng-if="universities.length==cusloading">
+      <p ng-if="customPlaylist.length == 0">Nenhuma playlist registrada</p>
 
       <!-- CATEGORIES -->
-      <div ng-repeat="playlist in playlists" ng-click="loadVideos(playlist._id)" class="btn-modal-courses">
+      <div ng-repeat="playlist in customPlaylist" ng-click="loadVideos(playlist._id)" class="btn-modal-courses">
 
         <div class="title" style="display: inline-block;">{{playlist.title}}</div>
         <div class="icon"><i class="fas fa-arrow-right"></i></div>
 
       </div>
       <!-- END CATEGORIES -->
-
+     </ng-containner>
     </div>
     <!-- end playlist -->
     <div ng-show="page == 'videolist'" class="col-xs-12">

@@ -157,6 +157,14 @@ angular.module('netbase', [
           templateUrl: 'partials/courses/suite/createQuiz.html',
           controller: 'CoursesCreateQuizCtrl',
         })
+        .when('/cursos/suite/createForumpost/:id', {
+          templateUrl: 'partials/courses/modals/video-forum-content.html',
+          controller: 'CoursesVideoForumContentCtrl',
+        })
+        .when('/cursos/suite/editForumpost/:id', {
+          templateUrl: 'partials/courses/modals/video-forum-content.html',
+          controller: 'editVideoForumContentCtrl',
+        })
         .when('/cursos/suite/content', {
             templateUrl: 'partials/courses/suite/content.html',
             controller: 'CoursesContentModulosCtrl',
@@ -173,6 +181,7 @@ angular.module('netbase', [
           templateUrl: 'partials/courses/suite/createPage.html',
           controller: 'CoursesCreateContentCtrl',
         })
+
         .when('/cursos/suite/createPage', {
           templateUrl: 'partials/courses/suite/createPage.html',
           controller: 'CoursesCreatePageCtrl',

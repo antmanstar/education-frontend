@@ -12,16 +12,23 @@
 
     <div class="panel-body quiz-panel">
       <span>Ques. {{indexQ+1}}</span>
-      <h4 class="text-uppercase">{{question.title}}</h4>
-      <div class="row options-row">
+      <h4 class="text-uppercase">{{question.title}} {{res.ans_status}} <p ng-if="res.ans_status=='FALSE' class="text-danger">(Wrong answer)</p></h4>
+      <div class="row options-row" ng-if="question.title_type=='mcq'">
         <div class="col-md-6" ng-repeat="q in question.qes_options">
-          <div class="quiz-options" ng-class="cor == q.qes_id? 'btn-success' : 'btn-danger'">
-            <span>{{q.title}}</span>
+          <div class="quiz-options btn-info" ng-class="{test: $index == cor,test:$index+1==res.view_ans,testD:$index==res.answer-1 && res.ans_status!='true'}" >
+            <span>{{q.title}} </span>
           </div>
         </div>
-        
-       
-        
+      </div>
+      <div class="row options-row" ng-if="question.title_type!='mcq'">
+        <div class="col-md-6 col-md-offset-3">
+          <div class="quiz-options btn-danger" ng-class="{test: cor != 5}" >
+            <span>{{res.answer}} </span>
+          </div>
+           <div class="quiz-options btn-success" ng-class="{test: cor == 5}" >
+            <span>{{res.view_ans}} </span>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -50,7 +57,16 @@
     margin-left: 50px;
     border: none;
   }
-
+  .test{
+    color: #fff;
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+  }
+  .testD {
+    color: #fff;
+    background-color: #d9534f;
+    border-color: #d43f3a;
+  }
   .quiz-box {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   }

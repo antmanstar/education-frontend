@@ -2270,6 +2270,59 @@ angular.module('netbase')
     }
 
 }])
+.directive('studentinfomaster', ['University', '$localStorage', '$route', 'jwtHelper', 'Students', function(University, $localStorage, $route, jwtHelper, Students) {
+    return {
+        restrict: 'EA',
+        templateUrl: '../partials/directive/studentinfomaster.html',
+        
+        link: function(scope, element, attr) {
+
+            let studentId = attr.sid;
+            scope.count=attr.count;
+            Students.getStudentById(studentId).then(function(res) {
+
+                console.log("response student: ");
+                console.log(res);
+                scope.student = res.data.data;
+
+            });
+
+        }
+
+    }
+
+}])
+.directive('studentinfosubscriber', ['University', '$localStorage', '$route', 'jwtHelper', 'Students', function(University, $localStorage, $route, jwtHelper, Students) {
+    return {
+        restrict: 'EA',
+        templateUrl: '../partials/directive/studentinfosubscriber.html',
+        
+        link: function(scope, element, attr) {
+
+            let studentId = attr.sid;
+            scope.count=attr.count;
+            Students.getStudentById(studentId).then(function(res) {
+
+                console.log("response student: ");
+                console.log(res);
+                scope.student = res.data.data;
+
+
+            });
+           Payments.getAllOrders(studentId).then(function(res) {
+
+                console.log("response payment: ");
+                console.log(res);
+                scope.payment = res.data.data;
+                scope.pay=scope.payment.find(x=>(x._id==attr.pid));
+                console.log(scope.payment);
+
+            });
+        }
+
+    }
+
+}])
 .directive('studentinfooption', ['University', '$localStorage', '$route', 'jwtHelper', 'Students', function(University, $localStorage, $route, jwtHelper, Students) {
     return {
         restrict: 'EA',

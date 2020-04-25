@@ -1,12 +1,14 @@
-<div class="menu-content-option" ng-repeat="c in modulecontent">
-        <div ng-click="openContent(courseid,c.contentType,c._id,c.modelId)" class="pretty p-icon p-round p-smooth">
-          <input type="checkbox" />
-          <div class="state p-success">
-              <i class="icon mdi mdi-check"></i>
-              <label>{{count}}.{{$index}} {{c.contentType}} {{c.title}}</label>
-          </div>
+<li ng-repeat="c in modulecontent">
+        <div style="cursor:pointer" ng-click="openContent(courseid,c.contentType,c._id,c.modelId)">
+        	<i class="far fa-square"></i>
+                  <span style="padding-left: 10px;">{{count}}.{{$index}}. {{c.title}}</span><br>
+                  <span ng-if="c.contentType=='page'"><i class="fas fa-file text-primary" style="padding: 8px 8px 0px 22px;"></i></span>
+                  <span ng-if="c.contentType=='quiz'"><i class="far fa-question-circle text-primary" style="padding: 8px 8px 0px 22px;"></i></span>
+                  <span ng-if="c.contentType=='video'"><i class="fas fa-video text-primary" style="padding: 8px 8px 0px 22px;"></i>1 min</span>
+                  <span ng-if="c.contentType=='forumpost'"><i class="fab fa-wpforms text-primary" style="padding: 8px 8px 0px 22px;"></i></span>
+          
         </div>
         
-</div>
+</li>
 
     
