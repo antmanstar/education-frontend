@@ -651,37 +651,16 @@ angular.module('netbase')
             }
         }
         if(!$scope.isMobile()) {
+            
+            let participantMenu = document.getElementsByClassName('participant-menu-icon');
+            let chatMenu = document.getElementsByClassName('chat-menu-icon');
+            mainWidth = parseInt(videoContainer.offsetWidth);
 
-          console.log('this is not mobile device');
-          mainWidth = parseInt(videoContainer.offsetWidth);
-          if(!$scope.isFullScreen){
-            videoContainer.style.height = mainWidth / 4 * 3 + 'px';
-            mainHeight = mainWidth / 4 * 3;
-          }
-          else {
-            mainHeight = videoContainer.style.height;
-          }
-
-          let px = 'px';
-
-        //   if (titleDom.length == 1 || countOfNone == 1) {
-        //       $scope.$apply(()=>{
-        //         $scope.fullScreenVisible = "visible";
-        //         console.log($scope.fullScreenVisible);
-        //       });
-        //   }
-        //   else {
-        //     $scope.$apply(()=>{
-        //         $scope.fullScreenVisible = "invisible";
-        //     });
-        //   }
-
-        if (titleDom.length == 1 || countOfNone == 1) {
-
-            titleDom[0].style.width = "99.9%";
-            titleDom[0].style.height = "99.9%";
-            if($scope.isFullScreen) {
-                titleDom[0].style.position = 'absolute';
+            if(!$scope.isFullScreen) {
+                videoContainer.style.height = mainWidth / 4 * 3 + 'px';
+                mainHeight = mainWidth / 4 * 3;
+                participantMenu[0].style.position = 'initial';
+                chatMenu[0].style.position = 'initial';
             }
             else {
                 mainHeight = videoContainer.style.height;
@@ -692,14 +671,28 @@ angular.module('netbase')
                 chatMenu[0].style.top = '9px';
                 chatMenu[0].style.right = '0px';
             }
+                
+            let px = 'px';
 
-            let k;
-            for (k = 0; k < titleDom[0].childElementCount; k++) {
-                if (titleDom[0].children[k].tagName == 'VIDEO') {
+            if (titleDom.length == 1 || countOfNone == 1) {
 
-                    titleDom[0].children[k].style.width = "100%";
-                    titleDom[0].children[k].style.height = "100%";
+                titleDom[0].style.width = "99.9%";
+                titleDom[0].style.height = "99.9%";
+                if($scope.isFullScreen) {
+                    titleDom[0].style.position = 'absolute';
+                }
+                else {
+                    titleDom[0].style.position = 'relative';
+                }
+                    
+                let k;
+                for (k = 0; k < titleDom[0].childElementCount; k++) {
+                    if (titleDom[0].children[k].tagName == 'VIDEO') {
 
+                        titleDom[0].children[k].style.width = "100%";
+                        titleDom[0].children[k].style.height = "100%";
+                        
+                    }
                 }
 
                 showingTitle.style.width = "99.9%";
@@ -713,14 +706,13 @@ angular.module('netbase')
                 for (k = 0; k < showingTitle.childElementCount; k++) {
                     if (showingTitle.children[k].tagName == 'VIDEO') {
 
-                      showingTitle.children[k].style.width = "100%";
-                      showingTitle.children[k].style.height = "100%";
-
-                  }
-              }
-
-            } else if (videoDom.length > 1 && videoDom.length < 5 && countOfNone != 1) {
-
+                        showingTitle.children[k].style.width = "100%";
+                        showingTitle.children[k].style.height = "100%";
+                        
+                    }
+                }
+            } 
+            else if (videoDom.length > 1 && videoDom.length < 5 && countOfNone != 1) {
                 for (i = 0; i < titleDom.length; i += 1) {
                     let k;
                     for (k = 0; k < titleDom[i].childElementCount; k++) {
@@ -735,7 +727,7 @@ angular.module('netbase')
                     titleDom[i].style.position = 'relative';
                 }
                 if(!$scope.isFullScreen) $scope.fullScreenStatus = '';
-            }
+            } 
             else if (videoDom.length > 4 && countOfNone != 1) {
                 for (i = 0; i < titleDom.length; i += 1) {
                     let k;
@@ -777,30 +769,17 @@ angular.module('netbase')
                     }
                 }
 
-            }
-            //showingTitle.style.left = '50px';
-            //showingTitle.style.top = '37.5px';
-
-          } else if (videoDom.length ==2 && countOfNone != 1) {
-              for (i = 0; i < titleDom.length; i += 1) {
-                  let k;
-                  for (k = 0; k < titleDom[i].childElementCount; k++) {
-                      if (titleDom[i].children[k].tagName == 'VIDEO') {
-                          titleDom[i].children[k].style.width = "100%";
-                          titleDom[i].children[k].style.height = "100%";
-                      }
-                  }
-                  titleDom[i].style.width = "100%";
-                  titleDom[i].style.height = mainHeight / 2 + 'px';
-              }
-          }
-          else if (videoDom.length > 2 && countOfNone != 1) {
-            for (i = 0; i < titleDom.length; i += 1) {
-                let k;
-                for (k = 0; k < titleDom[i].childElementCount; k++) {
-                    if (titleDom[i].children[k].tagName == 'VIDEO') {
-                        titleDom[i].children[k].style.width = "100%";
-                        titleDom[i].children[k].style.height = "100%";
+            } else if (videoDom.length ==2 && countOfNone != 1) {
+               
+                for (i = 0; i < titleDom.length; i += 1) {
+                    titleDom[i].style.width = "100%";
+                    titleDom[i].style.height = "50%";
+                    let k;
+                    for (k = 0; k < titleDom[i].childElementCount; k++) {
+                        if (titleDom[i].children[k].tagName == 'VIDEO') {
+                            titleDom[i].children[k].style.width = "100%";
+                            titleDom[i].children[k].style.height = "100%";
+                        }
                     }
                     titleDom[i].style.width = "100%";
                     titleDom[i].style.height = mainHeight / 2 + 'px';
@@ -1109,10 +1088,9 @@ angular.module('netbase')
             $scope.recordToggle = 'fas fa-record-vinyl';
             $scope.recordToggleCaption = 'record';
         }
+    }
 
-        if ($scope.shareScreenCaption == 'Share Screen') {
-
-      $scope.attachVideo = function(track, videoContainer) {              // Attach participant's video to dom
+    $scope.attachVideo = function(track, videoContainer) {              // Attach participant's video to dom
 
         angular.element(videoContainer.appendChild(track.attach())).bind('click', (e) => {
             var i;
@@ -1143,16 +1121,6 @@ angular.module('netbase')
             100);
             $scope.selectedOne = !$scope.selectedOne;
         });
-    }
-
-            });
-        
-        } else {
-            if($scope.currentShareScreen != null) $scope.currentShareScreen.stop();
-            $scope.shareScreenCaption = 'Share Screen';
-            $scope.connectClassroom($scope.currentRoomToken, $scope.currentRoomName);
-        }
-
     }
 
     $scope.toggleParticipantsBox = function() {                                 // Participant menu button event handler
