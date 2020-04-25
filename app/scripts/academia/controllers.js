@@ -120,40 +120,458 @@ angular.module('netbase')
 
 }])
 
+.controller('AcademiaClassroomChatCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Classroom', 'Students', 'ngDialog', 'jwtHelper', 'throttle', '$localStorage', '$window', function($rootScope, $scope, $location, $route, University, Classroom, Students, ngDialog, jwtHelper, throttle, $localStorage, $window) {
+    
+    var GENERAL_CHANNEL_UNIQUE_NAME;
+    var GENERAL_CHANNEL_NAME;
+    var MAX_LOAD_MESSAGE_COUNT = 120;
+    var accountSid = $route.current.params.accountSid;
+    var roomSID = $route.current.params.roomSID;
+
+    $scope.channels = [];
+    $scope.messagingClient = null;
+    $scope.generalChannel = null;
+    $scope.selectedChannel = null;
+    $scope.sendingMessage = '';
+    $scope.members = [];
+    $scope.months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    $scope.monthToVal = {
+        Jan: 0, Feb: 1, Mar: 2, Apr: 3, May: 4, Jun: 5, Jul: 6, Aug: 7, Sep: 8, Oct: 9, Nov: 10, Dec: 11
+    };
+    $scope.chattingNotification = '';
+
+    var baseUrl = "https://educationalcommunity-classroom.herokuapp.com";
+
+    $scope.openDialog = function(type, msg) {  // Opens Error Dialogs
+        ngDialog.open({ 
+            template: 'partials/modals/classroom_alert_modal.html',
+            controller: "AcademiaClassroomsAlertCtrl",
+            className: 'ngdialog-theme-default classroom-alert-modal', 
+            data: {
+                type: type, 
+                msg: msg
+            }
+        });    
+    }
+
+    if ($localStorage.token != undefined && $localStorage.token != null) {              // Check if logged in user
+        GENERAL_CHANNEL_UNIQUE_NAME = jwtHelper.decodeToken($localStorage.token)._id;   // chat member unique name(= user identity)
+        Students.getStudentById(GENERAL_CHANNEL_UNIQUE_NAME).then(res => {
+            
+            GENERAL_CHANNEL_NAME = res.data.data.name;                                  // chat friendly name
+            let url = '/classroom/chat_token/';
+            Classroom.getChatAccessToken(baseUrl + url).then((res) => {                 // Get chat access token(obtained by user identity
+                if(res.data.success == false){                                          // and device Id)
+                    $scope.openDialog("ERROR", res.data.msg);
+                }
+                else {
+                    $scope.chatCreate(res.data.token);
+                    console.log('here chat created');
+                }
+            }).catch(err => {
+                $scope.openDialog('ERROR', err);
+            });
+        });
+    }
+
+    $scope.chatCreate = function(token) {                                                           // Create chat client
+        Twilio.Chat.Client.create(token).then(function(client) {
+            $scope.messagingClient = client;
+            updateConnectedUI();
+            
+            $scope.loadChannelList().then(() => {                                                   // Load current acive channels and define 
+                $scope.messagingClient.on('channelAdded', $scope.loadChannelList);                  // events
+                $scope.messagingClient.on('channelRemoved', $scope.loadChannelList);
+                $scope.messagingClient.on('tokenExpired', $scope.chatCreate);
+                console.log('admin channel joined');
+            })
+            .catch((err) => {                                                                       // If there's no channels first create the Admin
+                console.log('load channel list first failed.');                                     // channel and reload channel list and define events
+                $scope.createAdminChannel().then(() => {
+                    console.log('create admin channel success');
+                    $scope.loadChannelList().then(() => {
+                        $scope.messagingClient.on('channelAdded', $scope.loadChannelList);
+                        $scope.messagingClient.on('channelRemoved', $scope.loadChannelList);
+                        $scope.messagingClient.on('tokenExpired', $scope.chatCreate);
+                        console.log('admin channel joined');
+                    })
+                    .catch((err) => {
+                        console.log('load channel list second failed');
+                        console.log(err);
+                    });
+                })
+                .catch(() => {
+                    $scope.openDialog('ERROR', 'join failded');
+                });
+            });
+            
+        });
+    }
+
+    function updateConnectedUI() {
+        //
+    }
+
+    $scope.loadChannelList = function() {                                           // Load published channel lists and join user into the admin channel.
+        return new Promise((resolve, reject) => {
+            
+            if ($scope.messagingClient == null) {
+                $scope.openDialog('ERROR', 'Client is not initialized.');
+                reject(new Error('none_message_client'));
+            }
+        
+            $scope.messagingClient.getPublicChannelDescriptors().then(function(channels) {
+                $scope.channels = channels.items;
+                var i;
+                for(i = 0; i < $scope.channels.length; i++) {
+                    if($scope.channels[i].uniqueName == roomSID) {
+                        $scope.currentChannel = $scope.channels[i];
+                        $scope.joinAdminChannel().then(() => {
+                            resolve();
+                        });
+                        break;
+                    }
+                }
+                if(i == $scope.channels.length){
+                    reject(new Error('none_admin_channel'));
+                }
+            });
+        });
+    }
+
+    $scope.createAdminChannel = function() {                                        // Create Admin Channel( every chat channel created by roomSId so
+        return new Promise((resolve, reject) => {                                   // as to be identical to every video chat room, and here roomSid
+            let studentId = jwtHelper.decodeToken($localStorage.token)._id;         // varible is the admin roomSid.
+            if(studentId == accountSid) {                                           // check if admin, so the user is not admin user, he can't create channel
+                $scope.messagingClient.createChannel({                              // create admin channel
+                    uniqueName: roomSID,
+                    friendlyName: GENERAL_CHANNEL_NAME
+                }).then((channel) => {
+                    $scope.currentChannel = channel;
+                    resolve();
+                }).catch(() => {
+                    reject(new Error('already exists'));
+                })
+            }
+        })
+    }
+
+    $scope.joinAdminChannel = function() {
+
+        return $scope.setupChannel();
+    }
+
+    $scope.setupChannel = function() {                                              // After create admin channel and join into it, should initialize the 
+        return new Promise((resolve, reject) => {                                   // channel and define channel events
+            if($scope.currentChannel.status == 'joined'){
+                $scope.leaveCurrentChannel().then(() => {
+                    return $scope.initChannel($scope.currentChannel);
+                })
+                .then((channel) => {
+                    return $scope.joinChannel(channel);
+                })
+                .then((_channel) => {
+                    $scope.currentChannel = _channel;
+                    $scope.initChannelEvents();
+                    resolve();
+                })
+            }
+            else {
+                $scope.initChannel($scope.currentChannel).then((channel) => {
+                    $scope.currentChannel = channel;
+                    $scope.joinChannel(channel).then((_channel) => {
+                        $scope.currentChannel = _channel;
+                        $scope.initChannelEvents();
+                        resolve();
+                    })
+                })
+            }
+        });
+    }
+
+    $scope.initChannel = function(channel) {
+        return $scope.messagingClient.getChannelBySid(channel.sid);
+    }
+
+    $scope.joinChannel = function(channel) {
+        return channel.join()
+        .then(function(joinedChannel) {
+            $scope.currentChannel = joinedChannel;
+            $scope.loadMessages();
+            return joinedChannel;
+        })
+        .catch(function(err) {
+            if (channel.status == 'joined') {
+                $scope.loadMessages();
+                return channel;    
+            } 
+            
+            $scope.openDialog('ERROR', "Couldn't join channel " + channel.friendlyName + ' because -> ' + err);
+            
+        });
+    }
+
+    $scope.initChannelEvents = function() {                                     // Define channel events
+        $scope.currentChannel.on('messageAdded', $scope.addMessageToList);
+        $scope.currentChannel.on('typingStarted', $scope.showTypingStarted);
+        $scope.currentChannel.on('typingEnded', $scope.hideTypingStarted);
+        $scope.currentChannel.on('memberJoined', $scope.notifyMemberJoined);
+        $scope.currentChannel.on('memberLeft', $scope.notifyMemberLeft);
+    }
+
+    $scope.sendMSG = function() {                                               // Send message
+        let currentDate = new Date();
+        let month = currentDate.getMonth();
+        let day = currentDate.getDate();
+        let hour = currentDate.getHours();
+        let minute = currentDate.getMinutes();
+        let second = currentDate.getSeconds();
+        $scope.sendingMessage = $scope.months[month] + ' ' + day + ' ' + hour + ':' + minute + ':' + second + '::sent_time::' + $scope.sendingMessage;
+        $scope.currentChannel.sendMessage($scope.sendingMessage);
+        $scope.sendingMessage = '';
+    }
+
+    $scope.addMessageToList = function(message) {
+        
+        let currentMember = '';
+        let i;
+        for(i = 0; i < $scope.members.length; i++) {
+            if($scope.members[i].id == message.author){
+                currentMember = $scope.members[i].name;
+                break;
+            }
+        }
+        if(currentMember == ''){
+            Students.getStudentById(message.author).then((res) => {
+                $scope.members.push({
+                    id: message.author,
+                    name: res.data.data.name
+                });
+
+                $scope.applyMessage(message, res.data.data.name);  
+                return;
+            })
+        }
+        else {
+            $scope.applyMessage(message, currentMember);  
+        }
+    }
+
+    $scope.addMember = function(message) {
+        let i;
+        return new Promise((resolve, reject) => {
+            let currentMember = '';
+            for(i = 0; i < $scope.members.length; i++){
+                if($scope.members[i].id == message.author){
+                    currentMember = $scope.members[i].name;
+                    break;
+                }
+            }
+            if(currentMember == ""){
+                Students.getStudentById(message.author).then((res) => {
+                    currentMember = res.data.data.name;
+                    $scope.members.push({
+                        id: message.author,
+                        name: currentMember
+                    });
+                    resolve();
+                });
+            }
+            else {
+                resolve();
+            }
+        })
+    }
+
+    $scope.loadMessages = function() {
+        let i;
+        $scope.currentChannel.getMessages(MAX_LOAD_MESSAGE_COUNT).then(function (messages) {
+            let messageArr = messages.items;
+            messageArr.sort(msgSortFunc2);
+            let promise = messageArr.reduce( (accumulatorPromise, nextID) => {
+                return accumulatorPromise.then(() => {
+                    return $scope.addMember(nextID);
+                });
+            }, Promise.resolve());
+            promise.then(() => {
+                messageArr.forEach($scope.addMessageToList)
+            });
+        });
+    }
+
+    $scope.applyMessage = function(message, currentMember, id) {
+        let messageListDom = document.getElementById('chat_list');
+        let messageTitleDom = document.createElement('div');
+        let messageTimeDom = document.createElement('div');
+        let messageBodyDom = document.createElement('div');
+        let messageItemDom = document.createElement('div');
+        
+        messageItemDom.setAttribute('id', id);
+        
+        messageTitleDom.setAttribute('class', 'chat-title-st row');
+        messageBodyDom.setAttribute('class', 'chat-body-st');
+        messageTimeDom.setAttribute('class', 'chat-time-st');
+
+        let sentTime = message.body.substring(0, message.body.indexOf('::sent_time::'));
+        let messageBody = message.body.replace(sentTime + '::sent_time::', '');
+        let messageBodyTextDom = document.createElement('div');
+        messageBodyTextDom.innerText = messageBody;
+
+        let avatar = document.createElement('img');
+        avatar.setAttribute('src', '/img/user/user.png');
+        
+        let nameDom = document.createElement('div');
+        nameDom.innerText = currentMember;
+        nameDom.setAttribute('class', 'chat-name-st');
+        messageTimeDom.innerText = sentTime;
+
+        messageTitleDom.appendChild(nameDom);
+        messageTitleDom.appendChild(messageTimeDom);
+
+        if(GENERAL_CHANNEL_UNIQUE_NAME == message.author){
+            messageItemDom.setAttribute('class', 'chat-item-st mine');
+            messageBodyDom.appendChild(messageBodyTextDom);
+            messageBodyDom.appendChild(avatar);
+        }
+        else{
+            messageItemDom.setAttribute('class', 'chat-item-st other');
+            messageBodyDom.appendChild(avatar);
+            messageBodyDom.appendChild(messageBodyTextDom);
+        }
+
+        messageItemDom.appendChild(messageBodyDom);
+        messageItemDom.appendChild(messageTitleDom);
+        messageListDom.appendChild(messageItemDom);
+        $scope.scrollToMessageListBottom();
+    }
+
+    $scope.sendingInputKeyPress = function($e) {
+        if($e.keyCode == 13) {
+            $scope.sendMSG();
+            $e.preventDefault();
+        }
+    }
+
+    $scope.scrollToMessageListBottom = function() {
+        var messageListDom = document.getElementById('chat_list');
+        messageListDom.scrollBy(0, messageListDom.scrollHeight);
+    }
+
+    function getDateValue(date) {
+        let dateSplit = date.split(' ');
+        let res = 0;
+        res = $scope.monthToVal[dateSplit[0]] * 30 * 24 * 60 * 60;
+        res += parseInt(dateSplit[1]) * 24 * 60 * 60;
+        let timeSplit = dateSplit[2].split(':');
+        res += parseInt(timeSplit[0]) * 60 * 60;
+        res += parseInt(timeSplit[1]) * 60;
+        res += parseInt(timeSplit[2]);
+        return res;
+    }
+
+    function msgSortFunc2(a, b) {
+        let sentTime1 = a.body.substring(0, a.body.indexOf('::sent_time::'));
+        let sentTime2 = b.body.substring(0, b.body.indexOf('::sent_time::'));
+                
+        if(getDateValue(sentTime1) > getDateValue(sentTime2)) return 1;
+        else return -1;
+    }
+
+    $scope.leaveCurrentChannel = function() {
+        if ($scope.currentChannel) {
+            return $scope.currentChannel.leave().then(function(leftChannel) {
+                leftChannel.removeListener('messageAdded', $scope.addMessageToList);
+                leftChannel.removeListener('typingStarted', $scope.showTypingStarted);
+                leftChannel.removeListener('typingEnded', $scope.hideTypingStarted);
+                leftChannel.removeListener('memberJoined', $scope.notifyMemberJoined);
+                leftChannel.removeListener('memberLeft', $scope.notifyMemberLeft);
+            });
+        } else {
+            return Promise.resolve();
+        }
+    }
+
+    function msgSortFunc1(arr) {
+        let i, j, temp;
+        for(i = 0; i < arr.length - 1; i++){
+            for(j = i + 1; j < arr.length; j++){
+                let sentTime1 = arr[i].body.substring(0, arr[i].body.indexOf('::sent_time::'));
+                let sentTime2 = arr[j].body.substring(0, arr[j].body.indexOf('::sent_time::'));
+                
+                if(getDateValue(sentTime1) > getDateValue(sentTime2)) {
+                    temp = arr[i];
+                    arr[i] = arr[j];
+                    arr[j] = temp;
+                }
+            }
+        }
+        return arr;
+    }
+
+    $scope.showTypingStarted = function(member) {
+        Students.getStudentById(member.identity).then((res) =>{
+            $scope.chattingNotification = res.data.data.name + ' is typing ...';
+        });
+    }
+    
+    $scope.hideTypingStarted = function(member) {
+        $scope.chattingNotification = "";
+    }
+
+    $scope.notifyMemberJoined = function(member) {
+        Students.getStudentById(member.identity).then((res) =>{
+            $scope.chattingNotification = res.data.data.name + ' joined the channel.';
+        });
+    }
+
+    $scope.notifyMemberLeft = function(member) {
+        Students.getStudentById(member.identity).then((res) =>{
+            $scope.chattingNotification = res.data.data.name + ' left the channel.';
+        });
+    }
+
+    $scope.confirm = function() {
+        ngDialog.close();
+    }
+
+}])
+
 .controller('AcademiaClassroomCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Classroom', 'Students', 'ngDialog', '$localStorage', '$window', function($rootScope, $scope, $location, $route, University, Classroom, Students, ngDialog, $localStorage, $window) {
-    let universityUrl = $route.current.params.academiaName;
-    let roomSID = $route.current.params.roomSID;
-    let accountSid = $route.current.params.accountSid;
-    let roomName = $route.current.params.roomName;
-    $scope.administrator = [];
-    $scope.participants = [];
-    $scope.selectedOne = false;
-    $scope.currentVideoRoom = null;
-    $scope.wholeClassroomList = [];
-    $scope.localParticipantUserName = "";
-    $scope.currentLocalparticipant = null;
-    $scope.showingParticipants = [];
-    $scope.shareScreenCaption = "Compartilhar Tela";
-    $scope.voiceToggle = 'fas fa-microphone-alt';
-    $scope.voiceStatus = "Mute";
-    $scope.videoToggle = 'fas fa-video';
-    $scope.videoStatus = 'Stop Video';
+    let universityUrl = $route.current.params.academiaName;         // Current university
+    let roomSID = $route.current.params.roomSID;                    // Current roomsid
+    let accountSid = $route.current.params.accountSid;              // Admin user id ( = null if unlogged user)
+    let roomName = $route.current.params.roomName;                  // Current room name
+    $scope.administrator = [];                                      // Array of administrators
+    $scope.participants = [];                                       // Array of participants
+    $scope.selectedOne = false;                                     // Flag varible showing if one participant's video selected by user
+    $scope.currentVideoRoom = null;                                 // Current Twilio video room vairble
+    $scope.wholeClassroomList = [];                                 // 
+    $scope.localParticipantUserName = "";                           // Current user name
+    $scope.currentLocalparticipant = null;                          // Current Twilio local participant varible
+    $scope.showingParticipants = [];                                // Array of participants should be shown below the administrators
+    $scope.shareScreenCaption = "Share Screen";                     // Toggling caption of share screen button
+    $scope.voiceToggle = 'fas fa-microphone-alt';                   // Fontawesome class name toggled by voice mute button status
+    $scope.voiceStatus = "Mute";                                    // Voice status
+    $scope.videoToggle = 'fas fa-video';                            // Fontawesome class name toggled by video mute button status
+    $scope.videoStatus = 'Stop Video';                              // Video status
     $scope.recordToggle = 'fas fa-record-vinyl'
-    $scope.recordStatus = 'Gravar vídeo';
-    $scope.participantsStatus = false;
-    $scope.chatStatus = false;
-    $scope.mobileVisibleToggle = 'mobile-invisible';
-    $scope.isFullScreen = false;
-    $scope.fullScreenStatus = '';
-    $scope.fullScreenToggle = "fa fa-expand";
+    $scope.recordStatus = false;
+    $scope.participantsStatus = false;                              // Participants Menu showing status
+    $scope.chatStatus = false;                                      // Chat box showing status
+    $scope.mobileVisibleToggle = 'mobile-invisible';                // Bottom controllers mobile visible classNames
+    $scope.isFullScreen = false;                                    // Full screen status
+    $scope.fullScreenStatus = '';                                   // Bottom controllers container showing classNames while full screen
+    $scope.fullScreenToggle = "fa fa-expand";                       // Full screen button's toggling classNames
     $scope.fullScreenIconPos = ' absolute';
-    $scope.localConnected = 'false';
-    // $scope.isMobile = false;
+    $scope.localConnected = 'false';                                // Flag varible showing the current user connected video room
+    $scope.recordToggleCaption = 'record';
+    
+    $rootScope.localMessager = null;
+    $scope.recorder = null;
 
-    var video = Twilio.Video;
-    var localVideo = Twilio.createLocalTracks;
+    var video = Twilio.Video;                                       // Twilio video 
 
-     var baseUrl = "https://educationalcommunity-classroom.herokuapp.com";
+    var baseUrl = "https://educationalcommunity-classroom.herokuapp.com";
     //var baseUrl = 'http://c395e03d.ngrok.io';
     var arr = $window.location.href.split("/");
     var domain = arr[0] + "//" + arr[2];
@@ -170,45 +588,35 @@ angular.module('netbase')
             let redirectUrl = '/a/university/' + universityUrl + '/roomid/' + roomSID + '/accountid/' + accountSid + '/roomname/' + roomName + '/';
             ngDialog.open({ template: 'partials/modals/login.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default', data: { redirectUrl: redirectUrl } });
             return;
-        }
+        } // Check if logged user, and showing login dialog. This needed because unlogged users can't join the classroom
 
-        Students.getStudentById(accountSid).then((res) => {
+        Students.getStudentById(accountSid).then((res) => {             // Get admin user data
             if ($scope.administrator.length == 0) {
                 $scope.administrator.push(res.data.data);
             }
-        })
-
-        console.log('administrator');
-        console.log($scope.administrator);
-        console.log('current classroom');
-        console.log($scope.currentClassroom);
+        });
 
         let url = '/classroom/' + roomSID + '/join/';
-        Classroom.joinClassroom(baseUrl + url).then((data) => {
+        Classroom.joinClassroom(baseUrl + url).then((data) => {         // Join and get access token
 
-                url = '/classroom/classroom/' + roomName + '/token/'
-                Classroom.getAccessToken(baseUrl + url).then((data) => {
-                    console.log('here access token');
-                    console.log(data);
-                    $scope.connectClassroom(data, roomName);
-                });
+            url = '/classroom/classroom/' + roomName + '/token/'
+            Classroom.getAccessToken(baseUrl + url).then((data) => {
+                $scope.connectClassroom(data, roomName);
+            });
 
-            })
-            .catch((err) => {
-                alert('Join Error.');
-            })
+        })
+        .catch((err) => {
+            alert('Join Error.');
+        });
     }
 
-
-
-    $scope.videoSizeSet = function() {
+    $scope.videoSizeSet = function() {                                  // Participants' video layout
         var i;
         var videoContainer = document.getElementById('twilio');
         var videoDom = document.getElementsByTagName('video');
         var titleDom = document.getElementsByClassName('sub-video-title');
         var mainWidth;
         var mainHeight;
-        var showingVideo;
         var showingTitle;
         var countOfNone = 0;
 
@@ -220,7 +628,7 @@ angular.module('netbase')
             videoContainer.style.height = '100%';
         } else {
             videoContainer.style.position = 'initial';
-            videoContainer.style.width = '600px';
+            if (!$scope.isMobile()) videoContainer.style.width = '600px';
         }
 
         for (i = 0; i < titleDom.length; i++) {
@@ -232,8 +640,6 @@ angular.module('netbase')
             for (j = 0; j < $scope.participants.length; j++) {
                 if ($scope.participants[j]._id == titleDom[i].getAttribute('id')) {
                     let checkEle = document.getElementById($scope.participants[j]._id + '_name');
-                    console.log('here check element');
-                    console.log(checkEle);
                     if (checkEle == null) {
                         let label = document.createElement('div');
                         label.setAttribute('id', $scope.participants[j]._id + '_name');
@@ -244,9 +650,8 @@ angular.module('netbase')
                 }
             }
         }
-        console.log('showing title');
-        console.log(showingTitle);
         if(!$scope.isMobile()) {
+
           console.log('this is not mobile device');
           mainWidth = parseInt(videoContainer.offsetWidth);
           if(!$scope.isFullScreen){
@@ -279,7 +684,13 @@ angular.module('netbase')
                 titleDom[0].style.position = 'absolute';
             }
             else {
-                titleDom[0].style.position = 'relative';
+                mainHeight = videoContainer.style.height;
+                participantMenu[0].style.position = 'fixed';
+                participantMenu[0].style.left = '0px';
+                participantMenu[0].style.top = '9px';
+                chatMenu[0].style.position = 'fixed';
+                chatMenu[0].style.top = '9px';
+                chatMenu[0].style.right = '0px';
             }
 
             let k;
@@ -290,27 +701,26 @@ angular.module('netbase')
                     titleDom[0].children[k].style.height = "100%";
 
                 }
-            }
 
-            showingTitle.style.width = "99.9%";
-            showingTitle.style.height = "99%";
-            if($scope.isFullScreen) {
-                showingTitle.style.position = 'absolute';
-            }
-            else {
-                showingTitle.style.position = 'relative';
-            }
-            for (k = 0; k < showingTitle.childElementCount; k++) {
-                if (showingTitle.children[k].tagName == 'VIDEO') {
-
-                    showingTitle.children[k].style.width = "100%";
-                    showingTitle.children[k].style.height = "100%";
-
+                showingTitle.style.width = "99.9%";
+                showingTitle.style.height = "99%";
+                if($scope.isFullScreen) {
+                    showingTitle.style.position = 'absolute';
                 }
-            }
+                else {
+                    showingTitle.style.position = 'relative';
+                }
+                for (k = 0; k < showingTitle.childElementCount; k++) {
+                    if (showingTitle.children[k].tagName == 'VIDEO') {
 
+                      showingTitle.children[k].style.width = "100%";
+                      showingTitle.children[k].style.height = "100%";
+
+                  }
+              }
 
             } else if (videoDom.length > 1 && videoDom.length < 5 && countOfNone != 1) {
+
                 for (i = 0; i < titleDom.length; i += 1) {
                     let k;
                     for (k = 0; k < titleDom[i].childElementCount; k++) {
@@ -343,31 +753,30 @@ angular.module('netbase')
                 if(!$scope.isFullScreen) $scope.fullScreenStatus = '';
             }
         }
-        else if ($scope.isMobile()) {
-          console.log("this is a mobile device");
-          videoContainer.style.height = parseInt(screen.height) - 102 + 'px';
-          if (titleDom.length == 1 || countOfNone == 1) {
-            titleDom[0].style.width = "100%";
-            titleDom[0].style.height = "100%";
-            //titleDom[0].style.left = '50px';
-            //titleDom[0].style.top = '37.5px';
-            let k;
-            for (k = 0; k < titleDom[0].childElementCount; k++) {
-                if (titleDom[0].children[k].tagName == 'VIDEO') {
+        else {
+            videoContainer.style.height = parseInt(screen.height) - 102 + 'px';
+            if (titleDom.length == 1 || countOfNone == 1) {
+                titleDom[0].style.width = "100%";
+                titleDom[0].style.height = "100%";
+                let k;
+                for (k = 0; k < titleDom[0].childElementCount; k++) {
+                    if (titleDom[0].children[k].tagName == 'VIDEO') {
 
-                    titleDom[0].children[k].style.width = "100%";
-                    titleDom[0].children[k].style.height = "100%";
+                        titleDom[0].children[k].style.width = "100%";
+                        titleDom[0].children[k].style.height = "100%";
+                    }
                 }
-            }
 
-            showingTitle.style.width = "100%";
-            showingTitle.style.height = "100%";
-            for (k = 0; k < showingTitle.childElementCount; k++) {
-                if (showingTitle.children[k].tagName == 'VIDEO') {
+                showingTitle.style.width = "100%";
+                showingTitle.style.height = "100%";
+                for (k = 0; k < showingTitle.childElementCount; k++) {
+                    if (showingTitle.children[k].tagName == 'VIDEO') {
 
-                    showingTitle.children[k].style.width = "100%";
-                    showingTitle.children[k].style.height = "100%";
+                        showingTitle.children[k].style.width = "100%";
+                        showingTitle.children[k].style.height = "100%";
+                    }
                 }
+
             }
             //showingTitle.style.left = '50px';
             //showingTitle.style.top = '37.5px';
@@ -393,56 +802,63 @@ angular.module('netbase')
                         titleDom[i].children[k].style.width = "100%";
                         titleDom[i].children[k].style.height = "100%";
                     }
+                    titleDom[i].style.width = "100%";
+                    titleDom[i].style.height = mainHeight / 2 + 'px';
                 }
-                titleDom[i].style.width = mainWidth / 2 + 'px';
-                titleDom[i].style.height = mainHeight / 2 + 'px';
+            } 
+            else if (videoDom.length > 2 && countOfNone != 1) {
+                
+                for (i = 0; i < titleDom.length; i += 1) {
+                    titleDom[i].style.width = "50%";
+                    titleDom[i].style.height = "50%";
+                    let k;
+                    for (k = 0; k < titleDom[i].childElementCount; k++) {
+                        if (titleDom[i].children[k].tagName == 'VIDEO') {
+                            titleDom[i].children[k].style.width = "100%";
+                            titleDom[i].children[k].style.height = "100%";
+                        }
+                    }
+                    titleDom[i].style.width = mainWidth / 2 + 'px';
+                    titleDom[i].style.height = mainHeight / 2 + 'px';
+                }
             }
-          }
         }
     }
 
     $scope.disconnectClassroom = function() {
         var mainDom = document.getElementById('twilio');
         var i;
-        //for (i = mainDom.childElementCount - 1; i >= 0; i--) {
-        //    mainDom.children[i].remove();
-        //}
         var videos = document.getElementsByClassName('sub-video-title');
         for(i = videos.length - 1; i >= 0;  i--){
             videos[i].remove();
         }
-        //$scope.$apply(()=>{
         $scope.participants = [];
         $scope.showingParticipants = [];
-        //});
-        console.log('herererererere');
         $scope.currentLocalparticipant = null;
         $scope.localConnected = false;
-        if ($scope.currentVideoRoom != null) $scope.currentVideoRoom.disconnect();
         $scope.currentVideoRoom = null;
     }
 
     $scope.isMobile = function() {
-        var check = false;
-        (function(a) { if (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino|android|ipad|playbook|silk/i.test(a) || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0, 4))) check = true; })(navigator.userAgent || navigator.vendor || window.opera);
-        if(screen.width < 500) check = true;
-        return check;
+        if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+            return true;
+        }
+        return false;
     }
 
     $scope.connectClassroom = function(token, roomName, screenTrack = null) {
-
-        //localVideo.connect()
-        $scope.disconnectClassroom();
 
         $scope.currentShareScreen = screenTrack;
         $scope.currentRoomToken = token;
         $scope.currentRoomName = roomName;
 
+        console.log(screenTrack);
+
         var room_t;
         if (screenTrack != null) {
             room_t = {
                 name: roomName,
-                tracks: [screenTrack]
+                tracks: [screenTrack[0], screenTrack[1]]
             }
         } else {
             room_t = {
@@ -452,15 +868,16 @@ angular.module('netbase')
 
         $scope.videoSizeSet();
 
-        video.connect(token, room_t).then(room => {
+        video.connect(token, room_t).then(room => {                         // Video room connect
             const localParticipant = room.localParticipant;
 
             $scope.currentLocalparticipant = room.localParticipant;
+            $scope.currentLocalparticipant.audioTracks.forEach(function(audioTrack) {
+                $scope.currentLoaclAudioTrack = audioTrack;
+                console.log($scope.currentLoaclAudioTrack);
+            });
             $scope.localConnected = true;
             $scope.currentVideoRoom = room;
-            if ($scope.currentShareScreen != null) {
-                room.localParticipant.publishTrack($scope.currentShareScreen);
-            }
 
             var mainVideoDom = document.getElementById('twilio');
             var videoTitle = document.createElement('div');
@@ -468,53 +885,27 @@ angular.module('netbase')
             videoTitle.setAttribute('class', 'sub-video-title');
             videoTitle.style.position = 'relative';
 
+            $scope.localVideoContainer = videoTitle;
+
             localParticipant.videoTracks.forEach(publication => {
-                const track = publication.track;
-
-                /********************* Screen Full Screen *********************/
-
-                console.log($scope.currentLocalparticipant);
-                angular.element(videoTitle.appendChild(track.attach())).bind('click', (e) => {
-                    var i;
-
-                    let mainDom = document.getElementById('twilio');
-                    if ($scope.selectedOne) {
-                        for (i = 0; i < mainDom.childElementCount; i++) {
-                            mainDom.children[i].style.display = 'initial';
-                        }
-
-                        setTimeout(() => {
-                                $window.dispatchEvent(new Event("resize"));
-                            },
-                            100);
-                    } else {
-
-                        let elements = document.getElementsByClassName('sub-video-title');
-                        for (i = 0; i < elements.length; i++) {
-                            let flag = false;
-                            let k;
-                            for (k = 0; k < elements[i].childElementCount; k++) {
-                                if (elements[i].children[k] == e.target) flag = true;
-                            }
-                            if (!flag) {
-                                elements[i].style.display = 'none';
-                            }
-                        }
-
-                        setTimeout(() => {
-                                $window.dispatchEvent(new Event("resize"));
-                            },
-                            100);
-                    }
-                    $scope.selectedOne = !$scope.selectedOne;
-                });
+                $scope.currentLocalScreen = publication.track;
+                $scope.attachVideo(publication.track, videoTitle);
             });
+
+            localParticipant.audioTracks.forEach(publication => {
+                $scope.attachVideo(publication.track, videoTitle);
+            });
+
             mainVideoDom.appendChild(videoTitle);
 
-            Students.getStudentById(localParticipant.identity).then((res) => {
-                console.log('Local Participant');
-                console.log(res.data);
+            Students.getStudentById(localParticipant.identity).then((res) => {          // Check the user if admin and push the data into admin array
                 $scope.localParticipantUserName = res.data.data.name;
+
+                $rootScope.localMessager = {
+                    id: res.data.data._id,
+                    name: res.data.data.name
+                }
+
                 if (document.getElementById('my_local_video') != null) {
                     document.getElementById('my_local_video').innerText = $scope.localParticipantUserName;
                 }
@@ -526,12 +917,11 @@ angular.module('netbase')
                 $scope.participants.push(res.data.data);
 
                 setTimeout(() => {
-                        $window.dispatchEvent(new Event("resize"));
-                    },
-                    100);
+                    $window.dispatchEvent(new Event("resize"));
+                },
+                100);
             });
 
-            /****************** Participants Connection && Disconnection ********************/
             room.participants.forEach($scope.participantConnected);
             room.on('participantConnected', $scope.participantConnected);
 
@@ -540,21 +930,21 @@ angular.module('netbase')
         });
     }
 
-    $scope.participantConnected = function(participant) {
+    $scope.participantConnected = function(participant) {               // Participant connected event handler
         var mainVideoDom = document.getElementById('twilio');
         var subTitleDom = document.createElement('div');
         subTitleDom.setAttribute('id', participant.identity);
 
-        //subTitleDom.id = participant.sid;
-        //subTitleDom.innerText = $scope.participants.username;
         subTitleDom.setAttribute('class', 'sub-video-title');
 
-        participant.on('trackSubscribed', track => $scope.trackSubscribed(mainVideoDom, subTitleDom, track));
+        participant.on('trackSubscribed', track => {
+            $scope.trackSubscribed(mainVideoDom, subTitleDom, track)
+        });
 
         participant.on('trackUnsubscribed', $scope.trackUnsubscribed);
 
         participant.tracks.forEach(publication => {
-            if (publication.isSubscribed) {
+            if (publication.isSubscribed ) {
                 $scope.trackSubscribed(mainVideoDom, subTitleDom, publication.track);
             }
         });
@@ -567,90 +957,49 @@ angular.module('netbase')
                 $scope.showingParticipants.push(res.data.data);
             }
 
-            console.log('Participant "%s" connected', participant.identity);
-            console.log(res.data.data);
-            console.log($scope.participants);
             setTimeout(() => {
-                    $window.dispatchEvent(new Event("resize"));
-                },
-                100);
-        });
-        //document.body.appendChild(videoDom);
-    }
-
-    $scope.trackSubscribed = function(main, ele, track) {
-
-        angular.element(ele.appendChild(track.attach())).bind('click', (e) => {
-            var i;
-            //if(e.target.tagName != 'VIDEO') return;
-            let mainDom = document.getElementById('twilio');
-            if ($scope.selectedOne) {
-                for (i = 0; i < mainDom.childElementCount; i++) {
-                    mainDom.children[i].style.display = 'initial';
-                }
-                $scope.videoSizeSet();
-                setTimeout(() => {
-                        $window.dispatchEvent(new Event("resize"));
-                    },
-                    100);
-            } else {
-                let elements = document.getElementsByClassName('sub-video-title');
-
-                for (i = 0; i < elements.length; i++) {
-                    let flag = false;
-                    let k;
-                    for (k = 0; k < elements[i].childElementCount; k++) {
-                        if (elements[i].children[k] == e.target) flag = true;
-                    }
-                    if (!flag) {
-                        elements[i].style.display = 'none';
-                    }
-                }
-                //$scope.videoSizeSet();
-                setTimeout(() => {
-                        $window.dispatchEvent(new Event("resize"));
-                    },
-                    100);
-            }
-            $scope.selectedOne = !$scope.selectedOne;
-        });
-        main.appendChild(ele);
-
-        setTimeout(() => {
                 $window.dispatchEvent(new Event("resize"));
             },
             100);
+        });
     }
 
-    $scope.participantDisconnected = function(participant) {
-        console.log('Participant "%s" disconnected', participant.identity);
+    $scope.trackSubscribed = function(main, ele, track) {           // Track subscribed event handler
+
+        $scope.attachVideo(track, ele);
+        main.appendChild(ele);
+
+        setTimeout(() => {
+            $window.dispatchEvent(new Event("resize"));
+        },
+        100);
+    }
+
+    $scope.participantDisconnected = function(participant) {        // Participant disconnected event handler
+        
         var i;
         for (i = 0; i < $scope.participants.length; i++) {
             if ($scope.participants[i] == null) continue;
             if ($scope.participants[i]._id == participant.identity) {
                 $scope.participants.splice(i, 1);
-                console.log('removed here1');
             }
         }
         for (i = 0; i < $scope.showingParticipants.length; i++) {
             if ($scope.showingParticipants[i] == null) continue;
             if ($scope.showingParticipants[i]._id == participant.identity) {
                 $scope.showingParticipants.splice(i, 1);
-                console.log('removed here1');
             }
         }
     }
 
-    $scope.trackUnsubscribed = function(track) {
+    $scope.trackUnsubscribed = function(track) {                    // Track unsubscribed event handler
         track.detach().forEach(element => {
 
-            console.log('removed here2');
             var i;
             let videos = document.getElementsByTagName('video');
             let titles = document.getElementsByClassName('sub-video-title');
             for (i = 0; i < videos.length; i++) {
-                console.log(element);
-                console.log(videos[i]);
+
                 if (element == videos[i]) {
 
                     let j;
@@ -672,7 +1021,6 @@ angular.module('netbase')
                             });
                         }
                     }
-                    console.log($scope.participants);
                     titles[i].remove();
                     setTimeout(() => {
                         $scope.videoSizeSet();
@@ -690,65 +1038,112 @@ angular.module('netbase')
         $scope.shareScreenCaption = 'Share Screen';
         $scope.disconnectClassroom();
         $scope.adminActive = '';
+
+        $rootScope.localMessager = null;
         //leave room
         $window.close();
     }
 
-    $scope.recordVideo = function() {
-        let API_KEY_SID = "SK1a798d2be5f6c189daea5ff4e126793b";
-        let API_KEY_SECRET = "iY7eTh3rYYR4matfxuZVNKJcPRpPOBtH";
-        let ACCOUNT_SID = "AC49c057053ba1660bf1304758c0a3218d";
+    $scope.recordVideo = function() {            // Works only chrome browser, not using Twilio api, instead of it, using MediaRecorder
+        if($scope.recordStatus == false) {
+            $scope.videoRecordStream = [];
+            $scope.recorder = [];
+            $scope.audioRecordStream = new MediaStream();
+            let videos = document.getElementsByTagName('video');
+            let audios = document.getElementsByTagName('audio');
+            let i;
 
-        //const client = new Twilio(API_KEY_SID, API_KEY_SECRET, {accountSid: ACCOUNT_SID});
+            
+            for(i = 0; i < audios.length; i++) {
+                $scope.audioRecordStream.addTrack(audios[i].captureStream().getAudioTracks()[0]);
+            }
+            
+            for(i = 0; i < videos.length; i++) {
+                let videoS = new MediaStream(); 
+                videoS.addTrack(videos[i].captureStream().getVideoTracks()[0]);
+                $scope.videoRecordStream.push(videoS);
+           
+                var outputStream = new MediaStream();
+                [$scope.audioRecordStream, videoS].forEach((s) => {
+                    s.getTracks().forEach((t) => {
+                        outputStream.addTrack(t);
+                    })
+                });
 
-        Twilio.Video.compositions.
-        create({
-                roomSid: $scope.currentClassroom._id,
-                videoLayout: {
-                    grid: {
-                        max_rows: 1,
-                        video_sources: [
-                            "RTAAAA",
-                            "MTBBBB",
-                            "teacher-webcast"
-                        ]
-                    }
-                },
-                statusCallback: 'http://localhost:8080/callbacks',
-                format: 'mp4'
-            })
-            .then(composition => {
-                console.log('Created Composition with SID=' + composition.sid);
+                let recorder = new MediaRecorder(outputStream);
+                recorder.start();
+                $scope.recorder.push(recorder);
+            }
+
+            $scope.recordStatus = true;
+            $scope.recordToggle = 'fas fa-record-vinyl recording';
+            $scope.recordToggleCaption = 'stop recording';
+        }
+        else {
+            let i;
+            $scope.tempScene = [];
+            let promise = new Promise((resolve, reject) => {
+                for(i = 0; i < $scope.recorder.length; i++){
+                    
+                    $scope.recorder[i].ondataavailable = e => {
+                        $scope.tempScene.push(e.data);
+                        //if($scope.tempScene.length == $scope.recorder.length) resolve();
+                    };
+                    $scope.recorder[i].stop();
+                }
+
+                setTimeout(() => {
+                    resolve();
+                }, 500);
             });
-    }
+            
+            promise.then(() => {
+                var a = document.createElement('a');
+                a.download = ['video_', (new Date() + '').slice(4, 28), '.webm'].join('');
+                a.href = URL.createObjectURL($scope.tempScene[0]);
+                a.textContent = a.download;
+                a.click();
+            })
 
-    $scope.shareScreen = function() {
-        console.log($scope.currentLocalparticipant.audioTracks);
-        console.log($scope.currentLocalParticipant);
-        if($scope.localParticipant == false){
-            //alert("Error");
-            return;
+            $scope.recordStatus = false;
+            $scope.recordToggle = 'fas fa-record-vinyl';
+            $scope.recordToggleCaption = 'record';
         }
 
         if ($scope.shareScreenCaption == 'Share Screen') {
 
-            $scope.shareScreenCaption = 'Stop Sharing';
+      $scope.attachVideo = function(track, videoContainer) {              // Attach participant's video to dom
 
-            navigator.mediaDevices.getDisplayMedia({audio: true, video: true}).then((stream) => {
-                const screenTrack = stream.getTracks()[0];
-                screenTrack.onended = function(e) {
-                    if(!$scope.localConnected) return;
-                    console.log('stop sharing........');
-                    $scope.disconnectClassroom();
-                    $scope.shareScreenCaption = 'Share Screen';
-                    $scope.connectClassroom($scope.currentRoomToken, $scope.currentRoomName);
+        angular.element(videoContainer.appendChild(track.attach())).bind('click', (e) => {
+            var i;
+
+            let mainDom = document.getElementById('twilio');
+            if ($scope.selectedOne) {
+                for (i = 0; i < mainDom.childElementCount; i++) {
+                    mainDom.children[i].style.display = 'initial';
                 }
 
-                $scope.disconnectClassroom();
+            } else {
 
-                console.log('screen track');
-                console.log(screenTrack);
-                $scope.connectClassroom($scope.currentRoomToken, $scope.currentRoomName, screenTrack);
+                let elements = document.getElementsByClassName('sub-video-title');
+                for (i = 0; i < elements.length; i++) {
+                    let flag = false;
+                    let k;
+                    for (k = 0; k < elements[i].childElementCount; k++) {
+                        if (elements[i].children[k] == e.target) flag = true;
+                    }
+                    if (!flag) {
+                        elements[i].style.display = 'none';
+                    }
+                }
+            }
+            setTimeout(() => {
+                $window.dispatchEvent(new Event("resize"));
+            },
+            100);
+            $scope.selectedOne = !$scope.selectedOne;
+        });
+    }
 
             });
         
@@ -760,7 +1155,7 @@ angular.module('netbase')
 
     }
 
-    $scope.toggleParticipantsBox = function() {
+    $scope.toggleParticipantsBox = function() {                                 // Participant menu button event handler
         $scope.participantsStatus = !$scope.participantsStatus;
         if($scope.participantsStatus){
           $scope.mobileToggleParticipantsList = 'drag-in-left-right';
@@ -773,7 +1168,7 @@ angular.module('netbase')
         }
     }
 
-    $scope.toggleChatBox = function() {
+    $scope.toggleChatBox = function() {                                         // Chatbox showing button event handler
         $scope.chatStatus = !$scope.chatStatus;
         if($scope.chatStatus){
           $scope.chatboxContainer = "drag-in-right-left";
@@ -786,17 +1181,15 @@ angular.module('netbase')
         }
     }
 
-    $scope.toggleVoice = function() {
+    $scope.toggleVoice = function() {                                           // Voice toggle event handler
         if ($scope.voiceStatus == "Mute") {
             $scope.currentLocalparticipant.audioTracks.forEach(function(audioTrack) {
-                console.log(audioTrack);
                 audioTrack.track.disable();
             });
             $scope.voiceToggle = 'fas fa-microphone-alt-slash';
             $scope.voiceStatus = "Unmute";
         } else {
             $scope.currentLocalparticipant.audioTracks.forEach(function(audioTrack) {
-                console.log(audioTrack);
                 audioTrack.track.enable();
             });
             $scope.voiceToggle = 'fas fa-microphone-alt';
@@ -804,17 +1197,15 @@ angular.module('netbase')
         }
     }
 
-    $scope.toggleVideo = function() {
+    $scope.toggleVideo = function() {                                           // Video toggle button event handler
         if ($scope.videoStatus == "Stop Video") {
             $scope.currentLocalparticipant.videoTracks.forEach(function(videoTrack) {
-                console.log(videoTrack);
                 videoTrack.track.disable();
             });
             $scope.videoToggle = 'fas fa-video-slash';
             $scope.videoStatus = "Start Video";
         } else {
             $scope.currentLocalparticipant.videoTracks.forEach(function(videoTrack) {
-                console.log(videoTrack);
                 videoTrack.track.enable();
             });
             $scope.videoToggle = 'fas fa-video';
@@ -822,12 +1213,13 @@ angular.module('netbase')
         }
     }
 
-    $scope.copyLink = function() {
+    $scope.copyLink = function() {                                              // Copy link button event handler
         let universityUrl = $route.current.params.academiaName;
         let roomSID = $route.current.params.roomSID;
         let accountSid = $route.current.params.accountSid;
         let roomName = $route.current.params.roomName;
         let text = domain + "/a/university/" + universityUrl + "/roomid/" + roomSID + "/accountid/" + accountSid + "/roomname/" + roomName + "/";
+
         /*
         if (navigator.clipboard != undefined) {//Chrome
             navigator.clipboard.writeText(text).then(function() {
@@ -843,18 +1235,16 @@ angular.module('netbase')
 
         Clipboard.copy(text);
         ngDialog.open({ template: 'partials/modals/classroom_alert_modal.html', controller: "AcademiaClassroomsAlertCtrl", className: 'ngdialog-theme-default classroom-alert-modal', data: {type: "Universidade", msg: 'Copied link to clipboard'}});
+        
     }
 
-
-
-
     $scope.toggleAllControllers = function() {
-      if($scope.mobileVisibleToggle == 'mobile-invisible'){
-        $scope.mobileVisibleToggle = 'mobile-visible';
-      }
-      else {
-        $scope.mobileVisibleToggle = 'mobile-invisible';
-      }
+        if($scope.mobileVisibleToggle == 'mobile-invisible'){
+            $scope.mobileVisibleToggle = 'mobile-visible';
+        }
+        else {
+            $scope.mobileVisibleToggle = 'mobile-invisible';
+        }
     }
 
     $scope.toggleFullScreen = function() {
@@ -875,13 +1265,16 @@ angular.module('netbase')
         },
         100);
     }
+    $scope.confirm = function() {
+        ngDialog.closeAll();
+    }
 }])
 
 .controller('AcademiaClassroomsAlertCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Classroom', 'Students', 'ngDialog', 'jwtHelper', '$localStorage', '$window', function($rootScope, $scope, $location, $route, University, Classroom, Students, ngDialog, jwtHelper, $localStorage, $window) {
     $scope.alertMsg = $scope.ngDialogData.msg;
     $scope.alertType = $scope.ngDialogData.type;
     $scope.confirm = function() {
-        ngDialog.close();
+        ngDialog.closeAll();
     }
 }])
 
@@ -893,21 +1286,12 @@ angular.module('netbase')
     $scope.participants = [];
     $scope.selectedOne = false;
 
-    //$scope.currentLocalParticipant = null;
     $scope.currentVideoRoom = null;
     $scope.wholeClassroomList = [];
     $scope.localParticipantUserName = "";
     $scope.showingParticipants = [];
     $scope.shareScreenCaption = "Share Screen";
     $scope.confirmDelete = false;
-    //console.log($route);
-    //console.log("$$$$$$$$$");
-    //console.log(Twilio.Video);
-    //console.log("$$$$$$$$$");
-    var video = Twilio.Video;
-    var localVideo = Twilio.createLocalTracks;
-    console.log('here local video');
-    console.log(localVideo);
 
     $scope.classroomViewMode = false;
 
@@ -919,31 +1303,22 @@ angular.module('netbase')
     var domain = arr[0] + "//" + arr[2];
 
     University.getUniversity(universityUrl).then(function(res) {
-        console.log('here university');
-        console.log(res);
         $scope.university = res.data.data;
         $scope.getAllClassrooms();
     });
 
     angular.element($window).bind('resize', function() {
         $scope.videoSizeSet();
-        //$scope.isMobile();
     });
 
     /****************** Mobile / Web **************************/
 
     $scope.isMobile = function() {
-        var check = false;
-        (function(a) { if (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino|android|ipad|playbook|silk/i.test(a) || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0, 4))) check = true; })(navigator.userAgent || navigator.vendor || window.opera);
-        $scope.classroomViewMode = check;
-        return check;
+        if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+            return true;
+        }
+        return false;
     }
-
-    // $scope.maxHeight = function() {
-    //     if ($scope.classroomViewMode == true)
-    //         return { "max-height": '500px' }
-    //     else return { 'max-height': '600px' }
-    // }
 
     $scope.maxHeight = {
         "max-height": '500px'
@@ -956,8 +1331,6 @@ angular.module('netbase')
         let url = '/classroom/university/' + $scope.university._id + '/all'
         Classroom.getAllClassroomsByUniversity(baseUrl + url).then((res) => {
             $scope.wholeClassroomList = res.data.data;
-            console.log('Classroom.getAllClassrooms');
-            console.log($scope.wholeClassroomList);
         });
     }
 
@@ -987,15 +1360,11 @@ angular.module('netbase')
 
         let token = $localStorage.token;
         let title = $scope.addingClassroom.uniqueName ? $scope.addingClassroom.uniqueName : '';
-        //let url = '/classroom/university/' + $scope.university._id + '/room/' + title;
         let url = '/classroom/university/';
 
         if ($localStorage.token != undefined && $localStorage.token != null) {
             studentId = jwtHelper.decodeToken($localStorage.token)._id;
         }
-        console.log("here studentId" + studentId);
-        console.log('here university');
-        console.log($scope.university);
         var i;
         var privilege = 0;
         for (i = 0; i < $scope.university.members.length; i++) {
@@ -1005,12 +1374,9 @@ angular.module('netbase')
             }
         }
         Classroom.createNewClassroom(baseUrl + url, title, privilege, $scope.university._id).then((data) => {
-            //$scope.getAllClassrooms();
             let url = '/classroom/university/' + $scope.university._id + '/all'
             Classroom.getAllClassroomsByUniversity(baseUrl + url).then((data) => {
                 $scope.wholeClassroomList = data;
-                console.log('Classroom.getAllClassrooms');
-                console.log($scope.wholeClassroomList);
                 $route.reload();
             });
             ngDialog.close();
@@ -1025,17 +1391,7 @@ angular.module('netbase')
 
     $scope.copyLink = function(classroom) {
         let text = domain + "/a/university/" + universityUrl + "/roomid/" + classroom.roomSID + "/accountid/" + classroom.accountSid + "/roomname/" + classroom.uniqueName + "/";
-        /*if (navigator.clipboard != undefined) {//Chrome
-            navigator.clipboard.writeText(text).then(function() {
-                ngDialog.open({ template: 'partials/modals/classroom_alert_modal.html', controller: "AcademiaClassroomsAlertCtrl", className: 'ngdialog-theme-default classroom-alert-modal', data: {type: "Universidade", msg: 'Copied link to clipboard'}});
-            }, function(err) {
-                ngDialog.open({ template: 'partials/modals/classroom_alert_modal.html', controller: "AcademiaClassroomsAlertCtrl", className: 'ngdialog-theme-default classroom-alert-modal', data: {type: "ERROR", msg: 'Could not copy link to the clipboard '}});
-            });
-        }
-        else if(window.clipboardData) { // Internet Explorer
-            window.clipboardData.setData("Text", text);
-        }*/
-
+        
         Clipboard.copy(text);
         ngDialog.open({ template: 'partials/modals/classroom_alert_modal.html', controller: "AcademiaClassroomsAlertCtrl", className: 'ngdialog-theme-default classroom-alert-modal', data: {type: "Universidade", msg: 'Copied link to clipboard'}});
     }
@@ -1050,8 +1406,6 @@ angular.module('netbase')
 
     $scope.deleteClassroom = function(classroom) {
         $rootScope.deleteRoom = classroom;
-        console.log('deleteroom');
-        console.log(classroom);
         ngDialog.open({ template: 'partials/modals/classroom_confirm_delete_modal.html', controller: "AcademiaClassroomsCtrl", className: 'ngdialog-theme-default classroom-alert-modal'});
     }
 
@@ -1060,6 +1414,7 @@ angular.module('netbase')
 
         console.log('here university');
         console.log($scope.university);
+
         let url = '/classroom/end/';
         var i;
         var privilege = 0;
@@ -1073,18 +1428,13 @@ angular.module('netbase')
                 privilege = member.privilege; break;
             }
         }
-        privilege = 99;
-        console.log('delete classroom');
-        console.log($rootScope.deleteRoom);
+        //privilege = 99;
         var roomId = $rootScope.deleteRoom.roomSID;
         Classroom.deleteClassroom(baseUrl + url, roomId, privilege).then((data) => {
-            //$scope.getAllClassrooms();
             let url = '/classroom/university/' + $scope.university._id + '/all';
             Classroom.getAllClassroomsByUniversity(baseUrl + url).then((data) => {
                 ngDialog.close();
                 $scope.wholeClassroomList = data;
-                console.log('Classroom.getAllClassrooms');
-                console.log($scope.wholeClassroomList);
                 $route.reload();
             });
         })
@@ -3269,3 +3619,5 @@ angular.module('netbase')
 })
 
 .filter('unsafe', function($sce) { return $sce.trustAsHtml; });
+
+
