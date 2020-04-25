@@ -71,6 +71,7 @@ angular.module('netbase')
     }
 
   };
+  //END nextPage
 
 }])
 

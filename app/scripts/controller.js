@@ -2686,20 +2686,23 @@ Courses.getAll().success(function(res) {
 }])
 
 /* home - universidades */
-.controller('HomeUserUniversidadesCtrl', ['$rootScope', '$scope', '$location', 'University', 'Knowledge' , function($rootScope, $scope, $location, University, Knowledge) {
+.controller('HomeUserUniversidadesCtrl', ['$rootScope', '$scope', '$location', 'University', 'Knowledge', 'User', function($rootScope, $scope, $location, University, Knowledge, User) {
 
   $scope.activeSection = 'seguindo';
 
   /* */
 
-  University.getUniversities().then(function(res) {
+  University.getUniversitiesByOwnerId(User.getId()).success(function(res) {
 
     console.log(res);
 
-    $scope.universities = res.data.data;
+    if (res.success) {
+
+      $scope.universitiesOwner = res.data;
+
+    }
 
   });
-
   /* */
 
 
