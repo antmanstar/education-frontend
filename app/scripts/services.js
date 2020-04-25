@@ -364,7 +364,7 @@ angular.module('netbase')
 
       var baseUrl = "https://educationalcommunity-uni.herokuapp.com/university";
       //var baseUrl = "https://api.universida.de/university";
-      //var baseUrl = "http://192.168.1.7:9003/university";
+      //var baseUrl = "http://localhost:9003/university";
 
       return {
 
@@ -417,7 +417,13 @@ angular.module('netbase')
           return $localStorage.universityStorage;
 
         },
+        getallCategorybyUniversity: function() {
 
+          var url = '/owner/members/university/category';
+
+          return $http.get(baseUrl + url);
+
+        },
         create: function(data) {
 
           var url = '/';
@@ -464,6 +470,7 @@ angular.module('netbase')
           return $http.get(baseUrl + url);
 
         },
+        
         getUniversitiesByOwnerId: function(id) {
 
           var url = '/ownerid/' + id;
@@ -1284,7 +1291,12 @@ angular.module('netbase')
           return $http.get(baseUrl + url);
 
         },
+        getByPlaylist:function(id)
+       {
+          var url = "/video/playlist/" + id;
 
+          return $http.get(baseUrl + url);
+       },
         create: function(payload) {
 
           var url = '/video';
@@ -1739,7 +1751,7 @@ angular.module('netbase')
          saveQuizResult: function(payload) {
           
            var url = "/quiz/id/submit";
-
+          console.log(payload)
           return $http({
             method: 'PUT',
             url: baseUrl + url,
