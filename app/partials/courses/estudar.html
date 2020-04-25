@@ -1,75 +1,144 @@
-<style>
-
-body {
-  padding: 0;
-}
-
-.scene-col {
-  height: 100vh;
-  background-color: #ececec;
-  padding: 0;
-}
-
-.menu-col {
-  height: 100vh;
-  border-left: 3px solid #c3c3c3;
-  overflow-y: scroll;
-}
-
-.menu-content-option {
-  padding: 10px;
-  border-bottom: 1px solid #cdcdcd;
-}
-
-.menu-content-option .module-title {
-  font-size: 1.1em;
-  font-weight: bold;
-}
-
-.menu-content-option .content-title {
-  font-size: 1.1em;
-}
-
-
-</style>
-
-<div class="container-fluid" ng-if="access">
+<div class="container-fluid">
+  <div ng-include="'partials/headerhome.html'"></div>
 
   <div class="row">
-
-    <div class="col-xs-12 col-sm-8 scene-col">
-     
+    <div class="col-sm-9">
+      <div class="row">
+        <div class="col-sm-12 content-part">
+           
      <ng-containner ng-if="type=='document' || type=='page'">
         
        <div ng-controller="CoursesEstudarTypeDocumentCtrl">
         <div  ng-include="'partials/courses/estudar/document.html'"></div>
        </div>
       </ng-containner>
-
+      <ng-containner ng-if="type=='forumpost' || type=='forum'">
+        
+       <div ng-controller="CoursesEstudarTypeForumCtrl">
+        <div  ng-include="'partials/courses/estudar/forum.html'"></div>
+       </div>
+      </ng-containner>
       <ng-containner ng-if="type=='quiz'">
       
        <div ng-controller="CoursesEstudarTypeQuizCtrl">
         <div mc="{{type}}" ng-include="'partials/courses/estudar/quiz.html'"></div>
        </div>
        </ng-containner>
-    </div>
-    <!-- end col-xs-12 col-sm-9 -->
+       <ng-containner ng-if="type=='video' || type=='videos'">
+      
+       <div ng-controller="CoursesEstudarTypeVideoCtrl">
+        <div mc="{{type}}" ng-include="'partials/courses/estudar/videos.html'"></div>
+       </div>
+       </ng-containner>
+        </div>
+        <div class="col-sm-12">
+          <div class="content-body">
+            <ul class="nav nav-tabs">
+              <li class="active"><a data-toggle="tab" href="#overview">Overview</a></li>
+            </ul>
 
-    <div class="col-xs-12 col-sm-4 menu-col" ng-if="course.module.length>0">
-     <ng-containner ng-repeat="c in course.module">
-      <div class="menu-content-option">
-        <div class="module-title">{{$index+1}} {{c.moduleId.title}}</div>
+            <div class="tab-content">
+              <div id="overview" class="tab-pane fade in active">
+                <h3>About this course</h3>
+                <div ng-bind-html="course.description"></div>
+                <hr>
+                <p>By the numbers</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <!-- END menu-option -->
 
-      <ng-containner ng-if="c.moduleId.content.length>0" coursemodulecontentmoduloview mc="{{c.moduleId.content}}" in="{{$index+1}}" courseid="{{course._id}}"></ng-containner>
-      <!-- END menu-option -->
-    </ng-containner>
     </div>
-    <!-- end col-xs-12 col-sm-9 -->
+    <div class="col-sm-3 right-side">
+      <div class="panel-group" id="accordion">
+        <ng-containner ng-repeat="c in course.module">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h5 class="panel-title">
+              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse{{$index}}">
+                Section {{$index+1}} {{c.moduleId.title}}</a>
+            </h5>
+            <small>0/{{c.moduleId.content.length}} | {{c.moduleId.duration}}</small>
+          </div>
+          <div id="collapse{{$index}}" class="panel-collapse collapse" ng-class="{in: $index == 0}">
+            <div class="panel-body">
+              <ul class="list-inline" ng-if="c.moduleId.content.length>0" coursemodulecontentmoduloview mc="{{c.moduleId.content}}" in="{{$index+1}}" courseid="{{course._id}}">
+                
+              </ul>
+            </div>
+          </div>
+        </div>
+       </ng-containner>
+        
 
+      </div>
+    </div>
   </div>
-  <!-- end row -->
-
 </div>
-<!-- -->
+
+<style>
+  .content-part {
+   
+    min-height: 400px;
+    text-align: center;
+  }
+
+  .content-body {
+    margin-top: 20px;
+  }
+
+  .video-content {
+    width: 100%;
+    padding: 30px;
+    margin-top: 27px;
+  }
+
+  .tab-content {
+    padding-left: 100px;
+  }
+
+  .nav-tabs li.active a {
+    border-bottom: 2px solid red;
+  }
+
+  .panel-group {
+    margin-bottom: 0px;
+    overflow-x: auto;
+    height: 650px;
+  }
+
+  .panel-group .panel {
+    margin-bottom: -6px;
+    border-radius: 0px;
+  }
+
+  .panel-default .panel-heading {
+    padding: 20px;
+  }
+
+  .right-side {
+    padding-left: 0px;
+  }
+
+  .list-inline>li {
+    padding-bottom: 10px;
+  }
+
+  .panel-heading .accordion-toggle:after {
+    font-family: 'Glyphicons Halflings';
+    content: "\e114";
+    float: right;
+    color: grey;
+  }
+
+  .panel-heading .accordion-toggle.collapsed:after {
+    content: "\e080";
+  }
+
+  .panel-title {
+    font-size: small;
+  }
+</style>
+
+    
