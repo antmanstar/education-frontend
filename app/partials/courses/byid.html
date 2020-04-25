@@ -162,8 +162,8 @@
 
     <div class="col-xs-12 col-sm-12">
 
-      <div class="instrutora">
-
+      <div class="instrutora" ng-repeat="int in course.instructors">
+        <ng-containner instructorinfo sid="{{int}}">
         <div class="picture">
           <img style="width: 180px; height: 180px;" src="https://blockchainacademy.com.br/wp-content/uploads/2017/01/rosine-kadamani-2019-270x270.jpg" />
         </div>
@@ -173,24 +173,11 @@
           <div class="title">FOUNDER</div>
         </div>
         <!-- end texts -->
-
+       </ng-containner>
       </div>
       <!-- end instrutoras -->
 
-      <div class="instrutora">
-
-        <div class="picture">
-          <img style="width: 180px; height: 180px;" src="https://blockchainacademy.com.br/wp-content/uploads/2018/04/solange-gueiros-270x270.jpg" />
-        </div>
-
-        <div class="author">
-          <div class="name">Solange Gueiros</div>
-          <div class="title">DEVELOPER - INSTRUCTOR</div>
-        </div>
-        <!-- end texts -->
-
-      </div>
-      <!-- end instrutoras -->
+      
 
     </div>
 
@@ -206,7 +193,7 @@
     <ng-containner ng-if="course.module.length>0">
     <div class="col-xs-12 col-sm-4" ng-repeat="c in course.module">
 
-      <div class="course-card" ng-if='c.moduleId.title' >
+      <div class="course-card" >
 
         <div class="title" style="line-height: 35px;">
 
@@ -240,7 +227,7 @@
           </div>
 
         </div>
-        <ng-containner ng-if="c.moduleId.length>0" coursemodulecontent courseid="{{course._id}}" mc="{{c.moduleId.content}}">
+        <ng-containner ng-if="c.moduleId.content.length>0" coursemodulecontent courseid="{{course._id}}" mc="{{c.moduleId.content}}">
         
         </ng-containner>
         

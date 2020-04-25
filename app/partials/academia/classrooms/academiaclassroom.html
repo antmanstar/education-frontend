@@ -2,6 +2,7 @@
   body {
       padding-left: 0 !important;
       padding-right: 0 !important;
+      padding-top: 0 !important;
       overflow: hidden !important;
   }
 </style>
@@ -20,14 +21,15 @@
             </div>
         </div>
         <!--div ng-if="participantsStatus==false" ng-class='mobileToggleParticipantsList' class="classroom-participants-container-none col-xs-7 col-sm-3 col-md-2 col-lg-2"> </div-->
-        <div class="meeting-classroom-main col-xs-12 col-sm-12 col-md-7 col-lg-7">
-            
+
+        <div class="meeting-classroom-main col-xs-12 col-sm-6 col-md-7 col-lg-7">
+
             <div class="controller-container">
                 <div id='paticipant_menu_ctrl' ng-click="toggleParticipantsBox()" class="screen-controller participant-menu-icon" >
                     <i class="fas fa-bars"></i>
                 </div>
                 <div class="calssroom-logo">
-                    <div>Universidade</div>
+                    <div style="font-size: 25px;">Universidade</div>
                 </div>
                 <div id="msg_menu_ctrl" ng-click="toggleChatBox()" class="screen-controller chat-menu-icon">
                     <i class="far fa-comment-alt"></i>
@@ -36,7 +38,7 @@
             <div id='twilio' class="classroom-video-container">
                 <!--div ng-click="toggleFullScreen()" ng-class='fullScreenVisible' class="mobile-invisible full-screen-icon">
                     <i ng-class="fullScreenToggle" aria-hidden="true"></i>
-                    
+
                 </div-->
             </div>
             <div class="controller-container bottom-controller-container" ng-class='fullScreenStatus'>
@@ -82,13 +84,13 @@
                     </div>
                     <div class='func-name'>{{shareScreenCaption}}</div>
                 </div>
-                
+
                 <div ng-click="toggleFullScreen()"  class="screen-controller mobile-invisible">
                     <div class="icon-container-bottom">
                         <div >
                             <i ng-class="fullScreenToggle" aria-hidden="true"></i>
                         </div>
-                        
+
                     </div>
                     <div class='func-name'>Full&nbsp;Screen</div>
                 </div>

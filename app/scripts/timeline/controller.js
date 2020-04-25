@@ -88,6 +88,7 @@ angular.module('netbase')
       let reshare = attr.reshare;
       let like = attr.like;
       let comments = attr.comments;
+
       scope.commentSection = false;
       scope.status = { reshare : reshare, like : like, comments : comments };
       scope.sharePost = false;
@@ -228,7 +229,6 @@ angular.module('netbase')
           let status = res.data.status;
           let data = res.data.data;
           let success = res.data.success;
-          console.log("createForumPost", res);
 
           if (success) {
             var timelineData = {
@@ -237,7 +237,6 @@ angular.module('netbase')
               universityId: data.universityId
             }
             University.createForumPostTimeline(timelineData).then(function(res) {
-              console.log("createForumPostTimeline", res);
               // $location.path('/home/timeline')
               window.location.reload();
               window.scrollTo(0, 0);
@@ -257,19 +256,7 @@ angular.module('netbase')
             }
           });
       };
-      // NO Need This Function Now
 
-      // scope.downvoteForumPost = function() {
-
-      //   University.downvoteForumPost(universityId, contentId).then(function(res) {
-
-      //     if (res.data.success) {
-      //       scope.votesCount -= 1;
-      //     }
-
-      //   });
-
-      // };
     }
 
   }

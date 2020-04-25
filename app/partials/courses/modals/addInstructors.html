@@ -1,0 +1,26 @@
+<div class="container-fluid">
+  <div class="panel panel-default panel-box" style="margin-top: 100px;">
+    <div class="panel-body text-center">
+      <label>Select Instructor: </label><br>
+      
+      <div class="col-sm-4" ng-repeat="member in university.members" >
+        <div  studentinfooption sid="{{member.accountId}}"> </div>
+        <div><center><input ng-click="pushMembers(member.accountId)" ng-if="selectedMember.indexOf(member.accountId)>=0" type="checkbox"  checked />
+        <input ng-if="selectedMember.indexOf(member.accountId)<0" type="checkbox" ng-click="pushMembers(member.accountId)" />
+        </center></div>
+     </div>
+     <br clear="all" />
+      <span class="text-danger" ng-show="selectedMember.length==0 || selectedMember == undefined">Select Member</span>
+      <br>
+      <div class="text-center">
+        <button class="btn btn-success" style="height: 29px; width: 40%;" ng-click="save()">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .panel-box {
+    height: 70%;
+  }
+</style>

@@ -115,10 +115,9 @@ socket.on("imagepath", function(a) {
     <div class="col-xs-4 col-sm-5 col-md-5 col-lg-4" style="text-align: center;">
 
       <img class="profile-pic" ng-if="student.imageUrl != undefined" src="{{student.imageUrl}}"></img>
-      <div class="profile-pic" ng-if="student.imageUrl == undefined" style="background-image: url('http://virtual-strategy.com/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png')"></div>
+      <img class="profile-pic" ng-if="student.imageUrl == undefined" style="background-image: url('http://virtual-strategy.com/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png')"></img>
 
-
-
+      <!--
       <div class="profile-manage-wrapper">
         <div ng-click="imageEdit = true" style="text-align: center;">Modificar fotografia</div>
         <div ng-show="imageEdit">
@@ -139,32 +138,19 @@ socket.on("imagepath", function(a) {
         </div>
 
       </div>
-
-
+      -->
 
     </div>
-    <!-- end col-xs-12 -->
+    <!-- end col-xs-4 col-sm-5 -->
 
     <div class="col-xs-8 col-sm-7 col-md-7 col-lg-8">
 
-      <div class="col-xs-4" style="text-align: center; padding-left: 5px; padding-right: 5px;">
-        <b style="font-size: 1.2em;">434</b>
-        <div style="color: #8e8e8e; font-size:0.9em; font-weight: 600; text-align: center;">Posts</div>
+      <div class="profile-name">{{student.name}}</div>
+      <div style="margin-top: 10px;">
+        <button style="background-color: #fff; border: none; border: 1px solid #2d4255; width: 100%;">Editar perfil</button>
       </div>
 
-      <div class="col-xs-4" style="text-align: center; padding-left: 5px; padding-right: 5px;">
-        <b style="font-size: 1.2em;">521</b></br><div style="color: #8e8e8e; font-size:0.9em; font-weight: 600;">Followers</div>
-      </div>
-
-      <div class="col-xs-4" style="text-align: center; padding-left: 5px; padding-right: 5px;">
-        <b style="font-size: 1.2em;">943</b></br><div style="color: #8e8e8e; font-size:0.9em; font-weight: 600;">Points</div>
-      </div>
-
-      <div class="col-xs-12" style="margin-top: 10px;">
-        <button style="background-color: #fff; border: none; border: 1px solid #2d4255; width: 100%;">Edit profile</button>
-      </div>
-
-
+      <!--
       <div class="profile-bio">
 
         <div class="title">Biografia <button ng-click="editBio()" class="btn-clean" style="float: right;" ng-hide="edit"><span class="glyphicon glyphicon glyphicon-pencil" style="padding-right: 5px;"></span> Edit</button><button ng-show="edit" ng-click="saveBio()" class="btn-clean" style="float: right; color: #30b39f;"><i class="fas fa-check" style="padding-right: 10px;"></i>Save</button></div>
@@ -174,7 +160,7 @@ socket.on("imagepath", function(a) {
         <div class="edit" ng-show="edit"><textarea ng-model="text" class="text"></textarea></div>
 
       </div>
-
+      -->
       <!-- end profile-bio -->
 
     </div>
@@ -183,28 +169,37 @@ socket.on("imagepath", function(a) {
   </div>
   <!-- end row -->
 
-  <div class="row" style="margin-bottom: 30px; margin-top: 20px;">
+  <div class="row" style="margin-top: 10px; margin-bottom: 10px;">
 
-    <div class="col-xs-12 col-sm-12">
+    <div class="col-xs-4" style="text-align: center; padding-left: 5px; padding-right: 5px;">
+      <b style="font-size: 1.2em;">434</b>
+      <div style="color: #8e8e8e; font-size:0.9em; font-weight: 600; text-align: center;">Curadorias</div>
+    </div>
 
-      <div class="profile-name">{{student.name}}</div>
+    <div class="col-xs-4" style="text-align: center; padding-left: 5px; padding-right: 5px;">
+      <b style="font-size: 1.2em;">521</b></br><div style="color: #8e8e8e; font-size:0.9em; font-weight: 600;">Trilhas</div>
+    </div>
 
+    <div class="col-xs-4" style="text-align: center; padding-left: 5px; padding-right: 5px;">
+      <b style="font-size: 1.2em;">943</b></br><div style="color: #8e8e8e; font-size:0.9em; font-weight: 600;">Seguidores</div>
     </div>
 
   </div>
+  <!-- -->
 
   <style>
 
     .user-collections {
-
+      white-space: none;
     }
 
     .user-collections .collection {
       box-shadow: 0px 0px 17px 0px rgba(130,130,130,0.23); display: inline-block; border-radius: 4px;
-      height: 90px; width: 140px; background-color: #fff; margin-left: 10px; margin-bottom: 10px;
+      height: 90px; width: calc(50% - 20px); background-color: #fff; margin-left: 10px; margin-bottom: 10px;
       text-align: left;
       padding-top: 40px;
       padding-left: 11px;
+      padding-bottom: 15px;
       position: relative;
     }
 
@@ -215,12 +210,12 @@ socket.on("imagepath", function(a) {
 
     <div class="col-xs-12">
 
-      <nav style="position: relative;">
+      <nav style="position: relative; z-index: -9;">
         <div class="navbar-slider navbar-slider-content">
 
-          <div class="option" ng-click="activeSection = 'conhecimento'" ng-class="{'active': activeSection == 'conhecimento'}"><a href="#">Conhecimento</a></div>
+          <div class="option" ng-click="activeSection = 'conhecimento'" ng-class="{'active': activeSection == 'conhecimento'}"><a href="#">Curadoria</a></div>
           <div class="option" ng-click="activeSection = 'feed'" ng-class="{'active': activeSection == 'feed'}"><a href="#">Feed</a></div>
-          <div class="option" ng-click="activeSection = 'estudos'" ng-class="{'active': activeSection == 'estudos'}"><a href="#">Estudos</a></div>
+          <div class="option" ng-click="activeSection = 'estudos'" ng-class="{'active': activeSection == 'estudos'}"><a href="#">Trilhas</a></div>
 
         </div>
         <!-- end navbar-slider -->
@@ -257,7 +252,7 @@ socket.on("imagepath", function(a) {
       </div>
       <!-- end conhecimento -->
 
-      <div style="text-align: right;" class="user-collections" ng-if="activeSection == 'conhecimento'">
+      <div style="text-align: left;" class="user-collections" ng-if="activeSection == 'conhecimento'">
 
         <div ng-repeat="n in ['Venture Capital', 'Valuation', 'SaaS', 'Algorithms', 'Node.JS', 'Business']" class="collection">
 

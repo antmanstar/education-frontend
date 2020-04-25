@@ -19,7 +19,8 @@ angular.module('netbase', [
     'ngSanitize',
     'infinite-scroll',
     'updateMeta',
-    'as.sortable'
+    'as.sortable',
+    'oc.lazyLoad'
 ])
 .config(['$translateProvider', '$localStorageProvider', 'StripeElementsProvider', function ($translateProvider, $localStorageProvider, StripeElementsProvider) {
 
@@ -78,15 +79,6 @@ angular.module('netbase', [
 
    };
 
-   /*
-
-   .when('/home', {
-       templateUrl: 'partials/home/home.html',
-       controller: 'HomeCtrl',
-   })
-
-   */
-
     $routeProvider.
         when('/onboarding/universities', {
             templateUrl: 'partials/onboarding/universities.html',
@@ -107,6 +99,14 @@ angular.module('netbase', [
         .when('/cursos/id/:id', {
             templateUrl: 'partials/courses/byid.html',
             controller: 'CoursesByIdCtrl',
+        })
+        .when('/quiz-result/:qid/:rid/:uid', {
+            templateUrl: 'partials/courses/quiz/quizResult.html',
+            controller: 'CoursesQuizResultCtrl',
+        })
+        .when('/cursos/suite/updateQuiz/:id', {
+          templateUrl: 'partials/courses/suite/updateQuiz.html',
+          controller: 'CoursesUpdateQuizCtrl',
         })
         .when('/cursos/id/:id/estudar', {
             templateUrl: 'partials/courses/estudar.html',
@@ -148,6 +148,10 @@ angular.module('netbase', [
         .when('/cursos/suite/createPage/:id', {
           templateUrl: 'partials/courses/suite/createPage.html',
           controller: 'CoursesCreatePageCtrl',
+        })
+        .when('/cursos/suite/editPage/:id', {
+          templateUrl: 'partials/courses/suite/createPage.html',
+          controller: 'CoursesEditPageCtrl',
         })
         .when('/cursos/suite/createQuiz/:id', {
           templateUrl: 'partials/courses/suite/createQuiz.html',
@@ -460,7 +464,7 @@ angular.module('netbase', [
         .when('/home/timeline', {
             templateUrl: 'partials/home/hometimeline.html',
             controller: 'HomeTimelineCtrl',
-            resolve: auth
+            resolve: auth,
         })
         .when('/home/noticias', {
             templateUrl: 'partials/home/homenews.html',

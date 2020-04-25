@@ -108,6 +108,14 @@
       text-align: center;
     }
 
+    nav .navbar-slider .option.active {
+      border-bottom: 3px solid #ee5748;
+    }
+
+    nav .navbar-slider .option:hover{
+      border-bottom: 3px solid rgb(238,87,72, 0.7);
+    }
+
 
 </style>
 
@@ -129,6 +137,22 @@
         </div>
 
       </div>
+
+    </div>
+    <!-- -->
+
+    <div class="col-xs-12">
+
+      <nav style="position: relative;">
+        <div class="navbar-slider navbar-slider-content">
+
+          <div class="option" ng-click="activeSection = 'seguindo'" ng-class="{'active': activeSection == 'seguindo'}"><a href="#">Seguindo</a></div>
+          <div class="option" ng-click="activeSection = 'admin'" ng-class="{'active': activeSection == 'admin'}"><a href="#">Administrador</a></div>
+          <div class="option" ng-click="activeSection = 'family'" ng-class="{'active': activeSection == 'family'}"><a href="#">Familia</a></div>
+
+        </div>
+        <!-- end navbar-slider -->
+      </nav>
 
     </div>
     <!-- -->

@@ -2,6 +2,17 @@
 
 <style>
 
+  .action-buttons::-webkit-scrollbar {
+    display: none;
+  }
+
+  .action-buttons {
+    -ms-overflow-style: none;
+    overflow: -moz-scrollbars-none;
+    margin-bottom: 10px;
+    scrollbar-width: none;
+  }
+
   @media screen and (max-width: 768px) {
     .navbar-slider {
       display: none;
@@ -82,7 +93,7 @@
 
       <div class="home-quick-options" style="padding-left: 15px; margin-top: 10px;">
 
-        <div style="overflow-x: scroll; white-space: nowrap; border-radius: 5px; padding-bottom: 10px;">
+        <div class="action-buttons" style="overflow-x: scroll; white-space: nowrap; border-radius: 5px; padding-bottom: 10px;">
 
           <a href="/home/calls" style="margin-left: 0px;">
 
@@ -121,6 +132,7 @@
           </div>
           </a>
 
+          <!--
           <a href="/objectives/weekly" style="margin-left: 0px;">
           <div class="menu-option">
             <div class="menu-option-ball">
@@ -129,6 +141,7 @@
             <div class="menu-option-title">Ensinar</br>um curso</div>
           </div>
           </a>
+          -->
 
           <a href="/companies" style="margin-left: 0px;">
           <div class="menu-option">
@@ -139,6 +152,7 @@
           </div>
           </a>
 
+          <!--
           <a href="/companies" style="margin-left: 0px;">
           <div class="menu-option">
             <div class="menu-option-ball">
@@ -147,6 +161,7 @@
             <div class="menu-option-title">Realidade</br>Virtual</div>
           </div>
           </a>
+          -->
 
           <div class="menu-option ng-hide" style="cursor: pointer;" ng-show="logged" ng-click="logout()">
             <div class="menu-option-ball">
