@@ -243,8 +243,9 @@
       </div>
       <!-- -->
 
+      <!--  ng-if="activity.entryType != 'comment'"  -->
       <div ng-repeat="activity in activities | orderBy: '-createdAt'" ng-if="user.universitiesSubscribed.length > 0">
-        <timelinenewforumpost ng-if="activity.entryType != 'comment'" reshare="{{activity.rePost}}" like="{{activity.like}}" comments="{{activity.comments}}" cid="{{activity.modelId}}" aid="{{activity.creatorId}}" uid="{{activity.universityId}}"></timelinenewforumpost>
+        <timelinenewforumpost reshare="{{activity.rePost}}" like="{{activity.like}}" comments="{{activity.comments}}" cid="{{activity.modelId}}" aid="{{activity.creatorId}}" uid="{{activity.universityId}}"></timelinenewforumpost>
       </div>
 
       <div ng-if="user.universitiesSubscribed.length > 0" infinite-scroll='nextPage()' infinite-scroll-disabled='busy' infinite-scroll-distance='1'>
