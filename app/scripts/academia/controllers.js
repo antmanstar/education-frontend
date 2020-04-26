@@ -1188,19 +1188,6 @@ angular.module('netbase')
         let roomName = $route.current.params.roomName;
         let text = domain + "/a/university/" + universityUrl + "/roomid/" + roomSID + "/accountid/" + accountSid + "/roomname/" + roomName + "/";
 
-        /*
-        if (navigator.clipboard != undefined) {//Chrome
-            navigator.clipboard.writeText(text).then(function() {
-                ngDialog.open({ template: 'partials/modals/classroom_alert_modal.html', controller: "AcademiaClassroomsAlertCtrl", className: 'ngdialog-theme-default classroom-alert-modal', data: {type: "Universidade", msg: 'Copied link to clipboard'}});
-            }, function(err) {
-                ngDialog.open({ template: 'partials/modals/classroom_alert_modal.html', controller: "AcademiaClassroomsAlertCtrl", className: 'ngdialog-theme-default classroom-alert-modal', data: {type: "ERROR", msg: 'Could not copy link to the clipboard '}});
-            });
-        }
-        else if(window.clipboardData) { // Internet Explorer
-            window.clipboardData.setData("Text", text);
-        }
-        */
-
         Clipboard.copy(text);
         ngDialog.open({ template: 'partials/modals/classroom_alert_modal.html', controller: "AcademiaClassroomsAlertCtrl", className: 'ngdialog-theme-default classroom-alert-modal', data: {type: "Universidade", msg: 'Copied link to clipboard'}});
         
@@ -1235,6 +1222,89 @@ angular.module('netbase')
     }
     $scope.confirm = function() {
         ngDialog.closeAll();
+    }
+
+    $scope.sharingScreen = function(stream) {
+        console.log(navigator.mediaDevices.getSupportedConstraints());
+        const screenTrack = stream.getTracks()[0];
+        
+        screenTrack.onended = function(e) {
+            if(!$scope.localConnected) return;
+            $scope.disconnectClassroom();
+            $scope.shareScreenCaption = 'Share Screen';
+            $scope.connectClassroom($scope.currentRoomToken, $scope.currentRoomName);
+            if($scope.currentShareScreen != null) {
+                $scope.currentShareScreen.forEach((track) => {
+                    track.stop();
+                });
+            }
+        }
+
+        $scope.currentShareScreen = screenTrack;
+        
+        navigator.mediaDevices.enumerateDevices()
+        .then((deviceInfos) => {
+            for (let i = 0; i !== deviceInfos.length; ++i) {
+                const deviceInfo = deviceInfos[i];
+                if (deviceInfo.kind === 'audioinput') {
+                    console.log(deviceInfo);
+                    const constraints = {
+                        audio: {
+                            deviceId: {exact: deviceInfo.id}
+                        }
+                    };
+                    
+                    navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
+                        
+                        $scope.disconnectClassroom();
+                        console.log('local audio track');
+                        $scope.connectClassroom($scope.currentRoomToken, $scope.currentRoomName, [stream.getTracks()[0], screenTrack]);
+                    });
+                    break;
+                }
+            }
+        });
+    }
+
+    $scope.shareScreen = function() {                   // Share screen event handler(toggle share screen)
+
+        if($scope.localConnected == false) {
+            return;
+        }
+        
+        if ($scope.shareScreenCaption == 'Share Screen') {
+
+            $scope.shareScreenCaption = 'Stop Sharing';
+            if($scope.isMobile()){
+                console.log('mobile');
+                navigator.mediaDevices.getUserMedia({
+                    audio: false,
+                    video: true
+                }).then((stream) => {
+                    $scope.sharingScreen(stream);
+                });
+            }
+            else {
+                console.log('desktop');
+                navigator.mediaDevices.getDisplayMedia({
+                    audio: false,
+                    video: {mediaSource: 'screen'}
+                }).then((stream) => {
+                    $scope.sharingScreen(stream);
+                });
+            }
+            
+        }
+        else {
+            $scope.disconnectClassroom();
+            if($scope.currentShareScreen != null) {
+                $scope.currentShareScreen.forEach((track) => {
+                    track.stop();
+                });
+            }
+            $scope.shareScreenCaption = 'Share Screen';
+            $scope.connectClassroom($scope.currentRoomToken, $scope.currentRoomName);
+        }
     }
 }])
 
