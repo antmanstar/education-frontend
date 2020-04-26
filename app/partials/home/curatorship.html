@@ -1,0 +1,49 @@
+<div ng-include="'partials/headerhome.html'"></div>
+
+<style>
+
+  @media screen and (max-width: 768px) {
+
+    .container-home {
+      padding-top: 43px !important;
+    }
+
+  }
+
+</style>
+
+<div class="container-fluid container-home">
+
+    <div class="row">
+
+      <div class="col-sm-4 col-md-3 section-menu-col">
+
+      </div>
+      <!-- col-sm-4 col-md-3 section-menu-col -->
+
+      <div class="col-xs-12 col-sm-8 col-md-9 section-content-col">
+
+        <ballmenu></ballmenu>
+
+        <div style="text-align: left;" class="user-collections">
+
+          <div ng-repeat="n in ['Venture Capital', 'Valuation', 'SaaS', 'Algorithms', 'Node.JS', 'Business']" class="collection">
+
+            <div class="dot" style="background-color: #000;"></div>
+
+            <div style="font-size: 1.2em; font-weight: bold;">{{n}}</div>
+            <div style="color: #909090;">4 items</div>
+
+          </div>
+
+        </div>
+        <!-- user-collections -->
+
+      </div>
+      <!-- end col-xs-12 -->
+
+    </div>
+    <!-- end row -->
+    <footermobile></footermobile>
+</div>
+<!-- container-full -->

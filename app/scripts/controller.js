@@ -4,6 +4,12 @@
 
 angular.module('netbase')
 
+.controller('HomeCuratorship', ['$rootScope', '$scope', '$location', '$route', 'University', 'Classroom', 'Students', 'ngDialog', 'jwtHelper', '$localStorage', '$window', function($rootScope, $scope, $location, $route, University, Classroom, Students, ngDialog, jwtHelper, $localStorage, $window) {
+
+
+
+}])
+
 .controller('HomePersonalClassroom', ['$rootScope', '$scope', '$location', '$route', 'University', 'Classroom', 'Students', 'ngDialog', 'jwtHelper', '$localStorage', '$window', function($rootScope, $scope, $location, $route, University, Classroom, Students, ngDialog, jwtHelper, $localStorage, $window) {
 
     let studentId = jwtHelper.decodeToken($localStorage.token)._id;
@@ -47,6 +53,7 @@ angular.module('netbase')
         $scope.university = res.data.data;
         $scope.getAllClassrooms();
     });
+    //END University.getUniversity()
 
     angular.element($window).bind('resize', function() {
         $scope.videoSizeSet();

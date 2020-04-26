@@ -470,6 +470,10 @@ angular.module('netbase', [
             templateUrl: 'partials/home/homestudentexplore.html',
             controller: 'HomeExploreCtrl'
         })
+        .when('/home/curadoria', {
+            templateUrl: 'partials/home/curatorship.html',
+            controller: 'HomeCuratorship'
+        })
         .when('/home/calls', {
             templateUrl: 'partials/home/userclassrooms.html',
             controller: 'HomePersonalClassroom'
