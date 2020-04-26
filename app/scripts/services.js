@@ -8,12 +8,13 @@ angular.module('netbase')
     //var baseUrl = "https://educationalcommunity-uni.herokuapp.com";
     // var baseUrl = "http://api.universida.de/university"
     var baseUrl = "https://educationalcommunity-timeline.herokuapp.com";
+    //var baseUrl = "http://localhost:7555"
 
     return {
 
-      getTimelineAll: function(studentId, page) {
+      getTimelineAll: function(universitiesSubscribed, page) {
 
-        var url = '/timeline';
+        var url = '/timeline?universities=' + universitiesSubscribed;
         console.log($localStorage.token)
 
         return $http({
@@ -470,7 +471,7 @@ angular.module('netbase')
           return $http.get(baseUrl + url);
 
         },
-        
+
         getUniversitiesByOwnerId: function(id) {
 
           var url = '/ownerid/' + id;
@@ -1749,7 +1750,7 @@ angular.module('netbase')
             }});
         },
          saveQuizResult: function(payload) {
-          
+
            var url = "/quiz/id/submit";
           console.log(payload)
           return $http({
@@ -1759,7 +1760,7 @@ angular.module('netbase')
             headers: {
                 'Content-Type': 'application/json',
             }});
-          
+
         },
         progress: function(payload, videoid) {
 
@@ -1789,7 +1790,7 @@ angular.module('netbase')
 
           var url = '/instructor/' + courseId;
 
-          
+
           return $http({
             method: 'PUT',
             url: baseUrl + url,
@@ -2066,7 +2067,7 @@ angular.module('netbase')
 
         },
         getKnowledgeId: function(universityId) {
-        
+
           var url = '/knowledge/'+universityId;
 
           return $http({
@@ -2149,13 +2150,13 @@ angular.module('netbase')
       return function (delay, no_trailing, callback, debounce_mode) {
         var timeout_id,
         last_exec = 0;
-        
+
         if (typeof no_trailing !== 'boolean') {
           debounce_mode = callback;
           callback = no_trailing;
           no_trailing = undefined;
         }
-        
+
         var wrapper = function () {
           var that = this,
               elapsed = +new Date() - last_exec,
@@ -2167,7 +2168,7 @@ angular.module('netbase')
               clear = function () {
                 timeout_id = undefined;
               };
-    
+
           if (debounce_mode && !timeout_id) { exec(); }
           if (timeout_id) { $timeout.cancel(timeout_id); }
           if (debounce_mode === undefined && elapsed > delay) {
@@ -2176,7 +2177,7 @@ angular.module('netbase')
             timeout_id = $timeout(debounce_mode ? clear : exec, debounce_mode === undefined ? delay - elapsed : delay);
           }
         };
-        
+
         return wrapper;
       };
     }])

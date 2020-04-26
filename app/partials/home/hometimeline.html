@@ -35,8 +35,8 @@
       <div class="section-menu-title">Universidades</div>
 
       <div class="section-menu">
-        <timelinemenuuniversity uid="{{u.universityId}}" ng-if="u.unsubscribed == false" ng-repeat="u in user.universitiesSubscribed"></timelinemenuuniversity>
-        <div ng-if="user.universitiesSubscribed.length == 0" class="option">Você não esta registrado em nenhuma Universidade</div>
+        <timelinemenuuniversity accountid="{{user._id}}" uid="{{u.universityId}}" ng-if="u.unsubscribed == false" ng-repeat="u in user.universitiesSubscribed"></timelinemenuuniversity>
+        <div ng-if="user.universitiesSubscribed.length == 1" class="option">Você não esta registrado em nenhuma Universidade</div>
       </div>
 
     </div>

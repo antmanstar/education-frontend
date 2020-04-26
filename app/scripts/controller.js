@@ -3881,6 +3881,8 @@ Courses.getAll().success(function(res) {
       $rootScope.user = data;
       $scope.user = data;
 
+      $rootScope.$broadcast("studentInformationParsed");
+
       if (data.imageUrl != undefined && data.imageUrl != null) {
         $scope.userImage = data.imageUrl;
       }
