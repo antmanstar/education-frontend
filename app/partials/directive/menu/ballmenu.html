@@ -1,0 +1,137 @@
+<div class="home-quick-options" style="margin-top: 10px;">
+
+  <style>
+
+    .action-buttons::-webkit-scrollbar {
+      display: none;
+    }
+
+    .action-buttons {
+      -ms-overflow-style: none;
+      overflow: -moz-scrollbars-none;
+      margin-bottom: 10px;
+      scrollbar-width: none;
+    }
+
+    .menu-option {
+      display: inline-block;
+      margin-right: 10px;
+      text-align: center;
+      vertical-align: top;
+    }
+
+    .menu-option-title {
+      font-weight: 600;
+      font-size: 0.8em;
+      color: #6d6d6d;
+      line-height: 1.2em;
+    }
+
+    .navbar-nav {
+      display: inline-block;
+      width: 100%;
+    }
+
+    .menu-option-ball {
+      padding: 20px;
+      margin-bottom: 5px;
+      background-color: #e6e6e6;
+      border-radius: 50%;
+      color: #6d6d6d;
+      display: inline-flex;
+    }
+
+    .home-quick-options {
+      right: 0;
+      left: 0;
+    }
+
+    .home-quick-action-button {
+      font-size: 1.1em; margin-bottom: 10px; margin-right: 5px; display: inline-block; background-color: #cdcdcd; border-radius: 4px; padding-left: 5px; padding-right: 5px; font-weight: 400;
+    }
+
+  </style>
+
+  <div class="action-buttons" style="overflow-x: scroll; white-space: nowrap; border-radius: 5px; padding-bottom: 10px;">
+
+    <a href="/home/calls" style="margin-left: 0px;">
+
+    <div class="menu-option">
+      <div class="menu-option-ball">
+        <i class="fas fa-video"></i>
+      </div>
+      <div class="menu-option-title">Chamada</br>em grupo</div>
+    </div>
+    </a>
+
+    <a href="/onboarding/universities/create" style="margin-left: 0px;">
+    <div class="menu-option">
+      <div class="menu-option-ball">
+        <i class="fas fa-university"></i>
+      </div>
+      <div class="menu-option-title">Criar</br>universidade</div>
+    </div>
+    </a>
+
+    <!--
+    <a href="/reports" style="margin-left: 0px;">
+    <div class="menu-option">
+      <div class="menu-option-ball">
+        <i class="fas fa-brain"></i>
+      </div>
+      <div class="menu-option-title">Iniciar</br>estudos</div>
+    </div>
+    </a>
+    -->
+
+    <a href="/wallet" style="margin-left: 0px;">
+    <div class="menu-option">
+      <div class="menu-option-ball">
+        <i class="fas fa-wallet"></i>
+      </div>
+      <div class="menu-option-title">Acessar</br>carteira</div>
+    </div>
+    </a>
+
+    <!--
+    <a href="/objectives/weekly" style="margin-left: 0px;">
+    <div class="menu-option">
+      <div class="menu-option-ball">
+        <i class="fas fa-chalkboard-teacher"></i>
+      </div>
+      <div class="menu-option-title">Ensinar</br>um curso</div>
+    </div>
+    </a>
+    -->
+
+    <a href="/companies" style="margin-left: 0px;">
+    <div class="menu-option">
+      <div class="menu-option-ball">
+        <i class="fas fa-sitemap"></i>
+      </div>
+      <div class="menu-option-title">Organizar</br>curadoria</div>
+    </div>
+    </a>
+
+    <!--
+    <a href="/companies" style="margin-left: 0px;">
+    <div class="menu-option">
+      <div class="menu-option-ball">
+        <i class="fas fa-vr-cardboard"></i>
+      </div>
+      <div class="menu-option-title">Realidade</br>Virtual</div>
+    </div>
+    </a>
+    -->
+
+    <div class="menu-option ng-hide" style="cursor: pointer;" ng-show="logged" ng-click="logout()">
+      <div class="menu-option-ball">
+        <i class="fas fa-sign-out-alt"></i>
+      </div>
+      <div class="menu-option-title">Logout</div>
+    </div>
+
+  </div>
+  <!-- end options -->
+
+</div>
