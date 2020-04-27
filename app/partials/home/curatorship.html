@@ -25,6 +25,24 @@
 
         <ballmenu></ballmenu>
 
+        <div class="classroom-list-header" style="margin-bottom: 15px;">
+            <div style="font-size: 1em;">
+                <div class='classroom-list-title'">
+                  <i style="padding-right: 10px;" class="fas fa-video"></i> Curadoria
+                </div>
+                <div class='classroom-arrange-iconview'>
+                    <!-- <img src="/img/icon/listview.svg" class="list-view-style" /> -->
+                    <!-- <img src="/img/icon/gridview.svg" class="grid-view-style" /> -->
+                </div>
+            </div>
+            <div class="classroom-btn-view">
+                <div ng-click="openDialog()" style="height: unset;" class="btn btn-success">
+                    Criar
+                </div>
+            </div>
+        </div>
+        <!-- -->
+
         <div style="text-align: left;" class="user-collections">
 
           <div ng-repeat="n in ['Venture Capital', 'Valuation', 'SaaS', 'Algorithms', 'Node.JS', 'Business']" class="collection">

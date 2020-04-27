@@ -6,6 +6,54 @@ angular.module('netbase')
 
 .controller('HomeCuratorship', ['$rootScope', '$scope', '$location', '$route', 'University', 'Classroom', 'Students', 'ngDialog', 'jwtHelper', '$localStorage', '$window', function($rootScope, $scope, $location, $route, University, Classroom, Students, ngDialog, jwtHelper, $localStorage, $window) {
 
+  let studentId = jwtHelper.decodeToken($localStorage.token)._id;
+  $scope.studentId = studentId;
+
+  let universityUrl = studentId;
+
+  let university;
+
+  University.getUniversity(universityUrl).then(function(res) {
+
+      $scope.university = res.data.data;
+      university = res.data.data;
+
+      console.log(university);
+
+  });
+  // END getUniversity
+
+  // Open ngDialog
+  $scope.openDialog = function() {
+    ngDialog.open({ template: 'partials/modals/curatorshipcreate.html', className: 'ngdialog-theme-default ngdialog-plans modal-accountsuggestion' });
+  }
+
+  // Button to add category
+  $scope.privilege = {
+      value: 0
+  };
+
+  $scope.createCategory = function() {
+
+      let data = {
+          title: $scope.title,
+          description: $scope.description,
+          privilegeMin: $scope.privilege.value
+      }
+
+      Forum.createCategory(university._id, data).success(function(res) {
+
+          console.log(res)
+
+          if (res.success) {
+
+              $location.path("/a/" + university.url + "/forum/category/id/" + res.data._id)
+
+          }
+
+      });
+
+  }
 
 
 }])
@@ -29,10 +77,7 @@ angular.module('netbase')
     $scope.showingParticipants = [];
     $scope.shareScreenCaption = "Share Screen";
     $scope.confirmDelete = false;
-    //console.log($route);
-    //console.log("$$$$$$$$$");
-    //console.log(Twilio.Video);
-    //console.log("$$$$$$$$$");
+
     var video = Twilio.Video;
     var localVideo = Twilio.createLocalTracks;
     console.log('here local video');
@@ -40,8 +85,6 @@ angular.module('netbase')
 
     $scope.classroomViewMode = false;
 
-    //var baseUrl = "http://localhost:9000"; //Back-end server base url
-    //var baseUrl = "http://localhost:9001"; //Back-end server base url
     var baseUrl = "https://educationalcommunity-classroom.herokuapp.com";
 
     var arr = $window.location.href.split("/");
@@ -186,7 +229,7 @@ angular.module('netbase')
         $rootScope.deleteRoom = classroom;
         console.log('deleteroom');
         console.log(classroom);
-        ngDialog.open({ template: 'partials/modals/classroom_confirm_delete_modal.html', controller: "AcademiaClassroomsCtrl", className: 'ngdialog-theme-default classroom-alert-modal'});
+        ngDialog.open({ template: 'partials/modals/classroom_confirm_delete_modal.html', controller: "HomePersonalClassroom", className: 'ngdialog-theme-default classroom-alert-modal'});
     }
 
     $scope.confirmDelete = function() {
@@ -366,12 +409,14 @@ angular.module('netbase')
   }
 
 }])
+
 .controller('CoursesCreateContentCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses',
 function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses) {
   $scope.moduleId = $scope.ngDialogData.moduleId;
   console.log('$scope', $scope.moduleId);
 
 }])
+
 .controller('CoursesVideoForumContentCtrl', ['Videos','$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'University', 'Playlist', 'Forum', 'User', function(Videos,$rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, University, Playlist, Forum, User) {
   $scope.page = $route.current.params.id;
   ngDialog.close();
@@ -582,6 +627,7 @@ $scope.videolist=[];
   /* END PLAYLISTS */
 
 }])
+
 .controller('editVideoForumContentCtrl', ['Videos','$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'University', 'Playlist', 'Forum', 'User', function(Videos,$rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, University, Playlist, Forum, User) {
 
     let id=$route.current.params.id
@@ -671,6 +717,7 @@ $scope.videolist=[];
 
 
 }])
+
 .controller('CoursesCreatePageCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses) {
 
 }])
@@ -711,8 +758,8 @@ $scope.videolist=[];
      $location.path('/home/cursos');
    })
 }])
-.controller('CoursesEstudarTypeDocumentCtrl', ['Courses','$rootScope', '$scope', '$location', '$route', 'University', 'Videos', '$sce', 'User', 'Forum', 'Students', 'ngDialog', '$localStorage', 'jwtHelper', function(Courses,$rootScope, $scope, $location, $route, University, Videos, $sce, User, Forum, Students, ngDialog, $localStorage, jwtHelper) {
 
+.controller('CoursesEstudarTypeDocumentCtrl', ['Courses','$rootScope', '$scope', '$location', '$route', 'University', 'Videos', '$sce', 'User', 'Forum', 'Students', 'ngDialog', '$localStorage', 'jwtHelper', function(Courses,$rootScope, $scope, $location, $route, University, Videos, $sce, User, Forum, Students, ngDialog, $localStorage, jwtHelper) {
 
   //let id = $route.current.params.id;
   let id=$scope.id;

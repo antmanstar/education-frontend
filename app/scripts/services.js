@@ -1164,7 +1164,8 @@ angular.module('netbase')
   .factory('Search', ['$http', function($http) {
 
       //var baseUrl = "https://api.universida.de/search";
-      var baseUrl = "https://network-search-prod.herokuapp.com/search";
+      //var baseUrl = "https://network-search-prod.herokuapp.com/search";
+      var baseUrl = "https://network-search-prod.herokuapp.com/search" 
 
       return {
 

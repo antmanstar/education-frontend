@@ -47,6 +47,10 @@
           display: none;
         }
 
+        .align-new-cards {
+          text-align: center;
+        }
+
       </style>
 
       <!-- default payment -->
@@ -57,7 +61,7 @@
 
           <ballmenu></ballmenu>
 
-          <div class="section-cards">
+          <div class="section-cards" ng-style="{ 'text-align' : (cards.length == 0) ? 'center' : 'unset' }">
 
             <div class="wallet-card" ng-click="addCard()">
               <div class="content" style="padding-top: 70px; text-align: center; font-size: 1.3em;">
@@ -67,14 +71,14 @@
             </div>
             <!-- end wallet card -->
 
-            <div class="wallet-card">
+            <div class="wallet-card" ng-repeat="card in cards" style="text-align: center; padding-top: 65px;">
 
               <div class="content">
                 <b>{{card.brand}}</b>
                 <div>
-                  <b>Nome no cartão: {{card.name}}</b></br>
-                  <b>LAST4{{card.last4}}</b> {{card.last4}}</br>
-                  <b>Expira: {{card.exp_month}}/{{card.exp_year}}</b>
+                  <b>{{card.name}}</b></br>
+                  <b>{{card.last4}}</b> {{card.last4}}</br>
+                  <b>{{card.exp_month}}/{{card.exp_year}}</b>
                 </div>
               </div>
               <!-- end content -->

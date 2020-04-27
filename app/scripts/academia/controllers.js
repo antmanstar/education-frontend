@@ -1227,7 +1227,7 @@ angular.module('netbase')
     $scope.sharingScreen = function(stream) {
         console.log(navigator.mediaDevices.getSupportedConstraints());
         const screenTrack = stream.getTracks()[0];
-        
+
         screenTrack.onended = function(e) {
             if(!$scope.localConnected) return;
             $scope.disconnectClassroom();
@@ -1241,7 +1241,7 @@ angular.module('netbase')
         }
 
         $scope.currentShareScreen = screenTrack;
-        
+
         navigator.mediaDevices.enumerateDevices()
         .then((deviceInfos) => {
             for (let i = 0; i !== deviceInfos.length; ++i) {
@@ -1253,9 +1253,9 @@ angular.module('netbase')
                             deviceId: {exact: deviceInfo.id}
                         }
                     };
-                    
+
                     navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
-                        
+
                         $scope.disconnectClassroom();
                         console.log('local audio track');
                         $scope.connectClassroom($scope.currentRoomToken, $scope.currentRoomName, [stream.getTracks()[0], screenTrack]);
@@ -1271,7 +1271,7 @@ angular.module('netbase')
         if($scope.localConnected == false) {
             return;
         }
-        
+
         if ($scope.shareScreenCaption == 'Share Screen') {
 
             $scope.shareScreenCaption = 'Stop Sharing';
@@ -1293,7 +1293,7 @@ angular.module('netbase')
                     $scope.sharingScreen(stream);
                 });
             }
-            
+
         }
         else {
             $scope.disconnectClassroom();

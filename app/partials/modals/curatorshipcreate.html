@@ -1,0 +1,54 @@
+<div class="container-fluid modal-accounts">
+
+  <style>
+
+    .input-email {
+      text-transform: lowercase;
+    }
+
+    .input-email::-webkit-input-placeholder {
+      text-transform: capitalize;
+    }
+
+
+  </style>
+
+  <div class="row">
+
+    <div class="col-xs-12">
+
+      <div class="headline-sub-one">Criar curadoria</div>
+
+      <div class="alert bg-primary-red" ng-if="loginMessageBox">{{loginMessage}}</div>
+
+      <div class="form">
+
+        <div class="form-group">
+          <i class="fas fa-envelope"></i>
+          <input class="input-email" ng-model="loginEmail" placeholder="Email" type="text" />
+        </div>
+        <!-- end form group -->
+
+        <div class="form-group">
+          <i class="fas fa-key"></i>
+          <input ng-keypress="($event.which === 13)?login():0" ng-model="loginPassword" placeholder="Senha" type="password" />
+        </div>
+        <!-- end form group -->
+
+        <button ng-click="createCategory()" class="btn btn-bluebase">Criar</button>
+
+        <div style="widht: 100%; text-align: center; padding-top: 30px; padding-bottom: 15px; font-size: 0.9em;"><a ng-click="forgotPassword()">Esqueceu sua senha?</a></div>
+        <p style="text-align: center; font-size: 0.8em;">ou</p>
+        <div style="widht: 100%; text-align: center; font-size: 0.9em; color: #1faa95;"><a ng-click="createDialog()">Criar uma conta</a></div>
+
+      </div>
+      <!-- end form -->
+
+    </div>
+    <!-- end col-xs-12 -->
+
+  </div>
+  <!-- end row -->
+
+</div>
+<!-- end container-fluid -->

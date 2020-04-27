@@ -50,7 +50,6 @@
     <div class="option" style="padding-left: 0px;"><a href="/a/{{university.url}}/timeline"><img src="/img/icon/timeline.png" style="margin-right: 14px;" height="20px" width="20px" />Timeline</a></div>
     <div class="option" style="padding-left: 0px;"><a href="/a/{{university.url}}/forum"><img src="https://visualpharm.com/assets/116/Open%20Book-595b40b65ba036ed117d154c.svg" style="margin-right: 14px;" height="20px" width="20px" />Feed</a></div>
     <div class="option" style="padding-left: 0px;"><a href="/a/{{university.url}}/forum/category/all"><img src="https://visualpharm.com/assets/811/Discussion%20Forum-595b40b65ba036ed117d396c.svg" style="margin-right: 14px;" height="20px" width="20px" />Forum</a></div>
-    <div class="option" ng-if="university.url == 'sambapoker'" style="padding-left: 0px;"><a href="/a/{{university.url}}/handanalysis/"><img src="https://visualpharm.com/assets/18/Cards-595b40b65ba036ed117d2a26.svg" style="margin-right: 14px;" height="20px" width="20px" />Hand Analysis</a></div>
     <div class="option" style="padding-left: 0px;"><a href="/a/{{university.url}}/playlist/all"><img src="https://visualpharm.com/assets/459/Film-595b40b75ba036ed117d9cd1.svg" style="margin-right: 14px;" height="20px" width="20px" />Playlists</a></div>
     <div class="option" style="padding-left: 0px;"><a href="/a/{{university.url}}/cursos"><img src="https://visualpharm.com/assets/311/Graduation%20Cap-595b40b65ba036ed117d2d97.svg" style="margin-right: 14px;" height="20px" width="20px" />Cursos</a></div>
     <!--div class="option" style="padding-left: 0px;"><a href="/a/{{university.url}}/classroom"><img src="https://visualpharm.com/assets/311/Graduation%20Cap-595b40b65ba036ed117d2d97.svg" style="margin-right: 14px;" height="20px" width="20px" />Classroom</a></div-->
@@ -99,6 +98,7 @@
       administração
     </div>
 
+    <a href="/dashboard/a/manage/id/{{university._id}}" ng-if="studentIsAdmin == true"><button class="btn bg-base" style="margin-top: 2px; height: 29px; width: unset;">Acessar dashboard</button></a>
     <a href="/a/{{university.url}}/forum/category/create" ng-if="studentIsAdmin == true"><button class="btn bg-base" style="margin-top: 2px; height: 29px; width: unset;">Criar categoria</button></a>
     <a href="/v/create?universityId={{university._id}}" ng-if="studentIsAdmin == true"><button class="btn bg-base" style="margin-top: 2px; height: 29px; width: unset;">Criar video</button></a>
     <a href="/p/create?universityId={{university._id}}" ng-if="studentIsAdmin == true"><button class="btn bg-base" style="margin-top: 2px; height: 29px; width: unset;">Criar playlist</button></a>
