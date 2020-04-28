@@ -147,7 +147,6 @@ angular.module('netbase')
 
 }])
 
-
 .controller('HomeCuratorshipById', ['$rootScope', '$scope', '$location', '$route', 'University', '$timeout', 'Forum', 'jwtHelper', '$localStorage', '$window', function($rootScope, $scope, $location, $route, University, $timeout, Forum, jwtHelper, $localStorage, $window) {
 
     let studentId = jwtHelper.decodeToken($localStorage.token)._id;
@@ -309,7 +308,7 @@ angular.module('netbase')
           if (res.success) {
 
             ngDialog.close();
-            $route.reload();
+            $location.path("/home/curadoria/id/" + res.data._id)
 
           }
 
@@ -5176,7 +5175,7 @@ Courses.getAll().success(function(res) {
 
 }])
 
-.controller('ProfileCtrl', ['$rootScope', '$scope', '$location', '$localStorage', 'jwtHelper', 'Students', function($rootScope, $scope, $location, $localStorage, jwtHelper, Students) {
+.controller('ProfileCtrl', ['$rootScope', '$scope', '$location', '$localStorage', 'jwtHelper', 'Students', 'University', 'Forum', function($rootScope, $scope, $location, $localStorage, jwtHelper, Students, University, Forum) {
 
   /* premium */
   let studentId;

@@ -144,7 +144,7 @@ angular.module('netbase')
 
     $scope.openDialog = function(type, msg) {  // Opens Error Dialogs
         if($rootScope.alertDialog == null || $rootScope.alertDialog == undefined) $rootScope.alertDialog = [];
-        $rootScope.alertDialog.push(ngDialog.open({ 
+        $rootScope.alertDialog.push(ngDialog.open({
             template: 'partials/modals/classroom_alert_modal.html',
             controller: "AcademiaClassroomsAlertCtrl",
             className: 'ngdialog-theme-default classroom-alert-modal',
@@ -152,7 +152,7 @@ angular.module('netbase')
                 type: type,
                 msg: msg
             }
-        }));    
+        }));
     }
 
     if ($localStorage.token != undefined && $localStorage.token != null) {              // Check if logged in user
@@ -1567,7 +1567,7 @@ angular.module('netbase')
         Clipboard.copy(text);           // Clipboard func is defined app/js/clipboard_func.js file
         if($rootScope.alertDialog == null || $rootScope.alertDialog == undefined) $rootScope.alertDialog = [];
         $rootScope.alertDialog.push(ngDialog.open({ template: 'partials/modals/classroom_alert_modal.html', controller: "AcademiaClassroomsAlertCtrl", className: 'ngdialog-theme-default classroom-alert-modal', data: {type: "Universidade", msg: 'Copied link to clipboard'}}));
-        
+
     }
 
     $scope.toggleAllControllers = function() {
@@ -3083,6 +3083,7 @@ angular.module('netbase')
 
                 attr.$observe('university', function(value) {
 
+                university = JSON.parse(value);
 
                 // Handle Subscribe Functionality
                 Students.getStudentById(studentId).then(function(res) {
