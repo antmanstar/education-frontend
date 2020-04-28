@@ -489,24 +489,30 @@
         height: 100%;
         width: 100%;
     }
+    
     .meeting-classroom-main {
         padding: 0px;
         margin-top: 0px;
     }
+    
     .controller-container {
         width: 100%;
     }
+    
     .bottom-controller-container {
         margin-bottom: 10px;
         padding-left: 15px;
         padding-right: 15px;
     }
+    
     .classroom-chat-container>.avatar-container {
         margin-top: 25px;
     }
+    
     .mobile-invisible {
         display: none !important;
     }
+    
     .mobile-visible {
         display: flex !important;
     }
@@ -579,6 +585,10 @@
         display: flex;
         flex-direction: row;
         justify-content: center;
+    }
+
+    .sub-video-title {
+        position: relative;
     }
 }
 
@@ -593,24 +603,30 @@
         height: 100%;
         width: 100%;
     }
+
     .meeting-classroom-main {
         padding: 0px;
         margin-top: 0px;
     }
+    
     .controller-container {
         width: 100%;
     }
+    
     .bottom-controller-container {
         margin-bottom: 10px;
         padding-left: 15px;
         padding-right: 15px;
     }
+    
     .classroom-chat-container>.avatar-container {
         margin-top: 25px;
     }
+    
     .mobile-invisible {
         display: none !important;
     }
+    
     .mobile-visible {
         display: flex !important;
     }
@@ -683,5 +699,9 @@
         display: flex;
         flex-direction: row;
         justify-content: center;
+    }
+
+    .sub-video-title {
+        position: relative;
     }
 }
