@@ -400,6 +400,84 @@
     color: red;
 }
 
+.sub-video-title {
+    background-color: black;
+}
+
+.classroom-select-device-modal .ngdialog-content {
+    width: 700px !important;
+    height: 500px !important;
+    margin-top: 100px !important;
+}
+
+.classroom-select-device-container {
+    display: flex;
+    padding-top: 30px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.join-button-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.join-button-group button {
+    width: 90px;
+    border-radius: 5px;
+    background-color: gray;
+    color: white;
+    margin: 20px;
+    height: 50px;
+}
+
+.video-setting-screen-controller {
+    position: absolute;
+    bottom: 100px;
+    left: 150px;
+}
+
+.voice-setting-screen-controller {
+    position: absolute;
+    bottom: 100px;
+    right: 150px;
+}
+
+#selecting_container {
+    position: relative;
+}
+
+#selecting_video {
+    width: 493px;
+    height: 425px;
+    contain: strict;
+    margin: 20px;
+    background-color: black;
+}
+
+.select-device-icon-controller {
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
+    background-color: unset;
+    margin-bottom: 5px;
+    justify-content: center;
+    border: solid;
+    border-color: white;
+    border-width: 1.3px;
+    display: flex;
+    font-size: 25px;
+    align-items: center;
+}
+
+.color-white {
+    color: white;
+}
+
+.color-red {
+    color: red;
+}
+
 @media screen and (max-width: 468px) {
     .classroom-page-container {
         margin-top: 0px;
