@@ -590,7 +590,7 @@ angular.module('netbase')
                 break;
             }
         }
-        if(i == $scope.audioInputDevices.length) {
+        if(i == $scope.audioInputDevices.length && i != 0) {
             $scope.audioStatus = 'auto search';
         }
         
@@ -609,7 +609,7 @@ angular.module('netbase')
                 break;
             }
         }
-        if(i == $scope.videoInputDevices.length) {
+        if(i == $scope.videoInputDevices.length && i != 0) {
             $scope.videoStatus = 'auto search';
         }
 
@@ -722,6 +722,10 @@ angular.module('netbase')
 
     $scope.confirmSelect = function() {
         $rootScope.ifSelectedDevice = true;
+        if($rootScope.constraints.audio == false && $rootScope.constraints.video == false){
+            ngDialog.open({ template: 'partials/modals/classroom_alert_modal.html', controller: "AcademiaClassroomsAlertCtrl", className: 'ngdialog-theme-default classroom-alert-modal', data: {type: "ERROR", msg: 'You have no cameras and microphones'}});
+            return;
+        }
         ngDialog.close();
     }
 }])
@@ -1252,7 +1256,7 @@ angular.module('netbase')
             }
 
             if(i == titles.length) return;
-            
+
             for (j = 0; j < $scope.participants.length; j++) {
                 if ($scope.participants[j] == null) continue;
                 if (titles[i].getAttribute('id') == $scope.participants[j]._id) {
@@ -1579,8 +1583,8 @@ angular.module('netbase')
 .controller('AcademiaClassroomsAlertCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Classroom', 'Students', 'ngDialog', 'jwtHelper', '$localStorage', '$window', function($rootScope, $scope, $location, $route, University, Classroom, Students, ngDialog, jwtHelper, $localStorage, $window) {
     $scope.alertMsg = $scope.ngDialogData.msg;
     $scope.alertType = $scope.ngDialogData.type;
-    $scope.confirm = function() {
-        ngDialog.closeAll();
+    $scope.confirmAlert = function() {
+        ngDialog.close();
     }
 }])
 
