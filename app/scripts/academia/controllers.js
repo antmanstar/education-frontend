@@ -593,7 +593,7 @@ angular.module('netbase')
         if(i == $scope.audioInputDevices.length && i != 0) {
             $scope.audioStatus = 'auto search';
         }
-        
+
         if($scope.videoInputDevices.length == 0) {
             ngDialog.open({ template: 'partials/modals/classroom_alert_modal.html', controller: "AcademiaClassroomsAlertCtrl", className: 'ngdialog-theme-default classroom-alert-modal', data: {type: "ERROR", msg: 'You have no cameras'}});
             $scope.videoStatus = null;
@@ -625,7 +625,7 @@ angular.module('netbase')
                          navigator.mozGetUserMedia;
 
         $rootScope.constraints = {audio: null, video: null}
-        
+
         if($scope.currentAudioInputDevice == 'auto search'){
             $rootScope.constraints.audio = true;
         }
@@ -695,7 +695,7 @@ angular.module('netbase')
             $scope.displayInitial();
         });
     }
-    
+
     $scope.toggleVideoSetting = function() {
         if(!$scope.videoTogglable) return;
         if($scope.videoToggle == 'fas fa-video-slash'){
@@ -879,6 +879,7 @@ angular.module('netbase')
                 else {
                     showingTitle.style.position = 'relative';
                 }
+
                 for (k = 0; k < showingTitle.childElementCount; k++) {
                     if (showingTitle.children[k].tagName == 'VIDEO') {
 
@@ -888,7 +889,7 @@ angular.module('netbase')
                     }
                 }
 
-            else if (titleDom.length > 1 && titleDom.length < 5 && countOfNone != 1) {
+            } else if (titleDom.length > 1 && titleDom.length < 5 && countOfNone != 1) {
 
                 for (i = 0; i < titleDom.length; i += 1) {
                     let k;
@@ -905,7 +906,7 @@ angular.module('netbase')
                 }
                 if(!$scope.isFullScreen) $scope.fullScreenStatus = '';
 
-            } 
+            }
             else if (titleDom.length > 4 && countOfNone != 1) {
 
                 for (i = 0; i < titleDom.length; i += 1) {
@@ -949,7 +950,7 @@ angular.module('netbase')
                 }
 
             } else if (titleDom.length ==2 && countOfNone != 1) {
-               
+
                 for (i = 0; i < titleDom.length; i += 1) {
                     titleDom[i].style.width = "100%";
                     titleDom[i].style.height = "50%";
@@ -964,9 +965,9 @@ angular.module('netbase')
                     titleDom[i].style.height = mainHeight / 2 + 'px';
                 }
 
-            } 
+            }
             else if (titleDom.length > 2 && countOfNone != 1) {
-                
+
                 for (i = 0; i < titleDom.length; i += 1) {
                     titleDom[i].style.width = "50%";
                     titleDom[i].style.height = "50%";
@@ -1021,9 +1022,9 @@ angular.module('netbase')
             let redirectUrl = '/a/university/' + universityUrl + '/roomid/' + roomSID + '/accountid/' + accountSid + '/roomname/' + roomName + '/';
             ngDialog.open({ template: 'partials/modals/login.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default', data: { redirectUrl: redirectUrl } });
             return;
-        } 
+        }
         let redirectUrl = '/a/university/' + universityUrl + '/roomid/' + roomSID + '/accountid/' + accountSid + '/roomname/' + roomName + '/';
-                
+
         if($rootScope.ifSelectedDevice == null || $rootScope.ifSelectedDevice == undefined) {
             ngDialog.open({ template: 'partials/modals/classroom_select_device_modal.html', controller: 'AcademiaClassroomSelectDeviceCtrl', className: 'ngdialog-theme-default classroom-select-device-modal', data: { redirectUrl: redirectUrl } });
             //ngDialog.open({ template: 'partials/modals/classroom_select_device_modal.html', controller: 'AcademiaClassroomCtrl', className: 'ngdialog-theme-default', data: { redirectUrl: redirectUrl } });
@@ -1069,7 +1070,7 @@ angular.module('netbase')
 
         video.connect(token, room_t).then(room => {                         // Video room connect
             const localParticipant = room.localParticipant;
-            
+
             $scope.currentLocalparticipant = room.localParticipant;
             console.log($scope.currentLocalparticipant);
             $scope.currentLocalparticipant.audioTracks.forEach(function(audioTrack) {
@@ -1114,11 +1115,11 @@ angular.module('netbase')
                 }
                 if (res.data.data._id == $scope.administrator[0]._id) {
                     $scope.adminActive = 'admin-active';
-                } else {        
+                } else {
                     $scope.showingParticipants.push(res.data.data);
                 }
                 $scope.participants.push(res.data.data);
-                
+
                 setTimeout(() => {
                     $window.dispatchEvent(new Event("resize"));
                 },
@@ -1156,7 +1157,7 @@ angular.module('netbase')
         } else {
 
             console.log($rootScope.constraints);
-            
+
             video.createLocalTracks($rootScope.constraints).then((localTracks) => {
                 room_t = {
                     name: roomName,
@@ -1262,7 +1263,7 @@ angular.module('netbase')
             else {
                 compareEle = videos[i];
             }
-            
+
             for(i = 0; i < titles.length; i++) {
                 for(j = 0; j < titles[i].childElementCount; j++){
                     if(compareEle == titles[i].children[j]) break;
@@ -1412,7 +1413,7 @@ angular.module('netbase')
     $scope.sharingScreen = function(stream) {
         console.log(navigator.mediaDevices.getSupportedConstraints());
         const screenTrack = stream.getTracks()[0];
-        
+
         screenTrack.onended = function(e) {
             if(!$scope.localConnected) return;
             $scope.disconnectClassroom();
@@ -1426,7 +1427,7 @@ angular.module('netbase')
         }
 
         $scope.currentShareScreen = screenTrack;
-        
+
         navigator.mediaDevices.enumerateDevices()
         .then((deviceInfos) => {
             for (let i = 0; i !== deviceInfos.length; ++i) {
@@ -1438,9 +1439,9 @@ angular.module('netbase')
                             deviceId: {exact: deviceInfo.id}
                         }
                     };
-                    
+
                     navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
-                        
+
                         $scope.disconnectClassroom();
                         console.log('local audio track');
                         $scope.connectClassroom($scope.currentRoomToken, $scope.currentRoomName, [stream.getTracks()[0], screenTrack]);
@@ -1456,7 +1457,7 @@ angular.module('netbase')
         if($scope.localConnected == false) {
             return;
         }
-        
+
         if ($scope.shareScreenCaption == 'Share Screen') {
 
             $scope.shareScreenCaption = 'Stop Sharing';
@@ -1478,7 +1479,7 @@ angular.module('netbase')
                     $scope.sharingScreen(stream);
                 });
             }
-            
+
         }
         else {
             $scope.disconnectClassroom();
@@ -1557,7 +1558,7 @@ angular.module('netbase')
         let accountSid = $route.current.params.accountSid;
         let roomName = $route.current.params.roomName;
         let text = domain + "/a/university/" + universityUrl + "/roomid/" + roomSID + "/accountid/" + accountSid + "/roomname/" + roomName + "/";
-    
+
         Clipboard.copy(text);           // Clipboard func is defined app/js/clipboard_func.js file
         ngDialog.open({ template: 'partials/modals/classroom_alert_modal.html', controller: "AcademiaClassroomsAlertCtrl", className: 'ngdialog-theme-default classroom-alert-modal', data: {type: "Universidade", msg: 'Copied link to clipboard'}});
 
@@ -1574,7 +1575,7 @@ angular.module('netbase')
 
     $scope.toggleFullScreen = function() {
         $scope.isFullScreen = !$scope.isFullScreen;
-        
+
         if($scope.isFullScreen) {
             $scope.fullScreenToggle = "fa fa-compress";
             $scope.fullScreenIconPos = ' fixed';
@@ -1684,11 +1685,11 @@ angular.module('netbase')
 
     $scope.confirmCreateClassroom = function() {
         let studentId;
-        
+
         let token = $localStorage.token;
         let title = $scope.addingClassroom.uniqueName ? $scope.addingClassroom.uniqueName : '';
         let url = '/classroom/university/';
-        
+
         if ($localStorage.token != undefined && $localStorage.token != null) {
             studentId = jwtHelper.decodeToken($localStorage.token)._id;
         }
@@ -1737,7 +1738,7 @@ angular.module('netbase')
 
     $scope.confirmDelete = function() {
         let token = $localStorage.token;
-        
+
         let url = '/classroom/end/';
         var i;
         var privilege = 0;
