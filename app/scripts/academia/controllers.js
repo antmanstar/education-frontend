@@ -663,10 +663,11 @@ angular.module('netbase')
         if (navigator.getUserMedia) {
             navigator.getUserMedia($rootScope.constraints ,
                 function(stream) {
+                    console.log(stream);
                     var video = document.getElementById('selecting_video');
                     video.srcObject = stream;
                     video.onloadedmetadata = function(e) {
-                    video.play();
+                        video.play();
                     };
                 },
                 function(err) {
@@ -674,7 +675,17 @@ angular.module('netbase')
                 }
             );
         } else {
-            console.log("getUserMedia not supported");
+            navigator.mediaDevices.getUserMedia($rootScope.constraints)
+            .then((stream) => {
+                console.log(stream);
+                var video = document.getElementById('selecting_video');
+                video.srcObject = stream;
+                video.onloadedmetadata = function(e) {
+                    video.play();
+                };
+            }).catch((err) => {
+                console.log("The following error occurred: " + err.name);
+            });
         }
     }
 
