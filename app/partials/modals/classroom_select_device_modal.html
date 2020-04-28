@@ -1,16 +1,4 @@
 <div ng-init='initSetting()' class='classroom-select-device-container'>
-    <!--div>
-        <label> Select Audio Input </label>
-        <select ng-model='currentAudioInputDevice' ng-change='selectingDevice()'>
-            <option ng-repeat='audioDevice in audioInputDevices' value="{{audioDevice.deviceId}}">{{audioDevice.label}}</option>
-        </select>
-    </div>
-    <div>
-        <label> Select Video Input </label>
-        <select ng-model='currentVideoInputDevice' ng-change='selectingDevice()'>
-            <option ng-repeat='videoDevice in videoInputDevices' value="{{videoDevice.deviceId}}">{{videoDevice.label}}</option>
-        </select>
-    </div-->
     <div id='selecting_container'>
         <video id='selecting_video'></video>
         <div ng-click="toggleVideoSetting()" class="video-setting-screen-controller">
