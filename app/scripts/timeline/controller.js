@@ -34,19 +34,39 @@ angular.module('netbase')
     studentId = jwtHelper.decodeToken($localStorage.token)._id;
   }
 
-  $scope.forumPosts = [];
+  $scope.$on('studentInformationParsed', function() {
 
-  TimelineNew.getTimelineAll(studentId, $scope.page).success(function(res) {
+    let universitiesSubscribed = $rootScope.user.universitiesSubscribed
 
-    let forumPosts = res.data.docs;
+    let universityParse = [];
+    for (let idx = 0; idx < universitiesSubscribed.length; idx++) {
+      let uni = universitiesSubscribed[idx];
+      let uId = uni.universityId;
 
-    $scope.activities = forumPosts;
-    $scope.pages = res.data.pages;
+      if (!uni.unsubscribed) {
+        universityParse.push(uId)
+      }
 
-    $scope.loading = false;
+    }
+
+    TimelineNew.getTimelineAll(universityParse, $scope.page).success(function(res) {
+
+      console.log(res)
+
+      let forumPosts = res.data.docs;
+
+      $scope.activities = forumPosts;
+      $scope.pages = res.data.pages;
+
+      $scope.loading = false;
+
+    });
+    //END Timeline.getTimelineByStudentId()
 
   });
-  //END Timeline.getTimelineByStudentId()
+  //END studentInformationParsed
+
+  $scope.forumPosts = [];
 
   $scope.busy = false;
 
@@ -71,6 +91,7 @@ angular.module('netbase')
     }
 
   };
+  //END nextPage
 
 }])
 
@@ -92,6 +113,7 @@ angular.module('netbase')
       scope.commentSection = false;
       scope.status = { reshare : reshare, like : like, comments : comments };
       scope.sharePost = false;
+
       TimelineNew.getTimelineRePostCount(contentId).success(function(res) {
         scope.rePostCount = res.data.count-1;
       });
@@ -109,10 +131,13 @@ angular.module('netbase')
           let data = res.data.data;
           let success = res.data.success;
 
+          //console.log(res)
+
           if (status != 90010) {
 
             scope.forumPost = data;
-            scope.votesCount = data.votesCount;
+            console.log(scope.forumPost)
+            //scope.votesCount = data.votesCount;
 
             scope.forumPost.text = $sce.trustAsHtml(scope.forumPost.text);
 
@@ -272,19 +297,32 @@ angular.module('netbase')
     link: function(scope, element, attr) {
 
       let universityId = attr.uid;
+      let accountId = attr.accountid;
+
+      scope.hideUniversity = false;
 
       if ( University.isStoredLocal(universityId) ) {
 
         let universityStorage = University.retrieveStorage(universityId);
 
-        scope.university = universityStorage[universityId];
         console.log(scope.university)
+
+        scope.university = universityStorage[universityId];
+
+        if (accountId == scope.university.name) {
+          scope.hideUniversity = true;
+        }
+
 
       } else {
 
         University.getUniversityById(universityId).success(function(res) {
 
           scope.university = res.data;
+
+          if (accountId == scope.university.name) {
+            scope.hideUniversity = true;
+          }
 
           University.storeLocal(scope.university);
 

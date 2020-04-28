@@ -31,7 +31,7 @@
         <div class="row navbar-top-first" style="height: 40px; line-height: 40px; padding-bottom: 2px; padding-top: 6px;">
           <div id="logomaster" class="col-xs-3 col-sm-4" style="padding: 3px; height: 100%; padding-left: 15px;"><img height="100%" src="https://storage.googleapis.com/educationalcommunity/pt/img/universidade_icon.png" /><span style="margin-left: 8px; font-size: 1.15em;"><i class="fas fa-angle-down" style="vertical-align: top; padding-top: 6px;"></i></span></div>
           <div class="col-xs-6 col-sm-4" style="text-align: center; padding: 6px; height: 100%;"><a href="/home/explore"><img height="100%" src="https://storage.googleapis.com/educationalcommunity/pt/img/universidade_logo.png" /></a></div>
-          <div class="col-xs-3 col-sm-4" id="mobile-credentials" ng-show="logged" ng-click="searchbar()" style="text-align: right; height: 100%; padding-right: 10px; line-height: 32px;"><div ng-click="searchBarToggle()" style="font-size: 1.4em; padding-bottom: 3px;"><i class="fas fa-search"></i></div></div>
+          <!--<div class="col-xs-3 col-sm-4" id="mobile-credentials" ng-show="logged" ng-click="searchbar()" style="text-align: right; height: 100%; padding-right: 10px; line-height: 32px;"><div ng-click="searchBarToggle()" style="font-size: 1.4em; padding-bottom: 3px;"><i class="fas fa-search"></i></div></div>-->
           <div class="col-xs-3 col-sm-4" id="mobile-credentials" ng-hide="logged" ng-click="login()" style="padding: 3px; text-align: right; height: 100%; padding-right: 10px;"><img height="100%" src="https://visualpharm.com/assets/880/Customer-595b40b65ba036ed117d413a.svg" /></div>
           <div class="col-xs-3 col-sm-4" id="desktop-credentials" style="height: 40px;">
 
@@ -48,7 +48,7 @@
                   <div class="picture" ng-if="user.imageUrl != undefined" style="background-image: url('{{user.imageUrl}}'); background-size: cover; height: 35px; width: 35px; display: inline-block; border-radius: 50%;"></div>
                   <!--<span><i class="fas fa-user-circle" style="padding-right: 2px;"></i></span> {{user.name}} <span><i class="fas fa-angle-down" style="padding-left: 3px;"></i></span>-->
                   <div class="profile-expanded">
-                    <div><a href="/dashboard">Dashboard</a></div>
+                    <!--<div><a href="/dashboard">Dashboard</a></div>-->
                     <div><a href="/perfil">Perfil</a></div>
                     <div ng-click="logout()"><a>Logout</a></div>
                   </div>
@@ -94,7 +94,7 @@
           <div class="option unselectable" ng-class="{'active': originalPath == '/home/explore' || originalPath == '/home/explore/'}"><a href="/home/explore">Explorar</a></div>
           <div class="option unselectable" ng-class="{'active': originalPath == '/home/universidades' || originalPath == '/home/universidades/' || originalPath.indexOf('/a/') != -1 }"><a href="/home/universidades">Universidades</a></div><!--
           <div class="option unselectable" ng-class="{'active': originalPath == '/cursos' || originalPath.indexOf('/cursos') >= 0}"><a href="/home/cursos">Cursos</a></div>-->
-          <div class="option unselectable" ng-class="{'active': originalPath == '/cursos' || originalPath.indexOf('/cursos') >= 0}"><a href="/home/">Videoconferência</a></div>
+          <div class="option unselectable" ng-class="{'active': originalPath == '/home/calls' || originalPath.indexOf('/videorooms') >= 0}"><a href="/home/calls">Videoconferência</a></div>
           <!--<div class="option unselectable" ng-class="{'active': originalPath.indexOf('/home/conhecimento') != -1 }"><a href="/home/conhecimento">Conhecimento</a></div>-->
 
         </div>
@@ -157,6 +157,7 @@
           <div class="menu">
             <!-- <<div class="option">Editar perfil</div> -->
             <div class="option unselectable" ng-show="logged"><a href="/perfil">Perfil</a></div>
+            <!--
             <div class="option unselectable" ng-show="logged"><a href="/dashboard"><b>Dashboard</b></a></div>
             <div class="option unselectable" ng-show="logged" style="padding-left: 40px; text-decoration: underline;">Universidades</div>
             <div class="option unselectable" ng-show="logged" style="padding-left: 40px;"><a href="/dashboard">- Inscrito</a></div>
@@ -165,7 +166,7 @@
             <div class="option unselectable" ng-show="logged" style="padding-left: 40px; text-decoration: underline;">Pedidos</div>
             <div class="option unselectable" ng-show="logged" style="padding-left: 40px;"><a href="/dashboard">- Todas compras</a></div>
             <div class="option unselectable" ng-show="logged" style="padding-left: 40px; text-decoration: underline;">Pagamentos</div>
-            <div class="option unselectable" ng-show="logged" style="padding-left: 40px;"><a href="/dashboard">- Carteira</a></div>
+            <div class="option unselectable" ng-show="logged" style="padding-left: 40px;"><a href="/dashboard">- Carteira</a></div>-->
             <div class="option" ng-click="logout()">Logout</div>
           </div>
           <!-- end menu -->

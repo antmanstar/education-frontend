@@ -183,7 +183,6 @@ angular.module('netbase')
 
   }
 
-
 }])
 
 /* manage */
