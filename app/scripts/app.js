@@ -474,6 +474,10 @@ angular.module('netbase', [
             templateUrl: 'partials/home/curatorship.html',
             controller: 'HomeCuratorship'
         })
+        .when('/home/curadoria/id/:id', {
+            templateUrl: 'partials/home/curatorshipbyid.html',
+            controller: 'HomeCuratorshipById'
+        })
         .when('/home/calls', {
             templateUrl: 'partials/home/userclassrooms.html',
             controller: 'HomePersonalClassroom'

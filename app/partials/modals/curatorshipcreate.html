@@ -24,25 +24,21 @@
       <div class="form">
 
         <div class="form-group">
-          <i class="fas fa-envelope"></i>
-          <input class="input-email" ng-model="loginEmail" placeholder="Email" type="text" />
+          <label>Titulo</label>
+          <input class="input-email" style="padding-left: 0; text-transform: unset;" ng-model="title" placeholder="Escreva o título da sua curadoria" type="text" />
         </div>
         <!-- end form group -->
 
         <div class="form-group">
-          <i class="fas fa-key"></i>
-          <input ng-keypress="($event.which === 13)?login():0" ng-model="loginPassword" placeholder="Senha" type="password" />
+          <label>Descrição</label>
+          <textarea style="border: none; width: 100%; min-height: 150px; border-bottom: 2px solid #cdcdcd; text-transform: unset;" class="input-email" ng-model="description" placeholder="Uma breve descrição da sua curadoria" type="text"></textarea>
         </div>
         <!-- end form group -->
 
-        <button ng-click="createCategory()" class="btn btn-bluebase">Criar</button>
-
-        <div style="widht: 100%; text-align: center; padding-top: 30px; padding-bottom: 15px; font-size: 0.9em;"><a ng-click="forgotPassword()">Esqueceu sua senha?</a></div>
-        <p style="text-align: center; font-size: 0.8em;">ou</p>
-        <div style="widht: 100%; text-align: center; font-size: 0.9em; color: #1faa95;"><a ng-click="createDialog()">Criar uma conta</a></div>
-
       </div>
       <!-- end form -->
+
+      <button ng-click="createCategory()" class="btn btn-bluebase">Criar</button>
 
     </div>
     <!-- end col-xs-12 -->
