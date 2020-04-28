@@ -1,0 +1,36 @@
+<div ng-init='initSetting()' class='classroom-select-device-container'>
+    <!--div>
+        <label> Select Audio Input </label>
+        <select ng-model='currentAudioInputDevice' ng-change='selectingDevice()'>
+            <option ng-repeat='audioDevice in audioInputDevices' value="{{audioDevice.deviceId}}">{{audioDevice.label}}</option>
+        </select>
+    </div>
+    <div>
+        <label> Select Video Input </label>
+        <select ng-model='currentVideoInputDevice' ng-change='selectingDevice()'>
+            <option ng-repeat='videoDevice in videoInputDevices' value="{{videoDevice.deviceId}}">{{videoDevice.label}}</option>
+        </select>
+    </div-->
+    <div id='selecting_container'>
+        <video id='selecting_video'></video>
+        <div ng-click="toggleVideoSetting()" class="video-setting-screen-controller">
+            <div class="select-device-icon-controller" ng-class='videoDisabled'>
+                <div >
+                    <i ng-class="videoToggle" class="meeting-controller-icon" >
+                    </i>
+                </div>
+            </div>
+        </div>
+        <div ng-click="toggleVoiceSetting()" class="voice-setting-screen-controller">
+            <div class="select-device-icon-controller" ng-class='audioDisabled'>
+                <div >
+                    <i ng-class="voiceToggle" ></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class='join-button-group'>
+        <button ng-click='confirmSelect()'>Join</button>
+        <button ng-click='cancel()'>Cancel</button>
+    </div>
+</div>

@@ -2,12 +2,12 @@
   body {
       padding-left: 0 !important;
       padding-right: 0 !important;
-      padding-top: 0 !important;
+      /*padding-top: 0 !important;*/
       overflow: hidden !important;
   }
 </style>
 
-<div ng-init="joinClassroom()" class="classroom-page-container">
+<div ng-init="initClassroom()" class="classroom-page-container">
     <div class="meeting-display-container">
         <div ng-class='mobileToggleParticipantsList' class="fixed-position classroom-participants-initial classroom-participants-container col-xs-7 col-sm-3 col-md-2 col-lg-2">
             <button class="participant-close-btn" ng-click="toggleParticipantsBox()"><i class="fas fa-times"></i></button>
