@@ -157,6 +157,14 @@ angular.module('netbase', [
           templateUrl: 'partials/courses/suite/createQuiz.html',
           controller: 'CoursesCreateQuizCtrl',
         })
+        .when('/cursos/suite/createForumpost/:id', {
+          templateUrl: 'partials/courses/modals/video-forum-content.html',
+          controller: 'CoursesVideoForumContentCtrl',
+        })
+        .when('/cursos/suite/editForumpost/:id', {
+          templateUrl: 'partials/courses/modals/video-forum-content.html',
+          controller: 'editVideoForumContentCtrl',
+        })
         .when('/cursos/suite/content', {
             templateUrl: 'partials/courses/suite/content.html',
             controller: 'CoursesContentModulosCtrl',
@@ -169,6 +177,11 @@ angular.module('netbase', [
             templateUrl: 'partials/courses/suite/owner.html',
             controller: 'CoursesOwnerCtrl',
         })
+         .when('/cursos/suite/createContent', {
+          templateUrl: 'partials/courses/suite/createPage.html',
+          controller: 'CoursesCreateContentCtrl',
+        })
+
         .when('/cursos/suite/createPage', {
           templateUrl: 'partials/courses/suite/createPage.html',
           controller: 'CoursesCreatePageCtrl',
@@ -456,6 +469,14 @@ angular.module('netbase', [
         .when('/home/explore', {
             templateUrl: 'partials/home/homestudentexplore.html',
             controller: 'HomeExploreCtrl'
+        })
+        .when('/home/curadoria', {
+            templateUrl: 'partials/home/curatorship.html',
+            controller: 'HomeCuratorship'
+        })
+        .when('/home/curadoria/id/:id', {
+            templateUrl: 'partials/home/curatorshipbyid.html',
+            controller: 'HomeCuratorshipById'
         })
         .when('/home/calls', {
             templateUrl: 'partials/home/userclassrooms.html',

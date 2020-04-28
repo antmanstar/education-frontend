@@ -69,6 +69,15 @@ socket.on("imagepath", function(a) {
 
 <style>
 
+  .profile-pic {
+    width: 210px;
+    height: 210px;
+  }
+
+  .profile-name {
+    font-size: 1.45em;
+  }
+
   .dot {
     height: 10px;
     width: 10px;
@@ -88,6 +97,7 @@ socket.on("imagepath", function(a) {
   }
 
   @media screen and (max-width: 768px) {
+
     .navbar-slider {
       display: none;
     }
@@ -102,7 +112,7 @@ socket.on("imagepath", function(a) {
       height: 90px;
     }
     .profile-name {
-      font-size: 1.4em;
+      font-size: 1.2em;
     }
   }
 
@@ -215,7 +225,7 @@ socket.on("imagepath", function(a) {
 
           <div class="option" ng-click="activeSection = 'conhecimento'" ng-class="{'active': activeSection == 'conhecimento'}"><a href="#">Curadoria</a></div>
           <div class="option" ng-click="activeSection = 'feed'" ng-class="{'active': activeSection == 'feed'}"><a href="#">Feed</a></div>
-          <div class="option" ng-click="activeSection = 'estudos'" ng-class="{'active': activeSection == 'estudos'}"><a href="#">Trilhas</a></div>
+          <!--<div class="option" ng-click="activeSection = 'estudos'" ng-class="{'active': activeSection == 'estudos'}"><a href="#">Trilhas</a></div>-->
 
         </div>
         <!-- end navbar-slider -->
@@ -254,12 +264,11 @@ socket.on("imagepath", function(a) {
 
       <div style="text-align: left;" class="user-collections" ng-if="activeSection == 'conhecimento'">
 
-        <div ng-repeat="n in ['Venture Capital', 'Valuation', 'SaaS', 'Algorithms', 'Node.JS', 'Business']" class="collection">
+        <div ng-repeat="n in categories" class="collection">
 
           <div class="dot" style="background-color: #000;"></div>
 
-          <div style="font-size: 1.2em; font-weight: bold;">{{n}}</div>
-          <div style="color: #909090;">4 items</div>
+          <div style="font-size: 1.2em; font-weight: bold;">{{n.title}}</div>
 
         </div>
 
