@@ -143,7 +143,8 @@ angular.module('netbase')
     var baseUrl = "https://educationalcommunity-classroom.herokuapp.com";
 
     $scope.openDialog = function(type, msg) {  // Opens Error Dialogs
-        ngDialog.open({
+        if($rootScope.alertDialog == null || $rootScope.alertDialog == undefined) $rootScope.alertDialog = [];
+        $rootScope.alertDialog.push(ngDialog.open({ 
             template: 'partials/modals/classroom_alert_modal.html',
             controller: "AcademiaClassroomsAlertCtrl",
             className: 'ngdialog-theme-default classroom-alert-modal',
@@ -151,7 +152,7 @@ angular.module('netbase')
                 type: type,
                 msg: msg
             }
-        });
+        }));    
     }
 
     if ($localStorage.token != undefined && $localStorage.token != null) {              // Check if logged in user
@@ -549,6 +550,7 @@ angular.module('netbase')
     $scope.selectDevice = function() {
         return new Promise((resolve, reject) => {
             navigator.mediaDevices.enumerateDevices().then(devices => {
+                console.log(devices);
                 let i;
                 for(i = 0; i < devices.length; i++) {
                     if(devices[i].kind == 'audioinput'){
@@ -577,7 +579,8 @@ angular.module('netbase')
 
         let i;
         if($scope.audioInputDevices.length == 0) {
-            ngDialog.open({ template: 'partials/modals/classroom_alert_modal.html', controller: "AcademiaClassroomsAlertCtrl", className: 'ngdialog-theme-default classroom-alert-modal', data: {type: "ERROR", msg: 'You have no microphones'}});
+            if($rootScope.alertDialog == null || $rootScope.alertDialog == undefined) $rootScope.alertDialog = [];
+            $rootScope.alertDialog.push(ngDialog.open({ template: 'partials/modals/classroom_alert_modal.html', controller: "AcademiaClassroomsAlertCtrl", className: 'ngdialog-theme-default classroom-alert-modal', data: {type: "ERROR", msg: 'You have no microphones'}}));
             $scope.audioStatus = null;
             $scope.audioDisabled = 'color-red';
         }
@@ -595,7 +598,8 @@ angular.module('netbase')
         }
 
         if($scope.videoInputDevices.length == 0) {
-            ngDialog.open({ template: 'partials/modals/classroom_alert_modal.html', controller: "AcademiaClassroomsAlertCtrl", className: 'ngdialog-theme-default classroom-alert-modal', data: {type: "ERROR", msg: 'You have no cameras'}});
+            if($rootScope.alertDialog == null || $rootScope.alertDialog == undefined) $rootScope.alertDialog = [];
+            $rootScope.alertDialog.push(ngDialog.open({ template: 'partials/modals/classroom_alert_modal.html', controller: "AcademiaClassroomsAlertCtrl", className: 'ngdialog-theme-default classroom-alert-modal', data: {type: "ERROR", msg: 'You have no cameras'}}));
             $scope.videoStatus = null;
             $scope.videoDisabled = 'color-red';
         }
@@ -734,7 +738,8 @@ angular.module('netbase')
     $scope.confirmSelect = function() {
         $rootScope.ifSelectedDevice = true;
         if($rootScope.constraints.audio == false && $rootScope.constraints.video == false){
-            ngDialog.open({ template: 'partials/modals/classroom_alert_modal.html', controller: "AcademiaClassroomsAlertCtrl", className: 'ngdialog-theme-default classroom-alert-modal', data: {type: "ERROR", msg: 'You have no cameras and microphones'}});
+            if($rootScope.alertDialog == null || $rootScope.alertDialog == undefined) $rootScope.alertDialog = [];
+            $rootScope.alertDialog.push(ngDialog.open({ template: 'partials/modals/classroom_alert_modal.html', controller: "AcademiaClassroomsAlertCtrl", className: 'ngdialog-theme-default classroom-alert-modal', data: {type: "ERROR", msg: 'You have no cameras and microphones'}}));
             return;
         }
         ngDialog.close();
@@ -889,7 +894,7 @@ angular.module('netbase')
                     }
                 }
 
-            } else if (titleDom.length > 1 && titleDom.length < 5 && countOfNone != 1) {
+           } else if (titleDom.length > 1 && titleDom.length < 5 && countOfNone != 1) {
 
                 for (i = 0; i < titleDom.length; i += 1) {
                     let k;
@@ -1560,8 +1565,9 @@ angular.module('netbase')
         let text = domain + "/a/university/" + universityUrl + "/roomid/" + roomSID + "/accountid/" + accountSid + "/roomname/" + roomName + "/";
 
         Clipboard.copy(text);           // Clipboard func is defined app/js/clipboard_func.js file
-        ngDialog.open({ template: 'partials/modals/classroom_alert_modal.html', controller: "AcademiaClassroomsAlertCtrl", className: 'ngdialog-theme-default classroom-alert-modal', data: {type: "Universidade", msg: 'Copied link to clipboard'}});
-
+        if($rootScope.alertDialog == null || $rootScope.alertDialog == undefined) $rootScope.alertDialog = [];
+        $rootScope.alertDialog.push(ngDialog.open({ template: 'partials/modals/classroom_alert_modal.html', controller: "AcademiaClassroomsAlertCtrl", className: 'ngdialog-theme-default classroom-alert-modal', data: {type: "Universidade", msg: 'Copied link to clipboard'}}));
+        
     }
 
     $scope.toggleAllControllers = function() {
@@ -1592,7 +1598,7 @@ angular.module('netbase')
         100);
     }
     $scope.confirm = function() {
-        ngDialog.closeAll();
+        ngDialog.close();
     }
 
 
@@ -1602,7 +1608,10 @@ angular.module('netbase')
     $scope.alertMsg = $scope.ngDialogData.msg;
     $scope.alertType = $scope.ngDialogData.type;
     $scope.confirmAlert = function() {
-        ngDialog.close();
+        //ngDialog.close();
+        if($rootScope.alertDialog.length == 0) return;
+        $rootScope.alertDialog[$rootScope.alertDialog.length - 1].close();
+        $rootScope.alertDialog.splice($rootScope.alertDialog.length - 1, 1);
     }
 }])
 
@@ -1712,7 +1721,8 @@ angular.module('netbase')
         .catch((err) => {
 
             ngDialog.close();
-            ngDialog.open({ template: 'partials/modals/classroom_alert_modal.html', controller: "AcademiaClassroomsAlertCtrl", className: 'ngdialog-theme-default classroom-alert-modal', data: {type: "ERROR", msg: err}});
+            if($rootScope.alertDialog == null || $rootScope.alertDialog == undefined) $rootScope.alertDialog = [];
+            $rootScope.alertDialog.push(ngDialog.open({ template: 'partials/modals/classroom_alert_modal.html', controller: "AcademiaClassroomsAlertCtrl", className: 'ngdialog-theme-default classroom-alert-modal', data: {type: "ERROR", msg: err}}));
 
         });
     }
@@ -1721,7 +1731,8 @@ angular.module('netbase')
         let text = domain + "/a/university/" + universityUrl + "/roomid/" + classroom.roomSID + "/accountid/" + classroom.accountSid + "/roomname/" + classroom.uniqueName + "/";
 
         Clipboard.copy(text);
-        ngDialog.open({ template: 'partials/modals/classroom_alert_modal.html', controller: "AcademiaClassroomsAlertCtrl", className: 'ngdialog-theme-default classroom-alert-modal', data: {type: "Universidade", msg: 'Copied link to clipboard'}});
+        if($rootScope.alertDialog == null || $rootScope.alertDialog == undefined) $rootScope.alertDialog = [];
+        $rootScope.alertDialog.push(ngDialog.open({ template: 'partials/modals/classroom_alert_modal.html', controller: "AcademiaClassroomsAlertCtrl", className: 'ngdialog-theme-default classroom-alert-modal', data: {type: "Universidade", msg: 'Copied link to clipboard'}}));
     }
 
 
@@ -1765,7 +1776,8 @@ angular.module('netbase')
         .catch((err) => {
 
             ngDialog.close();
-            ngDialog.open({ template: 'partials/modals/classroom_alert_modal.html', controller: "AcademiaClassroomsAlertCtrl", className: 'ngdialog-theme-default classroom-alert-modal', data: {type: "ERROR", msg: err}});
+            if($rootScope.alertDialog == null || $rootScope.alertDialog == undefined) $rootScope.alertDialog = [];
+            $rootScope.alertDialog.push(ngDialog.open({ template: 'partials/modals/classroom_alert_modal.html', controller: "AcademiaClassroomsAlertCtrl", className: 'ngdialog-theme-default classroom-alert-modal', data: {type: "ERROR", msg: err}}));
 
         });
     }
