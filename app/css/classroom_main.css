@@ -71,6 +71,7 @@
     overflow-y: auto;
     background-color: white;
     padding: 5px;
+    margin-bottom: 10px;
 }
 
 .meeting-display-container {
@@ -286,9 +287,14 @@
     
 }
 
-.chat-title-st {
-    width: 66%;
-    margin-left: 60px;
+.mine .chat-title-st {
+    width: 45%;
+    margin-left: 101px;
+}
+
+.other .chat-title-st {
+    width: 45%;
+    margin-left: 53px;
 }
 
 .chat-main-st {
@@ -349,25 +355,25 @@
 
 .chat-item-st.other .chat-body-st>div {
     position: relative;
-    width: 74%;
+    width: 80%;
     background-color: #dddddd;
     padding: 5px;
     border-radius: 5px;
     margin-left: 9px;
     word-break: break-all;
-    font-weight: 300;
+    font-weight: 600;
 }
 
 .chat-item-st.mine .chat-body-st>div {
     position: relative;
-    width: 72%;
+    width: 78%;
     background-color: #52bfea;
     padding: 5px;
     border-radius: 5px;
     margin-right: 11px;
-    margin-left: 39px;
+    margin-left: 13px;
     word-break: break-all;
-    font-weight: 300;
+    font-weight: 600;
 }
 
 .chat-item-st.mine .chat-body-st>div:before {

@@ -186,7 +186,8 @@ angular.module('netbase')
                 $scope.messagingClient.on('tokenExpired', $scope.chatCreate);
                 console.log('admin channel joined');
             })
-            .catch((err) => {                                                                       // If there's no channels first create the Admin
+            .catch((err) => {      
+                console.log(err);                                                                 // If there's no channels first create the Admin
                 console.log('load channel list first failed.');                                     // channel and reload channel list and define events
                 $scope.createAdminChannel().then(() => {
                     console.log('create admin channel success');
@@ -201,8 +202,9 @@ angular.module('netbase')
                         console.log(err);
                     });
                 })
-                .catch(() => {
-                    $scope.openDialog('ERROR', 'join failded');
+                .catch((err) => {
+                    console.log(err);
+                    $scope.openDialog('ERROR', 'join faild');
                 });
             });
 
@@ -225,6 +227,8 @@ angular.module('netbase')
                 $scope.channels = channels.items;
                 var i;
                 for(i = 0; i < $scope.channels.length; i++) {
+                    console.log($scope.channels[i]);
+                    console.log(roomSID);
                     if($scope.channels[i].uniqueName == roomSID) {
                         $scope.currentChannel = $scope.channels[i];
                         $scope.joinAdminChannel().then(() => {
@@ -1188,12 +1192,12 @@ angular.module('netbase')
         });
 
         participant.on('trackUnsubscribed', $scope.trackUnsubscribed);
-        participant.tracks.forEach(publication => {
-            if (publication.isSubscribed ) {
-                $scope.trackSubscribed(mainVideoDom, subTitleDom, publication.track);
-                console.log(publication.track);
-            }
-        });
+        // participant.tracks.forEach(publication => {
+        //     if (publication.isSubscribed ) {
+        //         $scope.trackSubscribed(mainVideoDom, subTitleDom, publication.track);
+        //         console.log(publication.track);
+        //     }
+        // });
 
         Students.getStudentById(participant.identity).then((res) => {
             $scope.participants.push(res.data.data);
@@ -1383,7 +1387,8 @@ angular.module('netbase')
     }
 
     $scope.attachVideo = function(track, videoContainer) {              // Attach participant's video to dom
-
+        console.log(track);
+        console.log(track.isSubscribed);
         angular.element(videoContainer.appendChild(track.attach())).bind('click', (e) => {
             var i;
 
