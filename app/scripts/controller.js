@@ -238,6 +238,8 @@ angular.module('netbase')
 
   // GET ALL CURATORSHIP
 
+  $scope.loading = true;
+
   /* forum posts */
   $scope.forumPosts = [];
 
@@ -259,6 +261,7 @@ angular.module('netbase')
               if (resCategory.success) {
 
                   $scope.categories = resCategory.data;
+                  $scope.loading = false;
 
               }
 

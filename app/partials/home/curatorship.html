@@ -43,9 +43,14 @@
         </div>
         <!-- -->
 
+        <div ng-show="loading" style="width: 100%; text-align: center; padding-top: 30px; padding-bottom: 30px;">
+          <img src="/img/loader.gif" height="50px" />
+        </div>
+        <!-- -->
+
         <div style="text-align: left;" class="user-collections">
 
-          <a  ng-repeat="n in categories | orderBy: '-createdAt'" ng-href="/home/curadoria/id/{{n._id}}">
+          <a ng-repeat="n in categories | orderBy: '-createdAt'" ng-href="/home/curadoria/id/{{n._id}}">
           <div class="collection">
 
             <div class="dot" style="background-color: #000;"></div>
