@@ -414,13 +414,12 @@
     width: 700px !important;
     height: 500px !important;
     margin-top: 100px !important;
+    background-color: #e6e6e6 !important;
 }
 
 .classroom-select-device-container {
     display: flex;
-    padding-top: 30px;
-    padding-left: 30px;
-    padding-right: 30px;
+    background-color: #e6e6e6
 }
 
 .join-button-group {
@@ -429,24 +428,25 @@
 }
 
 .join-button-group button {
-    width: 90px;
+    width: 74px;
     border-radius: 5px;
-    background-color: gray;
+    background-color: #333232;
     color: white;
     margin: 20px;
-    height: 50px;
+    height: 36px;
+    margin-left: 10px;
 }
 
 .video-setting-screen-controller {
     position: absolute;
     bottom: 100px;
-    left: 150px;
+    left: 180px;
 }
 
 .voice-setting-screen-controller {
     position: absolute;
     bottom: 100px;
-    right: 150px;
+    right: 180px;
 }
 
 #selecting_container {
@@ -454,8 +454,8 @@
 }
 
 #selecting_video {
-    width: 493px;
-    height: 425px;
+    width: 545px;
+    height: 460px;
     contain: strict;
     margin: 20px;
     background-color: black;
@@ -482,6 +482,10 @@
 
 .color-red {
     color: red;
+}
+
+.classroom-select-device-modal .ngdialog-close {
+    display: none;
 }
 
 @media screen and (max-width: 468px) {

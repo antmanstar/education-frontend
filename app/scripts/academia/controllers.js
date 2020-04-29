@@ -589,6 +589,10 @@ angular.module('netbase')
     $scope.videoDisabled = 'color-white';
     $scope.audioDisabled = 'color-white';
 
+    $scope.cancel = function() {
+        ngDialog.close();
+    }
+
     $scope.selectDevice = function() {
         return new Promise((resolve, reject) => {
             navigator.mediaDevices.enumerateDevices().then(devices => {
