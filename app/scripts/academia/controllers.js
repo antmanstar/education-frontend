@@ -186,11 +186,14 @@ angular.module('netbase')
                 $scope.messagingClient.on('tokenExpired', $scope.chatCreate);
                 console.log('admin channel joined');
             })
-            .catch((err) => {                                                                       // If there's no channels first create the Admin
+            .catch((err) => {      
+                console.log(err);                                                                 // If there's no channels first create the Admin
                 console.log('load channel list first failed.');                                     // channel and reload channel list and define events
-                $scope.createAdminChannel().then(() => {
+                $scope.createAdminChannel().then((channel) => {
+                    console.log($scope.currentChannel);
+                    console.log(channel);
                     console.log('create admin channel success');
-                    $scope.loadChannelList().then(() => {
+                    $scope.joinAdminChannel().then(() => {
                         $scope.messagingClient.on('channelAdded', $scope.loadChannelList);
                         $scope.messagingClient.on('channelRemoved', $scope.loadChannelList);
                         $scope.messagingClient.on('tokenExpired', $scope.chatCreate);
@@ -201,8 +204,9 @@ angular.module('netbase')
                         console.log(err);
                     });
                 })
-                .catch(() => {
-                    $scope.openDialog('ERROR', 'join failded');
+                .catch((err) => {
+                    console.log(err);
+                    $scope.openDialog('ERROR', 'The admin chatting channel is not created yet');
                 });
             });
 
@@ -222,21 +226,49 @@ angular.module('netbase')
             }
 
             $scope.messagingClient.getPublicChannelDescriptors().then(function(channels) {
-                $scope.channels = channels.items;
-                var i;
-                for(i = 0; i < $scope.channels.length; i++) {
-                    if($scope.channels[i].uniqueName == roomSID) {
-                        $scope.currentChannel = $scope.channels[i];
+                
+                $scope.getPublicChannelsFromAllPages(channels).then(() => {
+                    let i;
+
+                    for(i = 0; i < $scope.publicChannelArr.length; i++) {
+                        if($scope.publicChannelArr[i].uniqueName == roomSID) {
+                            break;
+                        }
+                    }
+
+                    if(i == $scope.publicChannelArr.length) {
+                        reject(new Error('none admin channel'));
+                    }
+
+                    $scope.messagingClient.getChannelBySid($scope.publicChannelArr[i].sid).then((comparingChannel) => {
+                        $scope.currentChannel = comparingChannel;
                         $scope.joinAdminChannel().then(() => {
                             resolve();
                         });
-                        break;
-                    }
-                }
-                if(i == $scope.channels.length){
-                    reject(new Error('none_admin_channel'));
-                }
+                    });
+                });
             });
+        });
+    }
+
+    $scope.getPublicChannelsFromAllPages = function(channel) {
+        return new Promise((resolve, reject) => {
+            if( $scope.publicChannelArr == null || $scope.publicChannelArr == undefined) {
+                $scope.publicChannelArr = [];
+            }
+            let i;
+            for(i = 0; i < channel.items.length; i++){
+                $scope.publicChannelArr.push({sid: channel.items[i].sid, uniqueName: channel.items[i].uniqueName});
+            }
+            if(channel.hasNextPage) {
+                channel.nextPage().then(nextChannel => {
+                    $scope.getPublicChannelsFromAllPages(nextChannel).then(() => {
+                        resolve();
+                    });
+                });
+            }
+            else
+                resolve();
         });
     }
 
@@ -249,10 +281,14 @@ angular.module('netbase')
                     friendlyName: GENERAL_CHANNEL_NAME
                 }).then((channel) => {
                     $scope.currentChannel = channel;
-                    resolve();
-                }).catch(() => {
+                    resolve($scope.currentChannel);
+                }).catch((err) => {
+                    console.log(err);
                     reject(new Error('already exists'));
                 })
+            }
+            else {
+                reject(new Error('you are not admin'));
             }
         })
     }
@@ -276,9 +312,14 @@ angular.module('netbase')
                     $scope.initChannelEvents();
                     resolve();
                 })
+                .catch(err => {
+                    console.log(err);
+                    reject(new Error('error'));
+                })
             }
             else {
                 $scope.initChannel($scope.currentChannel).then((channel) => {
+                    console.log(channel);
                     $scope.currentChannel = channel;
                     $scope.joinChannel(channel).then((_channel) => {
                         $scope.currentChannel = _channel;
@@ -386,6 +427,7 @@ angular.module('netbase')
 
     $scope.loadMessages = function() {
         let i;
+        console.log('loading messages');
         $scope.currentChannel.getMessages(MAX_LOAD_MESSAGE_COUNT).then(function (messages) {
             let messageArr = messages.items;
             messageArr.sort(msgSortFunc2);
@@ -546,6 +588,10 @@ angular.module('netbase')
     $scope.videoToggle = 'fas fa-video';
     $scope.videoDisabled = 'color-white';
     $scope.audioDisabled = 'color-white';
+
+    $scope.cancel = function() {
+        ngDialog.close();
+    }
 
     $scope.selectDevice = function() {
         return new Promise((resolve, reject) => {
@@ -996,6 +1042,7 @@ angular.module('netbase')
         console.log($rootScope.constraints);
 
         if($rootScope.constraints.audio == false && $rootScope.constraints.video == false){
+            ngDialog.open({ template: 'partials/modals/classroom_select_device_modal.html', controller: 'AcademiaClassroomSelectDeviceCtrl', className: 'ngdialog-theme-default classroom-select-device-modal', data: { redirectUrl: redirectUrl } });
             return;
         }
 
@@ -1188,12 +1235,12 @@ angular.module('netbase')
         });
 
         participant.on('trackUnsubscribed', $scope.trackUnsubscribed);
-        participant.tracks.forEach(publication => {
-            if (publication.isSubscribed ) {
-                $scope.trackSubscribed(mainVideoDom, subTitleDom, publication.track);
-                console.log(publication.track);
-            }
-        });
+        // participant.tracks.forEach(publication => {
+        //     if (publication.isSubscribed ) {
+        //         $scope.trackSubscribed(mainVideoDom, subTitleDom, publication.track);
+        //         console.log(publication.track);
+        //     }
+        // });
 
         Students.getStudentById(participant.identity).then((res) => {
             $scope.participants.push(res.data.data);
@@ -1383,7 +1430,8 @@ angular.module('netbase')
     }
 
     $scope.attachVideo = function(track, videoContainer) {              // Attach participant's video to dom
-
+        console.log(track);
+        console.log(track.isSubscribed);
         angular.element(videoContainer.appendChild(track.attach())).bind('click', (e) => {
             var i;
 
