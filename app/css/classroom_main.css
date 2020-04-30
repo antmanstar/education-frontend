@@ -499,30 +499,24 @@
         height: 100%;
         width: 100%;
     }
-    
     .meeting-classroom-main {
         padding: 0px;
         margin-top: 0px;
     }
-    
     .controller-container {
         width: 100%;
     }
-    
     .bottom-controller-container {
         margin-bottom: 10px;
         padding-left: 15px;
         padding-right: 15px;
     }
-    
     .classroom-chat-container>.avatar-container {
         margin-top: 25px;
     }
-    
     .mobile-invisible {
         display: none !important;
     }
-    
     .mobile-visible {
         display: flex !important;
     }
@@ -560,45 +554,6 @@
         left: -100%;
         height: 100%;
         z-index: 50;
-    }
-
-    .classroom-select-device-modal .ngdialog-content {
-        width: 100vw !important;
-    }
-
-    .classroom-select-device-container {
-        display: flex;
-        flex-direction: column;
-        padding-top: 47px;
-    }
-
-    #selecting_video {
-        width: 100%;
-        height: 300px;
-        margin-top: 20px;
-        margin-left: 0px;
-    }
-
-    .video-setting-screen-controller {
-        position: absolute;
-        bottom: 50px;
-        left: 90px;
-    }
-
-    .voice-setting-screen-controller {
-        position: absolute;
-        bottom: 50px;
-        right: 90px;
-    }
-
-    .join-button-group {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-    }
-
-    .sub-video-title {
-        position: relative;
     }
 }
 
@@ -613,30 +568,24 @@
         height: 100%;
         width: 100%;
     }
-
     .meeting-classroom-main {
         padding: 0px;
         margin-top: 0px;
     }
-    
     .controller-container {
         width: 100%;
     }
-    
     .bottom-controller-container {
         margin-bottom: 10px;
         padding-left: 15px;
         padding-right: 15px;
     }
-    
     .classroom-chat-container>.avatar-container {
         margin-top: 25px;
     }
-    
     .mobile-invisible {
         display: none !important;
     }
-    
     .mobile-visible {
         display: flex !important;
     }
@@ -674,44 +623,5 @@
         left: -100%;
         height: 100%;
         z-index: 50;
-    }
-
-    .classroom-select-device-modal .ngdialog-content {
-        width: 100vw !important;
-    }
-
-    .classroom-select-device-container {
-        display: flex;
-        flex-direction: column;
-        padding-top: 47px;
-    }
-
-    #selecting_video {
-        width: 100%;
-        height: 300px;
-        margin-top: 20px;
-        margin-left: 0px;
-    }
-
-    .video-setting-screen-controller {
-        position: absolute;
-        bottom: 50px;
-        left: 90px;
-    }
-
-    .voice-setting-screen-controller {
-        position: absolute;
-        bottom: 50px;
-        right: 90px;
-    }
-
-    .join-button-group {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-    }
-
-    .sub-video-title {
-        position: relative;
     }
 }
