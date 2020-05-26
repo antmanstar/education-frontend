@@ -607,6 +607,9 @@ angular.module('netbase')
 
   $scope.originalPath = originalPath;
 
+  $scope.universitiesKnowledgeDisplay = 'popular';
+
+  //
   Knowledge.getAllPaginated().success(function(res) {
 
     let data = res.data;
@@ -614,8 +617,12 @@ angular.module('netbase')
     let docs = data.docs;
 
     $scope.knowledges = docs;
+    console.log("knowledges: ")
+    console.log($scope.knowledges)
+    //$scope.universities = docs.data;
 
   });
+  //
 
   University.getUniversities().then(function(res) {
 
@@ -632,6 +639,58 @@ angular.module('netbase')
   });
 
   /* */
+  $scope.createCommunity = function() {
+    $location.path('/onboarding/universities/create');
+  }
+  /* */
+  $scope.createVideocall = function() {
+    $location.path('/home/calls');
+  }
+  /* */
+  $scope.createCommunity = function() {
+    $location.path('/onboarding/universities/create');
+  }
+  /* */
+
+  /* */
+  $scope.knowledgeValidate = function(id) {
+    console.log("validate: ")
+    console.log(id)
+
+    if ($scope.universitiesKnowledgeSelect == id) {
+      return true
+    } else {
+      return false
+    }
+
+  }
+  //
+
+  $scope.signup = function() {
+    ngDialog.open({ template: 'partials/modals/signup.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
+  }
+
+  /* */
+  $scope.selectKnowledge = function(id) {
+
+    $scope.universitiesKnowledgeSelect = id;
+
+    Knowledge.getById(id).success(function(res) {
+
+      console.log("universities: ")
+      console.log(res.data.universities);
+      let universitiesInKnowledge = res.data.universities;
+
+      $scope.universitiesKnowledgeDisplay = 'category';
+
+      $scope.universities = universitiesInKnowledge;
+
+    });
+    //Knowledge.getById
+
+  }
+
+  /* */
   $scope.actionMenuDisplay = false;
 
   $scope.open = function() {
@@ -644,7 +703,6 @@ angular.module('netbase')
 
   }
   /* */
-
 
   /* LEARNING TAB */
   $scope.learningTabActive = 'paths';
@@ -3184,6 +3242,8 @@ $scope.deleteContent = function() {
     let nameValidated = false;
     let emailValidated = false;
 
+    // FIX THIS PATTERN, DONT ACCEPT @WELOVE.EDUCATION
+
     /* reg ex */
     let emailPattern = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
 
@@ -4356,6 +4416,12 @@ Courses.getAll().success(function(res) {
     }
 
   });
+  //
+
+  $scope.playAudio = function() {
+    var audio = new Audio('sounds/cursorHover.wav');
+    audio.play();
+  };
 
 
 }])

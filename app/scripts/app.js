@@ -87,6 +87,7 @@ angular.module('netbase', [
         .when('/onboarding/universities/create', {
             templateUrl: 'partials/onboarding/universitycreate/create.html',
             controller: 'OnboardingUniversityCreateCtrl',
+            resolve: auth
         })
         .when('/onboarding/signup', {
             templateUrl: 'partials/onboarding/signupstep1.html',
@@ -112,7 +113,6 @@ angular.module('netbase', [
             templateUrl: 'partials/courses/estudar.html',
             controller: 'CoursesEstudarCtrl',
         })
-
         .when('/cursos/id/view/document/:id/:videoid/:post_id', {
             templateUrl: 'partials/courses/estudar/document.html',
             controller: 'CoursesEstudarTypeDocumentCtrl',
@@ -480,12 +480,13 @@ angular.module('netbase', [
         })
         .when('/home/calls', {
             templateUrl: 'partials/home/userclassrooms.html',
-            controller: 'HomePersonalClassroom'
+            controller: 'HomePersonalClassroom',
+            resolve: auth
         })
         .when('/home/timeline', {
             templateUrl: 'partials/home/hometimeline.html',
             controller: 'HomeTimelineCtrl',
-            resolve: auth,
+            resolve: auth
         })
         .when('/home/noticias', {
             templateUrl: 'partials/home/homenews.html',
