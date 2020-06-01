@@ -97,6 +97,10 @@ angular.module('netbase', [
             templateUrl: 'partials/playlist/create.html',
             controller: 'PlaylistCreateCtrl',
         })
+        .when('/sobre', {
+            templateUrl: 'partials/sobre/index.html',
+            controller: 'SobreIndexCtrl',
+        })
         .when('/cursos/id/:id', {
             templateUrl: 'partials/courses/byid.html',
             controller: 'CoursesByIdCtrl',

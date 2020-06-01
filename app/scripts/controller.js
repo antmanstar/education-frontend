@@ -4,6 +4,20 @@
 
 angular.module('netbase')
 
+.controller('SobreIndexCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'University', 'Playlist', 'Forum', 'User', '$window', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, University, Playlist, Forum, User, $window) {
+
+  console.log("Fooooterr");
+
+  let url = $route.current;
+  let originalPath = url.$$route.originalPath;
+
+  console.log("ORIGINAL PATHHHHHH")
+  console.log(originalPath)
+
+  $scope.originalPath = originalPath;
+
+}])
+
 .controller('HomeCuratorshipForumPostCreate', ['$rootScope', '$scope', '$location', '$route', 'University', 'ngDialog', 'Forum', function($rootScope, $scope, $location, $route, University, ngDialog, Forum) {
 
     let studentId = jwtHelper.decodeToken($localStorage.token)._id;
