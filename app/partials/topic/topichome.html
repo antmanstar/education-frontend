@@ -22,29 +22,16 @@
 
 <div class="container-fluid container-home">
 
-  <div style="height: 250px; margin-left: -15px; margin-right: -15px; position: relative; background-position: center center; background-size: cover; background-image:url('https://wakefield.apsva.us/wp-content/uploads/sites/37/2019/07/sport-1.jpg')">
-    <div class="knowledge-title" style="font-size: 1.55em; position: absolute; bottom: 15px; left: 15px; background-color: #fff; border-radius: 5px; padding: 5px; padding-left: 15px; padding-right: 15px;">{{knowledge.title}}</div>
-  </div>
+  <div class="row" style="padding-bottom: 15px; padding-top: 15px;">
 
-  <div class="row" style="padding-bottom: 15px;">
+    <div class="col-xs-12 col-sm-12">
 
-    <div class="col-xs-12 col-sm-6">
-
-      <!--
-      <div class="knowledge-meta">
-
-        <div class="knowledge-title" style="font-size: 1.85em;">{{knowledge.title}}</div>
-
+      <div>
+        <div style="display: inline-block; padding-right: 7px;"><img src="{{knowledge.icon}}" height="45px" /></div>
+        <div style="display: inline-block; vertical-align: top; line-height: 45px; padding-top: 0px;" class="knowledge-title">{{knowledge.title}}</div>
       </div>
-      -->
-      <!-- end knowledge-meta -->
 
-    </div>
-    <!-- col-xs-12 col-sm-6 -->
-
-    <div class="col-xs-12 col-sm-6 hide-max-768" style="padding-right: 0; min-height: 290px;">
-
-      <div class="knowledge-image"><img src="{{knowledge.backgroundImage}}" /></div>
+      <div style="height: 70px;"></div>
 
     </div>
     <!-- col-xs-12 col-sm-6 -->
@@ -72,7 +59,7 @@
 
       <!-- start universidades -->
       <div style="padding-bottom: 15px;">
-        <div class="knowledge-title" style="padding-top: 0;">Universidades</div>
+        <div class="knowledge-title" style="padding-top: 0; font-size: 1.5em;">Universidades</div>
       </div>
 
       <div class="section-cards" style="padding-bottom: 5px; margin-top: 8px; padding-left: 0px;">
@@ -86,16 +73,19 @@
 
       <!-- start courses -->
 
+      <!--
       <div style="padding-bottom: 15px;">
         <div class="knowledge-title">Cursos</div>
       </div>
 
       <coursehomebox c="5dd229986d7c71000419c5ce"></coursehomebox>
+      -->
 
       <!-- end courses -->
 
       <!-- start posts -->
 
+      <!--
       <div style="padding-bottom: 15px;">
         <div class="knowledge-title">Posts</div>
       </div>
@@ -103,6 +93,7 @@
       <div infinite-scroll='nextPage()' infinite-scroll-disabled='busy' infinite-scroll-distance='1'>
         <timelineposthome fp="{{fp}}" ng-repeat="fp in forumPosts"></timelinepost>
       </div>
+      -->
 
       <!-- end posts -->
 

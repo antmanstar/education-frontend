@@ -50,23 +50,21 @@
       <div style="color: #2f4457; font-size: 2.5em; margin-bottom: 5px; font-weight: bolder;  margin-bottom: 80px;">{{course.title}}</div>
 
       <!-- -->
-      <div class="course-card" style="border: 1px solid #ababab; box-shadow: unset; width: 100%; padding: 0px; padding-top; 1px;padding-left: 1px; padding-right: 1px;">
-
-      
-        <trix-editor style="margin-bottom: 15px;"   class="trix-content" ng-model="description" angular-trix trix-initialize="trixInitialize(e, editor);" trix-change="trixChange(e, editor);" trix-selection-change="trixSelectionChange(e, editor);" trix-focus="trixFocus(e, editor);" trix-blur="trixBlur(e, editor);" ></trix-editor>
-        <button ng-click="save(description)" type="button" class="btn btn-info">Submit</button>
+      <div class="course-card" style="box-shadow: unset; width: 100%; padding: 0px; padding-top; 1px;padding-left: 1px; padding-right: 1px;">
+        <trix-editor style="margin-bottom: 15px; min-height: 100px;" class="trix-content" ng-model="description" angular-trix trix-initialize="trixInitialize(e, editor);" trix-change="trixChange(e, editor);" trix-selection-change="trixSelectionChange(e, editor);" trix-focus="trixFocus(e, editor);" trix-blur="trixBlur(e, editor);" ></trix-editor>
+        <button ng-click="save(description)" type="button" class="btn btn-info">Enviar</button>
       </div>
-     
+
       <!-- -->
 
       <div class="course-card" ng-repeat="t in timelines">
 
         <div class="user-image" style="line-height: 30px; margin-bottom: 10px;" studentinfosmall sid="{{t.accountId}}">
-          
+
         </div>
 
         <div style="font-size: 1.2em;" ng-bind-html="t.description">
-         
+
         </div>
 
       </div>

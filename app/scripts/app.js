@@ -24,8 +24,8 @@ angular.module('netbase', [
 ])
 .config(['$translateProvider', '$localStorageProvider', 'StripeElementsProvider', function ($translateProvider, $localStorageProvider, StripeElementsProvider) {
 
-  //let stripeKey = "pk_live_ZBmOf7GNQ13AIEGeP9WkPv3M";
-  let stripeKey = "pk_test_2XclbP1INDqkspKrbRn6oBZR";
+  let stripeKey = "pk_live_ZBmOf7GNQ13AIEGeP9WkPv3M";
+  //let stripeKey = "pk_test_2XclbP1INDqkspKrbRn6oBZR";
 
   //AnalyticsProvider.setAccount('UA-125408424-1');
 
@@ -141,15 +141,15 @@ angular.module('netbase', [
             templateUrl: 'partials/courses/suite/index.html',
             controller: 'CoursesSuiteIndexCtrl',
         })
-        .when('/cursos/suite/modulos', {
+        .when('/cursos/a/:universityid/suite/modulos', {
             templateUrl: 'partials/courses/suite/modulos.html',
             controller: 'CoursesModulosCtrl',
         })
-        .when('/cursos/suite/owner/view/:id', {
+        .when('/cursos/a/:universityid/suite/owner/view/:id', {
             templateUrl: 'partials/courses/suite/modulos-course.html',
-            controller: 'CoursesModulossingleCtrl',
+            controller: 'CoursesModulosSingleCtrl',
         })
-        .when('/cursos/suite/createPage/:id', {
+        .when('/cursos/a/:universityid/suite/createPage/:id', {
           templateUrl: 'partials/courses/suite/createPage.html',
           controller: 'CoursesCreatePageCtrl',
         })
@@ -169,15 +169,15 @@ angular.module('netbase', [
           templateUrl: 'partials/courses/modals/video-forum-content.html',
           controller: 'editVideoForumContentCtrl',
         })
-        .when('/cursos/suite/content', {
+        .when('/cursos/a/:universityid/suite/content', {
             templateUrl: 'partials/courses/suite/content.html',
             controller: 'CoursesContentModulosCtrl',
         })
-        .when('/cursos/suite/modulos/id/:id', {
+        .when('/cursos/a/:universityid/suite/modulos/id/:id', {
             templateUrl: 'partials/courses/suite/modulosbyid.html',
             controller: 'CoursesModulosByIdCtrl',
         })
-        .when('/cursos/suite/owner', {
+        .when('/cursos/a/:universityid/suite/owner', {
             templateUrl: 'partials/courses/suite/owner.html',
             controller: 'CoursesOwnerCtrl',
         })

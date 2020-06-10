@@ -33,7 +33,12 @@ figure img {
 
       <div class="academia-content-forum">
 
-        <div class="academia-content-forum-post">
+        <div ng-hide="forumPost.title.length > 0" style="text-align: center;">
+          <img src="/img/loader.gif" height="50px" />
+          Carregando
+        </div>
+
+        <div ng-show="forumPost.title.length > 0" class="academia-content-forum-post">
 
           <div class="academia-content-forum-post-stats">
 

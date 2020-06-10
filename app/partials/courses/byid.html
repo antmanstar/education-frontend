@@ -7,20 +7,23 @@
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
       <div style="color: #2f4457; font-size: 2.5em; margin-bottom: 5px; font-weight: bolder;">{{course.title}}</div>
-    <ng-containner ng-if="course.free==true || useraccess==true">
-      <div  style="float: right; text-align: right;">
-      <a href="/cursos/id/{{course._id}}/timeline" class="btn btn-green button-highlighter" style="font-size: 1em;float:right"><b>Access the courses</b></a>
-    </div>
-    </ng-containner>
-    <ng-containner ng-if="course.free!=true">
-      <div  style="float: right; text-align: right;">
-        <div style="font-size: 1.8em; color: #2f4457f7;"><b>R${{course.price}}</b></div>
 
-        <div style="padding-bottom: 10px; font-size: 0.9em; color: #616161;">OU 12x R${{course.price/12}}</div>
-        <button class="btn btn-green button-highlighter" style="font-size: 1em;" ng-click="openPaymentDialog()"><b>Iniciar o curso</b></button>
-
+      <ng-containner ng-if="course.free==true || useraccess==true">
+        <div  style="float: right; text-align: right;">
+        <a href="/cursos/id/{{course._id}}/timeline" class="btn btn-green button-highlighter" style="font-size: 1em; float: right; padding-top: 0px; padding-bottom: 0; line-height: 44px;"><b>Acessar o curso</b></a>
       </div>
-    </ng-containner>
+      </ng-containner>
+
+      <ng-containner ng-if="course.free!=true">
+        <div  style="float: right; text-align: right;">
+          <div style="font-size: 1.8em; color: #2f4457f7;"><b>R${{course.price}}</b></div>
+
+          <div style="padding-bottom: 10px; font-size: 0.9em; color: #616161;">OU 12x R${{course.price/12}}</div>
+          <button class="btn btn-green button-highlighter" style="font-size: 1em; padding-top: 0px; padding-bottom: 0; line-height: 44px;" ng-click="openPaymentDialog()"><b>Iniciar o curso</b></button>
+
+        </div>
+      </ng-containner>
+
       <div style="font-size: 1.15em; margin-bottom: 15px;">
         <div style="display: inline-block; margin-right: 10px; margin-bottom: 5px;"><i class="fas fa-clock" style="padding-right: 5px;"></i> 24 horas</div>
         <div style="display: inline-block;"><i class="fas fa-chart-bar" style="padding-right: 5px;"></i> Introdutório a Intermediário</div>
@@ -54,8 +57,7 @@
 
       <div style="font-size: 1.8em; margin-bottom: 15px; font-weight: 600; color: #2f4457;">Receba um Certificado</div>
 
-      <div style="font-size: 1.4em;">
-        Ao concluir todos os cursos e concluir o projeto prático, você receberá um certificado que poderá compartilhar com possíveis empregadores e sua rede profissional.</div>
+      <div style="font-size: 1.4em;">Ao concluir todos os cursos e concluir o projeto prático, você receberá um certificado que poderá compartilhar com possíveis empregadores e sua rede profissional.</div>
 
     </div>
     <!-- -->
@@ -177,7 +179,7 @@
       </div>
       <!-- end instrutoras -->
 
-      
+
 
     </div>
 
@@ -214,7 +216,7 @@
           <div class="text">
             OBJETIVO</br>{{c.moduleId.goal}}
           </div>
-        
+
         </div>
         <div class="topic">
 
@@ -228,10 +230,10 @@
 
         </div>
         <ng-containner ng-if="c.moduleId.content.length>0" coursemodulecontent courseid="{{course._id}}" mc="{{c.moduleId.content}}">
-        
+
         </ng-containner>
-        
-        
+
+
         <!-- -->
 
       </div>
@@ -241,7 +243,7 @@
   </ng-containner>
     <!-- -->
 
-    
+
 
     </div>
     <!-- -->

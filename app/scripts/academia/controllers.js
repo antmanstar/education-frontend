@@ -107,13 +107,28 @@ angular.module('netbase')
 
 /* end landing pages */
 
-.controller('AcademiaCoursesCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', function($rootScope, $scope, $location, $route, University) {
+.controller('AcademiaCoursesCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Courses', function($rootScope, $scope, $location, $route, University, Courses) {
 
     let universityUrl = $route.current.params.academiaName;
 
     University.getUniversity(universityUrl).then(function(res) {
 
         $scope.university = res.data.data;
+
+        Courses.getByUniversityId($scope.university._id).success(function(res) {
+
+          console.log(res)
+
+          if (res.success) {
+
+            console.log(res.data)
+            $scope.courses = res.data;
+            //$location.path('/cursos/suite');
+
+          }
+
+        });
+        //END Courses.getCoursesByAccount()
 
     });
     //END University.getUniversity()
@@ -156,7 +171,9 @@ angular.module('netbase')
     }
 
     if ($localStorage.token != undefined && $localStorage.token != null) {              // Check if logged in user
+
         GENERAL_CHANNEL_UNIQUE_NAME = jwtHelper.decodeToken($localStorage.token)._id;   // chat member unique name(= user identity)
+
         Students.getStudentById(GENERAL_CHANNEL_UNIQUE_NAME).then(res => {
 
             GENERAL_CHANNEL_NAME = res.data.data.name;                                  // chat friendly name
@@ -172,10 +189,14 @@ angular.module('netbase')
             }).catch(err => {
                 $scope.openDialog('ERROR', err);
             });
+
         });
+        //Students.getStudentById()
+
     }
 
     $scope.chatCreate = function(token) {                                                           // Create chat client
+
         Twilio.Chat.Client.create(token).then(function(client) {
             $scope.messagingClient = client;
             updateConnectedUI();
@@ -186,7 +207,7 @@ angular.module('netbase')
                 $scope.messagingClient.on('tokenExpired', $scope.chatCreate);
                 console.log('admin channel joined');
             })
-            .catch((err) => {      
+            .catch((err) => {
                 console.log(err);                                                                 // If there's no channels first create the Admin
                 console.log('load channel list first failed.');                                     // channel and reload channel list and define events
                 $scope.createAdminChannel().then((channel) => {
@@ -211,6 +232,8 @@ angular.module('netbase')
             });
 
         });
+        //END Twilio.Chat.Client
+
     }
 
     function updateConnectedUI() {
@@ -226,7 +249,7 @@ angular.module('netbase')
             }
 
             $scope.messagingClient.getPublicChannelDescriptors().then(function(channels) {
-                
+
                 $scope.getPublicChannelsFromAllPages(channels).then(() => {
                     let i;
 
@@ -2685,10 +2708,10 @@ angular.module('netbase')
 
     if (type == "video") {
 
-        $scope.title = "Add YouTube video";
+        $scope.title = "Adicionar vídeo do YouTube";
         $scope.form.iconClass = "fab fa-youtube";
         $scope.form.placeholder = "YouTube Link";
-        $scope.form.button = "Add video";
+        $scope.form.button = "Adicionar vídeo";
 
         $scope.add = function() {
 

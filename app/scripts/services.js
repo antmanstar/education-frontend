@@ -933,7 +933,7 @@ angular.module('netbase')
 
       //var baseUrl = "https://api.universida.de/accounts/students";
       var baseUrl = "https://educationalcommunity-accounts.herokuapp.com/accounts/students";
-      //var baseUrl = "http://localhost:8000/accounts/students";
+      //var baseUrl = "http://localhost:9000/accounts/students";
 
       return {
 
@@ -1165,7 +1165,7 @@ angular.module('netbase')
 
       //var baseUrl = "https://api.universida.de/search";
       //var baseUrl = "https://network-search-prod.herokuapp.com/search";
-      var baseUrl = "https://network-search-prod.herokuapp.com/search" 
+      var baseUrl = "https://network-search-prod.herokuapp.com/search"
 
       return {
 
@@ -1682,9 +1682,40 @@ angular.module('netbase')
       //var baseUrl = "https://api.universida.de/search";
 
       //var baseUrl = "https://educationalcommunity-pay.herokuapp.com";
-      var baseUrl = "https://educationalcommunity-courses.herokuapp.com/courses";
-      //var baseUrl="http://localhost:9000/courses"
+      //var baseUrl = "https://educationalcommunity-courses.herokuapp.com/courses";
+      var baseUrl="http://localhost:9888/courses"
+
       return {
+
+        getByUniversityId: function(id) {
+
+          let url = "/universityid/" + id;
+
+          return $http.get(baseUrl + url);
+
+        },
+
+        userViewedContentInsideCourse: function(courseId, moduleId, contentId) {
+
+          let url = "/id/" + courseId + "/module/id/" + moduleId + "/content/id/" + contentId + "/viewed";
+
+          return $http({
+
+            url: baseUrl + url,
+            method: 'POST',
+            transformRequest: function(obj) {
+              var str = [];
+              for(var p in obj)
+              str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+              return str.join("&");
+            },
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'x-access-token': $localStorage.token
+            }});
+            //
+
+        },
 
         getAll: function(id) {
 
@@ -1693,6 +1724,7 @@ angular.module('netbase')
           return $http.get(baseUrl + url);
 
         },
+
         getquizResult: function(qid,uid,rid) {
 
           let url = "/quiz-result/"+qid+"/"+uid+"/"+rid;

@@ -1,36 +1,41 @@
-<div class="container-fluid">
-  <div ng-include="'partials/headerhome.html'"></div>
+<div class="container-fluid" style="padding-top: 15px;">
 
   <div class="row">
     <div class="col-sm-9">
       <div class="row">
         <div class="col-sm-12 content-part">
-           
-     <ng-containner ng-if="type=='document' || type=='page'">
-        
-       <div ng-controller="CoursesEstudarTypeDocumentCtrl">
-        <div  ng-include="'partials/courses/estudar/document.html'"></div>
-       </div>
-      </ng-containner>
-      <ng-containner ng-if="type=='forumpost' || type=='forum'">
-        
-       <div ng-controller="CoursesEstudarTypeForumCtrl">
-        <div  ng-include="'partials/courses/estudar/forum.html'"></div>
-       </div>
-      </ng-containner>
-      <ng-containner ng-if="type=='quiz'">
-      
-       <div ng-controller="CoursesEstudarTypeQuizCtrl">
-        <div mc="{{type}}" ng-include="'partials/courses/estudar/quiz.html'"></div>
-       </div>
-       </ng-containner>
-       <ng-containner ng-if="type=='video' || type=='videos'">
-      
-       <div ng-controller="CoursesEstudarTypeVideoCtrl">
-        <div mc="{{type}}" ng-include="'partials/courses/estudar/videos.html'"></div>
-       </div>
-       </ng-containner>
+
+           <ng-containner ng-if="type=='document' || type=='page'">
+
+             <div ng-controller="CoursesEstudarTypeDocumentCtrl">
+              <div ng-include="'partials/courses/estudar/document.html'"></div>
+             </div>
+            </ng-containner>
+
+            <ng-containner ng-if="type=='forumpost' || type=='forum'">
+
+             <div ng-controller="CoursesEstudarTypeForumCtrl">
+              <div ng-include="'partials/courses/estudar/forum.html'"></div>
+             </div>
+            </ng-containner>
+
+            <ng-containner ng-if="type=='quiz'">
+
+             <div ng-controller="CoursesEstudarTypeQuizCtrl">
+              <div mc="{{type}}" ng-include="'partials/courses/estudar/quiz.html'"></div>
+             </div>
+             </ng-containner>
+
+             <ng-containner ng-if="type=='video' || type=='videos'">
+
+             <div ng-controller="CoursesEstudarTypeVideoCtrl">
+              <div mc="{{type}}" ng-include="'partials/courses/estudar/videos.html'"></div>
+             </div>
+             </ng-containner>
+
         </div>
+
+        <!--
         <div class="col-sm-12">
           <div class="content-body">
             <ul class="nav nav-tabs">
@@ -47,12 +52,15 @@
             </div>
           </div>
         </div>
+        -->
+
       </div>
 
     </div>
     <div class="col-sm-3 right-side">
       <div class="panel-group" id="accordion">
         <ng-containner ng-repeat="c in course.module">
+
         <div class="panel panel-default">
           <div class="panel-heading">
             <h5 class="panel-title">
@@ -61,16 +69,18 @@
             </h5>
             <small>0/{{c.moduleId.content.length}} | {{c.moduleId.duration}}</small>
           </div>
+
           <div id="collapse{{$index}}" class="panel-collapse collapse" ng-class="{in: $index == 0}">
             <div class="panel-body">
-              <ul class="list-inline" ng-if="c.moduleId.content.length>0" coursemodulecontentmoduloview mc="{{c.moduleId.content}}" in="{{$index+1}}" courseid="{{course._id}}">
-                
-              </ul>
+              <ul class="list-inline" ng-if="c.moduleId.content.length > 0" coursemodulecontentmoduloview moduleid="{{c.moduleId}}" mc="{{c.moduleId.content}}" module="{{c}}" in="{{$index+1}}" courseid="{{course._id}}"></ul>
             </div>
           </div>
+
         </div>
+        <!-- end panel -->
+
        </ng-containner>
-        
+
 
       </div>
     </div>
@@ -78,8 +88,17 @@
 </div>
 
 <style>
+
+  body {
+    padding: 0px;
+  }
+
+  .accordion-toggle::after {
+    font-size: 1.3em;
+  }
+
   .content-part {
-   
+
     min-height: 400px;
     text-align: center;
   }
@@ -140,5 +159,3 @@
     font-size: small;
   }
 </style>
-
-    

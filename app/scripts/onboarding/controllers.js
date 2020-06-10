@@ -45,11 +45,13 @@ angular.module('netbase')
 
     $scope.error.text = []
 
+    // LANGUAGE MUST BE PT OR EN, LOWERCASE OR DIFFERENT WILL CAUSE A BUG
+
     let data = {
       name : $scope.name,
       about : $scope.about,
       url : $scope.url,
-      language : 'pt'
+      language : 'PT'
     };
 
     console.log(data)

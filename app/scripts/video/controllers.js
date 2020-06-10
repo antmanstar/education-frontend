@@ -10,8 +10,6 @@ angular.module('netbase')
 
   let videoId = $route.current.params.videoId;
 
-  //let player = angular.element(element.find("video")[0]).get(0);
-
   let viewers = {};
 
   let logged = $rootScope.logged;

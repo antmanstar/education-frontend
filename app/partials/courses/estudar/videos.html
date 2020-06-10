@@ -2,7 +2,7 @@
   .player-area {
     padding: 0;
   }
- 
+
 </style>
 
 <div ng-if="video.status == 1 " class="container-fluid" style="text-align: center;">
@@ -24,12 +24,16 @@
   .plyr {
     height: 100% !important;
   }
+  /*
   .plyr__video-wrapper {
     height: 100vh !important;
   }
+  */
 </style>
 
-<div ng-if="video.status != 1 && access" class="player-area">
+<!-- && access -->
+
+<div ng-if="video.status != 1" class="player-area">
 
   <video id="video" controls></video>
 

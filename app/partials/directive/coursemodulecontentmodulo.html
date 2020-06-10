@@ -1,9 +1,6 @@
-<div style="font-size: 1.4em;" ng-repeat="c in modulecontent">
-	
+<div style="font-size: 1.4em;" ng-repeat="c in modulecontent | orderBy : 'order'">
 	<a ng-if="c.contentType=='page'" ng-click="openContent(courseid,c.contentType,c._id,c.modelId)"><i class="fas fa-file" style="padding-right: 5px;"></i>{{c.title}}</a>
 	<a ng-if="c.contentType=='quiz'" ng-click="openContent(courseid,c.contentType,c._id,c.modelId)"><i class="far fa-question-circle" style="padding-right: 5px;"></i>{{c.title}}</a>
 	<a ng-if="c.contentType=='video'" ng-click="openContent(courseid,c.contentType,c._id,c.modelId)"><i class="fas fa-video" style="padding-right: 5px;"></i>{{c.title}}</a>
 	<a ng-if="c.contentType=='forumpost'" ng-click="openContent(courseid,c.contentType,c._id,c.modelId)"><i class="fab fa-wpforms" style="padding-right: 5px;"></i>{{c.title}}</a>
-	
 </div>
-    

@@ -41,7 +41,7 @@
 
   .course-card .topic .text {
     display: inline-block;
-    width: calc(100% - 39px);
+    width: calc(100% - 45px);
   }
 
   .course-card .topic .title {
@@ -122,12 +122,13 @@
 
 </style>
 
-<div class="container-fluid ">
+<div class="container-fluid" style="padding-bottom: 45px;">
 
   <div class="row" style="margin-top: 15px;">
 
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom: 15px;">
 
+      <a ng-click="back()" style="cursor: pointer;"><i class="fas fa-arrow-left"></i> VOLTAR</a>
       <div class="title" style="font-size: 3em; font-weight: bold;">Cursos</div>
 
       <div ng-include="'/partials/courses/suite/navbar.html'"></div>
@@ -158,7 +159,7 @@
           </div>
 
           <div class="text">
-            OBJETIVO</br>{{module.goal}}
+            <b>OBJETIVO</b></br>{{module.goal}}
           </div>
 
         </div>
@@ -170,16 +171,18 @@
           </div>
 
           <div class="text">
-            DURAÇÃO</br>{{module.duration}}
+            <b>DURAÇÃO</b></br>{{module.duration}}
           </div>
 
         </div>
-<div class="pull-right" style="cursor: pointer;">
+
+        <div class="pull-right" style="cursor: pointer;">
           <i class="far fa-trash-alt text-danger" aria-hidden="true" ng-click="openDeletePopup()"></i>
         </div><br>
+
       </div>
       <!-- end course-card -->
-      <h1>Drop your Conteudo here</h1>
+      <div style="margin-bottom: 15px; font-size: 1.2em; text-align: center; font-weight: bold;">Arraste o conteúdo no box abaixo</div>
       <table id="board2">
 
         <tbody>
@@ -208,31 +211,36 @@
         min-height: 150px;
         border: 1px solid #cdcdcd;
       }
-      #board2 {min-height: 150px;
-    border: 1px solid #5cb85c;width:100% !important;}
+      #board2 {
+        min-height: 150px;
+        border: 1px solid #000;
+        width:100% !important;
+      }
     </style>
 
     <div class="col-xs-12 col-sm-8">
 
-      <div style="padding-top: 10px;">
-        <div style="font-size: 2em; display: inline-block;">Conteudo</div>
+      <div style="padding-top: 10px; min-height: 60px;">
+        <div style="font-size: 1.3em; font-weight: bold; display: inline-block;">Conteúdo</div>
         <div style="float: right;"><button class="btn bg-base" style="margin-top: 2px; height: 29px; width: unset;" ng-click="conteudocriar()">Criar conteúdo</button></div>
       </div>
       <!-- -->
 
-      <div>Todos | Vídeos | Artigos | Testes</div>
+      <!--<div>Todos | Vídeos | Artigos | Testes</div>-->
 
       <div id="board1" style="padding: 10px;" data-as-sortable="dragControlListeners" data-ng-model="modulesByAccount">
         <ng-containner data-ng-repeat="item in modulesByAccount">
-        <div  data-as-sortable-item-handle data-as-sortable-item style="display: inline-block; box-shadow: 0px 0px 3px 0px rgba(171,171,171,0.5); padding: 10px; cursor: pointer;">
+
+        <div data-as-sortable-item-handle data-as-sortable-item style="display: inline-block; box-shadow: 0px 0px 3px 0px rgba(171,171,171,0.5); padding: 10px; cursor: pointer;">
           <div style="display: inline-block; padding-right: 5px;"><img width="30px" height="30px" src="https://visualpharm.com/assets/770/Video%20File-595b40b85ba036ed117dad88.svg" /></div>
           <div style="display: inline-block; line-height: 30px; vertical-align: top; font-size: 1.1em; color: #536473; font-weight: bold;">{{item.title}}</div>
         </div>
+
       </ng-containner>
       </div>
       <!-- -->
 
-      <button ng-click="saveModule()" class="btn btn-success">Save</button>
+      <button ng-click="saveModule()" class="btn btn-success" style="margin-top: 15px;">Salvar</button>
 
     </div>
     <!-- end col-xs-12 -->

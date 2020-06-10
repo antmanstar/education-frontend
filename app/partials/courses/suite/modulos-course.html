@@ -60,13 +60,17 @@
   }
 
   .course-card .topic .line {
-    width: 35px;
     font-size: 0.5em;
     padding-top: 7px;
     vertical-align: top;
-    text-align: center;
+    text-align: left;
     display: inline-block;
-    color: #d8d8d8;
+    color: #393939;
+    width: 100%;
+  }
+
+  .course-card .topic .line i {
+    padding-right: 5px;
   }
 
   .instrutora {
@@ -99,7 +103,7 @@
   .tabs-right {
     padding-top: 2px;
   }
-  
+
   .tabs-right {
     border: 1px solid #ddd;
   }
@@ -107,11 +111,11 @@
     float: none;
     margin-bottom: 2px;
   }
-  
+
   .tabs-right>li {
     margin-left: -1px;
   }
-  
+
   .tabs-right>li.active>a,
   .tabs-right>li.active>a:hover,
   .tabs-right>li.active>a:focus {
@@ -163,172 +167,170 @@
 
     }
 
+    .container-home {
+      padding-top: 43px !important;
+    }
+
+  }
+
+  .navbar-slider .option {
+    cursor: pointer;
   }
 
 </style>
 
-<!-- <div class="container-fluid ">
-  <div class="row" style="margin-top: 15px;">
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      <div class="title" style="font-size: 3em; font-weight: bold;">Modulos</div>
-      <div ng-include="'/partials/courses/suite/navbar.html'"></div>
-    </div>
-    <div class="col-xs-12 col-sm-4" style="margin-top: 15px;" ng-repeat="module in modules.module">
-      <a href="/cursos/suite/modulos/id/{{module.moduleId._id}}">
-      <div class="course-card" style="cursor: pointer;">
-        <div class="title" style="line-height: 35px;">
-          <div class="c100 p50 small center green" style="display: inline-block; font-size: 35px;">
-            <div class="slice"><div class="bar"></div><div class="fill"></div></div>
-          </div>
-          <div style="font-size: 1.4em; display: inline-block; vertical-align: top; padding-left: 10px; color: #2f4457; font-weight: bold;">{{module.moduleId.title}}</div>
-        </div>
-        <div class="topic">
-          <div class="line" style="font-size: 1em;">
-            <i class="fas fa-bullseye"></i>
-          </div>
-          <div class="text">
-            OBJETIVO</br>{{module.moduleId.goal}}
-          </div>
-        </div>
-        <div class="topic">
-          <div class="line" style="font-size: 1em;">
-            <i class="fas fa-clock"></i>
-          </div>
-          <div class="text">
-            DURAÇÃO</br>{{module.moduleId.duration}}
-          </div>
-        </div>
-       
-        <div class="topic">
-          <div class="line">
-            <i class="fas fa-circle"></i>
-          </div>
-          <div class="text">
-            <div class="title">Total Content</div>
-            <div class="subtitle">{{module.moduleId.content.length}}</div>
-          </div>
-        </div>      
-      </div>
-      </a>
-    </div>
-  </div>
-</div> -->
+<div class="container-fluid container-home">
 
-<div class="container-fluid">
   <div class="row">
-    <br><br>
-    <div class="col-sm-9">
+
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <div style="height: 10px;"></div>
+      <a href="/cursos/a/{{universityid}}/suite/owner"><i class="fas fa-arrow-left"></i> VOLTAR PARA CURSOS</a>
+      <div class="title" style="font-size: 3em; font-weight: bold; line-height: 1em;">{{course.title}}</div>
+
+      <!-- NAVIGATION -->
+      <nav style="position: relative; z-index: 0 !important;">
+        <div class="navbar-slider navbar-slider-content">
+          <div class="option option-course" ng-click="selectTab('module')" ng-class="{'active': section == 'module'}">Módulos</div>
+          <div class="option option-course" ng-click="selectTab('member')" ng-class="{'active': section == 'member'}">Membros</div>
+          <div class="option option-course" ng-click="selectTab('content')" ng-class="{'active': section == 'content'}">Conteúdos</div>
+          <!--<div class="option option-course" ng-click="selectTab('instructor')" ng-class="{'active': section == 'instructor'}">Instrutores</div>-->
+        </div>
+        <!-- end navbar-slider --> <!--ng-controller="CoursesByIdManagementNavBarCtrl"-->
+      </nav>
+      <!-- END NAVIGATION -->
+
+    </div>
+    <!-- end col-xs-12 -->
+
+    <div class="col-sm-12">
         <!-- Tab panes -->
         <div class="tab-content">
-            <div class="tab-pane active" id="moduleSection" role="tabpanel" ng-controller="CoursesModulosCtrl">
+          <!-- ng-controller="CoursesModulosCtrl" -->
+            <div class="tab-pane active" ng-controller="CoursesModulosCtrl" ng-show="section == 'module'">
 
               <!-- module section -->
               <div class="row">
-                <h3 style="color: black; margin-left: 20px;"><b>Module</b></h3>
+
+                <div class="col-xs-12" style="text-align: right; margin-bottom: 15px;">
+
+                  <button type="button" class="btn btn-mini btn-green" style="height: 29px; width: unset;" ng-click="moduleCreate(course._id)">Adicionar modulo</button>
+
+                </div>
+                <!-- end col-sm-12 -->
+
+                <div class="col-xs-12" style="padding-top: 15px;" ng-if="course.module.length == 0">
+                  <b>Nenhum módulo adicionado nesse curso</b>
+                </div>
+
                 <div class="col-xs-12 col-sm-4" ng-repeat="module in course.module">
                   <div class="course-card" style="cursor: pointer;">
-                    <a href="/cursos/suite/modulos/id/{{module.moduleId._id}}">
-            
-                      <div class="title" style="line-height: 35px;">
-            
-                        <div class="c100 p50 small center green" style="display: inline-block; font-size: 35px;">
-                          <div class="slice"><div class="bar"></div><div class="fill"></div></div>
-                        </div>
-            
-                        <div class="text-capitalize" style="font-size: 1.4em; display: inline-block; vertical-align: top; padding-left: 10px; color: #2f4457; font-weight: bold;">{{module.moduleId.title}}</div>
-            
+                    <a style="color: unset;" href="/cursos/a/{{universityid}}/suite/modulos/id/{{module.moduleId._id}}">
+
+                      <div class="title">
+
+                        <div class="text-capitalize" style="font-size: 1.2em; display: inline-block; vertical-align: top; color: #2f4457; font-weight: bold;">{{module.moduleId.title}}</div>
+
                       </div>
-            
+
                       <div class="topic">
-            
+
                         <div class="line" style="font-size: 1em;">
-                          <i class="fas fa-bullseye"></i>
+                          <i class="fas fa-bullseye"></i>OBJETIVO
                         </div>
-            
+
                         <div class="text">
-                          OBJETIVO</br>{{module.moduleId.goal}}
+                          {{module.moduleId.goal}}
                         </div>
-            
+
                       </div>
-            
+                      <!-- END OBJETIVO -->
+
                       <div class="topic">
-            
+
                         <div class="line" style="font-size: 1em;">
-                          <i class="fas fa-clock"></i>
+                          <i class="fas fa-clock"></i>DURAÇÃO
                         </div>
-            
+
                         <div class="text">
-                          DURAÇÃO</br>{{module.moduleId.duration}}
+                          {{module.moduleId.duration}}
                         </div>
-            
+
                       </div>
-            
+                      <!-- END OBJETIVO -->
+
                       <div class="topic">
-            
+
                         <div class="line" style="font-size: 1em;">
-                          <i class="fa fa-file"></i>
+                          <i class="fa fa-file"></i> CONTEÚDOS
                         </div>
-            
+
                         <div class="text pt">
-                          <span>TOTAL CONTENT</span>
-                          <span class="pull-right">{{module.moduleId.content.length}}</span>
+                          {{module.moduleId.content.length}}
                         </div>
-            
+
                       </div>
+                      <!-- END OBJETIVO -->
+
                     </a>
-                    
+
                     <hr>
-            
+
                     <div class="text-right">
-                      
+
                       <span>
                         <i class="fa fa-pencil-square-o text-success" style="padding-right: 10px;" aria-hidden="true" ng-click="updateModule(module)"></i>
-                      
+
                         <i class="far fa-trash-alt text-danger" aria-hidden="true" ng-click="openDeletePopup(module._id)"></i>
                       </span>
                     </div>
-                    
+
                   </div>
                 </div>
+                <!-- MODULO -->
+
               </div>
+
             </div>
-            <div class="tab-pane" id="membersSection" role="tabpanel">
+            <!-- tab-pane active -->
+
+            <div class="tab-pane active" ng-show="section == 'member'">
               <!-- member section -->
               <div class="row">
                 <div class="col-md-12">
-                  <h3 style="color: black;"><b>Subscribed Members</b></h3>
+                  Sales: {{course.salesss}}
                   <table class="table table-bordered members-table">
                     <thead class="text-center tHead">
                       <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Purchase Date</th>
-                       
-                        <th scope="col">Price</th>
-                        <th scope="col">Action</th>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Data adesão</th>
+
+                        <th scope="col">Pagamento</th>
+                        <th scope="col">Ação</th>
                       </tr>
                     </thead>
                     <tbody class="tBody">
                       <tr class="text-center" ng-repeat="i in course.salesss" studentinfosubscriber sid="{{i.member}}" count="{{$index+1}}" pid="i.sale">
-                        
                       </tr>
                     </tbody>
                   </table>
                 </div>
               </div>
             </div>
-            <div class="tab-pane" id="contentSection" role="tabpanel" ng-controller="CoursesContentModulosCtrl">
+
+            <!-- ng-controller="CoursesContentModulosCtrl" -->
+            <div class="tab-pane active" ng-controller="CoursesContentModulosCtrl" ng-show="section == 'content'">
               <!-- content section -->
               <div class="row" style="margin-top: 10px;">
-                <h3 style="color: black;"><b>Content</b></h3>
                 <div class="col-md-6" ng-repeat="item in modulesByAccount"  style="cursor: pointer;">
                   <div style="border-bottom: 1px solid #cccc; padding: 20px;">
                     <div style="display: inline-block; padding-right: 5px;">
-            
+
                       <i ng-if="item.contentType=='page'" class="fa fa-file-video" style="font-size: 30px; color: #e80f06;"></i>
-                    
+
                       <i ng-if="item.contentType=='quiz'" class="fa fa-question-circle text-success" style="font-size: 30px; color: #80c81b;" ></i>
-            
+
                     </div>
                     <div style="display: inline-block; line-height: 30px; vertical-align: top; font-size: 1.1em; color: #536473; font-weight: bold;">{{item.title}}</div>
                       <span class="pull-right">
@@ -340,47 +342,57 @@
                 <!-- end col-md-6 -->
               </div>
             </div>
-            <div class="tab-pane" id="instructorSection" role="tabpanel">
+
+            <div class="tab-pane active" ng-show="section == 'instructor'">
               <!-- instructor section -->
               <div class="row">
+
+                <div class="col-sm-12" style="text-align: right; margin-bottom: 15px;">
+                  {{course}}
+                  <button type="button" class="btn btn-mini btn-green" style="height: 29px; width: unset;" ng-click="addInstructors(course.university, course._id)">Adicionar instrutor</button>
+
+                </div>
+                <!-- end col-sm-12 -->
+
                 <div class="col-md-12">
-                  <h3 style="color: black;"><b>Instructors</b></h3>
+
                   <table class="table table-bordered members-table">
                     <thead class="text-center tHead">
                       <tr>
                         <th scope="col">#</th>
                         <th scope="col">Name</th>
                         <th scope="col">Join From</th>
-                       
+
                         <th scope="col">Action</th>
                       </tr>
                     </thead>
                     <tbody class="tBody">
                       <tr class="text-center" ng-repeat="i in course.instructors" studentinfomaster sid="{{i}}" count="{{$index+1}}">
-                        
+
                       </tr>
                     </tbody>
                   </table>
+
                 </div>
+                <!-- col-md-12 -->
+
               </div>
+
             </div>
+
         </div>
+        <!-- tab-content -->
+
     </div>
-    <div class="navbar col-sm-3" style="margin-top: 50px;">
-      <ul class="nav nav-tabs tabs-right">
-        <li class=""><a href="#moduleSection" data-toggle="tab" ng-class="{'active': section == 'module'}" ng-click="section == 'module'"><i class="fa fa-brain" style="margin-right: 10px; color: #bd4ada;"></i>Modulo</a></li>
-        <li class=""><a href="#membersSection" data-toggle="tab" ng-class="{'active': section == 'member'}" ng-click="section == 'member'"><i class="fa fa-users" style="margin-right: 10px; color: #33aabd;"></i>Members</a></li>
-        <li class=""><a href="#contentSection" data-toggle="tab" ng-class="{'active': section == 'content'}" ng-click="section == 'content'"><i class="fa fa-folder-open" style="margin-right: 10px; color: #f87e12;"></i>Content</a></li>
-        <li class=""><a href="#instructorSection" data-toggle="tab" ng-class="{'active': section == 'instructor'}" ng-click="section == 'instructor'"><i class="fa fa-chalkboard-teacher text-danger" style="margin-right: 10px; color: #ef5648;"></i>Instructor</a></li>
-      </ul>
-    </div>
+    <!-- col-sm-12 -->
+
   </div>
 </div>
 
 <!-- content delete popup-->
 <script type="text/ng-template" id="deleteContentPopup">
   <div class="container-fluid text-center delete-container">
-    <h3>Are you sure you want to delete this Content?</h3>
+    <h3>Você tem certeza que quer deletar esse conteúdo?</h3>
     <div class="delete-buttons-div">
       <button class="btn btn-danger" ng-disabled="deleteLoading" ng-click="deleteContent()">Delete <img style="width: 15px;" ng-show="deleteLoading == true" src="img/misc/loading.gif"/></button>
       <button class="btn btn-dark" ng-click="closePopup()">Cancel</button>
@@ -391,7 +403,7 @@
 <!-- module delete popup -->
 <script type="text/ng-template" id="deleteModulePopup">
   <div class="container-fluid text-center delete-container">
-    <h3>Are you sure you want to delete this Module?</h3>
+    <h3>Você tem certeza que quer deletar esse módulo?</h3>
     <div class="delete-buttons-div">
       <button class="btn btn-danger" ng-disabled="deleteLoading" ng-click="deleteModule()">Delete <img style="width: 15px;" ng-show="deleteLoading == true" src="img/misc/loading.gif"/></button>
       <button class="btn btn-dark" ng-click="closePopup()">Cancel</button>

@@ -140,7 +140,7 @@
 
     </div>
     <!-- -->
-
+    <!--
     <div class="col-xs-12">
 
       <nav style="position: relative;">
@@ -148,10 +148,9 @@
 
           <div class="option" ng-click="activeSection = 'seguindo'" ng-class="{'active': activeSection == 'seguindo'}">Seguindo</div>
           <div class="option" ng-click="activeSection = 'admin'" ng-class="{'active': activeSection == 'admin'}">Administrador</div>
-          <div class="option" ng-click="activeSection = 'family'" ng-class="{'active': activeSection == 'family'}">Familia</div>
 
         </div>
-        <!-- end navbar-slider -->
+
       </nav>
 
     </div>
@@ -164,15 +163,16 @@
     </div>
     <!-- end col-sm-8 -->
 
+    <!--
     <div class="col-xs-12" ng-show="activeSection == 'admin'" id="universitiesList" style="margin-bottom: 15px; padding-top: 10px;">
 
-      {{universitiesOwner}}
+      <universityuserrow uid="{{u.universityId}}" ng-if="u.unsubscribed == false" ng-hide="user._id == u.title" ng-repeat="u in user.universitiesOwner"></universityuserrow>
 
       <!--
       <universityuserrow uid="{{u.universityId}}" ng-if="u.unsubscribed == false" ng-repeat="u in user.universitiesSubscribed"></universityuserrow>
-      -->
 
     </div>
+    -->
     <!-- end col-sm-8 -->
 
   </div>
