@@ -243,5 +243,6 @@ angular.module('netbase')
     }
 
   }
+  //END addCard
 
 }])

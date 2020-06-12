@@ -1,13 +1,9 @@
-         <div class="topic" ng-repeat="c in modulecontent">
-         <div class="line" style="font-size: 1em;">
-           
-            <i ng-if="c.contentType=='page'" class="fas fa-file"></i>
-            <i ng-if="c.contentType=='quiz'" class="far fa-question-circle"></i>
-            <i ng-if="c.contentType=='video'" class="fas fa-video"></i>
-             <i ng-if="c.contentType=='forumpost'" class="fab fa-wpforms"></i>
-          </div>
-
-          <div class="text">
-            {{c.title}}</br>{{c.contentType}}
-          </div>
-        </div>
+<div class="topic" ng-repeat="c in modulecontent" style="margin-bottom: 5px;">
+  <div style="width: 100%; border-bottom: 1px solid #adadad; font-size: 0.90em; margin-bottom: 5px;">{{$index + 1}}. CONTEÚDO</div>
+   <div class="line" style="font-size: 1em; display: inline-block; padding-top: 0px; width: unset;">
+    <i ng-if="c.contentType=='quiz'" class="far fa-question-circle"></i>
+    <i ng-if="c.contentType=='video'" class="fas fa-video"></i>
+    <i ng-if="c.contentType=='forumpost'" class="fas fa-file"></i>
+  </div>
+  <div class="text" style="display: inline-block;">{{c.title}}</div>
+</div>

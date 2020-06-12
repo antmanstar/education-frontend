@@ -4,6 +4,23 @@
 
 angular.module('netbase')
 
+.controller('IniciarCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'University', 'Playlist', 'Forum', 'User', '$window', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, University, Playlist, Forum, User, $window) {
+
+  let url = $route.current;
+  let originalPath = url.$$route.originalPath;
+
+  $scope.originalPath = originalPath;
+
+  $scope.login = function() {
+    ngDialog.open({ template: 'partials/modals/login.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
+  }
+
+  $scope.signup = function() {
+    ngDialog.open({ template: 'partials/modals/signup.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
+  }
+
+}])
+
 .controller('SobreIndexCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'University', 'Playlist', 'Forum', 'User', '$window', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, University, Playlist, Forum, User, $window) {
 
   console.log("Fooooterr");
@@ -653,6 +670,10 @@ angular.module('netbase')
   });
 
   /* */
+  $scope.testarPlataforma = function() {
+    $location.path("/iniciar")
+  }
+
   $scope.construction = function() {
     alert("Em construção")
   }
@@ -2842,16 +2863,86 @@ $scope.deleteContent = function() {
         $sce.trustAsHtml($scope.course)
       }
 
+      $scope.openPaymentDialog();
+
     }
 
   });
-  //END Courses.getCoursesByAccount()
+  //END Courses.getById()
+
+  let logged = $localStorage.logged;
+
+  $scope.openFreeCourse = function() {
+
+    console.log("if user is logged or not: ")
+    console.log($localStorage.logged)
+
+    if (logged) {
+      // 1 - IF USER IS NOT REGISTERED ON MEMBERS, REGISTERED
+      // 2 - then registered
+
+      let userId = User.getId();
+
+      let userRegistered = false;
+
+      let members = $scope.course.members;
+
+      console.log("members: ")
+      console.log(members)
+
+      for (let idx = 0; idx < members.length; idx++) {
+
+        let member = members[idx];
+
+        if (member.accountId == userId) {
+          userRegistered = true;
+        }
+
+      }
+
+      console.log("userRegistered")
+      console.log(userRegistered)
+
+      if (userRegistered) {
+
+        $location.path('/cursos/id/' + $scope.course._id + '/timeline')
+
+      } else {
+
+        console.log("let's registered")
+
+        Courses.subscribeFree($scope.course._id).success(function(res) {
+
+          if (res.success) {
+
+            $location.path('/cursos/id/' + $scope.course._id + '/timeline');
+
+          }
+
+        });
+        //END Courses.subscribeFree()
+
+      }
+
+    } else {
+
+      ngDialog.open({ template: 'partials/modals/login.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
+
+    }
+
+    // CHECK IF USER IS LOGGED OR NOT
+    // 1 - IF USER IS NOT REGISTERED ON MEMBERS, REGISTERED
+    // 2 - OTHERWISE, REGISTER IT!
+
+    //$location.path('/cursos/id/' + $scope.course._id + '/timeline')
+  }
 
   $scope.openPaymentDialog = function() {
 
     let plan = { amount : $scope.course.price, currency : $scope.course.currency, name : $scope.course.title };
 
     console.log('open dialog');
+
       ngDialog.open({
         template: 'partials/courses/modals/payments.html',
         controller: 'CoursesPaymentsCtrl',
@@ -2861,10 +2952,13 @@ $scope.deleteContent = function() {
         closeByNavigation: true,
         data : { plan : plan, course: $scope.course, accountId: $scope.course.accountId }
       });
+
   }
 
+
 }])
-.controller('CoursesPaymentsCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'StripeElements', 'Payments', 'Courses', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, StripeElements, Payments, Courses) {
+
+.controller('CoursesPaymentsCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'StripeElements', 'Payments', 'Courses', 'User', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, StripeElements, Payments, Courses, User) {
 
   /* FLOWS:
     -> addCard
@@ -2874,10 +2968,79 @@ $scope.deleteContent = function() {
   $scope.plan = $scope.ngDialogData.plan;
   $scope.course = $scope.ngDialogData.course;
   $scope.accountId = $scope.ngDialogData.accountId;
+  $scope.flow = "order";
 
-  let userId = $rootScope.user._id;
+  $scope.page = "order"
+
+  let userId;
+
+  if ($localStorage.logged) {
+    userId = User.getId();
+  }
 
   $scope.loading = false;
+
+  /* */
+
+  $scope.initOrder = function() {
+
+    Students.getCards(userId).success(function(res) {
+
+      if (res.success) {
+
+        $scope.cards = res.data;
+        console.log(res.data)
+
+      } else {
+
+      }
+
+    });
+    //END Students.getCards()
+
+  }
+
+  /* */
+
+  $scope.informationAction = function() {
+
+    if ($scope.flow == "addCard") {
+
+      $scope.closeThisDialog();
+
+    }
+
+  }
+
+  /* */
+
+  if ($scope.flow == "order") {
+
+    $scope.initOrder();
+
+  }
+
+  /* information */
+
+  $scope.information = {
+    title : "",
+    text : ""
+  };
+
+  /* functions */
+
+  $scope.goToPage = function(page, data) {
+
+    $scope.page = page;
+
+    if (page = "order") {
+      $scope.initOrder();
+    }
+    //$scope.$apply();
+
+  }
+
+  /* */
 
   console.log('plan', $scope.plan)
 
@@ -2886,6 +3049,80 @@ $scope.deleteContent = function() {
     amount = amount.toFixed(2);
     return amount;
   }
+
+  /* ADD CARD */
+  $scope.cardAdd = function() {
+
+    let additionalData = {
+      name : $scope.cardName
+    };
+
+    if ($scope.validationError != undefined) {
+
+      console.log("error")
+
+    } else {
+
+      $scope.loading = true;
+
+      StripeElements.createToken(card, additionalData).then(function(result) {
+
+        if (result.token) {
+
+          // example.querySelector('.token').innerText = result.token.id;
+          // example.classList.add('submitted');
+
+          // Send card to API, then use routes below
+
+          let data = { source : result.token.id };
+
+          Students.postCards(userId, data).success(function(res) {
+
+            console.log(res);
+
+            if (res.success) {
+
+              if ($scope.flow == "addCard") {
+
+                $scope.information.title = "Card added";
+                $scope.information.text = "Your card was added with success on your account. You can start using right now.";
+                $scope.goToPage("information");
+
+              }
+
+              if ($scope.flow == "order") {
+
+                $scope.goToPage("order");
+
+              }
+
+              $scope.loading = false;
+
+            } else {
+
+            }
+
+          });
+          // end student post card
+
+        } else {
+
+          // Otherwise, un-disable inputs.
+          enableInputs();
+
+        }
+
+        $scope.loading = false;
+
+      });
+
+    }
+
+  }
+  //END addCard
+
+  /* */
+
 
   /* STRIPE */
 
@@ -2925,10 +3162,16 @@ $scope.deleteContent = function() {
       name : $scope.cardName
     };
 
+    console.log($scope.cards)
+
+    /*
+
     StripeElements.createToken($scope.card, additionalData).then(function (result) {
 
       if (result.error) {
+
         $scope.cardErrors = result.error.message
+
       } else {
         $scope.loading = true;
 
@@ -2978,6 +3221,8 @@ $scope.deleteContent = function() {
       }
     });
     //END StripeElements
+
+    */
 
   }
   //END handleSubmit

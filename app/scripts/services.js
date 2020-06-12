@@ -1682,10 +1682,32 @@ angular.module('netbase')
       //var baseUrl = "https://api.universida.de/search";
 
       //var baseUrl = "https://educationalcommunity-pay.herokuapp.com";
-      var baseUrl = "https://educationalcommunity-courses.herokuapp.com/courses";
-      //var baseUrl="http://localhost:9888/courses"
+      //var baseUrl = "https://educationalcommunity-courses.herokuapp.com/courses";
+      var baseUrl="http://localhost:9888/courses"
 
       return {
+
+        subscribeFree: function(courseId) {
+
+          let url = "/id/" + courseId + "/subscribe/free";
+
+          return $http({
+
+            url: baseUrl + url,
+            method: 'POST',
+            transformRequest: function(obj) {
+              var str = [];
+              for(var p in obj)
+              str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+              return str.join("&");
+            },
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'x-access-token': $localStorage.token
+            }});
+            //
+
+        },
 
         getByUniversityId: function(id) {
 

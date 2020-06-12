@@ -16,7 +16,42 @@
     margin-bottom: 10px;
   }
 
+  body {
+    font-size: 20px !important;
+  }
+
+  .headline-container {
+    padding-top: 5px;
+    font-size: 1.7em;
+    padding-bottom: 10px;
+  }
+
   @media screen and (max-width: 768px) {
+
+    body {
+      font-size: 18px !important;
+    }
+
+    .headline-sub-container {
+      padding-left: 15px;
+      padding-right: 15px;
+      padding-bottom: 10px;
+      line-height: 1.3em;
+    }
+
+    .headline-container {
+      padding-top: 10px;
+      padding-left: 15px;
+      padding-right: 15px;
+      padding-bottom: 5px;
+      font-size: 1.4em;
+      line-height: 1.2em;
+    }
+
+    .academia-footer {
+      font-size: 14px;
+    }
+
     .navbar-slider {
       display: none;
     }
@@ -32,7 +67,7 @@
     }
     #newuser-title {
       padding-top: 5px !important;
-      font-size: 1.5em !important;
+      font-size: 1.3em !important;
     }
   }
 
@@ -75,11 +110,17 @@
 
     <div class="col-xs-12 col-sm-10 col-md-10 section-content-col">
 
+      <div class="headline-container" style="letter-spacing: -0.5px; color: #2d4255;">A melhor plataforma para aprender, ensinar, debater e compartilhar conhecimento.</div>
+
+      <div class="headline-sub-container">Ao reunir a comunicação e as ferramentas em um só local, os educadores e estudantes manterão a produtividade em qualquer lugar.</div>
+
+      <div ng-click="testarPlataforma()" style="padding-top: 10px; text-align: right; padding-right: 15px; padding-left: 15px; cursor: pointer; font-weight: bold;">COMEÇE A EDUCAR <i class="fas fa-arrow-right"></i></div>
+
       <div style="height: 10px"></div>
 
       <div class="section-cards" style="padding-left: 15px; padding-right: 15px; padding-bottom: 0px;">
         <div class="knowledge-home-title" ng-class="{'knowledge-active': universitiesKnowledgeDisplay == 'popular'}" style="font-size: 1.2em; display: inline-block; margin-right: 10px;">Popular</div>
-        <div class="knowledge-home-title" ng-click="selectKnowledge(knowledge._id)" ng-class="{'knowledge-active': universitiesKnowledgeDisplay == 'category' && knowledgeValidate(knowledge._id)}" ng-hide="knowledge.title == 'popular'" ng-repeat="knowledge in knowledges">{{knowledge.title}}</div>
+        <div class="knowledge-home-title" ng-click="selectKnowledge(knowledge._id)" ng-class="{'knowledge-active': universitiesKnowledgeDisplay == 'category' && knowledgeValidate(knowledge._id)}" ng-hide="knowledge.title == 'popular'" ng-repeat="knowledge in knowledges" ng-if="knowledge.universities.length > 0">{{knowledge.title}}</div>
       </div>
 
       <div style="height: 0px"></div>
@@ -91,8 +132,6 @@
         <homeuniversitynewcard uid="5ee06b5c9472191dd45407cd"></homeuniversitynewcard>
 
         <homeuniversitynewcard uid="5ee0699a9472191dd45407c7"></homeuniversitynewcard>
-
-        <homeuniversitynewcard uid="5db50a9ad65a7c0017ca0bc2"></homeuniversitynewcard>
 
       </div>
       <!-- -->
@@ -135,7 +174,7 @@
 
         </style>
 
-        <a ng-repeat="knowledge in knowledges" href='/home/c/{{knowledge.url}}/'><div class="knowledge-circle"><img src="{{knowledge.icon}}" height="35px" style="margin-bottom: 10px" /><div style="font-size: 0.9em; font-weight: bold; color: #2d4255;">{{knowledge.title}}</div></div></a>
+        <a ng-repeat="knowledge in knowledges" ng-if="knowledge.universities.length > 0" href='/home/c/{{knowledge.url}}/'><div class="knowledge-circle"><img src="{{knowledge.icon}}" height="40px" style="margin-bottom: 10px" /><div style="font-size: 0.9em; font-weight: bold; color: #2d4255;">{{knowledge.title}}</div></div></a>
 
     </div>
 
@@ -184,6 +223,16 @@
       </div>
       <!-- end courses aulas trilhas tab -->
 
+      <!-- -->
+
+      <div class="home-big-box">
+        <div class="title">A melhor ferramenta para educar e aprender online</div>
+        <div class="button-row">
+          <button ng-click="testarPlataforma()" class="button test">TESTE A PLATAFORMA</button>
+          <!--<button class="button">FALE COM A EQUIPE DE VENDAS</button>-->
+        </div>
+      </div>
+
   </div>
   <!-- end row -->
 
@@ -209,6 +258,53 @@
 <!-- container-fluid container-full -->
 
 <footermobile></footermobile>
+
+<style>
+  .home-big-box {
+    /*min-height: 250px;*/
+    text-align: center;
+    background-color: #e8e8e8;
+    border-radius: 5px;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
+  .home-big-box .title {
+    font-size: 1.3em;
+    font-weight: bolder;
+    background-color: #e8e8e8;
+  }
+  .home-big-box .button-row {
+    padding-top: 25px;
+  }
+  .home-big-box .button {
+    border-radius: 10px;
+    border: none;
+    font-size: 0.8em;
+    padding-left: 15px;
+    padding-right: 15px;
+    font-weight: bold;
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+  .home-big-box .button.test {
+    background-color: #fff;
+    margin-right: 5px;
+  }
+  .home-big-box .button {
+    border-radius: 10px;
+    background-color: #fff;
+    border: none;
+    font-size: 0.8em;
+    padding-left: 15px;
+    padding-right: 15px;
+    font-weight: bold;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    margin-bottom: 10px;
+  }
+</style>
 
 <style>
   .swiper-container {

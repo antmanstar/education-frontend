@@ -462,6 +462,10 @@ angular.module('netbase', [
             templateUrl: 'partials/apartments/index.html',
             controller: 'ApartmentsIndexCtrl',
         })
+        .when('/iniciar', {
+            templateUrl: 'partials/home/iniciar.html',
+            controller: 'IniciarCtrl',
+        })
         .when('/home/create', {
             templateUrl: 'partials/home/homecreate.html',
             controller: 'HomeCreateCtrl',
