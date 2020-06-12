@@ -110,11 +110,11 @@
 
     <div class="col-xs-12 col-sm-10 col-md-10 section-content-col">
 
-      <div class="headline-container" style="letter-spacing: -0.5px; color: #2d4255;">A melhor plataforma para aprender, ensinar, debater e compartilhar conhecimento.</div>
+      <div class="headline-container" ng-if="!logged" style="letter-spacing: -0.5px; color: #2d4255;">A melhor plataforma para aprender, ensinar, debater e compartilhar conhecimento.</div>
 
-      <div class="headline-sub-container">Ao reunir a comunicação e as ferramentas em um só local, os educadores e estudantes manterão a produtividade em qualquer lugar.</div>
+      <div class="headline-sub-container" ng-if="!logged">Ao reunir a comunicação e as ferramentas em um só local, os educadores e estudantes manterão a produtividade em qualquer lugar.</div>
 
-      <div ng-click="testarPlataforma()" style="padding-top: 10px; text-align: right; padding-right: 15px; padding-left: 15px; cursor: pointer; font-weight: bold;">COMEÇE A EDUCAR <i class="fas fa-arrow-right"></i></div>
+      <div ng-if="!logged" ng-click="testarPlataforma()" style="padding-top: 10px; text-align: right; padding-right: 15px; padding-left: 15px; cursor: pointer; font-weight: bold;">COMEÇE A EDUCAR <i class="fas fa-arrow-right"></i></div>
 
       <div style="height: 10px"></div>
 
@@ -225,10 +225,10 @@
 
       <!-- -->
 
-      <div class="home-big-box">
+      <div ng-if="!logged" class="home-big-box">
         <div class="title">A melhor ferramenta para educar e aprender online</div>
         <div class="button-row">
-          <button ng-click="testarPlataforma()" class="button test">TESTE A PLATAFORMA</button>
+          <button ng-click="testarPlataforma()" class="button test">USE A PLATAFORMA</button>
           <!--<button class="button">FALE COM A EQUIPE DE VENDAS</button>-->
         </div>
       </div>
