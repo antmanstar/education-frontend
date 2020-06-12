@@ -51,48 +51,6 @@
         <div class="brand">
           <img id="logo" src="img/logo/universidade.png" />
           <img id="logoIcon" src="img/logo/universidade.png" />
-          <span><i class="fas fa-angle-down"></i></span>
-        </div>
-
-        <div class="menu-right">
-
-          <div class="options mobile-show" style="padding: 0; display: none">
-            <button ng-hide="logged" ng-click="login()" class="btn btn-blue" style="margin-top: 2px; height: 29px;">Entrar</button>
-          </div>
-
-          <div class="options">
-
-            <div ng-hide="logged" ng-click="login()">Login</div>
-
-            <div ng-hide="logged" ng-click="signup()">Registrar</div>
-
-            <div id="profileMenu" ng-show="logged" class="profile">
-              <span><i class="fas fa-user-circle" style="padding-right: 2px;"></i></span> {{user.name}} <span><i class="fas fa-angle-down" style="padding-left: 3px;"></i></span>
-              <div class="profile-expanded">
-                <div><a href="/dashboard">Dashboard</a></div>
-                <div><a href="/perfil">Perfil</a></div>
-                <div ng-click="logout()"><a>Logout</a></div>
-              </div>
-              <!-- end profile expanded -->
-            </div>
-            <!-- end profile -->
-
-          </div>
-          <!-- end options -->
-
-          <!--
-          <div class="search">
-
-            <div id="searchBox" class="form-group">
-              <input placeholder="Pesquise universidades..." type="text">
-              <span><i class="fas fa-search"></i></span>
-            </div>
-
-            <span id="searchButtonMobile"><i class="fas fa-search"></i></span>
-
-          </div>
-          -->
-
         </div>
 
       </div>
@@ -113,33 +71,6 @@
         </div>
         <!-- end menu -->
 
-        <div class="menu" ng-hide="logged">
-          <div class="header" style="border-top: 2px solid #2d4255; margin-left: 25px; margin-right: 25px; padding-bottom: 15px;"></div>
-          <div class="option unselectable" ng-hide="logged" ng-click="login()">Login</div>
-          <div class="option unselectable" ng-hide="logged" ng-click="signup()">Criar conta</div>
-        </div>
-        <!-- end menu -->
-
-        <div class="profile" ng-show="logged">
-          <div class="header"><span><i class="fas fa-user-circle"></i></span> {{user.name}}</div>
-          <div class="menu">
-            <!-- <<div class="option">Editar perfil</div> -->
-            <div class="option unselectable" ng-show="logged"><a href="/perfil">Perfil</a></div>
-            <div class="option unselectable" ng-show="logged"><a href="/dashboard"><b>Dashboard</b></a></div>
-            <div class="option unselectable" ng-show="logged" style="padding-left: 40px; text-decoration: underline;">Universidades</div>
-            <div class="option unselectable" ng-show="logged" style="padding-left: 40px;"><a href="/dashboard">- Inscrito</a></div>
-            <div class="option unselectable" ng-show="logged" style="padding-left: 40px;"><a href="/dashboard">- Criar Universidade</a></div>
-            <div class="option unselectable" ng-show="logged" style="padding-left: 40px;"><a href="/dashboard">- Administrar Universidade</a></div>
-            <div class="option unselectable" ng-show="logged" style="padding-left: 40px; text-decoration: underline;">Pedidos</div>
-            <div class="option unselectable" ng-show="logged" style="padding-left: 40px;"><a href="/dashboard">- Todas compras</a></div>
-            <div class="option unselectable" ng-show="logged" style="padding-left: 40px; text-decoration: underline;">Pagamentos</div>
-            <div class="option unselectable" ng-show="logged" style="padding-left: 40px;"><a href="/dashboard">- Carteira</a></div>
-            <div class="option" ng-click="logout()">Logout</div>
-          </div>
-          <!-- end menu -->
-        </div>
-        <!-- end profile -->
-
       </div>
       <!-- navbar mobile -->
 
@@ -150,28 +81,54 @@
 
 <!-- end header -->
 
+<style>
+
+  .main-section {
+    padding-left: 50px;
+    padding-top: 40px;
+  }
+
+  .main-section-title {
+    font-size: 4em; line-height: 1em; padding-bottom: 30px; font-weight: 600;
+  }
+
+  .main-section-subtitle {
+    font-size: 1.5em; font-weight: 300;
+  }
+
+  @media screen and (max-width: 768px) {
+
+    nav .navbar-top {
+      box-shadow: unset;
+      text-align: center;
+    }
+
+    .main-section {
+      padding-left: 20px;
+      padding-right: 20px;
+      padding-top: 0px;
+    }
+
+    .main-section-title {
+      font-size: 2.5em; line-height: 1em; padding-bottom: 30px; font-weight: 600;
+    }
+
+    .main-section-subtitle {
+      font-size: 1.2em;
+    }
+
+  }
+
+</style>
+
 <div class="container-fluid container-full animated fadeIn faster">
-
-  <div class="row" style="padding-top: 45px;">
-
-    <div class="col-xs-12">
-
-      <div style="font-size: 1.25em;">
-        <div style="display: inline-block; padding-left: 15px; padding-right: 15px; padding-top: 5px; padding-bottom: 5px; margin-right: 15px; border-radius: 5px;">Universidades</div>
-        <div style="display: inline-block; padding-left: 15px; padding-right: 15px; padding-top: 5px; padding-bottom: 5px; margin-right: 20px; border-radius: 5px; background-color: #52bfea; color: #fff;">Preço</div>
-        <div style="display: inline-block; padding-left: 15px; padding-right: 15px; padding-top: 5px; padding-bottom: 5px; margin-right: 20px; border-radius: 5px;">White label</div>
-      </div>
-
-    </div>
-
-  </div>
 
   <div class="row" style="padding-top: 35px; position: relative;">
 
-    <div class="col-xs-12 col-sm-6" style="color: #2e4254; padding-left: 50px; padding-top: 40px;">
+    <div class="col-xs-12 col-sm-6 main-section" style="color: #2e4254;">
 
-      <div style="font-size: 4em; line-height: 1em; padding-bottom: 30px; font-weight: 600;">É hora de começar</br>a educar</div>
-      <div style="font-size: 1.5em; font-weight: 300;">Qualquer um pode criar sua própria universidade e começar a disseminar o conhecimento organizado. Crie sua comunidade e inicie discussões, crie um curso, envie vídeos e gerencie uma lista de reprodução.</div>
+      <div class="main-section-title">É hora de começar a educar</div>
+      <div class="main-section-subtitle">Qualquer um pode criar sua própria universidade e começar a compartilhar conhecimento organizado. Crie sua comunidade e inicie discussões, crie cursos, envie vídeos e gerencie sua lista de alunos.</div>
       <div style="height: 130px;"></div>
 
     </div>
@@ -179,7 +136,7 @@
 
     <div class="col-xs-12 col-sm-6" style="text-align: left; position: relative; padding-top: 115px;">
 
-      <div style="position: absolute; top: -5px; z-index: -4; right: 0; width: 400px"><img src="https://i.kym-cdn.com/entries/icons/facebook/000/018/318/CFjU41M.jpg" style="width: 100%; border-radius: 150%;" /></div>
+      <div style="position: absolute; top: -76px; z-index: -4; right: 0; width: 400px"><img src="https://image.freepik.com/free-vector/studying-table-with-books-different-folders_113065-168.jpg" style="width: 100%; border-radius: 150%;" /></div>
 
       <div style="width: 100%; background-color: #fff; box-shadow: 0 2px 24px rgba(12,13,14,0.1); padding: 35px; border-radius: 5px;">
         <p><b style="color: #2e4254; font-size: 1.3em;">Universidade a partir de</b></p>
@@ -191,7 +148,7 @@
         <p style="font-weight: 600; font-size: 1.2em;"><span style="padding-right: 10px; color: #45a163;" class="glyphicon glyphicon-ok"></span>Espaço ilimitado para upload de arquivos</p>
         <p style="font-weight: 600; font-size: 1.2em;"><span style="padding-right: 10px; color: #45a163;" class="glyphicon glyphicon-ok"></span>14 dias de teste gratuito</p>
         <div style="height: 10px"></div>
-        <button class="btn bg-base" style="max-width: 250px">Começar</button>
+        <a href="/iniciar"><button class="btn bg-base" style="max-width: 250px">Começar</button></a>
       </div>
       <!-- end pricing -->
 
@@ -201,122 +158,89 @@
   </div>
   <!-- end row -->
 
-  <!--
-  <div class="row" style="padding-top: 95px">
+  <div class="row whatis" style="margin-top: 25px;">
 
-    <div class="col-xs-12" style="text-align: center; color: #2e4254;">
-
-      <div style="font-size: 3em; padding-bottom: 35px; font-weight: 500;">A melhor plataforma</div>
-      <div style="font-size: 1.6em; padding-bottom: 50px; font-weight: 300;">Funcionalidades ideias para ajudar indivíduos, grupos e empresas a ensinar</br>e compartilhar conhecimento da melhor maneira possível.</div>
-
+    <div class="col-xs-12" style="margin-bottom: 10px;">
+      <div class="whatsis-title" style="font-size: 1.2em;">O que é uma comunidade educacional?</div>
+      <p class="whatsis-description">A Universidade oferece todas as ferramentas digitais e de criação de conteúdo que professores e alunos precisam para criar uma experiência de aprendizado mais intuitiva e conectada.</p>
     </div>
 
   </div>
-  <!-- end row -->
+  <!-- id="whatis" -->
+  <div class="row whatis">
 
-  <div class="row" style="padding-top: 95px">
+    <div class="col-xs-12 col-sm-6 features">
 
-    <div class="col-xs-12 col-sm-6" style="text-align: center;">
-      <div><img src="/img/vr/vr_animation.gif" style="width: 80%;" /></div>
-    </div>
-    <!-- end col-xs-12 col-sm-6 -->
+      <div class="feature-title">
+        <img src="https://visualpharm.com/assets/811/Discussion%20Forum-595b40b65ba036ed117d396c.svg" /><b>TIMELINE</b>
+      </div>
 
-    <div class="col-xs-12 col-sm-6" style="padding: 45px;">
-
-      <p style="font-size: 1.3em; color: #2d4255; font-weight: bold;">SALA DE AULA VIRTUAL</p>
-      <p style="font-size: 2.3em; font-weight: bold; line-height: 1.25em;">Conecte seus alunos em sua comunidade educacional e começe a educar de verdade</p>
-      <p style="font-size: 1.4em;">A Universidade oferece todas as ferramentas digitais e de criação de conteúdo que professores e alunos precisam para criar uma experiência de aprendizado mais intuitiva e conectada.</p>
+      <div class="feature-description">Mantém um registro cronológico das atividades realizadas na sala de aula virtual.</div>
 
     </div>
-    <!-- end col-xs-12 col-sm-6 -->
 
-  </div>
-  <!-- end row -->
+    <div class="col-xs-12 col-sm-6 features">
 
-  <div class="row" style="padding-top: 95px">
+      <div class="feature-title">
+        <img src="https://visualpharm.com/assets/311/Graduation%20Cap-595b40b65ba036ed117d2d97.svg" /><b>CURSOS</b>
+      </div>
 
-    <div class="col-xs-12 col-sm-6" style="padding: 45px;">
-
-      <p style="font-size: 1.3em; color: #2d4255; font-weight: bold;">REALIDADE VIRTUAL</p>
-      <p style="font-size: 2.3em; font-weight: bold; line-height: 1.25em;">Alunos e educadores podem de fazer parte dessa revolução tecnológica</p>
-      <p style="font-size: 1.4em;">A combinação da Realidade Virtual com o ensino à distância ajudará os alunos a usar a tecnologia em todo o seu potencial, enquanto incentiva o auto-aprendizado em um ambiente ainda mais flexível e independente.</p>
+      <div class="feature-description">Mantém um registro cronológico das atividades realizadas na sala de aula virtual.</div>
 
     </div>
-    <!-- end col-xs-12 col-sm-6 -->
-
-    <div class="col-xs-12 col-sm-6" style="text-align: center;">
-      <div><img src="/img/vr/room_board.png" style="width: 100%; border-radius: 25px;" /></div>
-    </div>
-    <!-- end col-xs-12 col-sm-6 -->
-
-  </div>
-  <!-- end row -->
-
-  <div class="row" style="padding-top: 95px">
-
-    <div class="col-xs-12 col-sm-4" style="padding: 45px;">
-
-      <div style="margin-bottom: 10px; line-height: 30px; font-size: 1.35em; padding-bottom: 5px;"><img height="50px" style="margin-right: 15px;" src="https://visualpharm.com/assets/811/Discussion%20Forum-595b40b65ba036ed117d396c.svg"><b style="font-size: 1.35em;">TIMELINE</b></div>
-      <p style="font-size: 1.75em; font-weight: bold;">Os estudantes podem navegar com maior fluidez</p>
-      <p style="font-size: 1.1em;">Mantém um registro cronológico das atividades realizadas na sala de aula virtual.</p>
-
-    </div>
-    <!-- end col-xs-12 col-sm-4 -->
-
-    <div class="col-xs-12 col-sm-4" style="padding: 45px;">
-
-      <div style="margin-bottom: 15px; line-height: 30px; font-size: 1.35em; padding-bottom: 5px;"><img height="50px" style="margin-right: 15px;" src="https://visualpharm.com/assets/459/Film-595b40b75ba036ed117d9cd1.svg"><b style="font-size: 1.35em;">VIDEOCONFERÊNCIA</b></div>
-      <p style="font-size: 1.75em; font-weight: bold;">Converse com seus alunos em tempo real</p>
-      <p style="font-size: 1.1em;">Professores e alunos participam ao vivo de aulas remotas transmitindo áudio, vídeo e texto.</p>
-
-    </div>
-    <!-- end col-xs-12 col-sm-4 -->
-
-    <div class="col-xs-12 col-sm-4" style="padding: 45px;">
-
-      <div style="margin-bottom: 10px; line-height: 30px; font-size: 1.35em; padding-bottom: 5px;"><img height="50px" style="margin-right: 15px;" src="https://visualpharm.com/assets/311/Graduation%20Cap-595b40b65ba036ed117d2d97.svg"><b style="font-size: 1.35em;">CURSOS</b></div>
-      <p style="font-size: 1.75em; font-weight: bold;">Crie o seus cursos de maneira intuitiva</p>
-      <p style="font-size: 1.1em;">Organize um programa fixo de lições e uma grade com a programação das aulas.</p>
-
-    </div>
-    <!-- end col-xs-12 col-sm-4 -->
-
-
-
-  </div>
-  <!-- end row -->
-
-  <div class="row">
-
-    <div class="col-xs-12 col-sm-4" style="padding: 45px;">
-
-      <div style="margin-bottom: 10px; line-height: 30px; font-size: 1.35em; padding-bottom: 5px;"><img height="50px" style="margin-right: 15px;" src="https://welove.holdings/img/virtualrealityicon.png"><b style="font-size: 1.35em;">REALIDADE VIRTUAL</b></div>
-      <p style="font-size: 1.75em; font-weight: bold;">Tenha a sua Sala de Aula em Virtual Reality</p>
-      <p style="font-size: 1.1em;">Organize um programa fixo de lições e uma grade com a programação das aulas.</p>
-
-    </div>
-    <!-- end col-xs-12 col-sm-4 -->
-
-    <div class="col-xs-12 col-sm-4" style="padding: 45px;">
-
-      <div style="margin-bottom: 10px; line-height: 30px; font-size: 1.35em; padding-bottom: 5px;"><img height="50px" style="margin-right: 15px;" src="https://visualpharm.com/assets/311/Graduation%20Cap-595b40b65ba036ed117d2d97.svg"><b style="font-size: 1.35em;">FORUM E CHAT</b></div>
-      <p style="font-size: 1.75em; font-weight: bold;">Unlimited private questions and answers in a searchable archive</p>
-      <p style="font-size: 1.1em;">É um lugar onde as conversas acontecem, alunos e professores podem acompanhar discussões relevantes sobre assuntos favoritos.</p>
-
-    </div>
-    <!-- end col-xs-12 col-sm-4 -->
-
-    <div class="col-xs-12 col-sm-4" style="padding: 45px;">
-
-      <div style="margin-bottom: 10px; line-height: 30px; font-size: 1.35em; padding-bottom: 5px;"><img height="50px" style="margin-right: 15px;" src="https://visualpharm.com/assets/311/Graduation%20Cap-595b40b65ba036ed117d2d97.svg"><b style="font-size: 1.35em;">VÍDEOS</b></div>
-      <p style="font-size: 1.75em; font-weight: bold;">Unlimited private questions and answers in a searchable archive</p>
-      <p style="font-size: 1.1em;">Plataforma para compartilhamento de vídeo. Os professores e alunos podem armazenar e compartilhar vídeos dentro da sala de aula virtual.</p>
-
-    </div>
-    <!-- end col-xs-12 col-sm-4 -->
 
   </div>
   <!-- -->
+
+  <div class="row whatis">
+
+    <div class="col-xs-12 col-sm-6 features">
+
+      <div class="feature-title">
+        <img src="https://image.flaticon.com/icons/svg/745/745205.svg" /><b>FÓRUM & CHAT</b>
+      </div>
+
+      <div class="feature-description">É um lugar onde as conversas acontecem, alunos e professores podem acompanhar discussões relevantes sobre assuntos favoritos.</div>
+
+    </div>
+
+    <div class="col-xs-12 col-sm-6 features">
+
+      <div class="feature-title">
+        <img src="https://welove.holdings/img/virtualrealityicon.png" /><b>REALIDADE VIRTUAL</b>
+      </div>
+
+      <div class="feature-description">Os alunos da Escola da Inteligência podem acompanhar todas as aulas e cursos em uma experiência imersiva de aprendizado. </div>
+
+    </div>
+
+  </div>
+  <!-- -->
+
+  <div class="row whatis">
+
+    <div class="col-xs-12 col-sm-6 features">
+
+      <div class="feature-title">
+        <img src="https://image.flaticon.com/icons/svg/3048/3048415.svg" /><b>VIDEOCONFERÊNCIA</b>
+      </div>
+
+      <div class="feature-description">Professores e alunos participam ao vivo de aulas remotas transmitindo áudio, vídeo e texto.</div>
+
+    </div>
+
+    <div class="col-xs-12 col-sm-6 features">
+
+      <div class="feature-title">
+        <img src="https://image.flaticon.com/icons/svg/3039/3039381.svg" /><b>VÍDEOS</b>
+      </div>
+
+      <div class="feature-description">Plataforma para compartilhamento de vídeo. Os professores e alunos podem armazenar e compartilhar vídeos dentro da sala de aula virtual.</div>
+
+    </div>
+
+  </div>
+  <!-- END ROW -->
 
   <div class="row">
 
@@ -324,7 +248,7 @@
 
       <div class="header-section-two" style="text-align: center; padding-top: 30px; padding-bottom: 30px;">
 
-        <div class="header-support-section-two" style="font-size: 2.1em;">ELES USAM A PLATAFORMA</div>
+        <div class="header-support-section-two" style="font-size: 2.1em; font-weight: bold;">ELES USAM A PLATAFORMA</div>
 
       </div>
 
@@ -497,3 +421,104 @@
 </style>
 
 <!-- end container-fluid -->
+
+<style>
+
+  .whatsis-title {
+    font-weight: bold;
+    padding-bottom: 10px;
+  }
+
+  .whatsis-description {
+
+  }
+
+  .whatis {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+  }
+
+  #rowlog {
+    padding-top: 65px;
+    padding-bottom: 65px;
+    text-align: center;
+  }
+
+  #whatis {
+    padding-left: 20%;
+    padding-right: 20%;
+  }
+
+  .bigbox-action {
+    min-height: 300px;
+    padding: 30px;
+  }
+
+  .bigbox-action .title {
+    font-weight: bold;
+    line-height: 1.15em;
+    font-size: 1.5em;
+    padding-bottom: 15px;
+    min-height: 130px;
+  }
+
+  .bigbox-action p {
+    margin-bottom: 25px;
+    min-height: 90px;
+  }
+
+  .bigbox-action .button {
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .bigbox-action.signup .button {
+    color: #314354;
+    border: 1px solid #dedede;
+  }
+
+  .bigbox-action.signup .button {
+    color: #314354;
+    background-color: #fff;
+  }
+
+  .bigbox-action.signup .button:hover {
+    background-color: #dedede;
+  }
+
+  .bigbox-action.signup {
+
+  }
+
+  .bigbox-action.login {
+    background-color: #314354;
+    color: #fff;
+  }
+
+  .bigbox-action.login .button {
+    background-color: #fff;
+    color: #314354;
+  }
+
+  .features {
+    margin-bottom: 15px;
+  }
+
+  .feature-title  {
+    line-height: 25px;
+    padding-bottom: 30px;
+  }
+
+  .feature-title img {
+    height: 25px;
+    padding-right: 10px;
+  }
+
+  .feature-description {
+    font-size: 0.9em;
+  }
+
+</style>
