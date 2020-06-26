@@ -1085,45 +1085,133 @@ $scope.videolist=[];
 
 }])
 
-.controller('CoursesEstudarCtrl', ['$cookies','User','$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'University', 'Playlist', 'Forum', 'User',function($cookies,User,$rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, University, Playlist, Forum, Users) {
+.controller('CoursesEstudarCtrl', ['$cookies','User','$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'University', 'Playlist', 'Forum', 'User', '$window', function($cookies, User, $rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, University, Playlist, Forum, Users, $window) {
+
   let id = $route.current.params.id;
 
-   $scope.courseId=id;
-   $scope.access=false;
+  $scope.courseId = id;
+  $scope.access = false;
 
-   let type= $cookies.get("type");
-   let cid= $cookies.get("content_id");
-   let post_id= $cookies.get("post_id");
-   var url = "/cursos/id/";
-   $scope.type = type;
+  $localStorage.estudarModulos = [];
 
-   $scope.cid = cid;
-   $scope.post_id = post_id;
-   $scope.id = id;
+  $scope.studying = false;
 
-   $rootScope.$emit('childEmit', $scope.cid);
+  let type = $cookies.get("type");
+  let cid = $cookies.get("content_id");
+  let post_id = $cookies.get("post_id");
+  var url = "/cursos/id/";
 
-   if(type=="videos")
-     url=url+"watch/videos/"
-   else if(type=="document")
-     url=url+"view/document/"
-   else
-     url=url+"test/quiz/"
+  $scope.type = type;
 
-   $scope.url=url+$scope.courseId+"/"+cid+"/"+post_id
+  $scope.cid = cid;
+  $scope.post_id = post_id;
+  $scope.id = id;
 
-   Courses.getById(id).success(function(msg){
-     $scope.course=msg.data;
-     if(msg.data.free==true) $scope.access=true;
-     let mem=msg.data.members;
-     if(mem.indexOf(User.getId())>=0)
-     $scope.access=true;
-     if($scope.access==false)
-     $location.path('/cursos/id/'+res.data._id);
+  $scope.startStudyCourseId = $localStorage.startStudyButtonDisplay;
+
+  $scope.startStudy = function() {
+
+    $localStorage.startStudyButtonDisplay = $scope.courseId;
+    $scope.startStudyCourseId = $localStorage.startStudyButtonDisplay;
+
+    // 1 - Get the last viewed
+    let estudarModulos = $localStorage.estudarModulos;
+
+    let lastViewed = undefined
+
+    for (let idx = 0; idx < estudarModulos.length; idx++) {
+
+      if (lastViewed == undefined && !estudarModulos[idx].viewed) {
+        console.log("THIS IS THE UNVIEWED MODULE")
+        lastViewed = estudarModulos[idx];
+        console.log(lastViewed)
+      }
+
+    }
+
+    // 2 - OPEN LAST VIEWED CONTENT
+
+    if (lastViewed != undefined) {
+
+      console.log("USER GOTTA SEE SOMETHING!!!!!!!!!!!!!!")
+
+      let type_id = lastViewed._id;
+      let contentType = lastViewed.contentType;
+      let model_id = lastViewed.modelId;
+      let post_id = lastViewed.modelId;
+
+      $cookies.put("post_id", model_id)
+      $cookies.put("content_id", type_id)
+      $cookies.put("type", contentType)
+
+      $window.location.href = "/cursos/id/" + $scope.courseId + "/estudar";
+
+    } else {
+
+      console.log("USER SAW ALL!!!!!!!!!!!!!!")
+
+      lastViewed = estudarModulos[0]
+
+      let type_id = lastViewed._id;
+      let contentType = lastViewed.contentType;
+      let model_id = lastViewed.modelId;
+      //let post_id = lastViewed.modelId;
+
+      //POST_ID == modelId on contentmodule
+      $cookies.put("post_id", model_id)
+      $cookies.put("content_id", type_id)
+      $cookies.put("type", contentType)
+
+      $window.location.href = "/cursos/id/" + $scope.courseId + "/estudar";
+
+    }
+
+    //$cookies.put("module_id", scope.moduleid)
+
+    //
+
+  }
+
+  $rootScope.$emit('childEmit', $scope.cid);
+
+   if (type=="videos") {
+     url = url + "watch/videos/"
+   } else if (type=="document") {
+     url = url + "view/document/"
+   } else {
+     url = url + "test/quiz/"
+   }
+
+   $scope.url = url + $scope.courseId + "/" + cid + "/" + post_id;
+
+   Courses.getById(id).success(function(msg) {
+
+     $scope.course = msg.data;
+
+     console.log($scope.course)
+
+     if (msg.data.free==true) {
+       $scope.access = true;
+     }
+
+     let mem = msg.data.members;
+
+     if (mem.indexOf(User.getId())>=0) {
+
+     }
+
+     $scope.access = true;
+
+     if ($scope.access==false) {
+       $location.path('/cursos/id/'+res.data._id);
+     }
 
    },function error(response) {
      $location.path('/home/cursos');
    })
+   //END Courses.getById(id)
+
+
 }])
 
 .controller('CoursesEstudarTypeDocumentCtrl', ['Courses','$rootScope', '$scope', '$location', '$route', 'University', 'Videos', '$sce', 'User', 'Forum', 'Students', 'ngDialog', '$localStorage', 'jwtHelper', function(Courses,$rootScope, $scope, $location, $route, University, Videos, $sce, User, Forum, Students, ngDialog, $localStorage, jwtHelper) {
@@ -1237,8 +1325,10 @@ $scope.videolist=[];
 
   //let id = $route.current.params.id;
   let id = $scope.id;
+
   $scope.courseId = id;
   $scope.access = false;
+
   Courses.getById(id).success(function(msg){
      console.log(msg)
      $scope.course=msg.data;
@@ -1262,6 +1352,17 @@ $scope.videolist=[];
   let viewers = {};
 
   let logged = $rootScope.logged;
+
+  //
+
+  Courses.userViewedContentInsideCourse($scope.courseId, $cookies.get("module_id"), $cookies.get("content_id")).success(function(res) {
+
+    console.log("user viewed content inside course")
+    console.log(res);
+
+  })
+
+  //
 
   Courses.getContentModuleById(contentModuleId).success(function(res) {
 
@@ -1820,8 +1921,8 @@ $scope.videolist=[];
 .controller('CoursesEstudarCtrlCopy', ['$cookies','User','$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'University', 'Playlist', 'Forum', 'User',function($cookies,User,$rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, University, Playlist, Forum, Users) {
   let id = $route.current.params.id;
 
-   $scope.courseId=id;
-   $scope.access=false;
+   $scope.courseId = id;
+   $scope.access = false;
 
    let type = $cookies.get("type");
    let cid = $cookies.get("content_id");
@@ -1834,7 +1935,9 @@ $scope.videolist=[];
      url=url+"view/document/"
    else
      url=url+"test/quiz/"
+
    $scope.url=url+$scope.courseId+"/"+cid+"/"+post_id
+
    Courses.getById(id).success(function(msg){
      $scope.course=msg.data;
      if(msg.data.free==true) $scope.access=true;
@@ -2863,9 +2966,8 @@ $scope.deleteContent = function() {
         $sce.trustAsHtml($scope.course)
       }
 
-      $scope.openPaymentDialog();
-
     }
+    //END
 
   });
   //END Courses.getById()
@@ -2939,9 +3041,14 @@ $scope.deleteContent = function() {
 
   $scope.openPaymentDialog = function() {
 
+    console.log("COURSE IS: ")
+    console.log($scope.course)
+
     let plan = { amount : $scope.course.price, currency : $scope.course.currency, name : $scope.course.title };
 
     console.log('open dialog');
+    console.log("PLAN IS: ")
+    console.log(plan)
 
       ngDialog.open({
         template: 'partials/courses/modals/payments.html',
@@ -3162,9 +3269,11 @@ $scope.deleteContent = function() {
       name : $scope.cardName
     };
 
-    console.log($scope.cards)
+    console.log("CARD: ")
+    console.log($scope.card)
 
-    /*
+    console.log("additionalData: ")
+    console.log(additionalData)
 
     StripeElements.createToken($scope.card, additionalData).then(function (result) {
 
@@ -3221,8 +3330,6 @@ $scope.deleteContent = function() {
       }
     });
     //END StripeElements
-
-    */
 
   }
   //END handleSubmit
@@ -6281,15 +6388,23 @@ Courses.getAll().success(function(res) {
 
   }
 }])
-.directive('coursemodulecontentmoduloview', ['$window', '$cookies','Courses','$location', 'User', function($window, $cookies, Courses, $location, User) {
+.directive('coursemodulecontentmoduloview', ['$window', '$cookies','Courses','$location', 'User', '$localStorage', function($window, $cookies, Courses, $location, User, $localStorage) {
   return {
     restrict: 'AE',
+    replace: true,
     templateUrl: '../partials/directive/coursemodulecontentmoduloview.html',
 
     link: function(scope, element, attr) {
+
+      console.log("CONTENT MODULE CONTENT VIEW")
+
       scope.courseid = attr.courseid
       scope.count = attr.in
       scope.moduleid = JSON.parse(attr.moduleid)._id;
+
+      console.log("timesssss: ", attr.times)
+
+      console.log("MODULE ID: ", scope.moduleid)
 
       let module = JSON.parse(attr.module);
 
@@ -6304,32 +6419,19 @@ Courses.getAll().success(function(res) {
         let view = viewers[vdx].contentId;
         let accountId = viewers[vdx].accountId;
 
-        console.log("accountId: ")
-        console.log(accountId)
-
-        console.log("user id")
-        console.log(user_id)
-
-        console.log("content viewed indexof : ")
-        console.log(contentViewed.indexOf(view))
-
         if (contentViewed.indexOf(view) == -1 && accountId == user_id) {
           contentViewed.push(view);
         }
 
       }
 
-      console.log("module")
-      console.log(module)
-
-      console.log("module id module iddddddddddd: ")
-      console.log(scope.moduleid)
-
       let modulecontent = JSON.parse(attr.mc);
-      console.log("module content: ")
+
+      console.log("MODULE CONTENT")
       console.log(modulecontent)
 
       let id = [];
+
       for (let i = 0; i < modulecontent.length; i++) {
         id.push(modulecontent[i]['modelId'])
       }
@@ -6337,54 +6439,86 @@ Courses.getAll().success(function(res) {
       // Tem que append por ID
       // Carrega o modelId e adiciona as infos (titulo e tals)
 
+      console.log("ids to get on the api: ")
+      console.log(id)
+
       Courses.getContentModulesByIdmultiple(id).then(function(res) {
 
         let modulecontent = res.data.data;
         let moduleContentWithViews = []
 
+        console.log("get content modules by id multiple")
+        console.log(modulecontent)
+
         // 2 - ADD READ TRUE TO THOSE MODULECONTENT READED
-        for (let cvdx = 0; cvdx < viewers.length; cvdx++) {
 
-          let mc = modulecontent[cvdx];
+        if (viewers.length > 0) {
 
-          if (mc != undefined) {
+          console.log("VIEWERS MAIOR DE ZERO")
 
-            if (contentViewed.indexOf(mc._id) == -1) {
-              console.log("user didn't see: ")
-              console.log(mc.title)
-              mc.viewed = false;
-            } else {
-              console.log("user already checked ")
-              console.log(mc.title)
-              mc.viewed = true;
+          for (let cvdx = 0; cvdx < viewers.length; cvdx++) {
+
+            let mc = modulecontent[cvdx];
+
+            //console.log("mc")
+            //console.log(mc)
+
+            if (mc != undefined) {
+
+              if (contentViewed.indexOf(mc._id) == -1) {
+                console.log("user didn't see: ")
+                console.log(mc.title)
+                mc.viewed = false;
+              } else {
+                console.log("user already checked ")
+                console.log(mc.title)
+                mc.viewed = true;
+              }
+
+              moduleContentWithViews.push(mc)
+              $localStorage.estudarModulos.push(mc)
+
             }
-
-            moduleContentWithViews.push(mc)
+            //END undefined
 
           }
-          //END undefined
+          // END FOR
+
+        } else {
+
+          console.log("VIEWERS É ZERO")
+
+          scope.modulecontent = modulecontent
+          $localStorage.estudarModulos.push(modulecontent)
+
+          console.log("module content when viewers é zero: ")
+          console.log(scope.modulecontent)
 
         }
-        //AQUI fode tudo
+
         scope.modulecontent = moduleContentWithViews;
 
-        console.log("module content after: ")
-        console.log(moduleContentWithViews)
+        console.log("final module content is: ")
+        console.log(scope.modulecontent)
 
       });
-      //
+      // END Courses.getContentModulesByIdmultiple
 
+      // START openContent
+      scope.openContent = function(course, contentType, type_id, model_id) {
 
+        console.log("OPEN CONTENT")
 
-      // END openContent
-      scope.openContent = function(course, type, type_id, model_id) {
-        $cookies.put("content_id", type_id)
-        $cookies.put("type", type)
-        console.log("model id: ")
-        console.log(model_id)
-        $cookies.put("module_id", scope.moduleid)
+        console.log("post_id", model_id)
+        console.log("content_id", type_id)
+        console.log("type", contentType)
+
         $cookies.put("post_id", model_id)
+        $cookies.put("content_id", type_id)
+        $cookies.put("type", contentType)
+
         $window.location.href = "/cursos/id/" + course + "/estudar";
+
       }
 
     }

@@ -5,6 +5,8 @@
       <div class="row">
         <div class="col-sm-12 content-part">
 
+          <button ng-show="startStudyCourseId != courseId" class="btn btn-green button-highlighter" style="font-size: 1em; padding-top: 0px; padding-bottom: 0; line-height: 44px;" ng-click="startStudy()"><b>Iniciar o curso</b></button>
+
            <ng-containner ng-if="type=='document' || type=='page'">
 
              <div ng-controller="CoursesEstudarTypeDocumentCtrl">
@@ -57,29 +59,57 @@
       </div>
 
     </div>
+
     <div class="col-sm-3 right-side">
+
       <div class="panel-group" id="accordion">
-        <ng-containner ng-repeat="c in course.module">
 
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h5 class="panel-title">
-              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse{{$index}}">
-                Section {{$index+1}} {{c.moduleId.title}}</a>
-            </h5>
-            <small>0/{{c.moduleId.content.length}} | {{c.moduleId.duration}}</small>
-          </div>
+        <div ng-repeat="mod in course.module">
 
-          <div id="collapse{{$index}}" class="panel-collapse collapse" ng-class="{in: $index == 0}">
-            <div class="panel-body">
-              <ul class="list-inline" ng-if="c.moduleId.content.length > 0" coursemodulecontentmoduloview moduleid="{{c.moduleId}}" mc="{{c.moduleId.content}}" module="{{c}}" in="{{$index+1}}" courseid="{{course._id}}"></ul>
+          <div class="panel panel-default">
+
+            <div class="panel-heading">
+
+              <h5 class="panel-title" style="font-size: 1.2em;">
+                {{$index+1}}. {{mod.moduleId.title}}
+              </h5>
+
             </div>
+            <!-- END panel panel-heading -->
+
+            <div class="panel-body">
+              <div coursemodulecontentmoduloview class="list-inline" times="{{$index}}" moduleid="{{mod.moduleId}}" mc="{{mod.moduleId.content}}" module="{{mod}}" in="{{$index+1}}" courseid="{{course._id}}"></div>
+            </div>
+            <!-- END panel panel-body -->
+
           </div>
+          <!-- END panel panel-default -->
 
         </div>
-        <!-- end panel -->
+        <!-- END NG REPEAT -->
+
+        <!--
+        <ng-containner ng-repeat="c in course.module">
+
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h5 class="panel-title">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse{{$index}}">
+                  Section {{$index+1}} {{c.moduleId.title}}</a>
+              </h5>
+              <small>0/{{c.moduleId.content.length}} | {{c.moduleId.duration}}</small>
+            </div>
+
+            <div id="collapse{{$index}}" class="panel-collapse collapse" ng-class="{in: $index == 0}">
+              <div class="panel-body">
+                <ul class="list-inline" ng-if="c.moduleId.content.length > 0" coursemodulecontentmoduloview moduleid="{{c.moduleId}}" mc="{{c.moduleId.content}}" module="{{c}}" in="{{$index+1}}" courseid="{{course._id}}"></ul>
+              </div>
+            </div>
+
+          </div>
 
        </ng-containner>
+       -->
 
 
       </div>
