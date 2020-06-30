@@ -771,25 +771,35 @@ angular.module('netbase')
 
 }])
 
-.controller('CoursesCreateContentCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses',
-function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses) {
+.controller('CoursesCreateContentCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses) {
+
+  //
+
   $scope.moduleId = $scope.ngDialogData.moduleId;
-  console.log('$scope', $scope.moduleId);
+  $scope.universityId = $scope.ngDialogData.universityId;
+
+  //
+
 
 }])
 
 .controller('CoursesVideoForumContentCtrl', ['Videos','$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'University', 'Playlist', 'Forum', 'User', function(Videos,$rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, University, Playlist, Forum, User) {
+
   $scope.page = $route.current.params.id;
   ngDialog.close();
+
   let universityId;
-  $scope.universities=[];
-  $scope.customPlaylist=[];
-  $scope.cusloading=0;
+
+  $scope.universities = [];
+  $scope.customPlaylist = [];
+  $scope.cusloading = 0;
 
   $scope.loadForumPosts = function() {
 
     University.getallCategorybyUniversity().success(function(res) {
+
       console.log(res.success)
+
       if (res.success) {
 
 
@@ -804,6 +814,7 @@ function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialo
       }
 
     });
+    //University.getallCategorybyUniversity()
 
   }
   //END loadForumPost()
@@ -948,10 +959,14 @@ function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialo
 
   }
   //END Forum.loadForumPost()
-  /*Video List */
-$scope.loadVideos = function(id) {
-$scope.videolist=[];
-    $scope.page="videolist"
+
+  /* Video List */
+  $scope.loadVideos = function(id) {
+
+    $scope.videolist = [];
+
+    $scope.page = "videolist"
+
     Videos.getByPlaylist(id).success(function(res) {
 
       console.log(res);
@@ -2033,13 +2048,14 @@ $scope.videolist=[];
       template: 'partials/courses/modals/createContent.html',
       controller: 'CoursesCreateContentCtrl',
       className: 'ngdialog-theme-default',
-      data : { "universityId" : "fdasdfa" },
       closeByNavigation: true,
       width: '70%',
       data: {
-        moduleId: moduleId
+        moduleId: moduleId,
+        universityId : $scope.universityid
       }
     });
+
   }
 
   $scope.openDeletePopup = function() {
@@ -2209,17 +2225,20 @@ $scope.videolist=[];
 
     ngDialog.open({ template: 'partials/courses/modals/updateModule.html',data:{moduleData: moduleData}, controller: 'CoursesUpdateModuleCtrl', className: 'ngdialog-theme-default' });
   }
+
   $scope.openDeletePopup = function(moduleId) {
+
     console.log('delete module', moduleId);
 
     ngDialog.open({
       template: 'deleteModulePopup',
       controller: 'CoursesModulosByIdCtrl',
-      data: {moduleId: moduleId},
+      data: { moduleId: moduleId },
       width: '50%',
       height: '40%',
       className: 'ngdialog-theme-default'
     });
+
   }
 
   $scope.deleteModule = function() {
@@ -2681,6 +2700,7 @@ $scope.deleteContent = function() {
 }])
 
 .controller('CoursesCreateQuizCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses) {
+
   $scope.activeSection = "createQuiz";
   $scope.quesArr = [];
   $scope.quesNumber = 0;
