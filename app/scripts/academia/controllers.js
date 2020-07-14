@@ -3462,12 +3462,9 @@ angular.module('netbase')
         replace: true,
         scope: true,
         link: function(scope, element, attr) {
-
             let post = JSON.parse(attr.p);
-
             scope.post = post;
-
-            /* */
+            scope.novotes = true;
 
             let studentId;
             let studentReadedTimestamps = [];
@@ -3480,9 +3477,7 @@ angular.module('netbase')
 
             let viewers = [];
             let visualizations = post.visualization;
-
             for (let idx = 0; idx < visualizations.length; idx++) {
-
                 let v = visualizations[idx];
 
                 if (!viewers.includes(v.accountId) && v.accountId != undefined) {
@@ -3492,15 +3487,9 @@ angular.module('netbase')
                 if (v.accountId == studentId) {
                     studentReadedTimestamps.push(v.createdAt);
                 }
-
             }
-            //END for()
-
-            // latestStudentReadedTimestamps
 
             let latestStudentReadedTimestamps = studentReadedTimestamps.sort(function(a, b) { return b - a })[0];
-
-            /* */
 
             scope.viewers = viewers;
             scope.viewersParseFirstTime = true;
@@ -3509,48 +3498,35 @@ angular.module('netbase')
             scope.viewersParsedDisplay = false;
 
             scope.viewersParse = function() {
-
                 let firstTime = scope.viewersParseFirstTime;
 
                 if (firstTime) {
 
                     // loop viewers
                     if (viewers.length > 0) {
-
                         for (let idx = 0; idx < viewers.length; idx++) {
-
                             let viewerId = viewers[idx];
 
                             // Parse students
                             Students.getStudentById(viewerId).then(function(res) {
-
-                                    scope.viewersParsed.push(res.data.data)
-
-                                })
-                                //END Students.getStudentById
-
+                                scope.viewersParsed.push(res.data.data)
+                            })
                         }
-
                     }
 
                     scope.viewersParsedDisplay = true;
-
                     scope.viewersParseFirstTime = false;
-
                 } else {
 
                     // Just show, css
                     scope.viewersParsedDisplay = true;
-
                 }
-
             };
 
             // Find user on viewers
             scope.studentReaded = false;
 
             if (studentId.length > 0) {
-
                 if (viewers.includes(studentId)) {
                     scope.studentReaded = true;
                 } else {
@@ -3558,7 +3534,6 @@ angular.module('netbase')
                 }
 
             }
-            //END studentId.length > 0
 
             scope.viewers = viewers;
 
@@ -3568,12 +3543,9 @@ angular.module('netbase')
             // 2 - Compare with timestamp from lastest user timestamp viewed
 
             let answersTimestamps = [post.createdAt];
-
             for (let idx = 0; idx < post.answers.length; idx++) {
-
                 let timestamp = post.answers[idx].createdAt;
                 answersTimestamps.push(timestamp);
-
             }
 
             // 1.1 - Sort array, get highest
@@ -3585,48 +3557,31 @@ angular.module('netbase')
             }
 
             /* up vote */
-
             scope.upvoteForumPost = function(post) {
-
                 let postId = post._id;
-
-                var index = scope.$parent.forumPosts.findIndex(x => x._id === postId)
+                // var index = scope.$parent.forumPosts.findIndex(x => x._id === postId)
 
                 University.upvoteForumPost(scope.$parent.university._id, postId).then(function(res) {
-
                     if (res.data.success) {
+                        // let posts = scope.$parent.forumPosts;
 
-                        let posts = scope.$parent.forumPosts;
-
-                        posts[index].votesCount += 1;
-                        scope.$parent.forumPosts = posts;
-
-                        scope.post.votesCount += 1;
-
+                        // posts[index].votesCount += 1;
+                        // scope.$parent.forumPosts = posts;
+                        scope.post.votesCount = res.data.data.votesCount;
+                        // console.log("Up", res.data.data.votesCount)
                     }
-
                 });
-
             };
 
             /* down vote */
-
             scope.downvoteForumPost = function(postId) {
-
-                console.log(postId);
-
                 University.downvoteForumPost(scope.university._id, postId).then(function(res) {
-
                     if (res.data.success) {
-
-                        scope.post.votesCount -= 1;
-
+                        scope.post.votesCount = res.data.data.votesCount;
+                        // console.log("Down", res.data.data.votesCount)
                     }
-
                 });
-
             };
-
         }
     }
 }])

@@ -2361,12 +2361,10 @@ angular.module('netbase')
         $scope.activeSection = "owner";
 
         $scope.moduleCreate = function(id) {
-
             ngDialog.open({ template: 'partials/courses/modals/modulecreate.html', data: { id: id }, controller: 'CoursesModulosCriarCtrl', className: 'ngdialog-theme-default' });
         }
 
         $scope.addInstructors = function(universityId, courseId, members) {
-
             console.log('add instructor', universityId);
             console.log('add courseid', courseId);
 
@@ -2376,9 +2374,7 @@ angular.module('netbase')
 
         $scope.editCourse = function(courseData) {
             console.log('add courseid', courseData);
-
             ngDialog.open({ template: 'partials/courses/modals/updateCourse.html', data: { courseData: courseData }, controller: 'CoursesUpdateCtrl', className: 'ngdialog-theme-default' });
-
         }
 
         $scope.openDeletePopup = function(courseId) {
@@ -2418,9 +2414,7 @@ angular.module('netbase')
         }
 
         $scope.coursesCreate = function() {
-
             ngDialog.open({ template: 'partials/courses/modals/coursecreate.html', controller: 'CoursesCriarCtrl', className: 'ngdialog-theme-default', data: { universityId: universityid }, closeByNavigation: true });
-
         }
 
         // GET COURSES BY UNIVERSITY
@@ -2549,9 +2543,7 @@ angular.module('netbase')
                 $route.reload();
             }
         });
-
     }
-
 }])
 
 .controller('CoursesUpdateModuleCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses) {
@@ -4136,7 +4128,6 @@ angular.module('netbase')
     let section = "trend";
 
     News.getAllSections().success(function(res) {
-
         console.log("sections")
         console.log(res);
         $scope.sections = res.data;
@@ -4152,78 +4143,49 @@ angular.module('netbase')
     });
 
     $scope.newsLoadSection = function(id, title) {
-
         if (id == "trend") {
-
             News.getAllTrends().success(function(res) {
-
                 $scope.sectionTitle = "em alta";
                 $scope.news = res.data;
-
             });
-
         } else {
-
             News.getNewsBySection(id, title).success(function(res) {
 
                 $scope.sectionTitle = "sobre " + title;
                 $scope.news = res.data.docs;
-
             });
-
         }
-
     }
 
     $scope.vote = function(newsId, sectionId) {
-
+        console.log("AAA");
         if ($localStorage.token != undefined || $localStorage.token != null) {
-
             News.vote(newsId).success(function(res) {
-
                 let news = res.data;
-
                 if (res.success) {
-
                     if (section == "trend") {
-
                         News.getAllTrends().success(function(res) {
-
                             console.log("news: ")
                             console.log(res)
                             $scope.news = res.data;
-
                         });
-
                     } else {
-
                         News.getNewsBySection(news.sectionId).success(function(res) {
-
                             console.log("news: ")
                             console.log(res)
                             $scope.news = res.data;
-
                         });
-                        //END News.getNewsBySection
-
                     }
-
-                } else {
-
-                }
-
+                } else {}
             });
-
         } else {
             ngDialog.open({ template: 'partials/modals/login.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
         }
-
     }
 
     $scope.newsOpen = function(id, news) {
         ngDialog.open({ template: 'partials/modals/news.html', controller: 'NewsByIdCtrl', className: 'ngdialog-theme-default modal-news', data: { news: news } });
     };
-
 }])
 
 .controller('NewsByIdCtrl', ['$rootScope', '$scope', '$location', 'University', 'ngDialog', 'News', '$localStorage', function($rootScope, $scope, $location, University, ngDialog, News, $localStorage) {
@@ -6125,7 +6087,6 @@ angular.module('netbase')
         replace: true,
         scope: true,
         link: function(scope, element, attr) {
-
             let answer = JSON.parse(attr.a);
             let postId = attr.p;
             let universityId = attr.u;

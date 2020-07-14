@@ -2,150 +2,148 @@
 
 <update-title title="{{forumPost.title}} | {{university.name}} | Universidade"></update-title>
 <update-meta property="og:title" content="{{forumPost.title}} em {{university.name}} | Universidade"></update-meta>
-<update-meta property="og:url" content="https://universida.de/a/{{university.url}}/forum/post/id/{{forumPost._id}}"></update-meta>
+<update-meta property="og:url" content="https://universida.de/a/{{university.url}}/forum/post/id/{{forumPost._id}}">
+</update-meta>
 <meta property="og:description" content="{{university.name}} ensina, debate e compartilhar conhecimento na plataforma Universidade." />
 
 <update-meta ng-if="university.backgroundImage != undefined" property="og:image" content="{{university.backgroundImage}}"></update-meta>
 <update-meta ng-if="university.backgroundImage == undefined" property="og:image" content="https://universida.de/img/misc/noimageacademia.jpg"></update-meta>
 
 <style>
-
-figure img {
-  width: 100% !important;
-  height: unset !important;
-}
-
+    figure img {
+        width: 100% !important;
+        height: unset !important;
+    }
 </style>
 
 <div class="container-fluid container-full">
 
-  <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
-  <div class="row academia-coverimage" ng-if="university.backgroundImage == undefined"  style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
-  <!-- end academia-coverimage -->
+    <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
+    <div class="row academia-coverimage" ng-if="university.backgroundImage == undefined" style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
+    <!-- end academia-coverimage -->
 
-  <div class="row">
+    <div class="row">
 
-    <div academiarightcolumn university="{{university}}"></div>
+        <div academiarightcolumn university="{{university}}"></div>
 
-    <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9 academia-content">
+        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9 academia-content">
 
-      <div academiastatus university="{{university}}"></div>
+            <div academiastatus university="{{university}}"></div>
 
-      <div class="academia-content-forum">
+            <div class="academia-content-forum">
 
-        <div ng-hide="forumPost.title.length > 0" style="text-align: center;">
-          <img src="/img/loader.gif" height="50px" />
-          Carregando
-        </div>
+                <div ng-hide="forumPost.title.length > 0" style="text-align: center;">
+                    <img src="/img/loader.gif" height="50px" /> Carregando
+                </div>
+                <div ng-show="forumPost.title.length > 0" class="academia-content-forum-post">
 
-        <div ng-show="forumPost.title.length > 0" class="academia-content-forum-post">
+                    <div class="academia-content-forum-post-stats">
+                        <div class="academia-content-forum-post-stats-votes">
 
-          <div class="academia-content-forum-post-stats">
+                            <div ng-click="upvoteForumPost()" class="academia-content-forum-post-stats-upvote">
+                                <span class="glyphicon glyphicon-triangle-top" />
+                            </div>
+                            <!-- academia-content-forum-post-stats-ranking-votes -->
 
-            <div class="academia-content-forum-post-stats-votes">
+                            <div class="academia-content-forum-post-stats-votes-number">{{votesCount}}</div>
+                            <!-- academia-content-forum-post-stats-ranking-votes -->
 
-              <div ng-click="upvoteForumPost()" class="academia-content-forum-post-stats-upvote">
-                <span class="glyphicon glyphicon-triangle-top" />
-              </div>
-              <!-- academia-content-forum-post-stats-ranking-votes -->
+                            <div ng-click="downvoteForumPost()" class="academia-content-forum-post-stats-downvote">
+                                <span class="glyphicon glyphicon-triangle-bottom" />
+                            </div>
+                            <!-- academia-content-forum-post-stats-ranking-votes -->
 
-              <div class="academia-content-forum-post-stats-votes-number">{{votesCount}}</div>
-              <!-- academia-content-forum-post-stats-ranking-votes -->
+                        </div>
+                        <!-- academia-content-forum-post-stats-ranking-votes -->
 
-              <div ng-click="downvoteForumPost()" class="academia-content-forum-post-stats-downvote">
-                <span class="glyphicon glyphicon-triangle-bottom" />
-              </div>
-              <!-- academia-content-forum-post-stats-ranking-votes -->
+                    </div>
+                    <!-- academia-content-forum-post-stats -->
+
+                    <div class="academia-content-forum-post-info">
+                        <div>ADFASFSAFDAF</div>
+                        <div class="academia-content-forum-post-info-title">
+                            {{forumPost.title}}
+                        </div>
+                        <!-- academia-content-forum-post-info -->
+
+                        <div class="academia-content-forum-post-info-stats">
+                            postado faz <span am-time-ago="forumPost.createdAt | amFromUnix"></span>
+                        </div>
+                        <!-- academia-content-forum-post-info -->
+
+                        <div class="academia-content-forum-post-info-text text" ng-hide="getPremium" ng-bind-html="forumPost.text">
+                        </div>
+                        <!-- academia-content-forum-post-info -->
+
+                        <div class="academia-content-forum-post-info-text text premium-alert" ng-show="getPremium">
+
+                            <h3>🚀 Seja assinante premium! 🚀</h3>
+
+                            <div style="margin-top: 15px; margin-bottom: 15px;">
+                                <h4>Assine todo o conteúdo exclusivo {{university.name}}</h4>
+                            </div>
+
+                            <button class="btn btn-green" ng-click="premium()">Assinar agora!</button>
+
+                        </div>
+
+                        <div class="academia-content-forum-post-info-manage" ng-show="user._id == forumPost.accountId && user._id.length > 0">
+                            <button ng-click="updateForumPost()" class="btn-clean"><span class="glyphicon glyphicon glyphicon-pencil"
+                  style="padding-right: 5px;" /> Editar</button>
+                        </div>
+
+                    </div>
+                    <!-- academia-content-forum-post-info -->
+
+                </div>
+                <!-- academia-content-forum-post -->
+
+                <div class="academia-content-forum-answers" ng-show="forumPost.answers.length > 0">
+                    {{forumPost.answers.length}} Answers
+                </div>
+                <!-- academia-content-forum-answers -->
+
+                <forumpostanswer p="{{forumPost._id}}" u="{{forumPost.universityId}}" ng-show="forumPost.answers.length > 0" a="{{answer}}" ng-repeat="answer in forumPost.answers | orderBy:'-votesCount'"></forumpostanswer>
 
             </div>
-            <!-- academia-content-forum-post-stats-ranking-votes -->
+            <!-- academia-content-forum-->
 
-          </div>
-          <!-- academia-content-forum-post-stats -->
+            <div class="academia-content-forum-answer" id="answer">
 
-          <div class="academia-content-forum-post-info">
+                <div class="academia-content-forum-answer-title">
+                    Responder
+                </div>
+                <!-- academia-content-forum-answer-title -->
 
-            <div class="academia-content-forum-post-info-title">
-              {{forumPost.title}}
+                <div class="academia-content-forum-answer-box">
+
+                    <style>
+                        .ta-toolbar {
+                            background-color: #f0f0f0;
+                            padding-bottom: 5px;
+                            padding-top: 5px;
+                        }
+                    </style>
+
+                    <trix-editor angular-trix ng-model="answer"></trix-editor>
+
+                </div>
+                <!-- academia-content-forum-answer-box -->
+
+                <div class="academia-content-forum-answer-action">
+                    <button class="btn btn-blue" ng-click="createAnswerPost()">Responder</button>
+                </div>
+                <!-- academia-content-forum-answer -->
+
             </div>
-            <!-- academia-content-forum-post-info -->
-
-            <div class="academia-content-forum-post-info-stats">
-              postado faz <span am-time-ago="forumPost.createdAt | amFromUnix"></span>
-            </div>
-            <!-- academia-content-forum-post-info -->
-
-            <div class="academia-content-forum-post-info-text text" ng-hide="getPremium" ng-bind-html="forumPost.text"></div>
-            <!-- academia-content-forum-post-info -->
-
-            <div class="academia-content-forum-post-info-text text premium-alert" ng-show="getPremium">
-
-              <h3>🚀 Seja assinante premium! 🚀</h3>
-
-              <div style="margin-top: 15px; margin-bottom: 15px;">
-                <h4>Assine todo o conteúdo exclusivo {{university.name}}</h4>
-              </div>
-
-              <button class="btn btn-green" ng-click="premium()">Assinar agora!</button>
-
-            </div>
-
-            <div class="academia-content-forum-post-info-manage" ng-show="user._id == forumPost.accountId && user._id.length > 0">
-              <button ng-click="updateForumPost()" class="btn-clean"><span class="glyphicon glyphicon glyphicon-pencil" style="padding-right: 5px;" /> Editar</button>
-            </div>
-
-          </div>
-          <!-- academia-content-forum-post-info -->
+            <!-- academia-content-forum-answer -->
 
         </div>
-        <!-- academia-content-forum-post -->
-
-        <div class="academia-content-forum-answers" ng-show="forumPost.answers.length > 0">
-          {{forumPost.answers.length}} Answers
-        </div>
-        <!-- academia-content-forum-answers -->
-
-        <forumpostanswer p="{{forumPost._id}}" u="{{forumPost.universityId}}" ng-show="forumPost.answers.length > 0" a="{{answer}}" ng-repeat="answer in forumPost.answers | orderBy:'-votesCount'"></forumpostanswer>
-
-      </div>
-      <!-- academia-content-forum-->
-
-      <div class="academia-content-forum-answer" id="answer">
-
-        <div class="academia-content-forum-answer-title">
-          Responder
-        </div>
-        <!-- academia-content-forum-answer-title -->
-
-        <div class="academia-content-forum-answer-box">
-
-          <style>
-          .ta-toolbar {
-            background-color: #f0f0f0;
-            padding-bottom: 5px;
-            padding-top: 5px;
-          }
-          </style>
-
-          <trix-editor angular-trix ng-model="answer"></trix-editor>
-
-        </div>
-        <!-- academia-content-forum-answer-box -->
-
-        <div class="academia-content-forum-answer-action">
-          <button class="btn btn-blue" ng-click="createAnswerPost()">Responder</button>
-        </div>
-        <!-- academia-content-forum-answer -->
-
-      </div>
-      <!-- academia-content-forum-answer -->
+        <!-- end col-xs-12 -->
 
     </div>
-    <!-- end col-xs-12 -->
+    <!-- end row -->
 
-  </div>
-  <!-- end row -->
-
-  <footermobile></footermobile>
+    <footermobile></footermobile>
 
 </div>
