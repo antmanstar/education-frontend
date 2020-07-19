@@ -1,8 +1,8 @@
 'use strict';
 angular.module('netbase')
-  //35.229.52.103
+    //35.229.52.103
 
-  .factory('TimelineNew', ['$http', '$localStorage', function($http, $localStorage) {
+.factory('TimelineNew', ['$http', '$localStorage', function($http, $localStorage) {
 
     //var baseUrl = "https://api.universida.de/search";
     //var baseUrl = "https://educationalcommunity-uni.herokuapp.com";
@@ -12,41 +12,43 @@ angular.module('netbase')
 
     return {
 
-      getTimelineAll: function(universitiesSubscribed, page) {
+        getTimelineAll: function(universitiesSubscribed, page) {
 
-        var url = '/timeline?universities=' + universitiesSubscribed;
-        console.log($localStorage.token)
+            var url = '/timeline?universities=' + universitiesSubscribed;
+            console.log($localStorage.token)
 
-        return $http({
-          method: 'GET',
-          url: baseUrl + url,
-          headers: {
-              'Content-Type': 'application/x-www-form-urlencoded',
-              'x-access-token': $localStorage.token
-          }});
+            return $http({
+                method: 'GET',
+                url: baseUrl + url,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'x-access-token': $localStorage.token
+                }
+            });
 
-      },
+        },
 
-      getTimelineRePostCount: function(modelId) {
+        getTimelineRePostCount: function(modelId) {
 
-        var url = '/timeline/repost/count?modelId='+modelId;
-        console.log($localStorage.token)
+            var url = '/timeline/repost/count?modelId=' + modelId;
+            console.log($localStorage.token)
 
-        return $http({
-          method: 'GET',
-          url: baseUrl + url,
-          headers: {
-              'Content-Type': 'application/x-www-form-urlencoded',
-              'x-access-token': $localStorage.token
-          }});
+            return $http({
+                method: 'GET',
+                url: baseUrl + url,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'x-access-token': $localStorage.token
+                }
+            });
 
-      }
+        }
 
     }
 
-  }])
+}])
 
-  .factory('Timeline', ['$http', '$localStorage', function($http, $localStorage) {
+.factory('Timeline', ['$http', '$localStorage', function($http, $localStorage) {
 
     //var baseUrl = "https://api.universida.de/search";
     var baseUrl = "https://educationalcommunity-uni.herokuapp.com";
@@ -54,2186 +56,2253 @@ angular.module('netbase')
 
     return {
 
-      getTimelineActivityByStudentId: function(studentId, page) {
+        getTimelineActivityByStudentId: function(studentId, page) {
 
-        var url = '/university/student/' + studentId + '/timeline?page=' + page;
+            var url = '/university/student/' + studentId + '/timeline?page=' + page;
 
-        console.log($localStorage.token)
+            console.log($localStorage.token)
 
-        return $http({
-          method: 'GET',
-          url: baseUrl + url,
-          headers: {
-              'Content-Type': 'application/x-www-form-urlencoded',
-              'x-access-token': $localStorage.token
-          }});
+            return $http({
+                method: 'GET',
+                url: baseUrl + url,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'x-access-token': $localStorage.token
+                }
+            });
 
-      },
+        },
 
-      getTimelineByStudentId: function(studentId, page) {
+        getTimelineByStudentId: function(studentId, page) {
 
-        var url = '/university/student/' + studentId + '/timeline?page=' + page;
+            var url = '/university/student/' + studentId + '/timeline?page=' + page;
 
-        console.log($localStorage.token)
+            console.log($localStorage.token)
 
-        return $http({
-          method: 'GET',
-          url: baseUrl + url,
-          headers: {
-              'Content-Type': 'application/x-www-form-urlencoded',
-              'x-access-token': $localStorage.token
-          }});
+            return $http({
+                method: 'GET',
+                url: baseUrl + url,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'x-access-token': $localStorage.token
+                }
+            });
 
-      }
+        }
 
     }
 
-  }])
+}])
 
-  .factory('PokerHands', ['$http', '$localStorage', function($http, $localStorage) {
+.factory('PokerHands', ['$http', '$localStorage', function($http, $localStorage) {
 
-      var baseUrl = "https://educationalcommunity-uni.herokuapp.com";
-      //var baseUrl = "http://localhost:9003";
+    var baseUrl = "https://educationalcommunity-uni.herokuapp.com";
+    //var baseUrl = "http://localhost:9003";
 
-      return {
+    return {
 
         getAll: function() {
 
-          var url = '/pokerhands/all';
+            var url = '/pokerhands/all';
 
-          return $http.get(baseUrl + url);
+            return $http.get(baseUrl + url);
 
         },
 
         getById: function(id) {
 
-          var url = '/pokerhands/id/' + id;
+            var url = '/pokerhands/id/' + id;
 
-          return $http({
-            method: 'GET',
-            url: baseUrl + url,
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'x-access-token': $localStorage.token
-          }})
+            return $http({
+                method: 'GET',
+                url: baseUrl + url,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'x-access-token': $localStorage.token
+                }
+            })
 
         },
 
         answer: function(id, data) {
 
-          let url = "https://educationalcommunity-uni.herokuapp.com/pokerhands/id/" + id + "/answer";
+            let url = "https://educationalcommunity-uni.herokuapp.com/pokerhands/id/" + id + "/answer";
 
-          return $http({
-            method: 'POST',
-            data : data,
-            url: url,
-            transformRequest: function(obj) {
-                var str = [];
-                for(var p in obj)
-                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                return str.join("&");
-            },
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }});
+            return $http({
+                method: 'POST',
+                data: data,
+                url: url,
+                transformRequest: function(obj) {
+                    var str = [];
+                    for (var p in obj)
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    return str.join("&");
+                },
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
 
         },
 
         create: function(data) {
 
-          let url = "https://educationalcommunity-uni.herokuapp.com/pokerhands/create";
+            let url = "https://educationalcommunity-uni.herokuapp.com/pokerhands/create";
 
-          return $http({
-            method: 'POST',
-            data : data,
-            url: url,
-            transformRequest: function(obj) {
-                var str = [];
-                for(var p in obj)
-                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                return str.join("&");
-            },
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }});
+            return $http({
+                method: 'POST',
+                data: data,
+                url: url,
+                transformRequest: function(obj) {
+                    var str = [];
+                    for (var p in obj)
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    return str.join("&");
+                },
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
 
         },
 
         animateHand: function(handtext) {
 
-          let url = "https://educationalcommunity-uni.herokuapp.com/pokerhands/embed/create";
+            let url = "https://educationalcommunity-uni.herokuapp.com/pokerhands/embed/create";
 
-          return $http({
-            method: 'POST',
-            data : { raw : handtext, embed : true },
-            url: url,
-            transformRequest: function(obj) {
-                var str = [];
-                for(var p in obj)
-                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                return str.join("&");
-            },
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }});
+            return $http({
+                method: 'POST',
+                data: { raw: handtext, embed: true },
+                url: url,
+                transformRequest: function(obj) {
+                    var str = [];
+                    for (var p in obj)
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    return str.join("&");
+                },
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
 
         }
 
-      }
+    }
 
-    }])
+}])
 
-  .factory('Chat', ['$http', '$localStorage', function($http, $localStorage) {
+.factory('Chat', ['$http', '$localStorage', function($http, $localStorage) {
 
-      //var baseUrl = "";
-      var baseUrl = "http://localhost:6969";
+    //var baseUrl = "";
+    var baseUrl = "http://localhost:6969";
 
-      return {
+    return {
 
         getUniversityChannels: function(universityId) {
 
-          let url = "/chat/channel/university/" + universityId;
+            let url = "/chat/channel/university/" + universityId;
 
-          return $http.get(baseUrl + url);
+            return $http.get(baseUrl + url);
 
         },
 
         getTwilioToken: function(payload) {
 
-          let url = "/chat/token/device/" + payload.deviceID;
+            let url = "/chat/token/device/" + payload.deviceID;
 
-          return $http({
-            method: 'GET',
-            url: baseUrl + url,
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'x-access-token': $localStorage.token
-          }});
+            return $http({
+                method: 'GET',
+                url: baseUrl + url,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'x-access-token': $localStorage.token
+                }
+            });
 
         }
 
-      }
+    }
 
-    }])
+}])
 
-  .factory('Playlist', ['$http', function($http) {
+.factory('Playlist', ['$http', function($http) {
 
-      var baseUrl = "https://educationalcommunity-uni.herokuapp.com/university";
-      //var baseUrl = "https://api.universida.de/university";
-      //var baseUrl = "http://192.168.1.7:9003/university";
-      /*
+    var baseUrl = "https://educationalcommunity-uni.herokuapp.com/university";
+    //var baseUrl = "https://api.universida.de/university";
+    //var baseUrl = "http://192.168.1.7:9003/university";
+    /*
 
-      router.get('/id/:id/playlist', university_controller.getAllPlaylistByUniversityId)
+    router.get('/id/:id/playlist', university_controller.getAllPlaylistByUniversityId)
 
-      router.get('/playlist/id/:id', university_controller.getPlaylistById)
+    router.get('/playlist/id/:id', university_controller.getPlaylistById)
 
-      */
+    */
 
-      return {
+    return {
 
         getPlaylistById: function(playlistId) {
 
-          var url = '/playlist/id/' + playlistId;
+            var url = '/playlist/id/' + playlistId;
 
-          return $http.get(baseUrl + url);
+            return $http.get(baseUrl + url);
 
         },
 
         getAllPlaylistByUniversityId: function(universityId) {
 
-          var url = '/id/' + universityId + '/playlist/';
+            var url = '/id/' + universityId + '/playlist/';
 
-          return $http.get(baseUrl + url);
+            return $http.get(baseUrl + url);
 
         },
 
         create: function(data) {
 
-          var url = '/playlist';
+            var url = '/playlist';
 
-          return $http({
-            method: 'POST',
-            data : data,
-            url: baseUrl + url,
-            transformRequest: function(obj) {
-                var str = [];
-                for(var p in obj)
-                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                return str.join("&");
-            },
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }});
+            return $http({
+                method: 'POST',
+                data: data,
+                url: baseUrl + url,
+                transformRequest: function(obj) {
+                    var str = [];
+                    for (var p in obj)
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    return str.join("&");
+                },
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
 
         }
 
-      }
+    }
 
-    }])
+}])
 
-  .factory('Forum', ['$http', '$localStorage', function($http, $localStorage) {
+.factory('Forum', ['$http', '$localStorage', function($http, $localStorage) {
 
-      var baseUrl = "https://educationalcommunity-uni.herokuapp.com/university";
-      //var baseUrl = "https://api.universida.de/university";
-      //var baseUrl = "http://192.168.1.7:9003/university";
+    var baseUrl = "https://educationalcommunity-uni.herokuapp.com/university";
+    //var baseUrl = "https://api.universida.de/university";
+    //var baseUrl = "http://192.168.1.7:9003/university";
 
-      return {
+    return {
 
         getAllOwnerForumPost: function(universityId) {
 
-          var url = '/id/' + universityId + '/forum/owner';
+            var url = '/id/' + universityId + '/forum/owner';
 
-          return $http.get(baseUrl + url);
+            return $http.get(baseUrl + url);
 
         },
 
         getForumPostById: function(id, universityId) {
 
-          var url = '/id/' + universityId + '/forum/post/id/' + id;
+            var url = '/id/' + universityId + '/forum/post/id/' + id;
 
-          return $http({
-            method: 'GET',
-            url: baseUrl + url,
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'x-access-token': $localStorage.token
-            }});
+            return $http({
+                method: 'GET',
+                url: baseUrl + url,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'x-access-token': $localStorage.token
+                }
+            });
 
         },
 
-        getForumPostsByCategoryId : function(id, categoryId, page) {
+        getForumPostsByCategoryId: function(id, categoryId, page) {
 
-          var url = '/id/' + id + '/categories/id/' + categoryId + '/posts' + "?page=" + page;
+            var url = '/id/' + id + '/categories/id/' + categoryId + '/posts' + "?page=" + page;
 
-          return $http.get(baseUrl + url);
+            return $http.get(baseUrl + url);
 
         },
 
         postAnswerByForumPostId: function(id, answer) {
 
-          var url = '/forum/post/id/' + id + "/answer";
+            var url = '/forum/post/id/' + id + "/answer";
 
-          return $http({
-            method: 'POST',
-            url: baseUrl + url,
-            data : answer,
-            transformRequest: function(obj) {
-                var str = [];
-                for(var p in obj)
-                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                return str.join("&");
-            },
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }});
+            return $http({
+                method: 'POST',
+                url: baseUrl + url,
+                data: answer,
+                transformRequest: function(obj) {
+                    var str = [];
+                    for (var p in obj)
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    return str.join("&");
+                },
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
 
         },
 
         getCategoriesByUniversityId: function(universityId, data) {
 
-          var url = '/id/' + universityId + '/categories';
+            var url = '/id/' + universityId + '/categories';
 
-          return $http.get(baseUrl + url);
+            return $http.get(baseUrl + url);
 
         },
 
         createCategory: function(universityId, data) {
 
-          var url = '/id/' + universityId + '/category/';
+            var url = '/id/' + universityId + '/category/';
 
-          return $http({
-            method: 'POST',
-            url: baseUrl + url,
-            data : data,
-            transformRequest: function(obj) {
-                var str = [];
-                for(var p in obj)
-                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                return str.join("&");
-            },
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }});
+            return $http({
+                method: 'POST',
+                url: baseUrl + url,
+                data: data,
+                transformRequest: function(obj) {
+                    var str = [];
+                    for (var p in obj)
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    return str.join("&");
+                },
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
 
         }
 
-      }
+    }
 
-    }])
+}])
 
-  .factory('University', ['$http', '$localStorage', function($http, $localStorage) {
+.factory('University', ['$http', '$localStorage', function($http, $localStorage) {
 
-      var baseUrl = "https://educationalcommunity-uni.herokuapp.com/university";
-      //var baseUrl = "https://api.universida.de/university";
-      //var baseUrl = "http://localhost:9003/university";
+    var baseUrl = "https://educationalcommunity-uni.herokuapp.com/university";
+    //var baseUrl = "https://api.universida.de/university";
+    //var baseUrl = "http://localhost:9003/university";
 
-      return {
+    return {
 
         storeLocal: function(university) {
-          //$localStorage.studentsStorage = {}
-          if ($localStorage.universityStorage == undefined) {
-            $localStorage.universityStorage = {};
-          }
+            //$localStorage.studentsStorage = {}
+            if ($localStorage.universityStorage == undefined) {
+                $localStorage.universityStorage = {};
+            }
 
-          let ts = Math.round((new Date()).getTime() / 1000);
+            let ts = Math.round((new Date()).getTime() / 1000);
 
-          university.updated = ts;
+            university.updated = ts;
 
-          $localStorage.universityStorage[university._id] = university;
-          $localStorage.universityStorage[university.url] = university;
+            $localStorage.universityStorage[university._id] = university;
+            $localStorage.universityStorage[university.url] = university;
 
         },
 
         isStoredLocal: function(query) {
 
-          let ts = Math.round((new Date()).getTime() / 1000);
+            let ts = Math.round((new Date()).getTime() / 1000);
 
-          if ($localStorage.universityStorage == undefined) {
-            $localStorage.universityStorage = {};
-          }
-
-          let university = $localStorage.universityStorage;
-
-          // check timestamp, 3hr updates
-
-          if (query in university) {
-
-            let lastUpdate = university[query].updated;
-
-            if (lastUpdate + (3600 * 2) < ts) {
-              return true;
-            } else {
-              return false;
+            if ($localStorage.universityStorage == undefined) {
+                $localStorage.universityStorage = {};
             }
 
-          } else {
-            return false;
-          }
+            let university = $localStorage.universityStorage;
+
+            // check timestamp, 3hr updates
+
+            if (query in university) {
+
+                let lastUpdate = university[query].updated;
+
+                if (lastUpdate + (3600 * 2) < ts) {
+                    return true;
+                } else {
+                    return false;
+                }
+
+            } else {
+                return false;
+            }
 
 
         },
 
         retrieveStorage: function() {
 
-          return $localStorage.universityStorage;
+            return $localStorage.universityStorage;
 
         },
         getallCategorybyUniversity: function() {
 
-          var url = '/owner/members/university/category';
+            var url = '/owner/members/university/category';
 
-          return $http.get(baseUrl + url);
+            return $http.get(baseUrl + url);
 
         },
         create: function(data) {
 
-          var url = '/';
+            var url = '/';
 
-          return $http({
-            method: 'POST',
-            data : data,
-            url: baseUrl + url,
-            transformRequest: function(obj) {
-                var str = [];
-                for(var p in obj)
-                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                return str.join("&");
-            },
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }});
+            return $http({
+                method: 'POST',
+                data: data,
+                url: baseUrl + url,
+                transformRequest: function(obj) {
+                    var str = [];
+                    for (var p in obj)
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    return str.join("&");
+                },
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
 
         },
 
         update: function(id, data) {
 
-          var url = '/id/' + id;
+            var url = '/id/' + id;
 
-          return $http({
-            method: 'PUT',
-            data : data,
-            url: baseUrl + url,
-            transformRequest: function(obj) {
-                var str = [];
-                for(var p in obj)
-                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                return str.join("&");
-            },
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }});
+            return $http({
+                method: 'PUT',
+                data: data,
+                url: baseUrl + url,
+                transformRequest: function(obj) {
+                    var str = [];
+                    for (var p in obj)
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    return str.join("&");
+                },
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
 
         },
         getUniversitiesByAdminMembers: function() {
 
-          var url = '/owner/members/university';
+            var url = '/owner/members/university';
 
-          return $http.get(baseUrl + url);
+            return $http.get(baseUrl + url);
 
         },
 
         getUniversitiesByOwnerId: function(id) {
 
-          var url = '/ownerid/' + id;
+            var url = '/ownerid/' + id;
 
-          return $http.get(baseUrl + url);
+            return $http.get(baseUrl + url);
 
         },
 
         getUniversities: function() {
 
-          var url = '/';
+            var url = '/';
 
-          return $http.get(baseUrl + url);
+            return $http.get(baseUrl + url);
 
         },
 
         getAllUniversities: function() {
 
-          var url = '/all';
+            var url = '/all';
 
-          return $http.get(baseUrl + url);
+            return $http.get(baseUrl + url);
 
         },
 
         getUniversityById: function(universityId) {
 
-          var url = '/id/' + universityId;
+            var url = '/id/' + universityId;
 
-          return $http.get(baseUrl + url);
+            return $http.get(baseUrl + url);
 
         },
 
         getUniversity: function(universityUrl) {
 
-          var url = '/url/' + universityUrl;
+            var url = '/url/' + universityUrl;
 
-          return $http.get(baseUrl + url);
+            return $http.get(baseUrl + url);
 
         },
 
         getUniversityForumPosts: function(universityId, page) {
 
-          var url = "/id/" + universityId + "/forum" + "?page=" + page;
+            var url = "/id/" + universityId + "/forum" + "?page=" + page;
 
-          return $http({
-            method: 'GET',
-            url: baseUrl + url,
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'x-access-token': $localStorage.token
-            }});
+            return $http({
+                method: 'GET',
+                url: baseUrl + url,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'x-access-token': $localStorage.token
+                }
+            });
 
         },
 
         subscribeOnUniversity: function(universityUrl) {
 
-          var url = '/url/' + universityUrl + "/subscribe";
+            var url = '/url/' + universityUrl + "/subscribe";
 
-          return $http({
-            method: 'POST',
-            url: baseUrl + url,
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }});
+            return $http({
+                method: 'POST',
+                url: baseUrl + url,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
 
         },
 
         createForumPostTimeline: function(data) {
 
-          var url = '/timeline/forumpost';
+            var url = '/timeline/forumpost';
 
-          return $http({
-            method: 'POST',
-            data: data,
-            url: "https://educationalcommunity-timeline.herokuapp.com" + url,
-            transformRequest: function(obj) {
-                var str = [];
-                for(var p in obj)
-                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                return str.join("&");
-            },
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded',
-              'x-access-token': $localStorage.token
-            }});
+            return $http({
+                method: 'POST',
+                data: data,
+                url: "https://educationalcommunity-timeline.herokuapp.com" + url,
+                transformRequest: function(obj) {
+                    var str = [];
+                    for (var p in obj)
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    return str.join("&");
+                },
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'x-access-token': $localStorage.token
+                }
+            });
 
         },
 
         createForumPost: function(universityId, data) {
 
-          var url = '/id/' + universityId + '/forum';
+            var url = '/id/' + universityId + '/forum';
 
-          return $http({
-            method: 'POST',
-            data: data,
-            url: baseUrl + url,
-            transformRequest: function(obj) {
-                var str = [];
-                for(var p in obj)
-                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                return str.join("&");
-            },
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }});
+            return $http({
+                method: 'POST',
+                data: data,
+                url: baseUrl + url,
+                transformRequest: function(obj) {
+                    var str = [];
+                    for (var p in obj)
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    return str.join("&");
+                },
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
 
         },
 
         updateForumPost: function(universityId, postId, data) {
 
-          var url = '/id/' + universityId + '/forum/post/id/' + postId;
+            var url = '/id/' + universityId + '/forum/post/id/' + postId;
 
-          return $http({
-            method: 'PUT',
-            data: data,
-            url: baseUrl + url,
-            transformRequest: function(obj) {
-                var str = [];
-                for(var p in obj)
-                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                return str.join("&");
-            },
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }});
+            return $http({
+                method: 'PUT',
+                data: data,
+                url: baseUrl + url,
+                transformRequest: function(obj) {
+                    var str = [];
+                    for (var p in obj)
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    return str.join("&");
+                },
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
 
         },
 
         upvoteForumPost: function(universityId, postId) {
 
-          var url = '/id/' + universityId + '/forum/post/id/' + postId + '/vote/up';
+            var url = '/id/' + universityId + '/forum/post/id/' + postId + '/vote/up';
 
-          return $http({
-            method: 'POST',
-            url: baseUrl + url,
-            transformRequest: function(obj) {
-                var str = [];
-                for(var p in obj)
-                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                return str.join("&");
-            },
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }});
+            return $http({
+                method: 'POST',
+                url: baseUrl + url,
+                transformRequest: function(obj) {
+                    var str = [];
+                    for (var p in obj)
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    return str.join("&");
+                },
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
 
         },
 
         downvoteForumPost: function(universityId, postId) {
 
-          var url = '/id/' + universityId + '/forum/post/id/' + postId + '/vote/down';
+            var url = '/id/' + universityId + '/forum/post/id/' + postId + '/vote/down';
 
-          return $http({
-            method: 'POST',
-            url: baseUrl + url,
-            transformRequest: function(obj) {
-                var str = [];
-                for(var p in obj)
-                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                return str.join("&");
-            },
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }});
+            return $http({
+                method: 'POST',
+                url: baseUrl + url,
+                transformRequest: function(obj) {
+                    var str = [];
+                    for (var p in obj)
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    return str.join("&");
+                },
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
 
         },
 
         upvoteForumPostAnswer: function(universityId, postId, answerId) {
 
-          var url = "/id/" + universityId + "/forum/post/id/" + postId + "/answer/id/" + answerId + "/vote/up";
+            var url = "/id/" + universityId + "/forum/post/id/" + postId + "/answer/id/" + answerId + "/vote/up";
 
-          return $http({
-            method: 'PUT',
-            url: baseUrl + url,
-            transformRequest: function(obj) {
-                var str = [];
-                for(var p in obj)
-                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                return str.join("&");
-            },
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }});
+            return $http({
+                method: 'PUT',
+                url: baseUrl + url,
+                transformRequest: function(obj) {
+                    var str = [];
+                    for (var p in obj)
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    return str.join("&");
+                },
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
 
         },
 
         downvoteForumPostAnswer: function(universityId, postId, answerId) {
 
-          var url = "/id/" + universityId + "/forum/post/id/" + postId + "/answer/id/" + answerId + "/vote/down";
+            var url = "/id/" + universityId + "/forum/post/id/" + postId + "/answer/id/" + answerId + "/vote/down";
 
-          return $http({
-            method: 'PUT',
-            url: baseUrl + url,
-            transformRequest: function(obj) {
-                var str = [];
-                for(var p in obj)
-                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                return str.join("&");
-            },
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }});
+            return $http({
+                method: 'PUT',
+                url: baseUrl + url,
+                transformRequest: function(obj) {
+                    var str = [];
+                    for (var p in obj)
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    return str.join("&");
+                },
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
 
         },
 
         setMemberPrivilege: function(universityId, accountId, data) {
 
-          var url = '/id/' + universityId + '/member/' + accountId;
+            var url = '/id/' + universityId + '/member/' + accountId;
 
-          return $http({
-            method: 'PUT',
-            data: data,
-            url: baseUrl + url,
-            transformRequest: function(obj) {
-                var str = [];
-                for(var p in obj)
-                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                return str.join("&");
-            },
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }});
+            return $http({
+                method: 'PUT',
+                data: data,
+                url: baseUrl + url,
+                transformRequest: function(obj) {
+                    var str = [];
+                    for (var p in obj)
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    return str.join("&");
+                },
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
 
         },
 
         createPlan: function(universityId, data) {
 
-          var url = '/id/' + universityId + '/premium/plan';
+            var url = '/id/' + universityId + '/premium/plan';
 
-          return $http({
-            method: 'POST',
-            data : data,
-            url: baseUrl + url,
-            transformRequest: function(obj) {
-                var str = [];
-                for(var p in obj)
-                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                return str.join("&");
-            },
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }});
+            return $http({
+                method: 'POST',
+                data: data,
+                url: baseUrl + url,
+                transformRequest: function(obj) {
+                    var str = [];
+                    for (var p in obj)
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    return str.join("&");
+                },
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
 
         },
 
         updatePlan: function(universityId, data) {
 
-          var url = '/id/' + universityId + '/premium/plan/' + data.stripeId;
+            var url = '/id/' + universityId + '/premium/plan/' + data.stripeId;
 
-          return $http({
-            method: 'PUT',
-            data : data,
-            url: baseUrl + url,
-            transformRequest: function(obj) {
-                var str = [];
-                for(var p in obj)
-                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                return str.join("&");
-            },
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }});
+            return $http({
+                method: 'PUT',
+                data: data,
+                url: baseUrl + url,
+                transformRequest: function(obj) {
+                    var str = [];
+                    for (var p in obj)
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    return str.join("&");
+                },
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
 
         }
 
-      }
+    }
 
-    }])
+}])
 
-  .factory('Classroom', ['$http', '$localStorage', function($http, $localStorage) {
+.factory('Classroom', ['$http', '$localStorage', function($http, $localStorage) {
 
-		console.log('here entered.');
-		return {
-			getAllClassroomsByUniversity_J: function(url) {
-				return new Promise((resolve, reject) => {
-					let token = $localStorage.token;
-					console.log('loacl storage token');
-					console.log(token);
-					/*
-					var req = {
-						method: 'GET',
-						url: url,
-						headers: {
-							'x-access-token': token,
-							'query': token
-						},
-						params: {token: token },
-					}
+    console.log('here entered.');
+    return {
+        getAllClassroomsByUniversity_J: function(url) {
+            return new Promise((resolve, reject) => {
+                let token = $localStorage.token;
+                console.log('loacl storage token');
+                console.log(token);
+                /*
+                var req = {
+                	method: 'GET',
+                	url: url,
+                	headers: {
+                		'x-access-token': token,
+                		'query': token
+                	},
+                	params: {token: token },
+                }
 
-					var result = Array();
+                var result = Array();
 
-					$http(req).then((res) => {
-						var i;
-						console.log('hahhee we we we we ');
-						console.log(res);
-						for(i = 0; i < res.data.data.length; i++) {
-							let classRoom = res.data.data[i];
-							result.push(classRoom);
-						}
-						console.log(result);
-						resolve(result);
-					});
-					*/
-					var req = {
-						token: token,
-					}
+                $http(req).then((res) => {
+                	var i;
+                	console.log('hahhee we we we we ');
+                	console.log(res);
+                	for(i = 0; i < res.data.data.length; i++) {
+                		let classRoom = res.data.data[i];
+                		result.push(classRoom);
+                	}
+                	console.log(result);
+                	resolve(result);
+                });
+                */
+                var req = {
+                    token: token,
+                }
 
-					var result = Array();
+                var result = Array();
 
-					$http.get(url + "?token=" + token).then((res) => {
-						var i;
-						console.log('hahhee we we we we ');
-						console.log(res);
-						for(i = 0; i < res.data.data.length; i++) {
-							let classRoom = res.data.data[i];
-							result.push(classRoom);
-						}
-						console.log(result);
-						resolve(result);
-          });
+                $http.get(url + "?token=" + token).then((res) => {
+                    var i;
+                    console.log('hahhee we we we we ');
+                    console.log(res);
+                    for (i = 0; i < res.data.data.length; i++) {
+                        let classRoom = res.data.data[i];
+                        result.push(classRoom);
+                    }
+                    console.log(result);
+                    resolve(result);
+                });
 
-				});
-      },
-      getAllClassroomsByUniversity: function(url) {
+            });
+        },
+        getAllClassroomsByUniversity: function(url) {
 
-					let token = $localStorage.token;
-					console.log('loacl storage token');
-					console.log(token);
-          return $http.get(url + "?token=" + token);
-			},
-			createNewClassroom: function(url, title, privilege, universityId){
-				return new Promise((resolve, reject) => {
-					let token = $localStorage.token;
-					var req = {
-						method: 'POST',
-						url: url,
-						headers: {
-              'x-access-token': token,
-              'content-type': 'application/json'
-						},
-						params: {
-							token: token
-            },
-            data: {
-              id: universityId,
-              roomName: title,
-              privilege: privilege,
+            let token = $localStorage.token;
+            console.log('loacl storage token');
+            console.log(token);
+            return $http.get(url + "?token=" + token);
+        },
+        createNewClassroom: function(url, title, privilege, universityId) {
+            return new Promise((resolve, reject) => {
+                let token = $localStorage.token;
+                var req = {
+                    method: 'POST',
+                    url: url,
+                    headers: {
+                        'x-access-token': token,
+                        'content-type': 'application/json'
+                    },
+                    params: {
+                        token: token
+                    },
+                    data: {
+                        id: universityId,
+                        roomName: title,
+                        privilege: privilege,
+                    }
+                }
+                $http(req).then((res) => {
+                    console.log('create success');
+                    console.log(res);
+                    if (res.data.success == true) {
+                        resolve(res.data);
+                    } else {
+                        reject(res.data.msg);
+                    }
+                });
+            });
+        },
+        deleteClassroom: function(url, roomId, privilege) {
+            console.log('here check');
+            console.log(url);
+            console.log(roomId);
+            console.log(privilege);
+            return new Promise((resolve, reject) => {
+                let token = $localStorage.token;
+                var req = {
+                    method: 'DELETE',
+                    url: url,
+                    headers: {
+                        'x-access-token': token,
+                        'content-type': 'application/json'
+                    },
+                    params: {
+                        token: token
+                    },
+                    data: {
+                        id: roomId,
+                        privilege: privilege
+                    }
+                }
+                $http(req).then((res) => {
+                    console.log('delete success');
+                    console.log(res);
+                    if (res.data.success == true) {
+                        resolve(res.data);
+                    } else {
+                        console.log('delete error');
+                        console.log(res.data);
+                        reject(res.data.msg);
+                    }
+                });
+            });
+        },
+        joinClassroom: function(url) {
+            return new Promise((resolve, reject) => {
+                let token = $localStorage.token;
+
+                var req = {
+                    method: 'POST',
+                    url: url,
+                    headers: {
+                        'x-access-token': token,
+                    },
+                    params: { token: token }
+                }
+                $http(req).then((res) => {
+                    console.log(res);
+                    if (res.data.success) {
+                        resolve(res.data.data);
+                    } else {
+                        reject('err');
+                    }
+                });
+            });
+        },
+        getAccessToken: function(url) {
+            return new Promise((resolve, reject) => {
+                let token = $localStorage.token;
+                var req = {
+                    method: 'GET',
+                    url: url,
+                    headers: {
+                        'Access-Control-Allow-Origin': '*',
+                        'x-access-token': token,
+                    },
+                    params: { token: token }
+                }
+                $http(req).then((res) => {
+                    console.log(res);
+                    if (res.data.success) {
+                        resolve(res.data.token);
+                    } else {
+                        reject('err');
+                    }
+                });
+            })
+        },
+        getChatAccessToken: function(url) {
+            var token = $localStorage.token;
+            var req = {
+                method: 'GET',
+                url: url + 'deviceId/browser',
+                headers: {
+                    'x-access-token': token,
+                    'content-type': 'application/json'
+                }
             }
-					}
-					$http(req).then((res) => {
-						console.log('create success');
-						console.log(res);
-						if(res.data.success == true){
-							resolve(res.data);
-						}
-						else {
-							reject(res.data.msg);
-						}
-					});
-				});
-      },
-      deleteClassroom: function(url, roomId, privilege){
-        console.log('here check');
-        console.log(url);
-        console.log(roomId);
-        console.log(privilege);
-				return new Promise((resolve, reject) => {
-					let token = $localStorage.token;
-					var req = {
-						method: 'DELETE',
-						url: url,
-						headers: {
-              'x-access-token': token,
-              'content-type': 'application/json'
-						},
-						params: {
-							token: token
-            },
-            data: {
-              id: roomId,
-              privilege: privilege
-            }
-					}
-					$http(req).then((res) => {
-						console.log('delete success');
-						console.log(res);
-						if(res.data.success == true){
-							resolve(res.data);
-						}
-						else {
-              console.log('delete error');
-              console.log(res.data);
-							reject(res.data.msg);
-						}
-					});
-				});
-			},
-			joinClassroom: function(url) {
-				return new Promise((resolve, reject) => {
-					let token = $localStorage.token;
-
-					var req = {
-						method: 'POST',
-						url: url,
-						headers: {
-							'x-access-token': token,
-						},
-						params: { token: token }
-					}
-					$http(req).then((res) => {
-						console.log(res);
-						if(res.data.success){
-							resolve(res.data.data);
-						}
-						else {
-							reject('err');
-						}
-					});
-				});
-			},
-			getAccessToken: function(url) {
-				return new Promise((resolve, reject) => {
-					let token = $localStorage.token;
-					var req = {
-						method: 'GET',
-						url: url,
-						headers: {
-							'Access-Control-Allow-Origin': '*',
-							'x-access-token': token,
-						},
-						params: { token: token }
-					}
-					$http(req).then((res) => {
-						console.log(res);
-						if(res.data.success){
-							resolve(res.data.token);
-						}
-						else {
-							reject('err');
-						}
-					});
-				})
-      },
-      getChatAccessToken: function(url) {
-        var token = $localStorage.token;
-        var req = {
-          method: 'GET',
-          url: url + 'deviceId/browser',
-          headers: {
-            'x-access-token': token,
-            'content-type': 'application/json'
-          }
+            return $http(req);
         }
-        return $http(req);
-      }
-		}
-    }])
+    }
+}])
 
-  .factory('Students', ['$http', '$localStorage', function($http, $localStorage) {
+.factory('Students', ['$http', '$localStorage', function($http, $localStorage) {
 
-      //var baseUrl = "https://api.universida.de/accounts/students";
-      var baseUrl = "https://educationalcommunity-accounts.herokuapp.com/accounts/students";
-      //var baseUrl = "http://localhost:9000/accounts/students";
+    //var baseUrl = "https://api.universida.de/accounts/students";
+    var baseUrl = "https://educationalcommunity-accounts.herokuapp.com/accounts/students";
+    //var baseUrl = "http://localhost:9000/accounts/students";
 
-      return {
+    return {
 
         storeLocal: function(student) {
-          //$localStorage.studentsStorage = {}
-          if ($localStorage.studentsStorage == undefined) {
-            $localStorage.studentsStorage = {};
-          }
+            //$localStorage.studentsStorage = {}
+            if ($localStorage.studentsStorage == undefined) {
+                $localStorage.studentsStorage = {};
+            }
 
-          $localStorage.studentsStorage[student._id] = student;
+            $localStorage.studentsStorage[student._id] = student;
 
         },
 
         isStoredLocal: function(studentId) {
 
-          // check if it's stored local
+            // check if it's stored local
 
-          if ($localStorage.studentsStorage == undefined) {
-            $localStorage.studentsStorage = {};
-          }
+            if ($localStorage.studentsStorage == undefined) {
+                $localStorage.studentsStorage = {};
+            }
 
-          let storage = $localStorage.studentsStorage;
+            let storage = $localStorage.studentsStorage;
 
-          if (studentId in storage) {
-            return true;
-          } else {
-            return false;
-          }
+            if (studentId in storage) {
+                return true;
+            } else {
+                return false;
+            }
 
         },
 
         retrieveStorage: function() {
 
-          return $localStorage.studentsStorage;
+            return $localStorage.studentsStorage;
 
         },
 
         update: function(accountId, data) {
 
-          var url = "/id/" + accountId + "/update";
+            var url = "/id/" + accountId + "/update";
 
-          return $http({
-            method: 'PUT',
-            url: baseUrl + url,
-            data : data,
-            transformRequest: function(obj) {
-                var str = [];
-                for(var p in obj)
-                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                return str.join("&");
-            },
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }});
+            return $http({
+                method: 'PUT',
+                url: baseUrl + url,
+                data: data,
+                transformRequest: function(obj) {
+                    var str = [];
+                    for (var p in obj)
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    return str.join("&");
+                },
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
 
         },
 
         getCards: function(userId) {
 
-          var url = '/id/' + userId + "/cards";
+            var url = '/id/' + userId + "/cards";
 
-          return $http({
-            method: 'GET',
-            url: baseUrl + url,
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'x-access-token': $localStorage.token
-            }});
+            return $http({
+                method: 'GET',
+                url: baseUrl + url,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'x-access-token': $localStorage.token
+                }
+            });
 
         },
 
         resetPasswordStepThree: function(data) {
 
-          let url = "/forgot/newpassword/token";
+            let url = "/forgot/newpassword/token";
 
-          return $http({
-            method: 'PUT',
-            url: baseUrl + url,
-            data : data,
-            transformRequest: function(obj) {
-                var str = [];
-                for(var p in obj)
-                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                return str.join("&");
-            },
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }});
+            return $http({
+                method: 'PUT',
+                url: baseUrl + url,
+                data: data,
+                transformRequest: function(obj) {
+                    var str = [];
+                    for (var p in obj)
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    return str.join("&");
+                },
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
 
         },
 
         resetPasswordStepOne: function(data) {
 
-          let url = "/forgot";
+            let url = "/forgot";
 
-          return $http({
-            method: 'POST',
-            url: baseUrl + url,
-            data : data,
-            transformRequest: function(obj) {
-                var str = [];
-                for(var p in obj)
-                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                return str.join("&");
-            },
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }});
+            return $http({
+                method: 'POST',
+                url: baseUrl + url,
+                data: data,
+                transformRequest: function(obj) {
+                    var str = [];
+                    for (var p in obj)
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    return str.join("&");
+                },
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
 
         },
 
         resetPasswordStepTwo: function(data) {
 
-          let url = "/forgot/newpassword";
+            let url = "/forgot/newpassword";
 
-          return $http({
-            method: 'PUT',
-            url: baseUrl + url,
-            data : data,
-            transformRequest: function(obj) {
-                var str = [];
-                for(var p in obj)
-                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                return str.join("&");
-            },
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }});
+            return $http({
+                method: 'PUT',
+                url: baseUrl + url,
+                data: data,
+                transformRequest: function(obj) {
+                    var str = [];
+                    for (var p in obj)
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    return str.join("&");
+                },
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
 
         },
 
         postCards: function(userId, data) {
 
-          var url = '/id/' + userId + "/cards";
+            var url = '/id/' + userId + "/cards";
 
-          return $http({
-            method: 'POST',
-            url: baseUrl + url,
-            data : data,
-            transformRequest: function(obj) {
-                var str = [];
-                for(var p in obj)
-                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                return str.join("&");
-            },
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }});
+            return $http({
+                method: 'POST',
+                url: baseUrl + url,
+                data: data,
+                transformRequest: function(obj) {
+                    var str = [];
+                    for (var p in obj)
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    return str.join("&");
+                },
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
 
         },
 
         login: function(data) {
 
-          var url = '/authenticate/';
+            var url = '/authenticate/';
 
-          return $http({
-            method: 'POST',
-            url: baseUrl + url,
-            data : data,
-            transformRequest: function(obj) {
-                var str = [];
-                for(var p in obj)
-                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                return str.join("&");
-            },
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }});
+            return $http({
+                method: 'POST',
+                url: baseUrl + url,
+                data: data,
+                transformRequest: function(obj) {
+                    var str = [];
+                    for (var p in obj)
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    return str.join("&");
+                },
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
 
         },
 
         createAccount: function(data) {
 
-          var url = '/create/';
+            var url = '/create/';
 
-          data.language = "PT";
+            data.language = "PT";
 
-          return $http({
-            method: 'POST',
-            url: baseUrl + url,
-            data : data,
-            transformRequest: function(obj) {
-                var str = [];
-                for(var p in obj)
-                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                return str.join("&");
-            },
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }});
+            return $http({
+                method: 'POST',
+                url: baseUrl + url,
+                data: data,
+                transformRequest: function(obj) {
+                    var str = [];
+                    for (var p in obj)
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    return str.join("&");
+                },
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
 
         },
 
         getStudentById: function(id) {
 
-          var url = '/id/' + id;
+            var url = '/id/' + id;
 
-          return $http.get(baseUrl + url);
+            return $http.get(baseUrl + url);
 
         },
 
         getStudentById_J: function(id) {
-          var url = '/id/' + id;
-          return new Promise((resolve, reject) => {
-            $http.get(baseUrl + url).then((res) => {
-              console.log('here000000000000');
-              console.log(res);
-              resolve(res.data.data);
-            })
-            .catch((err) => {
-              reject(err);
+            var url = '/id/' + id;
+            return new Promise((resolve, reject) => {
+                $http.get(baseUrl + url).then((res) => {
+                        console.log('here000000000000');
+                        console.log(res);
+                        resolve(res.data.data);
+                    })
+                    .catch((err) => {
+                        reject(err);
+                    });
             });
-          });
         },
 
         getStudentByUsername: function(id) {
 
-          var url = '/username/' + id;
+            var url = '/username/' + id;
 
-          return $http.get(baseUrl + url);
+            return $http.get(baseUrl + url);
 
         }
 
-      }
+    }
 
-    }])
+}])
 
-  .factory('Search', ['$http', function($http) {
+.factory('Search', ['$http', function($http) {
 
-      //var baseUrl = "https://api.universida.de/search";
-      //var baseUrl = "https://network-search-prod.herokuapp.com/search";
-      var baseUrl = "https://network-search-prod.herokuapp.com/search"
+    //var baseUrl = "https://api.universida.de/search";
+    //var baseUrl = "https://network-search-prod.herokuapp.com/search";
+    var baseUrl = "https://network-search-prod.herokuapp.com/search"
 
-      return {
+    return {
 
         all: function(query) {
 
-          var url = '/all?q=' + query;
+            var url = '/all?q=' + query;
 
-          return $http.get(baseUrl + url);
+            return $http.get(baseUrl + url);
 
         }
 
-      }
+    }
 
-    }])
+}])
 
-  .factory('Knowledge', ['$http', '$localStorage', function($http, $localStorage) {
+.factory('Knowledge', ['$http', '$localStorage', function($http, $localStorage) {
 
-      //var baseUrl = "https://api.universida.de/search";
-      //var baseUrl = "http://192.168.1.7:9003/knowledge";
-      var baseUrl = "https://educationalcommunity-uni.herokuapp.com/knowledge";
+    //var baseUrl = "https://api.universida.de/search";
+    //var baseUrl = "http://192.168.1.7:9003/knowledge";
+    var baseUrl = "https://educationalcommunity-uni.herokuapp.com/knowledge";
 
-      return {
+    return {
 
         getAllPaginated: function(query) {
 
-          // do paginated here
+            // do paginated here
 
-          var url = '/all';
+            var url = '/all';
 
-          return $http.get(baseUrl + url);
+            return $http.get(baseUrl + url);
 
         },
 
         getById: function(id) {
 
-          // do paginated here
+            // do paginated here
 
-          var url = '/id/' + id;
+            var url = '/id/' + id;
 
-          return $http.get(baseUrl + url);
+            return $http.get(baseUrl + url);
 
         },
 
         getByUrl: function(urlArg) {
 
-          // do paginated here
+            // do paginated here
 
-          var url = '/url/' + urlArg;
+            var url = '/url/' + urlArg;
 
-          return $http.get(baseUrl + url);
+            return $http.get(baseUrl + url);
 
         },
 
         getAllPostsByIdPaginated: function(id) {
 
-          // do paginated here
+            // do paginated here
 
-          var url = '/id/' + id + '/posts';
+            var url = '/id/' + id + '/posts';
 
-          return $http.get(baseUrl + url);
+            return $http.get(baseUrl + url);
 
         },
 
         getAllPostsByUrlPaginated: function(id, page) {
 
-          // do paginated here
+            // do paginated here
 
-          var url = '/url/' + id + '/posts' + "?page=" + page;
+            var url = '/url/' + id + '/posts' + "?page=" + page;
 
-          return $http.get(baseUrl + url);
+            return $http.get(baseUrl + url);
 
         },
 
         subscribe: function(knowledgeId) {
 
-          // do paginated here
+            // do paginated here
 
-          var url = '/id/' + knowledgeId + "/subscribe";
+            var url = '/id/' + knowledgeId + "/subscribe";
 
-          return $http({
-            method: 'POST',
-            url: baseUrl + url,
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'x-access-token': $localStorage.token
-            }});
+            return $http({
+                method: 'POST',
+                url: baseUrl + url,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'x-access-token': $localStorage.token
+                }
+            });
 
         }
 
-      }
+    }
 
-    }])
+}])
 
-  .factory('Videos', ['$http', function($http) {
+.factory('Videos', ['$http', function($http) {
 
-      var baseUrl = "https://educationalcommunity-uni.herokuapp.com/university";
-      //var baseUrl = "http://192.168.1.7:9003/university";
+    var baseUrl = "https://educationalcommunity-uni.herokuapp.com/university";
+    //var baseUrl = "http://192.168.1.7:9003/university";
 
-      return {
+    return {
 
         progress: function(payload, videoid) {
 
-          var url = '/video/id/' + videoid + "/progress";
+            var url = '/video/id/' + videoid + "/progress";
 
-          return $http({
-            method: 'PUT',
-            url: baseUrl + url,
-            data : payload,
-            transformRequest: function(obj) {
-                var str = [];
-                for(var p in obj)
-                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                return str.join("&");
-            },
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }});
+            return $http({
+                method: 'PUT',
+                url: baseUrl + url,
+                data: payload,
+                transformRequest: function(obj) {
+                    var str = [];
+                    for (var p in obj)
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    return str.join("&");
+                },
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
 
         },
 
         getById: function(id) {
 
-          var url = "/video/id/" + id;
+            var url = "/video/id/" + id;
 
-          return $http.get(baseUrl + url);
+            return $http.get(baseUrl + url);
 
         },
-        getByPlaylist:function(id)
-       {
-          var url = "/video/playlist/" + id;
+        getByPlaylist: function(id) {
+            var url = "/video/playlist/" + id;
 
-          return $http.get(baseUrl + url);
-       },
+            return $http.get(baseUrl + url);
+        },
         create: function(payload) {
 
-          var url = '/video';
+            var url = '/video';
 
-          return $http({
-            method: 'POST',
-            url: baseUrl + url,
-            data : payload,
-            transformRequest: function(obj) {
-                var str = [];
-                for(var p in obj)
-                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                return str.join("&");
-            },
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }});
+            return $http({
+                method: 'POST',
+                url: baseUrl + url,
+                data: payload,
+                transformRequest: function(obj) {
+                    var str = [];
+                    for (var p in obj)
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    return str.join("&");
+                },
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
 
         },
 
         parse: function(youtubeId, type) {
 
-          if (type == 'yt') {
+            if (type == 'yt') {
 
-            var ytApiKey = "AIzaSyBO5oxAd6H-Au_lPyQiV2QU-7vCL_Li3GY";
-            var url = "https://www.googleapis.com/youtube/v3/videos?part=snippet&id=" + youtubeId + "&key=" + ytApiKey
+                var ytApiKey = "AIzaSyBO5oxAd6H-Au_lPyQiV2QU-7vCL_Li3GY";
+                var url = "https://www.googleapis.com/youtube/v3/videos?part=snippet&id=" + youtubeId + "&key=" + ytApiKey
 
-          }
+            }
 
-          console.log(url)
+            console.log(url)
 
-          return $http.get(url);
+            return $http.get(url);
 
         }
 
-      }
+    }
 
-    }])
+}])
 
-  .factory('SocialMarketPlace', ['$http', '$localStorage', 'jwtHelper', function($http, $localStorage, jwtHelper) {
+.factory('SocialMarketPlace', ['$http', '$localStorage', 'jwtHelper', function($http, $localStorage, jwtHelper) {
 
-      //var baseUrl = "https://api.universida.de/listing";
-      var baseUrl = "https://network-socialmarketplace-prod.herokuapp.com/listing";
+    //var baseUrl = "https://api.universida.de/listing";
+    var baseUrl = "https://network-socialmarketplace-prod.herokuapp.com/listing";
 
-      return {
+    return {
 
         create: function(data) {
 
-          var url = "/";
+            var url = "/";
 
-          return $http({
-            method: 'POST',
-            url: baseUrl + url,
-            data : data,
-            transformRequest: function(obj) {
-                var str = [];
-                for(var p in obj)
-                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                return str.join("&");
-            },
-            contentType: 'application/json',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }});
+            return $http({
+                method: 'POST',
+                url: baseUrl + url,
+                data: data,
+                transformRequest: function(obj) {
+                    var str = [];
+                    for (var p in obj)
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    return str.join("&");
+                },
+                contentType: 'application/json',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
 
         },
 
         update: function(data) {
 
-          var url = "/id/" + data.id;
+            var url = "/id/" + data.id;
 
-          return $http({
-            method: 'PUT',
-            url: baseUrl + url,
-            data : data,
-            transformRequest: function(obj) {
-                var str = [];
-                for(var p in obj)
-                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                return str.join("&");
-            },
-            contentType: 'application/json',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }});
+            return $http({
+                method: 'PUT',
+                url: baseUrl + url,
+                data: data,
+                transformRequest: function(obj) {
+                    var str = [];
+                    for (var p in obj)
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    return str.join("&");
+                },
+                contentType: 'application/json',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
 
         },
 
         getListingById: function(id) {
 
-          var url = '/id/' + id;
+            var url = '/id/' + id;
 
-          return $http.get(baseUrl + url);
+            return $http.get(baseUrl + url);
 
         },
 
         getListingsByUniversity: function(universityId) {
 
-          var url = '/university/id/' + universityId;
+            var url = '/university/id/' + universityId;
 
-          return $http.get(baseUrl + url);
+            return $http.get(baseUrl + url);
 
         },
 
         want: function(id) {
 
-          var url = '/id/' + id + '/want';
+            var url = '/id/' + id + '/want';
 
-          return $http({
-            method: 'POST',
-            url: baseUrl + url,
-            transformRequest: function(obj) {
-                var str = [];
-                for(var p in obj)
-                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                return str.join("&");
-            },
-            contentType: 'application/json',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }});
+            return $http({
+                method: 'POST',
+                url: baseUrl + url,
+                transformRequest: function(obj) {
+                    var str = [];
+                    for (var p in obj)
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    return str.join("&");
+                },
+                contentType: 'application/json',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
 
         },
 
         getListingsByAccountId: function(id) {
 
-          var url = '/accounts/id/' + id + '/listings';
+            var url = '/accounts/id/' + id + '/listings';
 
-          return $http.get(baseUrl + url);
-
-        }
-
-      }
-
-    }])
-
-  .factory('Uploads', ['$http', function($http) {
-
-      var baseUrl = "http://35.229.52.103:9007/images/college";
-
-      return {
-
-        upload : function(file) {
-
-         var url = baseUrl;
-
-         var fd = new FormData();
-         fd.append('files', file);
-
-         return $http.post(url, fd, {
-             transformRequest: angular.identity,
-             headers: {'Content-Type': undefined}
-         });
+            return $http.get(baseUrl + url);
 
         }
 
-      }
+    }
 
-    }])
+}])
 
-  .factory("User", ['$localStorage', 'jwtHelper', function($localStorage, jwtHelper) {
+.factory('Uploads', ['$http', function($http) {
 
-      return {
+    var baseUrl = "http://35.229.52.103:9007/images/college";
 
-        getId : function() {
+    return {
 
-          return jwtHelper.decodeToken($localStorage.token)._id;
+        upload: function(file) {
+
+            var url = baseUrl;
+
+            var fd = new FormData();
+            fd.append('files', file);
+
+            return $http.post(url, fd, {
+                transformRequest: angular.identity,
+                headers: { 'Content-Type': undefined }
+            });
 
         }
 
-      }
+    }
 
-    }])
+}])
 
-  .factory('Payments', ['$http', function($http) {
+.factory("User", ['$localStorage', 'jwtHelper', function($localStorage, jwtHelper) {
 
-      //var baseUrl = "https://api.universida.de/search";
+    return {
 
-      var baseUrl = "https://educationalcommunity-pay.herokuapp.com/payments";
-      //var baseUrl = "http://192.168.1.7:9004/payments";
+        getId: function() {
 
-      return {
+            return jwtHelper.decodeToken($localStorage.token)._id;
+
+        }
+
+    }
+
+}])
+
+.factory('Payments', ['$http', function($http) {
+
+    //var baseUrl = "https://api.universida.de/search";
+
+    var baseUrl = "https://educationalcommunity-pay.herokuapp.com/payments";
+    //var baseUrl = "http://192.168.1.7:9004/payments";
+
+    return {
 
         subscription: function(data) {
 
-          var url = '/subscription';
+            var url = '/subscription';
 
-          return $http({
-            method: 'POST',
-            url: baseUrl + url,
-            data : data,
-            transformRequest: function(obj) {
-                var str = [];
-                for(var p in obj)
-                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                return str.join("&");
-            },
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }});
+            return $http({
+                method: 'POST',
+                url: baseUrl + url,
+                data: data,
+                transformRequest: function(obj) {
+                    var str = [];
+                    for (var p in obj)
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    return str.join("&");
+                },
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
 
         },
 
         subscribePro: function(interval) {
 
-          var url = '/subscription/pro';
+            var url = '/subscription/pro';
 
-          let data = { interval : interval };
+            let data = { interval: interval };
 
-          return $http({
-            method: 'POST',
-            url: baseUrl + url,
-            data : data,
-            transformRequest: function(obj) {
-                var str = [];
-                for(var p in obj)
-                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                return str.join("&");
-            },
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }});
+            return $http({
+                method: 'POST',
+                url: baseUrl + url,
+                data: data,
+                transformRequest: function(obj) {
+                    var str = [];
+                    for (var p in obj)
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    return str.join("&");
+                },
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
 
         },
         coursePayment: function(data) {
 
-          var url = '/course';
+            var url = '/course';
 
-          return $http({
-            method: 'POST',
-            url: baseUrl + url, // for now base url is localhost
-            data : data,
-            headers: {
-                'Content-Type': 'application/json'
-            }});
+            return $http({
+                method: 'POST',
+                url: baseUrl + url, // for now base url is localhost
+                data: data,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
         },
 
         getAllOrders: function(id) {
 
-          var url = '/students/id/' + id + '/orders';
+            var url = '/students/id/' + id + '/orders';
 
-          return $http.get(baseUrl + url);
+            return $http.get(baseUrl + url);
 
         }
 
-      }
+    }
 
 
-    }])
+}])
 
-  .factory('News', ['$http', function($http) {
+.factory('News', ['$http', function($http) {
 
-      //var baseUrl = "https://api.universida.de/search";
+    //var baseUrl = "https://api.universida.de/search";
 
-      var baseUrl = "https://network-news-prod.herokuapp.com";
+    var baseUrl = "https://network-news-prod.herokuapp.com";
 
-      //var baseUrl = "http://192.168.1.7:8888";
-      //var baseUrl = "http://192.168.1.7:9004";
+    //var baseUrl = "http://192.168.1.7:8888";
+    //var baseUrl = "http://192.168.1.7:9004";
 
-      return {
+    return {
 
         getAllSections: function() {
 
-          var url = '/news/section';
+            var url = '/news/section';
 
-          return $http.get(baseUrl + url);
+            return $http.get(baseUrl + url);
 
         },
 
         getAllTrends: function() {
 
-          var url = '/news/trends';
+            var url = '/news/trends';
 
-          return $http.get(baseUrl + url);
+            return $http.get(baseUrl + url);
 
         },
 
         getNewsBySection: function(id) {
 
-          ///section/id/:id/news
+            ///section/id/:id/news
 
-          var url = '/news/section/id/' + id + '/news';
+            var url = '/news/section/id/' + id + '/news';
 
-          return $http.get(baseUrl + url);
+            return $http.get(baseUrl + url);
 
         },
 
         writeComment: function(id, data) {
 
-          var url = '/news/id/' + id + '/comment';
+            var url = '/news/id/' + id + '/comment';
 
-          return $http({
-            method: 'POST',
-            url: baseUrl + url,
-            data : data,
-            transformRequest: function(obj) {
-                var str = [];
-                for(var p in obj)
-                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                return str.join("&");
-            },
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }});
+            return $http({
+                method: 'POST',
+                url: baseUrl + url,
+                data: data,
+                transformRequest: function(obj) {
+                    var str = [];
+                    for (var p in obj)
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    return str.join("&");
+                },
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
 
         },
 
         vote: function(id) {
 
-          var url = '/news/id/' + id + '/vote';
+            var url = '/news/id/' + id + '/vote';
 
-          return $http({
-            method: 'POST',
-            url: baseUrl + url,
-            transformRequest: function(obj) {
-                var str = [];
-                for(var p in obj)
-                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                return str.join("&");
-            },
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }});
+            return $http({
+                method: 'POST',
+                url: baseUrl + url,
+                transformRequest: function(obj) {
+                    var str = [];
+                    for (var p in obj)
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    return str.join("&");
+                },
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
 
         },
 
         voteCommentById: function(newsId, commentId) {
 
-          var url = '/news/id/' + newsId + '/comment/' + commentId + '/vote';
+            var url = '/news/id/' + newsId + '/comment/' + commentId + '/vote';
 
-          return $http({
-            method: 'PUT',
-            url: baseUrl + url,
-            transformRequest: function(obj) {
-                var str = [];
-                for(var p in obj)
-                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                return str.join("&");
-            },
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }});
+            return $http({
+                method: 'PUT',
+                url: baseUrl + url,
+                transformRequest: function(obj) {
+                    var str = [];
+                    for (var p in obj)
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    return str.join("&");
+                },
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
 
         }
 
-      }
+    }
 
-    }])
+}])
 
-  .factory('Sales', ['$http', function($http) {
+.factory('Sales', ['$http', function($http) {
 
-      //var baseUrl = "https://api.universida.de/search";
+    //var baseUrl = "https://api.universida.de/search";
 
-      var baseUrl = "https://educationalcommunity-pay.herokuapp.com";
-      //var baseUrl = "http://192.168.1.7:9004";
+    var baseUrl = "https://educationalcommunity-pay.herokuapp.com";
+    //var baseUrl = "http://192.168.1.7:9004";
 
-      return {
+    return {
 
         reports: function(id) {
 
-          var url = '/payments/sales/universityid/' + id;
+            var url = '/payments/sales/universityid/' + id;
 
-          return $http.get(baseUrl + url);
+            return $http.get(baseUrl + url);
 
         },
 
         reportsByDate: function(id, y, m, d) {
 
-          var url = '/payments/sales/universityid/' + id + "/year/" + y + "/month/" + m + "/day/" + d;
+            var url = '/payments/sales/universityid/' + id + "/year/" + y + "/month/" + m + "/day/" + d;
 
-          return $http.get(baseUrl + url);
+            return $http.get(baseUrl + url);
 
         }
 
-      }
+    }
 
-    }])
+}])
 
-  .factory('Courses', ['$http', '$localStorage', function($http, $localStorage) {
+.factory('Courses', ['$http', '$localStorage', function($http, $localStorage) {
 
-      //var baseUrl = "https://api.universida.de/search";
+    //var baseUrl = "https://api.universida.de/search";
 
-      //var baseUrl = "https://educationalcommunity-pay.herokuapp.com";
-      var baseUrl = "https://educationalcommunity-courses.herokuapp.com/courses";
-      //var baseUrl = "http://localhost:9888/courses";
+    //var baseUrl = "https://educationalcommunity-pay.herokuapp.com";
+    var baseUrl = "https://educationalcommunity-courses.herokuapp.com/courses";
+    //var baseUrl = "http://localhost:9888/courses";
 
-      return {
+    return {
 
         subscribeFree: function(courseId) {
 
-          let url = "/id/" + courseId + "/subscribe/free";
+            let url = "/id/" + courseId + "/subscribe/free";
 
-          return $http({
+            return $http({
 
-            url: baseUrl + url,
-            method: 'POST',
-            transformRequest: function(obj) {
-              var str = [];
-              for(var p in obj)
-              str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-              return str.join("&");
-            },
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'x-access-token': $localStorage.token
-            }});
+                url: baseUrl + url,
+                method: 'POST',
+                transformRequest: function(obj) {
+                    var str = [];
+                    for (var p in obj)
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    return str.join("&");
+                },
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'x-access-token': $localStorage.token
+                }
+            });
             //
 
         },
 
         getByUniversityId: function(id) {
 
-          let url = "/universityid/" + id;
+            let url = "/universityid/" + id;
 
-          return $http.get(baseUrl + url);
+            return $http.get(baseUrl + url);
 
         },
 
         userViewedContentInsideCourse: function(courseId, moduleId, contentId) {
 
-          let url = "/id/" + courseId + "/module/id/" + moduleId + "/content/id/" + contentId + "/viewed";
+            let url = "/id/" + courseId + "/module/id/" + moduleId + "/content/id/" + contentId + "/viewed";
 
-          return $http({
+            return $http({
 
-            url: baseUrl + url,
-            method: 'POST',
-            transformRequest: function(obj) {
-              var str = [];
-              for(var p in obj)
-              str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-              return str.join("&");
-            },
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'x-access-token': $localStorage.token
-            }});
+                url: baseUrl + url,
+                method: 'POST',
+                transformRequest: function(obj) {
+                    var str = [];
+                    for (var p in obj)
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    return str.join("&");
+                },
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'x-access-token': $localStorage.token
+                }
+            });
             //
 
         },
 
         getAll: function(id) {
 
-          let url = "/all";
+            let url = "/all";
 
-          return $http.get(baseUrl + url);
-
-        },
-
-        getquizResult: function(qid,uid,rid) {
-
-          let url = "/quiz-result/"+qid+"/"+uid+"/"+rid;
-
-          return $http.get(baseUrl + url);
+            return $http.get(baseUrl + url);
 
         },
-         updateQuiz: function(quizId, data) {
 
-          var url = '/module/content/update/' + quizId;
+        getquizResult: function(qid, uid, rid) {
 
-          return $http({
-            method: 'PUT',
-            url: baseUrl + url,
-            data : data,
-            transformRequest: function(obj) {
-              var str = [];
-              for(var p in obj)
-              str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-              return str.join("&");
-            },
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            }});
+            let url = "/quiz-result/" + qid + "/" + uid + "/" + rid;
+
+            return $http.get(baseUrl + url);
+
+        },
+        updateQuiz: function(quizId, data) {
+
+            var url = '/module/content/update/' + quizId;
+
+            return $http({
+                method: 'PUT',
+                url: baseUrl + url,
+                data: data,
+                transformRequest: function(obj) {
+                    var str = [];
+                    for (var p in obj)
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    return str.join("&");
+                },
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                }
+            });
         },
         deleteCourseById: function(courseId) {
-          var url = '/courses/' + courseId;
+            var url = '/courses/' + courseId;
 
-          return $http({
-            method: 'DELETE',
-            url: baseUrl + url,
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            }});
+            return $http({
+                method: 'DELETE',
+                url: baseUrl + url,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                }
+            });
         },
 
         deleteModuleById: function(moduleId) {
-          var url = '/modulo/' + moduleId;
+            var url = '/modulo/' + moduleId;
 
-          return $http({
-            method: 'DELETE',
-            url: baseUrl + url,
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            }});
+            return $http({
+                method: 'DELETE',
+                url: baseUrl + url,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                }
+            });
         },
 
         deleteContentById: function(moduleId) {
-          var url = '/content/' + moduleId;
+            var url = '/content/' + moduleId;
 
-          return $http({
-            method: 'DELETE',
-            url: baseUrl + url,
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            }});
+            return $http({
+                method: 'DELETE',
+                url: baseUrl + url,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                }
+            });
         },
-         saveQuizResult: function(payload) {
+        saveQuizResult: function(payload) {
 
-           var url = "/quiz/id/submit";
-          console.log(payload)
-          return $http({
-            method: 'PUT',
-            url: baseUrl + url,
-            data : payload,
-            headers: {
-                'Content-Type': 'application/json',
-            }});
+            var url = "/quiz/id/submit";
+            console.log(payload)
+            return $http({
+                method: 'PUT',
+                url: baseUrl + url,
+                data: payload,
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
 
         },
         progress: function(payload, videoid) {
 
-          var url = '/page/id/' + videoid + "/progress";
+            var url = '/page/id/' + videoid + "/progress";
 
-          return $http({
-            method: 'PUT',
-            url: baseUrl + url,
-            data : payload,
-            transformRequest: function(obj) {
-                var str = [];
-                for(var p in obj)
-                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                return str.join("&");
-            },
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }});
+            return $http({
+                method: 'PUT',
+                url: baseUrl + url,
+                data: payload,
+                transformRequest: function(obj) {
+                    var str = [];
+                    for (var p in obj)
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    return str.join("&");
+                },
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
 
         },
 
-        fileUploadUrl:function(){
-          let url = baseUrl+"/jwt";
-          return $http.post(url,{});
+        fileUploadUrl: function() {
+            let url = baseUrl + "/jwt";
+            console.log("URL", url);
+            return $http.post(url, {});
         },
-        addInstructor: function(courseId, instructorId ) {
+        addInstructor: function(courseId, instructorId) {
 
-          var url = '/instructor/' + courseId;
+            var url = '/instructor/' + courseId;
 
 
-          return $http({
-            method: 'PUT',
-            url: baseUrl + url,
-            data : {instructors:instructorId},
-            headers: {
-                'Content-Type': 'application/json',
-            }});
+            return $http({
+                method: 'PUT',
+                url: baseUrl + url,
+                data: { instructors: instructorId },
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
         },
 
         updateCourse: function(courseId, data) {
 
-          var url = '/update/' + courseId;
+            var url = '/update/' + courseId;
 
-          return $http({
-            method: 'PUT',
-            url: baseUrl + url,
-            data : data,
-            transformRequest: function(obj) {
-              var str = [];
-              for(var p in obj)
-              str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-              return str.join("&");
-            },
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            }});
+            return $http({
+                method: 'PUT',
+                url: baseUrl + url,
+                data: data,
+                transformRequest: function(obj) {
+                    var str = [];
+                    for (var p in obj)
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    return str.join("&");
+                },
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                }
+            });
         },
 
         updateModule: function(moduleId, data) {
 
-          var url = '/module/update/' + moduleId;
+            var url = '/module/update/' + moduleId;
 
-          return $http({
-            method: 'PUT',
-            url: baseUrl + url,
-            data : data,
-            transformRequest: function(obj) {
-              var str = [];
-              for(var p in obj)
-              str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-              return str.join("&");
-            },
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            }});
+            return $http({
+                method: 'PUT',
+                url: baseUrl + url,
+                data: data,
+                transformRequest: function(obj) {
+                    var str = [];
+                    for (var p in obj)
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    return str.join("&");
+                },
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                }
+            });
         },
         getById: function(id) {
 
-          let url = "/id/" + id;
+            let url = "/id/" + id;
 
-          return $http.get(baseUrl + url);
+            return $http.get(baseUrl + url);
 
         },
         createQuiz: function(data) {
 
-          var url = '/module/content/create';
+            var url = '/module/content/create';
 
-          return $http({
-            method: 'POST',
-            url: baseUrl + url,
-            data : data,
-            transformRequest: function(obj) {
-              var str = [];
-              for(var p in obj)
-              str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-              return str.join("&");
-            },
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            }});
+            return $http({
+                method: 'POST',
+                url: baseUrl + url,
+                data: data,
+                transformRequest: function(obj) {
+                    var str = [];
+                    for (var p in obj)
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    return str.join("&");
+                },
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                }
+            });
         },
 
         addQuizQuestions: function(contentId, data) {
 
-          var url = '/quiz/questions/' + contentId;
+            var url = '/quiz/questions/' + contentId;
 
-          return $http({
-            method: 'POST',
-            url: baseUrl + url,
-            data : data,
-            headers: {
-                'Content-Type': 'application/json',
-            }});
+            return $http({
+                method: 'POST',
+                url: baseUrl + url,
+                data: data,
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
         },
 
 
         getContentModulesByIdmultiple: function(post) {
 
-          let url = "/module/content/all/id";
-          return $http({
-            method: 'POST',
-            data: {id:post},
-            url: baseUrl + url,
-            transformRequest: function(obj) {
-                var str = [];
-                for(var p in obj)
-                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                return str.join("&");
-            },
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            }});
-         },
-         createPage: function(data) {
+            let url = "/module/content/all/id";
+            return $http({
+                method: 'POST',
+                data: { id: post },
+                url: baseUrl + url,
+                transformRequest: function(obj) {
+                    var str = [];
+                    for (var p in obj)
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    return str.join("&");
+                },
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                }
+            });
+        },
+        createPage: function(data) {
 
-          var url = '/module/content/create' ;
+            var url = '/module/content/create';
 
-          return $http({
-            method: 'POST',
-            data: data,
-            url: baseUrl + url,
-            transformRequest: function(obj) {
-                var str = [];
-                for(var p in obj)
-                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                return str.join("&");
-            },
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            }});
+            return $http({
+                method: 'POST',
+                data: data,
+                url: baseUrl + url,
+                transformRequest: function(obj) {
+                    var str = [];
+                    for (var p in obj)
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    return str.join("&");
+                },
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                }
+            });
 
         },
-         savePage: function(data,id) {
+        savePage: function(data, id) {
 
-          var url = '/module/content/update/'+id ;
+            var url = '/module/content/update/' + id;
 
-          return $http({
-            method: 'PUT',
-            data: data,
-            url: baseUrl + url,
-            transformRequest: function(obj) {
-                var str = [];
-                for(var p in obj)
-                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                return str.join("&");
-            },
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            }});
+            return $http({
+                method: 'PUT',
+                data: data,
+                url: baseUrl + url,
+                transformRequest: function(obj) {
+                    var str = [];
+                    for (var p in obj)
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    return str.join("&");
+                },
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                }
+            });
 
         },
         create: function(data) {
 
-          var url = '/create' ;
+            var url = '/create';
 
-          return $http({
-            method: 'POST',
-            data: data,
-            url: baseUrl + url,
-            transformRequest: function(obj) {
-                var str = [];
-                for(var p in obj)
-                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                return str.join("&");
-            },
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            }});
+            return $http({
+                method: 'POST',
+                data: data,
+                url: baseUrl + url,
+                transformRequest: function(obj) {
+                    var str = [];
+                    for (var p in obj)
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    return str.join("&");
+                },
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                }
+            });
 
         },
         getTimeline: function(id) {
 
-          let url = "/module/get/timeline/" + id;
+            let url = "/module/get/timeline/" + id;
 
-          return $http.get(baseUrl + url);
+            return $http.get(baseUrl + url);
 
         },
         insertTimeline: function(id, data) {
 
-          var url = '/module/create/timeline/' + id;
+            var url = '/module/create/timeline/' + id;
 
-          return $http({
-            method: 'POST',
-            data: data,
-            url: baseUrl + url,
-            transformRequest: function(obj) {
-                var str = [];
-                for(var p in obj)
-                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                return str.join("&");
-            },
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            }});
+            return $http({
+                method: 'POST',
+                data: data,
+                url: baseUrl + url,
+                transformRequest: function(obj) {
+                    var str = [];
+                    for (var p in obj)
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    return str.join("&");
+                },
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                }
+            });
 
         },
         updateModuleById: function(id, data) {
 
-          var url = '/module/id/' + id;
+            var url = '/module/id/' + id;
 
-          return $http({
-            method: 'PUT',
-            data: data,
-            url: baseUrl + url,
-            transformRequest: function(obj) {
-                var str = [];
-                for(var p in obj)
-                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                return str.join("&");
-            },
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            }});
+            return $http({
+                method: 'PUT',
+                data: data,
+                url: baseUrl + url,
+                transformRequest: function(obj) {
+                    var str = [];
+                    for (var p in obj)
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    return str.join("&");
+                },
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                }
+            });
 
         },
 
         createModule: function(data) {
 
-          var url = '/module/create' ;
+            var url = '/module/create';
 
-          return $http({
-            method: 'POST',
-            data: data,
-            url: baseUrl + url,
-            transformRequest: function(obj) {
-                var str = [];
-                for(var p in obj)
-                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                return str.join("&");
-            },
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            }});
+            return $http({
+                method: 'POST',
+                data: data,
+                url: baseUrl + url,
+                transformRequest: function(obj) {
+                    var str = [];
+                    for (var p in obj)
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    return str.join("&");
+                },
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                }
+            });
 
         },
 
         createContentModule: function(data) {
 
-          var url = '/module/content/create' ;
+            var url = '/module/content/create';
 
-          return $http({
-            method: 'POST',
-            data: data,
-            url: baseUrl + url,
-            transformRequest: function(obj) {
-                var str = [];
-                for(var p in obj)
-                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                return str.join("&");
-            },
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            }});
+            return $http({
+                method: 'POST',
+                data: data,
+                url: baseUrl + url,
+                transformRequest: function(obj) {
+                    var str = [];
+                    for (var p in obj)
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    return str.join("&");
+                },
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                }
+            });
 
         },
         getQuestionsByQuizId: function(id) {
 
-          let url = "/quiz/questions/" + id;
+            let url = "/quiz/questions/" + id;
 
-          return $http.get(baseUrl + url);
+            return $http.get(baseUrl + url);
 
         },
         getMediaModulesByAccount: function() {
-          var url = '/my/';
-          return $http({
-            method: 'GET',
-            url: baseUrl + url,
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'x-access-token': $localStorage.token
-          }})
+            var url = '/my/';
+            return $http({
+                method: 'GET',
+                url: baseUrl + url,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'x-access-token': $localStorage.token
+                }
+            })
         },
         getContentModulesByAccount: function() {
 
-          var url = '/module/content/owner';
+            var url = '/module/content/owner';
 
-          return $http({
-            method: 'GET',
-            url: baseUrl + url,
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'x-access-token': $localStorage.token
-          }})
+            return $http({
+                method: 'GET',
+                url: baseUrl + url,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'x-access-token': $localStorage.token
+                }
+            })
 
         },
         getKnowledgeId: function(universityId) {
 
-          var url = '/knowledge/'+universityId;
+            var url = '/knowledge/' + universityId;
 
-          return $http({
-            method: 'GET',
-            url: baseUrl + url,
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'x-access-token': $localStorage.token
-          }})
+            return $http({
+                method: 'GET',
+                url: baseUrl + url,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'x-access-token': $localStorage.token
+                }
+            })
 
         },
         getCoursesByAccount: function(universityId) {
 
-          var url = '/owner';
+            var url = '/owner';
 
-          return $http({
-            method: 'GET',
-            url: baseUrl + url,
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'x-access-token': $localStorage.token
-          }})
+            return $http({
+                method: 'GET',
+                url: baseUrl + url,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'x-access-token': $localStorage.token
+                }
+            })
 
         },
 
         getModuleById: function(id) {
 
-          let url = "/module/id/" + id;
+            let url = "/module/id/" + id;
 
-          return $http.get(baseUrl + url);
+            return $http.get(baseUrl + url);
 
         },
 
         getModulesByAccount: function() {
 
-          var url = '/module/owner';
+            var url = '/module/owner';
 
-          return $http({
-            method: 'GET',
-            url: baseUrl + url,
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'x-access-token': $localStorage.token
-          }})
+            return $http({
+                method: 'GET',
+                url: baseUrl + url,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'x-access-token': $localStorage.token
+                }
+            })
 
         },
         getContentModuleBymodelId: function(id) {
 
-          let url = "/module/content/BymodelId/" + id;
+            let url = "/module/content/BymodelId/" + id;
 
-          return $http.get(baseUrl + url);
+            return $http.get(baseUrl + url);
 
         },
         getContentModuleById: function(id) {
 
-          let url = "/module/content/id/" + id;
+            let url = "/module/content/id/" + id;
 
-          return $http.get(baseUrl + url);
+            return $http.get(baseUrl + url);
 
         },
 
-        payment: function(courseId, data ) {
+        payment: function(courseId, data) {
 
-          var url = '/payment/' + courseId;
+            var url = '/payment/' + courseId;
 
-          return $http({
-            method: 'PUT',
-            url: baseUrl + url,
-            data : data,
-            headers: {
-                'Content-Type': 'application/json'
-            }});
+            return $http({
+                method: 'PUT',
+                url: baseUrl + url,
+                data: data,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
         },
 
-      }
+    }
 
-    }])
+}])
 
-    .factory('throttle', ['$timeout', function ($timeout) {
-      return function (delay, no_trailing, callback, debounce_mode) {
+.factory('throttle', ['$timeout', function($timeout) {
+    return function(delay, no_trailing, callback, debounce_mode) {
         var timeout_id,
-        last_exec = 0;
+            last_exec = 0;
 
         if (typeof no_trailing !== 'boolean') {
-          debounce_mode = callback;
-          callback = no_trailing;
-          no_trailing = undefined;
+            debounce_mode = callback;
+            callback = no_trailing;
+            no_trailing = undefined;
         }
 
-        var wrapper = function () {
-          var that = this,
-              elapsed = +new Date() - last_exec,
-              args = arguments,
-              exec = function () {
-                last_exec = +new Date();
-                callback.apply(that, args);
-              },
-              clear = function () {
-                timeout_id = undefined;
-              };
+        var wrapper = function() {
+            var that = this,
+                elapsed = +new Date() - last_exec,
+                args = arguments,
+                exec = function() {
+                    last_exec = +new Date();
+                    callback.apply(that, args);
+                },
+                clear = function() {
+                    timeout_id = undefined;
+                };
 
-          if (debounce_mode && !timeout_id) { exec(); }
-          if (timeout_id) { $timeout.cancel(timeout_id); }
-          if (debounce_mode === undefined && elapsed > delay) {
-            exec();
-          } else if (no_trailing !== true) {
-            timeout_id = $timeout(debounce_mode ? clear : exec, debounce_mode === undefined ? delay - elapsed : delay);
-          }
+            if (debounce_mode && !timeout_id) { exec(); }
+            if (timeout_id) { $timeout.cancel(timeout_id); }
+            if (debounce_mode === undefined && elapsed > delay) {
+                exec();
+            } else if (no_trailing !== true) {
+                timeout_id = $timeout(debounce_mode ? clear : exec, debounce_mode === undefined ? delay - elapsed : delay);
+            }
         };
 
         return wrapper;
-      };
-    }])
-;
+    };
+}]);

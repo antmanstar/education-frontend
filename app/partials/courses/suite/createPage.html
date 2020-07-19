@@ -1,7 +1,7 @@
 <div ng-include="'partials/headerhome.html'"></div>
 
 <div class="container-fluid ">
-  <!-- <div class="row" style="margin-top: 15px;">
+    <!-- <div class="row" style="margin-top: 15px;">
 
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
@@ -12,41 +12,41 @@
     </div>
   </div> -->
 
-  <div class="container-fluid" style="margin-top: 15px; margin-bottom: 30px;">
-    <div class="row">
-      <div class="col-md-12">
-        <form>
-          <input class="form-control input-lg" type="text" placeholder="Add Title Here" style="margin-bottom: 20px;" ng-model="title">
+    <div class="container-fluid" style="margin-top: 15px; margin-bottom: 30px;">
+        <div class="row">
+            <div class="col-md-12">
+                <form>
+                    <input class="form-control input-lg" type="text" placeholder="Add Title Here" style="margin-bottom: 20px;" ng-model="title">
 
-          
-          <br>
-          
-          <div class="panel panel-default">
-  
-            <!--<div class="panel-heading" style="background-color: #fff;">
+
+                    <br>
+
+                    <div class="panel panel-default">
+
+                        <!--<div class="panel-heading" style="background-color: #fff;">
               <trix-toolbar id="my_toolbar"></trix-toolbar>
             </div>-->
-  
-            <div class="panel-body">
-              <!--<trix-editor placeholder="Escreva aqui a descrição" angular-trix toolbar="my_toolbar" ng-model="description"
+
+                        <div class="panel-body">
+                            <!--<trix-editor placeholder="Escreva aqui a descrição" angular-trix toolbar="my_toolbar" ng-model="description"
                 trix-change="trixChange(e, editor);" trix-initialize="trixInitialize(e, editor);"></trix-editor>-->
-                <textarea ui-tinymce="tinymceOptions" ng-model="tinymceModel"></textarea>
-   
+                            <textarea ui-tinymce="tinymceOptions" ng-model="description"></textarea>
+
+                        </div>
+
+                    </div>
+
+                    <button ng-click="saveContent()" type="button" class="btn btn-mini btn-green" style="width: 20%;">CREATE A PAGE</button>
+
+                </form>
             </div>
-  
-          </div>
-  
-          <button ng-click="saveContent()" type="button" class="btn btn-mini btn-green" style="width: 20%;">CREATE A PAGE</button>
-  
-        </form>
-      </div>
+        </div>
     </div>
-  </div>
 </div>
 
 <style>
-  trix-editor {
-    min-height: 250px;
-    border: none;
-  }
+    trix-editor {
+        min-height: 250px;
+        border: none;
+    }
 </style>

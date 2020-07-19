@@ -88,8 +88,9 @@
                         </div>
 
                         <div class="academia-content-forum-post-info-manage" ng-show="user._id == forumPost.accountId && user._id.length > 0">
-                            <button ng-click="updateForumPost()" class="btn-clean"><span class="glyphicon glyphicon glyphicon-pencil"
-                  style="padding-right: 5px;" /> Editar</button>
+                            <button ng-click="updateForumPost()" class="btn-clean"><span
+                                    class="glyphicon glyphicon glyphicon-pencil" style="padding-right: 5px;" />
+                                Editar</button>
                         </div>
 
                     </div>
@@ -125,7 +126,8 @@
                         }
                     </style>
 
-                    <trix-editor angular-trix ng-model="answer"></trix-editor>
+                    <!-- <trix-editor angular-trix ng-model="answer"></trix-editor> -->
+                    <textarea ui-tinymce="tinymceOptions" ng-model="answer"></textarea>
 
                 </div>
                 <!-- academia-content-forum-answer-box -->

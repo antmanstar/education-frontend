@@ -1,101 +1,100 @@
 <div ng-include="'partials/headerhome.html'"></div>
 
 <script type="text/javascript">
-// Initialize instances:
+    // Initialize instances:
 
-var socket = io.connect("https://educationalcommunity-videouplo.herokuapp.com/");
+    var socket = io.connect("https://educationalcommunity-videouplo.herokuapp.com/");
 
-//var socket = io.connect("http://localhost:8585/");
+    //var socket = io.connect("http://localhost:8585/");
 
-var siofu = new SocketIOFileUpload(socket);
+    var siofu = new SocketIOFileUpload(socket);
 
-let filesCount = 0;
+    let filesCount = 0;
 
-let progressCloud = 0;
-var progressPercent = 0;
+    let progressCloud = 0;
+    var progressPercent = 0;
 
-siofu.listenOnDrop(document.getElementById("file_drop"));
+    siofu.listenOnDrop(document.getElementById("file_drop"));
 
-// Do something on upload progress:
-siofu.addEventListener("progress", function(event){
-  var percent = event.bytesLoaded / event.file.size * 100;
-  console.log("File is", percent.toFixed(2), "percent loaded");
+    // Do something on upload progress:
+    siofu.addEventListener("progress", function(event) {
+        var percent = event.bytesLoaded / event.file.size * 100;
+        console.log("File is", percent.toFixed(2), "percent loaded");
 
-  $("#file_drop").html("Upload: " + percent.toFixed(2) + "%");
+        $("#file_drop").html("Upload: " + percent.toFixed(2) + "%");
 
-  if (percent.toFixed(2) == 100) {
-    $("#file_drop").html("<b>Iniciando o processamento do vídeo</b>");
-  }
+        if (percent.toFixed(2) == 100) {
+            $("#file_drop").html("<b>Iniciando o processamento do vídeo</b>");
+        }
 
-});
+    });
 
-socket.on("progressCloud", function(a){
-  console.log("cloud progress: ")
-  console.log(a)
-  progressCloud = progressCloud + 1;
-  progressPercent = (progressCloud / filesCount) * 100;
+    socket.on("progressCloud", function(a) {
+        console.log("cloud progress: ")
+        console.log(a)
+        progressCloud = progressCloud + 1;
+        progressPercent = (progressCloud / filesCount) * 100;
 
-  console.log("process cloud is: " + progressCloud)
-  console.log("process percent is: " + progressPercent)
+        console.log("process cloud is: " + progressCloud)
+        console.log("process percent is: " + progressPercent)
 
-  $("#file_drop").html("<b>Salvando o vídeo:</b> " + progressPercent.toFixed(2) + "%");
-});
+        $("#file_drop").html("<b>Salvando o vídeo:</b> " + progressPercent.toFixed(2) + "%");
+    });
 
-socket.on("progressProgressing", function(a){
+    socket.on("progressProgressing", function(a) {
 
-  let progressPercent = a;
+        let progressPercent = a;
 
-  $("#file_drop").html("<b>Processando o vídeo:</b> " + progressPercent.toFixed(2) + "%");
+        $("#file_drop").html("<b>Processando o vídeo:</b> " + progressPercent.toFixed(2) + "%");
 
-});
+    });
 
-socket.on("status", function(a){
-  console.log("status: ")
-  console.log(a)
-  if (a == 1) {
+    socket.on("status", function(a) {
+        console.log("status: ")
+        console.log(a)
+        if (a == 1) {
 
-  }
-  if (a == 2) {
-    $("#file_drop").html("<b>O vídeo foi salvo no servidor! Estamos processando o vídeo na melhor qualidade possível.</b>");
-  }
-});
+        }
+        if (a == 2) {
+            $("#file_drop").html("<b>O vídeo foi salvo no servidor! Estamos processando o vídeo na melhor qualidade possível.</b>");
+        }
+    });
 
-socket.on("files", function(a){
-  console.log("files: ")
-  console.log(a)
-  filesCount = a;
-});
+    socket.on("files", function(a) {
+        console.log("files: ")
+        console.log(a)
+        filesCount = a;
+    });
 
-// Do something when a file is uploaded:
-siofu.addEventListener("complete", function(event){
-    console.log(event.success);
-    console.log(event.file);
-    console.log(event)
-});
+    // Do something when a file is uploaded:
+    siofu.addEventListener("complete", function(event) {
+        console.log(event.success);
+        console.log(event.file);
+        console.log(event)
+    });
 
-socket.on("videopath", function(a) {
-  $("#file").attr("value", a);
-  console.log(a)
-})
-
+    socket.on("videopath", function(a) {
+        $("#file").attr("value", a);
+        console.log(a)
+    })
 </script>
 
 <div class="container-fluid ">
 
-  <div class="row">
+    <div class="row">
 
-    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 academia-content">
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 academia-content">
 
-      <div style="font-size: 2em; padding-bottom: 30px; text-align: right;">Criar video</div>
+            <div style="font-size: 2em; padding-bottom: 30px; text-align: right;">Criar video</div>
 
-      <button ng-click="createVideo()" class="btn btn-green">Criar</button>
+            <button ng-click="createVideo()" class="btn btn-green">Criar</button>
 
-    </div>
-    <!-- end col-xs-12 col-sm-4 -->
+        </div>
+        <!-- end col-xs-12 col-sm-4 -->
 
-    <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9 academia-content">
+        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9 academia-content">
 
-      <!--
+            <!--
       <div class="academia-content-navigation">
 
         <div class="academia-content-navigation-option">Criar video</div>
@@ -103,86 +102,88 @@ socket.on("videopath", function(a) {
       </div>
       <!-- academia-content-navigation -->
 
-      <div class="alert bg-primary-red" ng-show="errorDisplay">
-        <p ng-repeat="m in errorMessages">{{m}}<p>
-      </div>
+            <div class="alert bg-primary-red" ng-show="errorDisplay">
+                <p ng-repeat="m in errorMessages">{{m}}
+                    <p>
+            </div>
 
-      <input class="academia-content-forum-post-create-title" placeholder="Escreva aqui título do video" ng-model="title"></input>
+            <input class="academia-content-forum-post-create-title" placeholder="Escreva aqui título do video" ng-model="title"></input>
 
-      <div>
+            <div>
 
-        <input type="hidden" id="file" ng-model="file">
-        <div id="file_drop" dropzone="copy" title="drop files for upload" class="file-drop-area"><b>Para iniciar o upload,</b> arraste o arquivo do vídeo aqui</div>
-        <!-- end file-drop-area -->
+                <input type="hidden" id="file" ng-model="file">
+                <div id="file_drop" dropzone="copy" title="drop files for upload" class="file-drop-area"><b>Para iniciar o upload,</b> arraste o arquivo do vídeo aqui</div>
+                <!-- end file-drop-area -->
 
-      </div>
-      <!-- end file -->
+            </div>
+            <!-- end file -->
 
-      <div class="academia-content-forum-answer">
+            <div class="academia-content-forum-answer">
 
-        <div class="academia-content-forum-post-create-premium">
+                <div class="academia-content-forum-post-create-premium">
 
-          <b>Descrição do Video</b>
+                    <b>Descrição do Video</b>
 
-          <div class="form-group">
-            <trix-toolbar id="my_toolbar"></trix-toolbar>
-            <trix-editor angular-trix toolbar="my_toolbar" ng-model="description" trix-change="trixChange(e, editor);" trix-initialize="trixInitialize(e, editor);"></trix-editor>
-          </div>
+                    <div class="form-group">
+                        <!-- <trix-toolbar id="my_toolbar"></trix-toolbar>
+            <trix-editor angular-trix toolbar="my_toolbar" ng-model="description" trix-change="trixChange(e, editor);" trix-initialize="trixInitialize(e, editor);"></trix-editor> -->
+                        <textarea ui-tinymce="tinymceOptions" ng-model="description"></textarea>
+                    </div>
 
-        </div>
-        <!-- academia-content-forum-post-create-premium -->
+                </div>
+                <!-- academia-content-forum-post-create-premium -->
 
-        <div class="academia-content-forum-post-create-premium" ng-if="playlists.length > 0">
+                <div class="academia-content-forum-post-create-premium" ng-if="playlists.length > 0">
 
-          <b>Playlist do video</b>
+                    <b>Playlist do video</b>
 
-          <div class="form-group">
-            <select ng-model="playlistSelect._id">
+                    <div class="form-group">
+                        <select ng-model="playlistSelect._id">
               <option ng-repeat="playlist in playlists" value="{{playlist._id}}" ng-selected="">{{playlist.title}}</option>
             </select>
-          </div>
+                    </div>
 
-        </div>
+                </div>
 
-        <div class="academia-content-forum-post-create-premium" ng-hide="universityId._id == undefined">
+                <div class="academia-content-forum-post-create-premium" ng-hide="universityId._id == undefined">
 
-          <b>A partir de qual membro esta categoria pode ser acessada?</b>
+                    <b>A partir de qual membro esta categoria pode ser acessada?</b>
 
-          <div class="form-group">
-            <select ng-model="privilege.value">
+                    <div class="form-group">
+                        <select ng-model="privilege.value">
               <option value="0" ng-selected="true">Estudante</option>
               <option value="10">Premium</option>
               <option value="50">Equipe</option>
               <option value="99">Administrador</option>
             </select>
-          </div>
+                    </div>
 
-        </div>
+                </div>
 
-        <div class="academia-content-forum-post-create-premium" ng-hide="universityId._id == undefined">
+                <div class="academia-content-forum-post-create-premium" ng-hide="universityId._id == undefined">
 
-          <b>Este conteúdo é exclusivo para assinantes premium?</b>
+                    <b>Este conteúdo é exclusivo para assinantes premium?</b>
 
-          <div class="form-group">
-            <select ng-model="premium.value">
+                    <div class="form-group">
+                        <select ng-model="premium.value">
               <option value="0" ng-selected="true">Não</option>
               <option value="1">Sim</option>
             </select>
-          </div>
+                    </div>
+
+                </div>
+                <!-- end academia-content-forum-post-create-premium -->
+
+            </div>
+            <!-- academia-content-forum-answer -->
 
         </div>
-        <!-- end academia-content-forum-post-create-premium -->
-
-      </div>
-      <!-- academia-content-forum-answer -->
+        <!-- end col-xs-12 -->
 
     </div>
-    <!-- end col-xs-12 -->
+    <!-- end row -->
 
-  </div>
-  <!-- end row -->
-
-  <!--
+    <!--
   <div class="academia-footer">
 
     <ul style="width: 100vw">

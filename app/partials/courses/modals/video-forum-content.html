@@ -1,98 +1,99 @@
 <div ng-include="'partials/headerhome.html'"></div>
 <div class="container-fluid ">
 
-  <div class="row">
+    <div class="row">
 
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom: 15px;">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom: 15px;">
 
-      <div class="title" style="font-size: 3em; font-weight: bold;">Cursos</div>
+            <div class="title" style="font-size: 3em; font-weight: bold;">Cursos</div>
 
-      <div ng-include="'/partials/courses/suite/navbar.html'"></div>
+            <div ng-include="'/partials/courses/suite/navbar.html'"></div>
 
-      <!-- -->
+            <!-- -->
 
-    </div>
-    <!-- CATEGORIES TEXT -->
+        </div>
+        <!-- CATEGORIES TEXT -->
 
-    <div ng-show="page == 'post'" class="col-xs-12">
+        <div ng-show="page == 'post'" class="col-xs-12">
 
-      <div class="header-modal-courses">
-        <div class="title"><img style="margin-bottom: 10px;" height="40px;" src="https://visualpharm.com/assets/197/Documents-595b40b65ba036ed117d2bf0.svg"> Texto</div>
-      </div>
+            <div class="header-modal-courses">
+                <div class="title"><img style="margin-bottom: 10px;" height="40px;" src="https://visualpharm.com/assets/197/Documents-595b40b65ba036ed117d2bf0.svg"> Texto</div>
+            </div>
 
-      <!-- CATEGORIES -->
-      <div ng-repeat="category in categories" ng-click="loadForumPostCategory(category.universityId,category._id)" class="btn-modal-courses">
+            <!-- CATEGORIES -->
+            <div ng-repeat="category in categories" ng-click="loadForumPostCategory(category.universityId,category._id)" class="btn-modal-courses">
 
-        <div class="title" style="display: inline-block;">{{category.title}}</div>
-        <div class="icon"><i class="fas fa-arrow-right"></i></div>
+                <div class="title" style="display: inline-block;">{{category.title}}</div>
+                <div class="icon"><i class="fas fa-arrow-right"></i></div>
 
-      </div>
-      <!-- END CATEGORIES -->
+            </div>
+            <!-- END CATEGORIES -->
 
-    </div>
-    <!-- end CATEGORIES TEXT -->
+        </div>
+        <!-- end CATEGORIES TEXT -->
 
-    <!-- TEXTO -->
+        <!-- TEXTO -->
 
-    <div ng-show="page == 'categoryforumposts'" class="col-xs-12">
+        <div ng-show="page == 'categoryforumposts'" class="col-xs-12">
 
-      <div class="header-modal-courses">
-        <div class="title"><img style="margin-bottom: 10px;" height="40px;" src="https://visualpharm.com/assets/197/Documents-595b40b65ba036ed117d2bf0.svg"> Texto</div>
-      </div>
+            <div class="header-modal-courses">
+                <div class="title"><img style="margin-bottom: 10px;" height="40px;" src="https://visualpharm.com/assets/197/Documents-595b40b65ba036ed117d2bf0.svg"> Texto</div>
+            </div>
 
-      <!-- CATEGORIES -->
-      <div ng-repeat="post in categoryPosts" ng-click="loadForumPost(post._id)" class="btn-modal-courses">
+            <!-- CATEGORIES -->
+            <div ng-repeat="post in categoryPosts" ng-click="loadForumPost(post._id)" class="btn-modal-courses">
 
-        <div class="title col-xs-11" style="display: inline-block;">{{post.title}}</div>
-        <div class="icon col-xs-1"><i class="fas fa-arrow-right"></i></div>
+                <div class="title col-xs-11" style="display: inline-block;">{{post.title}}</div>
+                <div class="icon col-xs-1"><i class="fas fa-arrow-right"></i></div>
 
-      </div>
-      <!-- END CATEGORIES -->
+            </div>
+            <!-- END CATEGORIES -->
 
-    </div>
-    <!-- end TEXTO -->
+        </div>
+        <!-- end TEXTO -->
 
-    <!-- CHECK OUT PAGE -->
-    <div ng-show="page == 'checkout'" class="col-xs-12">
+        <!-- CHECK OUT PAGE -->
+        <div ng-show="page == 'checkout'" class="col-xs-12">
 
-      <div class="header-modal-courses">
-        <div class="title"><img style="margin-bottom: 10px;" height="40px;" src="https://visualpharm.com/assets/197/Documents-595b40b65ba036ed117d2bf0.svg"> Texto</div>
-      </div>
+            <div class="header-modal-courses">
+                <div class="title"><img style="margin-bottom: 10px;" height="40px;" src="https://visualpharm.com/assets/197/Documents-595b40b65ba036ed117d2bf0.svg"> Texto</div>
+            </div>
 
-      <!-- inputs -->
-      <div>
+            <!-- inputs -->
+            <div>
 
-        <div class="headline-sub-one">Título do conteúdo</div>
-        <input class="academia-content-forum-post-create-title" placeholder="Escreva o título do conteúdo" ng-model="title"></input>
+                <div class="headline-sub-one">Título do conteúdo</div>
+                <input class="academia-content-forum-post-create-title" placeholder="Escreva o título do conteúdo" ng-model="title"></input>
 
-        <div style="font-size: 1.8em; font-weight: bold;">Descrição</div>
-        </br></br>
-        <trix-toolbar id="my_toolbar"></trix-toolbar>
-        <trix-toolbar id="my_toolbar"></trix-toolbar>
-        <trix-editor style="margin-bottom: 15px;" angular-trix toolbar="my_toolbar" ng-model="description" trix-change="trixChange(e, editor);" trix-initialize="trixInitialize(e, editor);"></trix-editor>
+                <div style="font-size: 1.8em; font-weight: bold;">Descrição</div>
+                </br>
+                </br>
+                <!-- <trix-toolbar id="my_toolbar"></trix-toolbar>
+                <trix-toolbar id="my_toolbar"></trix-toolbar> -->
+                <!-- <trix-editor style="margin-bottom: 15px;" angular-trix toolbar="my_toolbar" ng-model="description" trix-change="trixChange(e, editor);" trix-initialize="trixInitialize(e, editor);"></trix-editor> -->
+                <textarea ui-tinymce="tinymceOptions" ng-model="description"></textarea>
+            </div>
+            <!-- ends inputs -->
 
-      </div>
-      <!-- ends inputs -->
+            <!-- FORUM POST TEXT TYPE -->
+            <div ng-if="contentType == 'forumpost'">
 
-      <!-- FORUM POST TEXT TYPE -->
-      <div ng-if="contentType == 'forumpost'">
+                <div style="font-size: 1.3em; font-weight: bold;">{{forumPost.title}}</div>
+                <div style="overflow: hidden;" ng-bind-html="forumPost.text"></div>
 
-        <div style="font-size: 1.3em; font-weight: bold;">{{forumPost.title}}</div>
-        <div style="overflow: hidden;" ng-bind-html="forumPost.text"></div>
+            </div>
+            <!-- FORUM POST TEXT TYPE -->
 
-      </div>
-      <!-- FORUM POST TEXT TYPE -->
+            <!-- FORUM POST TEXT TYPE -->
+            <div ng-if="contentType == 'video'">
 
-      <!-- FORUM POST TEXT TYPE -->
-      <div ng-if="contentType == 'video'">
+                <div style="font-size: 1.3em; font-weight: bold;">{{forumPost.title}}</div>
+                <div style="overflow: hidden;" ng-bind-html="forumPost.text"></div>
 
-        <div style="font-size: 1.3em; font-weight: bold;">{{forumPost.title}}</div>
-        <div style="overflow: hidden;" ng-bind-html="forumPost.text"></div>
+            </div>
+            <!-- FORUM POST TEXT TYPE -->
 
-      </div>
-      <!-- FORUM POST TEXT TYPE -->
-
-      <button class="btn btn-success" ng-click="save()">Criar</div>
+            <button class="btn btn-success" ng-click="save()">Criar</div>
 
     </div>
     <!-- END CHECK OUT PAGE -->

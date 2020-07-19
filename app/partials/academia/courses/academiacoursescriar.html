@@ -2,29 +2,30 @@
 
 <div class="container-fluid ">
 
-  <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
-  <div class="row academia-coverimage" ng-if="university.backgroundImage == undefined"  style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
+    <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
+    <div class="row academia-coverimage" ng-if="university.backgroundImage == undefined" style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
 
-  <div class="row">
+    <div class="row">
 
-    <div academiarightcolumn university="{{university}}"></div>
+        <div academiarightcolumn university="{{university}}"></div>
 
-    <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9 academia-content">
+        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9 academia-content">
 
-      <div academiastatus university="{{university}}"></div>
+            <div academiastatus university="{{university}}"></div>
 
-      <input class="academia-content-forum-post-create-title" placeholder="Escreva o título do seu curso" ng-model="title"></input>
+            <input class="academia-content-forum-post-create-title" placeholder="Escreva o título do seu curso" ng-model="title"></input>
 
-      <label>Descrição do curso:</label>
-      </br></br>
-      <trix-toolbar id="my_toolbar"></trix-toolbar>
-      <trix-editor angular-trix toolbar="my_toolbar" ng-model="text" trix-change="trixChange(e, editor);" trix-initialize="trixInitialize(e, editor);"></trix-editor>
+            <label>Descrição do curso:</label>
+            </br>
+            </br>
+            <!-- <trix-toolbar id="my_toolbar"></trix-toolbar>
+      <trix-editor angular-trix toolbar="my_toolbar" ng-model="text" trix-change="trixChange(e, editor);" trix-initialize="trixInitialize(e, editor);"></trix-editor> -->
+            <textarea ui-tinymce="tinymceOptions" ng-model="text"></textarea>
+        </div>
+        <!-- end col-xs-12 -->
 
     </div>
-    <!-- end col-xs-12 -->
-
-  </div>
-  <!-- end row -->
+    <!-- end row -->
 
 </div>
 <!-- container-full -->

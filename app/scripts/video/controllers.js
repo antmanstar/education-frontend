@@ -6,43 +6,35 @@ angular.module('netbase')
 
 .filter('unsafe', function($sce) { return $sce.trustAsHtml; })
 
-.controller('VideoWatchCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Videos', '$sce', 'User', 'Forum', 'Students', 'ngDialog', '$localStorage', 'jwtHelper', function($rootScope, $scope, $location, $route, University, Videos, $sce, User, Forum, Students, ngDialog, $localStorage, jwtHelper) {
-
+.controller('VideoWatchCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Videos', '$sce', 'User', 'Forum', 'Students', 'Courses', 'ngDialog', '$localStorage', 'jwtHelper', function($rootScope, $scope, $location, $route, University, Videos, $sce, User, Forum, Students, Courses, ngDialog, $localStorage, jwtHelper) {
     let videoId = $route.current.params.videoId;
-
     let viewers = {};
-
     let logged = $rootScope.logged;
 
+    $scope.tinymceOptions = {
+        file_picker_types: 'file image media',
+        tinydrive_token_provider: function (success, failure) {
+            Courses.fileUploadUrl().success(function (msg) {
+                success({ token: msg.token });
+            })
+        },
+        height: 400,
+        tinydrive_google_drive_key: "carbisa-document-upload@carbisa.iam.gserviceaccount.com",
+        tinydrive_google_drive_client_id: '102507978919142111240',
+        plugins: 'print preview powerpaste casechange importcss tinydrive searchreplace autolink autosave save directionality advcode visualblocks visualchars fullscreen image link media mediaembed  codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists checklist wordcount tinymcespellchecker a11ychecker textpattern noneditable help formatpainter pageembed charmap mentions quickbars linkchecker emoticons advtable',
+        toolbar: 'insertfile|undo redo | bold italic | alignleft aligncenter alignright | code|styleselect|outdent indent|link image'
+    };
+
     Videos.getById(videoId).success(function(res) {
-
         console.log(res);
-
         let status = res.status;
-
         if (status == 90010) {
-
             $location.path('/home');
-
         } else {
-
             $scope.video = res.data;
-
-            console.log($scope.video)
-
             if ($scope.video != null && $scope.video != undefined) {
-
-                /* Video is being processed */
-                //$scope.video
-
-                /* */
-
-                //console.log($scope.video.file.indexOf(".mp4"))
-
                 if ($scope.video.file.indexOf(".mp4") == -1 && $scope.video.file.indexOf(".wmv") == -1) {
-
                     const video = document.querySelector('video');
-
                     const player = new Plyr(video);
 
                     if (!Hls.isSupported()) {
@@ -53,130 +45,87 @@ angular.module('netbase')
                         hls.loadSource($scope.video.file);
                         hls.attachMedia(video);
                     }
-
                 } else {
-
-                    console.log("is mp4")
                     $("video").attr("src", $scope.video.file);
-
                 }
 
                 // Get University
-
                 $scope.studentIsAdmin = false;
-
                 if ($scope.video.universityId.length > 0) {
-
                     let studentId;
-
                     if ($localStorage.token != undefined && $localStorage.token != null) {
                         studentId = jwtHelper.decodeToken($localStorage.token)._id;
                     }
 
                     University.getUniversityById($scope.video.universityId).success(function(res) {
-
                         let university = res.data;
                         $scope.university = university;
 
                         /* check if student is a premium member */
                         for (let idx = 0; idx < university.members.length; idx++) {
-
                             var member = university.members[idx];
 
                             if (studentId != undefined && member.accountId == studentId && member.privilege == 99) {
                                 $scope.studentIsAdmin = true;
                             }
                         }
-                        //END for (let idx)
 
                         /* Get Forum Post */
-
                         Forum.getForumPostById($scope.video.forumpostId, $scope.video.universityId).success(function(res) {
-
                             $scope.forumPost = res.data;
-
                         });
-                        //END Forum.getForumPostById
-
                     });
-                    //END
-
                 }
 
                 // Time Tracking
-
                 Students.getStudentById($scope.video.accountId).success(function(res) {
-
                     console.log("student: ")
                     console.log(res);
                     $scope.student = res.data;
-
                 });
-                /* */
 
                 viewers = $scope.video.viewers;
-
                 let timeWatched = 0;
 
                 if (logged) {
-
                     let accountId = User.getId();
 
                     if (viewers.length > 0) {
-
                         for (let idx = 0; idx < viewers.length; idx++) {
-
                             if (viewers[idx].accountId == accountId) {
                                 timeWatched = viewers[idx].time;
                             }
-
                         }
-
                     }
                     //END viewers
-
                 }
                 //END logged
 
                 // FIX
-
                 setInterval(function() {
-
                     let player = $("video").get(0);
 
                     if (player != undefined) {
-
                         let percentComplete = player.currentTime / player.duration;
 
                         if (timeWatched < player.currentTime) {
-
                             timeWatched = player.currentTime;
-
                             let payload = { timeWatched: timeWatched };
 
                             Videos.progress(payload, videoId).success(function(res) {
-
                                 console.log("time viewed updated")
                                 console.log(res);
-
                             });
                             //END update progress
-
                         }
                         //END timeWatched < player.currentTime
-
                     }
-
                 }, 10000);
                 //END setInterval
-
-
             }
             //END if (video is null or undefined)
-
         }
         //END status 90010
-
     });
     //END Videos.getById
 
@@ -222,9 +171,22 @@ angular.module('netbase')
 
 }])
 
-.controller('VideoCreateCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Playlist', 'Videos', function($rootScope, $scope, $location, $route, University, Playlist, Videos) {
-
+.controller('VideoCreateCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Playlist', 'Videos', 'Courses', function($rootScope, $scope, $location, $route, University, Playlist, Videos, Courses) {
     let universityId;
+
+    $scope.tinymceOptions = {
+        file_picker_types: 'file image media',
+        tinydrive_token_provider: function (success, failure) {
+            Courses.fileUploadUrl().success(function (msg) {
+                success({ token: msg.token });
+            })
+        },
+        height: 400,
+        tinydrive_google_drive_key: "carbisa-document-upload@carbisa.iam.gserviceaccount.com",
+        tinydrive_google_drive_client_id: '102507978919142111240',
+        plugins: 'print preview powerpaste casechange importcss tinydrive searchreplace autolink autosave save directionality advcode visualblocks visualchars fullscreen image link media mediaembed  codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists checklist wordcount tinymcespellchecker a11ychecker textpattern noneditable help formatpainter pageembed charmap mentions quickbars linkchecker emoticons advtable',
+        toolbar: 'insertfile|undo redo | bold italic | alignleft aligncenter alignright | code|styleselect|outdent indent|link image'
+    };
 
     if ($location.search().universityId != undefined) {
         universityId = { _id: $location.search().universityId };
@@ -311,12 +273,25 @@ angular.module('netbase')
 
 }])
 
-.controller('PlaylistCreateCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Playlist', 'ngDialog', function($rootScope, $scope, $location, $route, University, Playlist, ngDialog) {
-
+.controller('PlaylistCreateCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Courses', 'Playlist', 'ngDialog', function($rootScope, $scope, $location, $route, University, Courses, Playlist, ngDialog) {
     $scope.privilege = { value: 0 };
     $scope.premium = { value: 0 };
 
     let universityId;
+
+    $scope.tinymceOptions = {
+        file_picker_types: 'file image media',
+        tinydrive_token_provider: function (success, failure) {
+            Courses.fileUploadUrl().success(function (msg) {
+                success({ token: msg.token });
+            })
+        },
+        height: 400,
+        tinydrive_google_drive_key: "carbisa-document-upload@carbisa.iam.gserviceaccount.com",
+        tinydrive_google_drive_client_id: '102507978919142111240',
+        plugins: 'print preview powerpaste casechange importcss tinydrive searchreplace autolink autosave save directionality advcode visualblocks visualchars fullscreen image link media mediaembed  codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists checklist wordcount tinymcespellchecker a11ychecker textpattern noneditable help formatpainter pageembed charmap mentions quickbars linkchecker emoticons advtable',
+        toolbar: 'insertfile|undo redo | bold italic | alignleft aligncenter alignright | code|styleselect|outdent indent|link image'
+    };
 
     if ($location.search().universityId != undefined) {
         universityId = { _id: $location.search().universityId };

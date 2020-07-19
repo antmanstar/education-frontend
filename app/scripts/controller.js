@@ -753,19 +753,25 @@ angular.module('netbase')
 }])
 
 .controller('CoursesCreateContentCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses) {
-
-    //
-
     $scope.moduleId = $scope.ngDialogData.moduleId;
     $scope.universityId = $scope.ngDialogData.universityId;
 
-    //
-
-
+    $scope.tinymceOptions = {
+        file_picker_types: 'file image media',
+        tinydrive_token_provider: function (success, failure) {
+            Courses.fileUploadUrl().success(function (msg) {
+                success({ token: msg.token });
+            })
+        },
+        height: 400,
+        tinydrive_google_drive_key: "carbisa-document-upload@carbisa.iam.gserviceaccount.com",
+        tinydrive_google_drive_client_id: '102507978919142111240',
+        plugins: 'print preview powerpaste casechange importcss tinydrive searchreplace autolink autosave save directionality advcode visualblocks visualchars fullscreen image link media mediaembed  codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists checklist wordcount tinymcespellchecker a11ychecker textpattern noneditable help formatpainter pageembed charmap mentions quickbars linkchecker emoticons advtable',
+        toolbar: 'insertfile|undo redo | bold italic | alignleft aligncenter alignright | code|styleselect|outdent indent|link image'
+    };
 }])
 
 .controller('CoursesVideoForumContentCtrl', ['Videos', '$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'University', 'Playlist', 'Forum', 'User', function(Videos, $rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, University, Playlist, Forum, User) {
-
     $scope.page = $route.current.params.id;
     ngDialog.close();
 
@@ -775,47 +781,39 @@ angular.module('netbase')
     $scope.customPlaylist = [];
     $scope.cusloading = 0;
 
+    $scope.tinymceOptions = {
+        file_picker_types: 'file image media',
+        tinydrive_token_provider: function (success, failure) {
+            Courses.fileUploadUrl().success(function (msg) {
+                success({ token: msg.token });
+            })
+        },
+        height: 400,
+        tinydrive_google_drive_key: "carbisa-document-upload@carbisa.iam.gserviceaccount.com",
+        tinydrive_google_drive_client_id: '102507978919142111240',
+        plugins: 'print preview powerpaste casechange importcss tinydrive searchreplace autolink autosave save directionality advcode visualblocks visualchars fullscreen image link media mediaembed  codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists checklist wordcount tinymcespellchecker a11ychecker textpattern noneditable help formatpainter pageembed charmap mentions quickbars linkchecker emoticons advtable',
+        toolbar: 'insertfile|undo redo | bold italic | alignleft aligncenter alignright | code|styleselect|outdent indent|link image'
+    };
+
     $scope.loadForumPosts = function() {
-
-            University.getallCategorybyUniversity().success(function(res) {
-
-                console.log(res.success)
-
-                if (res.success) {
-
-
-                    $scope.categories = res.data;
-
-                } else {
-
-                    console.log("error while loading university")
-
-                }
-
-            });
-            //University.getallCategorybyUniversity()
-
-        }
-        //END loadForumPost()
+        University.getallCategorybyUniversity().success(function(res) {
+            if (res.success) {
+                $scope.categories = res.data;
+            } else {
+                console.log("error while loading university")
+            }
+        });
+    }
 
     $scope.loadForumPostCategory = function(uni_id, categoryId) {
-
         $scope.page = 'categoryforumposts';
         $scope.universityId = uni_id
         universityId = uni_id;
         Forum.getForumPostsByCategoryId(uni_id, categoryId, 1).success(function(resCategory) {
-
-            console.log(resCategory)
-
             if (resCategory.success) {
-
                 $scope.categoryPosts = resCategory.data.docs;
-
             }
-
         });
-        //END Forum.getForumPostsByCategoryId()
-
     }
 
     if ($scope.page == 'post') {
@@ -830,39 +828,25 @@ angular.module('netbase')
             //if($scope.universities.length==$scope.cusloading)
     }
 
-
-
     $scope.savePlay = function(play) {
-            console.log(play)
-            let mid = $route.current.params.id;
-            let formdata = {
-                title: play.title,
-                description: play.description,
-                contentType: "video",
-                text: "video",
-                modelId: play._id,
-                universityId: $scope.universityId,
-            }
-
-            Courses.createContentModule(formdata).success(function(res) {
-
-                if (res.success) {
-
-                    console.log(res);
-                    $location.path("/cursos/suite/content")
-
-                } else {
-
-                }
-
-            });
-            //END Courses
-
+        let mid = $route.current.params.id;
+        let formdata = {
+            title: play.title,
+            description: play.description,
+            contentType: "video",
+            text: "video",
+            modelId: play._id,
+            universityId: $scope.universityId,
         }
-        /* */
+
+        Courses.createContentModule(formdata).success(function(res) {
+            if (res.success) {
+                $location.path("/cursos/suite/content")
+            } else {}
+        });
+    }
 
     $scope.save = function() {
-
             let mid = $route.current.params.id;
 
             if (!$scope.title) {
@@ -890,23 +874,13 @@ angular.module('netbase')
             console.log($scope.forumPost._id)
 
             Courses.createContentModule(formdata).success(function(res) {
-
                 if (res.success) {
-
-                    console.log(res);
-
                     $location.path("/cursos/suite/content")
-
                 } else {
                     alert("error")
                 }
-
             });
-
-            //END Courses
-
         }
-        //END save()
 
     /* */
 
@@ -986,26 +960,30 @@ angular.module('netbase')
 }])
 
 .controller('editVideoForumContentCtrl', ['Videos', '$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'University', 'Playlist', 'Forum', 'User', function(Videos, $rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, University, Playlist, Forum, User) {
-
     let id = $route.current.params.id
+    $scope.tinymceOptions = {
+        file_picker_types: 'file image media',
+        tinydrive_token_provider: function (success, failure) {
+            Courses.fileUploadUrl().success(function (msg) {
+                success({ token: msg.token });
+            })
+        },
+        height: 400,
+        tinydrive_google_drive_key: "carbisa-document-upload@carbisa.iam.gserviceaccount.com",
+        tinydrive_google_drive_client_id: '102507978919142111240',
+        plugins: 'print preview powerpaste casechange importcss tinydrive searchreplace autolink autosave save directionality advcode visualblocks visualchars fullscreen image link media mediaembed  codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists checklist wordcount tinymcespellchecker a11ychecker textpattern noneditable help formatpainter pageembed charmap mentions quickbars linkchecker emoticons advtable',
+        toolbar: 'insertfile|undo redo | bold italic | alignleft aligncenter alignright | code|styleselect|outdent indent|link image'
+    };
+
     Courses.getContentModuleById(id).success(function(msg) {
-
-            $scope.content = msg.data;
-            $scope.title = $scope.content.title;
-            $scope.description = $scope.content.description;
-            $scope.loadForumPost($scope.content.modelId);
-
-        })
-        //END Forum.getForumPostsByCategoryId()
-
-
-
-
-
+        $scope.content = msg.data;
+        $scope.title = $scope.content.title;
+        $scope.description = $scope.content.description;
+        $scope.loadForumPost($scope.content.modelId);
+    })
 
     $scope.save = function() {
             let mid = $scope.content.modelId;
-
 
             if (!$scope.title) {
                 $scope.title = $scope.forumPost.title;
@@ -1016,30 +994,16 @@ angular.module('netbase')
             let formdata = {
                 title: $scope.title,
                 description: $scope.description,
-
             }
 
-
-            console.log("form data is:")
-            console.log(formdata);
-
             Courses.updateQuiz(id, formdata).success(function(res) {
-
                 if (res.success) {
-
-                    console.log(res);
-
                     $location.path("/cursos/suite/content")
-
                 } else {
                     alert("error")
                 }
-
             });
-            //END Courses
-
         }
-        //END save()
 
     /* */
 
@@ -1077,6 +1041,19 @@ angular.module('netbase')
 
 .controller('CoursesCreatePageCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses) {
 
+    $scope.tinymceOptions = {
+        file_picker_types: 'file image media',
+        tinydrive_token_provider: function (success, failure) {
+            Courses.fileUploadUrl().success(function (msg) {
+                success({ token: msg.token });
+            })
+        },
+        height: 400,
+        tinydrive_google_drive_key: "carbisa-document-upload@carbisa.iam.gserviceaccount.com",
+        tinydrive_google_drive_client_id: '102507978919142111240',
+        plugins: 'print preview powerpaste casechange importcss tinydrive searchreplace autolink autosave save directionality advcode visualblocks visualchars fullscreen image link media mediaembed  codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists checklist wordcount tinymcespellchecker a11ychecker textpattern noneditable help formatpainter pageembed charmap mentions quickbars linkchecker emoticons advtable',
+        toolbar: 'insertfile|undo redo | bold italic | alignleft aligncenter alignright | code|styleselect|outdent indent|link image'
+    };
 }])
 
 .controller('CoursesEstudarCtrl', ['$cookies', 'User', '$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'University', 'Playlist', 'Forum', 'User', '$window', function($cookies, User, $rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, University, Playlist, Forum, Users, $window) {
@@ -1942,6 +1919,20 @@ angular.module('netbase')
 
     $scope.timelines = [];
     $scope.course = {}
+    $scope.tinymceOptions = {
+        file_picker_types: 'file image media',
+        tinydrive_token_provider: function (success, failure) {
+            Courses.fileUploadUrl().success(function (msg) {
+                success({ token: msg.token });
+            })
+        },
+        height: 400,
+        tinydrive_google_drive_key: "carbisa-document-upload@carbisa.iam.gserviceaccount.com",
+        tinydrive_google_drive_client_id: '102507978919142111240',
+        plugins: 'print preview powerpaste casechange importcss tinydrive searchreplace autolink autosave save directionality advcode visualblocks visualchars fullscreen image link media mediaembed  codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists checklist wordcount tinymcespellchecker a11ychecker textpattern noneditable help formatpainter pageembed charmap mentions quickbars linkchecker emoticons advtable',
+        toolbar: 'insertfile|undo redo | bold italic | alignleft aligncenter alignright | code|styleselect|outdent indent|link image'
+    };
+
     Courses.getById(id).success(function(msg) {
         if (msg.data.free == true) $scope.access = true;
         let mem = msg.data.members;
@@ -1968,8 +1959,9 @@ angular.module('netbase')
 
         Courses.insertTimeline($scope.courseId, { description: dd }).success(function(res) {
             $scope.timelines.unshift(res.data)
-            angular.element(
-                $document[0].querySelector('trix-editor')).find("div").html('');
+            // angular.element(
+            //     $document[0].querySelector('trix-editor')).find("div").html('');
+            $scope.description = '';
 
         }).error(function(msg) {
             alert("request alert")
@@ -2490,12 +2482,22 @@ angular.module('netbase')
 .controller('CoursesUpdateCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'Knowledge', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, Knowledge) {
     console.log('update course controller');
     $scope.courseData = $scope.ngDialogData.courseData;
-
-    console.log('cData', $scope.courseData);
-
     $scope.title = $scope.courseData.title;
-
     $scope.selectedKnowledge = $scope.courseData.knowledgeId;
+
+    $scope.tinymceOptions = {
+        file_picker_types: 'file image media',
+        tinydrive_token_provider: function (success, failure) {
+            Courses.fileUploadUrl().success(function (msg) {
+                success({ token: msg.token });
+            })
+        },
+        height: 400,
+        tinydrive_google_drive_key: "carbisa-document-upload@carbisa.iam.gserviceaccount.com",
+        tinydrive_google_drive_client_id: '102507978919142111240',
+        plugins: 'print preview powerpaste casechange importcss tinydrive searchreplace autolink autosave save directionality advcode visualblocks visualchars fullscreen image link media mediaembed  codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists checklist wordcount tinymcespellchecker a11ychecker textpattern noneditable help formatpainter pageembed charmap mentions quickbars linkchecker emoticons advtable',
+        toolbar: 'insertfile|undo redo | bold italic | alignleft aligncenter alignright | code|styleselect|outdent indent|link image'
+    };
 
     if ($scope.courseData.free == false) {
         $scope.free = false;
@@ -2533,8 +2535,6 @@ angular.module('netbase')
             formdata.price = $scope.preco;
         }
 
-        console.log('updated data', formdata);
-
         Courses.updateCourse($scope.courseData._id, formdata).success(function(res) {
             console.log('update course res', res);
 
@@ -2547,15 +2547,25 @@ angular.module('netbase')
 }])
 
 .controller('CoursesUpdateModuleCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses) {
-        console.log('update module controller');
         $scope.moduleData = $scope.ngDialogData.moduleData;
-
-        console.log('mData', $scope.moduleData);
-
         $scope.title = $scope.moduleData.title;
         $scope.duration = $scope.moduleData.duration;
         $scope.goal = $scope.moduleData.goal;
         $scope.description = $scope.moduleData.description;
+
+        $scope.tinymceOptions = {
+            file_picker_types: 'file image media',
+            tinydrive_token_provider: function (success, failure) {
+                Courses.fileUploadUrl().success(function (msg) {
+                    success({ token: msg.token });
+                })
+            },
+            height: 400,
+            tinydrive_google_drive_key: "carbisa-document-upload@carbisa.iam.gserviceaccount.com",
+            tinydrive_google_drive_client_id: '102507978919142111240',
+            plugins: 'print preview powerpaste casechange importcss tinydrive searchreplace autolink autosave save directionality advcode visualblocks visualchars fullscreen image link media mediaembed  codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists checklist wordcount tinymcespellchecker a11ychecker textpattern noneditable help formatpainter pageembed charmap mentions quickbars linkchecker emoticons advtable',
+            toolbar: 'insertfile|undo redo | bold italic | alignleft aligncenter alignright | code|styleselect|outdent indent|link image'
+        };
 
         $scope.updateModule = function() {
             let formData = {
@@ -2565,11 +2575,7 @@ angular.module('netbase')
                 duration: $scope.duration
             }
 
-            console.log('updated data', formData, $scope.moduleData._id);
-
             Courses.updateModule($scope.moduleData._id, formData).success(function(res) {
-                console.log('module update res', res);
-
                 if (res.success == true) {
                     ngDialog.close();
                     $route.reload();
@@ -2578,6 +2584,7 @@ angular.module('netbase')
         }
 
     }])
+
     .controller('CoursesEditPageCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses) {
 
         let id = $route.current.params.id;
@@ -2592,11 +2599,8 @@ angular.module('netbase')
                 file_picker_types: 'file image media',
                 tinydrive_token_provider: function(success, failure) {
                     Courses.fileUploadUrl().success(function(msg) {
-
-
-                            success({ token: msg.token });
-                        })
-                        // failure('Could not create a jwt token')
+                        success({ token: msg.token });
+                    })
                 },
                 tinydrive_google_drive_key: "carbisa-document-upload@carbisa.iam.gserviceaccount.com",
                 tinydrive_google_drive_client_id: '102507978919142111240',
@@ -2607,8 +2611,6 @@ angular.module('netbase')
             alert("Error")
             $location.path("/home/cursos")
         })
-
-
 
         $scope.saveContent = function() {
 
@@ -2657,139 +2659,164 @@ angular.module('netbase')
 
 .controller('CoursesCreateQuizCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses) {
 
-        $scope.activeSection = "createQuiz";
-        $scope.quesArr = [];
-        $scope.quesNumber = 0;
-        $scope.q = null;
+    $scope.activeSection = "createQuiz";
+    $scope.quesArr = [];
+    $scope.quesNumber = 0;
+    $scope.q = null;
 
-        let moduleId = $route.current.params.id;
+    let moduleId = $route.current.params.id;
 
-        console.log('moduleId', moduleId);
+    $scope.tinymceOptions = {
+        file_picker_types: 'file image media',
+        tinydrive_token_provider: function (success, failure) {
+            Courses.fileUploadUrl().success(function (msg) {
+                success({ token: msg.token });
+            })
+        },
+        height: 400,
+        tinydrive_google_drive_key: "carbisa-document-upload@carbisa.iam.gserviceaccount.com",
+        tinydrive_google_drive_client_id: '102507978919142111240',
+        plugins: 'print preview powerpaste casechange importcss tinydrive searchreplace autolink autosave save directionality advcode visualblocks visualchars fullscreen image link media mediaembed  codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists checklist wordcount tinymcespellchecker a11ychecker textpattern noneditable help formatpainter pageembed charmap mentions quickbars linkchecker emoticons advtable',
+        toolbar: 'insertfile|undo redo | bold italic | alignleft aligncenter alignright | code|styleselect|outdent indent|link image'
+    };
 
-        $scope.createQuiz = function() {
-            console.log('create quiz valid', $scope.createQuizForm.$valid);
-            console.log('description valid', ($scope.quizDescription != undefined && $scope.quizDescription != ''));
+    $scope.createQuiz = function() {
+        console.log('create quiz valid', $scope.createQuizForm.$valid);
+        console.log('description valid', ($scope.quizDescription != undefined && $scope.quizDescription != ''));
 
 
-            if (($scope.quizDescription != undefined && $scope.quizDescription != '') && $scope.createQuizForm.$valid) {
-                $scope.createQuizLoading = true;
+        if (($scope.quizDescription != undefined && $scope.quizDescription != '') && $scope.createQuizForm.$valid) {
+            $scope.createQuizLoading = true;
 
-                let data = {
-                    modleId: moduleId,
-                    title: $scope.quizTitle,
-                    contentType: 'quiz',
-                    description: $scope.quizDescription
+            let data = {
+                modleId: moduleId,
+                title: $scope.quizTitle,
+                contentType: 'quiz',
+                description: $scope.quizDescription
+            }
+            console.log('quiz data', data);
+
+            Courses.createQuiz(data).success(function(res) {
+                console.log('create quiz res', res);
+                if (res.success) {
+                    $scope.createQuizLoading = false;
+                    $scope.addQuestions = true;
+                    console.log('quiz id created', res.data._id);
+                    $scope.contentId = res.data._id;
                 }
-                console.log('quiz data', data);
 
-                Courses.createQuiz(data).success(function(res) {
-                    console.log('create quiz res', res);
-                    if (res.success) {
-                        $scope.createQuizLoading = false;
-                        $scope.addQuestions = true;
-                        console.log('quiz id created', res.data._id);
-                        $scope.contentId = res.data._id;
-                    }
+            });
+        }
+    }
 
-                });
+    $scope.selectType = function(type, index) {
+        console.log('selectType', type, index);
+
+        if (type == 'mcq') {
+            console.log('mcq part');
+
+            $scope.q = {
+                title: '',
+                answer: '',
+                title_type: '',
+                ques_options: [
+                    { title: '' },
+                    { title: '' },
+                    { title: '' },
+                    { title: '' }
+                ],
+            }
+        } else if (type == 'descriptive') {
+            console.log('descriptive part');
+
+            // $scope.
+            $scope.quesArr[index].ques_options[0].title = 'not_available'
+            $scope.quesArr[index].ques_options[1].title = 'not_available'
+            $scope.quesArr[index].ques_options[2].title = 'not_available'
+            $scope.quesArr[index].ques_options[3].title = 'not_available'
+
+            $scope.q = {
+                title: '',
+                answer: '',
+                title_type: '',
             }
         }
+    }
 
-        $scope.selectType = function(type, index) {
-            console.log('selectType', type, index);
+    // add new question one by one
+    $scope.addNewQues = function() {
+        console.log('add new question valid', $scope.quizForm.$valid);
 
-            if (type == 'mcq') {
-                console.log('mcq part');
+        // console.log('form valid', $scope.quizForm.$valid);
+        $scope.showSelection = "true"
 
-                $scope.q = {
-                    title: '',
-                    answer: '',
-                    title_type: '',
-                    ques_options: [
-                        { title: '' },
-                        { title: '' },
-                        { title: '' },
-                        { title: '' }
-                    ],
-                }
-            } else if (type == 'descriptive') {
-                console.log('descriptive part');
+        if ($scope.quizForm.$valid) {
+            console.log('add question');
+            $scope.quesNumber++;
 
-                // $scope.
-                $scope.quesArr[index].ques_options[0].title = 'not_available'
-                $scope.quesArr[index].ques_options[1].title = 'not_available'
-                $scope.quesArr[index].ques_options[2].title = 'not_available'
-                $scope.quesArr[index].ques_options[3].title = 'not_available'
-
-                $scope.q = {
-                    title: '',
-                    answer: '',
-                    title_type: '',
-                }
+            let q = {
+                title: '',
+                answer: '',
+                title_type: 'mcq',
+                ques_options: [
+                    { title: '' },
+                    { title: '' },
+                    { title: '' },
+                    { title: '' }
+                ],
             }
+
+            $scope.$evalAsync(function() {
+
+                $scope.quesArr.push(q);
+
+                console.log('array', $scope.quesArr);
+            })
         }
+    }
 
-        // add new question one by one
-        $scope.addNewQues = function() {
-            console.log('add new question valid', $scope.quizForm.$valid);
+    $scope.saveQuiz = function() {
+        console.log('save valid', $scope.quizForm.$valid);
 
-            // console.log('form valid', $scope.quizForm.$valid);
-            $scope.showSelection = "true"
+        if ($scope.quizForm.$valid) {
+            $scope.addQuesLoading = true;
 
-            if ($scope.quizForm.$valid) {
-                console.log('add question');
-                $scope.quesNumber++;
+            console.log('final questions', $scope.quesArr);
 
-                let q = {
-                    title: '',
-                    answer: '',
-                    title_type: 'mcq',
-                    ques_options: [
-                        { title: '' },
-                        { title: '' },
-                        { title: '' },
-                        { title: '' }
-                    ],
-                }
-
-                $scope.$evalAsync(function() {
-
-                    $scope.quesArr.push(q);
-
-                    console.log('array', $scope.quesArr);
-                })
+            let quesData = {
+                data: $scope.quesArr
             }
-        }
 
-        $scope.saveQuiz = function() {
-            console.log('save valid', $scope.quizForm.$valid);
+            Courses.addQuizQuestions($scope.contentId, quesData).success(function(res) {
+                console.log('ques api res', res);
 
-            if ($scope.quizForm.$valid) {
-                $scope.addQuesLoading = true;
-
-                console.log('final questions', $scope.quesArr);
-
-                let quesData = {
-                    data: $scope.quesArr
+                if (res.success) {
+                    $scope.addQuesLoading = false;
+                    $location.path('/cursos/suite/content');
                 }
-
-                Courses.addQuizQuestions($scope.contentId, quesData).success(function(res) {
-                    console.log('ques api res', res);
-
-                    if (res.success) {
-                        $scope.addQuesLoading = false;
-                        $location.path('/cursos/suite/content');
-                    }
-                });
-            }
+            });
         }
-    }])
+    }
+}])
     .controller('CoursesUpdateQuizCtrl', ['$sce', 'User', '$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', function($sce, User, $rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses) {
 
         $scope.quizData = JSON.parse(localStorage.getItem('updateQuizData'));
-
         $scope.quizTitle = $scope.quizData.title;
         $scope.quizDescription = $scope.quizData.description;
+        
+        $scope.tinymceOptions = {
+            file_picker_types: 'file image media',
+            tinydrive_token_provider: function (success, failure) {
+                Courses.fileUploadUrl().success(function (msg) {
+                    success({ token: msg.token });
+                })
+            },
+            height: 400,
+            tinydrive_google_drive_key: "carbisa-document-upload@carbisa.iam.gserviceaccount.com",
+            tinydrive_google_drive_client_id: '102507978919142111240',
+            plugins: 'print preview powerpaste casechange importcss tinydrive searchreplace autolink autosave save directionality advcode visualblocks visualchars fullscreen image link media mediaembed  codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists checklist wordcount tinymcespellchecker a11ychecker textpattern noneditable help formatpainter pageembed charmap mentions quickbars linkchecker emoticons advtable',
+            toolbar: 'insertfile|undo redo | bold italic | alignleft aligncenter alignright | code|styleselect|outdent indent|link image'
+        };
 
         $scope.updateQuiz = function() {
             console.log('update quiz title', );
@@ -3336,15 +3363,25 @@ angular.module('netbase')
 .controller('CoursesModulosCriarCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses) {
 
     $scope.page = false;
-
     $scope.activeSection = "modulos";
 
+    $scope.tinymceOptions = {
+        file_picker_types: 'file image media',
+        tinydrive_token_provider: function (success, failure) {
+            Courses.fileUploadUrl().success(function (msg) {
+                success({ token: msg.token });
+            })
+        },
+        height: 400,
+        tinydrive_google_drive_key: "carbisa-document-upload@carbisa.iam.gserviceaccount.com",
+        tinydrive_google_drive_client_id: '102507978919142111240',
+        plugins: 'print preview powerpaste casechange importcss tinydrive searchreplace autolink autosave save directionality advcode visualblocks visualchars fullscreen image link media mediaembed  codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists checklist wordcount tinymcespellchecker a11ychecker textpattern noneditable help formatpainter pageembed charmap mentions quickbars linkchecker emoticons advtable',
+        toolbar: 'insertfile|undo redo | bold italic | alignleft aligncenter alignright | code|styleselect|outdent indent|link image'
+    };
+
     $scope.criar = function() {
-
-            /* */
             let error = false;
-            /* */
-
+            
             let formdata = {
                 title: $scope.title,
                 duration: $scope.duration,
@@ -3353,34 +3390,34 @@ angular.module('netbase')
                 course_id: $scope.ngDialogData.id
             };
 
-            console.log(formdata);
-
             Courses.createModule(formdata).success(function(res) {
-
-                console.log(res)
-
                 let courseModule = res.data;
 
                 if (res.success) {
-
                     ngDialog.close();
                     $route.reload()
-                        //$location.path('/cursos/suite/modulos');
-
                 }
-
             });
-            //END Courses.create()
-
         }
-        //END $scope.criar
-
 }])
 
 .controller('CoursesCriarCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'Knowledge', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, Knowledge) {
-
     $scope.universityId = $scope.ngDialogData.universityId;
     $scope.page = false;
+
+    $scope.tinymceOptions = {
+        file_picker_types: 'file image media',
+        tinydrive_token_provider: function (success, failure) {
+            Courses.fileUploadUrl().success(function (msg) {
+                success({ token: msg.token });
+            })
+        },
+        height: 400,
+        tinydrive_google_drive_key: "carbisa-document-upload@carbisa.iam.gserviceaccount.com",
+        tinydrive_google_drive_client_id: '102507978919142111240',
+        plugins: 'print preview powerpaste casechange importcss tinydrive searchreplace autolink autosave save directionality advcode visualblocks visualchars fullscreen image link media mediaembed  codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists checklist wordcount tinymcespellchecker a11ychecker textpattern noneditable help formatpainter pageembed charmap mentions quickbars linkchecker emoticons advtable',
+        toolbar: 'insertfile|undo redo | bold italic | alignleft aligncenter alignright | code|styleselect|outdent indent|link image'
+    };
 
     Knowledge.getAllPaginated().success(function(res) {
         if (res.success) {
@@ -3389,10 +3426,7 @@ angular.module('netbase')
     });
 
     $scope.criar = function() {
-
-            /* */
             let error = false;
-            /* */
 
             let formdata = {
                 title: $scope.title,
@@ -3410,34 +3444,20 @@ angular.module('netbase')
             }
 
             if ($scope.free == false) {
-
                 if ($scope.preco.length > 0) {
                     formdata.price = $scope.preco;
                 } else {
                     console.log("price zero")
                 }
-
             }
 
-            console.log(formdata);
-
             Courses.create(formdata).success(function(res) {
-
-                console.log(res)
-
                 if (res.success) {
-
                     ngDialog.close();
                     $route.reload();
-
                 }
-
             });
-            //END Courses.create()
-
         }
-        //END $scope.criar
-
 }])
 
 .controller('CoursesByIdManagementNavBarCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Payments', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Payments) {
@@ -3452,12 +3472,8 @@ angular.module('netbase')
         console.log("hello courses nav")
 
         $scope.coursesCreate = function(universityId) {
-
             ngDialog.open({ template: 'partials/courses/modals/coursecreate.html', controller: 'CoursesCriarCtrl', className: 'ngdialog-theme-default', data: { universityId: universityId }, closeByNavigation: true });
-
         }
-
-
     }])
     /* */
 
@@ -4128,6 +4144,7 @@ angular.module('netbase')
     let section = "trend";
 
     News.getAllSections().success(function(res) {
+
         console.log("sections")
         console.log(res);
         $scope.sections = res.data;
@@ -4143,49 +4160,78 @@ angular.module('netbase')
     });
 
     $scope.newsLoadSection = function(id, title) {
+
         if (id == "trend") {
+
             News.getAllTrends().success(function(res) {
+
                 $scope.sectionTitle = "em alta";
                 $scope.news = res.data;
+
             });
+
         } else {
+
             News.getNewsBySection(id, title).success(function(res) {
 
                 $scope.sectionTitle = "sobre " + title;
                 $scope.news = res.data.docs;
+
             });
+
         }
+
     }
 
     $scope.vote = function(newsId, sectionId) {
-        console.log("AAA");
+
         if ($localStorage.token != undefined || $localStorage.token != null) {
+
             News.vote(newsId).success(function(res) {
+
                 let news = res.data;
+
                 if (res.success) {
+
                     if (section == "trend") {
+
                         News.getAllTrends().success(function(res) {
+
                             console.log("news: ")
                             console.log(res)
                             $scope.news = res.data;
+
                         });
+
                     } else {
+
                         News.getNewsBySection(news.sectionId).success(function(res) {
+
                             console.log("news: ")
                             console.log(res)
                             $scope.news = res.data;
+
                         });
+                        //END News.getNewsBySection
+
                     }
-                } else {}
+
+                } else {
+
+                }
+
             });
+
         } else {
             ngDialog.open({ template: 'partials/modals/login.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
         }
+
     }
 
     $scope.newsOpen = function(id, news) {
         ngDialog.open({ template: 'partials/modals/news.html', controller: 'NewsByIdCtrl', className: 'ngdialog-theme-default modal-news', data: { news: news } });
     };
+
 }])
 
 .controller('NewsByIdCtrl', ['$rootScope', '$scope', '$location', 'University', 'ngDialog', 'News', '$localStorage', function($rootScope, $scope, $location, University, ngDialog, News, $localStorage) {
@@ -6087,6 +6133,7 @@ angular.module('netbase')
         replace: true,
         scope: true,
         link: function(scope, element, attr) {
+
             let answer = JSON.parse(attr.a);
             let postId = attr.p;
             let universityId = attr.u;

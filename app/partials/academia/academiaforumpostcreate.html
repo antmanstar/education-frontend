@@ -2,49 +2,51 @@
 
 <div class="container-fluid container-full">
 
-  <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
-  <div class="row academia-coverimage" ng-if="university.backgroundImage == undefined"  style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
-  <!-- end academia-coverimage -->
+    <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
+    <div class="row academia-coverimage" ng-if="university.backgroundImage == undefined" style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
+    <!-- end academia-coverimage -->
 
-  <div class="row">
+    <div class="row">
 
-    <div academiarightcolumn university="{{university}}"></div>
+        <div academiarightcolumn university="{{university}}"></div>
 
-    <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9 academia-content">
+        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9 academia-content">
 
-      <div class="academia-content-navigation">
+            <div class="academia-content-navigation">
 
-        <div class="academia-content-navigation-option">Criar postagem</div>
+                <div class="academia-content-navigation-option">Criar postagem</div>
 
-      </div>
-      <!-- academia-content-navigation -->
+            </div>
+            <!-- academia-content-navigation -->
 
-      <div class="alert bg-primary-red" ng-if="errors.length > 0">
-        <ul>
-          <li ng-repeat="e in errors">{{e}}</li>
-        </ul>
-      </div>
+            <div class="alert bg-primary-red" ng-if="errors.length > 0">
+                <ul>
+                    <li ng-repeat="e in errors">{{e}}</li>
+                </ul>
+            </div>
 
-      <div class="academia-content-forum-answer">
+            <div class="academia-content-forum-answer">
 
-        <input class="academia-content-forum-post-create-title" placeholder="Escreva o título da sua postagem" ng-model="title"></input>
+                <input class="academia-content-forum-post-create-title" placeholder="Escreva o título da sua postagem" ng-model="title"></input>
 
-        <trix-toolbar id="my_toolbar"></trix-toolbar>
-        <trix-editor angular-trix toolbar="my_toolbar" ng-model="text" trix-change="trixChange(e, editor);" trix-initialize="trixInitialize(e, editor);"></trix-editor>
+                <!-- <trix-toolbar id="my_toolbar"></trix-toolbar>
+        <trix-editor angular-trix toolbar="my_toolbar" ng-model="text" trix-change="trixChange(e, editor);" trix-initialize="trixInitialize(e, editor);"></trix-editor> -->
 
-        <div class="academia-content-forum-post-create-premium">
+                <textarea ui-tinymce="tinymceOptions" ng-model="text"></textarea>
+                <div class="academia-content-forum-post-create-premium">
 
-          <b>Categoria do Post</b>
+                    <b>Categoria do Post</b>
 
-          <div class="form-group">
-            <select ng-model="categoryForum._id">
-              <option ng-repeat="category in categories" ng-selected="category._id == categoryForum._id" value="{{category._id}}" ng-selected="">{{category.title}}</option>
+                    <div class="form-group">
+                        <select ng-model="categoryForum._id">
+              <option ng-repeat="category in categories" ng-selected="category._id == categoryForum._id"
+                value="{{category._id}}" ng-selected="">{{category.title}}</option>
             </select>
-          </div>
+                    </div>
 
-        </div>
+                </div>
 
-        <!--
+                <!--
         <div class="academia-content-forum-post-create-premium">
 
           <b>Este conteúdo é exclusivo para assinantes premium?</b>
@@ -59,20 +61,20 @@
         </div>
         -->
 
-        <div class="academia-content-forum-answer-action" style="margin-top: 15px;">
-          <button class="btn btn-bluebase" ng-click="createForumPost()">Criar postagem</button>
-        </div>
-        <!-- academia-content-forum-answer -->
+                <div class="academia-content-forum-answer-action" style="margin-top: 15px;">
+                    <button class="btn btn-bluebase" ng-click="createForumPost()">Criar postagem</button>
+                </div>
+                <!-- academia-content-forum-answer -->
 
-      </div>
-      <!-- academia-content-forum-answer -->
+            </div>
+            <!-- academia-content-forum-answer -->
+
+        </div>
+        <!-- end col-xs-12 -->
 
     </div>
-    <!-- end col-xs-12 -->
+    <!-- end row -->
 
-  </div>
-  <!-- end row -->
-
-  <footermobile></footermobile>
+    <footermobile></footermobile>
 
 </div>
