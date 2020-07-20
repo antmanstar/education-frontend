@@ -5,35 +5,43 @@
       <div class="row">
         <div class="col-sm-12 content-part">
 
-          <button ng-show="startStudyCourseId != courseId" class="btn btn-green button-highlighter" style="font-size: 1em; padding-top: 0px; padding-bottom: 0; line-height: 44px;" ng-click="startStudy()"><b>Iniciar o curso</b></button>
+          <button
+            ng-show="showInitiarCursoButton"
+            class="btn btn-green button-highlighter"
+            style="font-size: 1em; padding-top: 0px; padding-bottom: 0; line-height: 44px;"
+            ng-click="startStudy()">
+              <b>Iniciar o curso</b>
+          </button>
 
-           <ng-containner ng-if="type=='document' || type=='page'">
-
-             <div ng-controller="CoursesEstudarTypeDocumentCtrl">
+          <ng-containner ng-if="(type=='document' || type=='page') && !showInitiarCursoButton">
+            <div ng-controller="CoursesEstudarTypeDocumentCtrl">
               <div ng-include="'partials/courses/estudar/document.html'"></div>
-             </div>
-            </ng-containner>
+            </div>
+          </ng-containner>
 
-            <ng-containner ng-if="type=='forumpost' || type=='forum'">
-
-             <div ng-controller="CoursesEstudarTypeForumCtrl">
+          <ng-containner ng-if="(type=='forumpost' || type=='forum') && !showInitiarCursoButton">
+            <div ng-controller="CoursesEstudarTypeForumCtrl">
               <div ng-include="'partials/courses/estudar/forum.html'"></div>
-             </div>
-            </ng-containner>
+            </div>
+          </ng-containner>
 
-            <ng-containner ng-if="type=='quiz'">
-
-             <div ng-controller="CoursesEstudarTypeQuizCtrl">
+          <ng-containner ng-if="(type=='quiz' && !quizresult) && !showInitiarCursoButton">
+            <div ng-controller="CoursesEstudarTypeQuizCtrl">
               <div mc="{{type}}" ng-include="'partials/courses/estudar/quiz.html'"></div>
-             </div>
-             </ng-containner>
+            </div>
+          </ng-containner>
 
-             <ng-containner ng-if="type=='video' || type=='videos'">
-
-             <div ng-controller="CoursesEstudarTypeVideoCtrl">
+          <ng-containner ng-if="(type=='video' || type=='videos') && !showInitiarCursoButton">
+            <div ng-controller="CoursesEstudarTypeVideoCtrl">
               <div mc="{{type}}" ng-include="'partials/courses/estudar/videos.html'"></div>
-             </div>
-             </ng-containner>
+            </div>
+          </ng-containner>
+
+          <ng-containner ng-if="(type=='quiz' && quizresult) && !showInitiarCursoButton">
+            <div ng-controller="CoursesQuizResultCtrl">
+              <div mc="{{type}}" ng-include="'partials/courses/quiz/quizResult.html'"></div>
+            </div>
+          </ng-containner>
 
         </div>
 

@@ -3016,6 +3016,8 @@ angular.module('netbase')
                 scope.studentIsTeam = false;
                 scope.showSubscribe = undefined;
 
+                scope.userSubscribed = false;
+
                 /* chat */
 
                 scope.chatDisplay = true;
@@ -3045,17 +3047,34 @@ angular.module('netbase')
 
                         let data = res.data.data;
 
-                        for (let i = 0; i < data.universitiesSubscribed.length; i++) {
-                            if (data.universitiesSubscribed[i].universityId == university._id && data.universitiesSubscribed[i].unsubscribed === false) {
-                                scope.userSubscribed = true;
-                                console.log("user subscribed")
+                        // This variable will be used to check if a user / student
+                        // has once been subscribed to a university or
+                        // if the current university is included in user's universitiesSubscribed array
+                        let unisub = false;
 
-                            }
+                        for (let i=0; i < data.universitiesSubscribed.length; i++) {
+                          if (data.universitiesSubscribed[i].universityId == university._id && data.universitiesSubscribed[i].unsubscribed===false) {
+                            scope.userSubscribed = true;
+                            console.log("user subscribed")
+                          }
 
-                            if (data.universitiesSubscribed[i].universityId == university._id && data.universitiesSubscribed[i].unsubscribed === true) {
-                                scope.userSubscribed = false;
-                                console.log("user NOT subscribed")
-                            }
+                          if (data.universitiesSubscribed[i].universityId == university._id && data.universitiesSubscribed[i].unsubscribed===true) {
+                            scope.userSubscribed = false;
+                            console.log("user NOT subscribed")
+                          }
+
+                          if (data.universitiesSubscribed[i].universityId == university._id ) {
+                            unisub = true;
+                          }
+
+                        }
+
+                        // if unisub variable is false, it means that the current university is
+                        // not a member of the students universitiesSubscribed array
+                        // Means the button should display INSCREVER
+                        if (!unisub) {
+                          console.log("current university is not a member of the universitiesSubscribed array")
+                          scope.userSubscribed = false;
                         }
 
                     })
