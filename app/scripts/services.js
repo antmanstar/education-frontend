@@ -1509,13 +1509,13 @@ angular.module('netbase')
 
 }])
 
-.factory('Payments', ['$http', function($http) {
+.factory('Payments', ['$http', '$localStorage', function($http, $localStorage) {
 
     //var baseUrl = "https://api.universida.de/search";
 
     var baseUrl = "https://educationalcommunity-pay.herokuapp.com/payments";
     //var baseUrl = "http://192.168.1.7:9004/payments";
-
+    //var baseUrl = "http://localhost:9004/payments"
     return {
 
         subscription: function(data) {
@@ -1533,7 +1533,8 @@ angular.module('netbase')
                     return str.join("&");
                 },
                 headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'x-access-token': $localStorage.token
                 }
             });
 
@@ -1556,7 +1557,8 @@ angular.module('netbase')
                     return str.join("&");
                 },
                 headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'x-access-token': $localStorage.token
                 }
             });
 
@@ -1570,7 +1572,8 @@ angular.module('netbase')
                 url: baseUrl + url, // for now base url is localhost
                 data: data,
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'x-access-token': $localStorage.token
                 }
             });
         },
@@ -1952,6 +1955,18 @@ angular.module('netbase')
 
             return $http.get(baseUrl + url);
 
+        },
+        updateViewers: function(mId, cId) {
+          console.log("update course module content viewers")
+          let url = "/module/" +mId+ "/" +cId+ "/"
+
+          return $http({
+              method: 'PUT',
+              url: baseUrl + url,
+              headers: {
+                  'x-access-token': $localStorage.token,
+              }
+          });
         },
         createQuiz: function(data) {
 
