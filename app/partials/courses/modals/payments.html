@@ -8,6 +8,7 @@
         <label>{{information.title}}</label>
         <p>{{information.text}}</p>
       </div>
+      <div class="alert bg-primary-red" ng-show="errorMsg != null">{{errorMsg}}</div>
       <div class="headline-sub-one" style="margin-bottom: 30px;">{{course.title}}</div>
 
       <!--<p>{{course}}</p>-->
@@ -73,7 +74,7 @@
     <div class="col-xs-12">
 
       <div class="headline-sub-one">Confirmar pedido</div>
-
+      <div class="alert bg-primary-red" ng-show="errorMsg != undefined">{{errorMsg}}</div>
       <div style="padding-top: 15px;">
 
         <div>

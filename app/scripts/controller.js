@@ -1129,90 +1129,94 @@ angular.module('netbase')
 
     $scope.id = id;
 
-    console.log("type: ", $scope.type)
-    console.log("quizResult: ", $scope.quizresult)
-    console.log("show button: ", $scope.showInitiarCursoButton)
+  //console.log("type: ", $scope.type)
+  //console.log("quizResult: ", $scope.quizresult)
+  //console.log("show button: ", $scope.showInitiarCursoButton)
 
     $scope.startStudyCourseId = $localStorage.startStudyButtonDisplay;
 
     $scope.startStudy = function() {
 
-        $localStorage.startStudyButtonDisplay = $scope.courseId;
-        $scope.startStudyCourseId = $localStorage.startStudyButtonDisplay;
+      // let firstContent = $scope.course.module[0].moduleId.content[0]
+      //
+      // console.log("first content: ")
+      // console.log(firstContent)
 
-        // 1 - Get the last viewed
-        let estudarModulos = $localStorage.estudarModulos[0];
-        console.log("estudarModulos: ", JSON.stringify(estudarModulos))
-        console.log("estudarModulos length: ", estudarModulos.length)
-
-        let lastViewed = undefined
-
-        for (let idx = 0; idx < estudarModulos.length; idx++) {
-
-            if (lastViewed == undefined && !estudarModulos[idx].viewed) {
-                console.log("THIS IS THE UNVIEWED MODULE")
-                lastViewed = estudarModulos[idx];
-                console.log(lastViewed)
-            }
-
-        }
+        // $localStorage.startStudyButtonDisplay = $scope.courseId;
+        // $scope.startStudyCourseId = $localStorage.startStudyButtonDisplay;
+        //
+        // // 1 - Get the last viewed
+        // let estudarModulos = $localStorage.estudarModulos;
+        // let lastViewed = undefined
+        //
+        // for (let idx = 0; idx < estudarModulos.length; idx++) {
+        //     //if (lastViewed == undefined && !estudarModulos[idx].viewed) {
+        //     if (!estudarModulos[idx].viewed) {
+        //         console.log("THIS IS THE UNVIEWED MODULE")
+        //         lastViewed = estudarModulos[idx];
+        //         console.log(lastViewed)
+        //     }
+        // }
 
         // 2 - OPEN LAST VIEWED CONTENT
-
-        if (lastViewed != undefined) {
-
+        //if (lastViewed != undefined) {
+        if (cookieCheck) {
             console.log("USER GOTTA SEE SOMETHING!!!!!!!!!!!!!!")
 
-            let type_id = lastViewed._id;
-            let contentType = lastViewed.contentType;
-            let model_id = lastViewed.modelId;
-            let post_id = lastViewed.modelId;
-            console.log("lastViewed: ", JSON.stringify(lastViewed))
-            console.log("contentType: ", contentType)
-            console.log("model_id: ", model_id)
-            console.log("post_id: ", post_id)
+            // let type_id = lastViewed._id;
+            // let contentType = lastViewed.contentType;
+            // let model_id = lastViewed.modelId;
+            // let post_id = lastViewed.modelId;
+            //
+            // let cId = "course_" + $scope.courseId;
+            // let courseCookie = {
+            //   "content_id": type_id,
+            //   "type": contentType,
+            //   "post_id": model_id,
+      			//   "quizresult": false
+            // }
+            //$cookies.putObject(cId, courseCookie);
 
-            let cId = "course_" + $scope.courseId;
-            let courseCookie = {
-                "content_id": type_id,
-                "type": contentType,
-                "post_id": model_id,
-                "quizresult": false
-            }
             $localStorage.showInitiarCursoButton = false;
-            $cookies.putObject(cId, courseCookie);
-
-            console.log("cookie: ", JSON.stringify($cookies.getObject("course_" + $scope.courseId)))
-
             $window.location.href = "/cursos/id/" + $scope.courseId + "/estudar";
 
         } else {
 
-            console.log("USER SAW ALL!!!!!!!!!!!!!!")
+            // console.log("USER SAW ALL!!!!!!!!!!!!!!")
+            //
+            // lastViewed = estudarModulos[0]
+            //
+            // let type_id = lastViewed._id;
+            // let contentType = lastViewed.contentType;
+            // let model_id = lastViewed.modelId;
 
-            lastViewed = estudarModulos[0]
 
-            let type_id = lastViewed._id;
-            let contentType = lastViewed.contentType;
-            let model_id = lastViewed.modelId;
+            // Get the first module then the first content
+            let firstContent = $scope.course.module[0].moduleId.content[0]
 
-            let cId = "course_" + $scope.courseId;
-            let courseCookie = {
-                "content_id": type_id,
-                "type": contentType,
-                "post_id": model_id,
-                "quizresult": false
-            }
-            $localStorage.showInitiarCursoButton = false;
-            $cookies.putObject(cId, courseCookie);
+            Courses.getContentModuleById(firstContent.modelId).success(function(result) {
+              console.log("course get content module")
+              console.log(result)
+              if (result.success) {
+                console.log("success")
+                  let content = result.data
 
-            $window.location.href = "/cursos/id/" + $scope.courseId + "/estudar";
+                  let cId = "course_" + $scope.courseId;
+                  let courseCookie = {
+                    "content_id": firstContent._id,
+                    "type": content.contentType,
+                    "post_id": firstContent.modelId,
+            			  "quizresult": false
+                  }
+                  console.log(courseCookie)
+                  $localStorage.showInitiarCursoButton = false;
+                  $cookies.putObject(cId, courseCookie);
+
+                  $window.location.href = "/cursos/id/" + $scope.courseId + "/estudar";
+              }
+            })
 
         }
-
-        //$cookies.put("module_id", scope.moduleid)
-
-        //
 
     }
 
@@ -1715,7 +1719,7 @@ angular.module('netbase')
                 alert("Click Next")
         }
     }])
-    .controller('CoursesEstudarTypeQuizCtrl', ['Courses', '$rootScope', '$scope', '$location', '$route', 'University', 'Videos', '$sce', 'User', 'Forum', 'Students', 'ngDialog', '$localStorage', 'jwtHelper', '$cookies', function(Courses, $rootScope, $scope, $location, $route, University, Videos, $sce, User, Forum, Students, ngDialog, $localStorage, jwtHelper, $cookies) {
+    .controller('CoursesEstudarTypeQuizCtrl', ['Courses', '$rootScope', '$scope', '$location', '$route', 'University', 'Videos', '$sce', 'User', 'Forum', 'Students', 'ngDialog', '$localStorage', 'jwtHelper', '$cookies', '$window', function(Courses, $rootScope, $scope, $location, $route, University, Videos, $sce, User, Forum, Students, ngDialog, $localStorage, jwtHelper, $cookies, $window) {
 
         //let id = $route.current.params.id;
         let id = $scope.id;
@@ -3088,6 +3092,12 @@ angular.module('netbase')
         console.log("if user is logged or not: ")
         console.log($localStorage.logged)
 
+
+        // When the user has access, redirect to course timeline
+        if ($scope.useraccess) {
+          $location.path('/cursos/id/' + $scope.course._id + '/timeline')
+        }
+
         if (logged) {
             // 1 - IF USER IS NOT REGISTERED ON MEMBERS, REGISTERED
             // 2 - then registered
@@ -3206,29 +3216,29 @@ angular.module('netbase')
 
         /* */
 
-        $scope.initOrder = function() {
-            console.log("init order")
-            Students.getCards(userId).success(function(res) {
+  $scope.initOrder = function() {
 
-                if (res.success) {
-                    console.log("res success: ", JSON.stringify(res))
-                    $scope.cards = res.data;
-                    console.log(res.data)
-                    if ($scope.cards.sources.data.length > 0) {
-                        console.log("user has card")
-                        $scope.hasCard = true
-                        for (let i = 0; i < $scope.cards.sources.data.length; i++) {
-                            let card = $scope.cards.sources.data[i]
-                            if (card.id === $scope.cards.default_source) {
-                                console.log("default source")
-                                console.log("customer id: ", card.customer)
-                                $scope.customer_id = card.customer_id
-                                $scope.savedCard = card;
-                            } else {
-                                console.log("wrong check")
-                            }
-                        }
-                    }
+    Students.getCards(userId).success(function(res) {
+      if (res.success) {
+
+        $scope.cards = res.data;
+
+        if ($scope.cards.sources.data.length > 0) {
+          //console.log("user has card")
+          $scope.hasCard = true
+          for(let i=0; i < $scope.cards.sources.data.length; i++) {
+            let card = $scope.cards.sources.data[i]
+            if (card.id === $scope.cards.default_source){
+              //console.log("default source")
+              //console.log("customer id: ", card.customer)
+              $scope.customer_id = card.customer
+              $scope.savedCard = card;
+
+            }else {
+              console.log("wrong check")
+            }
+          }
+        }
 
                 } else {}
 
@@ -3277,7 +3287,7 @@ angular.module('netbase')
         /* functions */
 
         $scope.goToPage = function(page, data) {
-
+            $scope.errorMsg = null
             $scope.page = page;
 
             if (page = "order") {
@@ -3352,9 +3362,10 @@ angular.module('netbase')
 
                                     $scope.loading = false;
 
-                                } else {
-                                    console.log("postCard res.success is false")
-                                }
+            } else {
+              console.log("postCard res.success is false")
+              $scope.validationError = res.err.message;
+            }
 
                             });
                             // end student post card
@@ -3415,12 +3426,13 @@ angular.module('netbase')
         //END handleChange
 
 
-        // In
-        $scope.handleSubmit = function() {
-                console.log("handleSUbmit")
-                let additionalData = {
-                    name: $scope.cardName
-                };
+  // In
+  $scope.handleSubmit = function () {
+    console.log("handleSUbmit")
+    $scope.loading = true;
+    let additionalData = {
+      name : $scope.cardName
+    };
 
                 console.log("customer id: ", $scope.customer_id)
 
@@ -3431,8 +3443,9 @@ angular.module('netbase')
                     accountId: $scope.accountId
                 }
 
-                console.log("data: ");
-                console.log(data);
+        // console.log("data: ");
+        // console.log(data);
+        // console.log("token: ", $localStorage.token)
 
                 Payments.coursePayment(data).success(function(res) {
 
@@ -6525,22 +6538,49 @@ angular.module('netbase')
 
                     let user_id = User.getId();
 
-                    let contentViewed = [];
-                    let viewers = module.viewers;
-                    console.log("viewers: ", JSON.stringify(viewers))
+      let contentViewed = [];
+      let viewers = [];
+      //let viewers = module.viewers;
+      console.log("viewers: ", JSON.stringify(viewers))
 
-                    // 1 - CREATE A LIST WITH ALL CONTENT THIS USER SAW
-                    for (let vdx = 0; vdx < viewers.length; vdx++) {
+      // 1 - CREATE A LIST WITH ALL CONTENT THIS USER SAW
+      // for (let vdx = 0; vdx < viewers.length; vdx++) {
+      //
+      //     let view = viewers[vdx].contentId;
+      //     let accountId = viewers[vdx].accountId;
+      //
+      //     if (contentViewed.indexOf(view) == -1 && accountId == user_id) {
+      //         contentViewed.push(view);
+      //     }
+      // }
 
-                        let view = viewers[vdx].contentId;
-                        let accountId = viewers[vdx].accountId;
+      let mContents = module.moduleId.content
+      console.log("MODULE Contents: ", mContents.length)
+      console.log(mContents)
 
-                        if (contentViewed.indexOf(view) == -1 && accountId == user_id) {
-                            contentViewed.push(view);
-                        }
+      // Loop tru each module contents
+      for (let i = 0; i < mContents.length; i++) {
+        let contentViewers = mContents[i].viewers; // array containg user's accountId
+        let view = mContents[i].modelId; // id of the content
 
-                    }
-                    console.log("contentViewed: ", JSON.stringify(contentViewed));
+        // Loop thru each content viewers
+        for (let x = 0; x < contentViewers.length; x++) {
+          let accountId = contentViewers[x].accountId;
+          viewers.push(contentViewers[x])
+
+          console.log("viewer accountId: ", accountId)
+          console.log("in the array: ", contentViewed.indexOf(view) == -1)
+
+          // Check if user id matches viewers.accountId
+          if (contentViewed.indexOf(view) == -1 && accountId == user_id) {
+            console.log("must insert viewer")
+            contentViewed.push(view);
+          }
+        }
+      }
+
+
+      console.log("contentViewed: ", JSON.stringify(contentViewed));
 
                     let modulecontent = JSON.parse(attr.mc);
 
@@ -6549,9 +6589,12 @@ angular.module('netbase')
 
                     let id = [];
 
-                    for (let i = 0; i < modulecontent.length; i++) {
-                        id.push(modulecontent[i]['modelId'])
-                    }
+      // Replace modulecontent with mContents
+      for (let i = 0; i < modulecontent.length; i++) {
+        if (mContents[i]['modelId']) {
+          id.push(mContents[i]['modelId'])
+        }
+      }
 
                     // Tem que append por ID
                     // Carrega o modelId e adiciona as infos (titulo e tals)
@@ -6573,35 +6616,45 @@ angular.module('netbase')
 
                             console.log("VIEWERS MAIOR DE ZERO")
 
-                            for (let cvdx = 0; cvdx < viewers.length; cvdx++) {
+              //for (let cvdx = 0; cvdx < viewers.length; cvdx++) {
 
-                                let mc = modulecontent[cvdx];
+                  // let mc = modulecontent[cvdx];
+                  // if (mc != undefined) {
+                  //     if (contentViewed.indexOf(mc._id) == -1) {
+                  //         console.log("user didn't see: ")
+                  //         console.log(mc.title)
+                  //         mc.viewed = false;
+                  //     } else {
+                  //         console.log("user already checked ")
+                  //         console.log(mc.title)
+                  //         mc.viewed = true;
+                  //     }
+                  //     moduleContentWithViews.push(mc)
+                  //     $localStorage.estudarModulos.push(mc)
+                  // }
+                  //END undefined
 
-                                //console.log("mc")
-                                //console.log(mc)
+                  for (let x = 0; x < modulecontent.length; x++) {
+                    console.log(modulecontent[x]._id)
+                    console.log(contentViewed.indexOf(modulecontent[x].modelId))
+                    if (contentViewed.indexOf(modulecontent[x]._id) == -1) {
+                    //if (modulecontent[x]._id != "5f069a1fcad3f0000420c87e") {
+                        console.log("user didn't see: ")
+                        console.log(modulecontent[x].title)
+                        modulecontent[x].viewed = false;
+                    } else {
+                        console.log("user already checked ")
+                        console.log(modulecontent[x].title)
+                        modulecontent[x].viewed = true;
+                    }
+                    moduleContentWithViews.push(modulecontent[x])
+                    $localStorage.estudarModulos.push(modulecontent[x])
+                  }
 
-                                if (mc != undefined) {
-
-                                    if (contentViewed.indexOf(mc._id) == -1) {
-                                        console.log("user didn't see: ")
-                                        console.log(mc.title)
-                                        mc.viewed = false;
-                                    } else {
-                                        console.log("user already checked ")
-                                        console.log(mc.title)
-                                        mc.viewed = true;
-                                    }
-
-                                    moduleContentWithViews.push(mc)
-                                    $localStorage.estudarModulos.push(mc)
-
-                                }
-                                //END undefined
-
-                            }
-                            // END FOR
-                            scope.modulecontent = moduleContentWithViews;
-                        } else {
+              //}
+              // END FOR
+              scope.modulecontent = moduleContentWithViews;
+          } else {
 
                             console.log("VIEWERS É ZERO")
 
@@ -6630,9 +6683,11 @@ angular.module('netbase')
                         console.log("content_id", type_id)
                         console.log("type", contentType)
 
-                        //$cookies.put("post_id", model_id)
-                        //$cookies.put("content_id", type_id)
-                        //$cookies.put("type", contentType)
+
+        // Insert student id to the course module content viewers array
+        Courses.updateViewers(scope.moduleid, type_id).then(function(res) {
+          console.log("update viewers response: ")
+          console.log(res)
 
                         // Save or update cookies for the currently viewed course module content
                         let cId = "course_" + course;
@@ -6645,7 +6700,8 @@ angular.module('netbase')
                         $localStorage.showInitiarCursoButton = false;
                         $cookies.putObject(cId, courseCookie);
 
-                        $window.location.href = "/cursos/id/" + course + "/estudar";
+          $window.location.href = "/cursos/id/" + course + "/estudar";
+        })
 
                     }
 
@@ -6669,9 +6725,11 @@ angular.module('netbase')
                     scope.courseid = attr.courseid
                     let id = [];
 
-                    for (let i = 0; i < modulecontent.length; i++) {
-                        id.push(modulecontent[i]['modelId'])
-                    }
+      for (let i = 0; i < modulecontent.length; i++) {
+        if (modulecontent[i]['modelId']) {
+          id.push(modulecontent[i]['modelId'])
+        }
+      }
 
                     let moduleContentSort = []
 
@@ -6705,10 +6763,12 @@ angular.module('netbase')
 
                     });
 
-                    scope.openContent = function(course, type, type_id, post_id) {
-                        //$cookies.put("content_id", type_id)
-                        //$cookies.put("type", type)
-                        //$cookies.put("post_id", post_id)
+       scope.openContent=function(course,type,type_id,post_id) {
+
+          // Insert student id to the course module content viewers array
+          Courses.updateViewers(attr.mId, type_id).then(function(res) {
+            console.log("update viewers response")
+          })
 
                         // Save or update cookies for the currently viewed course module content
                         let cId = "course_" + course;

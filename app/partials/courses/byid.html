@@ -14,7 +14,7 @@
         </div>
       </ng-containner>
 
-      <ng-containner ng-if="course.free!=true">
+      <ng-containner ng-if="course.free!=true && !useraccess">
         <div  style="float: right; text-align: right;">
           <div style="font-size: 1.8em; color: #2f4457f7;"><b>R${{course.price}}</b></div>
 
