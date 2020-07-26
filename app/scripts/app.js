@@ -20,7 +20,8 @@ angular.module('netbase', [
     'infinite-scroll',
     'updateMeta',
     'as.sortable',
-    'oc.lazyLoad'
+    'oc.lazyLoad',
+    'ui.tinymce'
 ])
 .config(['$translateProvider', '$localStorageProvider', 'StripeElementsProvider', function ($translateProvider, $localStorageProvider, StripeElementsProvider) {
 
