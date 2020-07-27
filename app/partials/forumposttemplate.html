@@ -1,58 +1,65 @@
 <div class="academia-content-forum-post">
 
-<div class="academia-content-forum-post-stats">
+    <div class="academia-content-forum-post-stats">
 
-  <div class="academia-content-forum-post-stats-ranking">{{$index + 1}}</div>
+        <div class="academia-content-forum-post-stats-ranking">{{$index + 1}}</div>
 
-  <div class="academia-content-forum-post-stats-votes">
+        <div class="academia-content-forum-post-stats-votes">
 
-    <div ng-click="upvoteForumPost(post)" class="academia-content-forum-post-stats-upvote">
-      <span class="glyphicon glyphicon-triangle-top" />
+            <div ng-click="upvoteForumPost(post)" class="academia-content-forum-post-stats-upvote">
+                <span ng-if="novotes==true" class="glyphicon glyphicon-triangle-top" />
+                <!-- <span ng-if="novotes==false" class="glyphicon glyphicon-triangle-top" style="color: goldenrod" /> -->
+            </div>
+
+            <div class="academia-content-forum-post-stats-votes-number">{{post.votesCount}}</div>
+
+            <div ng-click="downvoteForumPost(post._id)" class="academia-content-forum-post-stats-downvote">
+                <span ng-if="novotes==true" class="glyphicon glyphicon-triangle-bottom" />
+                <!-- <span ng-if="novotes==false" class="glyphicon glyphicon-triangle-bottom" style="color:goldenrod" /> -->
+            </div>
+
+        </div>
+
     </div>
 
-    <div class="academia-content-forum-post-stats-votes-number">{{post.votesCount}}</div>
+    <div class="academia-content-forum-post-info" style="position: relative;">
 
-    <div ng-click="downvoteForumPost(post._id)" class="academia-content-forum-post-stats-downvote">
-      <span class="glyphicon glyphicon-triangle-bottom" />
+        <div ng-hide="studentReaded" style="position: absolute; top: 0; right: 0; padding: 5px; background-color: #2d4255; color: #fff; border-radius: 5px; font-size: 0.85em;">
+            <i class="fa fa-eye" style="padding-right: 2px;" aria-hidden="true"></i> Novo</div>
+
+        <div class="academia-content-forum-post-info-title">
+
+            <a href="/a/{{university.url}}/forum/post/id/{{post._id}}">{{post.title}}</a>
+
+        </div>
+
+        <div class="academia-content-forum-post-info-stats">postado faz <span am-time-ago="post.createdAt | amFromUnix"></span></div>
+
+        <div class="academia-content-forum-post-info-actions">
+
+            <a class="action" href="/a/{{university.url}}/forum/post/id/{{post._id}}">{{post.answers.length}} respostas</a>
+            <a class="action" href="/a/{{university.url}}/forum/post/id/{{post._id}}">{{post.visualization.length}}
+        visualizações</a>
+            <a class="action" ng-if="viewers.length > 0" ng-mouseover="viewersParse()">{{viewers.length}} <div
+          ng-if="viewers.length <= 1" style="display: inline-block;">visualização única</div>
+        <div ng-if="viewers.length > 1" style="display: inline-block;">visualizações únicas</div>
+      </a>
+
+        </div>
+
+        <div class="academia-content-viewers animated fadeIn faster" ng-show="viewersParsed.length > 0">
+
+            <p><b>Visualizações</b></p>
+
+            <div style="padding-bottom: 5px;" class="academia-content-viewers-user" ng-if="viewersParsed.length > 0" ng-repeat="v in viewersParsed | limitTo : 5">
+                <img class="academia-content-viewers-user-pic" ng-if="v.imageUrl == undefined" src="img/user/user.png" />
+                <img class="academia-content-viewers-user-pic" ng-if="v.imageUrl.length > 0" src="{{v.imageUrl}}" />{{v.name}}
+            </div>
+            <!-- end ng-repeat -->
+
+            <div style="display: inline-block; padding-top: 15px;" ng-if="viewersParsed.length > 5">+ <i class="fa fa-eye" style="padding-right: 2px; padding-left: 2px;" aria-hidden="true"></i> {{viewersParsed.length - 5}}</div>
+
+        </div>
+        <!-- end academia-content-viewers -->
+
     </div>
-
-  </div>
-
-</div>
-
-<div class="academia-content-forum-post-info" style="position: relative;">
-
-  <div ng-hide="studentReaded"  style="position: absolute; top: 0; right: 0; padding: 5px; background-color: #2d4255; color: #fff; border-radius: 5px; font-size: 0.85em;"><i class="fa fa-eye" style="padding-right: 2px;" aria-hidden="true"></i> Novo</div>
-
-  <div class="academia-content-forum-post-info-title">
-
-    <a href="/a/{{university.url}}/forum/post/id/{{post._id}}">{{post.title}}</a>
-
-  </div>
-
-  <div class="academia-content-forum-post-info-stats">postado faz <span am-time-ago="post.createdAt | amFromUnix"></span></div>
-
-  <div class="academia-content-forum-post-info-actions">
-
-    <a class="action" href="/a/{{university.url}}/forum/post/id/{{post._id}}" >{{post.answers.length}} respostas</a>
-    <a class="action" href="/a/{{university.url}}/forum/post/id/{{post._id}}" >{{post.visualization.length}} visualizações</a>
-    <a class="action" ng-if="viewers.length > 0" ng-mouseover="viewersParse()">{{viewers.length}} <div ng-if="viewers.length <= 1" style="display: inline-block;">visualização única</div> <div ng-if="viewers.length > 1" style="display: inline-block;">visualizações únicas</div></a>
-
-  </div>
-
-  <div class="academia-content-viewers animated fadeIn faster" ng-show="viewersParsed.length > 0">
-
-    <p><b>Visualizações</b></p>
-
-    <div style="padding-bottom: 5px;" class="academia-content-viewers-user" ng-if="viewersParsed.length > 0" ng-repeat="v in viewersParsed | limitTo : 5">
-      <img class="academia-content-viewers-user-pic" ng-if="v.imageUrl == undefined" src="img/user/user.png" />
-      <img class="academia-content-viewers-user-pic"  ng-if="v.imageUrl.length > 0" src="{{v.imageUrl}}" />{{v.name}}
-    </div>
-    <!-- end ng-repeat -->
-
-    <div style="display: inline-block; padding-top: 15px;" ng-if="viewersParsed.length > 5">+ <i class="fa fa-eye" style="padding-right: 2px; padding-left: 2px;" aria-hidden="true"></i> {{viewersParsed.length - 5}}</div>
-
-  </div>
-  <!-- end academia-content-viewers -->
-
-</div>

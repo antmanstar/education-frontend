@@ -1,66 +1,69 @@
 <div class="container-fluid modal-accounts" style="padding: 30px; margin-top: 23px;">
 
-  <div class="row">
+    <div class="row">
 
-    <style>
+        <style>
+            .courses-btn-pricing {
+                width: 50%;
+                background-color: #fff;
+                border: none;
+                font-size: 1.4em;
+                outline: none;
+            }
+            
+            .courses-btn-pricing .active {
+                text-shadow: 1px 1px 2px rgb(82, 191, 234, 0.8);
+                font-weight: bolder;
+            }
+            
+            trix-editor {
+                min-height: 100px;
+                border: none;
+            }
+        </style>
 
-      .courses-btn-pricing {
-        width: 50%; background-color: #fff; border: none; font-size: 1.4em; outline: none;
-      }
+        <div class="col-xs-12">
 
-      .courses-btn-pricing .active {
-        text-shadow: 1px 1px 2px rgb(82, 191, 234, 0.8);
-        font-weight: bolder;
-      }
+            <h5>Título do modulo</h5>
 
-      trix-editor {
-        min-height: 100px;
-        border: none;
-      }
+            <input class="form-control input-lg" placeholder="Escreva o título do modulo" ng-model="title"></input><br>
 
-    </style>
+            <h5>Duração do modulo</h5>
 
-    <div class="col-xs-12">
+            <input class="form-control input-lg" placeholder="Quanto tempo para realizar o modulo" ng-model="duration"></input><br>
 
-      <h5>Título do modulo</h5>
+            <h5>Objetivo</h5>
 
-      <input class="form-control input-lg" placeholder="Escreva o título do modulo" ng-model="title"></input><br>
+            <input class="form-control input-lg" placeholder="Qual o objetivo do modulo" ng-model="goal"></input><br>
 
-      <h5>Duração do modulo</h5>
+            <h5>Descrição</h5>
 
-      <input class="form-control input-lg" placeholder="Quanto tempo para realizar o modulo" ng-model="duration"></input><br>
-
-      <h5>Objetivo</h5>
-
-      <input class="form-control input-lg" placeholder="Qual o objetivo do modulo" ng-model="goal"></input><br>
-
-      <h5 >Descrição</h5>
-
-      <div class="panel panel-default">
-        <div class="panel-heading"  style="background-color: #fff;">
+            <div class="panel panel-default">
+                <!-- <div class="panel-heading"  style="background-color: #fff;">
           <trix-toolbar id="my_toolbar"></trix-toolbar>
         </div>
         <div class="panel-body">
           <trix-editor placeholder="Escreva aqui a descrição" angular-trix toolbar="my_toolbar" ng-model="description" trix-change="trixChange(e, editor);" trix-initialize="trixInitialize(e, editor);"></trix-editor>
+        </div> -->
+                <textarea ui-tinymce="tinymceOptions" ng-model="description"></textarea>
+            </div>
+
         </div>
-      </div>
+        <!-- end col-xs-12 -->
 
     </div>
-    <!-- end col-xs-12 -->
+    <!-- end row -->
 
-  </div>
-  <!-- end row -->
+    <div class="row">
 
-  <div class="row">
+        <div class="col-xs-12 col-sm-12">
 
-    <div class="col-xs-12 col-sm-12">
+            <button class="btn btn-green" ng-click="updateModule()">Update Module</button>
 
-      <button class="btn btn-green" ng-click="updateModule()">Update Module</button>
+        </div>
+        <!-- -->
 
     </div>
-    <!-- -->
-
-  </div>
 
 </div>
 <!-- end container-fluid -->

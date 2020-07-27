@@ -2,46 +2,46 @@
 
 <div class="container-fluid container-full">
 
-  <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
-  <div class="row academia-coverimage" ng-if="university.backgroundImage == undefined"  style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
+    <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
+    <div class="row academia-coverimage" ng-if="university.backgroundImage == undefined" style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
 
-  <div class="row">
+    <div class="row">
 
-    <div academiarightcolumn university="{{university}}"></div>
+        <div academiarightcolumn university="{{university}}"></div>
 
-    <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9 academia-content">
+        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9 academia-content">
 
-      <div academiastatus university="{{university}}"></div>
+            <div academiastatus university="{{university}}"></div>
 
-      <h2 style="border-bottom: 3px solid #dedddd; padding-bottom: 15px;">{{playlist.title}}</h2>
+            <h2 style="border-bottom: 3px solid #dedddd; padding-bottom: 15px;">{{playlist.title}}</h2>
 
-      <div class="academia-content-forum">
+            <div class="academia-content-forum">
 
-        <div ng-show="playlist.videos.length == 0">
-          Nenhum vídeo cadastrado nesta playlist.
+                <div ng-show="playlist.videos.length == 0">
+                    Nenhum vídeo cadastrado nesta playlist.
+                </div>
+
+                <div ng-show="playlist.videos.length > 0">
+
+                    <div ng-repeat="video in playlist.videos">
+
+                        <videorow videoid="{{video.videoId}}"></videorow>
+
+                    </div>
+
+                </div>
+                <!-- forumPosts.length > 0 -->
+
+            </div>
+            <!-- academia-content-forum-->
+
         </div>
-
-        <div ng-show="playlist.videos.length > 0">
-
-          <div ng-repeat="video in playlist.videos">
-
-            <videorow videoid="{{video.videoId}}"></videorow>
-
-          </div>
-
-        </div>
-        <!-- forumPosts.length > 0 -->
-
-      </div>
-      <!-- academia-content-forum-->
+        <!-- end col-xs-12 -->
 
     </div>
-    <!-- end col-xs-12 -->
+    <!-- end row -->
 
-  </div>
-  <!-- end row -->
-
-  <footermobile></footermobile>
+    <footermobile></footermobile>
 
 </div>
 <!-- container-full -->

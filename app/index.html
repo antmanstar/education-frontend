@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
@@ -22,26 +23,26 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-125408424-1"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+        window.dataLayer = window.dataLayer || [];
 
-      gtag('config', 'UA-125408424-1');
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-125408424-1');
     </script>
 
     <style>
-      body {
-        font-size: 18px !important;
-      }
-
-      @media only screen and (max-width: 768px) {
-
         body {
-          font-size: 15px !important;
+            font-size: 18px !important;
         }
-
-      }
-
+        
+        @media only screen and (max-width: 768px) {
+            body {
+                font-size: 15px !important;
+            }
+        }
     </style>
 
     <base href="/">
@@ -87,7 +88,7 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/angular-ui-swiper@2.3.8/dist/angular-ui-swiper.css">
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css" />
 
     <!--<link rel="stylesheet" href="https://storage.googleapis.com/educationalcommunity/pt/css/new/onboarding.css" />-->
     <link rel="stylesheet" href="/css/new/onboarding.css" />
@@ -127,108 +128,109 @@
 
     <link href="https://fonts.googleapis.com/css?family=Noto+Serif+TC:200,300,400,500,600,700,900&display=swap" rel="stylesheet">
 
-  </head>
+</head>
 
-    <body ng-app="netbase" autoscroll="true">
+<body ng-app="netbase" autoscroll="true">
 
-      <div ng-view="">
+    <div ng-view="">
 
-      </div>
-    </body>
+    </div>
+</body>
 
-    <!-- https://cdn.universida.de/static/universidade -->
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <!-- Angular -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.6/angular.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.6/angular-animate.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.6/angular-route.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-sanitize.js"></script>
-    <script src="/js/update-meta.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.js"></script>
-    <script src="https://cdn.tiny.cloud/1/nu6v2gff1svxvivlhv3ehx5uo4tnn2onev0c4vkm39rtro3n/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
-    <script src="/js/tinymce.js"></script>
-    <script src="/scripts/app.js"></script>
-    <script src="/scripts/angular-socialshare.min.js"></script>
+<!-- https://cdn.universida.de/static/universidade -->
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Angular -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.6/angular.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.6/angular-animate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.6/angular-route.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-sanitize.js"></script>
+<script src="/js/update-meta.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.js"></script>
+<script src="https://cdn.tiny.cloud/1/rocja899ourtx321adyobjgje8kenfq06nhxz9tu5fjycj6s/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<script src="/js/tinymce.js"></script>
+<script src="/scripts/app.js"></script>
+<script src="/scripts/angular-socialshare.min.js"></script>
 
-    <script src="/scripts/apartments/controllers.js"></script>
+<script src="/scripts/apartments/controllers.js"></script>
 
-    <script src="/scripts/payments/controller.js"></script>
+<script src="/scripts/payments/controller.js"></script>
 
-    <script src="/scripts/timeline/controller.js"></script>
-    <script src="/js/clipboard_func.js" defer></script>
-
-
-    <script src="/scripts/dashboard/payments/controller.js"></script>
-    <script src="/scripts/dashboard/controllers.js"></script>
-    <script src="/scripts/academia/controllers.js"></script>
-    <script src="/scripts/video/controllers.js"></script>
-    <script src="/scripts/teach/controllers.js"></script>
-    <script src="/scripts/onboarding/controllers.js"></script>
-    <script src="/scripts/controller.js"></script>
-    <script src="/scripts/handanalysis/controllers.js"></script>
-
-    <script src="/scripts/services.js"></script>
+<script src="/scripts/timeline/controller.js"></script>
+<script src="/js/clipboard_func.js" defer></script>
 
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vjs-video/0.1.11/vjs-video.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.11/ngStorage.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate/2.15.2/angular-translate.min.js"></script>
-    <script src="https://storage.googleapis.com/educationalcommunity/pt/js/ngDialog.js"></script>
-    <script type="text/javascript" src="https://cdn.rawgit.com/auth0/angular-jwt/master/dist/angular-jwt.js"></script>
+<script src="/scripts/dashboard/payments/controller.js"></script>
+<script src="/scripts/dashboard/controllers.js"></script>
+<script src="/scripts/academia/controllers.js"></script>
+<script src="/scripts/video/controllers.js"></script>
+<script src="/scripts/teach/controllers.js"></script>
+<script src="/scripts/onboarding/controllers.js"></script>
+<script src="/scripts/controller.js"></script>
+<script src="/scripts/handanalysis/controllers.js"></script>
 
-    <script src="//cdnjs.cloudflare.com/ajax/libs/trix/0.9.2/trix.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/angular-trix@1.0.2/dist/angular-trix.min.js" integrity="sha256-exWrT6/6vHQdKflwHzXm+P/+J7NTjBuN+g1Ualn2MGA=" crossorigin="anonymous"></script>
-
-    <script src="https://storage.googleapis.com/educationalcommunity/pt/js/ng-file-upload-shim.min.js"></script>
-    <script src="https://storage.googleapis.com/educationalcommunity/pt/js/ng-file-upload.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ng-dialog/1.4.0/js/ngDialog.min.js"></script>
-    <script src="https://media.twiliocdn.com/sdk/js/common/v0.1/twilio-common.min.js"></script>
-    <script src="https://media.twiliocdn.com/sdk/js/chat/v2.0/twilio-chat.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/locale/pt-br.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-moment/1.2.0/angular-moment.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/angular-ellipsis@1.0.1/src/angular-ellipsis.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ng-meta/1.0.3/ngMeta.min.js"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/socketio-file-upload@0.6.2/client.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-google-analytics/1.1.9/angular-google-analytics.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ngInfiniteScroll/1.3.0/ng-infinite-scroll.min.js"></script>
-
-    <script src="https://js.stripe.com/v3/"></script>
-    <script src="https://cdn.jsdelivr.net/npm/angularjs-stripe-elements@1.0.0/index.min.js"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/5.4.1/tinymce.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-tinymce/0.0.19/tinymce.js"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/angular.chartjs/latest/angular-chart.min.js"></script>
-
-    <script src="https://media.twiliocdn.com/sdk/js/chat/v3.0/twilio-chat.min.js"></script>
-    <script src="//media.twiliocdn.com/sdk/js/video/releases/2.3.0/twilio-video.min.js"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/fingerprintjs2@1.8.6/dist/fingerprint2.min.js"></script>
-
-    <script src="https://cdn.plyr.io/3.4.7/plyr.polyfilled.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/angular-ui-carousel@0.1.10/dist/ui-carousel.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/angular-ui-carousel@0.1.10/dist/ui-carousel.min.css">
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/swipejs/2.2.13/swipe.min.js"></script>
-    <script src="https://nebulr.github.io/ui-swiper/dist/angular-ui-swiper.js"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ng-sortable/1.3.8/ng-sortable.js"></script>
-
-    <script src='//cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.1/moment.min.js'></script>
-    <script src='https://www.webrtc-experiment.com/ConcatenateBlobs.js'></script>
+<script src="/scripts/services.js"></script>
 
 
-    <script src="/js/ocLazyLoad.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vjs-video/0.1.11/vjs-video.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.11/ngStorage.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate/2.15.2/angular-translate.min.js"></script>
+<script src="https://storage.googleapis.com/educationalcommunity/pt/js/ngDialog.js"></script>
+<script type="text/javascript" src="https://cdn.rawgit.com/auth0/angular-jwt/master/dist/angular-jwt.js"></script>
 
-  </body>
+<script src="//cdnjs.cloudflare.com/ajax/libs/trix/0.9.2/trix.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/angular-trix@1.0.2/dist/angular-trix.min.js" integrity="sha256-exWrT6/6vHQdKflwHzXm+P/+J7NTjBuN+g1Ualn2MGA=" crossorigin="anonymous"></script>
+
+<script src="https://storage.googleapis.com/educationalcommunity/pt/js/ng-file-upload-shim.min.js"></script>
+<script src="https://storage.googleapis.com/educationalcommunity/pt/js/ng-file-upload.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ng-dialog/1.4.0/js/ngDialog.min.js"></script>
+<script src="https://media.twiliocdn.com/sdk/js/common/v0.1/twilio-common.min.js"></script>
+<script src="https://media.twiliocdn.com/sdk/js/chat/v2.0/twilio-chat.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/locale/pt-br.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-moment/1.2.0/angular-moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/angular-ellipsis@1.0.1/src/angular-ellipsis.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ng-meta/1.0.3/ngMeta.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/socketio-file-upload@0.6.2/client.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-google-analytics/1.1.9/angular-google-analytics.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ngInfiniteScroll/1.3.0/ng-infinite-scroll.min.js"></script>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script src="https://cdn.jsdelivr.net/npm/angularjs-stripe-elements@1.0.0/index.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/angular.chartjs/latest/angular-chart.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/5.4.1/tinymce.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-tinymce/0.0.19/tinymce.js"></script>
+
+<script src="https://media.twiliocdn.com/sdk/js/chat/v3.0/twilio-chat.min.js"></script>
+<script src="//media.twiliocdn.com/sdk/js/video/releases/2.3.0/twilio-video.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/fingerprintjs2@1.8.6/dist/fingerprint2.min.js"></script>
+
+<script src="https://cdn.plyr.io/3.4.7/plyr.polyfilled.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/angular-ui-carousel@0.1.10/dist/ui-carousel.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/angular-ui-carousel@0.1.10/dist/ui-carousel.min.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/swipejs/2.2.13/swipe.min.js"></script>
+<script src="https://nebulr.github.io/ui-swiper/dist/angular-ui-swiper.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ng-sortable/1.3.8/ng-sortable.js"></script>
+
+<script src='//cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.1/moment.min.js'></script>
+<script src='https://www.webrtc-experiment.com/ConcatenateBlobs.js'></script>
+
+
+<script src="/js/ocLazyLoad.min.js"></script>
+
+</body>
+
 </html>

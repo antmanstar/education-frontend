@@ -4,6 +4,11 @@
 
     <div class="col-xs-12">
 
+      <div class="alert bg-primary-green" style="color: white;">
+        <label>{{information.title}}</label>
+        <p>{{information.text}}</p>
+      </div>
+      <div class="alert bg-primary-red" ng-show="errorMsg != null">{{errorMsg}}</div>
       <div class="headline-sub-one" style="margin-bottom: 30px;">{{course.title}}</div>
 
       <!--<p>{{course}}</p>-->
@@ -13,7 +18,7 @@
 
     <div class="form" style="position: absolute; bottom: 0; left: 0; width: 100%; padding-left: 15px; padding-right: 15px;">
 
-      <button ng-click="informationAction()" class="btn btn-bluebase" style="color: #fff;"><b>Ok</b></button>
+      <button ng-click="informationAction()" class="btn btn-bluebase" style="color: #fff;"><b>Confirmar pedido</b></button>
 
     </div>
     <!-- end form -->
@@ -24,6 +29,12 @@
   <div class="row" ng-show="page == 'cardAdd'">
 
     <div class="col-xs-12">
+
+      <!-- Add back functionality-->
+      <label ng-click="goToPage('order')"  style="margin-top: 8px; color: darkgray; cursor: pointer;">
+        <i class="fas fa-chevron-left" style="margin-right: 8px;" ></i>Back
+      </label>
+      <!-- end of Back -->
 
       <div class="headline-sub-one" style="margin-bottom: 30px;">Adicionar cartão</div>
 
@@ -63,7 +74,7 @@
     <div class="col-xs-12">
 
       <div class="headline-sub-one">Confirmar pedido</div>
-
+      <div class="alert bg-primary-red" ng-show="errorMsg != undefined">{{errorMsg}}</div>
       <div style="padding-top: 15px;">
 
         <div>
@@ -73,29 +84,43 @@
         <div>
           {{plan.name}}
           <div style="float: right;">
-            <div style="display: inline-block;" ng-if="plan.currency == 'brl'">R$</div> <div style="display: inline-block" ng-if="plan.currency == 'usd'">$</div> <div style="display: inline-block">{{planAmount(plan.amount)}}</div>
+            <div style="display: inline-block;" ng-if="plan.currency == 'brl'">R$</div>
+            <div style="display: inline-block" ng-if="plan.currency == 'usd'">$</div>
+            <div style="display: inline-block">{{planAmount(plan.amount)}}</div>
           </div>
-
         </div>
 
       </div>
 
+      <hr/>
       <div class="form">
 
         <div class="form-group">
 
           <label style="padding-bottom: 15px;">Cartão de crédito ou débito</label>
 
+          <!---Display notification if student does not have a credit card yet --->
+          <div class="alert bg-primary-blue" ng-show="!hasCard">No card found. Please enter your credit card for the course payment</div>
+          <div style="margin-top: 15px;">
+            <p class="text-color-primary-blue" ng-show="!hasCard" ng-click="goToPage('cardAdd')">+ adicionar novo cartão</p>
+          </div>
+
+          <!-- Since student can only update/change credit card and cannot add another one, so we just display the card info -->
+          <div ng-show="hasCard">
+            {{savedCard.brand}} - {{savedCard.last4}}
+            <div style="float: right;">
+              <div class="text-color-primary-blue" style="cursor: pointer;" ng-click="goToPage('cardAdd')">editar cartão</div>
+            </div>
+          </div>
+
+          <!--
           <select ng-model="ae" ng-show="cards.sources.data.length > 0 ">
             <option ng-repeat="card in cards.sources.data" ng-selected="card.id == cards.default_source" value="{{card.id}}">{{card.brand}} - {{card.last4}}</option>
           </select>
-
-          <div style="margin-top: 15px;">
-            <p class="text-color-primary-blue" ng-click="goToPage('cardAdd')">+ adicionar novo cartão</p>
-          </div>
+          -->
 
         </div>
-        <!-- end form -->
+        <!-- end form-group -->
 
       </div>
       <!-- end form -->
@@ -105,7 +130,7 @@
 
     <div class="form" style="position: absolute; bottom: 0; left: 0; width: 100%; padding-left: 15px; padding-right: 15px;">
 
-      <button ng-click="handleSubmit()" class="btn btn-green"><b ng-hide="loading">Confirmar</b><img style="width: 30px;" ng-show="loading" src="img/misc/loading.gif" /></button>
+      <button ng-disabled="!hasCard" ng-click="handleSubmit()" class="btn btn-green"><b ng-hide="loading">Confirmar</b><img style="width: 30px;" ng-show="loading" src="img/misc/loading.gif" /></button>
 
     </div>
     <!-- end form -->

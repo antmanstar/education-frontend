@@ -1,87 +1,86 @@
 'use strict';
 
 angular.module('netbase', [
-    '720kb.socialshare',
-    'ngStorage',
-    'ngRoute',
-    'ngCookies',
-    'ui.tinymce',
-    'pascalprecht.translate',
-    'ngDialog',
-    'angular-jwt',
-    'angularTrix',
-    'ngFileUpload',
-    'ngDialog',
-    'angularMoment',
-    'angularjs-stripe-elements',
-    'chart.js',
-    'dibari.angular-ellipsis',
-    'ngSanitize',
-    'infinite-scroll',
-    'updateMeta',
-    'as.sortable',
-    'oc.lazyLoad',
-    'ui.tinymce'
-])
-.config(['$translateProvider', '$localStorageProvider', 'StripeElementsProvider', function ($translateProvider, $localStorageProvider, StripeElementsProvider) {
+        '720kb.socialshare',
+        'ngStorage',
+        'ngRoute',
+        'ngCookies',
+        'ui.tinymce',
+        'pascalprecht.translate',
+        'ngDialog',
+        'angular-jwt',
+        'angularTrix',
+        'ngFileUpload',
+        'ngDialog',
+        'angularMoment',
+        'angularjs-stripe-elements',
+        'chart.js',
+        'dibari.angular-ellipsis',
+        'ngSanitize',
+        'infinite-scroll',
+        'updateMeta',
+        'as.sortable',
+        'oc.lazyLoad'
+    ])
+    .config(['$translateProvider', '$localStorageProvider', 'StripeElementsProvider', function($translateProvider, $localStorageProvider, StripeElementsProvider) {
 
-  let stripeKey = "pk_live_ZBmOf7GNQ13AIEGeP9WkPv3M";
-  //let stripeKey = "pk_test_2XclbP1INDqkspKrbRn6oBZR";
+        let stripeKey = "pk_live_ZBmOf7GNQ13AIEGeP9WkPv3M";
+        //let stripeKey = "pk_test_2XclbP1INDqkspKrbRn6oBZR";
 
-  //AnalyticsProvider.setAccount('UA-125408424-1');
+        //AnalyticsProvider.setAccount('UA-125408424-1');
 
-  StripeElementsProvider.setAPIKey(stripeKey);
+        StripeElementsProvider.setAPIKey(stripeKey);
 
-  $translateProvider.translations('en', {
-    HOME_TITLE: 'YOUR CAMPUS ONLINE',
-    HOME_SUBTITLE: 'Welcome to the biggest college market online',
-    MYSTORE_MENU: 'my store',
-    BUTTON_LANG_EN: 'english',
-    CREATE_YOUR_STORE: 'create store',
-    CATEGORY_BOOKS_TITLE: 'Books',
-    CATEGORY_CELLPHONE_TITLE: 'Mobile phones'
-  });
+        $translateProvider.translations('en', {
+            HOME_TITLE: 'YOUR CAMPUS ONLINE',
+            HOME_SUBTITLE: 'Welcome to the biggest college market online',
+            MYSTORE_MENU: 'my store',
+            BUTTON_LANG_EN: 'english',
+            CREATE_YOUR_STORE: 'create store',
+            CATEGORY_BOOKS_TITLE: 'Books',
+            CATEGORY_CELLPHONE_TITLE: 'Mobile phones'
+        });
 
-  $translateProvider.translations('pt', {
-    HOME_TITLE: 'SEU CAMPUS ONLINE',
-    HOME_SUBTITLE: 'Bem vindo ao maior mercado universitÃ¡rio online',
-    MYSTORE_MENU: 'minha loja',
-    BUTTON_LANG_EN: 'englisch',
-    BUTTON_LANG_DE: 'deutsch',
-    CREATE_YOUR_STORE: 'criar loja',
-    CATEGORY_BOOKS_TITLE: 'Livros',
-    CATEGORY_CELLPHONE_TITLE: 'Celulares',
-    CATEGORY_HEADPHONES_TITLE: 'Fone'
-  });
+        $translateProvider.translations('pt', {
+            HOME_TITLE: 'SEU CAMPUS ONLINE',
+            HOME_SUBTITLE: 'Bem vindo ao maior mercado universitÃ¡rio online',
+            MYSTORE_MENU: 'minha loja',
+            BUTTON_LANG_EN: 'englisch',
+            BUTTON_LANG_DE: 'deutsch',
+            CREATE_YOUR_STORE: 'criar loja',
+            CATEGORY_BOOKS_TITLE: 'Livros',
+            CATEGORY_CELLPHONE_TITLE: 'Celulares',
+            CATEGORY_HEADPHONES_TITLE: 'Fone'
+        });
 
-  $translateProvider.preferredLanguage('en');
+        $translateProvider.preferredLanguage('en');
 
-}])
+    }])
 
-.config(['$routeProvider', '$httpProvider', '$locationProvider', function ($routeProvider, $httpProvider, $locationProvider) {
+.config(['$routeProvider', '$httpProvider', '$locationProvider', function($routeProvider, $httpProvider, $locationProvider) {
 
     let auth = {
 
-      app: function($q, $location, $localStorage) {
+        app: function($q, $location, $localStorage) {
 
-        var deferred = $q.defer();
+            var deferred = $q.defer();
 
-        deferred.resolve();
+            deferred.resolve();
 
-        let logged = $localStorage.logged;
+            let logged = $localStorage.logged;
 
-        if (!logged) {
-          $location.path('/home/explore');
+            if (!logged) {
+                $location.path('/home/explore');
+            }
+
+            return deferred.promise;
+
         }
 
-        return deferred.promise;
-
-      }
-
-   };
+    };
 
     $routeProvider.
-        when('/onboarding/universities', {
+    when('/onboarding/universities', {
             templateUrl: 'partials/onboarding/universities.html',
             controller: 'OnboardingUniversitiesScreenCtrl',
         })
@@ -111,8 +110,8 @@ angular.module('netbase', [
             controller: 'CoursesQuizResultCtrl',
         })
         .when('/cursos/suite/updateQuiz/:id', {
-          templateUrl: 'partials/courses/suite/updateQuiz.html',
-          controller: 'CoursesUpdateQuizCtrl',
+            templateUrl: 'partials/courses/suite/updateQuiz.html',
+            controller: 'CoursesUpdateQuizCtrl',
         })
         .when('/cursos/id/:id/estudar', {
             templateUrl: 'partials/courses/estudar.html',
@@ -151,24 +150,24 @@ angular.module('netbase', [
             controller: 'CoursesModulosSingleCtrl',
         })
         .when('/cursos/a/:universityid/suite/createPage/:id', {
-          templateUrl: 'partials/courses/suite/createPage.html',
-          controller: 'CoursesCreatePageCtrl',
+            templateUrl: 'partials/courses/suite/createPage.html',
+            controller: 'CoursesCreatePageCtrl',
         })
         .when('/cursos/suite/editPage/:id', {
-          templateUrl: 'partials/courses/suite/createPage.html',
-          controller: 'CoursesEditPageCtrl',
+            templateUrl: 'partials/courses/suite/createPage.html',
+            controller: 'CoursesEditPageCtrl',
         })
         .when('/cursos/suite/createQuiz/:id', {
-          templateUrl: 'partials/courses/suite/createQuiz.html',
-          controller: 'CoursesCreateQuizCtrl',
+            templateUrl: 'partials/courses/suite/createQuiz.html',
+            controller: 'CoursesCreateQuizCtrl',
         })
         .when('/cursos/suite/createForumpost/:id', {
-          templateUrl: 'partials/courses/modals/video-forum-content.html',
-          controller: 'CoursesVideoForumContentCtrl',
+            templateUrl: 'partials/courses/modals/video-forum-content.html',
+            controller: 'CoursesVideoForumContentCtrl',
         })
         .when('/cursos/suite/editForumpost/:id', {
-          templateUrl: 'partials/courses/modals/video-forum-content.html',
-          controller: 'editVideoForumContentCtrl',
+            templateUrl: 'partials/courses/modals/video-forum-content.html',
+            controller: 'editVideoForumContentCtrl',
         })
         .when('/cursos/a/:universityid/suite/content', {
             templateUrl: 'partials/courses/suite/content.html',
@@ -182,17 +181,17 @@ angular.module('netbase', [
             templateUrl: 'partials/courses/suite/owner.html',
             controller: 'CoursesOwnerCtrl',
         })
-         .when('/cursos/suite/createContent', {
-          templateUrl: 'partials/courses/suite/createPage.html',
-          controller: 'CoursesCreateContentCtrl',
+        .when('/cursos/suite/createContent', {
+            templateUrl: 'partials/courses/suite/createPage.html',
+            controller: 'CoursesCreateContentCtrl',
         })
         .when('/cursos/suite/createPage', {
-          templateUrl: 'partials/courses/suite/createPage.html',
-          controller: 'CoursesCreatePageCtrl',
+            templateUrl: 'partials/courses/suite/createPage.html',
+            controller: 'CoursesCreatePageCtrl',
         })
         .when('/cursos/suite/createQuiz', {
-          templateUrl: 'partials/courses/suite/createQuiz.html',
-          controller: 'CoursesCreateQuizCtrl',
+            templateUrl: 'partials/courses/suite/createQuiz.html',
+            controller: 'CoursesCreateQuizCtrl',
         })
         .when('/v/id/:videoId', {
             templateUrl: 'partials/video/videowatch.html',
@@ -203,8 +202,8 @@ angular.module('netbase', [
             controller: 'VideoCreateCtrl',
         })
         .when('/a/:academiaName/landing/:step', {
-          templateUrl: 'partials/landing/fb/landingone.html',
-          controller: 'AcademiaLandingCtrl'
+            templateUrl: 'partials/landing/fb/landingone.html',
+            controller: 'AcademiaLandingCtrl'
         })
         .when('/a/:academiaName/', {
             templateUrl: 'partials/academia/academia.html',
@@ -539,7 +538,7 @@ angular.module('netbase', [
         .when('/home/universidades/user', {
             templateUrl: 'partials/home/homeuseruniversidades.html',
             controller: 'HomeUserUniversidadesCtrl',
-            resolve : auth
+            resolve: auth
         })
         .when('/home/smp', {
             templateUrl: 'partials/home/homesocialmarketplace.html',
@@ -554,31 +553,31 @@ angular.module('netbase', [
             controller: 'IndexCtrl',
         })
         .otherwise({
-          redirectTo: '/home/explore'
+            redirectTo: '/home/explore'
         });
-        //.otherwise({
-        //  redirectTo: '/home'
-        //});
+    //.otherwise({
+    //  redirectTo: '/home'
+    //});
 
-        if(window.history && window.history.pushState){
-          $locationProvider.html5Mode(true);
-        }
+    if (window.history && window.history.pushState) {
+        $locationProvider.html5Mode(true);
+    }
 
     $httpProvider.defaults.headers.put['Content-Type'] = 'application/x-www-form-urlencoded';
-    $httpProvider.defaults.headers.post['Content-Type'] =  'application/x-www-form-urlencoded';
+    $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
     $httpProvider.interceptors.push(['$q', '$location', '$localStorage', function($q, $location, $localStorage) {
 
-          return {
-              'request': function (config) {
-                  config.headers = config.headers || {};
-                  if ($localStorage.token) {
-                      config.headers.Authorization = 'Bearer ' + $localStorage.token;
-                      config.headers['x-access-token'] = $localStorage.token;
-                  }
-                  return config;
-              }
-          }
+        return {
+            'request': function(config) {
+                config.headers = config.headers || {};
+                if ($localStorage.token) {
+                    config.headers.Authorization = 'Bearer ' + $localStorage.token;
+                    config.headers['x-access-token'] = $localStorage.token;
+                }
+                return config;
+            }
+        }
 
     }]);
 
@@ -586,24 +585,24 @@ angular.module('netbase', [
 
 .run(function($rootScope, $location, $localStorage, $http, $route, $translate) {
 
-  // Sees Index page just one time
-  if ($localStorage.indexVisited == undefined) {
-    $localStorage.indexVisited = false;
-  }
+    // Sees Index page just one time
+    if ($localStorage.indexVisited == undefined) {
+        $localStorage.indexVisited = false;
+    }
 
-  $rootScope.logged = $localStorage.logged;
+    $rootScope.logged = $localStorage.logged;
 
-  $rootScope.logout = function() {
+    $rootScope.logout = function() {
 
-    $localStorage.$reset();
+        $localStorage.$reset();
 
-    $rootScope.logged = false;
-    $localStorage.logged = false;
-    $localStorage.token = undefined;
+        $rootScope.logged = false;
+        $localStorage.logged = false;
+        $localStorage.token = undefined;
 
-    $location.path('/home/explore');
-    $route.reload();
+        $location.path('/home/explore');
+        $route.reload();
 
-  };
+    };
 
 });
