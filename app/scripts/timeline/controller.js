@@ -114,6 +114,8 @@ angular.module('netbase')
       scope.status = { reshare : reshare, like : like, comments : comments };
       scope.sharePost = false;
 
+      scope.loaded = false;
+
       TimelineNew.getTimelineRePostCount(contentId).success(function(res) {
         scope.rePostCount = res.data.count-1;
       });
@@ -140,6 +142,7 @@ angular.module('netbase')
             //scope.votesCount = data.votesCount;
 
             scope.forumPost.text = $sce.trustAsHtml(scope.forumPost.text);
+            scope.loaded = true;
 
           } else {
 
@@ -181,6 +184,7 @@ angular.module('netbase')
               scope.votesCount = data.votesCount;
 
               scope.forumPost.text = $sce.trustAsHtml(scope.forumPost.text);
+              scope.loaded = true;
 
             } else {
 
