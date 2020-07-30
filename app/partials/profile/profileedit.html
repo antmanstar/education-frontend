@@ -171,33 +171,41 @@
 </style>
 
 <div class="container-fluid container-full container-home" style="padding-bottom: 150px;">
+
     <div class="row">
-        <div class="col-xs-4 col-sm-5 col-md-5 col-lg-4" style="text-align: center; display: flex; flex-direction: column; align-items: center;">
+
+      <div class="col-xs-12"><div style="font-size: 2.0em; font-weight: bolder;">Editar perfil</div></div>
+
+    </div>
+    <!-- end row -->
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-5 col-md-5 col-lg-4" style="text-align: center; display: flex; flex-direction: column; align-items: center;">
             <img class="profile-pic" ng-if="student.imageUrl != undefined" src="{{student.imageUrl}}"></img>
             <img class="profile-pic" ng-if="student.imageUrl == undefined" style="background-image: url('http://virtual-strategy.com/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png')"></img>
             <input type="hidden" id="file" ng-model="file">
             <button class="btn bg-base upload_btn" id="upload_btn" >Selecionar foto</button>
         </div>
 
-        <div class="col-xs-8 col-sm-7 col-md-7 col-lg-8 ">
+        <div class="col-xs-12 col-sm-7 col-md-7 col-lg-8 ">
             <div class="profile-manage-wrapper ">
-                <div>Name</div>
+                <div style="padding-bottom: 5px;"><b>Nome</b></div>
                 <input ng-model="name" placeholder="Insira seu novo nome aqui" type="text" class="profile-name">
 
                 <br>
-                <div>Password</div>
+                <div style="padding-bottom: 5px;"><b>Senha</b></div>
                 <input ng-model="pwd" placeholder="Escreva aqui a sua nova senha" type="password" class="profile-pwd">
                 <input ng-model="rpwd" placeholder="Escreva novamente a sua nova senha" type="password" class="profile-pwd">
 
                 <br>
-                <div>Bio</div>
-                <textarea ng-model="bio" placeholder="escreva sua pequena biografia" class="profile-bio"></textarea>
+                <div style="padding-bottom: 5px;"><b>Bio</b></div>
+                <textarea ng-model="bio" placeholder="Escreva a sua biografia" class="profile-bio"></textarea>
             </div>
         </div>
     </div>
 
     <div style="margin-top: 50px; ">
-        <button class="save-btn " ng-click="save(croppedDataUrl) ">Salvar perfil</button>
+        <button class="btn save-btn" ng-click="save(croppedDataUrl) ">Salvar perfil</button>
     </div>
 
     <!-- <div class="row " style="margin-top: 10px; margin-bottom: 10px; ">
