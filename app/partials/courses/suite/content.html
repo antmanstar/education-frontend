@@ -167,7 +167,7 @@
         </div>
         <div style="display: inline-block; line-height: 30px; vertical-align: top; font-size: 1.1em; color: #536473; font-weight: bold;">{{item.title}}</div>
          <span class="pull-right">
-          <i class="fa fa-pencil-square-o text-success" style="margin-right: 10px;" aria-hidden="true" ng-click="updateContent(item)"></i>
+          <i class="fa fa-pencil-square-o text-success" style="margin-right: 10px;" aria-hidden="true" ng-click="updateContent(item)" ng-hide="item.contentType=='video'"></i>
           <i class="far fa-trash-alt text-danger" aria-hidden="true" ng-click="openDeletePopup(item._id)"></i>
         </span>
       </div>

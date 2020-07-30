@@ -50,7 +50,7 @@
 
     socket.on("imagepath", function(a) {
         $("#file").attr("value", a);
-        $(".profile-pic").attr("style", "background-image: url('" + a + "')");
+        $(".profile-pic").attr("src", a);
     })
 </script>
 
