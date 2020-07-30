@@ -956,7 +956,7 @@ angular.module('netbase')
 
     //var baseUrl = "https://api.universida.de/accounts/students";
     var baseUrl = "https://educationalcommunity-accounts.herokuapp.com/accounts/students";
-    //var baseUrl = "http://localhost:9000/accounts/students";
+    // var baseUrl = "http://localhost:9009/accounts/students";
 
     return {
 
@@ -1892,14 +1892,10 @@ angular.module('netbase')
 
         fileUploadUrl: function() {
             let url = baseUrl + "/jwt";
-            console.log("URL", url);
             return $http.post(url, {});
         },
         addInstructor: function(courseId, instructorId) {
-
             var url = '/instructor/' + courseId;
-
-
             return $http({
                 method: 'PUT',
                 url: baseUrl + url,
@@ -1957,16 +1953,16 @@ angular.module('netbase')
 
         },
         updateViewers: function(mId, cId) {
-          console.log("update course module content viewers")
-          let url = "/module/" +mId+ "/" +cId+ "/"
+            console.log("update course module content viewers")
+            let url = "/module/" + mId + "/" + cId + "/"
 
-          return $http({
-              method: 'PUT',
-              url: baseUrl + url,
-              headers: {
-                  'x-access-token': $localStorage.token,
-              }
-          });
+            return $http({
+                method: 'PUT',
+                url: baseUrl + url,
+                headers: {
+                    'x-access-token': $localStorage.token,
+                }
+            });
         },
         createQuiz: function(data) {
 

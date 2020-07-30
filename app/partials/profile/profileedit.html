@@ -1,0 +1,278 @@
+<div ng-include="'partials/headerhome.html'"></div>
+
+<script type="text/javascript">
+    var socket = io.connect("https://totemic-chimera-237707.appspot.com");
+    //var socket = io.connect("http://104.196.9.222:5555");
+    //var socket = io.connect("http://localhost:8888");
+    var siofu = new SocketIOFileUpload(socket);
+
+    let filesCount = 0;
+
+    let progressCloud = 0;
+    var progressPercent = 0;
+
+    document.getElementById("upload_btn").addEventListener("click", siofu.prompt, false);
+
+    // Do something on upload progress:
+    siofu.addEventListener("progress", function(event) {
+        var percent = event.bytesLoaded / event.file.size * 100;
+        console.log("File is", percent.toFixed(2), "percent loaded");
+        $("#file_drop").html("Upload: " + percent.toFixed(2) + "%");
+
+        if (percent.toFixed(2) == 100) {
+            $("#file_drop").html("<b>Iniciando o processamento da imagem</b>");
+        }
+    });
+
+    socket.on("progressProgressing", function(a) {
+        let progressPercent = a;
+        $("#file_drop").html("<b>Processando o vídeo:</b> " + progressPercent.toFixed(2) + "%");
+    });
+
+    socket.on("status", function(a) {
+        console.log("status: ")
+        console.log(a)
+        if (a == 1) {
+        }
+        if (a == 2) {
+            $("#file_drop").html("<b>Upload completo!</b>");
+        }
+    });
+
+    socket.on("files", function(a) {        
+        filesCount = a;
+    });
+
+    // Do something when a file is uploaded:
+    siofu.addEventListener("complete", function(event) {
+        console.log("Upload Finished")
+    });
+
+    socket.on("imagepath", function(a) {
+        $("#file").attr("value", a);
+        $(".profile-pic").attr("src", a);
+    })
+</script>
+
+<style>
+    .profile-pic {
+        width: 210px;
+        height: 210px;
+        border: 0.5px solid #927d7d;
+        margin-top: 50px;
+    }
+    
+    .profile-name {
+        margin-bottom: 10px;
+        height: 30px;
+        font-size: 16px;
+    }
+    
+    .profile-pwd {
+        margin-bottom: 10px;
+        height: 30px !important;
+        font-size: 16px;
+    }
+    
+    .dot {
+        height: 10px;
+        width: 10px;
+        background-color: #bbb;
+        border-radius: 50%;
+        display: inline-block;
+        position: absolute;
+        top: 15px;
+        right: 10px;
+    }
+    
+    .navbar-slider-content {
+        display: block !important;
+        -webkit-box-shadow: 0px 2px 3px 0px rgba(196, 196, 196, 0.34) !important;
+        -moz-box-shadow: 0px 2px 3px 0px rgba(196, 196, 196, 0.34) !important;
+        box-shadow: 0px 2px 3px 0px rgba(196, 196, 196, 0.34) !important;
+    }
+    
+    .user-collections {
+        white-space: none;
+    }
+    
+    .user-collections .collection {
+        box-shadow: 0px 0px 17px 0px rgba(130, 130, 130, 0.23);
+        display: inline-block;
+        border-radius: 4px;
+        height: 90px;
+        width: calc(50% - 20px);
+        background-color: #fff;
+        margin-left: 10px;
+        margin-bottom: 10px;
+        text-align: left;
+        padding-top: 40px;
+        padding-left: 11px;
+        padding-bottom: 15px;
+        position: relative;
+    }
+    
+    .profile-manage-wrapper {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .save-btn {
+        border-radius: 2px;
+        text-transform: uppercase;
+        height: 44px;
+        color: #fff;
+        background-color: #2d4255;
+        font-weight: 500;
+        font-size: 0.8em;
+        letter-spacing: 0.4px;
+        padding-left: 15px;
+        padding-right: 15px;
+        width: 100%;
+        outline: none;
+        cursor: pointer;
+    }
+    
+    .profile-bio {
+        height: 200px !important;
+        font-size: 16px;
+        margin-top: 0px !important;
+    }
+    
+    .upload_btn {
+        color: #fff;
+        margin-bottom: 15px;
+        margin-top: 15px;
+        width: 165px;
+        height: 30px;
+    }
+    
+    @media screen and (max-width: 768px) {
+        .navbar-slider {
+            display: none;
+        }
+        .navbar-top-first {
+            margin-bottom: 2px;
+        }
+        .container-home {
+            padding-top: 60px !important;
+        }
+        .profile-pic {
+            width: 90px;
+            height: 90px;
+        }
+        .study-progress {
+            position: absolute;
+            top: 15px;
+            right: 10px;
+            width: 50%;
+        }
+    }
+</style>
+
+<div class="container-fluid container-full container-home" style="padding-bottom: 150px;">
+    <div class="row">
+        <div class="col-xs-4 col-sm-5 col-md-5 col-lg-4" style="text-align: center; display: flex; flex-direction: column; align-items: center;">
+            <img class="profile-pic" ng-if="student.imageUrl != undefined" src="{{student.imageUrl}}"></img>
+            <img class="profile-pic" ng-if="student.imageUrl == undefined" style="background-image: url('http://virtual-strategy.com/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png')"></img>
+            <input type="hidden" id="file" ng-model="file">
+            <button class="btn bg-base upload_btn" id="upload_btn" >Selecionar foto</button>
+        </div>
+
+        <div class="col-xs-8 col-sm-7 col-md-7 col-lg-8 ">
+            <div class="profile-manage-wrapper ">
+                <div>Name</div>
+                <input ng-model="name" placeholder="Insira seu novo nome aqui" type="text" class="profile-name">
+
+                <br>
+                <div>Password</div>
+                <input ng-model="pwd" placeholder="Escreva aqui a sua nova senha" type="password" class="profile-pwd">
+                <input ng-model="rpwd" placeholder="Escreva novamente a sua nova senha" type="password" class="profile-pwd">
+
+                <br>
+                <div>Bio</div>
+                <textarea ng-model="bio" placeholder="escreva sua pequena biografia" class="profile-bio"></textarea>
+            </div>
+        </div>
+    </div>
+
+    <div style="margin-top: 50px; ">
+        <button class="save-btn " ng-click="save(croppedDataUrl) ">Salvar perfil</button>
+    </div>
+
+    <!-- <div class="row " style="margin-top: 10px; margin-bottom: 10px; ">
+        <div class="col-xs-4 " style="text-align: center; padding-left: 5px; padding-right: 5px; ">
+            <b style="font-size: 1.2em; ">434</b>
+            <div style="color: #8e8e8e; font-size:0.9em; font-weight: 600; text-align: center; ">Curadorias</div>
+        </div>
+
+        <div class="col-xs-4 " style="text-align: center; padding-left: 5px; padding-right: 5px; ">
+            <b style="font-size: 1.2em; ">521</b></br>
+            <div style="color: #8e8e8e; font-size:0.9em; font-weight: 600; ">Trilhas</div>
+        </div>
+
+        <div class="col-xs-4 " style="text-align: center; padding-left: 5px; padding-right: 5px; ">
+            <b style="font-size: 1.2em; ">943</b></br>
+            <div style="color: #8e8e8e; font-size:0.9em; font-weight: 600; ">Seguidores</div>
+        </div>
+    </div> -->
+
+    <div class="row " style="margin-top: 10px; ">
+        <div class="col-xs-12 ">
+            <nav style="position: relative; z-index: -9; ">
+                <div class="navbar-slider navbar-slider-content ">
+                    <div class="option " ng-click="activeSection='conhecimento' " ng-class="{ 'active': activeSection=='conhecimento' } "><a href="# ">Curadoria</a></div>
+                    <div class="option " ng-click="activeSection='feed' " ng-class="{ 'active': activeSection=='feed' } "><a href="# ">Feed</a></div>
+                </div>
+                <!-- end navbar-slider -->
+            </nav>
+
+            <div style="height: 30px "></div>
+            <div ng-if="activeSection=='feed' ">
+                <div style="padding-top: 10px; padding-bottom: 10px; border-bottom: 0.5px solid #ececec; ">
+                    <div style="width: 60px; display: inline-block; vertical-align: top; text-align: right; "><img style="border-radius: 50%; width: 50px; height: 50px; " src="https://pbs.twimg.com/profile_images/1118002687377723392/ZHTaAv5s_bigger.jpg " /></div>
+                    <div style="width: calc(100% - 66px); display: inline-block; padding-left: 10px; padding-right: 10px; ">
+                        <div style="font-weight: 700; font-size: 1.05em; display: inline-block; ">Marcelo Pio</div> - <i style="color: #636363; ">@marcelopio</i></br>
+                        <div style="color: #464646; "><b>Adicionou apresentação</b> em <b>Valuation</b></br>
+                        </div>
+                        <div style="margin-top: 5px; margin-bottom: 5px; ">
+                            <img src="https://visualpharm.com/assets/431/PDF-595b40b65ba036ed117d3144.svg " height="40px; " />
+                            <div style="display: inline-block ">
+                                <b style="color: #757575; ">How to Value a SaaS Company</b></br>
+                                PDF - 1.6MB
+                            </div>
+                        </div>
+                        <div style="margin-top: 15px; font-size: 1.2em; color: #717171; ">
+                            <div style="width: 60px; text-align: left; padding-top: 5px; display: inline-block; "><i class="far fa-comment "></i></div>
+                            <div style="width: 60px; text-align: left; padding-top: 5px; display: inline-block; "><i class="fas fa-retweet "></i></div>
+                            <div style="width: 60px; text-align: left; padding-top: 5px; display: inline-block; "><i class="far fa-lightbulb "></i></div>
+                            <div style="width: 60px; text-align: left; padding-top: 5px; display: inline-block; "><i class="fas fa-share-alt "></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: left; " class="user-collections " ng-if="activeSection=='conhecimento' ">
+                <div ng-repeat="n in categories " class="collection ">
+                    <div class="dot " style="background-color: #000; "></div>
+                    <div style="font-size: 1.2em; font-weight: bold; ">{{n.title}}</div>
+                </div>
+            </div>
+
+            <div style="text-align: right; " class="user-collections " ng-if="activeSection=='estudos' ">
+                <div ng-repeat="n in [[ 'Computação', 70], [ 'Finanças', 90], [ 'Piano', 35]] " class="collection " style="width: 100%; margin-left: 0px; ">
+                    <div class="study-progress ">
+                        <div class="progress " style="height: 10px; ">
+                            <div class="progress-bar " role="progressbar " aria-valuenow="{{n[1]}} " aria-valuemin="0 " aria-valuemax="100 " style="width:{{n[1]}}%; background-color: lime; ">
+                            </div>
+                        </div>
+                    </div>
+                    <div style="font-size: 1.2em; font-weight: bold; ">{{n[0]}}</div>
+                    <div style="color: #909090; ">{{n[1]}}% Completo</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footermobile></footermobile>
