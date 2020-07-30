@@ -20,7 +20,8 @@ angular.module('netbase', [
         'infinite-scroll',
         'updateMeta',
         'as.sortable',
-        'oc.lazyLoad'
+        'oc.lazyLoad',
+        'ngImgCrop'
     ])
     .config(['$translateProvider', '$localStorageProvider', 'StripeElementsProvider', function($translateProvider, $localStorageProvider, StripeElementsProvider) {
 
@@ -314,6 +315,10 @@ angular.module('netbase', [
         .when('/perfil', {
             templateUrl: 'partials/profile/profile.html',
             controller: 'ProfileCtrl',
+        })
+        .when('/perfil/editar', {
+            templateUrl: 'partials/profile/profileedit.html',
+            controller: 'ProfileEditCtrl',
         })
         .when('/login', {
             templateUrl: 'partials/account.html',
