@@ -315,6 +315,10 @@ angular.module('netbase', [
             templateUrl: 'partials/profile/profile.html',
             controller: 'ProfileCtrl',
         })
+        .when('/perfil/editar', {
+            templateUrl: 'partials/profile/profileedit.html',
+            controller: 'ProfileEditCtrl',
+        })
         .when('/login', {
             templateUrl: 'partials/account.html',
             controller: 'AccountCtrl',
