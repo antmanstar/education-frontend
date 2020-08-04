@@ -6,51 +6,51 @@
         <div class="lh-25">Select a Plan</div>
       </div>
       <div class="plan-container">
-        <div ng-class="(planType == 'basic') ? 'border-green' : 'border-gray'" class="plan shadow" ng-click="selectPlan('basic')">
+        <div ng-class="(planType == 'essential') ? 'border-green' : 'border-gray'" class="plan shadow" ng-click="selectPlan('essential')">
           <div class="plan-type">
             <div class="plan-name plan-green shadow">
-              Basic
+              Essencial
             </div>
 
 
-              <i ng-show="planType == 'basic'" class="fas fa-check-circle" style="color:#57bf7c;"></i>
+              <i ng-show="planType == 'essential'" class="fas fa-check-circle" style="color:#57bf7c;"></i>
 
           </div>
           <div class="plan-body">
-            <p>Visualise your plans.</p>
+            <p>Para pequenos grupos que querem aprender e ensinar.</p>
           </div>
           <div class="plan-price">
-            <p><strong>Free</strong></p>
+            <p><strong>R$ 10.00</strong>/month</p>
           </div>
         </div>
 
-        <div ng-class="(planType == 'pro') ? 'border-red' : 'border-gray'" class="plan shadow" ng-click="selectPlan('pro')">
+        <div ng-class="(planType == 'advanced') ? 'border-red' : 'border-gray'" class="plan shadow" ng-click="selectPlan('advanced')">
           <div class="plan-type">
-            <div class="plan-name plan-red shadow">Pro</div>
+            <div class="plan-name plan-red shadow">Avançado</div>
             <div>
-              <i ng-show="planType == 'pro'" class="fas fa-check-circle" style="color:#e91e63;"></i>
+              <i ng-show="planType == 'advanced'" class="fas fa-check-circle" style="color:#e91e63;"></i>
             </div>
           </div>
           <div class="plan-body">
-            <p>Invite & collaborate with other managers.</p>
+            <p>Para instituições de ensino, educadores online.</p>
           </div>
           <div class="plan-price">
-            <p><strong>$19</strong>/month</p>
+            <p><strong>R$ 35.00</strong>/month</p>
           </div>
         </div>
 
-        <div ng-class="(planType == 'team') ? 'border-purple' : 'border-gray'" class="plan shadow" ng-click="selectPlan('team')">
+        <div ng-class="(planType == 'corporation') ? 'border-purple' : 'border-gray'" class="plan shadow" ng-click="selectPlan('corporation')">
           <div class="plan-type">
-            <div class="plan-name plan-purple shadow">Team</div>
+            <div class="plan-name plan-purple shadow">Corporação</div>
             <div>
-              <i ng-show="planType == 'team'" class="fas fa-check-circle" style="color:#9c27b0;"></i>
+              <i ng-show="planType == 'corporation'" class="fas fa-check-circle" style="color:#9c27b0;"></i>
             </div>
           </div>
           <div class="plan-body">
-            <p>Assign & track your team's progress visually.</p>
+            <p>Digitalize todas comunidades educacionais em sua organização.</p>
           </div>
           <div class="plan-price">
-            <p><strong>$49</strong>/month</p>
+            <p><strong>R$ 55.00</strong>/month</p>
           </div>
         </div>
       </div>
@@ -83,7 +83,7 @@
               <i ng-hide="billingInterval == 'yearly'"class="fas fa-circle" style="padding-right:15px;color: #e0e0e0;"></i>
               <strong>Yearly</strong>
             </div>
-            <div ng-show="planType == 'pro' || planType == 'team'"><strong>${{planAmountYearly}} </strong>/ year</div>
+            <div><strong>R${{planAmountYearly}} </strong>/ year</div>
           </div>
 
           <div ng-class="{'border-active' : (billingInterval == 'monthly')}" class="plan-bill shadow" ng-click="selectBillingInterval('monthly')">
@@ -92,7 +92,7 @@
               <i ng-hide="billingInterval == 'monthly'"class="fas fa-circle" style="padding-right:15px;color: #e0e0e0;"></i>
               <strong>Monthly</strong>
             </div>
-            <div ng-show="planType == 'pro' || planType == 'team'"><strong>${{planAmountMonthly}} </strong>/ month</div>
+            <div><strong>R${{planAmountMonthly}} </strong>/ month</div>
           </div>
         </div>
       </div>
@@ -180,7 +180,7 @@
   .plan-red{background: #e91e63;}
   .plan-purple{background: #9c27b0;}
   .plan-body{
-    min-height: 6em;
+    min-height: 7em;
   }
   .plan-container-compare {
     background: #f7f7f9;
