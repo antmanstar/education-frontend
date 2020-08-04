@@ -1,12 +1,12 @@
 <div>
 
-  <div ng-repeat="content in modulecontent" style="cursor:pointer" ng-click="openContent(courseid, content.contentType, content._id, content.modelId, moduleid)">
-    <i ng-show="!content.viewed" class="far fa-square"></i>
-    <i ng-show="content.viewed" class="fa fa-check-square"></i>
-    <b>{{count}}.{{$index}}. {{content.title}}</b></br>
-    <span ng-if="content.contentType=='page'"><i class="fas fa-file text-primary" style="font-size: 0.8em; padding: 8px 8px 0px 22px;"></i></span>
-    <span ng-if="content.contentType=='quiz'"><i class="far fa-question-circle text-primary" style="font-size: 0.8em; padding: 8px 8px 0px 22px;"></i></span>
-    <span ng-if="content.contentType=='video'"><i class="fas fa-video text-primary" style="font-size: 0.8em; padding: 8px 8px 0px 22px;"></i>Video</span>
-    <span ng-if="content.contentType=='forumpost'"><i class="fab fa-wpforms text-primary" style="font-size: 0.8em; padding: 8px 8px 0px 22px;"></i>Forum Post</span>
-  </div>
+    <div ng-repeat="content in modulecontent" style="cursor:pointer" ng-click="openContent(courseid, content.contentType, content._id, content.modelId, moduleid)">
+        <i ng-show="!content.viewed" class="far fa-square"></i>
+        <i ng-show="content.viewed" class="fa fa-check-square"></i>
+        <b>{{count}}.{{$index}}. {{content.title}}</b></br>
+        <span ng-if="content.contentType=='page'"><i class="fas fa-file text-primary" style="font-size: 0.8em; padding: 8px 8px 0px 22px;"></i>Page</span>
+        <span ng-if="content.contentType=='quiz'"><i class="far fa-question-circle text-primary" style="font-size: 0.8em; padding: 8px 8px 0px 22px;"></i>Quiz</span>
+        <span ng-if="content.contentType=='video'"><i class="fas fa-video text-primary" style="font-size: 0.8em; padding: 8px 8px 0px 22px;"></i>Video</span>
+        <span ng-if="content.contentType=='forumpost'"><i class="fab fa-wpforms text-primary" style="font-size: 0.8em; padding: 8px 8px 0px 22px;"></i>Forum Post</span>
+    </div>
 </div>
