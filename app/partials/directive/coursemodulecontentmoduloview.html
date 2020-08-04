@@ -1,5 +1,6 @@
 <div>
-  <div ng-repeat="content in modulecontent" style="cursor:pointer" ng-click="openContent(courseid, content.contentType, content._id, content.modelId)">
+
+  <div ng-repeat="content in modulecontent" style="cursor:pointer" ng-click="openContent(courseid, content.contentType, content._id, content.modelId, moduleid)">
     <i ng-show="!content.viewed" class="far fa-square"></i>
     <i ng-show="content.viewed" class="fa fa-check-square"></i>
     <b>{{count}}.{{$index}}. {{content.title}}</b></br>
