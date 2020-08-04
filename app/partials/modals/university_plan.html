@@ -1,0 +1,222 @@
+<div class="container-fluid modal-accounts" style="padding: 35px;">
+  <div>
+    <div class="select-plan-container">
+      <div class="select-plan-step">
+        <div class="plan-step">1</div>
+        <div class="lh-25">Select a Plan</div>
+      </div>
+      <div class="plan-container">
+        <div ng-class="(planType == 'essential') ? 'border-green' : 'border-gray'" class="plan shadow" ng-click="selectPlan('essential')">
+          <div class="plan-type">
+            <div class="plan-name plan-green shadow">
+              Essencial
+            </div>
+
+
+              <i ng-show="planType == 'essential'" class="fas fa-check-circle" style="color:#57bf7c;"></i>
+
+          </div>
+          <div class="plan-body">
+            <p>Para pequenos grupos que querem aprender e ensinar.</p>
+          </div>
+          <div class="plan-price">
+            <p><strong>R$ 10.00</strong>/month</p>
+          </div>
+        </div>
+
+        <div ng-class="(planType == 'advanced') ? 'border-red' : 'border-gray'" class="plan shadow" ng-click="selectPlan('advanced')">
+          <div class="plan-type">
+            <div class="plan-name plan-red shadow">Avançado</div>
+            <div>
+              <i ng-show="planType == 'advanced'" class="fas fa-check-circle" style="color:#e91e63;"></i>
+            </div>
+          </div>
+          <div class="plan-body">
+            <p>Para instituições de ensino, educadores online.</p>
+          </div>
+          <div class="plan-price">
+            <p><strong>R$ 35.00</strong>/month</p>
+          </div>
+        </div>
+
+        <div ng-class="(planType == 'corporation') ? 'border-purple' : 'border-gray'" class="plan shadow" ng-click="selectPlan('corporation')">
+          <div class="plan-type">
+            <div class="plan-name plan-purple shadow">Corporação</div>
+            <div>
+              <i ng-show="planType == 'corporation'" class="fas fa-check-circle" style="color:#9c27b0;"></i>
+            </div>
+          </div>
+          <div class="plan-body">
+            <p>Digitalize todas comunidades educacionais em sua organização.</p>
+          </div>
+          <div class="plan-price">
+            <p><strong>R$ 55.00</strong>/month</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="plan-container-compare">
+        <div class="compare-logo">
+          <img height="50px%" src="img/universidade_icon.png">
+        </div>
+        <div class="compare-text">
+          <div ng-click="gotopricing()" style="display: flex;color: #4986bf; cursor: pointer;">
+            <p><strong>Compare plans</strong></p>
+            <i class="fas fa-arrow-right" style="padding: 6px 0 0 15px;"></i>
+          </div>
+          <div style="display: flex">
+            <p>All plans come with 100% money back guarantee</p>
+            <i class="fas fa-question-circle" style="padding: 6px 0 0 15px;color: #4986bf;"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="select-plan-step">
+        <div class="plan-step">2</div>
+        <div class="lh-25">Choose your billing</div>
+      </div>
+      <div class="plan-container-billing">
+        <div class="billing-container">
+          <div ng-class="{'border-active' : (billingInterval == 'yearly')}" class="plan-bill shadow" ng-click="selectBillingInterval('yearly')">
+            <div>
+              <i ng-show="billingInterval == 'yearly'" class="fas fa-check-circle" style="padding-right:15px;color: #4986bf;"></i>
+              <i ng-hide="billingInterval == 'yearly'"class="fas fa-circle" style="padding-right:15px;color: #e0e0e0;"></i>
+              <strong>Yearly</strong>
+            </div>
+            <div><strong>R${{planAmountYearly}} </strong>/ year</div>
+          </div>
+
+          <div ng-class="{'border-active' : (billingInterval == 'monthly')}" class="plan-bill shadow" ng-click="selectBillingInterval('monthly')">
+            <div>
+              <i ng-show="billingInterval == 'monthly'" class="fas fa-check-circle" style="padding-right:15px;color: #4986bf;"></i>
+              <i ng-hide="billingInterval == 'monthly'"class="fas fa-circle" style="padding-right:15px;color: #e0e0e0;"></i>
+              <strong>Monthly</strong>
+            </div>
+            <div><strong>R${{planAmountMonthly}} </strong>/ month</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="plan-container-button">
+        <button type="button" class="btn btn-success" ng-click="openCardDialog()" ng-disabled="activateButton">{{buttonLabel}}</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end container-fluid -->
+
+<style>
+  .lh-25 {
+    line-height: 25px;
+  }
+  .select-plan-container {
+    justify-content: center;
+    margin: 2rem;
+  }
+  .select-plan-step {
+    display: flex;
+  }
+  .plan-step {
+    background: #4d4c48;
+    color: white;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 8px;
+  }
+  .plan-step-label {
+    line-height: 25px;
+  }
+  .plan-container{
+    display: flex;
+    flex-wrap: wrap;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .plan{
+    padding: 1em;
+    width: 230px;
+    margin: .5em;
+  }
+  .plan-type {
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .border-green {
+    border: 3px solid #57bf7c;
+    background-color: #d4edda;
+    border-radius: 5px;
+  }
+  .border-red {
+    border: 3px solid #e91e63;
+    background-color: #f8d7da;
+    border-radius: 5px;
+  }
+  .border-purple {
+    border: 3px solid #9c27b0;
+    background-color: #e2e3e5;
+    border-radius: 5px;
+  }
+  .border-gray {
+    border-radius: 5px;
+  }
+  .shadow {
+    webkit-box-shadow: 0 5px 8px 0 rgba(0,0,0,0.2),0 2px 10px 0 rgba(0,0,0,0.19) !important;
+    -moz-box-shadow: 0 5px 8px 0 rgba(0,0,0,0.2),0 2px 10px 0 rgba(0,0,0,0.19) !important;
+    box-shadow: 0 5px 8px 0 rgba(0,0,0,0.2),0 2px 10px 0 rgba(0,0,0,0.19) !important;
+  }
+  .plan-name{
+    color: white;
+    display: inline-block;
+    padding: .2em .4em;
+    border-radius: 8px;
+  }
+  .plan-green{background: #57bf7c;}
+  .plan-red{background: #e91e63;}
+  .plan-purple{background: #9c27b0;}
+  .plan-body{
+    min-height: 7em;
+  }
+  .plan-container-compare {
+    background: #f7f7f9;
+    border-radius: 5px;
+    padding: .5em;
+    margin: 1em 0 2.5em 0;
+    display: flex;
+    align-items: center;
+  }
+  .compare-logo {
+    margin-right: 16px;
+  }
+  .plan-container-billing-container {
+
+  }
+  .billing-container {
+    display: flex;
+    flex-wrap: wrap;
+    padding: .8em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .plan-bill {
+    display: flex;
+    width: 350px;
+    padding: 1em;
+    border-radius: 5px;
+    justify-content: space-between;
+  }
+  .border-active {
+    border: 3px solid blue;
+  }
+  .plan-container-button {
+    display: flex;
+    margin: 2em 0;
+    justify-content: flex-end;
+  }
+</style>
