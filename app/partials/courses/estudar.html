@@ -6,38 +6,44 @@
         <div class="col-sm-12 content-part">
 
           <button
-            ng-show="showInitiarCursoButton"
+            ng-show="showInitiarCursoButton && !courseFinished"
             class="btn btn-green button-highlighter"
             style="font-size: 1em; padding-top: 0px; padding-bottom: 0; line-height: 44px;"
-            ng-click="startStudy()">
+            ng-click="startStudy(lastViewed.modelId)">
               <b>Iniciar o curso</b>
           </button>
 
-          <ng-containner ng-if="(type=='document' || type=='page') && !showInitiarCursoButton">
+          <div ng-show="courseFinished" class="alert alert-success" style="color: #3c763d !important; margin-top: 2rem; height: 24rem;">
+            <label style="font-size: 4em;">Congratulations!</label>
+            <p>You have finished the course.</p>
+            <p>Module contents can be revisited by clicking on the Course contents menu.</p>
+          </div>
+
+          <ng-containner ng-if="(type=='document' || type=='page') && !showInitiarCursoButton" ng-hide="courseFinished">
             <div ng-controller="CoursesEstudarTypeDocumentCtrl">
               <div ng-include="'partials/courses/estudar/document.html'"></div>
             </div>
           </ng-containner>
 
-          <ng-containner ng-if="(type=='forumpost' || type=='forum') && !showInitiarCursoButton">
+          <ng-containner ng-if="(type=='forumpost' || type=='forum') && !showInitiarCursoButton" ng-hide="courseFinished">
             <div ng-controller="CoursesEstudarTypeForumCtrl">
               <div ng-include="'partials/courses/estudar/forum.html'"></div>
             </div>
           </ng-containner>
 
-          <ng-containner ng-if="(type=='quiz' && !quizresult) && !showInitiarCursoButton">
+          <ng-containner ng-if="(type=='quiz' && !quizresult) && !showInitiarCursoButton" ng-hide="courseFinished">
             <div ng-controller="CoursesEstudarTypeQuizCtrl">
               <div mc="{{type}}" ng-include="'partials/courses/estudar/quiz.html'"></div>
             </div>
           </ng-containner>
 
-          <ng-containner ng-if="(type=='video' || type=='videos') && !showInitiarCursoButton">
+          <ng-containner ng-if="(type=='video' || type=='videos') && !showInitiarCursoButton" ng-hide="courseFinished">
             <div ng-controller="CoursesEstudarTypeVideoCtrl">
               <div mc="{{type}}" ng-include="'partials/courses/estudar/videos.html'"></div>
             </div>
           </ng-containner>
 
-          <ng-containner ng-if="(type=='quiz' && quizresult) && !showInitiarCursoButton">
+          <ng-containner ng-if="(type=='quiz' && quizresult) && !showInitiarCursoButton" ng-hide="courseFinished">
             <div ng-controller="CoursesQuizResultCtrl">
               <div mc="{{type}}" ng-include="'partials/courses/quiz/quizResult.html'"></div>
             </div>
@@ -69,6 +75,12 @@
     </div>
 
     <div class="col-sm-3 right-side">
+
+      <div ng-show="showControlButton" style="display: flex; margin-bottom: .8rem;">
+        <button ng-click="moveContent('prev')" ng-disabled="!hasPrev" class="btn" style="background-color: #2f5192; height: 31px;">Previous</button>
+        <button ng-click="moveContent('next')" ng-disabled="!hasNext" class="btn btn-success" style="height: 30px;">Next</button>
+      </div>
+
 
       <div class="panel-group" id="accordion">
 

@@ -32,25 +32,13 @@ angular.module('netbase', [
         StripeElementsProvider.setAPIKey(stripeKey);
 
         $translateProvider.translations('en', {
-            HOME_TITLE: 'YOUR CAMPUS ONLINE',
-            HOME_SUBTITLE: 'Welcome to the biggest college market online',
-            MYSTORE_MENU: 'my store',
-            BUTTON_LANG_EN: 'english',
-            CREATE_YOUR_STORE: 'create store',
-            CATEGORY_BOOKS_TITLE: 'Books',
-            CATEGORY_CELLPHONE_TITLE: 'Mobile phones'
+            HOME_EXPLORE_TITLE: 'YOUR CAMPUS ONLINE',
+            HOME_SUBTITLE: 'Welcome to the biggest college market online'
         });
 
         $translateProvider.translations('pt', {
             HOME_TITLE: 'SEU CAMPUS ONLINE',
-            HOME_SUBTITLE: 'Bem vindo ao maior mercado universitÃ¡rio online',
-            MYSTORE_MENU: 'minha loja',
-            BUTTON_LANG_EN: 'englisch',
-            BUTTON_LANG_DE: 'deutsch',
-            CREATE_YOUR_STORE: 'criar loja',
-            CATEGORY_BOOKS_TITLE: 'Livros',
-            CATEGORY_CELLPHONE_TITLE: 'Celulares',
-            CATEGORY_HEADPHONES_TITLE: 'Fone'
+            HOME_SUBTITLE: 'Bem vindo ao maior mercado universitÃ¡rio online'
         });
 
         $translateProvider.preferredLanguage('en');
