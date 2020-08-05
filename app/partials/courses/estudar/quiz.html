@@ -22,7 +22,7 @@
 
 <!-- </div> -->
 <!-- end container-fluid -->
-<!-- 
+<!--
 <style>
   .plyr {
     height: 100% !important;
@@ -51,7 +51,7 @@
         <h2 style="margin-top: 20px">Quiz Title</h2>
       </div>
       <div class="col-sm-2 text-right">
-        <button ng-click="saveQuizSubmit(descriptiveAnswer)" ng-disabled="!finalquestion" class="btn pull-right label2">Save progress</button>
+        <button ng-click="saveQuizSubmit(descriptiveAnswer)" ng-disabled="!finalquestion" class="btn pull-right label2">Salvar progresso</button>
       </div>
     </div>
 
@@ -65,7 +65,7 @@
           </div>
         </div>
         <div ng-show="question.title_type == 'descriptive'" class="col-md-12">
-          <input class="form-control" type="text" placeholder="enter your answer" ng-model="descriptiveAnswer">
+          <input class="form-control" type="text" placeholder="Escreva a sua resposta" ng-model="descriptiveAnswer">
         </div>
         <!-- <div class="col-md-6">
           <div class="quiz-options" id="op2" ng-click="selectOption(2)">
@@ -87,7 +87,7 @@
 
     <div class="row">
       <div class="col-sm-3" ng-click="prevQues()">
-        <button class="btn btn-primary pull-left label3" ng-disabled="quesNo == 0"><i class="fas fa-chevron-left"></i> Previous</button>
+        <button class="btn btn-primary pull-left label3" ng-disabled="quesNo == 0"><i class="fas fa-chevron-left"></i> Anterior</button>
       </div>
       <div class="col-sm-6 text-center">
         <span style="padding-top: 20px;">
@@ -100,7 +100,7 @@
         </span>
       </div>
       <div class="col-sm-3 text-right" ng-click="nextQues(descriptiveAnswer)">
-        <button class="btn btn-success pull-right label4" ng-disabled="(selectedOption == undefined && descriptiveAnswer == undefined)|| finalquestion">Next <i class="fas fa-chevron-right"></i></button>
+        <button class="btn btn-success pull-right label4" ng-disabled="(selectedOption == undefined && descriptiveAnswer == undefined)|| finalquestion">Próximo <i class="fas fa-chevron-right"></i></button>
       </div>
     </div>
 

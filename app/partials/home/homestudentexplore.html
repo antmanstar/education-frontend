@@ -219,7 +219,7 @@
 
             <!-- -->
 
-            <div ng-if="!logged" class="home-big-box">
+            <div ng-if="!logged && learningTabActive != 'courses'" style="background-color: #e8e8e8;" class="home-big-box">
                 <div class="title">A melhor ferramenta para educar e aprender online</div>
                 <div class="button-row">
                     <button ng-click="testarPlataforma()" class="button test">USE A PLATAFORMA</button>
@@ -276,7 +276,6 @@
         .home-big-box {
             /*min-height: 250px;*/
             text-align: center;
-            background-color: #e8e8e8;
             border-radius: 5px;
             padding-left: 30px;
             padding-right: 30px;
@@ -287,7 +286,6 @@
         .home-big-box .title {
             font-size: 1.3em;
             font-weight: bolder;
-            background-color: #e8e8e8;
         }
 
         .home-big-box .button-row {

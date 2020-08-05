@@ -5,18 +5,26 @@
       <div class="row">
         <div class="col-sm-12 content-part">
 
-          <button
-            ng-show="showInitiarCursoButton && !courseFinished"
-            class="btn btn-green button-highlighter"
-            style="font-size: 1em; padding-top: 0px; padding-bottom: 0; line-height: 44px;"
-            ng-click="startStudy(lastViewed.modelId)">
-              <b>Iniciar o curso</b>
-          </button>
+          <div ng-show="showInitiarCursoButton && !courseFinished">
+
+            <div style="font-size: 2em; font-weight: bolder; ">Inicie o curso</div>
+
+            <img width="400px" src="https://static.dribbble.com/users/3116769/screenshots/9412016/media/a9fb86e2d046fa52f5676eaf72d78de2.jpg" />
+
+            <button
+              class="btn btn-green button-highlighter"
+              style="font-size: 1em; margin-top: 15px; padding-top: 0px; padding-bottom: 0; line-height: 44px;"
+              ng-click="startStudy(lastViewed.modelId)">
+                <b>COMEÇAR</b>
+            </button>
+
+          </div>
+          <!-- -->
 
           <div ng-show="courseFinished" class="alert alert-success" style="color: #3c763d !important; margin-top: 2rem; height: 24rem;">
-            <label style="font-size: 4em;">Congratulations!</label>
-            <p>You have finished the course.</p>
-            <p>Module contents can be revisited by clicking on the Course contents menu.</p>
+            <label style="font-size: 4em;">Parabéns!</label>
+            <p>Você terminou o curso.</p>
+            <p>O conteúdo pode ser revisado clicando no menu Módulos do curso.</p>
           </div>
 
           <ng-containner ng-if="(type=='document' || type=='page') && !showInitiarCursoButton" ng-hide="courseFinished">
@@ -77,8 +85,8 @@
     <div class="col-sm-3 right-side">
 
       <div ng-show="showControlButton" style="display: flex; margin-bottom: .8rem;">
-        <button ng-click="moveContent('prev')" ng-disabled="!hasPrev" class="btn" style="background-color: #2f5192; height: 31px;">Previous</button>
-        <button ng-click="moveContent('next')" ng-disabled="!hasNext" class="btn btn-success" style="height: 30px;">Next</button>
+        <button ng-click="moveContent('prev')" ng-disabled="!hasPrev" class="btn" style="background-color: #2f5192; height: 31px;">Anterior</button>
+        <button ng-click="moveContent('next')" ng-disabled="!hasNext" class="btn btn-success" style="height: 30px;">Próximo</button>
       </div>
 
 
