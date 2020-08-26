@@ -1,0 +1,117 @@
+<div class="container chat-box">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading chat-heading">
+                    <div class="btn-group pull-left">
+                        <button type="button" class="btn btn-default btn-xs dropdown-toggle setting-btn" data-toggle="dropdown" title='channels'>
+                            <span class="glyphicon glyphicon-chevron-down"></span>
+                        </button>
+                        <ul class="dropdown-menu slidedown channel-list">
+                            <li class="channel-list-item" ng-repeat="category in categories" ng-click="selectCategoryChannel(category)"><a href="#"># {{category.title}}</a><span class="badge">5</span></li>
+                        </ul>
+                    </div>&nbsp;{{curCategory.title}}
+                    <div class="btn-group pull-right">
+                        <button type="button" class="btn btn-default btn-xs dropdown-toggle setting-btn" data-toggle="dropdown" title="settings">
+                            <span class="glyphicon glyphicon-cog"></span>
+                        </button>
+                        <ul class="dropdown-menu slidedown">
+                            <li><a href="#"><span class="glyphicon glyphicon-refresh" style='color: blue'></span> Refresh</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-ok-sign" style='color: green'></span> Available</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-remove" style='color: red'></span> Busy</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-time" style='color: orange'></span> Away</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-off"></span> Leave</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="panel-body" id="scrollbar">
+                    <ul class="chat">
+                        <li class="left clearfix"><span class="chat-img pull-left">
+                            <img src="http://placehold.it/50/55C1E7/fff&text=KZ" alt="User Avatar" class="img-circle" />
+                        </span>
+                            <div class="chat-body clearfix">
+                                <div class="header">
+                                    <strong class="primary-font">Kok Zhang</strong> <small class="pull-right text-muted">
+                                        <span class="glyphicon glyphicon-time" style="margin-left: 3px; margin-right: 3px"></span>14 mins ago</small>
+                                </div>
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
+                                </p>
+                            </div>
+                        </li>
+                        <li class="right clearfix"><span class="chat-img pull-right">
+                            <img src="http://placehold.it/50/FA6F57/fff&text=MP" alt="User Avatar" class="img-circle" />
+                        </span>
+                            <div class="chat-body clearfix">
+                                <div class="header">
+                                    <small class=" text-muted"><span class="glyphicon glyphicon-time" style="margin-left: 3px; margin-right: 3px"></span>15 mins ago</small>
+                                    <strong class="pull-right primary-font">Marcelo Pio</strong>
+                                </div>
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
+                                </p>
+                            </div>
+                        </li>
+                        <li class="left clearfix"><span class="chat-img pull-left">
+                            <img src="http://placehold.it/50/55C1E7/fff&text=KZ" alt="User Avatar" class="img-circle" />
+                        </span>
+                            <div class="chat-body clearfix">
+                                <div class="header">
+                                    <strong class="primary-font">Kok Zhang</strong> <small class="pull-right text-muted">
+                                        <span class="glyphicon glyphicon-time" style="margin-left: 3px; margin-right: 3px"></span>14 mins ago</small>
+                                </div>
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
+                                </p>
+                            </div>
+                        </li>
+                        <li class="right clearfix"><span class="chat-img pull-right">
+                            <img src="http://placehold.it/50/FA6F57/fff&text=MP" alt="User Avatar" class="img-circle" />
+                        </span>
+                            <div class="chat-body clearfix">
+                                <div class="header">
+                                    <small class=" text-muted"><span class="glyphicon glyphicon-time" style="margin-left: 3px; margin-right: 3px"></span>15 mins ago</small>
+                                    <strong class="pull-right primary-font">Marcelo Pio</strong>
+                                </div>
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
+                                </p>
+                            </div>
+                        </li>
+                        <li class="left clearfix"><span class="chat-img pull-left">
+                            <img src="http://placehold.it/50/55C1E7/fff&text=KZ" alt="User Avatar" class="img-circle" />
+                        </span>
+                            <div class="chat-body clearfix">
+                                <div class="header">
+                                    <strong class="primary-font">Kok Zhang</strong> <small class="pull-right text-muted">
+                                        <span class="glyphicon glyphicon-time" style="margin-left: 3px; margin-right: 3px"></span>14 mins ago</small>
+                                </div>
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
+                                </p>
+                            </div>
+                        </li>
+                        <li class="right clearfix"><span class="chat-img pull-right">
+                            <img src="http://placehold.it/50/FA6F57/fff&text=MP" alt="User Avatar" class="img-circle" />
+                        </span>
+                            <div class="chat-body clearfix">
+                                <div class="header">
+                                    <small class=" text-muted"><span class="glyphicon glyphicon-time" style="margin-left: 3px; margin-right: 3px"></span>15 mins ago</small>
+                                    <strong class="pull-right primary-font">Marcelo Pio</strong>
+                                </div>
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
+                                </p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="panel-footer chat-footer">
+                    <textarea ng-model="message" class="textarea"></textarea>
+                    <button class="send-btn"><span class="glyphicon glyphicon-send"></span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

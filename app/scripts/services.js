@@ -761,6 +761,19 @@ angular.module('netbase')
                 }
             });
 
+        },
+
+        getChatAccessToken: function(url) {
+            var token = $localStorage.token;
+            var req = {
+                method: 'GET',
+                url: url + 'deviceId/browser',
+                headers: {
+                    'x-access-token': token,
+                    'content-type': 'application/json'
+                }
+            }
+            return $http(req);
         }
 
     }
