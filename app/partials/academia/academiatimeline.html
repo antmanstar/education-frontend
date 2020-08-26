@@ -36,7 +36,7 @@ figure img {
         </div>
 
         <div  ng-show="forumPosts.length == 0 && loaded">
-          Nenhuma postagem foi realizada.
+          {{'NO_POST' | translate}}
         </div>
 
         <div ng-show="forumPosts.length > 0">
@@ -51,9 +51,9 @@ figure img {
 
       <div>
         <ul class="pagination" ng-if="pages > 1">
-          <li class="page-item" ng-if="page != 1"><a class="page-link" href="/a/{{university.url}}/forum?page={{page - 1}}">Voltar</a></li>
+          <li class="page-item" ng-if="page != 1"><a class="page-link" href="/a/{{university.url}}/forum?page={{page - 1}}">{{'RETURN' | translate}}</a></li>
           <li class="page-item" ng-repeat="p in range(1, pages)"><a class="page-link" ng-style="p == page && {'font-weight':'bold'}" href="/a/{{university.url}}/forum?page={{p}}">{{p}}</a></li>
-          <li class="page-item"><a class="page-link" href="/a/{{university.url}}/forum?page={{page + 1}}">Próximo</a></li>
+          <li class="page-item"><a class="page-link" href="/a/{{university.url}}/forum?page={{page + 1}}">{{'NEXT' | translate}}</a></li>
         </ul>
       </div>
 

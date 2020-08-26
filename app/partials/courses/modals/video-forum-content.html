@@ -5,7 +5,7 @@
 
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom: 15px;">
 
-            <div class="title" style="font-size: 3em; font-weight: bold;">Cursos</div>
+            <div class="title" style="font-size: 3em; font-weight: bold;">{{'CURSOS' | translate}}</div>
 
             <div ng-include="'/partials/courses/suite/navbar.html'"></div>
 
@@ -17,15 +17,28 @@
         <div ng-show="page == 'post'" class="col-xs-12">
 
             <div class="header-modal-courses">
-                <div class="title"><img style="margin-bottom: 10px;" height="40px;" src="https://visualpharm.com/assets/197/Documents-595b40b65ba036ed117d2bf0.svg"> Texto</div>
+                <div class="title">
+                  <img style="margin-bottom: 10px;" height="40px;" src="https://visualpharm.com/assets/811/Discussion%20Forum-595b40b65ba036ed117d396c.svg">
+                  <p style="display: inline-block; font-size: 2em;">{{'FORUM_POST' | translate}}</p>
+                </div>
             </div>
 
             <!-- CATEGORIES -->
+            <div class="btn-modal-courses" ng-if="categories.length == 0">
+              <div class="title" style="display: inline-block;"><p>{{'NO_REGISTERED_CATEGORY' | translate}}</p></div>
+              <div class="icon">
+                <a href="/a/{{universityUrl}}/forum/category/create">
+                  <p style="display: inline-block; margin-right: 8px; font-family: 'Lota Grotesque, Helvetica, sans-serif'">{{'CREATE_CATEGORY' | translate}}</p>
+                  <i class="fas fa-arrow-right"></i>
+                </a>
+              </div>
+            </div>
+            <div ng-if="categories.length > 0" style="padding-top: 24px;">
+              <p >{{'SELECT_CATEGORY' | translate}}</p>
+            </div>
             <div ng-repeat="category in categories" ng-click="loadForumPostCategory(category.universityId,category._id)" class="btn-modal-courses">
-
                 <div class="title" style="display: inline-block;">{{category.title}}</div>
                 <div class="icon"><i class="fas fa-arrow-right"></i></div>
-
             </div>
             <!-- END CATEGORIES -->
 
@@ -37,10 +50,26 @@
         <div ng-show="page == 'categoryforumposts'" class="col-xs-12">
 
             <div class="header-modal-courses">
-                <div class="title"><img style="margin-bottom: 10px;" height="40px;" src="https://visualpharm.com/assets/197/Documents-595b40b65ba036ed117d2bf0.svg"> Texto</div>
+                <div class="title">
+                  <img style="margin-bottom: 10px;" height="40px;" src="https://visualpharm.com/assets/811/Discussion%20Forum-595b40b65ba036ed117d396c.svg">
+                  <p style="display: inline-block; font-size: 2em;">{{'FORUM_POST' | translate}}</p>
+                </div>
             </div>
 
             <!-- CATEGORIES -->
+            <div class="btn-modal-courses" ng-if="categoryPosts.length == 0">
+              <div class="title" style="display: inline-block;"><p>{{'NO_FORUM_POSTS_YET' | translate}}</p></div>
+              <div class="icon">
+                <a href="/a/{{universityUrl}}/forum/post/create">
+                  <p style="display: inline-block; margin-right: 8px; font-family: 'Lota Grotesque, Helvetica, sans-serif'">{{'CREATE_POST' | translate}}</p>
+                  <i class="fas fa-arrow-right"></i>
+                </a>
+              </div>
+            </div>
+
+            <div ng-if="categoryPosts.length > 0" style="padding-top: 24px;">
+              <p >{{'SELECT_FORUM_POST' | translate}}</p>
+            </div>
             <div ng-repeat="post in categoryPosts" ng-click="loadForumPost(post._id)" class="btn-modal-courses">
 
                 <div class="title col-xs-11" style="display: inline-block;">{{post.title}}</div>
@@ -56,16 +85,23 @@
         <div ng-show="page == 'checkout'" class="col-xs-12">
 
             <div class="header-modal-courses">
-                <div class="title"><img style="margin-bottom: 10px;" height="40px;" src="https://visualpharm.com/assets/197/Documents-595b40b65ba036ed117d2bf0.svg"> Texto</div>
+                <div class="title" ng-if="contentType == 'forumpost'">
+                  <img style="margin-bottom: 10px;" height="40px;" src="https://visualpharm.com/assets/811/Discussion%20Forum-595b40b65ba036ed117d396c.svg">
+                  <p style="display: inline-block; font-size: 2em;">{{'FORUM_POST' | translate}}</p>
+                </div>
+                <div class="title" ng-if="contentType == 'video'">
+                  <div class="title"> <img style="margin-bottom: 10px;" height="40px;" src="https://visualpharm.com/assets/770/Video%20File-595b40b85ba036ed117dad88.svg">
+                  <p style="display: inline-block; font-size: 2em;">{{'VIDEO' | translate}}</p>
+                </div>
             </div>
 
             <!-- inputs -->
-            <div>
+            <div class="title-margin">
 
-                <div class="headline-sub-one">Título do conteúdo</div>
-                <input class="academia-content-forum-post-create-title" placeholder="Escreva o título do conteúdo" ng-model="title"></input>
+                <div class="headline-sub-one">{{"CONTENT_TITLE" | translate}}</div>
+                <input class="academia-content-forum-post-create-title" placeholder="{{'WRITE_TITLE_CONTENT' | translate}}" ng-model="title"></input>
 
-                <div style="font-size: 1.8em; font-weight: bold;">Descrição</div>
+                <div style="font-size: 1.8em; font-weight: bold;">{{'DESCRIPTION' | translate}}</div>
                 </br>
                 </br>
                 <!-- <trix-toolbar id="my_toolbar"></trix-toolbar>
@@ -76,7 +112,7 @@
             <!-- ends inputs -->
 
             <!-- FORUM POST TEXT TYPE -->
-            <div ng-if="contentType == 'forumpost'">
+            <div class="title-margin" ng-if="contentType == 'forumpost'">
 
                 <div style="font-size: 1.3em; font-weight: bold;">{{forumPost.title}}</div>
                 <div style="overflow: hidden;" ng-bind-html="forumPost.text"></div>
@@ -84,16 +120,21 @@
             </div>
             <!-- FORUM POST TEXT TYPE -->
 
-            <!-- FORUM POST TEXT TYPE -->
-            <div ng-if="contentType == 'video'">
+            <!-- VIDEO TYPE -->
+            <div class="title-margin" ng-if="contentType == 'video'">
 
-                <div style="font-size: 1.3em; font-weight: bold;">{{forumPost.title}}</div>
-                <div style="overflow: hidden;" ng-bind-html="forumPost.text"></div>
+                <div style="font-size: 1.3em; font-weight: bold;">{{play.title}}</div>
+                <div ng-if="play.status != 1">
+
+                    <video id="video" controls poster="{{university.backgroundImage}}"></video>
+
+                </div>
 
             </div>
-            <!-- FORUM POST TEXT TYPE -->
+            <!-- VIDEO TYPE -->
 
-            <button class="btn btn-success" ng-click="save()">Criar</div>
+              <button class="btn btn-success" style="margin: 4rem 0;" ng-click="save()">{{'CREATE' | translate}}</button>
+        </div>
 
     </div>
     <!-- END CHECK OUT PAGE -->
@@ -104,15 +145,30 @@
 
       <div class="header-modal-courses">
 
-        <div class="title"><img style="margin-bottom: 10px;" height="40px;" src="https://visualpharm.com/assets/770/Video%20File-595b40b85ba036ed117dad88.svg">
-        <p style="font-weight: 600;">Playlist</p></div>
+        <div class="title">
+          <img style="margin-bottom: 10px;" height="40px;" src="https://visualpharm.com/assets/770/Video%20File-595b40b85ba036ed117dad88.svg">
+          <p style="display: inline-block; font-size: 2em;">{{'PLAYLIST' | translate}}</p>
+        </div>
       </div>
-      <p ng-if="universities.length>cusloading">please wait</p>
-      
+      <p ng-if="universities.length>cusloading">{{'PLEASE_WAIT' | translate}}</p>
+
       <ng-containner ng-if="universities.length==cusloading">
-      <p ng-if="customPlaylist.length == 0">Nenhuma playlist registrada</p>
+      <!--p ng-if="customPlaylist.length == 0">{{'NO_REGISTERED_PLAYLIST' | translate}}</p-->
+
+      <div class="btn-modal-courses" ng-if="customPlaylist.length == 0">
+        <div class="title" style="display: inline-block;"><p>{{'NO_REGISTERED_PLAYLIST' | translate}}</p></div>
+        <div class="icon">
+          <a href="/p/create?universityId={{ownedUniversityId}}">
+            <p style="display: inline-block; margin-right: 8px; font-family: 'Lota Grotesque, Helvetica, sans-serif'">{{'CREATE_PLAYLIST' | translate}}</p>
+            <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
 
       <!-- CATEGORIES -->
+      <div ng-if="customPlaylist.length > 0" style="padding-top: 24px;">
+        <p >{{'SELECT_PLAYLIST' | translate}}</p>
+      </div>
       <div ng-repeat="playlist in customPlaylist" ng-click="loadVideos(playlist._id)" class="btn-modal-courses">
 
         <div class="title" style="display: inline-block;">{{playlist.title}}</div>
@@ -127,13 +183,27 @@
 
       <div class="header-modal-courses">
         <div class="title"> <img style="margin-bottom: 10px;" height="40px;" src="https://visualpharm.com/assets/770/Video%20File-595b40b85ba036ed117dad88.svg">
-        <p style="font-weight: 600;">Vídeo</p></div>
+        <p style="display: inline-block; font-size: 2em;">{{'VIDEO' | translate}}</p>
       </div>
 
-      <p ng-if="videolist.length == 0">Nenhuma playlist registrada</p>
+      <div class="btn-modal-courses" ng-if="videolist.length == 0">
+        <div class="title" style="display: inline-block;"><p>{{'NO_VIDEO_REGISTERED_IN_PLAYLIST' | translate}}</p></div>
+        <div class="icon">
+          <a href="/v/create?universityId={{ownedUniversityId}}">
+            <p style="display: inline-block; margin-right: 8px; font-family: 'Lota Grotesque, Helvetica, sans-serif'">
+              {{'CREATE_VIDEO' | translate}}
+            </p>
+            <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+
+      <div ng-if="videolist.length > 0" style="padding-top: 24px;">
+        <p >{{'SELECT_VIDEO_TO_INCLUDE_IN_MODULE' | translate}}</p>
+      </div>
 
       <!-- CATEGORIES -->
-      
+
          <div ng-repeat="video in videolist" ng-click="savePlay(video)" class="btn-modal-courses">
         <div class="title" style="display: inline-block;">{{video.title}}</div>
         <div class="icon"><i class="fas fa-arrow-right"></i></div>
@@ -168,6 +238,10 @@
 
   .header-modal-courses {
 
+  }
+
+  .title-margin {
+    margin-top: 4rem;
   }
 
   .btn-modal-courses {

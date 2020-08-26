@@ -46,7 +46,7 @@
 
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
-      <div class="title" style="font-size: 3em; font-weight: bold;">Cursos</div>
+      <div class="title" style="font-size: 3em; font-weight: bold;">{{'COURSES' | translate}}</div>
 
       <div ng-include="'/partials/courses/suite/navbar.html'"></div>
 
@@ -58,7 +58,7 @@
     <div class="col-xs-12 col-sm-12">
 
       <div style="padding-top: 10px;">
-        <div style="float: right;"><button  class="btn bg-base" style="margin-top: 2px; height: 29px; width: unset;" ng-click="coursesCreate()">Criar curso</button></div>
+        <div style="float: right;"><button  class="btn bg-base" style="margin-top: 2px; height: 29px; width: unset;" ng-click="coursesCreate()">{{'CREATE_COURSE' | translate}}</button></div>
       </div>
       <!-- -->
     </div>
@@ -79,7 +79,7 @@
           <div class="btn-group" style="width: 100%; padding-top: 20px; border-top: 1px solid #eee;">
 
             <span class="pull-right" style="padding-top: 8px; padding-right: 5px;">
-              <b ng-click="editCourse(course)" style="margin-right: 5px;"><i class="fa fa-pencil-square-o text-success" style="margin-right: 5px;" aria-hidden="true"></i>Editar</b>
+              <b ng-click="editCourse(course)" style="margin-right: 5px;"><i class="fa fa-pencil-square-o text-success" style="margin-right: 5px;" aria-hidden="true"></i>{{'EDIT' | translate}}</b>
               <i class="far fa-trash-alt text-danger" aria-hidden="true" ng-click="openDeletePopup(course._id)"></i>
             </span>
 
@@ -101,10 +101,10 @@
 <!-- container-full -->
 <script type="text/ng-template" id="deleteCoursePopup">
   <div class="container-fluid text-center delete-container">
-    <h3>Are you sure you want to delete this Course?</h3>
+    <h3>{{'DELETE_COURSE_MESSAGE' | translate}}</h3>
     <div class="delete-buttons-div">
-      <button class="btn btn-danger" ng-disabled="deleteLoading" ng-click="deleteCourse()">Delete <img style="width: 15px;" ng-show="deleteLoading == true" src="img/misc/loading.gif"/></button>
-      <button class="btn btn-dark" ng-click="closePopup()">Cancel</button>
+      <button class="btn btn-danger" ng-disabled="deleteLoading" ng-click="deleteCourse()">{{'DELETE' | translate}} <img style="width: 15px;" ng-show="deleteLoading == true" src="img/misc/loading.gif"/></button>
+      <button class="btn btn-dark" ng-click="closePopup()">{{'CANCEL' | translate}}</button>
     </div>
   </div>
 </script>

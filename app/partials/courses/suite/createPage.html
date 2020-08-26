@@ -8,7 +8,7 @@
       <div class="title" style="font-size: 3em; font-weight: bold;">Cursos</div>
 
       <div ng-include="'/partials/courses/suite/navbar.html'"></div>
-      
+
     </div>
   </div> -->
 
@@ -16,7 +16,7 @@
         <div class="row">
             <div class="col-md-12">
                 <form>
-                    <input class="form-control input-lg" type="text" placeholder="Add Title Here" style="margin-bottom: 20px;" ng-model="title">
+                    <input class="form-control input-lg" type="text" placeholder="{{'ADD_TITLE_HERE' | translate}}" style="margin-bottom: 20px;" ng-model="title">
 
 
                     <br>
@@ -36,7 +36,7 @@
 
                     </div>
 
-                    <button ng-click="saveContent()" type="button" class="btn btn-mini btn-green" style="width: 20%;">CREATE A PAGE</button>
+                    <button ng-click="saveContent()" type="button" class="btn btn-mini btn-green" style="width: 20%;">{{'CREATE_A_PAGE' | translate}}</button>
 
                 </form>
             </div>

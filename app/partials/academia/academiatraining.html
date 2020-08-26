@@ -13,12 +13,12 @@
 
       <div academiastatus university="{{university}}"></div>
 
-      <h2 style="border-bottom: 3px solid #dedddd; padding-bottom: 15px;">Liderança</h2>
+      <h2 style="border-bottom: 3px solid #dedddd; padding-bottom: 15px;">{{'ABOUT_LEADERSHIP' | translate}}</h2>
 
       <div class="academia-content-forum">
 
         <div ng-show="playlist.videos.length == 0">
-          Nenhum vídeo cadastrado nesta playlist.
+          {{'NO_VIDEO_REGISTERED_IN_PLAYLIST' | translate}}
         </div>
 
         <div ng-show="playlist.videos.length > 0">

@@ -33,7 +33,7 @@
             <div class="academia-content-forum">
 
                 <div ng-hide="forumPost.title.length > 0" style="text-align: center;">
-                    <img src="/img/loader.gif" height="50px" /> Carregando
+                    <img src="/img/loader.gif" height="50px" /> {{'LOADING' | translate}}
                 </div>
                 <div ng-show="forumPost.title.length > 0" class="academia-content-forum-post">
 
@@ -66,7 +66,7 @@
                         <!-- academia-content-forum-post-info -->
 
                         <div class="academia-content-forum-post-info-stats">
-                            postado faz <span am-time-ago="forumPost.createdAt | amFromUnix"></span>
+                            {{'POST_AGO_1' | translate}} <span am-time-ago="forumPost.createdAt | amFromUnix"></span>
                         </div>
                         <!-- academia-content-forum-post-info -->
 
@@ -76,20 +76,20 @@
 
                         <div class="academia-content-forum-post-info-text text premium-alert" ng-show="getPremium">
 
-                            <h3>🚀 Seja assinante premium! 🚀</h3>
+                            <h3>🚀 {{'BE_A_PREMIUM_SUBSCRIBER' | translate}} 🚀</h3>
 
                             <div style="margin-top: 15px; margin-bottom: 15px;">
-                                <h4>Assine todo o conteúdo exclusivo {{university.name}}</h4>
+                                <h4>{{'SUBSCRIBE_TO_EXCLUSIVE_CONTENT' | translate}} {{university.name}}</h4>
                             </div>
 
-                            <button class="btn btn-green" ng-click="premium()">Assinar agora!</button>
+                            <button class="btn btn-green" ng-click="premium()">{{'SUBSCRIBE_NOW' | translate}}</button>
 
                         </div>
 
                         <div class="academia-content-forum-post-info-manage" ng-show="user._id == forumPost.accountId && user._id.length > 0">
                             <button ng-click="updateForumPost()" class="btn-clean"><span
                                     class="glyphicon glyphicon glyphicon-pencil" style="padding-right: 5px;" />
-                                Editar</button>
+                                {{'EDIT' | translate}}</button>
                         </div>
 
                     </div>
@@ -111,7 +111,7 @@
             <div class="academia-content-forum-answer" id="answer">
 
                 <div class="academia-content-forum-answer-title">
-                    Responder
+                    {{'REPLY' | translate}}
                 </div>
                 <!-- academia-content-forum-answer-title -->
 
@@ -132,7 +132,7 @@
                 <!-- academia-content-forum-answer-box -->
 
                 <div class="academia-content-forum-answer-action">
-                    <button class="btn btn-blue" ng-click="createAnswerPost()">Responder</button>
+                    <button class="btn btn-blue" ng-click="createAnswerPost()">{{'REPLY' | translate}}</button>
                 </div>
                 <!-- academia-content-forum-answer -->
 

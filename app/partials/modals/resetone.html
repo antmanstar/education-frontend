@@ -4,9 +4,9 @@
 
     <div class="col-xs-12">
 
-      <div class="headline-sub-one">Resetar senha</div>
+      <div class="headline-sub-one">{{'RESET_PASS' | translate}}</div>
 
-      <div ng-show="resetPasswordSuccess" style="margin-top: 25px;" class="alert bg-primary-green">Foi enviado um email com a segunta etapa do procedimento.</div>
+      <div ng-show="resetPasswordSuccess" style="margin-top: 25px;" class="alert bg-primary-green">{{'RESET_PASS_MESSAGE' | translate}}</div>
 
       <div class="form" ng-hide="resetPasswordSuccess">
 
@@ -16,7 +16,7 @@
         </div>
         <!-- end form group -->
 
-        <button ng-click="resetPasswordStepOne()" class="btn btn-bluebase">Resetar senha</button>
+        <button ng-click="resetPasswordStepOne()" class="btn btn-bluebase">{{'RESET_PASS' | translate}}</button>
 
       </div>
       <!-- end form -->

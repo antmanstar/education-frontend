@@ -110,17 +110,17 @@
 
         <div class="col-xs-12 col-sm-10 col-md-10 section-content-col">
 
-            <div class="headline-container" ng-if="!logged" style="letter-spacing: -0.5px; color: #2d4255;">A melhor plataforma para aprender, ensinar, debater e compartilhar conhecimento.</div>
+            <div class="headline-container" ng-if="!logged" style="letter-spacing: -0.5px; color: #2d4255;">{{'HOME_EXPLORE_TITLE' | translate}}</div>
 
-            <div class="headline-sub-container" ng-if="!logged">Ao reunir a comunicação e as ferramentas em um só local, os educadores e estudantes manterão a produtividade em qualquer lugar.</div>
+            <div class="headline-sub-container" ng-if="!logged">{{'HOME_EXPLORE_SUBTITLE' | translate}}</div>
 
             <div ng-if="!logged" ng-click="testarPlataforma()" style="padding-top: 10px; text-align: right; padding-right: 15px; padding-left: 15px; cursor: pointer; font-weight: bold;">
-                COMECE A EDUCAR <i class="fas fa-arrow-right"></i></div>
+                {{'HOME_EXPLORE_STARTEDUCATING' | translate}} <i class="fas fa-arrow-right"></i></div>
 
             <div style="height: 10px"></div>
 
             <div class="section-cards" style="padding-left: 15px; padding-right: 15px; padding-bottom: 0px;">
-                <div class="knowledge-home-title" ng-click="selectKnowledge('popular')" ng-class="{'knowledge-active': universitiesKnowledgeDisplay == 'popular'}" style="font-size: 1.2em; display: inline-block; margin-right: 10px;">Popular</div>
+                <div class="knowledge-home-title" ng-click="selectKnowledge('popular')" ng-class="{'knowledge-active': universitiesKnowledgeDisplay == 'popular'}" style="font-size: 1.2em; display: inline-block; margin-right: 10px;">{{'HOME_POPULAR' | translate}}</div>
                 <div class="knowledge-home-title" ng-click="selectKnowledge(knowledge._id)" ng-class="{'knowledge-active': universitiesKnowledgeDisplay == 'category' && knowledgeValidate(knowledge._id)}" ng-hide="knowledge.title == 'popular'" ng-repeat="knowledge in knowledges"
                     ng-if="knowledge.universities.length > 0">{{knowledge.title}}</div>
             </div>
@@ -143,8 +143,8 @@
 
                 <div style="position: absolute; right: 15px; top: 17px;"><i class="fas fa-chevron-right"></i></div>
                 <div id="newuser-title" style="font-weight: bold; letter-spacing: -0.5px; color: #2d4255; font-size: 1.3em; line-height: 1.1em; padding-top: 3px;">
-                    Novo na Universidade?</div>
-                <div style="font-size: 0.8em; font-weight: bold;">Registre para começar a aprender e ensinar</div>
+                    {{'HOME_EXPLORE_NEWHERE' | translate}}</div>
+                <div style="font-size: 0.8em; font-weight: bold;">{{'HOME_EXPLORE_REGISTERANDGO' | translate}}</div>
 
             </div>
 
@@ -177,8 +177,8 @@
 
             <div style="padding-left: 15px; padding-right: 15px;">
                 <div class="bar-sections standard animated delay-1s" style="width: 100%;">
-                    <div ng-click="learningTabActive = 'paths'" style="cursor: pointer;" ng-class="{'active-learningtab': learningTabActive == 'paths'}" class="bar-section">AÇÕES</div>
-                    <div ng-click="learningTabActive = 'courses'" style="cursor: pointer;" ng-class="{'active-learningtab': learningTabActive == 'courses'}" class="bar-section">CURSOS</div>
+                    <div ng-click="learningTabActive = 'paths'" style="cursor: pointer;" ng-class="{'active-learningtab': learningTabActive == 'paths'}" class="bar-section">{{'ACTIONS' | translate}}</div>
+                    <div ng-click="learningTabActive = 'courses'" style="cursor: pointer;" ng-class="{'active-learningtab': learningTabActive == 'courses'}" class="bar-section">{{'COURSES' | translate}}</div>
                 </div>
             </div>
 
@@ -186,14 +186,14 @@
 
                 <div ng-click="downloadVRAndroid()" class="card card-article-large" style="cursor: pointer; padding: 10px; height: 170px; word-wrap: break-word; white-space: initial; border-radius: 5px; display: inline-block; box-shadow: 0px 0px 3px 0px rgba(158,158,158,0.4);">
                     <img height="35px" width="35px" style="margin-bottom: 15px;" src="https://welove.holdings/img/virtualrealityicon.png" />
-                    <div style="font-size: 1em; font-weight: bold; color: #2d4255; width: 100%;">Educação em Realidade Virtual
+                    <div style="font-size: 1em; font-weight: bold; color: #2d4255; width: 100%;">{{'HOME_EXPLORE_VR' | translate}}
                     </div>
                 </div>
                 <!-- end card -->
 
                 <div ng-click="createCommunity()" class="card card-article-large" style="cursor: pointer; padding: 10px; height: 170px; word-wrap: break-word; white-space: initial; border-radius: 5px; display: inline-block; box-shadow: 0px 0px 3px 0px rgba(158,158,158,0.4);">
                     <img height="35px" width="40px" style="margin-bottom: 15px;" src="https://image.flaticon.com/icons/svg/2231/2231696.svg" />
-                    <div style="font-size: 1em; font-weight: bold; color: #2d4255; width: 100%;">Crie uma comunidade educacional
+                    <div style="font-size: 1em; font-weight: bold; color: #2d4255; width: 100%;">{{'CREATEEDCOMMUNITY' | translate}}
                     </div>
                 </div>
                 <!-- end card -->
@@ -201,7 +201,7 @@
                 <div ng-click="createVideocall()" class="card card-article-large" style="cursor: pointer; padding: 10px; height: 170px; word-wrap: break-word; white-space: initial; border-radius: 5px; display: inline-block; box-shadow: 0px 0px 3px 0px rgba(158,158,158,0.4);">
                     <img height="35px" width="35px" style="margin-bottom: 15px;" src="data:image/png;base64,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"
                     />
-                    <div style="font-size: 1em; font-weight: bold; color: #2d4255; width: 100%;">Inicie videoconferência</div>
+                    <div style="font-size: 1em; font-weight: bold; color: #2d4255; width: 100%;">{{'START_VIDEOCON' | translate}}</div>
                 </div>
                 <!-- end card -->
 
@@ -219,10 +219,10 @@
 
             <!-- -->
 
-            <div ng-if="!logged" class="home-big-box">
-                <div class="title">A melhor ferramenta para educar e aprender online</div>
+            <div ng-if="!logged && learningTabActive != 'courses'" style="background-color: #e8e8e8;" class="home-big-box">
+                <div class="title">{{'HOME_EXPLORE_BESTPLATFORM' | translate}}</div>
                 <div class="button-row">
-                    <button ng-click="testarPlataforma()" class="button test">USE A PLATAFORMA</button>
+                    <button ng-click="testarPlataforma()" class="button test">{{'HOME_EXPLORE_USERPLATFORM' | translate}}</button>
                     <!--<button class="button">FALE COM A EQUIPE DE VENDAS</button>-->
                 </div>
             </div>
@@ -239,29 +239,29 @@
             </div>
 
             <div class="col-xs-2" style="text-align: left;">
-                <div style="color: #2d4255; font-weight: bolder; font-size: 1em; margin-bottom: 30px;">Plataforma</div>
-                <div style="margin-right: 25px; margin-bottom: 20px; font-size: 0.9em;"><a style="color: #000;" href="/ensinar">Para educadores</b></div>
+                <div style="color: #2d4255; font-weight: bolder; font-size: 1em; margin-bottom: 30px;">{{'FOOTER_TITLE_1' | translate}}</div>
+                <div style="margin-right: 25px; margin-bottom: 20px; font-size: 0.9em;"><a style="color: #000;" href="/ensinar">{{'FOOTER_T1_SUBTITLE_1' | translate}}</b></div>
 
       </div>
 
       <div class="col-xs-2" style="text-align: left;">
-        <div style="color: #2d4255; font-weight: bolder; font-size: 1em; margin-bottom: 30px;">Equipe</div>
+        <div style="color: #2d4255; font-weight: bolder; font-size: 1em; margin-bottom: 30px;">{{'FOOTER_TITLE_2' | translate}}</div>
         <div style="display: inline-block; margin-right: 25px; font-size: 0.9em;"><a style="color: #000;"
-            href="/sobre">Quem somos</a></div>
+            href="/sobre">{{'FOOTER_T2_SUBTITLE_1' | translate}}</a></div>
                 <!--<div style="display: inline-block; margin-right: 25px;"><a href="#"><b>Para estudantes</b></a></div>-->
             </div>
 
             <div class="col-xs-2" style="text-align: left;">
-                <div style="color: #2d4255; font-weight: bolder; font-size: 1em; margin-bottom: 30px;">Recursos</div>
-                <div style="margin-bottom: 20px; margin-right: 25px; font-size: 0.9em;"><a style="color: #000;" href="/a/universidade/forum/category/id/5efadbb98c383600174f3b6d">Central de ajuda</a></div>
-                <div style="margin-bottom: 20px; margin-right: 25px; font-size: 0.9em;"><a style="color: #000;" href="/a/universidade/forum/category/id/5efadb8f8c383600174f3b6c">Tutoriais</a></div>
-                <div style="margin-bottom: 20px; margin-right: 25px; font-size: 0.9em;"><a style="color: #000;" ng-click="downloadVRAndroid()">Baixar a Universidade</a></div>
+                <div style="color: #2d4255; font-weight: bolder; font-size: 1em; margin-bottom: 30px;">{{'FOOTER_TITLE_3' | translate}}</div>
+                <div style="margin-bottom: 20px; margin-right: 25px; font-size: 0.9em;"><a style="color: #000;" href="/a/universidade/forum/category/id/5efadbb98c383600174f3b6d">{{'FOOTER_T3_SUBTITLE_1' | translate}}</a></div>
+                <div style="margin-bottom: 20px; margin-right: 25px; font-size: 0.9em;"><a style="color: #000;" href="/a/universidade/forum/category/id/5efadb8f8c383600174f3b6c">{{'FOOTER_T3_SUBTITLE_2' | translate}}</a></div>
+                <div style="margin-bottom: 20px; margin-right: 25px; font-size: 0.9em;"><a style="color: #000;" ng-click="downloadVRAndroid()">{{'FOOTER_T3_SUBTITLE_3' | translate}}</a></div>
                 <!--<div style="display: inline-block; margin-right: 25px;"><a href="#"><b>Para estudantes</b></a></div>-->
             </div>
 
             <div class="col-xs-2" style="text-align: left;">
-                <div style="color: #2d4255; font-weight: bolder; font-size: 1em; margin-bottom: 30px;">Empresa</div>
-                <div style="display: inline-block; margin-right: 25px; font-size: 0.9em;"><a style="color: #000;" href="/sobre">Sobre</a></div>
+                <div style="color: #2d4255; font-weight: bolder; font-size: 1em; margin-bottom: 30px;">{{'FOOTER_TITLE_4' | translate}}</div>
+                <div style="display: inline-block; margin-right: 25px; font-size: 0.9em;"><a style="color: #000;" href="/sobre">{{'FOOTER_T4_SUBTITLE_1' | translate}}</a></div>
                 <!--<div style="display: inline-block; margin-right: 25px;"><a href="#"><b>Para estudantes</b></a></div>-->
             </div>
 
@@ -276,7 +276,6 @@
         .home-big-box {
             /*min-height: 250px;*/
             text-align: center;
-            background-color: #e8e8e8;
             border-radius: 5px;
             padding-left: 30px;
             padding-right: 30px;
@@ -287,7 +286,6 @@
         .home-big-box .title {
             font-size: 1.3em;
             font-weight: bolder;
-            background-color: #e8e8e8;
         }
 
         .home-big-box .button-row {

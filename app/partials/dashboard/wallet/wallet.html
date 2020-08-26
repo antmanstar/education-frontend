@@ -66,7 +66,7 @@
             <div class="wallet-card" ng-click="addCard()">
               <div class="content" style="padding-top: 70px; text-align: center; font-size: 1.3em;">
                 <i class="fas fa-plus-circle"></i></br>
-                Adicionar cartao
+                {{'WALLET_CARD_ADD' | translate}}
               </div>
             </div>
             <!-- end wallet card -->
@@ -89,25 +89,25 @@
           </div>
           <!-- end section-cards -->
 
-          <div class="section-menu-title" style="padding-left: 0px;">Minhas compras</div>
+          <div class="section-menu-title" style="padding-left: 0px;">{{'MYORDERS' | translate}}</div>
 
-          <p ng-if="orders.length == 0">Você ainda não realizou uma compra na plataforma.</p>
+          <p ng-if="orders.length == 0">{{'WALLET_NOPURCHASE' | translate}}</p>
 
           <div class="order" ng-repeat="order in orders">
 
             <div class="info">
-              <div class="id">Pedido #{{order._id}}</div>
-              <div class="date"><b>Data:</b> <span am-time-ago="order.createdAt | amFromUnix | amDateFormat:'MM.DD.YYYY HH:mm:ss' "></span></div>
-              <div class="total"><b>Total:</b> R${{order.amount / 100}}</div>
+              <div class="id">{{'DASH_ORDER' | translate}} #{{order._id}}</div>
+              <div class="date"><b>{{'DATE' | translate}}:</b> <span am-time-ago="order.createdAt | amFromUnix | amDateFormat:'MM.DD.YYYY HH:mm:ss' "></span></div>
+              <div class="total"><b>{{'TOTAL' | translate}}:</b> {{'CURRENCY' | translate}}{{order.amount / 100}}</div>
             </div>
 
-            <p>Items</p>
+            <p>{{'ITEMS' | translate}}</p>
 
             <div class="items">
 
               <div class="item" ng-repeat="item in order.items">
-                <div class="top"><b class="name">{{item.name}}</b><div class="price">R$ {{item.amount / 100}}</div></div>
-                <p>Quantidade: {{item.quantity}}</p>
+                <div class="top"><b class="name">{{item.name}}</b><div class="price">{{'CURRENCY' | translate}} {{item.amount / 100}}</div></div>
+                <p>{{'QUANTITY' | translate}}: {{item.quantity}}</p>
               </div>
 
             </div>

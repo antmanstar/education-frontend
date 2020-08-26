@@ -524,3 +524,76 @@ nav .navbar-top .menu-right .options .profile .profile-expanded div:last-child {
   border-bottom: 0px;
 
 }
+
+
+/* select language  */
+nav .navbar-top .menu-right .options .language {
+
+}
+
+nav .navbar-top .menu-right .options .language .language-expanded {
+
+  display: none;
+
+  z-index: 999;
+
+  position: absolute;
+  right: 0;
+
+  font-size: 1em;
+
+  width: 200px;
+
+  border-left: 1px solid #cdcdcd;
+  border-right: 1px solid #cdcdcd;
+  border-bottom: 1px solid #cdcdcd;
+
+  padding-left: 15px;
+  padding-right: 15px;
+
+  background-color: #fff;
+
+  -webkit-box-shadow: 0px -1px 5px 0px rgba(0,0,0,0.15);
+  -moz-box-shadow: 0px -1px 5px 0px rgba(0,0,0,0.15);
+  box-shadow: 0px -1px 5px 0px rgba(0,0,0,0.15);
+
+  margin-top: 10px;
+  margin-right: 10px;
+
+  color: #747474;
+
+}
+
+nav .navbar-top .menu-right .options .language .language-expanded div {
+
+  font-size: 14px;
+
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+  border-bottom: 1px solid #cdcdcd;
+
+}
+
+nav .navbar-top .menu-right .options .language .language-expanded div a {
+
+  color: #747474;
+  text-decoration: none;
+
+}
+
+nav .navbar-top .menu-right .options .language .language-expanded div:hover {
+
+  border-bottom: 1px solid #414141;
+
+}
+
+nav .navbar-top .menu-right .options .language .language-expanded div:last-child {
+
+  border-bottom: 0px;
+
+}
+
+.selected-language {
+  color: #2196F3;
+}

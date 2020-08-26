@@ -3,13 +3,13 @@
     <div class="select-plan-container">
       <div class="select-plan-step">
         <div class="plan-step">1</div>
-        <div class="lh-25">Select a Plan</div>
+        <div class="lh-25">{{'SELECT_A_PLAN' | translate}}</div>
       </div>
       <div class="plan-container">
         <div ng-class="(planType == 'essential') ? 'border-green' : 'border-gray'" class="plan shadow" ng-click="selectPlan('essential')">
           <div class="plan-type">
             <div class="plan-name plan-green shadow">
-              Essencial
+              {{'ESSENTIAL' | translate}}
             </div>
 
 
@@ -17,40 +17,40 @@
 
           </div>
           <div class="plan-body">
-            <p>Para pequenos grupos que querem aprender e ensinar.</p>
+            <p>{{'ESSENTIAL_TEXT' | translate}}</p>
           </div>
           <div class="plan-price">
-            <p><strong>R$ 10.00</strong>/month</p>
+            <p><strong>{{'CURRENCY' | translate}} 10.00</strong>/{{'MONTH' | translate}}</p>
           </div>
         </div>
 
         <div ng-class="(planType == 'advanced') ? 'border-red' : 'border-gray'" class="plan shadow" ng-click="selectPlan('advanced')">
           <div class="plan-type">
-            <div class="plan-name plan-red shadow">Avançado</div>
+            <div class="plan-name plan-red shadow">{{'ADVANCED' | translate}}</div>
             <div>
               <i ng-show="planType == 'advanced'" class="fas fa-check-circle" style="color:#e91e63;"></i>
             </div>
           </div>
           <div class="plan-body">
-            <p>Para instituições de ensino, educadores online.</p>
+            <p>{{'ADVANCED_TEXT' | translate}}</p>
           </div>
           <div class="plan-price">
-            <p><strong>R$ 35.00</strong>/month</p>
+            <p><strong>{{'CURRENCY' | translate}} 35.00</strong>/{{'MONTH' | translate}}</p>
           </div>
         </div>
 
         <div ng-class="(planType == 'corporation') ? 'border-purple' : 'border-gray'" class="plan shadow" ng-click="selectPlan('corporation')">
           <div class="plan-type">
-            <div class="plan-name plan-purple shadow">Corporação</div>
+            <div class="plan-name plan-purple shadow">{{'CORPORATION' | translate}}</div>
             <div>
               <i ng-show="planType == 'corporation'" class="fas fa-check-circle" style="color:#9c27b0;"></i>
             </div>
           </div>
           <div class="plan-body">
-            <p>Digitalize todas comunidades educacionais em sua organização.</p>
+            <p>{{'CORPORATION_TEXT' | translate}}</p>
           </div>
           <div class="plan-price">
-            <p><strong>R$ 55.00</strong>/month</p>
+            <p><strong>{{'MONTH' | translate}} 55.00</strong>/{{'MONTH' | translate}}</p>
           </div>
         </div>
       </div>
@@ -61,11 +61,11 @@
         </div>
         <div class="compare-text">
           <div ng-click="gotopricing()" style="display: flex;color: #4986bf; cursor: pointer;">
-            <p><strong>Compare plans</strong></p>
+            <p><strong>{{'COMPARE_PLANS' | translate}}</strong></p>
             <i class="fas fa-arrow-right" style="padding: 6px 0 0 15px;"></i>
           </div>
           <div style="display: flex">
-            <p>All plans come with 100% money back guarantee</p>
+            <p>{{'ALL_PLANS_WITH_GUARANTEE' | translate}}</p>
             <i class="fas fa-question-circle" style="padding: 6px 0 0 15px;color: #4986bf;"></i>
           </div>
         </div>
@@ -73,7 +73,7 @@
 
       <div class="select-plan-step">
         <div class="plan-step">2</div>
-        <div class="lh-25">Choose your billing</div>
+        <div class="lh-25">{{'CHOOSE_YOUR_BILLING' | translate}}</div>
       </div>
       <div class="plan-container-billing">
         <div class="billing-container">
@@ -81,24 +81,24 @@
             <div>
               <i ng-show="billingInterval == 'yearly'" class="fas fa-check-circle" style="padding-right:15px;color: #4986bf;"></i>
               <i ng-hide="billingInterval == 'yearly'"class="fas fa-circle" style="padding-right:15px;color: #e0e0e0;"></i>
-              <strong>Yearly</strong>
+              <strong>{{'YEARLY' | translate}}</strong>
             </div>
-            <div><strong>R${{planAmountYearly}} </strong>/ year</div>
+            <div><strong>{{'CURRENCY' | translate}}{{planAmountYearly}} </strong>/ {{'YEAR' | translate}}</div>
           </div>
 
           <div ng-class="{'border-active' : (billingInterval == 'monthly')}" class="plan-bill shadow" ng-click="selectBillingInterval('monthly')">
             <div>
               <i ng-show="billingInterval == 'monthly'" class="fas fa-check-circle" style="padding-right:15px;color: #4986bf;"></i>
               <i ng-hide="billingInterval == 'monthly'"class="fas fa-circle" style="padding-right:15px;color: #e0e0e0;"></i>
-              <strong>Monthly</strong>
+              <strong>{{'MONTHLY' | translate}}</strong>
             </div>
-            <div><strong>R${{planAmountMonthly}} </strong>/ month</div>
+            <div><strong>{{'CURRENCY' | translate}}{{planAmountMonthly}} </strong>/ {{'MONTH' | translate}}</div>
           </div>
         </div>
       </div>
 
       <div class="plan-container-button">
-        <button type="button" class="btn btn-success" ng-click="openCardDialog()" ng-disabled="activateButton">{{buttonLabel}}</button>
+        <button type="button" class="btn btn-success" ng-click="openCardDialog()" ng-disabled="activateButton">{{buttonLabel | translate}}</button>
       </div>
     </div>
   </div>

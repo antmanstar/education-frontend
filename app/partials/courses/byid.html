@@ -10,16 +10,16 @@
 
       <ng-containner ng-if="course.free == true || useraccess == true">
         <div style="float: right; text-align: right;">
-          <div ng-click="openFreeCourse()" class="btn btn-green button-highlighter" style="font-size: 1em; float: right; padding-top: 0px; padding-bottom: 0; line-height: 44px;"><b>Acessar o curso</b></div>
+          <div ng-click="openFreeCourse()" class="btn btn-green button-highlighter" style="font-size: 1em; float: right; padding-top: 0px; padding-bottom: 0; line-height: 44px;"><b>{{'COURSE_ACCESS' | translate}}</b></div>
         </div>
       </ng-containner>
 
       <ng-containner ng-if="course.free!=true && !useraccess">
         <div  style="float: right; text-align: right;">
-          <div style="font-size: 1.8em; color: #2f4457f7;"><b>R${{course.price}}</b></div>
+          <div style="font-size: 1.8em; color: #2f4457f7;"><b>{{'CURRENCY' | translate}}{{course.price}}</b></div>
 
-          <div style="padding-bottom: 10px; font-size: 0.9em; color: #616161;">OU 12x R${{course.price/12}}</div>
-          <button class="btn btn-green button-highlighter" style="font-size: 1em; padding-top: 0px; padding-bottom: 0; line-height: 44px;" ng-click="openPaymentDialog()"><b>Iniciar o curso</b></button>
+          <div style="padding-bottom: 10px; font-size: 0.9em; color: #616161;">{{'OR' | translate}} 12x {{'CURRENCY' | translate}}{{course.price/12}}</div>
+          <button class="btn btn-green button-highlighter" style="font-size: 1em; padding-top: 0px; padding-bottom: 0; line-height: 44px;" ng-click="openPaymentDialog()"><b>{{'COURSE_START' | translate}}</b></button>
 
         </div>
       </ng-containner>
@@ -39,7 +39,7 @@
 
     <div class="col-xs-12 col-sm-8">
 
-      <div style="font-size: 1.8em; margin-bottom: 15px; font-weight: 600; color: #2f4457;">Sobre o Curso</div>
+      <div style="font-size: 1.8em; margin-bottom: 15px; font-weight: 600; color: #2f4457;">{{'COURSE_ABOUT' | translate}}</div>
 
       <div style="font-size: 1.4em;" ng-bind-html="course.description"></div></br>
 
@@ -53,9 +53,9 @@
 
     <div class="col-xs-12 col-sm-8">
 
-      <div style="font-size: 1.8em; margin-bottom: 15px; font-weight: 600; color: #2f4457;">Receba um Certificado</div>
+      <div style="font-size: 1.8em; margin-bottom: 15px; font-weight: 600; color: #2f4457;">{{'COURSE_CERTIFICATE_RECEIVE' | translate}}</div>
 
-      <div style="font-size: 1.4em;">Ao concluir todos os cursos e concluir o projeto prático, você receberá um certificado que poderá compartilhar com possíveis empregadores e sua rede profissional.</div>
+      <div style="font-size: 1.4em;">{{'COURSE_BYCOMPLETING' | translate}}</div>
 
     </div>
     <!-- -->
@@ -194,7 +194,7 @@
   <div class="row academia-content modules-row academia-content">
 
     <div class="col-xs-12 col-sm-12">
-      <div style="font-size: 1.8em; margin-bottom: 15px; font-weight: 600; color: #2f4457;">Programa</div>
+      <div style="font-size: 1.8em; margin-bottom: 15px; font-weight: 600; color: #2f4457;">{{'PROGRAM' | translate}}</div>
     </div>
     <!-- end -->
     <ng-containner ng-if="course.module.length>0">
@@ -213,7 +213,7 @@
           <div class="topic">
 
               <div class="line" style="font-size: 1em;">
-                <i class="fas fa-bullseye"></i>OBJETIVO
+                <i class="fas fa-bullseye"></i>{{'OBJECTIVE' | translate}}
               </div>
 
               <div class="text">
@@ -226,7 +226,7 @@
           <div class="topic">
 
               <div class="line" style="font-size: 1em;">
-                <i class="fas fa-clock"></i>DURAÇÃO
+                <i class="fas fa-clock"></i>{{'DURATION' | translate}}
               </div>
 
               <div class="text">

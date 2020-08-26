@@ -22,7 +22,7 @@
     <div class="col-xs-12 col-sm-9 col-md-9 col-lg-10 dashboard-content">
 
       <div class="dashboard-content-title">
-        <h3>Todas compras</h3>
+        <h3>{{'DASH_ALL_ORDERS' | translate}}</h3>
       </div>
 
       <div class="dashboard-orders">
@@ -30,18 +30,18 @@
         <div class="order" ng-repeat="order in orders">
 
           <div class="info">
-            <div class="id">Pedido #{{order._id}}</div>
-            <div class="date"><b>Data:</b> <span am-time-ago="order.createdAt | amFromUnix | amDateFormat:'MM.DD.YYYY HH:mm:ss' "></span></div>
-            <div class="total"><b>Total:</b> R${{order.amount / 100}}</div>
+            <div class="id">{{'DASH_ORDER' | translate}} #{{order._id}}</div>
+            <div class="date"><b>{{'DATE' | translate}}:</b> <span am-time-ago="order.createdAt | amFromUnix | amDateFormat:'MM.DD.YYYY HH:mm:ss' "></span></div>
+            <div class="total"><b>{{'TOTAL' | translate}}:</b> {{'CURRENCY' | translate}}{{order.amount / 100}}</div>
           </div>
 
-          <p>Items</p>
+          <p>{{'ITEMS' | translate}}</p>
 
           <div class="items">
 
             <div class="item" ng-repeat="item in order.items">
               <div class="top"><b class="name">{{item.name}}</b><div class="price">R$ {{item.amount / 100}}</div></div>
-              <p>Quantidade: {{item.quantity}}</p>
+              <p>{{'QUANTITY' | translate}}: {{item.quantity}}</p>
             </div>
 
           </div>
