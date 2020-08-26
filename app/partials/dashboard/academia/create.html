@@ -79,8 +79,8 @@ socket.on("imagepath", function(a) {
           </div>
 
           <div class="col-xs-12 col-sm-9" style="color: #fff; text-align: left;">
-            <p style="font-size: 1.35em; margin-bottom: 0;">Crie a sua Universidade</p>
-            <p style="font-size: 1em;">Desenvolva comunidades educacionais em escala</p>
+            <p style="font-size: 1.35em; margin-bottom: 0;">{{'CREATE_YOUR_UNIVERSITY' | translate}}</p>
+            <p style="font-size: 1em;">{{'DEVELOP_EDCOMM' | translate}}</p>
           </div>
 
         </div>
@@ -88,8 +88,8 @@ socket.on("imagepath", function(a) {
 
         <div style="text-align: center; padding-bottom: 15px; padding-top: 15px;">
 
-          <div style="font-size: 1.1em; padding-bottom: 10px; padding-top: 10px;">Siga todas as etapas para criar a sua própria Universidade.</div>
-          <button style="max-width: 150px;" ng-click="move(1)" class="btn btn-green">Iniciar!</button>
+          <div style="font-size: 1.1em; padding-bottom: 10px; padding-top: 10px;">{{'FOLLOW_ALL_STEPS_UNIVERSITY' | translate}}</div>
+          <button style="max-width: 150px;" ng-click="move(1)" class="btn btn-green">{{'START' | translate}}!</button>
 
         </div>
         <!-- text and action -->
@@ -118,7 +118,7 @@ socket.on("imagepath", function(a) {
 
       <div style="text-align: left;">
 
-        <div class="headline-main" style="padding-bottom: 20px; padding-top: 20px; text-align: center;">Crie a sua Universidade</div>
+        <div class="headline-main" style="padding-bottom: 20px; padding-top: 20px; text-align: center;">{{'CREATE_YOUR_UNIVERSITY' | translate}}</div>
 
         <!--<p style="padding-bottom: 20px; padding-top: 0px;">To create your College, fill all informations below.</p>-->
 
@@ -136,18 +136,18 @@ socket.on("imagepath", function(a) {
           </style>
 
           <div class="form-group">
-            <label>Foto da Universidade</label>
+            <label>{{"UNIVERSITY_PICTURE" | translate}}</label>
             <input type="hidden" ng-model="backgroundImage" id="file" ng-change="backgroundImageUpdate()">
             <div id="university-background-image" style="background-image: url('https://universida.de/img/misc/noimageacademia.jpg')"></div>
 
             <div class="row">
 
               <div class="col-xs-12 col-sm-6" style="margin-top: 15px;">
-                <button id="upload_btn" class="btn bg-base">Selecionar Foto</button>
+                <button id="upload_btn" class="btn bg-base">{{"SELECT_PICTURE" | translate}}</button>
               </div>
 
               <div class="col-xs-12 col-sm-6" style="margin-top: 15px;">
-                <button class="btn btn-red">Remover foto</button>
+                <button class="btn btn-red">{{"REMOVE_PICTURE" | translate}}</button>
               </div>
 
             </div>
@@ -157,29 +157,29 @@ socket.on("imagepath", function(a) {
           <!-- end form group -->
 
           <div class="form-group">
-            <label>Nome da Universidade</label>
-            <input ng-model="name" placeholder="Escreva aqui o nome da sua Universidade" type="text" />
+            <label>{{'UNIVERSITY_NAME' | translate}}</label>
+            <input ng-model="name" placeholder="{{'WRITE_UNI_NAME_HERE' | translate}}" type="text" />
           </div>
           <!-- end form group -->
 
           <div class="form-group">
-            <label>Sobre</label>
-            <input ng-model="about" placeholder="Escreva uma descrição sobre a sua Universidade" type="text" />
+            <label>{{'ABOUT' | translate}}</label>
+            <input ng-model="about" placeholder="{{'WRITE_UNI_DESCRIPTION' | translate}}" type="text" />
           </div>
           <!-- end form group -->
 
           <div class="form-group">
-            <label>Idioma</label>
+            <label>{{'LANGUAGE' | translate}}</label>
             <select ng-model="language">
-              <option value="PT" selected>Português</option>
-              <option value="EN">Inglês</option>
+              <option value="PT" selected>{{'PORTUGUESE' | translate}}</option>
+              <option value="EN">{{'ENGLISH' | translate}}</option>
             </select>
           </div>
           <!-- end form group -->
 
           <div class="form-group">
-            <label>URL</label>
-            <input ng-model="url" placeholder="URL da sua Universidade. Exemplo: universida.de/a/<url>" type="Text" />
+            <label>{{'URL' | translate}}</label>
+            <input ng-model="url" placeholder="{{'UNIVERSITY_URL' | translate}}" type="Text" />
           </div>
           <!-- end form group -->
 
@@ -189,11 +189,11 @@ socket.on("imagepath", function(a) {
         <div class="row">
 
           <div class="col-xs-12 col-sm-6" style="margin-top: 15px;">
-            <button ng-click="move(-1)" class="btn-two btn-two-yellow">Voltar</button>
+            <button ng-click="move(-1)" class="btn-two btn-two-yellow">{{'BACK' | translate}}</button>
           </div>
 
           <div class="col-xs-12 col-sm-6" style="margin-top: 15px;">
-            <button ng-click="move(1)" class="btn btn-bluebase">Próximo</button>
+            <button ng-click="move(1)" class="btn btn-bluebase">{{'NEXT' | translate}}</button>
           </div>
 
         </div>
@@ -207,38 +207,38 @@ socket.on("imagepath", function(a) {
     <div ng-show="step == 3" class="col-xs-12 col-sm-9 col-md-9 col-lg-10 col-lg-10 dashboard-content">
 
       <div class="headline-main" style="padding-bottom: 20px; padding-top: 20px; text-align: center;">Create your own college</div>
-      <p style="padding-bottom: 20px; padding-top: 0px;">Prever</p>
+      <p style="padding-bottom: 20px; padding-top: 0px;">{{'PREVER' | translate}}</p>
 
       <div class="form-group">
-        <label>Foto da Universidade</label>
+        <label>{{'UNIVERSITY_PICTURE' | translate}}</label>
         <div id="university-background-image" style="background-image: url('{{backgroundImage}}')"></div>
       </div>
       <!-- end form group -->
 
       <div class="form-group">
-        <label>Nome</label>
+        <label>{{'NOME' | translate}}</label>
         <div class="headline-display" style="padding-top: 0; padding-bottom: 0;">{{name}}</div>
       </div>
 
       <div class="form-group">
-        <label>Sobre</label>
+        <label>{{'ABOUT' | translate}}</label>
         <div class="headline-sub-two" style="padding-top: 0; padding-bottom: 0;">{{about}}</div>
       </div>
 
 
       <div class="form-group">
-        <label>URL</label>
+        <label>{{'URL' | translate}}</label>
         <div class="headline-sub-two" style="padding-top: 0; padding-bottom: 0;">universida.de/a/{{url}}</div>
       </div>
 
       <div class="row">
 
         <div class="col-xs-12 col-sm-6" style="margin-top: 15px;">
-          <button ng-click="move(-1)" class="btn-two btn-two-yellow">Voltar</button>
+          <button ng-click="move(-1)" class="btn-two btn-two-yellow">{{'BACK' | translate}}</button>
         </div>
 
         <div class="col-xs-12 col-sm-6" style="margin-top: 15px;">
-          <button ng-click="create()" class="btn btn-green">Criar</button>
+          <button ng-click="create()" class="btn btn-green">{{'CREATE' | translate}}</button>
         </div>
 
       </div>

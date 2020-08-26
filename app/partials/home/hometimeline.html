@@ -28,11 +28,11 @@
 
         <div class="col-sm-4 col-md-3 section-menu-col">
 
-            <div class="section-menu-title">Universidades</div>
+            <div class="section-menu-title">{{'UNIVERSITIES' | translate}}</div>
 
             <div class="section-menu">
                 <timelinemenuuniversity accountid="{{user._id}}" uid="{{u.universityId}}" ng-if="u.unsubscribed == false" ng-repeat="u in user.universitiesSubscribed"></timelinemenuuniversity>
-                <div ng-if="user.universitiesSubscribed.length == 1" class="option">Você não esta registrado em nenhuma Universidade</div>
+                <div ng-if="user.universitiesSubscribed.length == 1" class="option">{{'NOT_YET_REGISTERED_IN_UNI' | translate}}</div>
             </div>
 
         </div>
@@ -90,12 +90,12 @@
             <div class="onboarding-knowledge" ng-show="user.universitiesSubscribed.length == 1">
 
                 <div class="picture"><img src="/img/vr/vr_animation.gif" height="120px;" /></div>
-                <div class="title">Novo! Inscreva-se nas Universidades</div>
-                <p><b>Siga educadores</b> Começe aprender em comunidade</p>
-                <p><b>Customize a timeline</b> Acesse o conteúdo que você tem interesse</p>
-                <p><b>Aprenda e ensine</b> Você pode participar de diversas maneiras</p>
+                <div class="title">{{'NEW_ENROLL' | translate}}</div>
+                <p><b>{{'FOLLOW_EDUCATORS' | translate}}</b> {{'START_LEARNING_IN_COMM' | translate}}</p>
+                <p><b>{{'CUSTOMIZE_A_TIMELINE' | translate}}</b> {{'ACCESS_CONTENT' | translate}}</p>
+                <p><b>{{'LEARN_AND_TEACH' | translate}}</b> {{'PARTICIPATE' | translate}}</p>
                 <div class="buttons">
-                    <a href="/onboarding/universities"><button class="btn btn-success" style="width: unset;">Seguir Universidades</button></a>
+                    <a href="/onboarding/universities"><button class="btn btn-success" style="width: unset;">{{'FOLLOW_UNIVERISITIES' | translate}}</button></a>
                 </div>
 
             </div>

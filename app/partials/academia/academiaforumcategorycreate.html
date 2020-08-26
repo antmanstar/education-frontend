@@ -14,29 +14,29 @@
 
       <div class="academia-content-forum-answer">
 
-        <label>Titulo da categoria</label></br>
-        <input class="academia-content-forum-post-create-title" placeholder="Escreva aqui título da categoria" ng-model="title"></input>
+        <label>{{'CATEGORY_TITLE' | translate}}</label></br>
+        <input class="academia-content-forum-post-create-title" placeholder="{{'WRITE_CATEGORY_TITLE' | translate}}" ng-model="title"></input>
 
-        <label>Descrição da categoria</label></br>
-        <textarea style="height: unset" class="academia-content-forum-post-create-title" placeholder="Escreva aqui a descrição da categoria" ng-model="description"></textarea>
+        <label>{{'CATEGORY_DESCRIPTION' | translate}}</label></br>
+        <textarea style="height: unset" class="academia-content-forum-post-create-title" placeholder="{{'WRITE_CATEGORY_DESCRIPTION' | translate}}" ng-model="description"></textarea>
 
         <div class="academia-content-forum-post-create-premium">
 
-          <b>A partir de qual membro esta categoria pode ser acessada?</b>
+          <b>{{'SELECT_ACCESS_MEMBER' | translate}}</b>
 
           <div class="form-group">
             <select ng-model="privilege.value">
-              <option value="0" ng-selected="true">Estudante</option>
-              <option value="10">Premium</option>
-              <option value="50">Equipe</option>
-              <option value="99">Administrador</option>
+              <option value="0" ng-selected="true">{{'STUDENT' | translate}}</option>
+              <option value="10">{{'PREMIUM' | translate}}</option>
+              <option value="50">{{'TEAM' | translate}}</option>
+              <option value="99">{{'ADMINISTRATOR' | translate}}</option>
             </select>
           </div>
 
         </div>
 
         <div class="academia-content-forum-answer-action" style="margin-top: 15px;">
-          <button class="btn btn-bluebase" ng-click="createCategory()">Criar categoria</button>
+          <button class="btn btn-bluebase" ng-click="createCategory()">{{'CREATE_CATEGORY' | translate}}</button>
         </div>
         <!-- academia-content-forum-answer -->
 

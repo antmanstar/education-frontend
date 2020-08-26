@@ -456,7 +456,7 @@ angular.module('netbase')
 
   /* chart */
 
-  $scope.labels = ["January", "February", "March", "April", "May", "June", "July", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+  $scope.labels = ["JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"];
 
   $scope.chartData = [
     0,0,0,0,0,0,0,0,0,0,0,0

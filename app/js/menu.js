@@ -75,4 +75,26 @@ $(document).ready(function() {
 
   });
 
+  /* language select */
+
+  let languageMenu = $("#languageMenu");
+  let languageExpanded = $(".language-expanded");
+
+  let languageExpandedOpen = false;
+
+  languageMenu.hover(function() {
+
+    languageExpanded.css("display", "block");
+    languageExpandedOpen = true;
+
+  });
+
+  $(window).click(function() {
+
+    if (languageExpandedOpen) {
+      languageExpanded.css("display", "none");
+    }
+
+  });
+
 });

@@ -126,10 +126,14 @@
 
   <div class="row" style="margin-top: 15px;">
 
+    <div class="alert alert-success" style="color: #3c763d !important; margin-top: 2rem; height: 6rem;" ng-if="save_module_success">
+      {{ 'SAVE_MODULE_SUCCESS' | translate}}
+    </div>
+
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom: 15px;">
 
-      <a ng-click="back()" style="cursor: pointer;"><i class="fas fa-arrow-left"></i> VOLTAR</a>
-      <div class="title" style="font-size: 3em; font-weight: bold;">Cursos</div>
+      <a ng-click="back()" style="cursor: pointer;"><i class="fas fa-arrow-left"></i> {{'RETURN' | translate}}</a>
+      <div class="title" style="font-size: 3em; font-weight: bold;">{{'COURSES' | translate}}</div>
 
       <div ng-include="'/partials/courses/suite/navbar.html'"></div>
 
@@ -159,7 +163,7 @@
           </div>
 
           <div class="text">
-            <b>OBJETIVO</b></br>{{module.goal}}
+            <b>{{'OBJECTIVE_UPPERCASE' | translate}}</b></br>{{module.goal}}
           </div>
 
         </div>
@@ -171,7 +175,7 @@
           </div>
 
           <div class="text">
-            <b>DURAÇÃO</b></br>{{module.duration}}
+            <b>{{'DURATION_UPPERCASE' | translate}}</b></br>{{module.duration}}
           </div>
 
         </div>
@@ -182,27 +186,28 @@
 
       </div>
       <!-- end course-card -->
-      <div style="margin-bottom: 15px; font-size: 1.2em; text-align: center; font-weight: bold;">Arraste o conteúdo no box abaixo</div>
+      <div style="margin-bottom: 15px;">
+        <p style="font-size: 1.2em; text-align: center; font-weight: bold;">
+          {{'DRAG_CONTENT_IN_THE_BOX' | translate}}
+        </p>
+        <p>
+          {{'DRAG_CONTENTS_SUBTITLE' | translate}}
+        </p>
+      </div>
+
       <table id="board2">
-
         <tbody>
-
           <tr>
-
             <td style="padding: 10px;" as-sortable="dragControlListeners1" ng-model="module.content" >
-
               <div modulecontentcard mc="{{item}}" data-ng-repeat="item in module.content"></div>
-
             </td>
             <!-- end board order -->
-
           </tr>
-
         </tbody>
-
       </table>
       <!-- end table -->
 
+      <button ng-click="saveModule()" class="btn btn-success" style="margin-top: 15px;">{{'SAVE' | translate}}</button>
     </div>
     <!-- -->
 
@@ -221,8 +226,8 @@
     <div class="col-xs-12 col-sm-8">
 
       <div style="padding-top: 10px; min-height: 60px;">
-        <div style="font-size: 1.3em; font-weight: bold; display: inline-block;">Conteúdo</div>
-        <div style="float: right;"><button class="btn bg-base" style="margin-top: 2px; height: 29px; width: unset;" ng-click="conteudocriar()">Criar conteúdo</button></div>
+        <div style="font-size: 1.3em; font-weight: bold; display: inline-block;">{{'LIST_OF_AVAILABLE_CONTENTS' | translate}}</div>
+        <div style="float: right;"><button class="btn bg-base" style="margin-top: 2px; height: 29px; width: unset;" ng-click="conteudocriar()">{{"CREATE_CONTENT" | translate}}</button></div>
       </div>
       <!-- -->
 
@@ -232,15 +237,22 @@
         <ng-containner data-ng-repeat="item in modulesByAccount">
 
         <div data-as-sortable-item-handle data-as-sortable-item style="display: inline-block; box-shadow: 0px 0px 3px 0px rgba(171,171,171,0.5); padding: 10px; cursor: pointer;">
-          <div style="display: inline-block; padding-right: 5px;"><img width="30px" height="30px" src="https://visualpharm.com/assets/770/Video%20File-595b40b85ba036ed117dad88.svg" /></div>
+          <div style="display: inline-block; padding-right: 5px;">
+            <!--img width="30px" height="30px" src="https://visualpharm.com/assets/770/Video%20File-595b40b85ba036ed117dad88.svg" /-->
+            <img ng-if="item.contentType=='forumpost'" width="30px" height="30px" src="https://visualpharm.com/assets/811/Discussion%20Forum-595b40b65ba036ed117d396c.svg" />
+            <img ng-if="item.contentType=='video'" width="30px" height="30px" src="https://visualpharm.com/assets/770/Video%20File-595b40b85ba036ed117dad88.svg" />
+            <img ng-if="item.contentType=='quiz'" style="width:30px; height:30px;" src="https://visualpharm.com/assets/632/Test%20Passed-595b40b65ba036ed117d34c6.svg">
+            <img ng-if="item.contentType=='page'"  width="30px" height="30px;" src="https://visualpharm.com/assets/197/Documents-595b40b65ba036ed117d2bf0.svg">
+          </div>
           <div style="display: inline-block; line-height: 30px; vertical-align: top; font-size: 1.1em; color: #536473; font-weight: bold;">{{item.title}}</div>
         </div>
 
       </ng-containner>
       </div>
-      <!-- -->
 
-      <button ng-click="saveModule()" class="btn btn-success" style="margin-top: 15px;">Salvar</button>
+      <!-- move save button to the right column
+      <button ng-click="saveModule()" class="btn btn-success" style="margin-top: 15px;">{{'SAVE' | translate}}</button>
+      -->
 
     </div>
     <!-- end col-xs-12 -->
@@ -253,10 +265,10 @@
 <!-- delete popup -->
 <script type="text/ng-template" id="deleteModulePopup">
   <div class="container-fluid text-center delete-container">
-    <h3>Are you sure you want to delete this Module?</h3>
+    <h3>{{'DELETE_MODULE_MESSAGE' | translate}}</h3>
     <div class="delete-buttons-div">
-      <button class="btn btn-danger" ng-disabled="deleteLoading" ng-click="deleteModule()">Delete <img style="width: 15px;" ng-show="deleteLoading == true" src="img/misc/loading.gif"/></button>
-      <button class="btn btn-dark" ng-click="closePopup()">Cancel</button>
+      <button class="btn btn-danger" ng-disabled="deleteLoading" ng-click="deleteModule()">{{'DELETE' | translate}} <img style="width: 15px;" ng-show="deleteLoading == true" src="img/misc/loading.gif"/></button>
+      <button class="btn btn-dark" ng-click="closePopup()">{{'CANCEL' | translate}}</button>
     </div>
   </div>
 </script>

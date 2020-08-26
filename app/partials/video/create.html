@@ -85,9 +85,9 @@
 
         <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 academia-content">
 
-            <div style="font-size: 2em; padding-bottom: 30px; text-align: right;">Criar video</div>
+            <div style="font-size: 2em; padding-bottom: 30px; text-align: right;">{{'CREATE_VIDEO' | translate}}</div>
 
-            <button ng-click="createVideo()" class="btn btn-green">Criar</button>
+            <button ng-click="createVideo()" class="btn btn-green">{{'CREATE' | translate}}</button>
 
         </div>
         <!-- end col-xs-12 col-sm-4 -->
@@ -107,12 +107,12 @@
                     <p>
             </div>
 
-            <input class="academia-content-forum-post-create-title" placeholder="Escreva aqui título do video" ng-model="title"></input>
+            <input class="academia-content-forum-post-create-title" placeholder="{{'WRITE_VIDEO_TITLE' | translate}}" ng-model="title"></input>
 
             <div>
 
                 <input type="hidden" id="file" ng-model="file">
-                <div id="file_drop" dropzone="copy" title="drop files for upload" class="file-drop-area"><b>Para iniciar o upload,</b> arraste o arquivo do vídeo aqui</div>
+                <div id="file_drop" dropzone="copy" title="drop files for upload" class="file-drop-area"><b>{{'START_UPLOAD' | translate}}</b> {{'DRAG_VIDEO_FILE_HERE' | translate}}</div>
                 <!-- end file-drop-area -->
 
             </div>
@@ -122,7 +122,7 @@
 
                 <div class="academia-content-forum-post-create-premium">
 
-                    <b>Descrição do Video</b>
+                    <b>{{'VIDEO_DESCRIPTION' | translate}}</b>
 
                     <div class="form-group">
                         <!-- <trix-toolbar id="my_toolbar"></trix-toolbar>
@@ -135,7 +135,7 @@
 
                 <div class="academia-content-forum-post-create-premium" ng-if="playlists.length > 0">
 
-                    <b>Playlist do video</b>
+                    <b>{{'VIDEO_PLAYLIST' | translate}}</b>
 
                     <div class="form-group">
                         <select ng-model="playlistSelect._id">
@@ -147,27 +147,27 @@
 
                 <div class="academia-content-forum-post-create-premium" ng-hide="universityId._id == undefined">
 
-                    <b>A partir de qual membro esta categoria pode ser acessada?</b>
+                    <b>{{'SELECT_ACCESS_MEMBER' | translate}}</b>
 
                     <div class="form-group">
                         <select ng-model="privilege.value">
-              <option value="0" ng-selected="true">Estudante</option>
-              <option value="10">Premium</option>
-              <option value="50">Equipe</option>
-              <option value="99">Administrador</option>
-            </select>
+                          <option value="0" ng-selected="true">{{'STUDENT' | translate}}</option>
+                          <option value="10">{{'PREMIUM' | translate}}</option>
+                          <option value="50">{{'TEAM' | translate}}</option>
+                          <option value="99">{{'ADMINISTRATOR' | translate}}</option>
+                        </select>
                     </div>
 
                 </div>
 
                 <div class="academia-content-forum-post-create-premium" ng-hide="universityId._id == undefined">
 
-                    <b>Este conteúdo é exclusivo para assinantes premium?</b>
+                    <b>{{'CONTENT_EXCLUSIVE_TO_PREMIUM' | translate}}</b>
 
                     <div class="form-group">
                         <select ng-model="premium.value">
-              <option value="0" ng-selected="true">Não</option>
-              <option value="1">Sim</option>
+              <option value="0" ng-selected="true">{{'NO' | translate}}</option>
+              <option value="1">{{"YES" | translate}}</option>
             </select>
                     </div>
 

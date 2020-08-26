@@ -2,7 +2,7 @@
   <td>{{plan.name}}</td>
   <td> <div style="display: inline-block" ng-if="plan.currency == 'brl'">R$</div> <div style="display: inline-block" ng-if="plan.currency == 'usd'">$</div> {{plan.amount}}</td>
   <td>{{plan.intervalCount}} {{plan.interval}}</td>
-  <td ng-if="plan.active">Sim</td>
-  <td ng-if="!plan.active">Não</td>
-  <td style="text-align: right;"><button ng-click="managePremium()" class="btn-two btn-two-blue btn-small">Administrar</button></td>
+  <td ng-if="plan.active">{{'YES' | translate}}</td>
+  <td ng-if="!plan.active">{{'NO' | translate}}</td>
+  <td style="text-align: right;"><button ng-click="managePremium()" class="btn-two btn-two-blue btn-small">{{'MANAGE' | translate}}</button></td>
 </tr>

@@ -4,7 +4,7 @@
     <div class="user">
       <div class="img" ng-if="user.imageUrl == undefined" style="background-image: url('img/user/user.png')"></div>
       <div class="img" ng-if="user.imageUrl.length > 0" style="background-image: url('{{user.imageUrl}}')"></div>
-      <div class="name"><b>{{user.name}}</b> escreveu um <b>post</b></div>
+      <div class="name"><b>{{user.name}}</b> {{'WROTE_ONE' | translate}} <b>{{'POST' | translate}}</b></div>
     </div>
     <div class="time"><span am-time-ago="post.createdAt | amFromUnix"></span></div>
   </div>
@@ -18,11 +18,11 @@
     <div class="title"><a href="/a/{{university.url}}/forum/post/id/{{post._id}}">{{post.title}}</a></div>
     <div style="overflow-wrap: break-word;" ng-bind-html="post.text"></div>
     <div class="status">
-      <div class="comments"><i class="fas fa-comment"></i> {{post.answers.length}} comentários</div>
+      <div class="comments"><i class="fas fa-comment"></i> {{post.answers.length}} {{'COMMENTS' | translate}}</div>
       <div class="votes"><i class="fas fa-arrow-up"></i> {{post.votesCount}} votos</div>
     </div>
     <div class="actions">
-      <div class="comment" ng-click="gotocomment()"><i class="fas fa-comment"></i> Comentar</div><div ng-click="upvoteForumPost()" class="vote"><i class="fas fa-arrow-up"></i></div>
+      <div class="comment" ng-click="gotocomment()"><i class="fas fa-comment"></i> {{'COMMENT_AR'}}</div><div ng-click="upvoteForumPost()" class="vote"><i class="fas fa-arrow-up"></i></div>
     </div>
   </div>
 </div>

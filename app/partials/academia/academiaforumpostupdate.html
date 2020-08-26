@@ -14,7 +14,7 @@
 
             <div class="academia-content-forum-answer">
 
-                <input class="academia-content-forum-post-create-title" placeholder="Escreva aqui título da sua postagem" ng-model="title"></input>
+                <input class="academia-content-forum-post-create-title" placeholder="{{'WRITE_TITLE_POST' | translate}}" ng-model="title"></input>
 
                 <!-- <trix-toolbar id="my_toolbar"></trix-toolbar>
         <trix-editor angular-trix toolbar="my_toolbar" ng-model="text" trix-change="trixChange(e, editor);" trix-initialize="trixInitialize(e, editor);"></trix-editor> -->
@@ -22,19 +22,19 @@
                 <textarea ui-tinymce="tinymceOptions" ng-model="text"></textarea>
                 <div class="academia-content-forum-post-create-premium">
 
-                    <b>Este conteúdo é exclusivo para assinantes premium?</b>
+                    <b>{{'CONTENT_EXCLUSIVE_TO_PREMIUM' | translate}}</b>
 
                     <div class="form-group">
                         <select>
-              <option value="0" ng-selected="premium.value == 0">Não</option>
-              <option value="1" ng-selected="premium.value == 1">Sim</option>
+              <option value="0" ng-selected="premium.value == 0">{{'NO' | translate}}</option>
+              <option value="1" ng-selected="premium.value == 1">{{'YES' | translate}}</option>
             </select>
                     </div>
 
                 </div>
 
                 <div class="academia-content-forum-answer-action" style="margin-top: 15px;">
-                    <button class="btn btn-bluebase" ng-click="updateForumPost()">Update a post</button>
+                    <button class="btn btn-bluebase" ng-click="updateForumPost()">{{'UPDATE_A_POST' | translate}}</button>
                 </div>
                 <!-- academia-content-forum-answer -->
 

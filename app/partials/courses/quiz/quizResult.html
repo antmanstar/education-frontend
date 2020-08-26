@@ -2,19 +2,18 @@
     <div class="text-center">
       <div class="panel panel-default quiz-result">
         <div class="panel-body" ng-if="view='1'">
-          <h3><b>Feeling smarter already, aren't you?</b></h3><br>
+          <h3><b>{{'QUIZ_RESULT_FEELING_SMARTER' | translate}}</b></h3><br>
 
-          <p class="para">Thanks for taking this quiz. We hope
-            you had fun and learned something new while doing so!</p><br>
+          <p class="para">{{'QUIZ_RESULT_THANKS_FOR_TAKING' | translate}}</p><br>
 
-          <h4><b>{{data.title}} Quiz</b></h4>
-          <h4><b>Total Questions : {{data.questions.length}}</b></h4>
-          <h4><b>Answer : {{cor}}</b></h4>
+          <h4><b>{{data.title}} {{'QUIZ' | translate}}</b></h4>
+          <h4><b>{{'QUIZ_TOTAL_QUESTION' | translate}} : {{data.questions.length}}</b></h4>
+          <h4><b>{{'ANSWER' | translate}} : {{cor}}</b></h4>
 
-          <button ng-click="showresultPreview()" type="button" class="btn btn-info">Preview Answers</button>
+          <button ng-click="showresultPreview()" type="button" class="btn btn-info">{{'PREVIEW_ANSWER' | translate}}</button>
         </div>
         <div class="panel-body" ng-if="view=='0'">
-          <h3><b>Invalid request?</b></h3><br>
+          <h3><b>{{'INVALID_REQUEST' | transalte}}</b></h3><br>
         </div>
       </div>
     </div>

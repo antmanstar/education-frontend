@@ -22,12 +22,12 @@
     <div class="col-xs-12 col-sm-9 col-md-9 col-lg-10 dashboard-content">
 
       <ul class="breadcrumb">
-        <li><a href="#">Reitoria</a></li>
-        <li><a href="/dashboard/a/manage">Administrar Universidades</a></li>
+        <li><a href="#">{{'DASH_RECTORY' | translate}}</a></li>
+        <li><a href="/dashboard/a/manage">{{'MANAGE_UNIVERSITIES' | translate}}</a></li>
       </ul>
 
       <div class="dashboard-content-title">
-        <h3>Administrar Universidades</h3>
+        <h3>{{'MANAGE_UNIVERSITIES' | translate}}</h3>
       </div>
 
       <div class="section-cards dashboard-cards">
@@ -39,7 +39,7 @@
 
           <div class="title">{{university.name}}</div>
           <div class="description">{{university.about}}</div>
-          <button ng-click="manage(university._id)" style="margin-top: 15px;" class="btn btn-green">Administrar</button>
+          <button ng-click="manage(university._id)" style="margin-top: 15px;" class="btn btn-green">{{'MANAGE' | translate}}</button>
 
         </div>
           <!-- end card -->

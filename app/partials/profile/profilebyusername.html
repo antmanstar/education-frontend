@@ -17,9 +17,9 @@
 
       <div class="profile-bio">
 
-        <div class="title">Biografia</div>
+        <div class="title">{{'BIOGRAPHY' | translate}}</div>
         <div class="short" ng-hide="edit"><div ng-if="student.bioShort != undefined">{{student.bioShort}}</div><div ng-if="student.bioShort == undefined"></div></div>
-        <div class="text" ng-hide="edit"><div ng-if="student.bioLong != undefined">{{student.bioLong}}</div><div ng-if="student.bioLong == undefined">{{student.name}} ainda não escreveu a biografica</div></div>
+        <div class="text" ng-hide="edit"><div ng-if="student.bioLong != undefined">{{student.bioLong}}</div><div ng-if="student.bioLong == undefined">{{student.name}} {{'NOT_YET_WRITTEN_BIO' | translate}}</div></div>
 
       </div>
       <!-- end profile-bio -->

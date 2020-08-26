@@ -8,7 +8,7 @@
   <div class="academia-supportcol-stats">
 
     <div class="academia-supportcol-stats-stat">
-      {{university.members.length }} members
+      {{university.members.length }} {{'MEMBERS' | translate}}
     </div>
 
     <!--
@@ -19,8 +19,8 @@
 
     -->
 
-    <button class="academia-supportcol-button" ng-hide="userSubscribed(university.members)" ng-click="subscribe()">Subscribe</button>
-    <button class="academia-supportcol-button" ng-show="userSubscribed(university.members)" ng-click="subscribe()">Unsubscribe</button>
+    <button class="academia-supportcol-button" ng-hide="userSubscribed(university.members)" ng-click="subscribe()">{{'SUBSCRIBE' | translate}}</button>
+    <button class="academia-supportcol-button" ng-show="userSubscribed(university.members)" ng-click="subscribe()">{{'UNSUBSCRIBE' | translate}}</button>
 
   </div>
 

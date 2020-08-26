@@ -31,29 +31,17 @@ angular.module('netbase', [
 
         StripeElementsProvider.setAPIKey(stripeKey);
 
-        $translateProvider.translations('en', {
-            HOME_TITLE: 'YOUR CAMPUS ONLINE',
-            HOME_SUBTITLE: 'Welcome to the biggest college market online',
-            MYSTORE_MENU: 'my store',
-            BUTTON_LANG_EN: 'english',
-            CREATE_YOUR_STORE: 'create store',
-            CATEGORY_BOOKS_TITLE: 'Books',
-            CATEGORY_CELLPHONE_TITLE: 'Mobile phones'
+        $translateProvider.useStaticFilesLoader({
+            prefix: 'locales/locale-',
+            suffix: '.json'
         });
 
-        $translateProvider.translations('pt', {
-            HOME_TITLE: 'SEU CAMPUS ONLINE',
-            HOME_SUBTITLE: 'Bem vindo ao maior mercado universitÃ¡rio online',
-            MYSTORE_MENU: 'minha loja',
-            BUTTON_LANG_EN: 'englisch',
-            BUTTON_LANG_DE: 'deutsch',
-            CREATE_YOUR_STORE: 'criar loja',
-            CATEGORY_BOOKS_TITLE: 'Livros',
-            CATEGORY_CELLPHONE_TITLE: 'Celulares',
-            CATEGORY_HEADPHONES_TITLE: 'Fone'
-        });
 
-        $translateProvider.preferredLanguage('en');
+        $translateProvider.preferredLanguage('pt');
+        //$translateProvider.uniformLanguageTag('bcp47').determinePreferredLanguage();
+        //console.log("PREFERRED LANGUAGE: ", $translateProvider.uniformLanguageTag('bcp47').determinePreferredLanguage())
+
+
 
     }])
 
@@ -587,11 +575,21 @@ angular.module('netbase', [
 
 }])
 
-.run(function($rootScope, $location, $localStorage, $http, $route, $translate) {
+.run(function($rootScope, $location, $localStorage, $http, $route, $translate, amMoment) {
 
     // Sees Index page just one time
     if ($localStorage.indexVisited == undefined) {
         $localStorage.indexVisited = false;
+    }
+
+    // check localStorage for set language
+    if ($localStorage.setLanguage == "en") {
+        $translate.use("en")
+        amMoment.changeLocale('en');
+    } else {
+        $translate.use("pt")
+        amMoment.changeLocale('pt-br');
+        $localStorage.setLanguage = "pt"
     }
 
     $rootScope.logged = $localStorage.logged;

@@ -4,30 +4,30 @@
 
     <div class="col-xs-12">
 
-      <div class="headline-sub-one">Manage Plan</div>
+      <div class="headline-sub-one">{{'MANAGE_PLAN' | translate}}</div>
 
-      <div class="alert bg-primary-green" style="margin-bottom: 10px; margin-top: 10px;" ng-show="success">Success while updating this plan.</div>
+      <div class="alert bg-primary-green" style="margin-bottom: 10px; margin-top: 10px;" ng-show="success">{{'UPDATE_PLAN_SUCCESS' | translate}}</div>
 
       <div class="form">
 
         <div class="form-group">
-          <label>Plan name</label>
+          <label>{{'PLAN_NAME' | translate}}</label>
           <p>{{plan.name}}</p>
         </div>
         <!-- end form group -->
 
         <div class="form-group">
-          <label>Active</label>
+          <label>{{'ACTIVE' | translate}}</label>
           <select ng-model="data.active">
-            <option value="true">Yes</option>
-            <option value="false">No</option>
+            <option value="true">{{'YES' | translate}}</option>
+            <option value="false">{{'NO' | translate}}</option>
           </select>
         </div>
         <!-- end form group -->
 
         <div class="form-group">
-          <label>Numbers of trial days</label>
-          <input style="padding-left: 0;" ng-model="trialPeriodDays" placeholder="Number of trial days. Leave empty if no trial period." type="text" />
+          <label>{{'NUMBER_TRIAL_DAYS' | translate}}</label>
+          <input style="padding-left: 0;" ng-model="trialPeriodDays" placeholder="{{'TRIAL_DAYS_PLACEHOLDER' | translate}}" type="text" />
         </div>
         <!-- end form group -->
 
@@ -39,7 +39,7 @@
 
     <div class="form" style="position: absolute; bottom: 0; left: 0; width: 100%; padding-left: 15px; padding-right: 15px;">
 
-      <button ng-click="update()" class="btn btn-bluebase">Update</button>
+      <button ng-click="update()" class="btn btn-bluebase">{{'UPDATE' | translate}}</button>
 
     </div>
     <!-- end form -->

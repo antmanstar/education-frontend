@@ -4,13 +4,13 @@
 
     <div class="col-xs-12">
 
-      <div class="headline-sub-one" style="padding-bottom: 30px;">Visualizações</div>
+      <div class="headline-sub-one" style="padding-bottom: 30px;">{{'VIEWS' | translate}}</div>
 
-      <p style="padding-bottom: 10px;" ng-if="viewers.length > 0">Lista com progresso das visualizações de cada estudante em porcentagem</p>
+      <p style="padding-bottom: 10px;" ng-if="viewers.length > 0">{{'VIDEO_LIST_OF_PROGRESS' | translate}}</p>
 
       <accountviewer v="{{viewer}}" pd="{{playerDuration}}" ng-repeat="viewer in viewers"></accountviewer>
 
-      <p style="padding-bottom: 10px;" ng-if="viewers.length == 0">Nenhuma visualização realizada</p>
+      <p style="padding-bottom: 10px;" ng-if="viewers.length == 0">{{'NO_VIEWERS_TO_DISPLAY' | translate}}</p>
 
     </div>
     <!-- end col-xs-12 -->

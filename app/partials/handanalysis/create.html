@@ -14,7 +14,7 @@
 
       <div class="academia-content-navigation">
 
-        <div class="academia-content-navigation-option">Criar postagem</div>
+        <div class="academia-content-navigation-option">{{'CREATE_POST' | translate}}</div>
 
       </div>
       <!-- academia-content-navigation -->
@@ -28,23 +28,23 @@
       <div class="academia-content-forum-answer">
 
         <div>
-          <div style="margin-bottom: 15px; font-weight: bold; font-size: 1.3em; display: inline-block; width: 50%;">Título</div><div style="text-align: right; display: inline-block; vertical-align: top; width: 50%;"><button style="height: 29px; max-width: 140px;" class="btn btn-bluebase" ng-click="sendHand()">Enviar</button></div>
+          <div style="margin-bottom: 15px; font-weight: bold; font-size: 1.3em; display: inline-block; width: 50%;">{{'TITLE' | translate}}</div><div style="text-align: right; display: inline-block; vertical-align: top; width: 50%;"><button style="height: 29px; max-width: 140px;" class="btn btn-bluebase" ng-click="sendHand()">{{'SUBMIT' | translate}}</button></div>
         </div>
 
-        <input class="academia-content-forum-post-create-title" placeholder="Escreva o título da sua mão" ng-model="title"></input>
+        <input class="academia-content-forum-post-create-title" placeholder="{{'WRITE_TITLE_OF_HAND' | translate}}" ng-model="title"></input>
 
-        <div style="margin-bottom: 15px; font-weight: bold; font-size: 1.3em;">Descrição</div>
-        <textarea ng-model="analysisText" style="margin-bottom: 15px; background-color: #efefef; border-radius: 3px; height: 130px; width: 100%; resize: none; border: none; padding: 10px;" placeholder="Escreve aqui"></textarea>
+        <div style="margin-bottom: 15px; font-weight: bold; font-size: 1.3em;">{{'DESCRIPTION' | translate}}</div>
+        <textarea ng-model="analysisText" style="margin-bottom: 15px; background-color: #efefef; border-radius: 3px; height: 130px; width: 100%; resize: none; border: none; padding: 10px;" placeholder="{{'WRITE_HERE' | translate}}"></textarea>
 
         <div>
-          <div style="margin-bottom: 30px; font-weight: bold; font-size: 1.3em; display: inline-block; width: 50%;">Mãos</div><div style="text-align: right; display: inline-block; vertical-align: top; width: 50%;"><button style="height: 29px; max-width: 140px;" class="btn btn-green" ng-click="addHand()">Adicionar hand</button></div>
+          <div style="margin-bottom: 30px; font-weight: bold; font-size: 1.3em; display: inline-block; width: 50%;">Mãos</div><div style="text-align: right; display: inline-block; vertical-align: top; width: 50%;"><button style="height: 29px; max-width: 140px;" class="btn btn-green" ng-click="addHand()">{{'ADDITIONAL_HAND' | translate}}</button></div>
         </div>
         <!-- Hand -->
         <div ng-repeat="hand in hands track by $index" style="box-shadow: 0px 0px 8px 0px rgba(196, 196, 196, 0.35); padding: 10px; border-radius: 5px; margin-bottom: 15px;">
 
-          <p style="width: 100%;"><b>Mão #{{$index + 1}}</b></p>
-          <input class="academia-content-forum-post-create-title" placeholder="Escreva a sua pergunta aqui" ng-model="hands[$index].title"></input>
-          <textarea id="singlehandform-raw" ng-model="hands[$index].handtext" style="margin-bottom: 15px; background-color: #efefef; border-radius: 3px; height: 130px; width: 100%; resize: none; border: none; padding: 10px;" placeholder="Cole o hand history aqui"></textarea>
+          <p style="width: 100%;"><b>{{'HAND' | translate}} #{{$index + 1}}</b></p>
+          <input class="academia-content-forum-post-create-title" placeholder="{{'WRITE_QUESTION_HERE' | translate}}" ng-model="hands[$index].title"></input>
+          <textarea id="singlehandform-raw" ng-model="hands[$index].handtext" style="margin-bottom: 15px; background-color: #efefef; border-radius: 3px; height: 130px; width: 100%; resize: none; border: none; padding: 10px;" placeholder="{{'PASTE_HAND_HISTORY' | translate}}"></textarea>
 
         </div>
 

@@ -24,9 +24,9 @@
           <thead>
             <tr>
               <th class="col-sm-1 col-md-1" style="text-align: left;"></th>
-              <th class="col-sm-6 col-md-6" style="text-align: left;">Fórum</th>
-              <th class="col-sm-2 col-md-2" style="text-align: left;">Tópicos</th>
-              <th class="col-sm-2 col-md-2" style="text-align: left;">Última post criado</th>
+              <th class="col-sm-6 col-md-6" style="text-align: left;">{{'FORUM' | translate}}</th>
+              <th class="col-sm-2 col-md-2" style="text-align: left;">{{'TOPICS' | translate}}</th>
+              <th class="col-sm-2 col-md-2" style="text-align: left;">{{'LAST_POST_CREATED' | translate}}</th>
             </tr>
           </thead>
         </table>
@@ -37,7 +37,7 @@
         </table>
 
         <div ng-show="categories.length == 0">
-          Nenhuma categoria cadastrada
+          {{'NO_REGISTERED_CATEGORY' | translate}}
         </div>
 
         <div ng-show="forumPosts.length > 0">

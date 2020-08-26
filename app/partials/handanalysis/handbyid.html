@@ -50,7 +50,7 @@
 
           <div style="box-shadow: 0px 0px 8px 0px rgba(196, 196, 196, 0.35); padding: 10px; border-radius: 5px; margin-bottom: 15px;">
 
-            <div style="font-size: 1.3em; margin-bottom: 15px; font-weight: bold;">Pergunta</div>
+            <div style="font-size: 1.3em; margin-bottom: 15px; font-weight: bold;">{{'QUESTION' | translate}}</div>
 
             <!-- -->
             <div ng-repeat="hand in pokerhands.hand track by $index" ng-show="handIndex == $index">
@@ -69,8 +69,8 @@
 
           <div style="box-shadow: 0px 0px 8px 0px rgba(196, 196, 196, 0.35); padding: 10px; border-radius: 5px;">
             <div style="text-align: center;">
-              <button class="btn bg-primary-purple" style="height: 29px; width: calc(50% - 20px); margin-right: 5px;" ng-click='move("back")'>Voltar</button>
-              <button ng-click='move("next")' class="btn bg-primary-purple" style="height: 29px; width: calc(50% - 20px); margin-right: 5px;">Próxima</button>
+              <button class="btn bg-primary-purple" style="height: 29px; width: calc(50% - 20px); margin-right: 5px;" ng-click='move("back")'>{{'BACK' | translate}}</button>
+              <button ng-click='move("next")' class="btn bg-primary-purple" style="height: 29px; width: calc(50% - 20px); margin-right: 5px;">{{'NEXT' | translate}}</button>
             </div>
           </div>
 
@@ -83,7 +83,7 @@
 
           <div style="box-shadow: 0px 0px 8px 0px rgba(196, 196, 196, 0.35); padding: 10px; border-radius: 5px; margin-bottom: 15px;">
             <div style="margin-bottom: 15px; font-weight: bold; font-size: 1.3em; border-bottom: 1px solid #cdcdcd; padding-bottom: 10px;"><img src="https://visualpharm.com/assets/18/Cards-595b40b65ba036ed117d2a26.svg" style="margin-right: 14px;" height="20px" width="20px" />{{pokerhands.title}}</div>
-            <div style="margin-bottom: 15px; border-bottom: 1px solid #cdcdcd; padding-bottom: 10px;"><b>Mão</b> <i style="float: right;">{{handIndex + 1}} / {{pokerhands.hand.length}}</i></div>
+            <div style="margin-bottom: 15px; border-bottom: 1px solid #cdcdcd; padding-bottom: 10px;"><b>{{'HAND' | translate}}</b> <i style="float: right;">{{handIndex + 1}} / {{pokerhands.hand.length}}</i></div>
             <div style="padding-bottom: 5px;">
 
               <div ng-if="student.imageUrl == undefined" style="display: inline-block; background-image: url('img/user/user.png'); background-position: cover; background-size: cover; background-position: 50% 50%; border-radius: 4px; height: 20px; width: 20px;"></div>
@@ -102,7 +102,7 @@
 
           <div style="box-shadow: 0px 0px 8px 0px rgba(196, 196, 196, 0.35); padding: 10px; min-height: 200px; border-radius: 5px;">
 
-            <div style="font-size: 1.3em; margin-bottom: 15px; font-weight: bold;">Análises</div>
+            <div style="font-size: 1.3em; margin-bottom: 15px; font-weight: bold;">{{'ANALYSES' | translate}}</div>
 
             <div class="analysis-scroll" style="max-height: 300px; overflow-y: scroll;">
 
@@ -115,9 +115,9 @@
           <div style="height: 25px;"></div>
 
           <div style="box-shadow: 0px 0px 8px 0px rgba(196, 196, 196, 0.35); padding: 10px; min-height: 200px; border-radius: 5px;">
-            <div style="margin-bottom: 15px; font-weight: bold; font-size: 1.3em;">Escrever Análise</div>
-            <textarea ng-model="analysisText" style="background-color: #efefef; border-radius: 3px; height: 130px; width: 100%; resize: none; border: none; padding: 10px;" placeholder="Escreve a sua análise aqui"></textarea>
-            <button ng-click="sendAnalysis()" style="background-color: #38b6a2; border: none; width: 100%; padding-left: 15px; padding-right: 15px; padding-top: 5px; padding-bottom: 5px; border-radius: 3px; color: #fff; margin-right: 5px; margin-top: 5px; outline: none;">Enviar</button>
+            <div style="margin-bottom: 15px; font-weight: bold; font-size: 1.3em;">{{'WRITE_ANALYSIS' | translate}}</div>
+            <textarea ng-model="analysisText" style="background-color: #efefef; border-radius: 3px; height: 130px; width: 100%; resize: none; border: none; padding: 10px;" placeholder="{{'WRITE_ANALYSIS_HERE' | translate}}"></textarea>
+            <button ng-click="sendAnalysis()" style="background-color: #38b6a2; border: none; width: 100%; padding-left: 15px; padding-right: 15px; padding-top: 5px; padding-bottom: 5px; border-radius: 3px; color: #fff; margin-right: 5px; margin-top: 5px; outline: none;">{{'SUBMIT' | translate}}</button>
           </div>
 
         </div>

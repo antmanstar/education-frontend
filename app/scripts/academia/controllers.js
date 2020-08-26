@@ -2071,11 +2071,14 @@ angular.module('netbase')
     let universityUrl = $route.current.params.academiaName;
     let displayinvite = false;
 
-    /* forum posts */
-    $scope.forumPosts = [];
-    $scope.page = 1;
-    $scope.pages = 1;
-    $scope.loaded = false;
+        //Set to localstorage for use in creating category
+        $localStorage.universityUrl = universityUrl
+
+        /* forum posts */
+        $scope.forumPosts = [];
+        $scope.page = 1;
+        $scope.pages = 1;
+        $scope.loaded = false;
 
     if ($location.search().page != undefined) {
         $scope.page = $location.search().page;

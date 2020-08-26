@@ -4,9 +4,9 @@
         <i ng-show="!content.viewed" class="far fa-square"></i>
         <i ng-show="content.viewed" class="fa fa-check-square"></i>
         <b>{{count}}.{{$index}}. {{content.title}}</b></br>
-        <span ng-if="content.contentType=='page'"><i class="fas fa-file text-primary" style="font-size: 0.8em; padding: 8px 8px 0px 22px;"></i>Page</span>
-        <span ng-if="content.contentType=='quiz'"><i class="far fa-question-circle text-primary" style="font-size: 0.8em; padding: 8px 8px 0px 22px;"></i>Quiz</span>
-        <span ng-if="content.contentType=='video'"><i class="fas fa-video text-primary" style="font-size: 0.8em; padding: 8px 8px 0px 22px;"></i>Video</span>
-        <span ng-if="content.contentType=='forumpost'"><i class="fab fa-wpforms text-primary" style="font-size: 0.8em; padding: 8px 8px 0px 22px;"></i>Forum Post</span>
+        <span ng-if="content.contentType=='page'"><i class="fas fa-file text-primary" style="font-size: 0.8em; padding: 8px 8px 0px 22px;"></i>{{'PAGE' | translate}}</span>
+        <span ng-if="content.contentType=='quiz'"><i class="far fa-question-circle text-primary" style="font-size: 0.8em; padding: 8px 8px 0px 22px;"></i>{{'QUIZ' | translate}}</span>
+        <span ng-if="content.contentType=='video'"><i class="fas fa-video text-primary" style="font-size: 0.8em; padding: 8px 8px 0px 22px;"></i>{{'VIDEO' | translate}}</span>
+        <span ng-if="content.contentType=='forumpost'"><i class="fab fa-wpforms text-primary" style="font-size: 0.8em; padding: 8px 8px 0px 22px;"></i>{{'FORUM_POST' | translate}}</span>
     </div>
 </div>
