@@ -10,8 +10,8 @@
     <div class="video-title" style="margin-top: 30px;">{{video.title}}</div>
     <p style="margin-bottom: 50px;"><a href="https://universida.de/v/id/{{video._id}}">https://universida.de/v/id/{{video._id}}</p></a>
 
-        <h1>O seu vídeo esta sendo processado.</h1>
-        <h4>Aguarde alguns instantes. O seu vídeo vai estar disponível para todos.</h4>
+        <h1>{{'VIDEO_BEING_PROCESSED' | translate}}</h1>
+        <h4>{{'VIDEO_WAIT_A_FEW_MOMENT' | translate}}</h4>
 
         <!--
   <div class="alert bg-primary-green">Este vídeo esta sendo processado.</div>
@@ -24,7 +24,7 @@
     .plyr {
         height: 100% !important;
     }
-    
+
     .plyr__video-wrapper {
         height: 100% !important;
     }
@@ -58,16 +58,16 @@
             </div>
 
             <div class="video-description">
-                <div class="title">Descrição</div>
+                <div class="title">{{'DESCRIPTION' | translate}}</div>
                 <div class="text" ng-bind-html="video.description"></div>
             </div>
             <!-- -->
 
             <div class="video-forum">
 
-                <div class="title">Comentários</div>
+                <div class="title">{{'VIDEO_COMMENTS' | translate}}</div>
 
-                <p style="padding-top: 30px;" ng-show="forumPost.answers.length == 0">Nenhum comentario postado</p>
+                <p style="padding-top: 30px;" ng-show="forumPost.answers.length == 0">{{"NO_COMMENTS_POSTED" | translate}}</p>
 
                 <forumpostanswer p="{{forumPost._id}}" u="{{forumPost.universityId}}" ng-show="forumPost.answers.length > 0" a="{{answer}}" ng-repeat="answer in forumPost.answers | orderBy:'-votesCount'"></forumpostanswer>
 
@@ -76,7 +76,7 @@
             <div class="academia-content-forum-answer">
 
                 <div class="academia-content-forum-answer-title">
-                    Escreva o seu comentário
+                    {{'VIDEO_WRITE_COMMENT' | translate}}
                 </div>
 
 
@@ -96,7 +96,7 @@
                 </div>
 
                 <div class="academia-content-forum-answer-action">
-                    <button class="btn btn-blue" ng-click="createAnswerPost()">Postar</button>
+                    <button class="btn btn-blue" ng-click="createAnswerPost()">{{'VIDEO_POST' | translate}}</button>
                 </div>
 
             </div>
@@ -109,12 +109,12 @@
 
             <div class="video-admin video-rightbar-area">
 
-                <div class="title">ADMINISTRAÇÃO</div>
+                <div class="title">{{'VIDEO_ADMINISTRATION' | translate}}</div>
 
                 <div class="buttons">
 
                     <!--<button class="btn btn-bluebase" style="margin-right: 15px;"><i class="fas fa-pencil-alt" style="padding-right: 5px;"></i> Editar</button>-->
-                    <button class="btn btn-bluebase" ng-click="openViewers()"><i class="fa fa-eye" style="padding-right: 5px;" aria-hidden="true"></i> Visualizações</button>
+                    <button class="btn btn-bluebase" ng-click="openViewers()"><i class="fa fa-eye" style="padding-right: 5px;" aria-hidden="true"></i> {{'VIEWS' | translate}}</button>
 
                 </div>
 

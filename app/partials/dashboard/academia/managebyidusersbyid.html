@@ -22,25 +22,25 @@
     <div class="col-xs-12 col-sm-9 col-md-9 col-lg-10 dashboard-content">
 
       <ul class="breadcrumb">
-        <li><a href="#">Reitoria</a></li>
-        <li><a href="/dashboard/a/manage">Administrar Universidades</a></li>
+        <li><a href="#">{{'DASH_RECTORY' | translate}}</a></li>
+        <li><a href="/dashboard/a/manage">{{'MANAGE_UNIVERSITIES' | translate}}</a></li>
         <li><a href="/dashboard/a/manage/id/{{university._id}}">{{university.name}}</a></li>
-        <li><a href="/dashboard/a/manage/id/{{universityId}}/users">Ver todos</a></li>
+        <li><a href="/dashboard/a/manage/id/{{universityId}}/users">{{'SEE_ALL' | translate}}</a></li>
         <li><a href="/dashboard/a/manage/id/{{universityId}}/users/id/{{student._id}}">{{student.name}}</a></li>
       </ul>
 
       <div class="dashboard-content-title">
-        <h3>View User</h3>
+        <h3>{{'VIEW_USER' | translate}}</h3>
       </div>
 
       <div class="row">
 
         <div class="col-xs-12 col-sm-12 manage-user infos">
 
-          <div class="headline-sub-three" style="padding: 0; padding-bottom: 15px;">Nome</div>
+          <div class="headline-sub-three" style="padding: 0; padding-bottom: 15px;">{{'NOME' | translate}}</div>
           <div class="headline-sub-two" style="padding: 0;">{{student.name}}</div>
 
-          <div class="headline-sub-three" style="padding-top: 30px; padding-bottom: 15px;">Username</div>
+          <div class="headline-sub-three" style="padding-top: 30px; padding-bottom: 15px;">{{'USERNAME' | translate}}</div>
           <div class="headline-sub-two" style="padding: 0;">{{student.username}}</div>
 
         </div>
@@ -50,7 +50,7 @@
       <!-- end row -->
 
       <div class="dashboard-content-title">
-        <h3>Permissões do usuário</h3>
+        <h3>{{'USER_PERMISSIONS' | translate}}</h3>
       </div>
 
       <div class="row">
@@ -59,29 +59,29 @@
 
           <div class="alert bg-primary-green" ng-show="success.status">{{success.text}}</div>
 
-          <div class="headline-sub-three" style="padding: 0; padding-bottom: 15px;">Permissão atual</div>
+          <div class="headline-sub-three" style="padding: 0; padding-bottom: 15px;">{{'CURRENT_PERMIT' | translate}}</div>
           <div class="headline-sub-two" style="padding: 0;">
-            <div ng-if="privilege == 99">Administrator</div>
-            <div ng-if="privilege == 50">Time</div>
-            <div ng-if="privilege == 10">Premium</div>
-            <div ng-if="privilege == 0">Regular</div>
+            <div ng-if="privilege == 99">{{'ADMINISTRATOR' | translate}}</div>
+            <div ng-if="privilege == 50">{{'TEAM' | translate}}</div>
+            <div ng-if="privilege == 10">{{'PREMIUM' | translate}}</div>
+            <div ng-if="privilege == 0">{{'REGULAR' | translate}}</div>
           </div>
 
           <div class="form-group" style="padding-top: 30px;">
 
-            <div class="headline-sub-three" style="padding-top: 0px; padding-bottom: 15px;">Configurar permissão do usuário</div>
+            <div class="headline-sub-three" style="padding-top: 0px; padding-bottom: 15px;">{{'SET_USER_PERMISSION' | translate}}</div>
             <select ng-model="privilege" style="width: 50%; max-width: 350px;">
-              <option value="99" ng-selected="privilege == 99">Administrator</option>
-              <option value="50" ng-selected="privilege == 50">Time</option>
-              <option value="10" ng-selected="privilege == 10">Premium</option>
-              <option value="0" ng-selected="privilege == 0">Regular</option>
+              <option value="99" ng-selected="privilege == 99">{{'ADMINISTRATOR' | translate}}</option>
+              <option value="50" ng-selected="privilege == 50">{{'TEAM' | translate}}</option>
+              <option value="10" ng-selected="privilege == 10">{{'PREMIUM' | translate}}</option>
+              <option value="0" ng-selected="privilege == 0">{{'REGULAR' | translate}}</option>
             </select>
 
           </div>
           <!-- end form-group -->
 
           <div class="form-group" style="text-align: right;">
-            <button ng-click="setMemberPrivilege()" class="btn btn-green" style="width: 50%; max-width: 200px;">Salvar</button>
+            <button ng-click="setMemberPrivilege()" class="btn btn-green" style="width: 50%; max-width: 200px;">{{'SAVE' | translate}}</button>
           </div>
 
         </div>

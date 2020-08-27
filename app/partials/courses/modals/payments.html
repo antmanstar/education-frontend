@@ -18,7 +18,7 @@
 
     <div class="form" style="position: absolute; bottom: 0; left: 0; width: 100%; padding-left: 15px; padding-right: 15px;">
 
-      <button ng-click="informationAction()" class="btn btn-bluebase" style="color: #fff;"><b>Confirmar pedido</b></button>
+      <button ng-click="informationAction()" class="btn btn-bluebase" style="color: #fff;"><b>{{'CONFIRM_ORDER' | translate}}</b></button>
 
     </div>
     <!-- end form -->
@@ -32,24 +32,24 @@
 
       <!-- Add back functionality-->
       <label ng-click="goToPage('order')"  style="margin-top: 8px; color: darkgray; cursor: pointer;">
-        <i class="fas fa-chevron-left" style="margin-right: 8px;" ></i>Back
+        <i class="fas fa-chevron-left" style="margin-right: 8px;" ></i>{{'BACK' | translate}}
       </label>
       <!-- end of Back -->
 
-      <div class="headline-sub-one" style="margin-bottom: 30px;">Adicionar cartão</div>
+      <div class="headline-sub-one" style="margin-bottom: 30px;">{{'ADD_CARD' | translate}}</div>
 
       <div class="alert bg-primary-red" ng-show="validationError != undefined">{{validationError}}</div>
 
       <form ng-model="form">
 
         <div class="form-group">
-          <label>Nome no cartão</label>
-          <input ng-model="cardName" placeholder="Escreva o seu nome no cartão" type="text" />
+          <label>{{'CARDHOLDER' | translate}}</label>
+          <input ng-model="cardName" placeholder="{{'MR_CARDHOLDER' | translate}}" type="text" />
         </div>
         <!-- end form group -->
 
         <div class="form-group">
-          <label>Cartão</label>
+          <label>{{'CARD' | translate}}</label>
           <stripe-element instance="card"></stripe-element>
         </div>
         <!-- end form group -->
@@ -61,7 +61,7 @@
 
     <div class="form" style="position: absolute; bottom: 0; left: 0; width: 100%; padding-left: 15px; padding-right: 15px;">
 
-      <button ng-click="cardAdd()" class="btn btn-green"><b ng-hide="loading">Adicionar cartão</b><img style="width: 30px;" ng-show="loading" src="img/misc/loading.gif" /></button>
+      <button ng-click="cardAdd()" class="btn btn-green"><b ng-hide="loading">{{'ADD_CARD' | translate}}</b><img style="width: 30px;" ng-show="loading" src="img/misc/loading.gif" /></button>
 
     </div>
     <!-- end form -->
@@ -73,12 +73,12 @@
 
     <div class="col-xs-12">
 
-      <div class="headline-sub-one">Confirmar pedido</div>
+      <div class="headline-sub-one">{{'CONFIRM_ORDER' | translate}}</div>
       <div class="alert bg-primary-red" ng-show="errorMsg != undefined">{{errorMsg}}</div>
       <div style="padding-top: 15px;">
 
         <div>
-          <label style="padding-bottom: 15px;">Seu pedido</label>
+          <label style="padding-bottom: 15px;">{{'YOUR_ORDER' | translate}}</label>
         </div>
 
         <div>
@@ -97,19 +97,20 @@
 
         <div class="form-group">
 
-          <label style="padding-bottom: 15px;">Cartão de crédito ou débito</label>
+          <label style="padding-bottom: 15px;">{{'CREDIT_OR_DEBIT' | translate}}</label>
 
           <!---Display notification if student does not have a credit card yet --->
-          <div class="alert bg-primary-blue" ng-show="!hasCard">Nenhum cartão encontrado. Por favor, adicione um cartão de crédito.</div>
+
+          <div class="alert bg-primary-blue" ng-show="!hasCard">{{'NO_CARD_FOUND' | translate}}</div>
           <div style="margin-top: 15px;">
-            <p class="text-color-primary-blue" ng-show="!hasCard" ng-click="goToPage('cardAdd')">+ adicionar novo cartão</p>
+            <p class="text-color-primary-blue" ng-show="!hasCard" ng-click="goToPage('cardAdd')">+ {{'ADD_NEW_CARD' | translate}}</p>
           </div>
 
           <!-- Since student can only update/change credit card and cannot add another one, so we just display the card info -->
           <div ng-show="hasCard">
             {{savedCard.brand}} - {{savedCard.last4}}
             <div style="float: right;">
-              <div class="text-color-primary-blue" style="cursor: pointer;" ng-click="goToPage('cardAdd')">editar cartão</div>
+              <div class="text-color-primary-blue" style="cursor: pointer;" ng-click="goToPage('cardAdd')">{{'EDIT_CARD' | translate}}</div>
             </div>
           </div>
 
@@ -130,7 +131,7 @@
 
     <div class="form" style="position: absolute; bottom: 0; left: 0; width: 100%; padding-left: 15px; padding-right: 15px;">
 
-      <button ng-disabled="!hasCard" ng-click="handleSubmit()" class="btn btn-green"><b ng-hide="loading">Confirmar</b><img style="width: 30px;" ng-show="loading" src="img/misc/loading.gif" /></button>
+      <button ng-disabled="!hasCard" ng-click="handleSubmit()" class="btn btn-green"><b ng-hide="loading">{{'CONFIRM' | translate}}</b><img style="width: 30px;" ng-show="loading" src="img/misc/loading.gif" /></button>
 
     </div>
     <!-- end form -->

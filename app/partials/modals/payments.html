@@ -25,20 +25,20 @@
 
     <div class="col-xs-12">
 
-      <div class="headline-sub-one" style="margin-bottom: 30px;">Adicionar cartão</div>
+      <div class="headline-sub-one" style="margin-bottom: 30px;">{{'ADD_CARD' | translate}}</div>
 
       <div class="alert bg-primary-red" ng-show="validationError != undefined">{{validationError}}</div>
 
       <form ng-model="form">
 
         <div class="form-group">
-          <label>Nome no cartão</label>
-          <input ng-model="cardName" placeholder="Escreva o seu nome no cartão" type="text" />
+          <label>{{'CARDHOLDER' | translate}}</label>
+          <input ng-model="cardName" placeholder="{{'MR_CARDHOLDER' | translate}}" type="text" />
         </div>
         <!-- end form group -->
 
         <div class="form-group">
-          <label>Cartão</label>
+          <label>{{'CARD' | translate}}</label>
           <stripe-element instance="card"></stripe-element>
         </div>
         <!-- end form group -->
@@ -50,7 +50,7 @@
 
     <div class="form" style="position: absolute; bottom: 0; left: 0; width: 100%; padding-left: 15px; padding-right: 15px;">
 
-      <button ng-click="cardAdd()" class="btn btn-green"><b ng-hide="loading">Adicionar cartão</b><img style="width: 30px;" ng-show="loading" src="img/misc/loading.gif" /></button>
+      <button ng-click="cardAdd()" class="btn btn-green"><b ng-hide="loading">{{'ADD_CARD' | translate}}</b><img style="width: 30px;" ng-show="loading" src="img/misc/loading.gif" /></button>
 
     </div>
     <!-- end form -->
@@ -62,16 +62,16 @@
 
     <div class="col-xs-12">
 
-      <div class="headline-sub-one">Confirmar pedido</div>
+      <div class="headline-sub-one">{{'CONFIRM_ORDER' | translate}}</div>
 
       <div style="padding-top: 15px;">
 
         <div>
-          <label style="padding-bottom: 15px;">Seu pedido</label>
+          <label style="padding-bottom: 15px;">{{'YOUR_ORDER' | translate}}</label>
         </div>
 
         <div>
-          Assinatura {{plan.name}}
+          {{'SUBSCRIPTION' | translate}} {{plan.name}}
           <div style="float: right;">
             <div style="display: inline-block;" ng-if="plan.currency == 'brl'">R$</div> <div style="display: inline-block" ng-if="plan.currency == 'usd'">$</div> <div style="display: inline-block">{{planAmount(plan.amount)}}</div>
           </div>
@@ -84,14 +84,14 @@
 
         <div class="form-group">
 
-          <label style="padding-bottom: 15px;">Cartão de crédito ou débito</label>
+          <label style="padding-bottom: 15px;">{{'CREDIT_OR_DEBIT' | translate}}</label>
 
           <select ng-model="ae" ng-show="cards.sources.data.length > 0 ">
             <option ng-repeat="card in cards.sources.data" ng-selected="card.id == cards.default_source" value="{{card.id}}">{{card.brand}} - {{card.last4}}</option>
           </select>
 
           <div style="margin-top: 15px;">
-            <p class="text-color-primary-blue" ng-click="goToPage('cardAdd')">+ adicionar novo cartão</p>
+            <p class="text-color-primary-blue" ng-click="goToPage('cardAdd')">+ {{'ADD_NEW_CARD' | translate}}</p>
           </div>
 
         </div>
@@ -105,7 +105,7 @@
 
     <div class="form" style="position: absolute; bottom: 0; left: 0; width: 100%; padding-left: 15px; padding-right: 15px;">
 
-      <button ng-click="confirmOrder()" class="btn btn-green"><b ng-hide="loading">Confirmar</b><img style="width: 30px;" ng-show="loading" src="img/misc/loading.gif" /></button>
+      <button ng-click="confirmOrder()" class="btn btn-green"><b ng-hide="loading">{{'CONFIRM' | translate}}</b><img style="width: 30px;" ng-show="loading" src="img/misc/loading.gif" /></button>
 
     </div>
     <!-- end form -->

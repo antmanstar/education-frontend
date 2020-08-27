@@ -1,9 +1,9 @@
 <a ng-repeat="u in university" href="/cursos/id/{{u._id}}" target="_blank" style="color: unset;;color: unset;width:100%" class="col-xs-12 col-sm-6 col-md-4 course-box-wrapper ng-scope" c="5dd229da6d7c71000419c5d0" ng-repeat="course in courses">
 <div class="course-box" style="min-height:150px">
   <div class="title ng-binding">{{u.title}}</div>
-  <div style="color: #9f9f9f; font-size: 1.1em;"><div style="width: 15px; text-align: center; display: inline-block;"><i class="fas fa-bullseye"></i></div> <b>Modulo:</b><br>{{u.module.length}}</div>
+  <div style="color: #9f9f9f; font-size: 1.1em;"><div style="width: 15px; text-align: center; display: inline-block;"><i class="fas fa-bullseye"></i></div> <b>{{'MODULE' | translate}}:</b><br>{{u.module.length}}</div>
   <br>
-  <div style="color: #9f9f9f; font-size: 1.1em;"><i class="fas fa-chalkboard-teacher"></i> <b>Instrutora:</b><br><img style="border-radius: 5px;" width="18px" height="18px" src="https://storage.googleapis.com/educationalcommunity-upload/images/1569441207/a0.jpg">{{u.instructors.length}}</div>
+  <div style="color: #9f9f9f; font-size: 1.1em;"><i class="fas fa-chalkboard-teacher"></i> <b>{{'INSTRUCTOR' | translate}}:</b><br><img style="border-radius: 5px;" width="18px" height="18px" src="https://storage.googleapis.com/educationalcommunity-upload/images/1569441207/a0.jpg">{{u.instructors.length}}</div>
   <!--<div style="font-size: 1.1em; margin-top: 5px;" ng-bind-html="textFilter(course.description)"></div>-->
 </div>
 </a>

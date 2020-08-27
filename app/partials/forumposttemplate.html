@@ -25,7 +25,7 @@
     <div class="academia-content-forum-post-info" style="position: relative;">
 
         <div ng-hide="studentReaded" style="position: absolute; top: 0; right: 0; padding: 5px; background-color: #2d4255; color: #fff; border-radius: 5px; font-size: 0.85em;">
-            <i class="fa fa-eye" style="padding-right: 2px;" aria-hidden="true"></i> Novo</div>
+            <i class="fa fa-eye" style="padding-right: 2px;" aria-hidden="true"></i> {{'NEW' | translate}}</div>
 
         <div class="academia-content-forum-post-info-title">
 
@@ -33,23 +33,23 @@
 
         </div>
 
-        <div class="academia-content-forum-post-info-stats">postado faz <span am-time-ago="post.createdAt | amFromUnix"></span></div>
+        <div class="academia-content-forum-post-info-stats">{{'POST_AGO_1' | translate}} <span am-time-ago="post.createdAt | amFromUnix"></span></div>
 
         <div class="academia-content-forum-post-info-actions">
 
-            <a class="action" href="/a/{{university.url}}/forum/post/id/{{post._id}}">{{post.answers.length}} respostas</a>
+            <a class="action" href="/a/{{university.url}}/forum/post/id/{{post._id}}">{{post.answers.length}} {{'REPLIES' | translate}}</a>
             <a class="action" href="/a/{{university.url}}/forum/post/id/{{post._id}}">{{post.visualization.length}}
-        visualizações</a>
+        {{'VIEWS' | translate}}</a>
             <a class="action" ng-if="viewers.length > 0" ng-mouseover="viewersParse()">{{viewers.length}} <div
-          ng-if="viewers.length <= 1" style="display: inline-block;">visualização única</div>
-        <div ng-if="viewers.length > 1" style="display: inline-block;">visualizações únicas</div>
+          ng-if="viewers.length <= 1" style="display: inline-block;">{{'UNIQUEVIEW' | translate}}</div>
+        <div ng-if="viewers.length > 1" style="display: inline-block;">{{'UNIQUEVIEWS' | translate}}</div>
       </a>
 
         </div>
 
         <div class="academia-content-viewers animated fadeIn faster" ng-show="viewersParsed.length > 0">
 
-            <p><b>Visualizações</b></p>
+            <p><b>{{'VIEWS' | translate}}</b></p>
 
             <div style="padding-bottom: 5px;" class="academia-content-viewers-user" ng-if="viewersParsed.length > 0" ng-repeat="v in viewersParsed | limitTo : 5">
                 <img class="academia-content-viewers-user-pic" ng-if="v.imageUrl == undefined" src="img/user/user.png" />

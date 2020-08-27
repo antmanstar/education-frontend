@@ -185,15 +185,15 @@
 
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
       <div style="height: 10px;"></div>
-      <a href="/cursos/a/{{universityid}}/suite/owner"><i class="fas fa-arrow-left"></i> VOLTAR PARA CURSOS</a>
-      <div class="title" style="font-size: 3em; font-weight: bold; line-height: 1em;">{{course.title}}</div>
+      <a href="/cursos/a/{{universityid}}/suite/owner"><i class="fas fa-arrow-left"></i> {{'BACK_TO_COURSE' | translate}}</a>
+      <div class="title" style="font-size: 3em; font-weight: bold; line-height: 1em; margin: 4rem 0;">{{course.title}}</div>
 
       <!-- NAVIGATION -->
       <nav style="position: relative; z-index: 0 !important;">
         <div class="navbar-slider navbar-slider-content">
-          <div class="option option-course" ng-click="selectTab('module')" ng-class="{'active': section == 'module'}">Módulos</div>
-          <div class="option option-course" ng-click="selectTab('member')" ng-class="{'active': section == 'member'}">Membros</div>
-          <div class="option option-course" ng-click="selectTab('content')" ng-class="{'active': section == 'content'}">Conteúdos</div>
+          <div class="option option-course" ng-click="selectTab('module')" ng-class="{'active': section == 'module'}">{{'MODULES' | translate}}</div>
+          <div class="option option-course" ng-click="selectTab('member')" ng-class="{'active': section == 'member'}">{{'MEMBERS' | translate}}</div>
+          <div class="option option-course" ng-click="selectTab('content')" ng-class="{'active': section == 'content'}">{{'CONTENTS' | translate}}</div>
           <!--<div class="option option-course" ng-click="selectTab('instructor')" ng-class="{'active': section == 'instructor'}">Instrutores</div>-->
         </div>
         <!-- end navbar-slider --> <!--ng-controller="CoursesByIdManagementNavBarCtrl"-->
@@ -214,16 +214,16 @@
 
                 <div class="col-xs-12" style="text-align: right; margin-bottom: 15px;">
 
-                  <button type="button" class="btn btn-mini btn-green" style="height: 29px; width: unset;" ng-click="moduleCreate(course._id)">Adicionar modulo</button>
+                  <button type="button" class="btn btn-mini btn-green" style="height: 29px; width: unset;" ng-click="moduleCreate(course._id)">{{'ADD_MODULE' | translate}}</button>
 
                 </div>
                 <!-- end col-sm-12 -->
 
                 <div class="col-xs-12" style="padding-top: 15px;" ng-if="course.module.length == 0">
-                  <b>Nenhum módulo adicionado nesse curso</b>
+                  <b>{{'NO_MODULE_ADDED' | translate}}</b>
                 </div>
 
-                <div class="col-xs-12 col-sm-4" ng-repeat="module in course.module">
+                <div class="col-xs-12 col-sm-4" ng-repeat="module in course.module" ng-if="module.moduleId.active == true">
 
                   <div class="course-card" style="cursor: pointer;">
                     <a style="color: unset;" href="/cursos/a/{{universityid}}/suite/modulos/id/{{module.moduleId._id}}">
@@ -237,7 +237,7 @@
                       <div class="topic">
 
                         <div class="line" style="font-size: 1em;">
-                          <i class="fas fa-bullseye"></i>OBJETIVO
+                          <i class="fas fa-bullseye"></i>{{'OBJECTIVE_UPPERCASE' | translate}}
                         </div>
 
                         <div class="text">
@@ -250,7 +250,7 @@
                       <div class="topic">
 
                         <div class="line" style="font-size: 1em;">
-                          <i class="fas fa-clock"></i>DURAÇÃO
+                          <i class="fas fa-clock"></i>{{'DURATION_UPPERCASE' | translate}}
                         </div>
 
                         <div class="text">
@@ -263,7 +263,7 @@
                       <div class="topic">
 
                         <div class="line" style="font-size: 1em;">
-                          <i class="fa fa-file"></i> CONTEÚDOS
+                          <i class="fa fa-file"></i> {{'CONTENTS' | translate}}
                         </div>
 
                         <div class="text pt">
@@ -280,15 +280,15 @@
                     <div class="text-right">
 
                       <span>
-                        <i class="fa fa-pencil-square-o text-success" style="padding-right: 10px;" aria-hidden="true" ng-click="updateModule(module)"></i>
+                        <i class="fa fa-pencil-square-o text-success" style="padding-right: 10px;" aria-hidden="true" ng-click="updateModule(module.moduleId)"></i>
 
-                        <i class="far fa-trash-alt text-danger" aria-hidden="true" ng-click="openDeletePopup(module._id)"></i>
+                        <i class="far fa-trash-alt text-danger" aria-hidden="true" ng-click="openDeletePopup(module.moduleId._id)"></i>
                       </span>
                     </div>
 
                   </div>
                   <!-- end courses card -->
-                  
+
                 </div>
                 <!-- MODULO -->
 
@@ -300,17 +300,17 @@
             <div class="tab-pane active" ng-show="section == 'member'">
               <!-- member section -->
               <div class="row">
-                <div class="col-md-12">
-                  Sales: {{course.salesss}}
+                <div class="col-md-12"style="margin: 2em 0;">
+                  {{'SALES' | translate}}: {{course.salesss}}
                   <table class="table table-bordered members-table">
                     <thead class="text-center tHead">
                       <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Nome</th>
-                        <th scope="col">Data adesão</th>
+                        <th scope="col">{{'NOME' | translate}}</th>
+                        <th scope="col">{{'DATE_ACCESSED' | translate}}</th>
 
-                        <th scope="col">Pagamento</th>
-                        <th scope="col">Ação</th>
+                        <th scope="col">{{'PAYMENT' | translate}}</th>
+                        <th scope="col">{{'ACTION' | translate}}</th>
                       </tr>
                     </thead>
                     <tbody class="tBody">
@@ -325,14 +325,27 @@
             <!-- ng-controller="CoursesContentModulosCtrl" -->
             <div class="tab-pane active" ng-controller="CoursesContentModulosCtrl" ng-show="section == 'content'">
               <!-- content section -->
+              <div class="col-xs-12 col-sm-12">
+                <div style="padding-top: 10px;">
+                  <div style="float: right;"><button  class="btn bg-base" style="margin-top: 2px; height: 29px; width: unset;" ng-click="conteudocriar()">{{'CREATE_CONTENT' | translate}}</button></div>
+                </div>
+              </div>
+
               <div class="row" style="margin-top: 10px;">
                 <div class="col-md-6" ng-repeat="item in modulesByAccount"  style="cursor: pointer;">
                   <div style="border-bottom: 1px solid #cccc; padding: 20px;">
                     <div style="display: inline-block; padding-right: 5px;">
 
-                      <i ng-if="item.contentType=='page'" class="fa fa-file-video" style="font-size: 30px; color: #e80f06;"></i>
+                      <!--i ng-if="item.contentType=='page'" class="fa fa-file-video" style="font-size: 30px; color: #e80f06;"></i>
 
-                      <i ng-if="item.contentType=='quiz'" class="fa fa-question-circle text-success" style="font-size: 30px; color: #80c81b;" ></i>
+                      <i ng-if="item.contentType=='quiz'" class="fa fa-question-circle text-success" style="font-size: 30px; color: #80c81b;" ></i-->
+                      <img ng-if="item.contentType=='forumpost'" width="30px" height="30px" src="https://visualpharm.com/assets/811/Discussion%20Forum-595b40b65ba036ed117d396c.svg" />
+
+                      <img ng-if="item.contentType=='page'" width="30px" height="30px" src="https://visualpharm.com/assets/197/Documents-595b40b65ba036ed117d2bf0.svg" />
+
+                      <img ng-if="item.contentType=='quiz'" style="width:30px; height:30px;" src="https://visualpharm.com/assets/632/Test%20Passed-595b40b65ba036ed117d34c6.svg">
+
+                      <img ng-if="item.contentType=='video'" width="30px" height="30px" src="https://visualpharm.com/assets/770/Video%20File-595b40b85ba036ed117dad88.svg" />
 
                     </div>
                     <div style="display: inline-block; line-height: 30px; vertical-align: top; font-size: 1.1em; color: #536473; font-weight: bold;">{{item.title}}</div>
@@ -352,7 +365,7 @@
 
                 <div class="col-sm-12" style="text-align: right; margin-bottom: 15px;">
                   {{course}}
-                  <button type="button" class="btn btn-mini btn-green" style="height: 29px; width: unset;" ng-click="addInstructors(course.university, course._id)">Adicionar instrutor</button>
+                  <button type="button" class="btn btn-mini btn-green" style="height: 29px; width: unset;" ng-click="addInstructors(course.university, course._id)">{{'ADD_INSTRUCTOR' | translate}}</button>
 
                 </div>
                 <!-- end col-sm-12 -->
@@ -363,10 +376,10 @@
                     <thead class="text-center tHead">
                       <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Join From</th>
+                        <th scope="col">{{'NOME' | translate}}</th>
+                        <th scope="col">{{'JOIN_FROM' | translate}}</th>
 
-                        <th scope="col">Action</th>
+                        <th scope="col">{{'ACTION' | translate}}</th>
                       </tr>
                     </thead>
                     <tbody class="tBody">
@@ -395,10 +408,10 @@
 <!-- content delete popup-->
 <script type="text/ng-template" id="deleteContentPopup">
   <div class="container-fluid text-center delete-container">
-    <h3>Você tem certeza que quer deletar esse conteúdo?</h3>
+    <h3>{{'SURE_DELETE_CONTENT' | translate}}</h3>
     <div class="delete-buttons-div">
-      <button class="btn btn-danger" ng-disabled="deleteLoading" ng-click="deleteContent()">Delete <img style="width: 15px;" ng-show="deleteLoading == true" src="img/misc/loading.gif"/></button>
-      <button class="btn btn-dark" ng-click="closePopup()">Cancel</button>
+      <button class="btn btn-danger" ng-disabled="deleteLoading" ng-click="deleteContent()">{{'DELETE' | translate}} <img style="width: 15px;" ng-show="deleteLoading == true" src="img/misc/loading.gif"/></button>
+      <button class="btn btn-dark" ng-click="closePopup()">{{'CANCEL' | translate}}</button>
     </div>
   </div>
 </script>
@@ -406,10 +419,10 @@
 <!-- module delete popup -->
 <script type="text/ng-template" id="deleteModulePopup">
   <div class="container-fluid text-center delete-container">
-    <h3>Você tem certeza que quer deletar esse módulo?</h3>
+    <h3>{{'SURE_DELETE_MODULE' | translate}}</h3>
     <div class="delete-buttons-div">
-      <button class="btn btn-danger" ng-disabled="deleteLoading" ng-click="deleteModule()">Delete <img style="width: 15px;" ng-show="deleteLoading == true" src="img/misc/loading.gif"/></button>
-      <button class="btn btn-dark" ng-click="closePopup()">Cancel</button>
+      <button class="btn btn-danger" ng-disabled="deleteLoading" ng-click="deleteModule()">{{'DELETE' | translate}} <img style="width: 15px;" ng-show="deleteLoading == true" src="img/misc/loading.gif"/></button>
+      <button class="btn btn-dark" ng-click="closePopup()">{{'CANCEL' | translate}}</button>
     </div>
   </div>
 </script>

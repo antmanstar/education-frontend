@@ -174,7 +174,7 @@
 
     <div class="row">
 
-      <div class="col-xs-12"><div style="font-size: 2.0em; font-weight: bolder;">Editar perfil</div></div>
+      <div class="col-xs-12"><div style="font-size: 2.0em; font-weight: bolder;">{{'EDIT_PROFILE' | translate}}</div></div>
 
     </div>
     <!-- end row -->
@@ -184,28 +184,30 @@
             <img class="profile-pic" ng-if="student.imageUrl != undefined" src="{{student.imageUrl}}"></img>
             <img class="profile-pic" ng-if="student.imageUrl == undefined" style="background-image: url('http://virtual-strategy.com/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png')"></img>
             <input type="hidden" id="file" ng-model="file">
-            <button class="btn bg-base upload_btn" id="upload_btn" >Selecionar foto</button>
+            <button class="btn bg-base upload_btn" id="upload_btn" >{{'SELECT_PHOTO' | translate}}</button>
         </div>
 
         <div class="col-xs-12 col-sm-7 col-md-7 col-lg-8 ">
             <div class="profile-manage-wrapper ">
-                <div style="padding-bottom: 5px;"><b>Nome</b></div>
-                <input ng-model="name" placeholder="Insira seu novo nome aqui" type="text" class="profile-name">
+
+                <div style="padding-bottom: 5px;"><b>{{'NOME' | translate}}</b></div>
+                <input ng-model="name" placeholder="{{'ENTER_NAME_HERE' | translate}}" type="text" class="profile-name">
 
                 <br>
-                <div style="padding-bottom: 5px;"><b>Senha</b></div>
-                <input ng-model="pwd" placeholder="Escreva aqui a sua nova senha" type="password" class="profile-pwd">
-                <input ng-model="rpwd" placeholder="Escreva novamente a sua nova senha" type="password" class="profile-pwd">
+                <div style="padding-bottom: 5px;"><b>{{'SENHA' | translate}}</b></div>
+                <input ng-model="pwd" placeholder="{{'TYPE_NEW_PASSWORD_HERE' | translate}}" type="password" class="profile-pwd">
+                <input ng-model="rpwd" placeholder="{{'RETYPE_NEW_PASSWORD' | translate}}" type="password" class="profile-pwd">
 
                 <br>
-                <div style="padding-bottom: 5px;"><b>Bio</b></div>
-                <textarea ng-model="bio" placeholder="Escreva a sua biografia" class="profile-bio"></textarea>
+                <div style="padding-bottom: 5px;"><b>{{'BIO' | translate}}</b></div>
+                <textarea ng-model="bio" placeholder="{{'WRITE_YOUR_BIO' | translate}}" class="profile-bio"></textarea>
+
             </div>
         </div>
     </div>
 
     <div style="margin-top: 50px; ">
-        <button class="btn save-btn" ng-click="save(croppedDataUrl) ">Salvar perfil</button>
+        <button class="btn save-btn" ng-click="save(croppedDataUrl) ">{{'SAVE_PROFILE' | translate}}</button>
     </div>
 
     <!-- <div class="row " style="margin-top: 10px; margin-bottom: 10px; ">

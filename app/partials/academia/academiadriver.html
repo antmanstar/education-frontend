@@ -105,7 +105,7 @@ socket.on("videopath", function(a) {
 
       <div class="academia-content-navigation" style="display: block;">
 
-        <div class="academia-content-navigation-option" style="font-size: 1.5em;">Upload</div>
+        <div class="academia-content-navigation-option" style="font-size: 1.5em;">{{'UPLOAD' | translate}}</div>
 
       </div>
       <!-- academia-content-navigation -->
@@ -116,7 +116,7 @@ socket.on("videopath", function(a) {
 
       <div>
         <input type="hidden" id="file" ng-model="file">
-        <div id="file_drop" dropzone="copy" title="drop files for upload" class="file-drop-area"><b>Para iniciar o upload,</b> arraste o arquivo aqui</div>
+        <div id="file_drop" dropzone="copy" title="drop files for upload" class="file-drop-area"><b>{{'START_UPLOAD' | translate}}</b> {{'DRAG_FILE_HERE' | translate}}</div>
         <!-- end file-drop-area -->
 
       </div>

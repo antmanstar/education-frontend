@@ -1,7 +1,7 @@
 <div class="container-fluid">
   <div class="panel panel-default panel-box" style="margin-top: 100px;">
     <div class="panel-body text-center">
-      <label>Select Instructor: </label><br>
+      <label>{{'SELECT_INSTRUCTOR' | translate}}: </label><br>
 
       <div class="col-sm-4" ng-repeat="member in university.members">
 
@@ -13,10 +13,10 @@
      </div>
 
      <br clear="all" />
-      <span class="text-danger" ng-show="selectedMember.length==0 || selectedMember == undefined">Select Member</span>
+      <span class="text-danger" ng-show="selectedMember.length==0 || selectedMember == undefined">{{'SELECT_MEMBER' | translate}}</span>
       <br>
       <div class="text-center">
-        <button class="btn btn-success" style="height: 29px; width: 40%;" ng-click="save()">Save</button>
+        <button class="btn btn-success" style="height: 29px; width: 40%;" ng-click="save()">{{'SAVE' | translate}}</button>
       </div>
 
     </div>

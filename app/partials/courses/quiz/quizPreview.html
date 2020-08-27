@@ -12,7 +12,7 @@
 
     <div class="panel-body quiz-panel">
       <span>Ques. {{indexQ+1}}</span>
-      <h4 class="text-uppercase">{{question.title}} {{res.ans_status}} <p ng-if="res.ans_status=='FALSE' class="text-danger">(Wrong answer)</p></h4>
+      <h4 class="text-uppercase">{{question.title}} {{res.ans_status}} <p ng-if="res.ans_status=='FALSE' class="text-danger">({{'QUIZ_WRONG_ANSWER' | translate}})</p></h4>
       <div class="row options-row" ng-if="question.title_type=='mcq'">
         <div class="col-md-6" ng-repeat="q in question.qes_options">
           <div class="quiz-options btn-info" ng-class="{test: $index == cor,test:$index+1==res.view_ans,testD:$index==res.answer-1 && res.ans_status!='true'}" >
@@ -34,7 +34,7 @@
 
     <div class="row">
       <div class="col-sm-3">
-        <button ng-click="showPrev()"  class="btn btn-primary pull-left label1">Previous</button>
+        <button ng-click="showPrev()"  class="btn btn-primary pull-left label1">{{'QUIZ_PREVIOUS' | translate}}</button>
       </div>
       <div class="col-sm-6 text-center">
         <span style="padding-top: 20px;">
@@ -42,7 +42,7 @@
         </span>
       </div>
       <div class="col-sm-3 text-right">
-        <button ng-click="showNext()" n class="btn btn-success pull-right label2">Next<i class="fas fa-chevron-right"></i></button>
+        <button ng-click="showNext()" n class="btn btn-success pull-right label2">{{'NEXT' | translate}}<i class="fas fa-chevron-right"></i></button>
       </div>
     </div>
 
