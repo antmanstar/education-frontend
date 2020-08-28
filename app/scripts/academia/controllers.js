@@ -2071,14 +2071,14 @@ angular.module('netbase')
     let universityUrl = $route.current.params.academiaName;
     let displayinvite = false;
 
-        //Set to localstorage for use in creating category
-        $localStorage.universityUrl = universityUrl
+    //Set to localstorage for use in creating category
+    $localStorage.universityUrl = universityUrl
 
-        /* forum posts */
-        $scope.forumPosts = [];
-        $scope.page = 1;
-        $scope.pages = 1;
-        $scope.loaded = false;
+    /* forum posts */
+    $scope.forumPosts = [];
+    $scope.page = 1;
+    $scope.pages = 1;
+    $scope.loaded = false;
 
     if ($location.search().page != undefined) {
         $scope.page = $location.search().page;
@@ -2435,23 +2435,18 @@ angular.module('netbase')
         let data = {
             title: $scope.title,
             description: $scope.description,
-            privilegeMin: $scope.privilege.value
+            privilegeMin: $scope.privilege.value,
+            friendlyName: $scope.title + "channel",
+            uniqueName: "general"
         }
 
         Forum.createCategory(university._id, data).success(function(res) {
-
             console.log(res)
-
             if (res.success) {
-
                 $location.path("/a/" + university.url + "/forum/category/id/" + res.data._id)
-
             }
-
         });
-
     }
-
 }])
 
 .controller('AcademiaForumPostCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Forum', 'Courses', '$sce', '$localStorage', 'ngDialog', 'jwtHelper', '$timeout', function($rootScope, $scope, $location, $route, University, Forum, Courses, $sce, $localStorage, ngDialog, jwtHelper, $timeout) {
@@ -2514,7 +2509,6 @@ angular.module('netbase')
     }
 
     $scope.premium = function() {
-
         //check if logged before
         if ($localStorage.token != undefined && $localStorage.token != null) {
             //ngDialog.open({ template: 'partials/modals/payments.html', controller: 'PaymentsCtrl', className: 'ngdialog-theme-default', data : { flow : "order", page : "order" } });
@@ -2526,7 +2520,6 @@ angular.module('netbase')
 
     /* votes */
     $scope.votesCount = 0;
-
     $scope.updateForumPost = function() {
         $location.path("/a/" + universityUrl + "/forum/post/id/" + postId + "/update")
     }
@@ -3061,428 +3054,347 @@ angular.module('netbase')
                             })
                         },
                     });
+
+                    if ($localStorage.token != undefined && $localStorage.token != null) { // Check if logged in user
+                        GENERAL_CHANNEL_UNIQUE_NAME = jwtHelper.decodeToken($localStorage.token)._id;
+
+                        Students.getStudentById(GENERAL_CHANNEL_UNIQUE_NAME).then(res => {
+                            GENERAL_CHANNEL_NAME = res.data.data.name; // chat friendly name
+                            let url = '/university/chat_token/';
+                            University.getChatAccessToken(baseUrl + url).then((res) => {
+                                if (res.data.success == false) { // and device Id
+                                    console.log("ERROR")
+                                } else {
+                                    scope.chatCreate(res.data.token);
+                                    console.log('here chat created', res.data.token);
+                                }
+                            }).catch(err => {
+                                alert("ERROR" + err)
+                            });
+                        });
+                        scope.chatCreate();
+                    }
                 }
             });
 
             scope.selectCategoryChannel = (category) => {
                 scope.curCategory = category;
+                scope.getCurrentCategoryChannel().then(() => { // Load current acive channels and define
+                        scope.messagingClient.on('channelAdded', scope.getCurrentCategoryChannel); // events
+                        scope.messagingClient.on('channelRemoved', scope.getCurrentCategoryChannel);
+                        scope.messagingClient.on('tokenExpired', scope.chatCreate); // recreate access token when expired
+                        console.log('channel joined');
+                    })
+                    .catch((err) => {
+                        alert("No channel found" + scope.curCategory.title);
+                    });
             }
 
-            if ($localStorage.token != undefined && $localStorage.token != null) { // Check if logged in user
-                GENERAL_CHANNEL_UNIQUE_NAME = jwtHelper.decodeToken($localStorage.token)._id;
+            // create chat client
+            scope.chatCreate = (token) => {
+                Twilio.Chat.Client.create(token).then(client => {
+                    scope.messagingClient = client;
+                    scope.updateConnectedUI();
+                    scope.getCurrentCategoryChannel().then(() => { // Load current acive channels and define
+                            scope.messagingClient.on('channelAdded', scope.getCurrentCategoryChannel); // events
+                            scope.messagingClient.on('channelRemoved', scope.getCurrentCategoryChannel);
+                            scope.messagingClient.on('tokenExpired', scope.chatCreate); // recreate access token when expired
+                            console.log('channel joined');
+                        })
+                        .catch((err) => {
+                            alert("No channel found" + scope.curCategory.title);
+                        });
+                });
+            }
 
-                Students.getStudentById(GENERAL_CHANNEL_UNIQUE_NAME).then(res => {
-                    GENERAL_CHANNEL_NAME = res.data.data.name; // chat friendly name
-                    let url = '/university/chat_token/';
-                    University.getChatAccessToken(baseUrl + url).then((res) => {
-                        if (res.data.success == false) { // and device Id
-                            console.log("ERROR")
-                        } else {
-                            scope.chatCreate(res.data.token);
-                            console.log('here chat created', res.data.token);
+            scope.updateConnectedUI = () => {
+                console.log("Updated Connect UI");
+            }
+
+            scope.getCurrentCategoryChannel = () => {
+                return new Promise((resolve, reject) => {
+                    if (scope.messagingClient == null) {
+                        alert('Client is not initialized.');
+                        reject(new Error('none_message_client'));
+                    }
+
+                    scope.messagingClient.getChannelBySid(scope.curCategory.channelSid).then(channel => {
+                            scope.currentChannel = channel;
+                            scope.joinAdminChannel().then(() => {
+                                resolve();
+                            });
+                        })
+                        .catch((err) => {
+                            alert(err + " : " + scope.curCategory.title);
+                        });
+                });
+            }
+
+            scope.joinAdminChannel = () => {
+                return scope.setupChannel();
+            }
+
+            scope.setupChannel = () => {
+                return new Promise((resolve, reject) => { // channel and define channel events
+                    if (scope.currentChannel.status == 'joined') {
+                        scope.leaveCurrentChannel().then(() => {
+                                return scope.initChannel(scope.currentChannel);
+                            })
+                            .then((channel) => {
+                                return scope.joinChannel(channel);
+                            })
+                            .then((_channel) => {
+                                scope.currentChannel = _channel;
+                                scope.initChannelEvents();
+                                resolve();
+                            })
+                            .catch(err => {
+                                console.log(err);
+                                reject(new Error('error'));
+                            })
+                    } else {
+                        scope.initChannel(scope.currentChannel).then((channel) => {
+                            console.log(channel);
+                            scope.currentChannel = channel;
+                            scope.joinChannel(channel).then((_channel) => {
+                                scope.currentChannel = _channel;
+                                scope.initChannelEvents();
+                                resolve();
+                            })
+                        })
+                    }
+                });
+            }
+
+            scope.initChannel = channel => {
+                return scope.messagingClient.getChannelBySid(channel.sid);
+            }
+
+            scope.joinChannel = channel => {
+                return channel.join()
+                    .then(joinedChannel => {
+                        scope.currentChannel = joinedChannel;
+                        scope.loadMessages();
+                        return joinedChannel;
+                    })
+                    .catch(err => {
+                        if (channel.status == 'joined') {
+                            scope.loadMessages();
+                            return channel;
                         }
-                    }).catch(err => {
-                        scope.openDialog('ERROR', err);
+                        alert("Couldn't join channel " + channel.friendlyName + ' because -> ' + err);
+                    });
+            }
+
+            scope.initChannelEvents = () => { // Define channel events
+                scope.currentChannel.on('messageAdded', scope.addMessageToList);
+                scope.currentChannel.on('typingStarted', scope.showTypingStarted);
+                scope.currentChannel.on('typingEnded', scope.hideTypingStarted);
+                scope.currentChannel.on('memberJoined', scope.notifyMemberJoined);
+                scope.currentChannel.on('memberLeft', scope.notifyMemberLeft);
+            }
+
+            scope.sendMSG = () => { // Send message
+                let currentDate = new Date();
+                let month = currentDate.getMonth();
+                let day = currentDate.getDate();
+                let hour = currentDate.getHours();
+                let minute = currentDate.getMinutes();
+                let second = currentDate.getSeconds();
+                scope.sendingMessage = scope.months[month] + ' ' + day + ' ' + hour + ':' + minute + ':' + second + '::sent_time::' + $scope.sendingMessage;
+                scope.currentChannel.sendMessage(scope.sendingMessage);
+                scope.sendingMessage = '';
+            }
+
+            scope.addMessageToList = message => {
+                let currentMember = '';
+                let i;
+                for (i = 0; i < scope.members.length; i++) {
+                    if (scope.members[i].id == message.author) {
+                        currentMember = scope.members[i].name;
+                        break;
+                    }
+                }
+                if (currentMember == '') {
+                    Students.getStudentById(message.author).then((res) => {
+                        scope.members.push({
+                            id: message.author,
+                            name: res.data.data.name
+                        });
+
+                        scope.applyMessage(message, res.data.data.name);
+                        return;
+                    })
+                } else {
+                    scope.applyMessage(message, currentMember);
+                }
+            }
+
+            scope.addMember = message => {
+                let i;
+                return new Promise((resolve, reject) => {
+                    let currentMember = '';
+                    for (i = 0; i < scope.members.length; i++) {
+                        if (scope.members[i].id == message.author) {
+                            currentMember = scope.members[i].name;
+                            break;
+                        }
+                    }
+                    if (currentMember == "") {
+                        Students.getStudentById(message.author).then((res) => {
+                            currentMember = res.data.data.name;
+                            scope.members.push({
+                                id: message.author,
+                                name: currentMember
+                            });
+                            resolve();
+                        });
+                    } else {
+                        resolve();
+                    }
+                })
+            }
+
+            scope.loadMessages = () => {
+                let i;
+                console.log('loading messages');
+                scope.currentChannel.getMessages(MAX_LOAD_MESSAGE_COUNT).then(messages => {
+                    let messageArr = messages.items;
+                    messageArr.sort(msgSortFunc2);
+                    let promise = messageArr.reduce((accumulatorPromise, nextID) => {
+                        return accumulatorPromise.then(() => {
+                            return scope.addMember(nextID);
+                        });
+                    }, Promise.resolve());
+                    promise.then(() => {
+                        messageArr.forEach(scope.addMessageToList)
                     });
                 });
+            }
 
-                // scope.chatCreate = function(token) { // Create chat client
+            scope.applyMessage = (message, currentMember, id) => {
+                let messageListDom = document.getElementById('chat_list');
+                let messageTitleDom = document.createElement('div');
+                let messageTimeDom = document.createElement('div');
+                let messageBodyDom = document.createElement('div');
+                let messageItemDom = document.createElement('div');
 
-                //     Twilio.Chat.Client.create(token).then(function(client) {
-                //         $scope.messagingClient = client;
-                //         updateConnectedUI();
+                messageItemDom.setAttribute('id', id);
 
-                //         scope.loadChannelList().then(() => { // Load current acive channels and define
-                //                 $scope.messagingClient.on('channelAdded', $scope.loadChannelList); // events
-                //                 $scope.messagingClient.on('channelRemoved', $scope.loadChannelList);
-                //                 $scope.messagingClient.on('tokenExpired', $scope.chatCreate);
-                //                 console.log('admin channel joined');
-                //             })
-                //             .catch((err) => {
-                //                 console.log(err); // If there's no channels first create the Admin
-                //                 console.log('load channel list first failed.'); // channel and reload channel list and define events
-                //                 $scope.createAdminChannel().then((channel) => {
-                //                         console.log($scope.currentChannel);
-                //                         console.log(channel);
-                //                         console.log('create admin channel success');
-                //                         $scope.joinAdminChannel().then(() => {
-                //                                 $scope.messagingClient.on('channelAdded', $scope.loadChannelList);
-                //                                 $scope.messagingClient.on('channelRemoved', $scope.loadChannelList);
-                //                                 $scope.messagingClient.on('tokenExpired', $scope.chatCreate);
-                //                                 console.log('admin channel joined');
-                //                             })
-                //                             .catch((err) => {
-                //                                 console.log('load channel list second failed');
-                //                                 console.log(err);
-                //                             });
-                //                     })
-                //                     .catch((err) => {
-                //                         console.log(err);
-                //                         $scope.openDialog('ERROR', 'The admin chatting channel is not created yet');
-                //                     });
-                //             });
+                messageTitleDom.setAttribute('class', 'chat-title-st row');
+                messageBodyDom.setAttribute('class', 'chat-body-st');
+                messageTimeDom.setAttribute('class', 'chat-time-st');
 
-                //     });
-                //     //END Twilio.Chat.Client
+                let sentTime = message.body.substring(0, message.body.indexOf('::sent_time::'));
+                let messageBody = message.body.replace(sentTime + '::sent_time::', '');
+                let messageBodyTextDom = document.createElement('div');
+                messageBodyTextDom.innerText = messageBody;
 
-                // }
+                let avatar = document.createElement('img');
+                avatar.setAttribute('src', '/img/user/user.png');
 
-                // function updateConnectedUI() {
-                //     //
-                // }
+                let nameDom = document.createElement('div');
+                nameDom.innerText = currentMember;
+                nameDom.setAttribute('class', 'chat-name-st');
+                messageTimeDom.innerText = sentTime;
 
-                // $scope.loadChannelList = function() { // Load published channel lists and join user into the admin channel.
-                //     return new Promise((resolve, reject) => {
+                messageTitleDom.appendChild(nameDom);
+                messageTitleDom.appendChild(messageTimeDom);
 
-                //         if ($scope.messagingClient == null) {
-                //             $scope.openDialog('ERROR', 'Client is not initialized.');
-                //             reject(new Error('none_message_client'));
-                //         }
+                if (GENERAL_CHANNEL_UNIQUE_NAME == message.author) {
+                    messageItemDom.setAttribute('class', 'chat-item-st mine');
+                    messageBodyDom.appendChild(messageBodyTextDom);
+                    messageBodyDom.appendChild(avatar);
+                } else {
+                    messageItemDom.setAttribute('class', 'chat-item-st other');
+                    messageBodyDom.appendChild(avatar);
+                    messageBodyDom.appendChild(messageBodyTextDom);
+                }
 
-                //         $scope.messagingClient.getPublicChannelDescriptors().then(function(channels) {
+                messageItemDom.appendChild(messageBodyDom);
+                messageItemDom.appendChild(messageTitleDom);
+                messageListDom.appendChild(messageItemDom);
+                scope.scrollToMessageListBottom();
+            }
 
-                //             $scope.getPublicChannelsFromAllPages(channels).then(() => {
-                //                 let i;
+            scope.sendingInputKeyPress = $e => {
+                if ($e.keyCode == 13) {
+                    scope.sendMSG();
+                    $e.preventDefault();
+                }
+            }
 
-                //                 for (i = 0; i < $scope.publicChannelArr.length; i++) {
-                //                     if ($scope.publicChannelArr[i].uniqueName == roomSID) {
-                //                         break;
-                //                     }
-                //                 }
+            function getDateValue(date) {
+                let dateSplit = date.split(' ');
+                let res = 0;
+                res = scope.monthToVal[dateSplit[0]] * 30 * 24 * 60 * 60;
+                res += parseInt(dateSplit[1]) * 24 * 60 * 60;
+                let timeSplit = dateSplit[2].split(':');
+                res += parseInt(timeSplit[0]) * 60 * 60;
+                res += parseInt(timeSplit[1]) * 60;
+                res += parseInt(timeSplit[2]);
+                return res;
+            }
 
-                //                 if (i == $scope.publicChannelArr.length) {
-                //                     reject(new Error('none admin channel'));
-                //                 }
+            function msgSortFunc2(a, b) {
+                let sentTime1 = a.body.substring(0, a.body.indexOf('::sent_time::'));
+                let sentTime2 = b.body.substring(0, b.body.indexOf('::sent_time::'));
 
-                //                 $scope.messagingClient.getChannelBySid($scope.publicChannelArr[i].sid).then((comparingChannel) => {
-                //                     $scope.currentChannel = comparingChannel;
-                //                     $scope.joinAdminChannel().then(() => {
-                //                         resolve();
-                //                     });
-                //                 });
-                //             });
-                //         });
-                //     });
-                // }
+                if (getDateValue(sentTime1) > getDateValue(sentTime2)) return 1;
+                else return -1;
+            }
 
-                // $scope.getPublicChannelsFromAllPages = function(channel) {
-                //     return new Promise((resolve, reject) => {
-                //         if ($scope.publicChannelArr == null || $scope.publicChannelArr == undefined) {
-                //             $scope.publicChannelArr = [];
-                //         }
-                //         let i;
-                //         for (i = 0; i < channel.items.length; i++) {
-                //             $scope.publicChannelArr.push({ sid: channel.items[i].sid, uniqueName: channel.items[i].uniqueName });
-                //         }
-                //         if (channel.hasNextPage) {
-                //             channel.nextPage().then(nextChannel => {
-                //                 $scope.getPublicChannelsFromAllPages(nextChannel).then(() => {
-                //                     resolve();
-                //                 });
-                //             });
-                //         } else
-                //             resolve();
-                //     });
-                // }
+            scope.leaveCurrentChannel = function() {
+                if (scope.currentChannel) {
+                    return scope.currentChannel.leave().then(function(leftChannel) {
+                        leftChannel.removeListener('messageAdded', scope.addMessageToList);
+                        leftChannel.removeListener('typingStarted', scope.showTypingStarted);
+                        leftChannel.removeListener('typingEnded', scope.hideTypingStarted);
+                        leftChannel.removeListener('memberJoined', scope.notifyMemberJoined);
+                        leftChannel.removeListener('memberLeft', scope.notifyMemberLeft);
+                    });
+                } else {
+                    return Promise.resolve();
+                }
+            }
 
-                // $scope.createAdminChannel = function() { // Create Admin Channel( every chat channel created by roomSId so
-                //     return new Promise((resolve, reject) => { // as to be identical to every video chat room, and here roomSid
-                //         let studentId = jwtHelper.decodeToken($localStorage.token)._id; // varible is the admin roomSid.
-                //         if (studentId == accountSid) { // check if admin, so the user is not admin user, he can't create channel
-                //             $scope.messagingClient.createChannel({ // create admin channel
-                //                 uniqueName: roomSID,
-                //                 friendlyName: GENERAL_CHANNEL_NAME
-                //             }).then((channel) => {
-                //                 $scope.currentChannel = channel;
-                //                 resolve($scope.currentChannel);
-                //             }).catch((err) => {
-                //                 console.log(err);
-                //                 reject(new Error('already exists'));
-                //             })
-                //         } else {
-                //             reject(new Error('you are not admin'));
-                //         }
-                //     })
-                // }
+            function msgSortFunc1(arr) {
+                let i, j, temp;
+                for (i = 0; i < arr.length - 1; i++) {
+                    for (j = i + 1; j < arr.length; j++) {
+                        let sentTime1 = arr[i].body.substring(0, arr[i].body.indexOf('::sent_time::'));
+                        let sentTime2 = arr[j].body.substring(0, arr[j].body.indexOf('::sent_time::'));
 
-                // $scope.joinAdminChannel = function() {
-                //     return $scope.setupChannel();
-                // }
+                        if (getDateValue(sentTime1) > getDateValue(sentTime2)) {
+                            temp = arr[i];
+                            arr[i] = arr[j];
+                            arr[j] = temp;
+                        }
+                    }
+                }
+                return arr;
+            }
 
-                // $scope.setupChannel = function() { // After create admin channel and join into it, should initialize the
-                //     return new Promise((resolve, reject) => { // channel and define channel events
-                //         if ($scope.currentChannel.status == 'joined') {
-                //             $scope.leaveCurrentChannel().then(() => {
-                //                     return $scope.initChannel($scope.currentChannel);
-                //                 })
-                //                 .then((channel) => {
-                //                     return $scope.joinChannel(channel);
-                //                 })
-                //                 .then((_channel) => {
-                //                     $scope.currentChannel = _channel;
-                //                     $scope.initChannelEvents();
-                //                     resolve();
-                //                 })
-                //                 .catch(err => {
-                //                     console.log(err);
-                //                     reject(new Error('error'));
-                //                 })
-                //         } else {
-                //             $scope.initChannel($scope.currentChannel).then((channel) => {
-                //                 console.log(channel);
-                //                 $scope.currentChannel = channel;
-                //                 $scope.joinChannel(channel).then((_channel) => {
-                //                     $scope.currentChannel = _channel;
-                //                     $scope.initChannelEvents();
-                //                     resolve();
-                //                 })
-                //             })
-                //         }
-                //     });
-                // }
+            scope.showTypingStarted = member => {
+                Students.getStudentById(member.identity).then((res) => {
+                    scope.chattingNotification = res.data.data.name + ' is typing ...';
+                });
+            }
 
-                // $scope.initChannel = function(channel) {
-                //     return $scope.messagingClient.getChannelBySid(channel.sid);
-                // }
+            scope.hideTypingStarted = member => {
+                scope.chattingNotification = "";
+            }
 
-                // $scope.joinChannel = function(channel) {
-                //     return channel.join()
-                //         .then(function(joinedChannel) {
-                //             $scope.currentChannel = joinedChannel;
-                //             $scope.loadMessages();
-                //             return joinedChannel;
-                //         })
-                //         .catch(function(err) {
-                //             if (channel.status == 'joined') {
-                //                 $scope.loadMessages();
-                //                 return channel;
-                //             }
+            scope.notifyMemberJoined = member => {
+                Students.getStudentById(member.identity).then((res) => {
+                    scope.chattingNotification = res.data.data.name + ' joined the channel.';
+                });
+            }
 
-                //             $scope.openDialog('ERROR', "Couldn't join channel " + channel.friendlyName + ' because -> ' + err);
-
-                //         });
-                // }
-
-                // $scope.initChannelEvents = function() { // Define channel events
-                //     $scope.currentChannel.on('messageAdded', $scope.addMessageToList);
-                //     $scope.currentChannel.on('typingStarted', $scope.showTypingStarted);
-                //     $scope.currentChannel.on('typingEnded', $scope.hideTypingStarted);
-                //     $scope.currentChannel.on('memberJoined', $scope.notifyMemberJoined);
-                //     $scope.currentChannel.on('memberLeft', $scope.notifyMemberLeft);
-                // }
-
-                // $scope.sendMSG = function() { // Send message
-                //     let currentDate = new Date();
-                //     let month = currentDate.getMonth();
-                //     let day = currentDate.getDate();
-                //     let hour = currentDate.getHours();
-                //     let minute = currentDate.getMinutes();
-                //     let second = currentDate.getSeconds();
-                //     $scope.sendingMessage = $scope.months[month] + ' ' + day + ' ' + hour + ':' + minute + ':' + second + '::sent_time::' + $scope.sendingMessage;
-                //     $scope.currentChannel.sendMessage($scope.sendingMessage);
-                //     $scope.sendingMessage = '';
-                // }
-
-                // $scope.addMessageToList = function(message) {
-
-                //     let currentMember = '';
-                //     let i;
-                //     for (i = 0; i < $scope.members.length; i++) {
-                //         if ($scope.members[i].id == message.author) {
-                //             currentMember = $scope.members[i].name;
-                //             break;
-                //         }
-                //     }
-                //     if (currentMember == '') {
-                //         Students.getStudentById(message.author).then((res) => {
-                //             $scope.members.push({
-                //                 id: message.author,
-                //                 name: res.data.data.name
-                //             });
-
-                //             $scope.applyMessage(message, res.data.data.name);
-                //             return;
-                //         })
-                //     } else {
-                //         $scope.applyMessage(message, currentMember);
-                //     }
-                // }
-
-                // $scope.addMember = function(message) {
-                //     let i;
-                //     return new Promise((resolve, reject) => {
-                //         let currentMember = '';
-                //         for (i = 0; i < $scope.members.length; i++) {
-                //             if ($scope.members[i].id == message.author) {
-                //                 currentMember = $scope.members[i].name;
-                //                 break;
-                //             }
-                //         }
-                //         if (currentMember == "") {
-                //             Students.getStudentById(message.author).then((res) => {
-                //                 currentMember = res.data.data.name;
-                //                 $scope.members.push({
-                //                     id: message.author,
-                //                     name: currentMember
-                //                 });
-                //                 resolve(); 
-                //             });
-                //         } else {
-                //             resolve();
-                //         }
-                //     })
-                // }
-
-                // scope.loadMessages = function() {
-                //     let i;
-                //     console.log('loading messages');
-                //     scope.currentChannel.getMessages(MAX_LOAD_MESSAGE_COUNT).then(function(messages) {
-                //         let messageArr = messages.items;
-                //         messageArr.sort(msgSortFunc2);
-                //         let promise = messageArr.reduce((accumulatorPromise, nextID) => {
-                //             return accumulatorPromise.then(() => {
-                //                 return scope.addMember(nextID);
-                //             });
-                //         }, Promise.resolve());
-                //         promise.then(() => {
-                //             messageArr.forEach(scope.addMessageToList)
-                //         });
-                //     });
-                // }
-
-                // scope.applyMessage = function(message, currentMember, id) {
-                //     let messageListDom = document.getElementById('chat_list');
-                //     let messageTitleDom = document.createElement('div');
-                //     let messageTimeDom = document.createElement('div');
-                //     let messageBodyDom = document.createElement('div');
-                //     let messageItemDom = document.createElement('div');
-
-                //     messageItemDom.setAttribute('id', id);
-
-                //     messageTitleDom.setAttribute('class', 'chat-title-st row');
-                //     messageBodyDom.setAttribute('class', 'chat-body-st');
-                //     messageTimeDom.setAttribute('class', 'chat-time-st');
-
-                //     let sentTime = message.body.substring(0, message.body.indexOf('::sent_time::'));
-                //     let messageBody = message.body.replace(sentTime + '::sent_time::', '');
-                //     let messageBodyTextDom = document.createElement('div');
-                //     messageBodyTextDom.innerText = messageBody;
-
-                //     let avatar = document.createElement('img');
-                //     avatar.setAttribute('src', '/img/user/user.png');
-
-                //     let nameDom = document.createElement('div');
-                //     nameDom.innerText = currentMember;
-                //     nameDom.setAttribute('class', 'chat-name-st');
-                //     messageTimeDom.innerText = sentTime;
-
-                //     messageTitleDom.appendChild(nameDom);
-                //     messageTitleDom.appendChild(messageTimeDom);
-
-                //     if (GENERAL_CHANNEL_UNIQUE_NAME == message.author) {
-                //         messageItemDom.setAttribute('class', 'chat-item-st mine');
-                //         messageBodyDom.appendChild(messageBodyTextDom);
-                //         messageBodyDom.appendChild(avatar);
-                //     } else {
-                //         messageItemDom.setAttribute('class', 'chat-item-st other');
-                //         messageBodyDom.appendChild(avatar);
-                //         messageBodyDom.appendChild(messageBodyTextDom);
-                //     }
-
-                //     messageItemDom.appendChild(messageBodyDom);
-                //     messageItemDom.appendChild(messageTitleDom);
-                //     messageListDom.appendChild(messageItemDom);
-                //     $scope.scrollToMessageListBottom();
-                // }
-
-                // scope.sendingInputKeyPress = function($e) {
-                //     if ($e.keyCode == 13) {
-                //         $scope.sendMSG();
-                //         $e.preventDefault();
-                //     }
-                // }
-
-                // scope.scrollToMessageListBottom = function() {
-                //     var messageListDom = document.getElementById('chat_list');
-                //     messageListDom.scrollBy(0, messageListDom.scrollHeight);
-                // }
-
-                // function getDateValue(date) {
-                //     let dateSplit = date.split(' ');
-                //     let res = 0;
-                //     res = $scope.monthToVal[dateSplit[0]] * 30 * 24 * 60 * 60;
-                //     res += parseInt(dateSplit[1]) * 24 * 60 * 60;
-                //     let timeSplit = dateSplit[2].split(':');
-                //     res += parseInt(timeSplit[0]) * 60 * 60;
-                //     res += parseInt(timeSplit[1]) * 60;
-                //     res += parseInt(timeSplit[2]);
-                //     return res;
-                // }
-
-                // function msgSortFunc2(a, b) {
-                //     let sentTime1 = a.body.substring(0, a.body.indexOf('::sent_time::'));
-                //     let sentTime2 = b.body.substring(0, b.body.indexOf('::sent_time::'));
-
-                //     if (getDateValue(sentTime1) > getDateValue(sentTime2)) return 1;
-                //     else return -1;
-                // }
-
-                // scope.leaveCurrentChannel = function() {
-                //     if (scope.currentChannel) {
-                //         return $scope.currentChannel.leave().then(function(leftChannel) {
-                //             leftChannel.removeListener('messageAdded', $scope.addMessageToList);
-                //             leftChannel.removeListener('typingStarted', $scope.showTypingStarted);
-                //             leftChannel.removeListener('typingEnded', $scope.hideTypingStarted);
-                //             leftChannel.removeListener('memberJoined', $scope.notifyMemberJoined);
-                //             leftChannel.removeListener('memberLeft', $scope.notifyMemberLeft);
-                //         });
-                //     } else {
-                //         return Promise.resolve();
-                //     }
-                // }
-
-                // function msgSortFunc1(arr) {
-                //     let i, j, temp;
-                //     for (i = 0; i < arr.length - 1; i++) {
-                //         for (j = i + 1; j < arr.length; j++) {
-                //             let sentTime1 = arr[i].body.substring(0, arr[i].body.indexOf('::sent_time::'));
-                //             let sentTime2 = arr[j].body.substring(0, arr[j].body.indexOf('::sent_time::'));
-
-                //             if (getDateValue(sentTime1) > getDateValue(sentTime2)) {
-                //                 temp = arr[i];
-                //                 arr[i] = arr[j];
-                //                 arr[j] = temp;
-                //             }
-                //         }
-                //     }
-                //     return arr;
-                // }
-
-                // scope.showTypingStarted = function(member) {
-                //     Students.getStudentById(member.identity).then((res) => {
-                //         scope.chattingNotification = res.data.data.name + ' is typing ...';
-                //     });
-                // }
-
-                // scope.hideTypingStarted = function(member) {
-                //     scope.chattingNotification = "";
-                // }
-
-                // scope.notifyMemberJoined = function(member) {
-                //     Students.getStudentById(member.identity).then((res) => {
-                //         scope.chattingNotification = res.data.data.name + ' joined the channel.';
-                //     });
-                // }
-
-                // scope.notifyMemberLeft = function(member) {
-                //     Students.getStudentById(member.identity).then((res) => {
-                //         scope.chattingNotification = res.data.data.name + ' left the channel.';
-                //     });
-                // }
-
-                // scope.confirm = function() {
-                //     ngDialog.close();
-                // }
+            scope.notifyMemberLeft = member => {
+                Students.getStudentById(member.identity).then((res) => {
+                    scope.chattingNotification = res.data.data.name + ' left the channel.';
+                });
             }
         }
     }

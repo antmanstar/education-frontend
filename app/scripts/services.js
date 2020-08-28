@@ -226,7 +226,6 @@ angular.module('netbase')
 }])
 
 .factory('Playlist', ['$http', function($http) {
-
     var baseUrl = "https://educationalcommunity-uni.herokuapp.com/university";
     //var baseUrl = "https://api.universida.de/university";
     //var baseUrl = "http://192.168.1.7:9003/university";
@@ -239,27 +238,18 @@ angular.module('netbase')
     */
 
     return {
-
         getPlaylistById: function(playlistId) {
-
             var url = '/playlist/id/' + playlistId;
-
             return $http.get(baseUrl + url);
-
         },
 
         getAllPlaylistByUniversityId: function(universityId) {
-
             var url = '/id/' + universityId + '/playlist/';
-
             return $http.get(baseUrl + url);
-
         },
 
         create: function(data) {
-
             var url = '/playlist';
-
             return $http({
                 method: 'POST',
                 data: data,
@@ -274,31 +264,23 @@ angular.module('netbase')
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             });
-
         }
-
     }
 
 }])
 
 .factory('Forum', ['$http', '$localStorage', function($http, $localStorage) {
-
     var baseUrl = "https://educationalcommunity-uni.herokuapp.com/university";
     //var baseUrl = "https://api.universida.de/university";
     //var baseUrl = "http://192.168.1.7:9003/university";
 
     return {
-
         getAllOwnerForumPost: function(universityId) {
-
             var url = '/id/' + universityId + '/forum/owner';
-
             return $http.get(baseUrl + url);
-
         },
 
         getForumPostById: function(id, universityId) {
-
             var url = '/id/' + universityId + '/forum/post/id/' + id;
 
             return $http({
@@ -309,21 +291,15 @@ angular.module('netbase')
                     'x-access-token': $localStorage.token
                 }
             });
-
         },
 
         getForumPostsByCategoryId: function(id, categoryId, page) {
-
             var url = '/id/' + id + '/categories/id/' + categoryId + '/posts' + "?page=" + page;
-
             return $http.get(baseUrl + url);
-
         },
 
         postAnswerByForumPostId: function(id, answer) {
-
             var url = '/forum/post/id/' + id + "/answer";
-
             return $http({
                 method: 'POST',
                 url: baseUrl + url,
@@ -342,15 +318,11 @@ angular.module('netbase')
         },
 
         getCategoriesByUniversityId: function(universityId, data) {
-
             var url = '/id/' + universityId + '/categories';
-
             return $http.get(baseUrl + url);
-
         },
 
         createCategory: function(universityId, data) {
-
             var url = '/id/' + universityId + '/category/';
 
             return $http({
@@ -367,11 +339,8 @@ angular.module('netbase')
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             });
-
         }
-
     }
-
 }])
 
 .factory('University', ['$http', '$localStorage', function($http, $localStorage) {
