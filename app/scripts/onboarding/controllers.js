@@ -4,520 +4,481 @@
 
 angular.module('netbase')
 
-.controller('OnboardingUniversityCreateCtrl', ['$rootScope', '$scope', 'ngDialog', 'University', 'Knowledge', '$location', '$window' , function($rootScope, $scope, ngDialog, University, Knowledge, $location, $window) {
+.controller('OnboardingUniversityCreateCtrl', ['$rootScope', '$scope', 'ngDialog', 'University', 'Knowledge', '$location', '$window', function($rootScope, $scope, ngDialog, University, Knowledge, $location, $window) {
 
-  /* */
-  $scope.mode = "";
+    /* */
+    $scope.mode = "";
 
-  $scope.universityType = '';
-  /* */
+    $scope.universityType = '';
+    /* */
 
-  $scope.error = {
-    text : [],
-    exists : false
-  }
-
-  $scope.lastpageReturn = function() {
-    $window.history.back();
-  }
-
-  $scope.displayError = function(e) {
-
-    let txt = "";
-
-    for (var i = 0; i < e.length; i++) {
-
-      if (i + 1 == e.length) {
-        //end
-        txt += e[i]
-      } else {
-        txt += e[i] + ", ";
-      }
-
+    $scope.error = {
+        text: [],
+        exists: false
     }
 
-    return txt;
-  }
-
-  $scope.create = function() {
-
-    let validated = true;
-
-    $scope.error.text = []
-
-    // LANGUAGE MUST BE PT OR EN, LOWERCASE OR DIFFERENT WILL CAUSE A BUG
-
-    let data = {
-      name : $scope.name,
-      about : $scope.about,
-      url : $scope.url,
-      language : 'PT'
-    };
-
-    console.log(data)
-
-    if (data.name == undefined) {
-      validated = false;
-      $scope.error.text.push("Escreva um nome para a sua comunidade educacional.");
-      $scope.error.exists = true;
+    $scope.lastpageReturn = function() {
+        $window.history.back();
     }
 
-    if (data.url == undefined) {
-      validated = false;
-      $scope.error.text.push("Escreva uma URL para a sua comunidade educacional.");
-      $scope.error.exists = true;
-    }
+    $scope.displayError = function(e) {
 
-    if (data.about == undefined) {
-      validated = false;
-      $scope.error.text.push("Escreva uma pequena descrição para explicar a sua comunidade educacional.");
-      $scope.error.exists = true;
-    }
+        let txt = "";
 
-    if (validated) {
+        for (var i = 0; i < e.length; i++) {
 
-      University.create(data).success(function(res) {
-
-        if (res.success) {
-
-          console.log(res.data);
-          $location.path('/a/' + res.data.url + '/forum')
-
-        } else {
-          console.log("error while creating university")
-          console.log(res);
-
-          if (res.err.errmsg.indexOf("url") != 1) {
-            $scope.error.text.push("Type a different URL for your university. The one you choose already exists.");
-            $scope.error.exists = true;
-          }
+            if (i + 1 == e.length) {
+                //end
+                txt += e[i]
+            } else {
+                txt += e[i] + ", ";
+            }
 
         }
 
-      });
-
-    } else {
-
+        return txt;
     }
 
-  }
+    $scope.create = function() {
+
+        let validated = true;
+
+        $scope.error.text = []
+
+        // LANGUAGE MUST BE PT OR EN, LOWERCASE OR DIFFERENT WILL CAUSE A BUG
+
+        let data = {
+            name: $scope.name,
+            about: $scope.about,
+            url: $scope.url,
+            language: 'PT'
+        };
+
+        console.log(data)
+
+        if (data.name == undefined) {
+            validated = false;
+            $scope.error.text.push("Escreva um nome para a sua comunidade educacional.");
+            $scope.error.exists = true;
+        }
+
+        if (data.url == undefined) {
+            validated = false;
+            $scope.error.text.push("Escreva uma URL para a sua comunidade educacional.");
+            $scope.error.exists = true;
+        }
+
+        if (data.about == undefined) {
+            validated = false;
+            $scope.error.text.push("Escreva uma pequena descrição para explicar a sua comunidade educacional.");
+            $scope.error.exists = true;
+        }
+
+        if (validated) {
+
+            University.create(data).success(function(res) {
+
+                if (res.success) {
+
+                    console.log(res.data);
+                    $location.path('/a/' + res.data.url + '/forum')
+
+                } else {
+                    console.log("error while creating university")
+                    console.log(res);
+
+                    if (res.err.errmsg.indexOf("url") != 1) {
+                        $scope.error.text.push("Type a different URL for your university. The one you choose already exists.");
+                        $scope.error.exists = true;
+                    }
+
+                }
+
+            });
+
+        } else {
+
+        }
+
+    }
 
 }])
 
-.controller('OnboardingUniversitiesScreenCtrl', ['$rootScope', '$scope', 'ngDialog', 'University', 'Knowledge' , function($rootScope, $scope, ngDialog, University, Knowledge) {
+.controller('OnboardingUniversitiesScreenCtrl', ['$rootScope', '$scope', 'ngDialog', 'University', 'Knowledge', function($rootScope, $scope, ngDialog, University, Knowledge) {
+    $scope.universities = [];
+    $scope.page = 1;
 
-  $scope.universities = [];
+    /* Knowledge -> Page 1 */
+    Knowledge.getAllPaginated().success(function(res) {
+        let data = res.data;
+        let success = res.success;
+        let docs = data.docs;
+        $scope.knowledges = docs;
+    });
 
-  /* */
-  $scope.page = 1;
-  /* */
+    $scope.checkbox = false;
+    let knowledgeSelected = [];
+    $scope.knowledgeCheck = function(id) {
+        let idx = knowledgeSelected.indexOf(id);
 
-  /* Knowledge -> Page 1 */
-
-  Knowledge.getAllPaginated().success(function(res) {
-
-    let data = res.data;
-    let success = res.success;
-    let docs = data.docs;
-
-    $scope.knowledges = docs;
-
-  });
-
-  $scope.checkbox = false;
-
-  let knowledgeSelected = [];
-
-  $scope.knowledgeCheck = function(id) {
-
-    let idx = knowledgeSelected.indexOf(id);
-
-    if (idx >= 0) {
-      knowledgeSelected.splice(idx, 1);
-    } else {
-      knowledgeSelected.push(id);
+        if (idx >= 0) {
+            knowledgeSelected.splice(idx, 1);
+        } else {
+            knowledgeSelected.push(id);
+        }
     }
 
-    console.log(knowledgeSelected)
+    $scope.knowledgeStore = function() {
+        // Get value id from inputs
+        // Do a for loop
+        // Do multiple requests to push into user account
 
-  }
+        knowledgeSelected.forEach(function(id, idx) {
+            Knowledge.subscribe(id).success(function(res) {
+                console.log("knowledge registered")
+            });
+        });
+        //END knowledgeSelected
 
-  $scope.knowledgeStore = function() {
-
-    // Get value id from inputs
-    // Do a for loop
-    // Do multiple requests to push into user account
-
-    knowledgeSelected.forEach(function(id, idx) {
-
-      Knowledge.subscribe(id).success(function(res) {
-
-        console.log("knowledge registered")
-
-      });
-
-    });
-    //END knowledgeSelected
-
-    $scope.page = 2;
-
-  }
-
-  /* Universities -> Page 2 */
-
-  let universitySelected = [];
-
-  University.getAllUniversities().success(function(res) {
-
-    let success = res.success;
-    let data = res.data;
-
-    $scope.universities = data;
-
-    console.log(res);
-
-  });
-
-  $scope.universityCheck = function(url) {
-
-    let idx = universitySelected.indexOf(url);
-
-    if (idx >= 0) {
-      universitySelected.splice(idx, 1);
-    } else {
-      universitySelected.push(url);
+        $scope.page = 2;
     }
 
-  }
-
-  $scope.universityStore = function() {
-
-    // Get value id from inputs
-    // Do a for loop
-    // Do multiple requests to push into user account
-
-    universitySelected.forEach(function(url, idx) {
-
-      University.subscribeOnUniversity(url).success(function(res) {
-
-        console.log("knowledge registered")
-
-      });
-
-      ngDialog.close();
-
+    /* Universities -> Page 2 */
+    let universitySelected = [];
+    University.getAllUniversities().success(function(res) {
+        let success = res.success;
+        let data = res.data;
+        $scope.universities = data;
+        console.log(res);
     });
-    //END knowledgeSelected
 
-    $scope.page = 2;
+    $scope.universityCheck = function(url) {
+        let idx = universitySelected.indexOf(url);
 
-  }
+        if (idx >= 0) {
+            universitySelected.splice(idx, 1);
+        } else {
+            universitySelected.push(url);
+        }
+    }
 
-  $scope.studentProExplore = function () {
-    ngDialog.open({ template: 'partials/modals/studentpro.html', className: 'ngdialog-theme-default ngdialog-student-pro', controller: 'StudentProExploreCtrl' });
-  };
+    $scope.universityStore = function() {
+        // Get value id from inputs
+        // Do a for loop
+        // Do multiple requests to push into user account
 
-  //ngDialog.close();
+        universitySelected.forEach(function(url, idx) {
+            University.subscribeOnUniversity(url).success(function(res) {
+                console.log("knowledge registered")
+            });
+            ngDialog.close();
+        });
+        //END knowledgeSelected
+        $scope.page = 2;
+    }
+
+    $scope.studentProExplore = function() {
+        ngDialog.open({ template: 'partials/modals/studentpro.html', className: 'ngdialog-theme-default ngdialog-student-pro', controller: 'StudentProExploreCtrl' });
+    };
+}])
+
+.controller('OnboardingSignUpScreenCtrl', ['$rootScope', '$scope', 'ngDialog', 'University', 'Knowledge', '$location', function($rootScope, $scope, ngDialog, University, Knowledge, $location) {
+
+    /* */
+    $scope.mode = "";
+    /* */
+
+    $scope.selectMode = function(mode) {
+        $scope.mode = mode;
+    }
+
+    $scope.selectUniversityType = function(name) {
+
+        console.log(name)
+
+        $scope.universityType = name;
+
+    }
+
+    $scope.learning = function() {
+        $location.path('/home/timeline');
+    }
+
+    $scope.teaching = function() {
+        $location.path('/onboarding/universities/create');
+    }
+
+    $scope.videocalling = function() {
+        $location.path('/home/calls');
+    }
 
 }])
 
-.controller('OnboardingSignUpScreenCtrl', ['$rootScope', '$scope', 'ngDialog', 'University', 'Knowledge', '$location' , function($rootScope, $scope, ngDialog, University, Knowledge, $location) {
+.controller('OnboardingScreenCtrl', ['$rootScope', '$scope', 'ngDialog', 'University', 'Knowledge', function($rootScope, $scope, ngDialog, University, Knowledge) {
 
-  /* */
-  $scope.mode = "";
-  /* */
+    $scope.universities = [];
 
-  $scope.selectMode = function(mode) {
-    $scope.mode = mode;
-  }
+    /* */
+    $scope.page = 2;
+    /* */
 
-  $scope.selectUniversityType = function(name) {
+    /* Knowledge -> Page 1 */
 
-    console.log(name)
+    Knowledge.getAllPaginated().success(function(res) {
 
-    $scope.universityType = name;
+        let data = res.data;
+        let success = res.success;
+        let docs = data.docs;
 
-  }
+        $scope.knowledges = docs;
 
-  $scope.learning = function() {
-    $location.path('/home/timeline');
-  }
+    });
 
-  $scope.teaching = function() {
-    $location.path('/onboarding/universities/create');
-  }
+    $scope.checkbox = false;
 
-  $scope.videocalling = function() {
-    $location.path('/home/calls');
-  }
+    let knowledgeSelected = [];
+
+    $scope.knowledgeCheck = function(id) {
+
+        let idx = knowledgeSelected.indexOf(id);
+
+        if (idx >= 0) {
+            knowledgeSelected.splice(idx, 1);
+        } else {
+            knowledgeSelected.push(id);
+        }
+
+        console.log(knowledgeSelected)
+
+    }
+
+    $scope.knowledgeStore = function() {
+
+        // Get value id from inputs
+        // Do a for loop
+        // Do multiple requests to push into user account
+
+        knowledgeSelected.forEach(function(id, idx) {
+
+            Knowledge.subscribe(id).success(function(res) {
+
+                console.log("knowledge registered")
+
+            });
+
+        });
+        //END knowledgeSelected
+
+        $scope.page = 2;
+
+    }
+
+    /* Universities -> Page 2 */
+
+    let universitySelected = [];
+
+    University.getAllUniversities().success(function(res) {
+
+        let success = res.success;
+        let data = res.data;
+
+        $scope.universities = data;
+
+        console.log(res);
+
+    });
+
+    $scope.universityCheck = function(url) {
+
+        let idx = universitySelected.indexOf(url);
+
+        if (idx >= 0) {
+            universitySelected.splice(idx, 1);
+        } else {
+            universitySelected.push(url);
+        }
+
+    }
+
+    $scope.universityStore = function() {
+
+        // Get value id from inputs
+        // Do a for loop
+        // Do multiple requests to push into user account
+
+        universitySelected.forEach(function(url, idx) {
+
+            University.subscribeOnUniversity(url).success(function(res) {
+
+                console.log("knowledge registered")
+
+            });
+
+            ngDialog.close();
+
+        });
+        //END knowledgeSelected
+
+        $scope.page = 2;
+
+    }
+
+    $scope.studentProExplore = function() {
+        ngDialog.open({ template: 'partials/modals/studentpro.html', className: 'ngdialog-theme-default ngdialog-student-pro', controller: 'StudentProExploreCtrl' });
+    };
+
+    //ngDialog.close();
 
 }])
 
-.controller('OnboardingScreenCtrl', ['$rootScope', '$scope', 'ngDialog', 'University', 'Knowledge' , function($rootScope, $scope, ngDialog, University, Knowledge) {
+.controller('OnboardingUniversitiesCtrl', ['$rootScope', '$scope', 'ngDialog', 'University', 'Knowledge', function($rootScope, $scope, ngDialog, University, Knowledge) {
 
-  $scope.universities = [];
+    $scope.universities = [];
 
-  /* */
-  $scope.page = 2;
-  /* */
+    /* */
+    $scope.page = 1;
+    /* */
 
-  /* Knowledge -> Page 1 */
+    /* Knowledge -> Page 1 */
+    // Knowledge.getByUrl('esportes').success(function(res) {
 
-  Knowledge.getAllPaginated().success(function(res) {
+    //   console.log("knowledge: ");
+    //   console.log(res.data);
 
-    let data = res.data;
-    let success = res.success;
-    let docs = data.docs;
+    //   $scope.knowledge = res.data;
 
-    $scope.knowledges = docs;
+    // });
 
-  });
+    Knowledge.getAllPaginated().success(function(res) {
 
-  $scope.checkbox = false;
+        let data = res.data;
+        let success = res.success;
+        let docs = data.docs;
 
-  let knowledgeSelected = [];
-
-  $scope.knowledgeCheck = function(id) {
-
-    let idx = knowledgeSelected.indexOf(id);
-
-    if (idx >= 0) {
-      knowledgeSelected.splice(idx, 1);
-    } else {
-      knowledgeSelected.push(id);
-    }
-
-    console.log(knowledgeSelected)
-
-  }
-
-  $scope.knowledgeStore = function() {
-
-    // Get value id from inputs
-    // Do a for loop
-    // Do multiple requests to push into user account
-
-    knowledgeSelected.forEach(function(id, idx) {
-
-      Knowledge.subscribe(id).success(function(res) {
-
-        console.log("knowledge registered")
-
-      });
+        console.log("knowledge: ");
+        console.log(docs);
+        $scope.knowledges = docs;
 
     });
-    //END knowledgeSelected
 
-    $scope.page = 2;
+    $scope.studentProExplore = function() {
+        ngDialog.open({ template: 'partials/modals/studentpro.html', className: 'ngdialog-theme-default ngdialog-student-pro', controller: 'StudentProExploreCtrl' });
+    };
 
-  }
-
-  /* Universities -> Page 2 */
-
-  let universitySelected = [];
-
-  University.getAllUniversities().success(function(res) {
-
-    let success = res.success;
-    let data = res.data;
-
-    $scope.universities = data;
-
-    console.log(res);
-
-  });
-
-  $scope.universityCheck = function(url) {
-
-    let idx = universitySelected.indexOf(url);
-
-    if (idx >= 0) {
-      universitySelected.splice(idx, 1);
-    } else {
-      universitySelected.push(url);
-    }
-
-  }
-
-  $scope.universityStore = function() {
-
-    // Get value id from inputs
-    // Do a for loop
-    // Do multiple requests to push into user account
-
-    universitySelected.forEach(function(url, idx) {
-
-      University.subscribeOnUniversity(url).success(function(res) {
-
-        console.log("knowledge registered")
-
-      });
-
-      ngDialog.close();
-
-    });
-    //END knowledgeSelected
-
-    $scope.page = 2;
-
-  }
-
-  $scope.studentProExplore = function () {
-    ngDialog.open({ template: 'partials/modals/studentpro.html', className: 'ngdialog-theme-default ngdialog-student-pro', controller: 'StudentProExploreCtrl' });
-  };
-
-  //ngDialog.close();
-
-}])
-
-.controller('OnboardingUniversitiesCtrl', ['$rootScope', '$scope', 'ngDialog', 'University', 'Knowledge' , function($rootScope, $scope, ngDialog, University, Knowledge) {
-
-  $scope.universities = [];
-
-  /* */
-  $scope.page = 1;
-  /* */
-
-  /* Knowledge -> Page 1 */
-  // Knowledge.getByUrl('esportes').success(function(res) {
-
-  //   console.log("knowledge: ");
-  //   console.log(res.data);
-
-  //   $scope.knowledge = res.data;
-
-  // });
-
-  Knowledge.getAllPaginated().success(function(res) {
-
-    let data = res.data;
-    let success = res.success;
-    let docs = data.docs;
-
-    console.log("knowledge: ");
-    console.log(docs);
-    $scope.knowledges = docs;
-
-  });
-
-  $scope.studentProExplore = function () {
-    ngDialog.open({ template: 'partials/modals/studentpro.html', className: 'ngdialog-theme-default ngdialog-student-pro', controller: 'StudentProExploreCtrl' });
-  };
-
-  //ngDialog.close();
+    //ngDialog.close();
 
 }])
 
 .directive('onboardinguniversity', ['University', 'Students', '$localStorage', '$route', 'jwtHelper', '$filter', '$sce', '$location', function(University, Students, $localStorage, $route, jwtHelper, $filter, $sce, $location) {
-  return {
-    restrict: 'E',
-    templateUrl:  '../../partials/directive/onboarding/university.html',
-    replace: true,
-    scope: true,
-    link: function(scope, element, attr) {
+    return {
+        restrict: 'E',
+        templateUrl: '../../partials/directive/onboarding/university.html',
+        replace: true,
+        scope: true,
+        link: function(scope, element, attr) {
 
-      let universityId = attr.uid;
-      let studentId;
+            let universityId = attr.uid;
+            let studentId;
 
-      scope.showSubscribe = true;
-
-      if ($localStorage.token != undefined && $localStorage.token != null) {
-        studentId = jwtHelper.decodeToken($localStorage.token)._id;
-      }
-
-      Students.getStudentById(studentId).then(function(res) {
-        let data = res.data.data;
-
-        for (let i=0; i < data.universitiesSubscribed.length; i++) {
-          if (data.universitiesSubscribed[i].universityId == universityId && data.universitiesSubscribed[i].unsubscribed===false) {
-            scope.showSubscribe = false;
-          }
-          if (data.universitiesSubscribed[i].universityId == universityId && data.universitiesSubscribed[i].unsubscribed===true) {
             scope.showSubscribe = true;
-          }
-        }
-      })
 
-      if ( University.isStoredLocal(universityId) ) {
+            if ($localStorage.token != undefined && $localStorage.token != null) {
+                studentId = jwtHelper.decodeToken($localStorage.token)._id;
+            }
 
-        let universityStorage = University.retrieveStorage(universityId);
+            Students.getStudentById(studentId).then(function(res) {
+                let data = res.data.data;
 
-        scope.university = universityStorage[universityId];
-        console.log(scope.university)
+                for (let i = 0; i < data.universitiesSubscribed.length; i++) {
+                    if (data.universitiesSubscribed[i].universityId == universityId && data.universitiesSubscribed[i].unsubscribed === false) {
+                        scope.showSubscribe = false;
+                    }
+                    if (data.universitiesSubscribed[i].universityId == universityId && data.universitiesSubscribed[i].unsubscribed === true) {
+                        scope.showSubscribe = true;
+                    }
+                }
+            })
 
-      } else {
+            if (University.isStoredLocal(universityId)) {
 
-        University.getUniversityById(universityId).success(function(res) {
+                let universityStorage = University.retrieveStorage(universityId);
 
-          scope.university = res.data;
-
-          University.storeLocal(scope.university);
-          console.log(scope.university)
-
-        });
-
-      }
-
-      function userMembersLocation(array) {
-
-        function findStudentId(sId) {
-          return sId.accountId = studentId;
-        }
-
-        return array.findIndex(findStudentId);
-
-      }
-
-      let userSubscribed = scope.userSubscribed = function userSubscribed(array) {
-
-        let studentIdMembersLocation = userMembersLocation(array);
-
-        if (studentIdMembersLocation != -1) {
-
-          if (array[studentIdMembersLocation].unsubscribed) {
-            return false;
-          } else {
-            return true;
-          }
-
-        } else {
-          return false;
-        }
-
-      };
-
-      /* start subscribe */
-      scope.subscribe = function() {
-
-        if ($localStorage.token != undefined && $localStorage.token != null) {
-
-          University.subscribeOnUniversity(scope.university.url).then(function(res) {
-
-            if (userSubscribed(scope.university.members)) {
-
-              let studentIdMembersLocation = userMembersLocation(scope.university.members);
-
-              scope.university.members.splice(studentIdMembersLocation, 1);
-              scope.showSubscribe = !scope.showSubscribe;
+                scope.university = universityStorage[universityId];
+                console.log(scope.university)
 
             } else {
 
-              scope.university.members.push({ accountId : studentId, unsubscribed : false });
-              scope.showSubscribe = !scope.showSubscribe;
+                University.getUniversityById(universityId).success(function(res) {
+
+                    scope.university = res.data;
+
+                    University.storeLocal(scope.university);
+                    console.log(scope.university)
+
+                });
 
             }
 
-          });
+            function userMembersLocation(array) {
 
-        } else {
-          ngDialog.open({ template: 'partials/modals/login.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
+                function findStudentId(sId) {
+                    return sId.accountId = studentId;
+                }
+
+                return array.findIndex(findStudentId);
+
+            }
+
+            let userSubscribed = scope.userSubscribed = function userSubscribed(array) {
+
+                let studentIdMembersLocation = userMembersLocation(array);
+
+                if (studentIdMembersLocation != -1) {
+
+                    if (array[studentIdMembersLocation].unsubscribed) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+
+                } else {
+                    return false;
+                }
+
+            };
+
+            /* start subscribe */
+            scope.subscribe = function() {
+
+                if ($localStorage.token != undefined && $localStorage.token != null) {
+
+                    University.subscribeOnUniversity(scope.university.url).then(function(res) {
+
+                        if (userSubscribed(scope.university.members)) {
+
+                            let studentIdMembersLocation = userMembersLocation(scope.university.members);
+
+                            scope.university.members.splice(studentIdMembersLocation, 1);
+                            scope.showSubscribe = !scope.showSubscribe;
+
+                        } else {
+
+                            scope.university.members.push({ accountId: studentId, unsubscribed: false });
+                            scope.showSubscribe = !scope.showSubscribe;
+
+                        }
+
+                    });
+
+                } else {
+                    ngDialog.open({ template: 'partials/modals/login.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
+                }
+
+            };
+            /* end subscribe */
+
         }
 
-      };
-      /* end subscribe */
-
     }
-
-  }
 
 }])

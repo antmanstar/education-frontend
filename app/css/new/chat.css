@@ -164,7 +164,7 @@
     margin: 0;
 }
 
-.panel-body {
+.panel-body-chat {
     overflow-y: scroll;
     height: 250px;
 }

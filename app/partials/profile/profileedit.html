@@ -2,12 +2,9 @@
 
 <script type="text/javascript">
     var socket = io.connect("https://totemic-chimera-237707.appspot.com");
-    //var socket = io.connect("http://104.196.9.222:5555");
-    //var socket = io.connect("http://localhost:8888");
+
     var siofu = new SocketIOFileUpload(socket);
-
     let filesCount = 0;
-
     let progressCloud = 0;
     var progressPercent = 0;
 
@@ -19,6 +16,7 @@
         console.log("File is", percent.toFixed(2), "percent loaded");
         $("#file_drop").html("Upload: " + percent.toFixed(2) + "%");
 
+        $("#gif").show();
         if (percent.toFixed(2) == 100) {
             $("#file_drop").html("<b>Iniciando o processamento da imagem</b>");
         }
@@ -32,8 +30,7 @@
     socket.on("status", function(a) {
         console.log("status: ")
         console.log(a)
-        if (a == 1) {
-        }
+        if (a == 1) {}
         if (a == 2) {
             $("#file_drop").html("<b>Upload completo!</b>");
         }
@@ -46,6 +43,7 @@
     // Do something when a file is uploaded:
     siofu.addEventListener("complete", function(event) {
         console.log("Upload Finished")
+        $("#gif").hide();
     });
 
     socket.on("imagepath", function(a) {
@@ -61,19 +59,19 @@
         border: 0.5px solid #927d7d;
         margin-top: 50px;
     }
-
+    
     .profile-name {
         margin-bottom: 10px;
         height: 30px;
         font-size: 16px;
     }
-
+    
     .profile-pwd {
         margin-bottom: 10px;
         height: 30px !important;
         font-size: 16px;
     }
-
+    
     .dot {
         height: 10px;
         width: 10px;
@@ -84,18 +82,18 @@
         top: 15px;
         right: 10px;
     }
-
+    
     .navbar-slider-content {
         display: block !important;
         -webkit-box-shadow: 0px 2px 3px 0px rgba(196, 196, 196, 0.34) !important;
         -moz-box-shadow: 0px 2px 3px 0px rgba(196, 196, 196, 0.34) !important;
         box-shadow: 0px 2px 3px 0px rgba(196, 196, 196, 0.34) !important;
     }
-
+    
     .user-collections {
         white-space: none;
     }
-
+    
     .user-collections .collection {
         box-shadow: 0px 0px 17px 0px rgba(130, 130, 130, 0.23);
         display: inline-block;
@@ -111,12 +109,12 @@
         padding-bottom: 15px;
         position: relative;
     }
-
+    
     .profile-manage-wrapper {
         display: flex;
         flex-direction: column;
     }
-
+    
     .save-btn {
         border-radius: 2px;
         text-transform: uppercase;
@@ -132,13 +130,13 @@
         outline: none;
         cursor: pointer;
     }
-
+    
     .profile-bio {
         height: 200px !important;
         font-size: 16px;
         margin-top: 0px !important;
     }
-
+    
     .upload_btn {
         color: #fff;
         margin-bottom: 15px;
@@ -146,7 +144,14 @@
         width: 165px;
         height: 30px;
     }
-
+    
+    .loading-gif {
+        position: absolute;
+        align-items: center;
+        top: 150px;
+        display: none;
+    }
+    
     @media screen and (max-width: 768px) {
         .navbar-slider {
             display: none;
@@ -171,20 +176,19 @@
 </style>
 
 <div class="container-fluid container-full container-home" style="padding-bottom: 150px;">
-
     <div class="row">
-
-      <div class="col-xs-12"><div style="font-size: 2.0em; font-weight: bolder;">{{'EDIT_PROFILE' | translate}}</div></div>
-
+        <div class="col-xs-12">
+            <div style="font-size: 2.0em; font-weight: bolder;">{{'EDIT_PROFILE' | translate}}</div>
+        </div>
     </div>
-    <!-- end row -->
 
     <div class="row">
         <div class="col-xs-12 col-sm-5 col-md-5 col-lg-4" style="text-align: center; display: flex; flex-direction: column; align-items: center;">
             <img class="profile-pic" ng-if="student.imageUrl != undefined" src="{{student.imageUrl}}"></img>
             <img class="profile-pic" ng-if="student.imageUrl == undefined" style="background-image: url('http://virtual-strategy.com/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png')"></img>
+            <img id="gif" src="http://www.nasa.gov/multimedia/videogallery/ajax-loader.gif" class="loading-gif" width="20" height="20" /></img>
             <input type="hidden" id="file" ng-model="file">
-            <button class="btn bg-base upload_btn" id="upload_btn" >{{'SELECT_PHOTO' | translate}}</button>
+            <button class="btn bg-base upload_btn" id="upload_btn">{{'SELECT_PHOTO' | translate}}</button>
         </div>
 
         <div class="col-xs-12 col-sm-7 col-md-7 col-lg-8 ">

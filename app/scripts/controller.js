@@ -1724,7 +1724,6 @@ angular.module('netbase')
 
 
         Videos.getById(videoId).success(function(res) {
-
             console.log(res);
 
             let status = res.status;
@@ -4760,25 +4759,13 @@ angular.module('netbase')
 
 /* home - universidades */
 .controller('HomeUserUniversidadesCtrl', ['$rootScope', '$scope', '$location', 'University', 'Knowledge', 'User', function($rootScope, $scope, $location, University, Knowledge, User) {
-
     $scope.activeSection = 'seguindo';
 
-    /* */
-
     University.getUniversitiesByOwnerId(User.getId()).success(function(res) {
-
-        console.log(res);
-
         if (res.success) {
-
             $scope.universitiesOwner = res.data;
-
         }
-
     });
-    /* */
-
-
 }])
 
 .directive('universityuserrow', ['University', 'Students', '$filter', '$sce', '$location', function(University, Students, $filter, $sce, $location) {
@@ -4788,37 +4775,24 @@ angular.module('netbase')
         replace: true,
         scope: true,
         link: function(scope, element, attr) {
-
             let universityId = attr.uid;
 
             scope.openUniversity = function(url) {
-                console.log("open universityyyyy: ")
-                console.log(url)
                 $location.path('/a/' + url)
             }
 
             if (University.isStoredLocal(universityId)) {
-
                 let universityStorage = University.retrieveStorage(universityId);
-
                 scope.university = universityStorage[universityId];
                 console.log(scope.university)
-
             } else {
-
                 University.getUniversityById(universityId).success(function(res) {
-
                     scope.university = res.data;
-
                     University.storeLocal(scope.university);
-
                 });
-
             }
-
         }
     }
-
 }])
 
 .controller('HomeUniversidadesCtrl', ['$rootScope', '$scope', '$location', 'University', 'Knowledge', function($rootScope, $scope, $location, University, Knowledge) {
@@ -5466,105 +5440,68 @@ angular.module('netbase')
 
     /* open/close search */
     searchButton.click(function() {
-
         logo.css("display", "none");
         logoIcon.css("display", "inline-block");
-
         $("#searchButtonMobile").css("display", "none");
-
         menuRight.addClass("expand");
-
         $("nav .navbar-top .menu-right .search .form-group").css("display", "inline-block");
-
         searchTextInput.css("display", "inline-block");
-
     });
     /* end open/close search */
 
     /* menu profile */
-
     let profileMenu = $("#profileMenu");
     let profileExpanded = $(".profile-expanded");
 
     let profileExpandedOpen = false;
-
     profileMenu.hover(function() {
-
         profileExpanded.css("display", "block");
         profileExpandedOpen = true;
-
     });
 
     $(window).click(function() {
-
         if (profileExpandedOpen) {
             profileExpanded.css("display", "none");
         }
-
     });
-    //
 
 
     /* language menu */
-
     let languageMenu = $("#languageMenu");
     let languageExpanded = $(".language-expanded");
-
     let languageExpandedOpen = false;
 
     languageMenu.hover(function() {
-
         languageExpanded.css("display", "block");
         languageExpandedOpen = true;
-
     });
 
     $(window).click(function() {
-
         if (languageExpandedOpen) {
             languageExpanded.css("display", "none");
         }
-
     });
-    //
-
 
     $scope.playAudio = function() {
         var audio = new Audio('sounds/cursorHover.wav');
         audio.play();
     };
-
-
 }])
 
-.controller('FooterCtrl', ['$rootScope', '$scope', '$location', function($rootScope, $scope, $location) {
-
-
-
-}])
+.controller('FooterCtrl', ['$rootScope', '$scope', '$location', function($rootScope, $scope, $location) {}])
 
 .controller('SearchCtrl', ['$rootScope', '$scope', '$location', 'Search', '$localStorage', 'jwtHelper', 'Students', function($rootScope, $scope, $location, Search, $localStorage, jwtHelper, Students) {
 
     $scope.displayMobileMenu = function() {
-
         if (mobileAndTabletCheck() || $(window).width() < 768) {
-
             if ($scope.showMobileMenu) {
-
                 $scope.showMobileMenu = false;
-
             } else {
-
                 $scope.showMobileMenu = true;
-
             }
-
         } else {
-
             $location.path("/home");
-
         }
-
     };
 
     function mobileAndTabletCheck() {
@@ -6462,7 +6399,7 @@ angular.module('netbase')
 
             if (success) {
                 alert("Profile successully updated");
-                $rootScope.logout();
+                // $rootScope.logout();
             }
         });
     }

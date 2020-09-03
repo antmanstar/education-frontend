@@ -1,146 +1,133 @@
 <div ng-include="'partials/headerhome.html'"></div>
 
 <style>
-
-.section-cards .card .description {
-  height: unset !important;
-  max-height: 125px;
-}
-
-.university-row {
-  border-bottom: 1px solid #e6e6e6;
-  position: relative;
-  padding-bottom: 8px;
-  padding-top: 8px;
-}
-
-.university-row .activity-count {
-  position: absolute;
-  right: 0px;
-  top: 5px;
-  padding: 4px;
-  background-color: #ee5748;
-  color: #fff;
-  border-radius: 5px;
-  padding-left: 10px;
-  padding-right: 10px;
-}
-
-.university-row .activity-count i {
-  padding-right: 3px;
-}
-
-.university-row .bg img {
-  border-radius: 50%;
-}
-
-.university-row .bg {
-  display: inline-block;
-  vertical-align: top;
-}
-
-.university-row .text {
-  display: inline-block;
-  vertical-align: top;
-  padding-left: 15px;
-}
-
-.university-row .text .title {
-  font-size: 1.5em;
-  font-weight: bold;
-}
-
-.university-row .text .activity {
-
-}
-
-@media screen and (max-width: 768px) {
-
-  #universitiesList {
-    padding-left: 0;
-    padding-right: 0;
-    padding-top: 0 !important;
-  }
-
-  .university-row {
-    padding-left: 15px;
-    padding-right: 15px;
-  }
-
-  .university-row .activity-count {
-    right: 15px;
-  }
-
-}
-
+    .section-cards .card .description {
+        height: unset !important;
+        max-height: 125px;
+    }
+    
+    .university-row {
+        border-bottom: 1px solid #e6e6e6;
+        position: relative;
+        padding-bottom: 8px;
+        padding-top: 8px;
+    }
+    
+    .university-row .activity-count {
+        position: absolute;
+        right: 0px;
+        top: 5px;
+        padding: 4px;
+        background-color: #ee5748;
+        color: #fff;
+        border-radius: 5px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    
+    .university-row .activity-count i {
+        padding-right: 3px;
+    }
+    
+    .university-row .bg img {
+        border-radius: 50%;
+    }
+    
+    .university-row .bg {
+        display: inline-block;
+        vertical-align: top;
+    }
+    
+    .university-row .text {
+        display: inline-block;
+        vertical-align: top;
+        padding-left: 15px;
+    }
+    
+    .university-row .text .title {
+        font-size: 1.5em;
+        font-weight: bold;
+    }
+    
+    .university-row .text .activity {}
+    
+    @media screen and (max-width: 768px) {
+        #universitiesList {
+            padding-left: 0;
+            padding-right: 0;
+            padding-top: 0 !important;
+        }
+        .university-row {
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+        .university-row .activity-count {
+            right: 15px;
+        }
+    }
 </style>
 
 <style>
-
     .onboarding-knowledge {
-      padding-bottom: 20px;
-      border-bottom: 1px solid #cdcdcd;
-      margin-bottom: 10px;
-      text-align: center;
-      padding-top: 20px;
-      padding-left: 30px;
-      padding-right: 30px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #cdcdcd;
+        margin-bottom: 10px;
+        text-align: center;
+        padding-top: 20px;
+        padding-left: 30px;
+        padding-right: 30px;
     }
-
-    .onboarding-knowledge p  {
-      font-size: 1.1em;
-      margin-bottom: 15px;
+    
+    .onboarding-knowledge p {
+        font-size: 1.1em;
+        margin-bottom: 15px;
     }
-
-    .onboarding-knowledge .picture {
-
-    }
-
+    
+    .onboarding-knowledge .picture {}
+    
     .onboarding-knowledge .title {
-      font-size: 1.3em;
-      display: inline-block;
-      font-weight: bolder;
-      color: #2d4255;
-      margin-bottom: 15px;
+        font-size: 1.3em;
+        display: inline-block;
+        font-weight: bolder;
+        color: #2d4255;
+        margin-bottom: 15px;
     }
-
+    
     .onboarding-knowledge .buttons {
-      text-align: center;
+        text-align: center;
     }
-
+    
     nav .navbar-slider .option.active {
-      border-bottom: 3px solid #ee5748;
+        border-bottom: 3px solid #ee5748;
     }
-
-    nav .navbar-slider .option:hover{
-      border-bottom: 3px solid rgb(238,87,72, 0.7);
+    
+    nav .navbar-slider .option:hover {
+        border-bottom: 3px solid rgb(238, 87, 72, 0.7);
     }
-
-
 </style>
 
 <div class="container-fluid container-full animated fadeIn" style="padding-bottom: 60px;">
 
-  <div class="row">
+    <div class="row">
 
-    <div class="col-xs-12" ng-if="user.universitiesSubscribed.length == 0">
+        <div class="col-xs-12" ng-if="user.universitiesSubscribed.length == 0">
 
-      <div class="onboarding-knowledge" ng-show="user.universitiesSubscribed.length == 0">
+            <div class="onboarding-knowledge" ng-show="user.universitiesSubscribed.length == 0">
 
-        <div class="picture"><img src="/img/vr/vr_animation.gif" height="120px;" /></div>
-        <div class="title">Novo! Inscreva-se nas Universidades</div>
-        <p><b>Siga educadores</b> Começe aprender em comunidade</p>
-        <p><b>Customize a timeline</b> Acesse o conteúdo que você tem interesse</p>
-        <p><b>Aprenda e ensine</b> Você pode participar de diversas maneiras</p>
-        <div class="buttons">
-          <a href="/onboarding/universities"><button class="btn btn-success" style="max-width: 180px;">Seguir Universidades</button></a>
+                <div class="picture"><img src="/img/vr/vr_animation.gif" height="120px;" /></div>
+                <div class="title">Novo! Inscreva-se nas Universidades</div>
+                <p><b>Siga educadores</b> Começe aprender em comunidade</p>
+                <p><b>Customize a timeline</b> Acesse o conteúdo que você tem interesse</p>
+                <p><b>Aprenda e ensine</b> Você pode participar de diversas maneiras</p>
+                <div class="buttons">
+                    <a href="/onboarding/universities"><button class="btn btn-success" style="max-width: 180px;">Seguir Universidades</button></a>
+                </div>
+
+            </div>
+
         </div>
-
-      </div>
-
-    </div>
-    <!-- -->
-    <!--
+        <!-- -->
+        <!--
     <div class="col-xs-12">
 
       <nav style="position: relative;">
@@ -156,14 +143,12 @@
     </div>
     <!-- -->
 
-    <div class="col-xs-12" ng-show="activeSection == 'seguindo'" id="universitiesList" style="margin-bottom: 15px; padding-top: 10px;">
+        <div class="col-xs-12" ng-show="activeSection == 'seguindo'" id="universitiesList" style="margin-bottom: 15px; padding-top: 10px;">
+            <universityuserrow uid="{{u.universityId}}" ng-if="u.unsubscribed == false" ng-repeat="u in user.universitiesSubscribed"></universityuserrow>
+        </div>
+        <!-- end col-sm-8 -->
 
-      <universityuserrow uid="{{u.universityId}}" ng-if="u.unsubscribed == false" ng-hide="user._id == u.title" ng-repeat="u in user.universitiesSubscribed"></universityuserrow>
-
-    </div>
-    <!-- end col-sm-8 -->
-
-    <!--
+        <!--
     <div class="col-xs-12" ng-show="activeSection == 'admin'" id="universitiesList" style="margin-bottom: 15px; padding-top: 10px;">
 
       <universityuserrow uid="{{u.universityId}}" ng-if="u.unsubscribed == false" ng-hide="user._id == u.title" ng-repeat="u in user.universitiesOwner"></universityuserrow>
@@ -173,12 +158,12 @@
 
     </div>
     -->
-    <!-- end col-sm-8 -->
+        <!-- end col-sm-8 -->
 
-  </div>
-  <!-- end row -->
+    </div>
+    <!-- end row -->
 
-  <!--
+    <!--
   <div class="section-footer">
 
     <div class="section-footer-title" style="width: 125px;"><b>Conhecimentos</b></div>
@@ -189,7 +174,7 @@
 
   </div>
   -->
-  <!-- end news-footer -->
+    <!-- end news-footer -->
 
 </div>
 <!-- container-fluid container-full -->

@@ -1788,11 +1788,8 @@ angular.module('netbase')
         $rootScope.alertDialog.push(ngDialog.open({ template: 'partials/modals/classroom_alert_modal.html', controller: "AcademiaClassroomsAlertCtrl", className: 'ngdialog-theme-default classroom-alert-modal', data: { type: "Universidade", msg: 'Copied link to clipboard' } }));
     }
 
-
     $scope.joinClassroom = function(classroom) {
-
         window.open(domain + "/a/university/" + universityUrl + "/roomid/" + classroom.roomSID + "/accountid/" + classroom.accountSid + "/roomname/" + classroom.uniqueName + "/");
-
     }
 
     $scope.deleteClassroom = function(classroom) {
@@ -1838,28 +1835,21 @@ angular.module('netbase')
 
     $scope.cancelDelete = function() {
         $scope.deleteRoom = null;
-
         ngDialog.close();
     }
 }])
 
 .controller('AcademiaCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', function($rootScope, $scope, $location, $route, University) {
-
     let universityUrl = $route.current.params.url;
 
     University.getUniversity(universityUrl).then(function(res) {
-
         $scope.knowledge = res.data;
-
     });
 
     $location.path("/a/" + universityUrl + "/timeline");
-
 }])
 
-.controller('HomeTopicCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Forum', '$sce', '$filter', function($rootScope, $scope, $location, $route, University, Forum, $sce, $filter) {
-
-}])
+.controller('HomeTopicCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Forum', '$sce', '$filter', function($rootScope, $scope, $location, $route, University, Forum, $sce, $filter) {}])
 
 .controller('AcademiaTimelineCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Forum', '$sce', '$filter', 'ngDialog', '$timeout', function($rootScope, $scope, $location, $route, University, Forum, $sce, $filter, ngDialog, $timeout) {
 
@@ -1870,44 +1860,30 @@ angular.module('netbase')
 
     /* Accounts suggestion */
     if (University.isStoredLocal(universityUrl)) {
-
         let universityStorage = University.retrieveStorage(universityUrl);
-
         $scope.university = universityStorage[universityUrl];
-
         let universityId = $scope.university._id;
 
         Forum.getAllOwnerForumPost(universityId).then(function(res) {
-
             $scope.loaded = true;
             $scope.forumPosts = res.data.data.docs;
-
         });
 
         if (!$rootScope.logged) {
-
             $rootScope.accountSuggestion = $timeout(function() {
-
                 if (!displayinvite) {
 
                     console.log("time out!");
                     //ngDialog.open({ template: 'partials/modals/accountsuggestion.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default ngdialog-plans modal-accountsuggestion', data : { university : $scope.university } });
                     $timeout.cancel()
                     displayinvite = true;
-
                 }
-
             }, 13500, true);
-
         }
-        //END if (!$rootScope.logged)
-
     } else {
-
         console.log("not stored")
 
         University.getUniversity(universityUrl).then(function(res) {
-
             $scope.university = res.data.data;
             University.storeLocal($scope.university);
             console.log("university parsed not stored: ")
@@ -1916,131 +1892,81 @@ angular.module('netbase')
             let universityId = $scope.university._id;
 
             Forum.getAllOwnerForumPost(universityId).then(function(res) {
-
                 $scope.loaded = true;
-
                 console.log(res.data.data.docs)
                 $scope.forumPosts = res.data.data.docs;
-
             });
 
             if (!$rootScope.logged) {
-
                 $rootScope.accountSuggestion = $timeout(function() {
-
                     if (!displayinvite) {
-
                         console.log("time out!");
                         //ngDialog.open({ template: 'partials/modals/accountsuggestion.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default ngdialog-plans modal-accountsuggestion', data : { university : $scope.university } });
                         $timeout.cancel()
                         displayinvite = true;
-
                     }
-
                 }, 13500, true);
-
             }
-            //END if (!$rootScope.logged)
-
         });
-
     }
 
     $scope.textFilter = function(text) {
-
         if (text.indexOf("iframe") != -1) {
             return $sce.trustAsHtml(text)
         } else {
             return $filter('limitHtml')(text, 350, '...')
         }
-
     }
-
 }])
 
 .controller('AcademiaPlaylistsByIdCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Playlist', 'Videos', function($rootScope, $scope, $location, $route, University, Playlist, Videos) {
-
     let universityUrl = $route.current.params.academiaName;
     let playlistId = $route.current.params.playlistId;
 
     if (University.isStoredLocal(universityUrl)) {
-
         let universityStorage = University.retrieveStorage(universityUrl);
-
         $scope.university = universityStorage[universityUrl];
-
         Playlist.getPlaylistById(playlistId).success(function(res) {
-
             console.log(res);
-
             $scope.playlist = res.data;
-
         });
-
         console.log("stored")
-
     } else {
-
         console.log("not stored")
-
         University.getUniversity(universityUrl).then(function(res) {
-
             $scope.university = res.data.data;
             University.storeLocal($scope.university);
 
             Playlist.getPlaylistById(playlistId).success(function(res) {
-
                 console.log(res);
-
                 $scope.playlist = res.data;
-
             });
-
         });
-
     }
-
 }])
 
 .controller('AcademiaPlaylistsCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Playlist', function($rootScope, $scope, $location, $route, University, Playlist) {
-
     let universityUrl = $route.current.params.academiaName;
-
     if (University.isStoredLocal(universityUrl)) {
-
         let universityStorage = University.retrieveStorage(universityUrl);
-
         $scope.university = universityStorage[universityUrl];
 
         Playlist.getAllPlaylistByUniversityId($scope.university._id).success(function(res) {
-
             console.log(res);
-
             $scope.playlists = res.data;
-
         });
-
         console.log("stored")
-
     } else {
-
         console.log("not stored")
-
         University.getUniversity(universityUrl).then(function(res) {
-
             $scope.university = res.data.data;
             University.storeLocal($scope.university);
 
             Playlist.getAllPlaylistByUniversityId($scope.university._id).success(function(res) {
-
                 console.log(res);
-
                 $scope.playlists = res.data;
-
             });
-
         });
-
     }
 
 }])
@@ -2054,16 +1980,12 @@ angular.module('netbase')
     }
 
     $scope.subscribe = function(plan) {
-
         if ($localStorage.token != undefined || $localStorage.token != null) {
             ngDialog.open({ template: 'partials/modals/payments.html', controller: 'PaymentsCtrl', className: 'ngdialog-theme-default', data: { flow: "order", page: "order", plan: plan, university: $scope.university } });
         } else {
             ngDialog.open({ template: 'partials/modals/login.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
         }
-
     }
-
-
 }])
 
 .controller('AcademiaForumCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', '$timeout', 'ngDialog', 'jwtHelper', '$localStorage', function($rootScope, $scope, $location, $route, University, $timeout, ngDialog, jwtHelper, $localStorage) {
@@ -2097,9 +2019,7 @@ angular.module('netbase')
     /* get university informations */
 
     if (University.isStoredLocal(universityUrl)) {
-
         let universityStorage = University.retrieveStorage(universityUrl);
-
         $scope.university = universityStorage[universityUrl];
 
         University.getUniversityForumPosts($scope.university._id, $scope.page).then(function(res) {
@@ -2137,38 +2057,22 @@ angular.module('netbase')
                 }
 
                 $scope.forumPostsNew = [];
-
                 for (let idx = 0; idx < $scope.forumPosts.length; idx++) {
 
                     let userViewed = false;
-
                     for (let bdx = 0; bdx < $scope.forumPosts[idx].visualization.length; bdx++) {
-
                         if ($scope.forumPosts[idx].visualization[bdx].accountId == studentId) {
                             userViewed = true;
                         }
-
                     }
-
                     if (!userViewed) {
                         $scope.forumPostsNew.push($scope.forumPosts[idx]);
                     }
-
                 }
-
                 console.log($scope.forumPostsNew);
-
             }
-
-            /* */
-
-        }).catch(function(e) {
-
-
-        });
-
+        }).catch(function(e) {});
     } else {
-
         University.getUniversity(universityUrl).then(function(res) {
 
             console.log("university: ")
@@ -2885,16 +2789,14 @@ angular.module('netbase')
 
 }])
 
-.directive('academiastatus', ['University', '$localStorage', '$route', 'jwtHelper', function(University, $localStorage, $route, jwtHelper) {
+.directive('academiastatus', ['University', 'Students', '$localStorage', '$route', 'jwtHelper', function(University, Students, $localStorage, $route, jwtHelper) {
     return {
         restrict: 'EA',
         templateUrl: '../partials/academia/status.html',
         replace: false,
         scope: true,
         link: function(scope, element, attr) {
-
             let university;
-
             let controllerActive = $route.current.$$route.controller;
 
             scope.controllerActive = controllerActive;
@@ -2905,7 +2807,8 @@ angular.module('netbase')
             scope.playlistClass = '';
             scope.cursosClass = '';
             scope.actionPostButton = false;
-
+            scope.studentIsPremium = false;
+            scope.userSubscribed = false;
             scope.buttonActionUrl = '';
 
             if (controllerActive == "AcademiaForumCtrl" || controllerActive == "AcademiaForumPostCreateCtrl" || controllerActive == "AcademiaForumPostCtrl") {
@@ -2925,60 +2828,122 @@ angular.module('netbase')
             } else if (controllerActive == "AcademiaJobsCtrl") {
                 scope.jobsClass = "active";
                 scope.actionPostButton = true;
-            } else {
-
-            }
-
-            attr.$observe('university', function(value) {
-                if (value) {
-
-                    university = JSON.parse(value);
-
-                    // ngMeta.setTitle(university.name);
-
-                    function userMembersLocation(array) {
-
-                        function findStudentId(sId) {
-                            return sId.accountId = studentId;
-                        }
-
-                        return array.findIndex(findStudentId);
-
-                    }
-
-                    let userSubscribed = scope.userSubscribed = function userSubscribed(array) {
-
-                        let studentIdMembersLocation = userMembersLocation(array);
-
-                        if (studentIdMembersLocation != -1) {
-                            return true;
-                        } else {
-                            return false;
-                        }
-
-                    };
-
-                }
-            });
+            } else {}
 
             let studentId;
-
             if ($localStorage.token != undefined && $localStorage.token != null) {
                 studentId = jwtHelper.decodeToken($localStorage.token)._id;
             }
 
-            scope.subscribe = function() {
-                University.subscribeOnUniversity(university.url).then(function(res) {
-                    if (userSubscribed(scope.university.members)) {
-                        let studentIdMembersLocation = userMembersLocation(scope.university.members);
-                        scope.university.members.splice(studentIdMembersLocation, 1);
-                    } else {
-                        scope.university.members.push({ accountId: studentId });
-                    }
-                });
-            };
-            /* end subscribe */
+            attr.$observe('university', function(value) {
+                university = JSON.parse(value);
 
+                // Handle Subscribe Functionality
+                Students.getStudentById(studentId).then(function(res) {
+                    let data = res.data.data;
+
+                    // This variable will be used to check if a user / student
+                    // has once been subscribed to a university or
+                    // if the current university is included in user's universitiesSubscribed array
+                    let unisub = false;
+
+                    for (let i = 0; i < data.universitiesSubscribed.length; i++) {
+                        if (data.universitiesSubscribed[i].universityId == university._id && data.universitiesSubscribed[i].unsubscribed === false) {
+                            scope.userSubscribed = true;
+                        }
+
+                        if (data.universitiesSubscribed[i].universityId == university._id && data.universitiesSubscribed[i].unsubscribed === true) {
+                            scope.userSubscribed = false;
+                        }
+
+                        if (data.universitiesSubscribed[i].universityId == university._id) {
+                            unisub = true;
+                        }
+                    }
+
+                    // if unisub variable is false, it means that the current university is
+                    // not a member of the students universitiesSubscribed array
+                    // Means the button should display INSCREVER
+                    if (!unisub) {
+                        scope.userSubscribed = false;
+                    }
+
+                })
+
+                /* check if student is a premium member */
+                for (let idx = 0; idx < university.members.length; idx++) {
+                    var member = university.members[idx];
+
+                    if (studentId != undefined && member.accountId == studentId && member.privilege >= 10) {
+                        scope.studentIsPremium = true;
+                    }
+
+                    if (studentId != undefined && member.accountId == studentId && member.privilege >= 50) {
+                        scope.studentIsTeam = true;
+                    }
+
+                    if (studentId != undefined && member.accountId == studentId && member.privilege == 99) {
+                        scope.studentIsAdmin = true;
+                    }
+                }
+
+                function userMembersLocation(array) {
+                    function findStudentId(sId) {
+                        return sId.accountId = studentId;
+                    }
+                    return array.findIndex(findStudentId);
+                }
+
+                let userSubscribed = scope.userSubscribed = function userSubscribed(array) {
+                    let studentIdMembersLocation = userMembersLocation(array);
+
+                    if (studentIdMembersLocation != -1) {
+                        if (array[studentIdMembersLocation].unsubscribed) {
+                            return false;
+                        } else {
+                            return true;
+                        }
+                    } else {
+                        return false;
+                    }
+                };
+            });
+
+            function userMembersLocation(array) {
+                function findStudentId(sId) {
+                    return sId.accountId = studentId;
+                }
+                return array.findIndex(findStudentId);
+            }
+
+            let userSubscribed = scope.userSubscribed = function userSubscribed(array) {
+                let studentIdMembersLocation = userMembersLocation(array);
+
+                if (studentIdMembersLocation != -1) {
+                    if (array[studentIdMembersLocation].unsubscribed) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                } else {
+                    return false;
+                }
+            };
+
+            scope.subscribe = function() {
+                if ($localStorage.token != undefined && $localStorage.token != null) {
+                    University.subscribeOnUniversity(university.url).then(function(res) {
+                        if (userSubscribed(scope.university.members)) {
+                            let studentIdMembersLocation = userMembersLocation(scope.university.members);
+                            scope.university.members.splice(studentIdMembersLocation, 1);
+                        } else {
+                            scope.university.members.push({ accountId: studentId, unsubscribed: false });
+                        }
+                    });
+                } else {
+                    ngDialog.open({ template: 'partials/modals/login.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
+                }
+            };
         }
     }
 }])
