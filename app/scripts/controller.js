@@ -1226,9 +1226,7 @@ angular.module('netbase')
 
     console.log("estudar page: ", $localStorage.showControlButton)
 
-    let course = $scope.course
-    console.log("course")
-    console.log(course)
+  let course = $scope.course
 
     let id = $route.current.params.id;
 
@@ -1261,8 +1259,10 @@ angular.module('netbase')
     $scope.hasPrev = true
     $scope.hasNext = true
 
-    Courses.getById(id).success(function(msg) {
-        $scope.course = msg.data;
+  Courses.getById(id).success(function(msg) {
+      $scope.course = msg.data;
+      console.log("course")
+      console.log($scope.course)
 
         if (msg.data.free == true) {
             $scope.access = true;
@@ -1400,10 +1400,11 @@ angular.module('netbase')
     }
 
     function getContent(c) {
-        Courses.getContentModuleById(c._id).success(function(result) {
-
-            if (result.success) {
-                let content = result.data
+      Courses.getContentModuleById(c._id).success(function(result) {
+        console.log("get content result")
+        console.log(result)
+        if (result.success) {
+            let content = result.data
 
                 let courseCookie = {
                     "module_id": c.module_id,
@@ -1426,12 +1427,28 @@ angular.module('netbase')
 
     $scope.moveContent = function(direction) {
 
-        console.log("move content")
-        console.log(direction)
-        console.log(cookieCheck)
-        console.log($localStorage.lastModuleId)
-            // locate the content in estudarModulos
-        for (let idx = 0; idx < $localStorage.estudarModulos.length; idx++) {
+      console.log("move content")
+      console.log(direction)
+      console.log(cookieCheck)
+      console.log($localStorage.lastModuleId)
+      console.log($localStorage.estudarModulos)
+
+
+      // For navigating after viewing quiz result
+      // check if quizresult is true
+      // content_id is same as quiz content id
+      // locate the content in estudarModulos
+      // get module id
+      if (cookieCheck.type == 'quiz' && quizResult == true) {
+        for(let i=0; i< $localStorage.estudarModulos.length; i++) {
+          if ($localStorage.estudarModulos[i]._id == cid) {
+            module_id = $localStorage.estudarModulos[i].module_id
+          }
+        }
+      }
+
+
+      for (let idx = 0; idx < $localStorage.estudarModulos.length; idx++) {
 
             if (direction == "next") {
                 if ($localStorage.estudarModulos[idx]._id == cid && $localStorage.estudarModulos[idx].module_id == module_id) {
@@ -1468,21 +1485,21 @@ angular.module('netbase')
                 }
             }
 
-            if (direction == "prev") {
-                if ($localStorage.estudarModulos[idx]._id == cid) {
-                    if (idx == 0) {
-                        $scope.hasPrev = false
-                        $scope.navigationMessage = "This is the first content"
-                        break
-                    } else {
-                        $scope.prevContent = $localStorage.estudarModulos[idx - 1]
-                        console.log("prev content")
-                        console.log($scope.prevContent)
-                        getContent($scope.prevContent)
-                        break
-                    }
-                }
+        if (direction == "prev") {
+          if ($localStorage.estudarModulos[idx]._id == cid && $localStorage.estudarModulos[idx].module_id == module_id) {
+            if (idx == 0) {
+              $scope.hasPrev = false
+              $scope.navigationMessage = "This is the first content"
+              break
+            } else {
+              $scope.prevContent = $localStorage.estudarModulos[idx - 1]
+              console.log("prev content")
+              console.log($scope.prevContent)
+              getContent($scope.prevContent)
+              break
             }
+          }
+        }
 
         }
 
@@ -1533,7 +1550,8 @@ angular.module('netbase')
             $scope.trustedContent = $sce.trustAsHtml($scope.contentData.text)
             Forum.getForumPostById(post_id, $scope.contentData.universityId).success(function(res) {
                 let status = res.status;
-                if (status == 90010) {} else {
+                if (status == 90010) {
+                } else {
 
                     $scope.video = res.data;
 
@@ -1998,7 +2016,7 @@ angular.module('netbase')
         let cookieCheck = $cookies.getObject($scope.cookieId)
         let contentId = cookieCheck.content_id;
 
-        Courses.userViewedContentInsideCourse($scope.courseId, $cookies.get("content_id")).success(function(res) {
+        Courses.userViewedContentInsideCourse($scope.courseId, $cookies.get("content_id")).success(function (res) {
 
             console.log("user viewed content inside course")
             console.log(res);
@@ -2012,7 +2030,9 @@ angular.module('netbase')
         $scope.questionIndex = 1;
         $scope.finalquestion = false;
 
-        Courses.getQuestionsByQuizId(videoId).success(function(res) {
+        Courses.getQuestionsByQuizId(videoId).success(function (res) {
+          console.log("get questions by quiz id")
+          console.log(res)
             if (res.success) {
                 $scope.contentData = res.data;
                 $scope.quesArr = res.data.questions;
@@ -2176,7 +2196,7 @@ angular.module('netbase')
             }
         }
     }])
-    .controller('CoursesEstudarTypeVideoIdCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'University', 'Playlist', 'Forum', 'User', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, University, Playlist, Forum, User) {
+    .controller('CoursesEstudarTypeVideoIdCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'University', 'Playlist', 'Forum', 'User', function ($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, University, Playlist, Forum, User) {
 
         let id = $route.current.params.id;
         let userId = User.getId()
@@ -2185,7 +2205,7 @@ angular.module('netbase')
 
         $scope.access = false;
 
-        Courses.getById(id).success(function(msg) {
+        Courses.getById(id).success(function (msg) {
             $scope.course = msg.data;
             if (msg.data.free == true) $scope.access = true;
             let mem = msg.data.members;
@@ -2201,33 +2221,36 @@ angular.module('netbase')
 
         let cookieCheck = $cookies.getObject($scope.cookieId)
         let contentId = cookieCheck.content_id;
-        Courses.userViewedContentInsideCourse($scope.courseId, content_id).success(function(res) {
+        Courses.userViewedContentInsideCourse($scope.courseId, content_id).success(function (res) {
             console.log("user viewed content inside course")
             console.log(res);
         })
     }])
 
-.controller('CoursesByIdDashboardModuloCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'University', 'Playlist', 'Forum', 'User', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, University, Playlist, Forum, User) {
-    let id = $route.current.params.id;
-    $scope.courseId = id;
-    $scope.access = false;
-    Courses.getById(id).success(function(msg) {
-        $scope.course = msg.data;
-        if (msg.data.free == true) $scope.access = true;
-        let mem = msg.data.members;
-        if (mem.indexOf(User.getId()) >= 0)
-            $scope.access = true;
-        if ($scope.access == false)
-            $location.path('/cursos/id/' + res.data._id);
-    }, function error(response) {
-        $location.path('/home/cursos');
-    })
-}])
+    .controller('CoursesByIdDashboardModuloCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'University', 'Playlist', 'Forum', 'User', function ($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, University, Playlist, Forum, User) {
+        let id = $route.current.params.id;
+        $scope.courseId = id;
+        $scope.access = false;
+        Courses.getById(id).success(function (msg) {
+            $scope.course = msg.data;
+            if (msg.data.free == true) $scope.access = true;
+            let mem = msg.data.members;
+            //if (mem.indexOf(User.getId()) >= 0)
+            let userid = User.getId()
+            const userExists = msg.data.members.some(user => user.member = userid);
+            if (userExists)
+                $scope.access = true;
+            if ($scope.access == false)
+                $location.path('/cursos/id/' + msg.data._id);
+        }, function error(response) {
+            $location.path('/home/cursos');
+        })
+    }])
 
-.controller('CoursesEstudarCtrlCopy', ['$cookies', 'User', '$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'University', 'Playlist', 'Forum', 'User', function($cookies, User, $rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, University, Playlist, Forum, Users) {
-    let id = $route.current.params.id;
+    .controller('CoursesEstudarCtrlCopy', ['$cookies', 'User', '$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'University', 'Playlist', 'Forum', 'User', function ($cookies, User, $rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, University, Playlist, Forum, Users) {
+        let id = $route.current.params.id;
 
-    $scope.courseId = id;
+        $scope.courseId = id;
     $scope.access = false;
 
     let type = $cookies.get("type");
@@ -2244,14 +2267,17 @@ angular.module('netbase')
 
     $scope.url = url + $scope.courseId + "/" + cid + "/" + post_id
 
-    Courses.getById(id).success(function(msg) {
-        $scope.course = msg.data;
-        if (msg.data.free == true) $scope.access = true;
-        let mem = msg.data.members;
-        if (mem.indexOf(User.getId()) >= 0)
-            $scope.access = true;
-        if ($scope.access == false)
-            $location.path('/cursos/id/' + res.data._id);
+        Courses.getById(id).success(function (msg) {
+            $scope.course = msg.data;
+            if (msg.data.free == true) $scope.access = true;
+            let mem = msg.data.members;
+            //if (mem.indexOf(User.getId()) >= 0)
+            let userid = User.getId()
+            const userExists = msg.data.members.some(user => user.member = userid);
+            if (userExists)
+                $scope.access = true;
+            if ($scope.access == false)
+                $location.path('/cursos/id/' + msg.data._id);
 
     }, function error(response) {
         $location.path('/home/cursos');
@@ -2262,9 +2288,13 @@ angular.module('netbase')
     $localStorage.estudarModulos = [];
     $localStorage.showControlButton = false
 
-    let id = $route.current.params.id;
-    $scope.courseId = id;
-    $scope.access = false;
+        let id = $route.current.params.id;
+        $scope.courseId = id;
+        $scope.access = false;
+        $scope.description = '';
+        $scope.timelineError = false;
+        $scope.timelineMessage = ""
+        $scope.timelineNotification = false;
 
     $scope.timelines = [];
     $scope.course = {}
@@ -2282,47 +2312,62 @@ angular.module('netbase')
         toolbar: 'insertfile|undo redo | bold italic | alignleft aligncenter alignright | code|styleselect|outdent indent|link image'
     };
 
-    Courses.getById(id).success(function(msg) {
-        if (msg.data.free == true) $scope.access = true;
-        let mem = msg.data.members;
-        if (mem.indexOf(User.getId()) >= 0)
-            $scope.access = true;
-        if ($scope.access == false)
-            $location.path('/cursos/id/' + msg.data._id);
-        $scope.course = msg.data;
-        $scope.get();
-    }, function error(response) {
-        $location.path('/home/cursos');
-    })
-
-    $scope.get = function() {
-        Courses.getTimeline($scope.courseId).success(function(res) {
-            $scope.timelines = res.data;
-        }).error(function(msg) {
-            alert("request alert")
+        Courses.getById(id).success(function (msg) {
+          console.log(msg)
+            if (msg.data.free == true) $scope.access = true;
+            let mem = msg.data.members;
+            //if (mem.indexOf(User.getId()) >= 0)
+            let userid = User.getId()
+            const userExists = msg.data.members.some(user => user.member = userid);
+            if (userExists)
+                $scope.access = true;
+            if ($scope.access == false)
+                $location.path('/cursos/id/' + msg.data._id);
+            $scope.course = msg.data;
+            $scope.get();
+        }, function error(response) {
+            $location.path('/home/cursos');
         })
-    }
 
-    $scope.save = function(dd) {
-        //$scope.description=angular.element('#trix-input-1').val()
+        $scope.get = function () {
+            Courses.getTimeline($scope.courseId).success(function (res) {
+                $scope.timelines = res.data;
+            }).error(function (msg) {
+              $scope.timelineError = true;
+              $scope.timelineMessage = "TIMELINE_GET_ERROR";
+              $scope.timelineNotification = true;
+            })
+        }
 
-        Courses.insertTimeline($scope.courseId, { description: dd }).success(function(res) {
-            $scope.timelines && $scope.timelines.unshift(res.data)
-                // angular.element(
-                //     $document[0].querySelector('trix-editor')).find("div").html('');
-            $scope.description = '';
+        $scope.save = function (dd) {
+            if (dd.length < 9) {
+              $scope.timelineError = true;
+              $scope.timelineMessage = "ADD_TIMELINE_ERROR_LESS_CHARACTER";
+              $scope.timelineNotification = true;
+              return
+            }
 
-        }).error(function(msg) {
-            alert("request alert")
-        })
-    }
-}])
+            Courses.insertTimeline($scope.courseId, { description: dd }).success(function(res) {
+              $scope.timelines && $scope.timelines.unshift(res.data)
+              $scope.description = '';
 
-.controller('CoursesContentCreateCtrl', ['Videos', '$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'University', 'Playlist', 'Forum', 'User', function(Videos, $rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, University, Playlist, Forum, User) {
-    $scope.page = 'universitySelect';
-    let universityId;
-    console.log($scope.ngDialogData);
-}])
+              $scope.timelineError = false;
+              $scope.timelineMessage = "ADD_TIMELINE_MESSAGE_SUCCESS";
+              $scope.timelineNotification = true;
+
+            }).error(function (msg) {
+              $scope.timelineError = true;
+              $scope.timelineMessage = "ADD_TIMELINE_MESSAGE_ERROR";
+              $scope.timelineNotification = true;
+            })
+        }
+    }])
+
+    .controller('CoursesContentCreateCtrl', ['Videos', '$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'University', 'Playlist', 'Forum', 'User', function (Videos, $rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, University, Playlist, Forum, User) {
+        $scope.page = 'universitySelect';
+        let universityId;
+        console.log($scope.ngDialogData);
+    }])
 
 .controller('CoursesModulosByIdCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', '$window', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, $window) {
 
@@ -2579,7 +2624,7 @@ angular.module('netbase')
         }
 
     }])
-    .controller('CoursesModulosSingleCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses) {
+    .controller('CoursesModulosSingleCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'Sales', function ($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, Sales) {
 
         $scope.page = false;
 
@@ -2589,9 +2634,15 @@ angular.module('netbase')
 
         $scope.section = 'module';
 
+        $scope.addmemberstatus = false;
+        $scope.addmembermessage = "";
+        $scope.addmembererr = false;
+        $scope.hasMember = false;
+        $scope.addstep = 1
+
         let id = $route.current.params.id;
 
-        Courses.getById(id).success(function(res) {
+        Courses.getById(id).success(function (res) {
             console.log("check the course module from the getbyid result")
             console.log(res)
 
@@ -2599,14 +2650,242 @@ angular.module('netbase')
 
                 $scope.course = res.data;
                 console.log("course: ", $scope.course)
+
+                // Check if the course is Free or Paid
+                if ($scope.course.free) {
+                  // The course is free, get member's details
+                  if ($scope.course.members.length > 0) {
+                    $scope.hasMember = true
+                    let coursemembers = []
+                    for (let i = 0; i < $scope.course.members.length; i++) {
+                      let member = $scope.course.members[i]
+                      let memberid = member.member
+
+                      // Get member details
+                      Students.getStudentById(memberid).success(function (res) {
+                        if (res.success) {
+                          let memberdetails = res.data
+
+                          let fulldetails = {
+                            name: memberdetails.name,
+                            datejoined: member.date
+                          }
+
+                          coursemembers.push(fulldetails)
+
+                          $scope.members = coursemembers
+
+                        }
+                      })
+
+                    }
+                  }
+
+                } else {
+                  // The course is paid, get members and sales details
+                  if ($scope.course.salesss.length > 0) {
+                    $scope.hasMember = true
+                    prepareCourseMembers($scope.course)
+                  }
+
+                  // Get all the students from the Accounts microservice
+                  // To be used for the select dropdown - Add member in the members tab
+                  Students.getAllStudents().success(function (res) {
+                    if (res.success) {
+                      $scope.allstudents = res.data
+
+                      console.log("logging all students")
+                      console.log($scope.allstudents)
+
+                      // remove course members to the list of all students
+                      for (let i=0; i < $scope.course.members.length; i++) {
+                        $scope.allstudents = $scope.allstudents.filter(function( obj ) {
+                            return obj._id !== $scope.course.members[i].member;
+                        });
+                      }
+
+
+                    }
+                  })
+                }
             }
 
         });
         //END Courses.getById(id)
 
-        $scope.selectTab = function(type) {
-            console.log(type)
+
+        // Search implementation for the add member dropdown select
+        $scope.selected = '';
+        $scope.state = closed;
+
+
+        // This function is called whenever there is a change in
+        // the input for the Searchable dropdown in Add Member
+        $scope.change = function () {
+
+          if ($scope.query.length == 0) {
+            return $scope.state = "closed"
+          }
+
+          $scope.filtered = [];
+          $scope.filtered = $scope.allstudents.filter(
+            item => item.name.toLowerCase().includes($scope.query.toLowerCase())
+          );
+          console.log($scope.filtered)
+          $scope.$watch('filtered', function(newValue, oldValue) {
+            $scope.filtered = newValue
+          }, true)
+          return $scope.state = $scope.filtered.length > 0 ? 'opened' : 'closed';
+        };
+        $scope.select = function (item) {
+          $scope.selected = item;
+          $scope.query = item.name
+          return $scope.state = closed;
+        };
+
+        // Open the add member confirmation modal
+        $scope.openAddMemberPopup = function (student) {
+
+            ngDialog.open({
+                template: 'addMemberPopup',
+                controller: 'CoursesModulosSingleCtrl',
+                data: { student: student, course: $scope.course },
+                width: '50%',
+                height: '40%',
+                className: 'ngdialog-theme-default'
+            });
+        }
+
+
+        // This function is called for closing the add member confirmation modal
+        $scope.closePopup = function () {
+            ngDialog.close();
+        }
+
+
+        // Display add member confirmation
+        $scope.confirmAddMember = function () {
+          $scope.addstep = 2
+        }
+
+        //
+        $scope.cancelAddMember = function () {
+          clearAddMemberVars()
+        }
+
+        // This function is called to add a member to a paid course
+        // To be used only by university admin
+        $scope.addMember = function () {
+          ngDialog.close();
+          let student = $scope.selected;
+          let course = $scope.course;
+          console.log("add to course member: ", student)
+
+          let memberData = {
+              course_id: course._id,
+              memberId: student._id
+          }
+
+          console.log(memberData)
+
+          updateAddMemberNotification(true, false, "ADD_MEMBER_SUCCESS")
+
+          Courses.addForFree(course._id, memberData).success(function (res) {
+              console.log("add for free result")
+              console.log(res)
+              if (res.success) {
+
+                  // Update the coursemembers array to include the newly added member
+                  $scope.course = res.data
+                  prepareCourseMembers(res.data)
+                  updateAddMemberNotification(true, false, "ADD_MEMBER_SUCCESS")
+                  clearAddMemberVars()
+
+              } else {
+                  updateAddMemberNotification(true, true, "ADD_MEMBER_FAILS")
+                  clearAddMemberVars()
+              }
+
+          });
+        }
+
+        function prepareCourseMembers(course) {
+          console.log("preparing course member")
+          let coursemembers = []
+          for (let i = 0; i < course.salesss.length; i++) {
+            let sale = course.salesss[i]
+            let memberid = sale.member
+            let saleid = sale.sale
+
+            // Get member details
+            Students.getStudentById(memberid).success(function (res) {
+              if (res.success) {
+                let memberdetails = res.data
+
+                if (saleid) {
+                  // Get Sale details
+                  Sales.saleDetails(saleid).success(function (resp) {
+                    if (resp.success) {
+                      let saledetails = resp.data[0]
+
+                      console.log("sales details")
+                      console.log(saledetails)
+
+                      let fulldetails = {
+                        name: memberdetails.name,
+                        datejoined: saledetails.createdAt,
+                        amount: saledetails.paymentData.payment_method_details.card.brand,
+                        currency: saledetails.currency,
+                        note: "Paid user"
+                      }
+
+                      coursemembers.push(fulldetails)
+
+                      $scope.members = coursemembers
+                    }
+                  })
+                } else {
+
+                  let item = course.members
+                  let freemember = course.members.filter(function( obj ) {
+                      return obj.member == memberid;
+                  });
+                  let fulldetails = {
+                    name: memberdetails.name,
+                    datejoined: freemember[0].date,
+                    amount: null,
+                    currency: null,
+                    note: "Added for free"
+                  }
+
+                  coursemembers.push(fulldetails)
+                  $scope.members = coursemembers
+                }
+              }
+            })
+
+          }
+        }
+
+        function updateAddMemberNotification(status, err, message) {
+          $scope.addmemberstatus = status
+          $scope.addmembererr = err
+          $scope.addmembermessage = message
+        }
+
+        function clearAddMemberVars() {
+          $scope.selected = '';
+          $scope.query = '';
+          $scope.state = closed;
+          $scope.addstep = 1;
+        }
+
+
+        $scope.selectTab = function (type) {
             $scope.section = type;
+            $scope.addmemberstatus = false;
+            $scope.addmembermessage = "";
+            $scope.addmembererr = false;
         }
 
         $scope.moduleCreate = function(id) {
@@ -2829,7 +3108,7 @@ angular.module('netbase')
 
         });
 
-        $scope.pushMembers = function(mem, t) {
+        $scope.pushMembers = function (mem, t) {
 
             let inn = $scope.selectedMember.indexOf(mem);
 
@@ -2842,10 +3121,10 @@ angular.module('netbase')
 
         }
 
-        $scope.save = function() {
+        $scope.save = function () {
 
             if ($scope.selectedMember != undefined && $scope.selectedMember.length > 0) {
-                Courses.addInstructor(courseId, $scope.selectedMember).success(function(res) {
+                Courses.addInstructor(courseId, $scope.selectedMember).success(function (res) {
                     console.log('instructor res', res);
 
                     if (res.success) {
@@ -2858,50 +3137,75 @@ angular.module('netbase')
 
     }])
 
-.controller('CoursesUpdateCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'Knowledge', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, Knowledge) {
-    console.log('update course controller');
-    $scope.courseData = $scope.ngDialogData.courseData;
-    $scope.title = $scope.courseData.title;
-    $scope.selectedKnowledge = $scope.courseData.knowledgeId;
+    .controller('CoursesUpdateCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'Knowledge', function ($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, Knowledge) {
+        console.log('update course controller');
+        $scope.courseData = $scope.ngDialogData.courseData;
+        $scope.title = $scope.courseData.title;
+        $scope.selectedKnowledge = $scope.courseData.knowledgeId;
 
-    $scope.tinymceOptions = {
-        file_picker_types: 'file image media',
-        tinydrive_token_provider: function(success, failure) {
-            Courses.fileUploadUrl().success(function(msg) {
-                success({ token: msg.token });
-            })
-        },
-        height: 400,
-        tinydrive_google_drive_key: "carbisa-document-upload@carbisa.iam.gserviceaccount.com",
-        tinydrive_google_drive_client_id: '102507978919142111240',
-        plugins: 'print preview powerpaste casechange importcss tinydrive searchreplace autolink autosave save directionality advcode visualblocks visualchars fullscreen image link media mediaembed  codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists checklist wordcount tinymcespellchecker a11ychecker textpattern noneditable help formatpainter pageembed charmap mentions quickbars linkchecker emoticons advtable',
-        toolbar: 'insertfile|undo redo | bold italic | alignleft aligncenter alignright | code|styleselect|outdent indent|link image'
-    };
+        $scope.hasError = false;
+        $scope.createcourseerrmessage = ""
 
-    if ($scope.courseData.free == false) {
-        $scope.free = false;
-        $scope.preco = $scope.courseData.price;
-    } else {
-        $scope.free = true;
-    }
-
-    $scope.description = $scope.courseData.description;
-
-    Knowledge.getAllPaginated().success(function(res) {
-        console.log('knowledge res', res);
-
-        if (res.success) {
-            $scope.knowledge = res.data.docs;
-        }
-    });
-
-    $scope.updateCourse = function() {
-        let formdata = {
-            title: $scope.title,
-            description: $scope.description,
-            knowledgeId: $scope.selectedKnowledge,
-            // university: $scope.courseData.university
+        $scope.tinymceOptions = {
+            file_picker_types: 'file image media',
+            tinydrive_token_provider: function (success, failure) {
+                Courses.fileUploadUrl().success(function (msg) {
+                    success({ token: msg.token });
+                })
+            },
+            height: 400,
+            tinydrive_google_drive_key: "carbisa-document-upload@carbisa.iam.gserviceaccount.com",
+            tinydrive_google_drive_client_id: '102507978919142111240',
+            plugins: 'print preview powerpaste casechange importcss tinydrive searchreplace autolink autosave save directionality advcode visualblocks visualchars fullscreen image link media mediaembed  codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists checklist wordcount tinymcespellchecker a11ychecker textpattern noneditable help formatpainter pageembed charmap mentions quickbars linkchecker emoticons advtable',
+            toolbar: 'insertfile|undo redo | bold italic | alignleft aligncenter alignright | code|styleselect|outdent indent|link image'
         };
+
+        if ($scope.courseData.free == false) {
+            $scope.free = false;
+            $scope.preco = $scope.courseData.price;
+        } else {
+            $scope.free = true;
+        }
+
+        $scope.description = $scope.courseData.description;
+
+        Knowledge.getAllPaginated().success(function (res) {
+            console.log('knowledge res', res);
+
+            if (res.success) {
+                $scope.knowledge = res.data.docs;
+            }
+        });
+
+        $scope.updateCourse = function () {
+
+            console.log("updating course")
+
+            //form validation
+            if ($scope.title == '') {
+              $scope.hasError = true;
+              $scope.createcourseerrmessage = "PLEASE_ENTER_COURSE_TITLE"
+              return
+            } else if ($scope.selectedKnowledge == '') {
+              $scope.hasError = true;
+              $scope.createcourseerrmessage = "PLEASE_SELECT_COURSE_KNOWLEDGE"
+              return
+            } else if ($scope.free == undefined) {
+              $scope.hasError = true;
+              $scope.createcourseerrmessage = "PLEASE_SELECT_COURSE_PAYMENT"
+              return
+            } else if ($scope.description == '') {
+              $scope.hasError = true;
+              $scope.createcourseerrmessage = "PLEASE_ENTER_COURSE_DESCRIPTION"
+              return
+            }
+
+            let formdata = {
+                title: $scope.title,
+                description: $scope.description,
+                knowledgeId: $scope.selectedKnowledge,
+                // university: $scope.courseData.university
+            };
 
         if ($scope.free == undefined) {
             console.log("error, undefined")
@@ -3009,7 +3313,7 @@ angular.module('netbase')
 
 
     }])
-    .controller('CoursesCreatePageCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', '$cookies', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, $cookies) {
+    .controller('CoursesCreatePageCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', '$cookies', function ($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, $cookies) {
         ngDialog.close();
         $scope.activeSection = "createPage";
         $scope.tinymceModel = 'Initial content';
@@ -3319,7 +3623,7 @@ angular.module('netbase')
             }
         }
 
-        $scope.saveQuiz = function() {
+        $scope.saveQuiz = function () {
             console.log('save valid', $scope.quizForm.$valid);
 
             if ($scope.quizForm.$valid) {
@@ -3331,7 +3635,7 @@ angular.module('netbase')
                     data: $scope.quesArr.questions
                 }
 
-                Courses.addQuizQuestions($scope.quizData._id, quesData).success(function(res) {
+                Courses.addQuizQuestions($scope.quizData._id, quesData).success(function (res) {
                     console.log('ques api res', res);
 
                     if (res.success) {
@@ -3344,29 +3648,40 @@ angular.module('netbase')
 
     }])
 
-.controller('CoursesByIdCtrl', ['$sce', 'User', '$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', function($sce, User, $rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses) {
+    .controller('CoursesByIdCtrl', ['$sce', 'User', '$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', function ($sce, User, $rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses) {
 
-    $scope.page = false;
+        $scope.page = false;
 
-    let id = $route.current.params.id;
+        let id = $route.current.params.id;
 
-    $scope.activeSection = "comprados";
-    $scope.useraccess = false;
+        $scope.activeSection = "comprados";
+        $scope.useraccess = false;
 
-    Courses.getById(id).success(function(res) {
+        Courses.getById(id).success(function (res) {
 
-        console.log('course res', res)
+            console.log('course res', res)
 
-        if (res.success) {
+            if (res.success) {
 
-            $scope.course = res.data;
+                $scope.course = res.data;
 
-            let mem = res.data.members;
+                //let mem = res.data.members;
 
-            if (mem.indexOf(User.getId()) >= 0) {
-                $scope.useraccess = true;
-                $sce.trustAsHtml($scope.course)
-            }
+                // if (mem.indexOf(User.getId()) >= 0) {
+                //     $scope.useraccess = true;
+                //     $sce.trustAsHtml($scope.course)
+                // }
+
+                // Check if the student / user id is in the members array
+                // if its in the array, it means user has access to the course
+                let userid = User.getId();
+                console.log("userid: ", userid)
+                const userExists = $scope.course.members.some(user => user.member = userid);
+                console.log("user exist: ", userExists)
+                if(userExists) {
+                  $scope.useraccess = true;
+                  $sce.trustAsHtml($scope.course)
+                }
 
         }
         //END
@@ -3378,8 +3693,9 @@ angular.module('netbase')
 
     $scope.openFreeCourse = function() {
 
-        console.log("if user is logged or not: ")
-        console.log($localStorage.logged)
+            console.log("if user is logged or not: ")
+            console.log($localStorage.logged)
+            console.log("useraccess: ", $scope.useraccess)
 
 
         // When the user has access, redirect to course timeline
@@ -3400,11 +3716,11 @@ angular.module('netbase')
             console.log("members: ")
             console.log(members)
 
-            for (let idx = 0; idx < members.length; idx++) {
+                for (let idx = 0; idx < members.length; idx++) {
 
-                let member = members[idx];
+                    let member = members[idx];
 
-                if (member.accountId == userId) {
+                    if (member.member == userId) {
                     userRegistered = true;
                 }
 
@@ -3413,15 +3729,19 @@ angular.module('netbase')
             console.log("userRegistered")
             console.log(userRegistered)
 
-            if (userRegistered) {
+                if (userRegistered) {
+                    console.log("go to course timeline")
+                    $location.path('/cursos/id/' + $scope.course._id + '/timeline')
 
-                $location.path('/cursos/id/' + $scope.course._id + '/timeline')
+                } else {
 
-            } else {
+                    console.log("let's registered")
+                    let memberData = {
+                        course_id: $scope.course._id,
+                        memberId: userId
+                    }
 
-                console.log("let's registered")
-
-                Courses.subscribeFree($scope.course._id).success(function(res) {
+                    Courses.subscribeFree($scope.course._id, memberData).success(function (res) {
 
                     if (res.success) {
 
@@ -3840,23 +4160,26 @@ angular.module('netbase')
     }
 }])
 
-.controller('CoursesCriarCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'Knowledge', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, Knowledge) {
-    $scope.universityId = $scope.ngDialogData.universityId;
-    $scope.page = false;
+    .controller('CoursesCriarCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'Knowledge', function ($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, Knowledge) {
+        $scope.universityId = $scope.ngDialogData.universityId;
+        $scope.page = false;
 
-    $scope.tinymceOptions = {
-        file_picker_types: 'file image media',
-        tinydrive_token_provider: function(success, failure) {
-            Courses.fileUploadUrl().success(function(msg) {
-                success({ token: msg.token });
-            })
-        },
-        height: 400,
-        tinydrive_google_drive_key: "carbisa-document-upload@carbisa.iam.gserviceaccount.com",
-        tinydrive_google_drive_client_id: '102507978919142111240',
-        plugins: 'print preview powerpaste casechange importcss tinydrive searchreplace autolink autosave save directionality advcode visualblocks visualchars fullscreen image link media mediaembed  codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists checklist wordcount tinymcespellchecker a11ychecker textpattern noneditable help formatpainter pageembed charmap mentions quickbars linkchecker emoticons advtable',
-        toolbar: 'insertfile|undo redo | bold italic | alignleft aligncenter alignright | code|styleselect|outdent indent|link image'
-    };
+        $scope.hasError = false;
+        $scope.createcourseerrmessage = '';
+
+        $scope.tinymceOptions = {
+            file_picker_types: 'file image media',
+            tinydrive_token_provider: function (success, failure) {
+                Courses.fileUploadUrl().success(function (msg) {
+                    success({ token: msg.token });
+                })
+            },
+            height: 400,
+            tinydrive_google_drive_key: "carbisa-document-upload@carbisa.iam.gserviceaccount.com",
+            tinydrive_google_drive_client_id: '102507978919142111240',
+            plugins: 'print preview powerpaste casechange importcss tinydrive searchreplace autolink autosave save directionality advcode visualblocks visualchars fullscreen image link media mediaembed  codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists checklist wordcount tinymcespellchecker a11ychecker textpattern noneditable help formatpainter pageembed charmap mentions quickbars linkchecker emoticons advtable',
+            toolbar: 'insertfile|undo redo | bold italic | alignleft aligncenter alignright | code|styleselect|outdent indent|link image'
+        };
 
     Knowledge.getAllPaginated().success(function(res) {
         if (res.success) {
@@ -3867,37 +4190,57 @@ angular.module('netbase')
     $scope.criar = function() {
         let error = false;
 
-        let formdata = {
-            title: $scope.title,
-            description: $scope.description,
-            currency: $scope.currency,
-            // currency : $scope.currency,
-            knowledgeId: $scope.selectedKnowledge,
-            university: $scope.universityId
-        };
+            //form validation
+            if ($scope.title == undefined) {
+              $scope.hasError = true;
+              $scope.createcourseerrmessage = "PLEASE_ENTER_COURSE_TITLE"
+              return
+            } else if ($scope.selectedKnowledge == undefined) {
+              $scope.hasError = true;
+              $scope.createcourseerrmessage = "PLEASE_SELECT_COURSE_KNOWLEDGE"
+              return
+            } else if ($scope.free == undefined) {
+              $scope.hasError = true;
+              $scope.createcourseerrmessage = "PLEASE_SELECT_COURSE_PAYMENT"
+              return
+            } else if ($scope.description == undefined) {
+              $scope.hasError = true;
+              $scope.createcourseerrmessage = "PLEASE_ENTER_COURSE_DESCRIPTION"
+              return
+            }
 
-        if ($scope.free == undefined) {
-            error = true;
-        } else {
-            formdata.free = $scope.free;
-        }
 
-        if ($scope.free == false) {
-            if ($scope.preco.length > 0) {
-                formdata.price = $scope.preco;
+            let formdata = {
+                title: $scope.title,
+                description: $scope.description,
+                currency: $scope.currency,
+                // currency : $scope.currency,
+                knowledgeId: $scope.selectedKnowledge,
+                university: $scope.universityId
+            };
+
+            if ($scope.free == undefined) {
+                $scope.hasError = true;
             } else {
-                console.log("price zero")
+                formdata.free = $scope.free;
             }
-        }
 
-        Courses.create(formdata).success(function(res) {
-            if (res.success) {
-                ngDialog.close();
-                $route.reload();
+            if ($scope.free == false) {
+                if ($scope.preco.length > 0) {
+                    formdata.price = $scope.preco;
+                } else {
+                    console.log("price zero")
+                }
             }
-        });
-    }
-}])
+
+            Courses.create(formdata).success(function (res) {
+                if (res.success) {
+                    ngDialog.close();
+                    $route.reload();
+                }
+            });
+        }
+    }])
 
 .controller('CoursesByIdManagementNavBarCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Payments', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Payments) {
 
@@ -3910,13 +4253,13 @@ angular.module('netbase')
 
         console.log("hello courses nav")
 
-        $scope.coursesCreate = function(universityId) {
+        $scope.coursesCreate = function (universityId) {
             ngDialog.open({ template: 'partials/courses/modals/coursecreate.html', controller: 'CoursesCriarCtrl', className: 'ngdialog-theme-default', data: { universityId: universityId }, closeByNavigation: true });
         }
     }])
     /* */
 
-.controller('CoursesNavBarCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Payments', '$cookies', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Payments, $cookies) {
+    .controller('CoursesNavBarCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Payments', '$cookies', function ($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Payments, $cookies) {
 
         $scope.page = false;
 
@@ -3925,34 +4268,31 @@ angular.module('netbase')
         let universityid = $route.current.params.universityid;
 
         if (universityid) {
-            $scope.universityid = universityid;
+          $scope.universityid = universityid;
         } else {
-            $scope.universityid = $cookies.get('ownedUniversityId');
+          $scope.universityid = $cookies.get('ownedUniversityId');
         }
 
         $scope.originalPath = originalPath;
 
         console.log("hello courses nav")
 
-        $scope.coursesCreate = function(universityId) {
+        $scope.coursesCreate = function (universityId) {
 
             ngDialog.open({
-                template: 'partials/courses/modals/coursecreate.html',
-                controller: 'CoursesCriarCtrl',
-                className: 'ngdialog-theme-default',
-                data: { universityId: universityId },
-                closeByNavigation: true
-            });
+              template: 'partials/courses/modals/coursecreate.html',
+              controller: 'CoursesCriarCtrl',
+              className: 'ngdialog-theme-default',
+              data: { universityId: universityId }, closeByNavigation: true });
         }
 
         $scope.openSelectPlan = function() {
 
-            ngDialog.open({
-                template: 'partials/modals/university_plan.html',
-                controller: 'UniversityPlanCtrl',
-                className: 'ngdialog-theme-default',
-                closeByNavigation: true
-            });
+          ngDialog.open({
+            template: 'partials/modals/university_plan.html',
+            controller: 'UniversityPlanCtrl',
+            className: 'ngdialog-theme-default',
+            closeByNavigation: true });
         }
 
 
@@ -4761,12 +5101,23 @@ angular.module('netbase')
 .controller('HomeUserUniversidadesCtrl', ['$rootScope', '$scope', '$location', 'University', 'Knowledge', 'User', function($rootScope, $scope, $location, University, Knowledge, User) {
     $scope.activeSection = 'seguindo';
 
-    University.getUniversitiesByOwnerId(User.getId()).success(function(res) {
-        if (res.success) {
-            $scope.universitiesOwner = res.data;
-        }
-    });
-}])
+        /* */
+
+        University.getUniversitiesByOwnerId(User.getId()).success(function (res) {
+
+            console.log(res);
+
+            if (res.success) {
+
+                $scope.universitiesOwner = res.data;
+
+            }
+
+        });
+        /* */
+
+
+    }])
 
 .directive('universityuserrow', ['University', 'Students', '$filter', '$sce', '$location', function(University, Students, $filter, $sce, $location) {
     return {
@@ -6976,13 +7327,25 @@ angular.module('netbase')
 
                         } else {
 
-                            //console.log("VIEWERS É ZERO")
+              // attached order field from modulecontent
+              for (let x = 0; x < modulecontentMC.length; x++) {
+                for (let i=0; i<mContents.length; i++) {
+                  if(mContents[i].modelId == modulecontentMC[x]._id) {
+                    modulecontentMC[x].order = modulecontent[i].order
+                  }
+                }
+              }
 
-                            scope.modulecontent = modulecontent
-                            $localStorage.estudarModulos.push(modulecontent)
+              let moduleContentSorted = modulecontentMC.sort(function(a, b) {
+                  return a.order - b.order;
+              });
+              scope.modulecontent = moduleContentSorted;
 
-                            //console.log("module content when viewers é zero: ")
-                            //console.log(scope.modulecontent)
+              //scope.modulecontent = modulecontentMC
+              $localStorage.estudarModulos.push(moduleContentSorted)
+
+              console.log("module content when viewers é zero: ")
+              console.log(scope.modulecontent)
 
                         }
 

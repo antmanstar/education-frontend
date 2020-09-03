@@ -26,13 +26,14 @@
 
             <h3>{{'COURSE_NAME' | translate}}</h3>
 
-            <input class="form-control input-lg" placeholder="{{'WRITE_COURSE_TITLE' | translate}}" ng-model="title"></input>
+            <input class="form-control input-lg" placeholder="{{'WRITE_COURSE_TITLE' | translate}}" ng-model="title" ng-required="true"></input>
+
             <br>
             <label>{{'SELECT_KNOWLEDGE' | translate}}</label>
             <select class="form-control input-lg" required name="" ng-model="selectedKnowledge">
-        <option disabled value="">{{'SELECT_KNOWLEDGE' | translate}}</option>
-        <option ng-repeat="k in knowledge" value="{{k._id}}">{{k.title}}</option>
-      </select>
+              <option disabled value="">{{'SELECT_KNOWLEDGE' | translate}}</option>
+              <option ng-repeat="k in knowledge" value="{{k._id}}">{{k.title}}</option>
+            </select>
             <style>
                 .courses-btn-pricing {
                     width: 50%;
@@ -57,9 +58,9 @@
                 <div class="col-xs-6 col-sm-6" style="text-align: center;">
 
                     <button class="courses-btn-pricing" ng-click="free = false" ng-click="pago = true">
-            <i ng-class="{'active': free == false}" class="fas fa-money-bill btn-success"></i>
-            <div ng-class="{'active': free == false}">{{'PAID' | translate}}</div>
-          </button>
+                      <i ng-class="{'active': free == false}" class="fas fa-money-bill btn-success"></i>
+                      <div ng-class="{'active': free == false}">{{'PAID' | translate}}</div>
+                    </button>
 
                 </div>
                 <!-- -->
@@ -67,9 +68,9 @@
                 <div class="col-xs-6 col-sm-6" style="text-align: center;">
 
                     <button class="courses-btn-pricing" ng-click="free = true">
-            <i ng-class="{'active': free == true}" class="fas fa-share-alt text-primary"></i>
-            <div ng-class="{'active': free == true}">{{'FREE' | translate}}</div>
-          </button>
+                      <i ng-class="{'active': free == true}" class="fas fa-share-alt text-primary"></i>
+                      <div ng-class="{'active': free == true}">{{'FREE' | translate}}</div>
+                    </button>
 
                 </div>
                 <!-- end col-xs-12 -->
@@ -110,6 +111,10 @@
             <!-- -->
 
             <div class="row">
+
+                <div class="alert alert-danger" style="color: #721c24 !important;" ng-show="hasError">
+                  {{createcourseerrmessage | translate}}
+                </div>
 
                 <div class="col-xs-12 col-sm-12">
 

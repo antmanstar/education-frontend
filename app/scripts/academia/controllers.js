@@ -1849,7 +1849,9 @@ angular.module('netbase')
     $location.path("/a/" + universityUrl + "/timeline");
 }])
 
-.controller('HomeTopicCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Forum', '$sce', '$filter', function($rootScope, $scope, $location, $route, University, Forum, $sce, $filter) {}])
+.controller('HomeTopicCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Forum', '$sce', '$filter', function($rootScope, $scope, $location, $route, University, Forum, $sce, $filter) {
+
+}])
 
 .controller('AcademiaTimelineCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Forum', '$sce', '$filter', 'ngDialog', '$timeout', function($rootScope, $scope, $location, $route, University, Forum, $sce, $filter, ngDialog, $timeout) {
 
@@ -2071,7 +2073,14 @@ angular.module('netbase')
                 }
                 console.log($scope.forumPostsNew);
             }
-        }).catch(function(e) {});
+
+            /* */
+
+        }).catch(function(e) {
+
+
+        });
+
     } else {
         University.getUniversity(universityUrl).then(function(res) {
 

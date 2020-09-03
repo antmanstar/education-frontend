@@ -229,6 +229,7 @@ angular.module('netbase')
     var baseUrl = "https://educationalcommunity-uni.herokuapp.com/university";
     //var baseUrl = "https://api.universida.de/university";
     //var baseUrl = "http://192.168.1.7:9003/university";
+    //var baseUrl = "http://localhost:9003/university";
     /*
 
     router.get('/id/:id/playlist', university_controller.getAllPlaylistByUniversityId)
@@ -272,7 +273,7 @@ angular.module('netbase')
 .factory('Forum', ['$http', '$localStorage', function($http, $localStorage) {
     var baseUrl = "https://educationalcommunity-uni.herokuapp.com/university";
     //var baseUrl = "https://api.universida.de/university";
-    //var baseUrl = "http://192.168.1.7:9003/university";
+    //var baseUrl = "http://localhost:9003/university";
 
     return {
         getAllOwnerForumPost: function(universityId) {
@@ -1168,6 +1169,12 @@ angular.module('netbase')
 
             return $http.get(baseUrl + url);
 
+        },
+
+        getAllStudents: function(id) {
+          var url = '/all';
+
+          return $http.get(baseUrl + url);
         }
 
     }
@@ -1276,7 +1283,7 @@ angular.module('netbase')
 .factory('Videos', ['$http', function($http) {
 
     var baseUrl = "https://educationalcommunity-uni.herokuapp.com/university";
-    //var baseUrl = "http://192.168.1.7:9003/university";
+    //var baseUrl = "http://localhost:9003/university";
 
     return {
 
@@ -1698,6 +1705,12 @@ angular.module('netbase')
 
             return $http.get(baseUrl + url);
 
+        },
+
+        saleDetails: function(id) {
+            var url = '/payments/sales/' + id;
+
+            return $http.get(baseUrl + url);
         }
 
     }
@@ -1714,23 +1727,31 @@ angular.module('netbase')
 
     return {
 
-        subscribeFree: function(courseId) {
+        subscribeFree: function(courseId, data) {
 
             let url = "/id/" + courseId + "/subscribe/free";
 
             return $http({
-
+                method: 'PUT',
                 url: baseUrl + url,
-                method: 'POST',
-                transformRequest: function(obj) {
-                    var str = [];
-                    for (var p in obj)
-                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                    return str.join("&");
-                },
+                data: data,
                 headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                    'x-access-token': $localStorage.token
+                    'Content-Type': 'application/json'
+                }
+            });
+
+        },
+
+        addForFree: function(courseId, data) {
+
+            let url = "/id/" + courseId + "/paid/free";
+
+            return $http({
+                method: 'PUT',
+                url: baseUrl + url,
+                data: data,
+                headers: {
+                    'Content-Type': 'application/json'
                 }
             });
             //
