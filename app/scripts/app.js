@@ -36,12 +36,9 @@ angular.module('netbase', [
             suffix: '.json'
         });
 
-
         $translateProvider.preferredLanguage('pt');
         //$translateProvider.uniformLanguageTag('bcp47').determinePreferredLanguage();
         //console.log("PREFERRED LANGUAGE: ", $translateProvider.uniformLanguageTag('bcp47').determinePreferredLanguage())
-
-
 
     }])
 

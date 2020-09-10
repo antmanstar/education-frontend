@@ -100,6 +100,7 @@
           <label style="padding-bottom: 15px;">{{'CREDIT_OR_DEBIT' | translate}}</label>
 
           <!---Display notification if student does not have a credit card yet --->
+
           <div class="alert bg-primary-blue" ng-show="!hasCard">{{'NO_CARD_FOUND' | translate}}</div>
           <div style="margin-top: 15px;">
             <p class="text-color-primary-blue" ng-show="!hasCard" ng-click="goToPage('cardAdd')">+ {{'ADD_NEW_CARD' | translate}}</p>

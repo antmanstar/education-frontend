@@ -38,6 +38,7 @@
             <div class="menu-right">
               <div class="options" style="padding-right: 0px;">
 
+                <!--
                 <div id="languageMenu" ng-hide="logged" class="language">
                   <span style="padding-top: 10px; padding-right: 5px;">{{'LANGUAGE' | translate}} <i class="fas fa-angle-down" style="margin-top: 10px; display: inline-block; vertical-align: top;"></i></span>
                   <div class="language-expanded">
@@ -45,6 +46,7 @@
                     <div ng-click="changeLanguage('pt')" ng-class="{'selected-language': selectedLanguage === 'pt'}">{{'PORTUGUESE' | translate}} (pt-br)</div>
                   </div>
                 </div>
+                -->
 
                 <div ng-hide="logged" ng-click="login()">{{'HEADER_MENU_1' | translate}}</div>
 
@@ -58,8 +60,10 @@
                   <div class="profile-expanded">
                     <!--<div><a href="/dashboard">Dashboard</a></div>-->
                     <div><a href="/perfil">{{'HEADER_PROFILE_1' | translate}}</a></div>
+                    <!--
                     <div ng-click="changeLanguage('en')" ng-class="{'selected-language': selectedLanguage === 'en'}">{{'ENGLISH' | translate}} (en-us)</div>
                     <div ng-click="changeLanguage('pt')" ng-class="{'selected-language': selectedLanguage === 'pt'}">{{'PORTUGUESE' | translate}} (pt-br)</div>
+                    -->
                     <div ng-click="logout()"><a>{{'HEADER_PROFILE_2' | translate}}</a></div>
                   </div>
                 </div>
