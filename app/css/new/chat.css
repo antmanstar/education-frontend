@@ -93,6 +93,17 @@
 .chat-footer {
     padding: 0 !important;
     display: flex;
+    flex-direction: column;
+}
+
+.notification {
+    height: 20px;
+    font-size: 10px;
+    background-color: white;
+}
+
+.chat-controller {
+    display: flex;
     flex-direction: row;
 }
 

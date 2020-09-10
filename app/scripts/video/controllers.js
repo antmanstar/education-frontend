@@ -8,13 +8,14 @@ angular.module('netbase')
 
 .controller('VideoWatchCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Videos', '$sce', 'User', 'Forum', 'Students', 'Courses', 'ngDialog', '$localStorage', 'jwtHelper', function($rootScope, $scope, $location, $route, University, Videos, $sce, User, Forum, Students, Courses, ngDialog, $localStorage, jwtHelper) {
     let videoId = $route.current.params.videoId;
+    $scope.videoId = videoId;
     let viewers = {};
     let logged = $rootScope.logged;
 
     $scope.tinymceOptions = {
         file_picker_types: 'file image media',
-        tinydrive_token_provider: function (success, failure) {
-            Courses.fileUploadUrl().success(function (msg) {
+        tinydrive_token_provider: function(success, failure) {
+            Courses.fileUploadUrl().success(function(msg) {
                 success({ token: msg.token });
             })
         },
@@ -26,29 +27,12 @@ angular.module('netbase')
     };
 
     Videos.getById(videoId).success(function(res) {
-        console.log(res);
         let status = res.status;
         if (status == 90010) {
             $location.path('/home');
         } else {
             $scope.video = res.data;
             if ($scope.video != null && $scope.video != undefined) {
-                if ($scope.video.file.indexOf(".mp4") == -1 && $scope.video.file.indexOf(".wmv") == -1) {
-                    const video = document.querySelector('video');
-                    const player = new Plyr(video);
-
-                    if (!Hls.isSupported()) {
-                        video.src = $scope.video.file;
-                    } else {
-                        // For more Hls.js options, see https://github.com/dailymotion/hls.js
-                        const hls = new Hls();
-                        hls.loadSource($scope.video.file);
-                        hls.attachMedia(video);
-                    }
-                } else {
-                    $("video").attr("src", $scope.video.file);
-                }
-
                 // Get University
                 $scope.studentIsAdmin = false;
                 if ($scope.video.universityId.length > 0) {
@@ -104,62 +88,42 @@ angular.module('netbase')
                 // FIX
                 setInterval(function() {
                     let player = $("video").get(0);
-
                     if (player != undefined) {
                         let percentComplete = player.currentTime / player.duration;
-
                         if (timeWatched < player.currentTime) {
                             timeWatched = player.currentTime;
                             let payload = { timeWatched: timeWatched };
-
                             Videos.progress(payload, videoId).success(function(res) {
                                 console.log("time viewed updated")
                                 console.log(res);
                             });
-                            //END update progress
                         }
-                        //END timeWatched < player.currentTime
                     }
                 }, 10000);
-                //END setInterval
             }
-            //END if (video is null or undefined)
         }
-        //END status 90010
     });
-    //END Videos.getById
 
     $scope.createAnswerPost = function() {
-
         var data = { text: $scope.answer };
 
         // change forum post structure
-
         var data = { text: $scope.answer };
-
         if ($localStorage.token != undefined || $localStorage.token != null) {
-
             Forum.postAnswerByForumPostId($scope.forumPost._id, data).then(function(res) {
-
                 let status = res.data.status;
                 let data = res.data.data;
                 let success = res.data.success;
 
                 if (success) {
-
                     data.votesCount = 0;
                     data.createdAt = Math.round((new Date()).getTime() / 1000);
                     $scope.forumPost.answers.push(data);
-
                 }
-
             });
-            //END Forum.postAnswerByForumPostId
-
         } else {
             ngDialog.open({ template: 'partials/modals/login.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
         }
-
     };
 
     $scope.openViewers = function() {
@@ -176,8 +140,8 @@ angular.module('netbase')
 
     $scope.tinymceOptions = {
         file_picker_types: 'file image media',
-        tinydrive_token_provider: function (success, failure) {
-            Courses.fileUploadUrl().success(function (msg) {
+        tinydrive_token_provider: function(success, failure) {
+            Courses.fileUploadUrl().success(function(msg) {
                 success({ token: msg.token });
             })
         },
@@ -195,26 +159,22 @@ angular.module('netbase')
     }
 
     $scope.playlistSelect = { _id: undefined };
-
     $scope.universityId = universityId;
 
     Playlist.getAllPlaylistByUniversityId(universityId._id).success(function(res) {
-
         $scope.playlists = res.data;
-
     });
 
     $scope.privilege = { value: 0 };
     $scope.premium = { value: 0 };
     $scope.errorDisplay = false;
     $scope.errorMessages = [];
-
-    /* */
+    $scope.videoUploadAttension = () => {
+        alert("Upload Video First");
+    }
 
     $scope.createVideo = function() {
-
         let file = $("#file").attr("value");
-
         let upload = true;
 
         let payload = {
@@ -237,38 +197,24 @@ angular.module('netbase')
             upload = false;
         }
 
-        if (payload.description == undefined || payload.title.description == 0) {
+        if (payload.description == undefined || payload.description.length == 0) {
             $scope.errorMessages.push("Escreva uma descricao para o vídeo.");
             upload = false;
         }
 
-        if (payload.universityId == undefined || payload.title.universityId == 0) {
+        if (payload.universityId == undefined || payload.universityId.length == 0) {
             $scope.errorMessages.push("O video deve ser criado dentro da página de uma universidade.");
             upload = false;
         }
 
-        console.log(payload);
-
         if (upload) {
             Videos.create(payload).success(function(res) {
-
                 console.log(res);
                 $location.path("/v/id/" + res.data._id)
-
             });
         } else {
             $scope.errorDisplay = true;
         }
-
-        /*
-        Videos.create(payload).success(function(res) {
-
-          console.log(res);
-          $location.path("/v/id/" + res.data._id)
-
-        });
-        */
-
     }
 
 }])
@@ -281,8 +227,8 @@ angular.module('netbase')
 
     $scope.tinymceOptions = {
         file_picker_types: 'file image media',
-        tinydrive_token_provider: function (success, failure) {
-            Courses.fileUploadUrl().success(function (msg) {
+        tinydrive_token_provider: function(success, failure) {
+            Courses.fileUploadUrl().success(function(msg) {
                 success({ token: msg.token });
             })
         },

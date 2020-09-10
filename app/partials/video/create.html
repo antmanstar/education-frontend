@@ -4,15 +4,13 @@
     // Initialize instances:
 
     var socket = io.connect("https://educationalcommunity-videouplo.herokuapp.com/");
-
-    //var socket = io.connect("http://localhost:8585/");
-
     var siofu = new SocketIOFileUpload(socket);
 
     let filesCount = 0;
-
     let progressCloud = 0;
     var progressPercent = 0;
+
+    $("#btn_hide").hide();
 
     siofu.listenOnDrop(document.getElementById("file_drop"));
 
@@ -26,51 +24,47 @@
         if (percent.toFixed(2) == 100) {
             $("#file_drop").html("<b>Iniciando o processamento do vídeo</b>");
         }
-
     });
 
     socket.on("progressCloud", function(a) {
-        console.log("cloud progress: ")
-        console.log(a)
+        // console.log("cloud progress: ")
+        // console.log(a)
         progressCloud = progressCloud + 1;
         progressPercent = (progressCloud / filesCount) * 100;
 
-        console.log("process cloud is: " + progressCloud)
-        console.log("process percent is: " + progressPercent)
+        // console.log("process cloud is: " + progressCloud)
+        // console.log("process percent is: " + progressPercent)
 
         $("#file_drop").html("<b>Salvando o vídeo:</b> " + progressPercent.toFixed(2) + "%");
     });
 
     socket.on("progressProgressing", function(a) {
-
         let progressPercent = a;
-
         $("#file_drop").html("<b>Processando o vídeo:</b> " + progressPercent.toFixed(2) + "%");
-
     });
 
     socket.on("status", function(a) {
-        console.log("status: ")
-        console.log(a)
-        if (a == 1) {
-
-        }
+        // console.log("status: ")
+        // console.log(a)
+        if (a == 1) {}
         if (a == 2) {
             $("#file_drop").html("<b>O vídeo foi salvo no servidor! Estamos processando o vídeo na melhor qualidade possível.</b>");
+            $("#btn_hide").show();
+            $("#btn_show").hide();
         }
     });
 
     socket.on("files", function(a) {
-        console.log("files: ")
-        console.log(a)
+        // console.log("files: ")
+        // console.log(a)
         filesCount = a;
     });
 
     // Do something when a file is uploaded:
     siofu.addEventListener("complete", function(event) {
-        console.log(event.success);
-        console.log(event.file);
-        console.log(event)
+        // console.log("A1", event.success);
+        // console.log("A2", event.file);
+        // console.log("A3", event)
     });
 
     socket.on("videopath", function(a) {
@@ -86,9 +80,8 @@
         <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 academia-content">
 
             <div style="font-size: 2em; padding-bottom: 30px; text-align: right;">{{'CREATE_VIDEO' | translate}}</div>
-
-            <button ng-click="createVideo()" class="btn btn-green">{{'CREATE' | translate}}</button>
-
+            <button id="btn_show" ng-click="videoUploadAttension()" class="btn btn-green">{{'CREATE' | translate}}</button>
+            <button id="btn_hide" ng-click="createVideo()" class="btn btn-green">{{'CREATE' | translate}}</button>
         </div>
         <!-- end col-xs-12 col-sm-4 -->
 
@@ -110,11 +103,9 @@
             <input class="academia-content-forum-post-create-title" placeholder="{{'WRITE_VIDEO_TITLE' | translate}}" ng-model="title"></input>
 
             <div>
-
                 <input type="hidden" id="file" ng-model="file">
                 <div id="file_drop" dropzone="copy" title="drop files for upload" class="file-drop-area"><b>{{'START_UPLOAD' | translate}}</b> {{'DRAG_VIDEO_FILE_HERE' | translate}}</div>
                 <!-- end file-drop-area -->
-
             </div>
             <!-- end file -->
 

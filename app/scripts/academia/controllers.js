@@ -2970,7 +2970,6 @@ angular.module('netbase')
             var accountSid = $route.current.params.accountSid;
             var roomSID = $route.current.params.roomSID;
             var baseUrl = "https://educationalcommunity-uni.herokuapp.com";
-            // var baseUrl = 'localhost:9007'
 
             scope.channels = [];
             scope.university = JSON.parse(attr.university);
@@ -3012,6 +3011,7 @@ angular.module('netbase')
                         resize: false,
                         statusbar: false,
                         toolbar_location: 'bottom',
+                        forced_root_block: false,
                         height: 100,
                         width: '100%',
                         readonly: scope.curCategory === undefined ? true : false,
@@ -3175,7 +3175,8 @@ angular.module('netbase')
                 let hour = currentDate.getHours();
                 let minute = currentDate.getMinutes();
                 let second = currentDate.getSeconds();
-                scope.sendingMessage = scope.months[month] + ' ' + day + ' ' + hour + ':' + minute + ':' + second + '::sent_time::' + $scope.sendingMessage;
+                scope.sendingMessage = scope.months[month] + ' ' + day + ' ' + hour + ':' + minute + ':' + second + '::sent_time::' + scope.sendingMessage;
+                console.log("AAA", scope.sendingMessage)
                 scope.currentChannel.sendMessage(scope.sendingMessage);
                 scope.sendingMessage = '';
             }
@@ -3247,7 +3248,7 @@ angular.module('netbase')
             }
 
             scope.applyMessage = (message, currentMember, id) => {
-                let messageListDom = document.getElementById('chat_list');
+                let messageListDom = document.getElementById('scrollbar');
                 let messageTitleDom = document.createElement('div');
                 let messageTimeDom = document.createElement('div');
                 let messageBodyDom = document.createElement('div');
@@ -3288,7 +3289,7 @@ angular.module('netbase')
                 messageItemDom.appendChild(messageBodyDom);
                 messageItemDom.appendChild(messageTitleDom);
                 messageListDom.appendChild(messageItemDom);
-                scope.scrollToMessageListBottom();
+                // scope.scrollToMessageListBottom();
             }
 
             scope.sendingInputKeyPress = $e => {
@@ -3296,6 +3297,7 @@ angular.module('netbase')
                     scope.sendMSG();
                     $e.preventDefault();
                 }
+                console.log("AAA")
             }
 
             function getDateValue(date) {
@@ -3776,6 +3778,7 @@ angular.module('netbase')
                     if (Hls.isSupported()) {
                         var hls = new Hls();
                         hls.loadSource(scope.video.file);
+                        console.log("Video File", scope.video.file)
                         hls.attachMedia(player);
                     }
 
