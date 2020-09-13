@@ -112,6 +112,10 @@
 
             <div class="row">
 
+                <div class="alert alert-danger" style="color: #721c24 !important;" ng-show="hasError">
+                  {{createcourseerrmessage | translate}}
+                </div>
+
                 <div class="col-xs-12 col-sm-12">
 
                     <button class="btn btn-green" ng-click="updateCourse()">{{"UPDATE_COURSE" | translate}}</button>

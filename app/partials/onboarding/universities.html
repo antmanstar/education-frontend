@@ -1,99 +1,80 @@
-<div class="container-fluid" ng-controller="OnboardingUniversitiesCtrl">
-
-  <div class="row" style="margin-top: 20px; margin-bottom: 20px;">
-
-    <div class="col-xs-4"></div>
-
-    <div class="col-xs-4" style="text-align: center;">
-
-      <a href="/home/explore">
-        <img src="img/universidade_icon.png" height="30px" />
-      </a>
-
-    </div>
-
-    <div class="col-xs-4" style="text-align: right; line-height: 30px;">
-
-      <a href="/home/timeline">
-        <button class="btn btn-success" style="height: 30px; width: unset; font-size: 0.75em; font-weight: bold;">{{'FINISH' | translate}}</button>
-      </a>
-
-    </div>
-
-  </div>
-  <!-- end row -->
-
-  <div class="row" style="margin-bottom: 40px;">
-
-    <div class="col-xs-12">
-
-      <div style="width: 100%; text-align: center;">
-
-        <div style="font-weight: bolder; font-size: 1.8em; color: #2d4255;">{{'FOLLOW_FAVORITE_UNIVERSITIES' | translate}}</div>
-
-      </div>
-
-    </div>
-    <!-- end COL XS 12 -->
-
-  </div>
-  <!-- end ROW -->
-
-  <style>
-
+<style>
     .onboarding-knowledge {
-      padding-bottom: 10px;
-      border-bottom: 1px solid #cdcdcd;
-      margin-bottom: 10px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #cdcdcd;
+        margin-bottom: 10px;
     }
-
+    
     .onboarding-knowledge .title {
-      font-size: 1.5em;
-      display: inline-block;
-      font-weight: bolder;
-      color: #2d4255;
+        font-size: 1.5em;
+        display: inline-block;
+        font-weight: bolder;
+        color: #2d4255;
     }
-
+    
     .onboarding-knowledge .icon {
-      float: right;
-      font-size: 1.5em;
-      display: inline-block;
-      vertical-align: top;
+        float: right;
+        font-size: 1.5em;
+        display: inline-block;
+        vertical-align: top;
     }
-
-    .onboarding-knowledge-university-row {
-
-    }
-
+    
     .onboarding-knowledge-university-row .name {
-      display: inline-block;
-      font-weight: bolder;
-      font-size: 1.2em;
-      padding-left: 10px;
+        display: inline-block;
+        font-weight: bolder;
+        font-size: 1.2em;
+        padding-left: 10px;
     }
-
+    
     .onboarding-knowledge-university-row .logo-bg {
-      display: inline-block;
+        display: inline-block;
     }
-
+    
     .onboarding-knowledge-university-row .buttons {
-      text-align: right; float: right; vertical-align: top;
-      line-height: 60px;
-      font-size: 0.7em;
+        text-align: right;
+        float: right;
+        vertical-align: top;
+        line-height: 60px;
+        font-size: 0.7em;
     }
+</style>
 
-  </style>
-
-  <div class="row">
-    <div class="col-xs-12" style="margin-bottom: 15px;" ng-repeat="u in knowledges">
-      <div class="onboarding-knowledge">
-        <div class="title">{{u.title}}</div>
-        <div class="icon"><i class="fas fa-plus"></i></div>
-      </div>
-      <onboardinguniversity uid="{{item.universityId}}" ng-repeat="item in u.universities"></onboardinguniversity>
+<div class="container-fluid" ng-controller="OnboardingUniversitiesCtrl">
+    <div class="row" style="margin-top: 20px; margin-bottom: 20px;">
+        <div class="col-xs-4"></div>
+        <div class="col-xs-4" style="text-align: center;">
+            <a href="/home/explore">
+                <img src="img/universidade_icon.png" height="30px" />
+            </a>
+        </div>
+        <div class="col-xs-4" style="text-align: right; line-height: 30px;">
+            <a href="/home/timeline">
+                <button class="btn btn-success" style="height: 30px; width: unset; font-size: 0.75em; font-weight: bold;">{{'FINISH' | translate}}</button>
+            </a>
+        </div>
     </div>
-    <!-- end COL XS 12 -->
-  </div>
-  <!-- end ROW -->
+    <!-- end row -->
+
+    <div class="row" style="margin-bottom: 40px;">
+        <div class="col-xs-12">
+            <div style="width: 100%; text-align: center;">
+                <div style="font-weight: bolder; font-size: 1.8em; color: #2d4255;">{{'FOLLOW_FAVORITE_UNIVERSITIES' | translate}}</div>
+            </div>
+        </div>
+        <!-- end COL XS 12 -->
+    </div>
+    <!-- end ROW -->
+
+    <div class="row">
+        <div class="col-xs-12" style="margin-bottom: 15px;" ng-repeat="u in knowledges" ng-hide="u.universities.length === 0">
+            <div class="onboarding-knowledge">
+                <div class="title">{{u.title}}</div>
+                <div class="icon"><i class="fas fa-plus"></i></div>
+            </div>
+            <onboardinguniversity uid="{{item.universityId}}" ng-repeat="item in u.universities"></onboardinguniversity>
+        </div>
+        <!-- end COL XS 12 -->
+    </div>
+    <!-- end ROW -->
 </div>
 <!-- end container fluid -->

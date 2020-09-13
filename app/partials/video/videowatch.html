@@ -24,22 +24,17 @@
     .plyr {
         height: 100% !important;
     }
-
+    
     .plyr__video-wrapper {
         height: 100% !important;
     }
 </style>
 
 <div ng-if="video.status != 1" class="player-area">
-
-    <video id="video" controls poster="{{university.backgroundImage}}"></video>
-    <!--
-  <video id="video" crossorigin="anonymous" class="video-js vjs-default-skin" controls preload="auto" vjs-video></video>
-  -->
-
+    <videorow videoid="{{videoId}}"></videorow>
 </div>
 
-<div ng-if="video.status != 1" class="container-fluid" style="padding: 30px;">
+<div ng-if="video.status != 1" class="container-fluid" style="padding: 30px; margin-top: 30px">
 
     <div class="row">
 

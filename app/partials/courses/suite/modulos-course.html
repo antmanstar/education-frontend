@@ -177,11 +177,90 @@
     cursor: pointer;
   }
 
+  .wrap {
+    margin: 20px 20px 100px;
+    width: 400px;
+    /* position: relative; */
+    float: right;
+}
+
+input {
+  width: 190px;
+  line-height: 25px;
+  border: 1px solid #C3D0DB;
+  margin: 0;
+  padding-left: 10px;
+  z-index: 0;
+  outline: none;
+}
+input:focus {
+  border-width: 2px;
+  position: relative;
+  top: -1px;
+  left: -1px;
+}
+
+ul {
+  margin-top: 2px;
+  padding-left: 10px;
+  border: 1px solid #C3D0DB;
+  line-height: 25px;
+  background-color: #fff;
+  cursor: pointer;
+  width: 193px;
+  position: relative;
+  top: -1px;
+  left: -1px;
+}
+
+.closed {
+  display: none;
+}
+
+.opened {
+  display: block;
+}
+
+.members_container {
+  max-height: 150px;
+  overflow-y: auto;
+  width: 280px;
+}
+
+.danger {
+  color: #721c24 !important;
+}
+
+.success {
+  color: #3c763d !important;
+}
+
+/* span {
+  line-height: 25px;
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-left: 10px;
+  background-color: #fff;
+  margin-top: 2px;
+}
+span i {
+  font-size: 12px;
+  color: #C3D0DB;
+  cursor: pointer;
+  margin-left: 2px;
+} */
+
 </style>
 
 <div class="container-fluid container-home">
 
   <div class="row">
+
+    <div ng-class="{'alert alert-danger danger': addmembererr, 'alert alert-success success': !addmembererr}" style="margin-top: 2rem; height: 6rem;" ng-show="addmemberstatus">
+      {{ addmembermessage | translate}}
+    </div>
 
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
       <div style="height: 10px;"></div>
@@ -300,24 +379,78 @@
             <div class="tab-pane active" ng-show="section == 'member'">
               <!-- member section -->
               <div class="row">
-                <div class="col-md-12"style="margin: 2em 0;">
-                  {{'SALES' | translate}}: {{course.salesss}}
-                  <table class="table table-bordered members-table">
-                    <thead class="text-center tHead">
-                      <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">{{'NOME' | translate}}</th>
-                        <th scope="col">{{'DATE_ACCESSED' | translate}}</th>
 
-                        <th scope="col">{{'PAYMENT' | translate}}</th>
-                        <th scope="col">{{'ACTION' | translate}}</th>
+                <!-- Searchable dropdown for adding course member -->
+                <div class='wrap' ng-show="!course.free">
+
+                  <div style="display: flex;" ng-show="addstep==1">
+                    <input ng-change='change()' ng-model='query' placeholder='Enter student name' type='text' xng-focus='cleared' style="width: 280px;">
+                    <button class="btn btn-success" ng-click="confirmAddMember()" ng-disabled="selected==''">Add Member</button>
+                  </div>
+                  <div class="members_container">
+                    <ul class='{{state}}' ng-show='state=="opened"' style="width: 280px;">
+                      <li ng-click='select(item)' ng-repeat='item in filtered' style="list-style-type: none;">
+                        {{item.name}}
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div ng-show="addstep==2">
+                    <h3>{{'SURE_ADD_MEMBER' | translate}}</h3>
+                    <div style="display: flex;justify-content: space-between;">
+                      <button class="btn btn-success" ng-click="addMember()" style="max-width: 45%">{{'YES' | translate}}</button>
+                      <button class="btn btn-primary" ng-click="cancelAddMember()" style="max-width: 45%">{{'CANCEL' | translate}}</button>
+                    </div>
+                  </div>
+
+                </div>
+                <!-- End of Searchable dropdown for adding course member -->
+
+                <div class="col-md-12"style="margin: 2em 0;">
+                  {{'MEMBERS' | translate}} : {{course.members.length}}
+                  <table class="table table-bordered members-table" ng-if="!course.free">
+                    <thead class="text-center tHead">
+                      <tr class="text-center">
+                        <th scope="col" class="text-center">#</th>
+                        <th scope="col" class="text-center">{{'NOME' | translate}}</th>
+                        <th scope="col" class="text-center">{{'DATE_ACCESSED' | translate}}</th>
+
+                        <th scope="col" class="text-center">{{'PAYMENT' | translate}}</th>
+                        <th scope="col" class="text-center">{{'REMARKS' | translate}}</th>
                       </tr>
                     </thead>
                     <tbody class="tBody">
-                      <tr class="text-center" ng-repeat="i in course.salesss" studentinfosubscriber sid="{{i.member}}" count="{{$index+1}}" pid="i.sale">
+                      <tr ng-repeat="i in members">
+                        <td class="text-center">{{$index+1}}</td>
+                        <td>{{i.name}}</td>
+                        <td ng-if="i.note=='Paid user'" class="text-center">{{i.datejoined | amFromUnix | amDateFormat:'MMMM Do YYYY'}}</td>
+                        <td ng-if="i.note!='Paid user'" class="text-center">{{i.datejoined | amDateFormat:'MMMM Do YYYY'}}</td>
+                        <td class="text-center">{{i.amount}}</td>
+                        <td class="text-center">{{i.note}}</td>
                       </tr>
                     </tbody>
                   </table>
+
+                  <table class="table table-bordered members-table" ng-if="course.free">
+                    <thead class="text-center tHead">
+                      <tr class="text-center">
+                        <th scope="col" class="text-center">#</th>
+                        <th scope="col"">{{'NOME' | translate}}</th>
+                        <th scope="col" class="text-center">{{'DATE_ACCESSED' | translate}}</th>
+                      </tr>
+                    </thead>
+                    <tbody class="tBody">
+                      <tr ng-repeat="i in members">
+                        <td class="text-center">{{$index+1}}</td>
+                        <td class="text-center">{{i.name}}</td>
+                        <td class="text-center">{{i.datejoined | amDateFormat:'MMMM Do YYYY'}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+                  <div ng-show="!hasMember">
+                    <p>{{'NO_MEMBERS_MESSAGE' | translate}}</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -422,6 +555,17 @@
     <h3>{{'SURE_DELETE_MODULE' | translate}}</h3>
     <div class="delete-buttons-div">
       <button class="btn btn-danger" ng-disabled="deleteLoading" ng-click="deleteModule()">{{'DELETE' | translate}} <img style="width: 15px;" ng-show="deleteLoading == true" src="img/misc/loading.gif"/></button>
+      <button class="btn btn-dark" ng-click="closePopup()">{{'CANCEL' | translate}}</button>
+    </div>
+  </div>
+</script>
+
+<!-- module delete popup -->
+<script type="text/ng-template" id="addMemberPopup">
+  <div class="container-fluid text-center delete-container">
+    <h3>{{'SURE_ADD_MEMBER' | translate}}</h3>
+    <div class="delete-buttons-div">
+      <button class="btn btn-danger" ng-disabled="deleteLoading" ng-click="addMember(student)">{{'YES' | translate}} <img style="width: 15px;" ng-show="deleteLoading == true" src="img/misc/loading.gif"/></button>
       <button class="btn btn-dark" ng-click="closePopup()">{{'CANCEL' | translate}}</button>
     </div>
   </div>
