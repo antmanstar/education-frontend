@@ -2,44 +2,47 @@
 
 <div class="container-fluid container-full">
 
-  <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
-  <div class="row academia-coverimage" ng-if="university.backgroundImage == undefined"  style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
+    <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
+    <div class="row academia-coverimage" ng-if="university.backgroundImage == undefined" style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
 
-  <div class="row">
+    <div class="row">
 
-    <div academiarightcolumn university="{{university}}"></div>
+        <div academiarightcolumn university="{{university}}"></div>
 
-    <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9 academia-content">
+        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9 academia-content">
 
-      <div academiastatus university="{{university}}"></div>
+            <div academiastatus university="{{university}}"></div>
 
-      <div style="font-size: 2.0em; font-weight: bolder; margin-bottom: 25px;">{{'PLAYLISTS' | translate}}</div>
+            <div style="font-size: 2.0em; font-weight: bolder; margin-bottom: 25px;">{{'PLAYLISTS' | translate}}</div>
 
-      <div class="academia-content-forum">
+            <div class="academia-content-forum">
 
-        <div class="academia-category" ng-repeat="playlist in playlists">
+                <div class="academia-category" ng-repeat="playlist in playlists">
 
-          <div class="texts">
-            <div class="title"><div class="icon" style="padding-right: 30px;"><i class="fa fa-video-camera"></i><a href="/a/{{university.url}}/playlist/id/{{playlist._id}}"></div>{{playlist.title}}</a></div>
-          </div>
+                    <div class="texts">
+                        <div class="title">
+                            <div class="icon" style="padding-right: 30px;"><i class="fa fa-video-camera"></i>
+                                <a href="/a/{{university.url}}/playlist/id/{{playlist._id}}"></div>{{playlist.title}}</a>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- end academia-category -->
+
+                <div ng-show="playlists.length == 0">
+                    {{'NO_REGISTERED_PLAYLIST' | translate}}
+                </div>
+
+            </div>
+            <!-- academia-content-forum-->
 
         </div>
-        <!-- end academia-category -->
-
-        <div ng-show="playlists.length == 0">
-          {{'NO_REGISTERED_PLAYLIST' | translate}}
-        </div>
-
-      </div>
-      <!-- academia-content-forum-->
+        <!-- end col-xs-12 -->
 
     </div>
-    <!-- end col-xs-12 -->
-
-  </div>
-  <!-- end row -->
+    <!-- end row -->
 
 </div>
 <!-- container-full -->
-
+<categorychat university={{university}} />
 <footermobile></footermobile>

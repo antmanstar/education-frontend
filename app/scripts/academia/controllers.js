@@ -1660,10 +1660,12 @@ angular.module('netbase')
     $scope.alertMsg = $scope.ngDialogData.msg;
     $scope.alertType = $scope.ngDialogData.type;
     $scope.confirmAlert = function() {
-        //ngDialog.close();
         if ($rootScope.alertDialog.length == 0) return;
         $rootScope.alertDialog[$rootScope.alertDialog.length - 1].close();
         $rootScope.alertDialog.splice($rootScope.alertDialog.length - 1, 1);
+    }
+    $scope.confirmAlertFrom = function() {
+        ngDialog.close();
     }
 }])
 
@@ -2350,7 +2352,7 @@ angular.module('netbase')
             description: $scope.description,
             privilegeMin: $scope.privilege.value,
             friendlyName: $scope.title + "channel",
-            uniqueName: "general"
+            uniqueName: $scope.title + "general"
         }
 
         Forum.createCategory(university._id, data).success(function(res) {
@@ -2964,92 +2966,76 @@ angular.module('netbase')
         replace: false,
         scope: true,
         link: (scope, element, attr) => {
-            var GENERAL_CHANNEL_UNIQUE_NAME;
-            var GENERAL_CHANNEL_NAME;
             var MAX_LOAD_MESSAGE_COUNT = 120;
-            var accountSid = $route.current.params.accountSid;
-            var roomSID = $route.current.params.roomSID;
             var baseUrl = "https://educationalcommunity-uni.herokuapp.com";
 
             scope.channels = [];
-            scope.university = JSON.parse(attr.university);
             scope.messagingClient = null;
             scope.generalChannel = null;
             scope.selectedChannel = null;
-            scope.sendingMessage = '';
             scope.members = [];
-            scope.months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-            scope.monthToVal = {
-                Jan: 0,
-                Feb: 1,
-                Mar: 2,
-                Apr: 3,
-                May: 4,
-                Jun: 5,
-                Jul: 6,
-                Aug: 7,
-                Sep: 8,
-                Oct: 9,
-                Nov: 10,
-                Dec: 11
-            };
             scope.chattingNotification = '';
+            scope.messages = [];
+            scope.currentMember = null;
 
-            Forum.getCategoriesByUniversityId(scope.university._id).success(function(resCategory) {
-                if (resCategory.success) {
-                    scope.categories = resCategory.data;
-                    scope.curCategory = scope.categories[0];
-                    let placeholdText = scope.curCategory !== undefined ? "Message from #" + scope.curCategory.title : "No channel";
+            attr.$observe('university', function(value) {
+                scope.university = JSON.parse(value);
 
-                    tinymce.init({
-                        selector: 'textarea',
-                        menuitem: 'textarea',
-                        wordcound: 'count',
-                        menubar: false,
-                        branding: false,
-                        wordcounts: false,
-                        resize: false,
-                        statusbar: false,
-                        toolbar_location: 'bottom',
-                        forced_root_block: false,
-                        height: 100,
-                        width: '100%',
-                        readonly: scope.curCategory === undefined ? true : false,
-                        placeholder: placeholdText,
-                        plugins: [
-                            'autolink lists link image charmap print preview',
-                            'searchreplace visualblocks code fullscreen',
-                            'table paste code codesample emoticons'
-                        ],
-                        toolbar: 'bold italic underline strikethrough codesample link | bullist numlist outdent indent | emoticons',
-                        tinydrive_token_provider: function(success, failure) {
-                            Courses.fileUploadUrl().success(function(msg) {
-                                success({ token: msg.token });
-                            })
-                        },
-                    });
+                Forum.getCategoriesByUniversityId(scope.university._id).success(function(resCategory) {
+                    if (resCategory.success) {
+                        scope.categories = resCategory.data;
+                        scope.curCategory = scope.categories[0];
 
-                    if ($localStorage.token != undefined && $localStorage.token != null) { // Check if logged in user
-                        GENERAL_CHANNEL_UNIQUE_NAME = jwtHelper.decodeToken($localStorage.token)._id;
-
-                        Students.getStudentById(GENERAL_CHANNEL_UNIQUE_NAME).then(res => {
-                            GENERAL_CHANNEL_NAME = res.data.data.name; // chat friendly name
-                            let url = '/university/chat_token/';
-                            University.getChatAccessToken(baseUrl + url).then((res) => {
-                                if (res.data.success == false) { // and device Id
-                                    console.log("ERROR")
-                                } else {
-                                    scope.chatCreate(res.data.token);
-                                    console.log('here chat created', res.data.token);
-                                }
-                            }).catch(err => {
-                                alert("ERROR" + err)
-                            });
+                        tinymce.init({
+                            selector: 'textarea',
+                            menuitem: 'textarea',
+                            wordcound: 'count',
+                            menubar: false,
+                            branding: false,
+                            wordcounts: false,
+                            resize: false,
+                            statusbar: false,
+                            toolbar_location: 'bottom',
+                            forced_root_block: false,
+                            height: 100,
+                            width: '100%',
+                            readonly: scope.curCategory === undefined ? true : false,
+                            placeholder: "Type here...",
+                            plugins: [
+                                'autolink lists link image charmap print preview',
+                                'searchreplace visualblocks code fullscreen',
+                                'table paste code codesample emoticons'
+                            ],
+                            toolbar: 'bold italic underline strikethrough codesample link | bullist numlist outdent indent | emoticons',
+                            tinydrive_token_provider: function(success, failure) {
+                                Courses.fileUploadUrl().success(function(msg) {
+                                    success({ token: msg.token });
+                                })
+                            },
                         });
-                        scope.chatCreate();
+
+                        if ($localStorage.token != undefined && $localStorage.token != null) { // Check if logged in user
+                            let stdId = jwtHelper.decodeToken($localStorage.token)._id;
+
+                            Students.getStudentById(stdId).then(res => {
+                                let url = '/university/chat_token/';
+                                scope.currentMember = res.data.data;
+                                University.getChatAccessToken(baseUrl + url).then((res) => {
+                                    if (res.data.success == false) { // and device Id
+                                        console.log("ERROR")
+                                    } else {
+                                        scope.chatCreate(res.data.token);
+                                        console.log('here chat created', res.data.token);
+                                    }
+                                }).catch(err => {
+                                    alert("ERROR" + err)
+                                });
+                            });
+                        }
                     }
-                }
-            });
+                });
+
+            })
 
             scope.selectCategoryChannel = (category) => {
                 scope.curCategory = category;
@@ -3057,7 +3043,7 @@ angular.module('netbase')
                         scope.messagingClient.on('channelAdded', scope.getCurrentCategoryChannel); // events
                         scope.messagingClient.on('channelRemoved', scope.getCurrentCategoryChannel);
                         scope.messagingClient.on('tokenExpired', scope.chatCreate); // recreate access token when expired
-                        console.log('channel joined');
+                        console.log('channel joined_sel');
                     })
                     .catch((err) => {
                         alert("No channel found" + scope.curCategory.title);
@@ -3073,7 +3059,7 @@ angular.module('netbase')
                             scope.messagingClient.on('channelAdded', scope.getCurrentCategoryChannel); // events
                             scope.messagingClient.on('channelRemoved', scope.getCurrentCategoryChannel);
                             scope.messagingClient.on('tokenExpired', scope.chatCreate); // recreate access token when expired
-                            console.log('channel joined');
+                            console.log('channel joined_cr');
                         })
                         .catch((err) => {
                             alert("No channel found" + scope.curCategory.title);
@@ -3081,9 +3067,7 @@ angular.module('netbase')
                 });
             }
 
-            scope.updateConnectedUI = () => {
-                console.log("Updated Connect UI");
-            }
+            scope.updateConnectedUI = () => {}
 
             scope.getCurrentCategoryChannel = () => {
                 return new Promise((resolve, reject) => {
@@ -3144,16 +3128,21 @@ angular.module('netbase')
                 return scope.messagingClient.getChannelBySid(channel.sid);
             }
 
+            // scope.getChannelMembers = channelId => {
+            //     let channel = scope.messagingClient.getChannelBySid(channelId);
+            //     console.log("Channel", channel)
+            // }
+
             scope.joinChannel = channel => {
                 return channel.join()
                     .then(joinedChannel => {
                         scope.currentChannel = joinedChannel;
-                        scope.loadMessages();
+                        scope.loadAndSortMessages();
                         return joinedChannel;
                     })
                     .catch(err => {
                         if (channel.status == 'joined') {
-                            scope.loadMessages();
+                            scope.loadAndSortMessages();
                             return channel;
                         }
                         alert("Couldn't join channel " + channel.friendlyName + ' because -> ' + err);
@@ -3161,7 +3150,7 @@ angular.module('netbase')
             }
 
             scope.initChannelEvents = () => { // Define channel events
-                scope.currentChannel.on('messageAdded', scope.addMessageToList);
+                scope.currentChannel.on('messageAdded', scope.addMessage);
                 scope.currentChannel.on('typingStarted', scope.showTypingStarted);
                 scope.currentChannel.on('typingEnded', scope.hideTypingStarted);
                 scope.currentChannel.on('memberJoined', scope.notifyMemberJoined);
@@ -3169,19 +3158,11 @@ angular.module('netbase')
             }
 
             scope.sendMSG = () => { // Send message
-                let currentDate = new Date();
-                let month = currentDate.getMonth();
-                let day = currentDate.getDate();
-                let hour = currentDate.getHours();
-                let minute = currentDate.getMinutes();
-                let second = currentDate.getSeconds();
-                scope.sendingMessage = scope.months[month] + ' ' + day + ' ' + hour + ':' + minute + ':' + second + '::sent_time::' + scope.sendingMessage;
-                console.log("AAA", scope.sendingMessage)
-                scope.currentChannel.sendMessage(scope.sendingMessage);
-                scope.sendingMessage = '';
+                scope.currentChannel.sendMessage(tinymce.activeEditor.getContent());
+                tinymce.activeEditor.setContent("")
             }
 
-            scope.addMessageToList = message => {
+            scope.addMessage = message => {
                 let currentMember = '';
                 let i;
                 for (i = 0; i < scope.members.length; i++) {
@@ -3197,18 +3178,20 @@ angular.module('netbase')
                             name: res.data.data.name
                         });
 
-                        scope.applyMessage(message, res.data.data.name);
+                        scope.messages.push(message);
                         return;
                     })
                 } else {
-                    scope.applyMessage(message, currentMember);
+                    scope.messages.push(message);
                 }
+                scope.$apply();
+                scope.scrollToMessageListBottom();
             }
 
             scope.addMember = message => {
                 let i;
                 return new Promise((resolve, reject) => {
-                    let currentMember = '';
+                    let currentMember = "";
                     for (i = 0; i < scope.members.length; i++) {
                         if (scope.members[i].id == message.author) {
                             currentMember = scope.members[i].name;
@@ -3230,66 +3213,86 @@ angular.module('netbase')
                 })
             }
 
-            scope.loadMessages = () => {
+            scope.getName = (id) => {
+                let user = scope.members.filter(item => { return item.id === id; });
+                return user[0].name;
+            }
+
+            scope.getFirstCapitals = (str) => {
+                var matches = str.match(/\b(\w)/g);
+                var acronym = matches.join(''); // JSON
+                return acronym;
+            }
+
+            function hslToHex(h, s, l) {
+                h /= 360;
+                s /= 100;
+                l /= 100;
+                let r, g, b;
+                if (s === 0) {
+                    r = g = b = l; // achromatic
+                } else {
+                    const hue2rgb = (p, q, t) => {
+                        if (t < 0) t += 1;
+                        if (t > 1) t -= 1;
+                        if (t < 1 / 6) return p + (q - p) * 6 * t;
+                        if (t < 1 / 2) return q;
+                        if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+                        return p;
+                    };
+                    const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+                    const p = 2 * l - q;
+                    r = hue2rgb(p, q, h + 1 / 3);
+                    g = hue2rgb(p, q, h);
+                    b = hue2rgb(p, q, h - 1 / 3);
+                }
+                const toHex = x => {
+                    const hex = Math.round(x * 255).toString(16);
+                    return hex.length === 1 ? '0' + hex : hex;
+                };
+                return `${toHex(r)}${toHex(g)}${toHex(b)}`;
+            }
+
+            scope.stringToHslColor = (str) => {
+                var hash = 0;
+                for (var i = 0; i < str.length; i++) {
+                    hash = str.charCodeAt(i) + ((hash << 5) - hash);
+                }
+
+                var h = hash % 360;
+                return hslToHex(h, 90, 50);
+            }
+
+            scope.getTimeDisplay = timestamp => {
+                let h = timestamp.getHours();
+                let m = timestamp.getMinutes();
+                return `${h % 12 > 9 ? h % 12 : '0'+ h % 12} : ${m > 9 ? m : '0' + m} ${h > 12 ? 'PM' : 'AM'}`;
+            }
+
+            scope.loadAndSortMessages = () => {
                 let i;
                 console.log('loading messages');
                 scope.currentChannel.getMessages(MAX_LOAD_MESSAGE_COUNT).then(messages => {
                     let messageArr = messages.items;
-                    messageArr.sort(msgSortFunc2);
-                    let promise = messageArr.reduce((accumulatorPromise, nextID) => {
+                    let sortedMessageArr = messageArr.sort((msg1, msg2) => {
+                        return msg1.timestamp > msg2.timestamp ? 1 : -1;
+                    })
+                    let promise = sortedMessageArr.reduce((accumulatorPromise, nextID) => {
                         return accumulatorPromise.then(() => {
                             return scope.addMember(nextID);
                         });
                     }, Promise.resolve());
                     promise.then(() => {
-                        messageArr.forEach(scope.addMessageToList)
+                        scope.messages = sortedMessageArr;
+                        scope.$apply();
+                        scope.scrollToMessageListBottom();
                     });
                 });
             }
 
-            scope.applyMessage = (message, currentMember, id) => {
-                let messageListDom = document.getElementById('scrollbar');
-                let messageTitleDom = document.createElement('div');
-                let messageTimeDom = document.createElement('div');
-                let messageBodyDom = document.createElement('div');
-                let messageItemDom = document.createElement('div');
-
-                messageItemDom.setAttribute('id', id);
-
-                messageTitleDom.setAttribute('class', 'chat-title-st row');
-                messageBodyDom.setAttribute('class', 'chat-body-st');
-                messageTimeDom.setAttribute('class', 'chat-time-st');
-
-                let sentTime = message.body.substring(0, message.body.indexOf('::sent_time::'));
-                let messageBody = message.body.replace(sentTime + '::sent_time::', '');
-                let messageBodyTextDom = document.createElement('div');
-                messageBodyTextDom.innerText = messageBody;
-
-                let avatar = document.createElement('img');
-                avatar.setAttribute('src', '/img/user/user.png');
-
-                let nameDom = document.createElement('div');
-                nameDom.innerText = currentMember;
-                nameDom.setAttribute('class', 'chat-name-st');
-                messageTimeDom.innerText = sentTime;
-
-                messageTitleDom.appendChild(nameDom);
-                messageTitleDom.appendChild(messageTimeDom);
-
-                if (GENERAL_CHANNEL_UNIQUE_NAME == message.author) {
-                    messageItemDom.setAttribute('class', 'chat-item-st mine');
-                    messageBodyDom.appendChild(messageBodyTextDom);
-                    messageBodyDom.appendChild(avatar);
-                } else {
-                    messageItemDom.setAttribute('class', 'chat-item-st other');
-                    messageBodyDom.appendChild(avatar);
-                    messageBodyDom.appendChild(messageBodyTextDom);
-                }
-
-                messageItemDom.appendChild(messageBodyDom);
-                messageItemDom.appendChild(messageTitleDom);
-                messageListDom.appendChild(messageItemDom);
-                // scope.scrollToMessageListBottom();
+            scope.scrollToMessageListBottom = function() {
+                var messageListDom = document.getElementById('scrollbar');
+                messageListDom.scrollBy(0, messageListDom.scrollHeight);
             }
 
             scope.sendingInputKeyPress = $e => {
@@ -3297,33 +3300,12 @@ angular.module('netbase')
                     scope.sendMSG();
                     $e.preventDefault();
                 }
-                console.log("AAA")
-            }
-
-            function getDateValue(date) {
-                let dateSplit = date.split(' ');
-                let res = 0;
-                res = scope.monthToVal[dateSplit[0]] * 30 * 24 * 60 * 60;
-                res += parseInt(dateSplit[1]) * 24 * 60 * 60;
-                let timeSplit = dateSplit[2].split(':');
-                res += parseInt(timeSplit[0]) * 60 * 60;
-                res += parseInt(timeSplit[1]) * 60;
-                res += parseInt(timeSplit[2]);
-                return res;
-            }
-
-            function msgSortFunc2(a, b) {
-                let sentTime1 = a.body.substring(0, a.body.indexOf('::sent_time::'));
-                let sentTime2 = b.body.substring(0, b.body.indexOf('::sent_time::'));
-
-                if (getDateValue(sentTime1) > getDateValue(sentTime2)) return 1;
-                else return -1;
             }
 
             scope.leaveCurrentChannel = function() {
                 if (scope.currentChannel) {
                     return scope.currentChannel.leave().then(function(leftChannel) {
-                        leftChannel.removeListener('messageAdded', scope.addMessageToList);
+                        leftChannel.removeListener('messageAdded', scope.addMessage);
                         leftChannel.removeListener('typingStarted', scope.showTypingStarted);
                         leftChannel.removeListener('typingEnded', scope.hideTypingStarted);
                         leftChannel.removeListener('memberJoined', scope.notifyMemberJoined);
@@ -3332,23 +3314,6 @@ angular.module('netbase')
                 } else {
                     return Promise.resolve();
                 }
-            }
-
-            function msgSortFunc1(arr) {
-                let i, j, temp;
-                for (i = 0; i < arr.length - 1; i++) {
-                    for (j = i + 1; j < arr.length; j++) {
-                        let sentTime1 = arr[i].body.substring(0, arr[i].body.indexOf('::sent_time::'));
-                        let sentTime2 = arr[j].body.substring(0, arr[j].body.indexOf('::sent_time::'));
-
-                        if (getDateValue(sentTime1) > getDateValue(sentTime2)) {
-                            temp = arr[i];
-                            arr[i] = arr[j];
-                            arr[j] = temp;
-                        }
-                    }
-                }
-                return arr;
             }
 
             scope.showTypingStarted = member => {

@@ -1,59 +1,57 @@
 <div ng-include="'partials/headerhome.html'"></div>
 
 <style>
-
-  .course-box {
-    box-shadow: 0px 0px 17px 0px rgba(130,130,130,0.23);
-    display: inline-block;
-    border-radius: 5px;
-     height: 240px;
-    width: 100%;
-    padding: 15px;
-    cursor: pointer;
-  }
-
-  .course-box .title {
-    font-size: 1.3em;
-    font-weight: bold;
-  }
-
+    .course-box {
+        box-shadow: 0px 0px 17px 0px rgba(130, 130, 130, 0.23);
+        display: inline-block;
+        border-radius: 5px;
+        height: 240px;
+        width: 100%;
+        padding: 15px;
+        cursor: pointer;
+    }
+    
+    .course-box .title {
+        font-size: 1.3em;
+        font-weight: bold;
+    }
 </style>
 
 <div class="container-fluid container-full">
 
-  <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
-  <div class="row academia-coverimage" ng-if="university.backgroundImage == undefined"  style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
+    <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
+    <div class="row academia-coverimage" ng-if="university.backgroundImage == undefined" style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
 
-  <div class="row">
+    <div class="row">
 
-    <div academiarightcolumn university="{{university}}"></div>
+        <div academiarightcolumn university="{{university}}"></div>
 
-    <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9 academia-content">
+        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9 academia-content">
 
-      <div academiastatus university="{{university}}"></div>
+            <div academiastatus university="{{university}}"></div>
 
-      <div style="font-size: 2.0em; font-weight: bolder;">Cursos</div>
+            <div style="font-size: 2.0em; font-weight: bolder;">Cursos</div>
 
-      <div ng-show="courses.length == 0" style="margin-top: 30px;">
-        Nenhum curso cadastrado
-      </div>
+            <div ng-show="courses.length == 0" style="margin-top: 30px;">
+                Nenhum curso cadastrado
+            </div>
 
-      <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4" style="margin-top: 15px;" ng-repeat="course in courses">
+            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4" style="margin-top: 15px;" ng-repeat="course in courses">
 
-        <a href="/cursos/id/{{course._id}}" style="color: unset;">
-        <div class="course-box">
+                <a href="/cursos/id/{{course._id}}" style="color: unset;">
+                    <div class="course-box">
 
-        <div class="title" style="margin-bottom: 10px; min-height: 145px; overflow-wrap: break-word;">{{course.title}}</div>
-        </a>
+                        <div class="title" style="margin-bottom: 10px; min-height: 145px; overflow-wrap: break-word;">{{course.title}}</div>
+                </a>
 
-      </div>
-      <!-- -->
+                </div>
+                <!-- -->
 
+            </div>
+            <!-- end col-xs-12 -->
+
+        </div>
+        <!-- end row -->
+        <categorychat university={{university}} />
     </div>
-    <!-- end col-xs-12 -->
-
-  </div>
-  <!-- end row -->
-
-</div>
-<!-- container-full -->
+    <!-- container-full -->
