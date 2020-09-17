@@ -3043,7 +3043,6 @@ angular.module('netbase')
                         scope.messagingClient.on('channelAdded', scope.getCurrentCategoryChannel); // events
                         scope.messagingClient.on('channelRemoved', scope.getCurrentCategoryChannel);
                         scope.messagingClient.on('tokenExpired', scope.chatCreate); // recreate access token when expired
-                        console.log('channel joined_sel');
                     })
                     .catch((err) => {
                         alert("No channel found" + scope.curCategory.title);
@@ -3059,7 +3058,6 @@ angular.module('netbase')
                             scope.messagingClient.on('channelAdded', scope.getCurrentCategoryChannel); // events
                             scope.messagingClient.on('channelRemoved', scope.getCurrentCategoryChannel);
                             scope.messagingClient.on('tokenExpired', scope.chatCreate); // recreate access token when expired
-                            console.log('channel joined_cr');
                         })
                         .catch((err) => {
                             alert("No channel found" + scope.curCategory.title);
