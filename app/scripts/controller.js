@@ -1722,6 +1722,7 @@ angular.module('netbase')
         console.log("userrrrrr videooooo viewwww start")
 
         let cookieCheck = $cookies.getObject("course_" + id + "_" + userId);
+
         let content_id = cookieCheck.content_id;
         Courses.userViewedContentInsideCourse($scope.courseId, $cookies.get("module_id"), content_id).success(function(res) {
 
