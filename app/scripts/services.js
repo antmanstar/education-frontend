@@ -752,188 +752,94 @@ angular.module('netbase')
 
 .factory('Classroom', ['$http', '$localStorage', function($http, $localStorage) {
 
-    console.log('here entered.');
-    return {
-        getAllClassroomsByUniversity_J: function(url) {
-            return new Promise((resolve, reject) => {
-                let token = $localStorage.token;
-                console.log('loacl storage token');
-                console.log(token);
-                /*
-                var req = {
-                	method: 'GET',
-                	url: url,
-                	headers: {
-                		'x-access-token': token,
-                		'query': token
-                	},
-                	params: {token: token },
-                }
+		console.log('here entered.');
+		return {
+      getAllClassroomsByUniversity: function(url) {
 
-                var result = Array();
-
-                $http(req).then((res) => {
-                	var i;
-                	console.log('hahhee we we we we ');
-                	console.log(res);
-                	for(i = 0; i < res.data.data.length; i++) {
-                		let classRoom = res.data.data[i];
-                		result.push(classRoom);
-                	}
-                	console.log(result);
-                	resolve(result);
-                });
-                */
-                var req = {
-                    token: token,
-                }
-
-                var result = Array();
-
-                $http.get(url + "?token=" + token).then((res) => {
-                    var i;
-                    console.log('hahhee we we we we ');
-                    console.log(res);
-                    for (i = 0; i < res.data.data.length; i++) {
-                        let classRoom = res.data.data[i];
-                        result.push(classRoom);
-                    }
-                    console.log(result);
-                    resolve(result);
-                });
-
-            });
-        },
-        getAllClassroomsByUniversity: function(url) {
-
-            let token = $localStorage.token;
-            console.log('loacl storage token');
-            console.log(token);
-            return $http.get(url + "?token=" + token);
-        },
-        createNewClassroom: function(url, title, privilege, universityId) {
-            return new Promise((resolve, reject) => {
-                let token = $localStorage.token;
-                var req = {
-                    method: 'POST',
-                    url: url,
-                    headers: {
-                        'x-access-token': token,
-                        'content-type': 'application/json'
-                    },
-                    params: {
-                        token: token
-                    },
-                    data: {
-                        id: universityId,
-                        roomName: title,
-                        privilege: privilege,
-                    }
-                }
-                $http(req).then((res) => {
-                    console.log('create success');
-                    console.log(res);
-                    if (res.data.success == true) {
-                        resolve(res.data);
-                    } else {
-                        reject(res.data.msg);
-                    }
-                });
-            });
-        },
-        deleteClassroom: function(url, roomId, privilege) {
-            console.log('here check');
-            console.log(url);
-            console.log(roomId);
-            console.log(privilege);
-            return new Promise((resolve, reject) => {
-                let token = $localStorage.token;
-                var req = {
-                    method: 'DELETE',
-                    url: url,
-                    headers: {
-                        'x-access-token': token,
-                        'content-type': 'application/json'
-                    },
-                    params: {
-                        token: token
-                    },
-                    data: {
-                        id: roomId,
-                        privilege: privilege
-                    }
-                }
-                $http(req).then((res) => {
-                    console.log('delete success');
-                    console.log(res);
-                    if (res.data.success == true) {
-                        resolve(res.data);
-                    } else {
-                        console.log('delete error');
-                        console.log(res.data);
-                        reject(res.data.msg);
-                    }
-                });
-            });
-        },
-        joinClassroom: function(url) {
-            return new Promise((resolve, reject) => {
-                let token = $localStorage.token;
-
-                var req = {
-                    method: 'POST',
-                    url: url,
-                    headers: {
-                        'x-access-token': token,
-                    },
-                    params: { token: token }
-                }
-                $http(req).then((res) => {
-                    console.log(res);
-                    if (res.data.success) {
-                        resolve(res.data.data);
-                    } else {
-                        reject('err');
-                    }
-                });
-            });
-        },
-        getAccessToken: function(url) {
-            return new Promise((resolve, reject) => {
-                let token = $localStorage.token;
-                var req = {
-                    method: 'GET',
-                    url: url,
-                    headers: {
-                        'Access-Control-Allow-Origin': '*',
-                        'x-access-token': token,
-                    },
-                    params: { token: token }
-                }
-                $http(req).then((res) => {
-                    console.log(res);
-                    if (res.data.success) {
-                        resolve(res.data.token);
-                    } else {
-                        reject('err');
-                    }
-                });
-            })
-        },
-        getChatAccessToken: function(url) {
-            var token = $localStorage.token;
-            var req = {
-                method: 'GET',
-                url: url + 'deviceId/browser',
-                headers: {
-                    'x-access-token': token,
-                    'content-type': 'application/json'
-                }
+					let token = $localStorage.token;
+					console.log('loacl storage token');
+					console.log(token);
+          return $http.get(url + "?token=" + token);
+			},
+			createNewClassroom: function(url, title, privilege, universityId){
+					let token = $localStorage.token;
+					var req = {
+						method: 'POST',
+						url: url,
+						headers: {
+              'x-access-token': token,
+              'content-type': 'application/json'
+						},
+						params: {
+							token: token
+            },
+            data: {
+              id: universityId,
+              roomName: title,
+              privilege: privilege,
             }
-            return $http(req);
+					}
+					return $http(req);
+      },
+      deleteClassroom: function(url, roomId, privilege){
+					let token = $localStorage.token;
+					var req = {
+						method: 'DELETE',
+						url: url,
+						headers: {
+              'x-access-token': token,
+              'content-type': 'application/json'
+						},
+						params: {
+							token: token
+            },
+            data: {
+              id: roomId,
+              privilege: privilege
+            }
+					}
+					return $http(req);
+			},
+			joinClassroom: function(url) {
+					let token = $localStorage.token;
+
+					var req = {
+						method: 'POST',
+						url: url,
+						headers: {
+							'x-access-token': token,
+						},
+						params: { token: token }
+					}
+					return $http(req);
+			},
+			getAccessToken: function(url) {
+					let token = $localStorage.token;
+					var req = {
+						method: 'GET',
+						url: url,
+						headers: {
+							'Access-Control-Allow-Origin': '*',
+							'x-access-token': token,
+						},
+						params: { token: token }
+					}
+					return $http(req);
+      },
+      getChatAccessToken: function(url) {
+        var token = $localStorage.token;
+        var req = {
+          method: 'GET',
+          url: url + 'deviceId/browser',
+          headers: {
+            'x-access-token': token,
+            'content-type': 'application/json'
+          }
         }
-    }
-}])
+        return $http(req);
+      }
+		}
+    }])
 
 .factory('Students', ['$http', '$localStorage', function($http, $localStorage) {
 

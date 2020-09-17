@@ -1,7 +1,7 @@
 <div ng-controller='AcademiaClassroomChatCtrl' ng-class="chatboxContainer" class="fixed-position classroom-chatbox-initial classroom-chat-container col-xs-12 col-sm-4 col-md-3 col-lg-2">
     <button class="chatbox-close-btn" ng-click="toggleChatBox()"><i class="fas fa-times"></i></button>
     <div class="avatar-container chat-admin">
-        <img src="/img/icon/human.png" alt="HN" title="User Avatar" width="100" height="100" class="ava1">
+        <img src="/img/icon/profile_man.png" alt="HN" title="User Avatar" width="100" height="100" class="ava1">
         <div class="userinfo">
             <div class="username"> &nbsp; {{administrator[0].username}}</div>
             <div class="privilege">
@@ -18,7 +18,7 @@
         <option ng-repeat='channel in channels' ng-value='channel'>{{channel.friendlyName}}</option>
     </select-->
     <div id='chat_list' class="chat-main-list" > </div>
-    <div >
+    <div class='chatbox-status'>
         {{chattingNotification}}
     </div>
     <div class='chat-sending-input-container'>

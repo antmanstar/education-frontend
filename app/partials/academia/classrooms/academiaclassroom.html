@@ -13,11 +13,11 @@
             <button class="participant-close-btn" ng-click="toggleParticipantsBox()"><i class="fas fa-times"></i></button>
             <div class='classroom-students-title'>Administrators</div>
             <div ng-repeat="admin in administrator" class='classroom-administrator-container'>
-                <img ng-class="adminActive" src="/img/icon/human.png" alt="HN" title="User Avatar" class="ava1"> {{admin.username}}
+                <img ng-class="adminActive" src="/img/icon/profile_man.png" alt="HN" title="User Avatar" class="ava1"> {{admin.username}}
             </div>
             <div class='classroom-students-title top-margin-20'>Participants</div>
             <div ng-model='showingParticipants' data-ng-repeat="part in showingParticipants" class='classroom-administrator-container'>
-                <img src="/img/icon/human.png" alt="HN" title="User Avatar" class="ava1"> {{part.username}}
+                <img src="/img/icon/profile_man.png" alt="HN" title="User Avatar" class="ava1"> {{part.username}}
             </div>
         </div>
         <!--div ng-if="participantsStatus==false" ng-class='mobileToggleParticipantsList' class="classroom-participants-container-none col-xs-7 col-sm-3 col-md-2 col-lg-2"> </div-->
