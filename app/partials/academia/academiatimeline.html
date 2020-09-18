@@ -8,26 +8,24 @@
 <update-meta ng-if="university.backgroundImage == undefined" property="og:image" content="https://universida.de/img/misc/noimageacademia.jpg"></update-meta>
 
 <style>
-
-figure img {
-  width: 100% !important;
-  height: unset !important;
-}
-
+    figure img {
+        width: 100% !important;
+        height: unset !important;
+    }
 </style>
 
 <div class="container-fluid container-full animated fadeIn">
 
-  <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
-  <div class="row academia-coverimage" ng-if="university.backgroundImage == undefined"  style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
+    <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
+    <div class="row academia-coverimage" ng-if="university.backgroundImage == undefined" style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
 
-  <div class="row">
+    <div class="row">
 
-    <div academiarightcolumn university="{{university}}"></div>
+        <div academiarightcolumn university="{{university}}"></div>
 
-    <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9 academia-content">
+        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9 academia-content">
 
-      <div academiastatus university="{{university}}"></div>
+            <div academiastatus university="{{university}}"></div>
 
       <style>
         .onboarding-row {
@@ -83,39 +81,39 @@ figure img {
 
       <div class="academia-content-forum">
 
-        <div ng-hide="loaded" style="text-align: center;">
-          <img src="/img/loader.gif" height="50px" />
+                <div ng-hide="loaded" style="text-align: center;">
+                    <img src="/img/loader.gif" height="50px" />
+                </div>
+
+                <div ng-show="forumPosts.length == 0 && loaded">
+                    {{'NO_POST' | translate}}
+                </div>
+
+                <div ng-show="forumPosts.length > 0">
+
+                    <timelinepost p="{{post}}" u="{{university}}" ng-repeat="post in forumPosts"></timelinepost>
+
+                </div>
+                <!-- forumPosts.length > 0 -->
+
+            </div>
+            <!-- academia-content-forum-->
+
+            <div>
+                <ul class="pagination" ng-if="pages > 1">
+                    <li class="page-item" ng-if="page != 1"><a class="page-link" href="/a/{{university.url}}/forum?page={{page - 1}}">{{'RETURN' | translate}}</a></li>
+                    <li class="page-item" ng-repeat="p in range(1, pages)"><a class="page-link" ng-style="p == page && {'font-weight':'bold'}" href="/a/{{university.url}}/forum?page={{p}}">{{p}}</a></li>
+                    <li class="page-item"><a class="page-link" href="/a/{{university.url}}/forum?page={{page + 1}}">{{'NEXT' | translate}}</a></li>
+                </ul>
+            </div>
+
         </div>
-
-        <div  ng-show="forumPosts.length == 0 && loaded">
-          {{'NO_POST' | translate}}
-        </div>
-
-        <div ng-show="forumPosts.length > 0">
-
-          <timelinepost p="{{post}}" u="{{university}}" ng-repeat="post in forumPosts"></timelinepost>
-
-        </div>
-        <!-- forumPosts.length > 0 -->
-
-      </div>
-      <!-- academia-content-forum-->
-
-      <div>
-        <ul class="pagination" ng-if="pages > 1">
-          <li class="page-item" ng-if="page != 1"><a class="page-link" href="/a/{{university.url}}/forum?page={{page - 1}}">{{'RETURN' | translate}}</a></li>
-          <li class="page-item" ng-repeat="p in range(1, pages)"><a class="page-link" ng-style="p == page && {'font-weight':'bold'}" href="/a/{{university.url}}/forum?page={{p}}">{{p}}</a></li>
-          <li class="page-item"><a class="page-link" href="/a/{{university.url}}/forum?page={{page + 1}}">{{'NEXT' | translate}}</a></li>
-        </ul>
-      </div>
+        <!-- end col-xs-12 -->
 
     </div>
-    <!-- end col-xs-12 -->
-
-  </div>
-  <!-- end row -->
-
-  <footermobile></footermobile>
+    <!-- end row -->
+    <categorychat university={{university}} />
+    <footermobile></footermobile>
 
 </div>
 <!-- container-full -->

@@ -3,6 +3,10 @@
     padding-left: 30px;
 }
 
+.active {
+    color: green;
+}
+
 .add-classroom-btn {
     border-radius: 5px;
     font-size: 16px;
@@ -520,10 +524,8 @@ video {
 }
 
 .ava1 {
-    width: 55px;
-    height: 55px;
-    border: 1px solid #cbcbcb;
-    background: #fff;
+    width: 70px;
+    height: 70px;
     -webkit-border-radius: 18x;
     -moz-border-radius: 18px;
     border-radius: 50%;
@@ -621,7 +623,8 @@ video {
 
 .admin-active {
     border-width: 3px;
-    border-color: #fbff00;
+    border-color: #e0e0e0 !important;
+    border: solid;
 }
 
 .mobile-participants {

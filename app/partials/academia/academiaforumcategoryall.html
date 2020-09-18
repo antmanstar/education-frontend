@@ -2,61 +2,61 @@
 
 <div class="container-fluid container-full">
 
-  <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
-  <div class="row academia-coverimage" ng-if="university.backgroundImage == undefined"  style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
+    <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
+    <div class="row academia-coverimage" ng-if="university.backgroundImage == undefined" style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
 
-  <div class="row">
+    <div class="row">
 
-    <div academiarightcolumn university="{{university}}"></div>
+        <div academiarightcolumn university="{{university}}"></div>
 
-    <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9 academia-content">
+        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9 academia-content">
 
-      <div academiastatus university="{{university}}"></div>
+            <div academiastatus university="{{university}}"></div>
 
-      <style>
-      tr.spaceUnder>td {
-        padding-bottom: 1em;
-      }
-      </style>
+            <style>
+                tr.spaceUnder>td {
+                    padding-bottom: 1em;
+                }
+            </style>
 
-      <div class="academia-content-forum" style="border-radius: 5px; box-shadow: 0px 0px 8px 0px rgba(196, 196, 196, 0.35);">
-        <table class="table">
-          <thead>
-            <tr>
-              <th class="col-sm-1 col-md-1" style="text-align: left;"></th>
-              <th class="col-sm-6 col-md-6" style="text-align: left;">{{'FORUM' | translate}}</th>
-              <th class="col-sm-2 col-md-2" style="text-align: left;">{{'TOPICS' | translate}}</th>
-              <th class="col-sm-2 col-md-2" style="text-align: left;">{{'LAST_POST_CREATED' | translate}}</th>
-            </tr>
-          </thead>
-        </table>
-        <table class="table">
-          <tbody>
-            <categoryrow ng-repeat="category in categories" category="{{category}}" universityid="{{university._id}}"></categoryrow>
-          </tbody>
-        </table>
+            <div class="academia-content-forum" style="border-radius: 5px; box-shadow: 0px 0px 8px 0px rgba(196, 196, 196, 0.35);">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="col-sm-1 col-md-1" style="text-align: left;"></th>
+                            <th class="col-sm-6 col-md-6" style="text-align: left;">{{'FORUM' | translate}}</th>
+                            <th class="col-sm-2 col-md-2" style="text-align: left;">{{'TOPICS' | translate}}</th>
+                            <th class="col-sm-2 col-md-2" style="text-align: left;">{{'LAST_POST_CREATED' | translate}}</th>
+                        </tr>
+                    </thead>
+                </table>
+                <table class="table">
+                    <tbody>
+                        <categoryrow ng-repeat="category in categories" category="{{category}}" universityid="{{university._id}}"></categoryrow>
+                    </tbody>
+                </table>
 
-        <div ng-show="categories.length == 0">
-          {{'NO_REGISTERED_CATEGORY' | translate}}
+                <div ng-show="categories.length == 0">
+                    {{'NO_REGISTERED_CATEGORY' | translate}}
+                </div>
+
+                <div ng-show="forumPosts.length > 0">
+
+                    <forumpost ng-repeat="post in forumPosts | orderBy:'-votesCount'" p="{{post}}"></forumpost>
+
+                </div>
+                <!-- forumPosts.length > 0 -->
+
+            </div>
+            <!-- academia-content-forum-->
+
         </div>
-
-        <div ng-show="forumPosts.length > 0">
-
-          <forumpost ng-repeat="post in forumPosts | orderBy:'-votesCount'" p="{{post}}"></forumpost>
-
-        </div>
-        <!-- forumPosts.length > 0 -->
-
-      </div>
-      <!-- academia-content-forum-->
+        <!-- end col-xs-12 -->
 
     </div>
-    <!-- end col-xs-12 -->
-
-  </div>
-  <!-- end row -->
-
-  <footermobile></footermobile>
+    <!-- end row -->
+    <categorychat university={{university}} />
+    <footermobile></footermobile>
 
 </div>
 <!-- container-full -->
