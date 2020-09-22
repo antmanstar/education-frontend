@@ -2465,6 +2465,8 @@ angular.module('netbase')
     }
 }])
 
+
+
 .controller('AcademiaForumPostCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Forum', 'Courses', '$sce', '$localStorage', 'ngDialog', 'jwtHelper', '$timeout', function($rootScope, $scope, $location, $route, University, Forum, Courses, $sce, $localStorage, ngDialog, jwtHelper, $timeout) {
 
     let displayinvite = false;
@@ -3143,7 +3145,7 @@ angular.module('netbase')
                 scope.getCurrentCategoryChannel().then(() => { // Load current acive channels and define
                         scope.messagingClient.on('channelAdded', scope.getCurrentCategoryChannel); // events
                         scope.messagingClient.on('channelRemoved', scope.getCurrentCategoryChannel);
-                        scope.messagingClient.on('tokenExpired', scope.chatCreate); // recreate access token when expired
+                        scope.messagingClient.on('tokenExpired', scope.updateToken); // recreate access token when expired
                     })
                     .catch((err) => {
                         alert("No channel found" + scope.curCategory.title);
@@ -3158,11 +3160,25 @@ angular.module('netbase')
                     scope.getCurrentCategoryChannel().then(() => { // Load current acive channels and define
                             scope.messagingClient.on('channelAdded', scope.getCurrentCategoryChannel); // events
                             scope.messagingClient.on('channelRemoved', scope.getCurrentCategoryChannel);
-                            scope.messagingClient.on('tokenExpired', scope.chatCreate); // recreate access token when expired
+                            scope.messagingClient.on('tokenExpired', scope.updateToken); // recreate access token when expired
                         })
                         .catch((err) => {
                             alert("No channel found" + scope.curCategory.title);
                         });
+                });
+            }
+
+            scope.updateToken = () => {
+                let url = '/university/chat_token/';
+                University.getChatAccessToken(baseUrl + url).then((res) => {
+                    if (res.data.success == false) { // and device Id
+                        console.log("ERROR")
+                    } else {
+                        scope.messagingClient.updateToken(res.data.token);
+                        console.log('token updated', res.data.token);
+                    }
+                }).catch(err => {
+                    alert("ERROR" + err)
                 });
             }
 
