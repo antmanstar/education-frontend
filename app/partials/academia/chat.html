@@ -17,17 +17,18 @@
                             <span class="glyphicon glyphicon-cog"></span>
                         </button>
                         <ul class="dropdown-menu slidedown">
-                            <li><a href="#"><span class="glyphicon glyphicon-refresh" style='color: blue'></span> Refresh</a></li>
-                            <li><a href="#"><span class="glyphicon glyphicon-ok-sign" style='color: green'></span> Available</a></li>
-                            <li><a href="#"><span class="glyphicon glyphicon-remove" style='color: red'></span> Busy</a></li>
-                            <li><a href="#"><span class="glyphicon glyphicon-time" style='color: orange'></span> Away</a></li>
+                            <li ng-click="getChannelMembers(currentChannel.sid)"><a href="#"><span class="glyphicon glyphicon-user" style='color: blue'></span>&nbsp;View All Memebers</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-ok-sign" style='color: green'></span>&nbsp;Available</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-remove" style='color: red'></span>&nbsp;Busy</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-time" style='color: orange'></span>&nbsp;Away</a></li>
                             <li class="divider"></li>
-                            <li><a href="#"><span class="glyphicon glyphicon-off"></span> Leave</a></li>
+                            <li ng-click="leaveCurrentChannel()"><a href="#"><span class="glyphicon glyphicon-off"></span>&nbsp;Leave</a></li>
                         </ul>
                     </div>
                 </div>
                 <div class="panel-body-chat" id="scrollbar">
-                    <ul class="chat" id="chat-list">
+                    <img id="gif" src="https://gifimage.net/wp-content/uploads/2017/08/loading-animated-gif-1.gif" class="loading-gif" width="50" height="50" ng-hide="loading == false" /></img>
+                    <ul class="chat" id="chat-list" ng-hide="loading == true">
                         <li ng-repeat-start="message in messages" ng-if="message.author == currentMember._id" class="left clearfix li">
                             <span class="chat-img pull-left">
                                 <img src="http://placehold.it/50/{{stringToHslColor(getName(message.author))}}/fff&text={{getFirstCapitals(getName(message.author))}}" alt="User Avatar" class="img-circle" />

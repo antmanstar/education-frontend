@@ -3080,6 +3080,7 @@ angular.module('netbase')
             scope.chattingNotification = '';
             scope.messages = [];
             scope.currentMember = null;
+            scope.loading = true;
 
             attr.$observe('university', function(value) {
                 scope.university = JSON.parse(value);
@@ -3141,6 +3142,7 @@ angular.module('netbase')
             })
 
             scope.selectCategoryChannel = (category) => {
+                scope.loading = true;
                 scope.curCategory = category;
                 scope.getCurrentCategoryChannel().then(() => { // Load current acive channels and define
                         scope.messagingClient.on('channelAdded', scope.getCurrentCategoryChannel); // events
@@ -3148,7 +3150,9 @@ angular.module('netbase')
                         scope.messagingClient.on('tokenExpired', scope.updateToken); // recreate access token when expired
                     })
                     .catch((err) => {
-                        alert("No channel found" + scope.curCategory.title);
+                        alert("The channel does not exist for this <" + scope.curCategory.title + "> category");
+                        scope.loading = false;
+                        scope.$apply();
                     });
             }
 
@@ -3159,11 +3163,13 @@ angular.module('netbase')
                     scope.updateConnectedUI();
                     scope.getCurrentCategoryChannel().then(() => { // Load current acive channels and define
                             scope.messagingClient.on('channelAdded', scope.getCurrentCategoryChannel); // events
-                            scope.messagingClient.on('channelRemoved', scope.getCurrentCategoryChannel);
-                            scope.messagingClient.on('tokenExpired', scope.updateToken); // recreate access token when expired
+                            scope.messagingClient.on('channelRemoved', scope.chatRemoved);
+                            scope.messagingClient.on('tokenAboutToExpire', scope.updateToken); // recreate access token when expired
                         })
                         .catch((err) => {
-                            alert("No channel found" + scope.curCategory.title);
+                            alert("The channel does not exist for this <" + scope.curCategory.title + "> category");
+                            scope.loading = false;
+                            scope.$apply();
                         });
                 });
             }
@@ -3182,12 +3188,16 @@ angular.module('netbase')
                 });
             }
 
+            scope.chatRemoved = () => {
+                alert("idle channel deleted by the system")
+            }
+
             scope.updateConnectedUI = () => {}
 
             scope.getCurrentCategoryChannel = () => {
                 return new Promise((resolve, reject) => {
                     if (scope.messagingClient == null) {
-                        alert('Client is not initialized.');
+                        alert('The channel is not initialized.');
                         reject(new Error('none_message_client'));
                     }
 
@@ -3198,7 +3208,9 @@ angular.module('netbase')
                             });
                         })
                         .catch((err) => {
-                            alert(err + " : " + scope.curCategory.title);
+                            alert("The channel does not exist for this <" + scope.curCategory.title + "> category");
+                            scope.loading = false;
+                            scope.$apply();
                         });
                 });
             }
@@ -3210,31 +3222,39 @@ angular.module('netbase')
             scope.setupChannel = () => {
                 return new Promise((resolve, reject) => { // channel and define channel events
                     if (scope.currentChannel.status == 'joined') {
-                        scope.leaveCurrentChannel().then(() => {
-                                return scope.initChannel(scope.currentChannel);
-                            })
-                            .then((channel) => {
-                                return scope.joinChannel(channel);
-                            })
-                            .then((_channel) => {
-                                scope.currentChannel = _channel;
-                                scope.initChannelEvents();
-                                resolve();
-                            })
-                            .catch(err => {
-                                console.log(err);
-                                reject(new Error('error'));
-                            })
+                        scope.loadAndSortMessages();
+                        resolve();
+                        // scope.leaveCurrentChannel().then(() => {
+                        //         return scope.initChannel(scope.currentChannel);
+                        //     })
+                        //     .then((channel) => {
+                        //         return scope.joinChannel(channel);
+                        //     })
+                        //     .then((_channel) => {
+                        //         scope.currentChannel = _channel;
+                        //         scope.initChannelEvents();
+                        //         resolve();
+                        //     })
+                        //     .catch(err => {
+                        //         console.log(err);
+                        //         reject(new Error('error'));
+                        //     })
                     } else {
-                        scope.initChannel(scope.currentChannel).then((channel) => {
-                            console.log(channel);
-                            scope.currentChannel = channel;
-                            scope.joinChannel(channel).then((_channel) => {
-                                scope.currentChannel = _channel;
-                                scope.initChannelEvents();
-                                resolve();
+                        var r = confirm("You did not join this channel yet. Will join now?");
+                        if (r == true) {
+                            scope.initChannel(scope.currentChannel).then((channel) => {
+                                console.log(channel);
+                                scope.currentChannel = channel;
+                                scope.joinChannel(channel).then((_channel) => {
+                                    scope.currentChannel = _channel;
+                                    scope.initChannelEvents();
+                                    resolve();
+                                })
                             })
-                        })
+                        } else {
+                            scope.loading = false;
+                            scope.$apply();
+                        }
                     }
                 });
             }
@@ -3243,14 +3263,15 @@ angular.module('netbase')
                 return scope.messagingClient.getChannelBySid(channel.sid);
             }
 
-            // scope.getChannelMembers = channelId => {
-            //     let channel = scope.messagingClient.getChannelBySid(channelId);
-            //     console.log("Channel", channel)
-            // }
+            scope.getChannelMembers = channelId => {
+                let channel = scope.messagingClient.getChannelBySid(channelId);
+                console.log("Channel", scope.members)
+            }
 
             scope.joinChannel = channel => {
                 return channel.join()
                     .then(joinedChannel => {
+                        console.log("joined");
                         scope.currentChannel = joinedChannel;
                         scope.loadAndSortMessages();
                         return joinedChannel;
@@ -3399,6 +3420,7 @@ angular.module('netbase')
                     }, Promise.resolve());
                     promise.then(() => {
                         scope.messages = sortedMessageArr;
+                        scope.loading = false;
                         scope.$apply();
                         scope.scrollToMessageListBottom();
                     });
@@ -3418,17 +3440,24 @@ angular.module('netbase')
             }
 
             scope.leaveCurrentChannel = function() {
-                if (scope.currentChannel) {
-                    return scope.currentChannel.leave().then(function(leftChannel) {
-                        leftChannel.removeListener('messageAdded', scope.addMessage);
-                        leftChannel.removeListener('typingStarted', scope.showTypingStarted);
-                        leftChannel.removeListener('typingEnded', scope.hideTypingStarted);
-                        leftChannel.removeListener('memberJoined', scope.notifyMemberJoined);
-                        leftChannel.removeListener('memberLeft', scope.notifyMemberLeft);
-                    });
-                } else {
-                    return Promise.resolve();
-                }
+                console.log()
+                var r = confirm("Are you sure to leave the channel?");
+                if (r == true) {
+                    if (scope.currentChannel) {
+                        return scope.currentChannel.leave().then(function(leftChannel) {
+                            scope.messages = [];
+                            scope.loading = false;
+                            leftChannel.removeListener('messageAdded', scope.addMessage);
+                            leftChannel.removeListener('typingStarted', scope.showTypingStarted);
+                            leftChannel.removeListener('typingEnded', scope.hideTypingStarted);
+                            leftChannel.removeListener('memberJoined', scope.notifyMemberJoined);
+                            leftChannel.removeListener('memberLeft', scope.notifyMemberLeft);
+                            scope.$apply();
+                        });
+                    } else {
+                        return Promise.resolve();
+                    }
+                } else {}
             }
 
             scope.showTypingStarted = member => {
