@@ -450,11 +450,8 @@ angular.module('netbase')
 
         },
         getUniversitiesByAdminMembers: function() {
-
             var url = '/owner/members/university';
-
             return $http.get(baseUrl + url);
-
         },
 
         getUniversitiesByOwnerId: function(id) {
@@ -752,94 +749,94 @@ angular.module('netbase')
 
 .factory('Classroom', ['$http', '$localStorage', function($http, $localStorage) {
 
-		console.log('here entered.');
-		return {
-      getAllClassroomsByUniversity: function(url) {
+    console.log('here entered.');
+    return {
+        getAllClassroomsByUniversity: function(url) {
 
-					let token = $localStorage.token;
-					console.log('loacl storage token');
-					console.log(token);
-          return $http.get(url + "?token=" + token);
-			},
-			createNewClassroom: function(url, title, privilege, universityId){
-					let token = $localStorage.token;
-					var req = {
-						method: 'POST',
-						url: url,
-						headers: {
-              'x-access-token': token,
-              'content-type': 'application/json'
-						},
-						params: {
-							token: token
-            },
-            data: {
-              id: universityId,
-              roomName: title,
-              privilege: privilege,
+            let token = $localStorage.token;
+            console.log('loacl storage token');
+            console.log(token);
+            return $http.get(url + "?token=" + token);
+        },
+        createNewClassroom: function(url, title, privilege, universityId) {
+            let token = $localStorage.token;
+            var req = {
+                method: 'POST',
+                url: url,
+                headers: {
+                    'x-access-token': token,
+                    'content-type': 'application/json'
+                },
+                params: {
+                    token: token
+                },
+                data: {
+                    id: universityId,
+                    roomName: title,
+                    privilege: privilege,
+                }
             }
-					}
-					return $http(req);
-      },
-      deleteClassroom: function(url, roomId, privilege){
-					let token = $localStorage.token;
-					var req = {
-						method: 'DELETE',
-						url: url,
-						headers: {
-              'x-access-token': token,
-              'content-type': 'application/json'
-						},
-						params: {
-							token: token
-            },
-            data: {
-              id: roomId,
-              privilege: privilege
+            return $http(req);
+        },
+        deleteClassroom: function(url, roomId, privilege) {
+            let token = $localStorage.token;
+            var req = {
+                method: 'DELETE',
+                url: url,
+                headers: {
+                    'x-access-token': token,
+                    'content-type': 'application/json'
+                },
+                params: {
+                    token: token
+                },
+                data: {
+                    id: roomId,
+                    privilege: privilege
+                }
             }
-					}
-					return $http(req);
-			},
-			joinClassroom: function(url) {
-					let token = $localStorage.token;
+            return $http(req);
+        },
+        joinClassroom: function(url) {
+            let token = $localStorage.token;
 
-					var req = {
-						method: 'POST',
-						url: url,
-						headers: {
-							'x-access-token': token,
-						},
-						params: { token: token }
-					}
-					return $http(req);
-			},
-			getAccessToken: function(url) {
-					let token = $localStorage.token;
-					var req = {
-						method: 'GET',
-						url: url,
-						headers: {
-							'Access-Control-Allow-Origin': '*',
-							'x-access-token': token,
-						},
-						params: { token: token }
-					}
-					return $http(req);
-      },
-      getChatAccessToken: function(url) {
-        var token = $localStorage.token;
-        var req = {
-          method: 'GET',
-          url: url + 'deviceId/browser',
-          headers: {
-            'x-access-token': token,
-            'content-type': 'application/json'
-          }
+            var req = {
+                method: 'POST',
+                url: url,
+                headers: {
+                    'x-access-token': token,
+                },
+                params: { token: token }
+            }
+            return $http(req);
+        },
+        getAccessToken: function(url) {
+            let token = $localStorage.token;
+            var req = {
+                method: 'GET',
+                url: url,
+                headers: {
+                    'Access-Control-Allow-Origin': '*',
+                    'x-access-token': token,
+                },
+                params: { token: token }
+            }
+            return $http(req);
+        },
+        getChatAccessToken: function(url) {
+            var token = $localStorage.token;
+            var req = {
+                method: 'GET',
+                url: url + 'deviceId/browser',
+                headers: {
+                    'x-access-token': token,
+                    'content-type': 'application/json'
+                }
+            }
+            return $http(req);
         }
-        return $http(req);
-      }
-		}
-    }])
+    }
+}])
 
 .factory('Students', ['$http', '$localStorage', function($http, $localStorage) {
 
@@ -1078,9 +1075,9 @@ angular.module('netbase')
         },
 
         getAllStudents: function(id) {
-          var url = '/all';
+            var url = '/all';
 
-          return $http.get(baseUrl + url);
+            return $http.get(baseUrl + url);
         }
 
     }
