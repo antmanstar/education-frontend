@@ -4437,7 +4437,6 @@ angular.module('netbase')
                     } else {
                         $route.reload();
                     }
-
                 } else {
 
                     let statusCode = res.data.status;

@@ -1955,7 +1955,7 @@ angular.module('netbase')
 
 }])
 
-.controller('AcademiaTimelineCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Forum', '$sce', '$filter', 'ngDialog', '$timeout', function($rootScope, $scope, $location, $route, University, Forum, $sce, $filter, ngDialog, $timeout) {
+.controller('AcademiaTimelineCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Forum', 'User', 'Students', '$sce', '$filter', 'ngDialog', '$timeout', function($rootScope, $scope, $location, $route, University, Forum, User, Students, $sce, $filter, ngDialog, $timeout) {
 
     let universityUrl = $route.current.params.academiaName;
 
@@ -2013,6 +2013,45 @@ angular.module('netbase')
             }
         });
     }
+
+    Students.getStudentById(User.getId()).then(res => {
+        let student = res.data.data;
+
+        if ($scope.isAdmin(student._id) === true) {
+            Intercom("boot", {
+                app_id: "qq74p5y0",
+                email: "antman357357@gmail.com",
+                created_at: student.createdAt,
+                name: student.name,
+                user_id: student._id,
+                language: student.language,
+                imageUrl: student.imageUrl,
+                widget: {
+                    activator: "#IntercomDefaultWidget"
+                }
+            });
+
+            $rootScope.$on("$routeChangeStart", function(event, next, current) {
+                console.log("KK", next.$$route.controller)
+                if (next.$$route.controller !== "AcademiaForumCtrl" &&
+                    next.$$route.controller !== "AcademiaTimelineCtrl" &&
+                    next.$$route.controller !== "AcademiaForumCategoryAllCtrl" &&
+                    next.$$route.controller !== "AcademiaPlaylistsCtrl" &&
+                    next.$$route.controller !== "AcademiaCoursesCtrl" &&
+                    next.$$route.controller !== "AcademiaClassroomsCtrl") {
+                    Intercom("shutdown");
+                }
+            });
+        }
+    })
+
+    $scope.isAdmin = (id) => {
+        let membersOfUniversity = $scope.university.members;
+        return membersOfUniversity.filter(val => {
+            return val.accountId == id && val.privilege == 99
+        }).length == 0 ? false : true
+    }
+
 
     $scope.textFilter = function(text) {
         if (text.indexOf("iframe") != -1) {
@@ -2092,7 +2131,7 @@ angular.module('netbase')
     }
 }])
 
-.controller('AcademiaForumCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', '$timeout', 'ngDialog', 'jwtHelper', '$localStorage', function($rootScope, $scope, $location, $route, University, $timeout, ngDialog, jwtHelper, $localStorage) {
+.controller('AcademiaForumCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'User', 'Students', '$timeout', 'ngDialog', 'jwtHelper', '$localStorage', function($rootScope, $scope, $location, $route, University, User, Students, $timeout, ngDialog, jwtHelper, $localStorage) {
 
     let universityUrl = $route.current.params.academiaName;
     let displayinvite = false;
@@ -2115,19 +2154,15 @@ angular.module('netbase')
     //-votesCount
 
     $scope.orderForumPosts = function(order) {
-
         $scope.forumPostsOrder = "-" + order;
-
     }
 
     /* get university informations */
-
     if (University.isStoredLocal(universityUrl)) {
         let universityStorage = University.retrieveStorage(universityUrl);
         $scope.university = universityStorage[universityUrl];
 
         University.getUniversityForumPosts($scope.university._id, $scope.page).then(function(res) {
-
             let forumPostsRequested = res.data.data.docs;
             $scope.page = Number(res.data.data.page);
             $scope.pages = res.data.data.pages;
@@ -2135,25 +2170,16 @@ angular.module('netbase')
             $scope.loaded = true;
 
             if (!$rootScope.logged) {
-
                 if (!displayinvite) {
-
                     $rootScope.accountSuggestion = $timeout(function() {
-
                         //ngDialog.open({ template: 'partials/modals/accountsuggestion.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default ngdialog-plans modal-accountsuggestion', data : { university : $scope.university } });
                         $timeout.cancel()
-
                     }, 13500, true);
-
                 }
-
             }
-            //END if (!$rootScope.logged)
 
             /* organize new posts */
-
             if ($rootScope.logged) {
-
                 let studentId;
 
                 if ($localStorage.token != undefined && $localStorage.token != null) {
@@ -2162,7 +2188,6 @@ angular.module('netbase')
 
                 $scope.forumPostsNew = [];
                 for (let idx = 0; idx < $scope.forumPosts.length; idx++) {
-
                     let userViewed = false;
                     for (let bdx = 0; bdx < $scope.forumPosts[idx].visualization.length; bdx++) {
                         if ($scope.forumPosts[idx].visualization[bdx].accountId == studentId) {
@@ -2173,63 +2198,77 @@ angular.module('netbase')
                         $scope.forumPostsNew.push($scope.forumPosts[idx]);
                     }
                 }
-                console.log($scope.forumPostsNew);
             }
-
-            /* */
-
-        }).catch(function(e) {
-
-
-        });
-
+        }).catch(function(e) {});
     } else {
         University.getUniversity(universityUrl).then(function(res) {
-
-            console.log("university: ")
-            console.log(res.data.data)
             $scope.university = res.data.data;
             University.storeLocal($scope.university);
 
             University.getUniversityForumPosts($scope.university._id, $scope.page).then(function(res) {
-
                 let forumPostsRequested = res.data.data.docs;
                 $scope.page = Number(res.data.data.page);
                 $scope.pages = res.data.data.pages;
                 $scope.forumPosts = $scope.forumPosts.concat(forumPostsRequested);
                 $scope.loaded = true;
 
-                console.log(res)
-
                 if (!$rootScope.logged) {
-
                     if (!displayinvite) {
-
                         $rootScope.accountSuggestion = $timeout(function() {
-
                             //ngDialog.open({ template: 'partials/modals/accountsuggestion.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default ngdialog-plans modal-accountsuggestion', data : { university : $scope.university } });
                             $timeout.cancel()
-
                         }, 13500, true);
-
                     }
-
                 }
                 //END if (!$rootScope.logged)
 
             }).catch(function(e) {
-
                 console.log("forum post error request: ");
                 console.log(e);
+            });
+        });
+    }
 
+
+    Students.getStudentById(User.getId()).then(res => {
+        let student = res.data.data;
+
+        if ($scope.isAdmin(student._id) === true) {
+            Intercom("boot", {
+                app_id: "qq74p5y0",
+                email: "antman357357@gmail.com",
+                created_at: student.createdAt,
+                name: student.name,
+                user_id: student._id,
+                language: student.language,
+                imageUrl: student.imageUrl,
+                widget: {
+                    activator: "#IntercomDefaultWidget"
+                }
             });
 
-        });
+            $rootScope.$on("$routeChangeStart", function(event, next, current) {
+                console.log("KK", next.$$route.controller)
+                if (next.$$route.controller !== "AcademiaForumCtrl" &&
+                    next.$$route.controller !== "AcademiaTimelineCtrl" &&
+                    next.$$route.controller !== "AcademiaForumCategoryAllCtrl" &&
+                    next.$$route.controller !== "AcademiaPlaylistsCtrl" &&
+                    next.$$route.controller !== "AcademiaCoursesCtrl" &&
+                    next.$$route.controller !== "AcademiaClassroomsCtrl") {
+                    Intercom("shutdown");
+                }
+            });
+        }
+    })
 
+    $scope.isAdmin = (id) => {
+        let membersOfUniversity = $scope.university.members;
+        return membersOfUniversity.filter(val => {
+            return val.accountId == id && val.privilege == 99
+        }).length == 0 ? false : true
     }
 
     /* get all forum posts */
-
     $scope.range = function(min, max, step) {
         step = step || 1;
         var input = [];
@@ -3138,7 +3177,6 @@ angular.module('netbase')
                         }
                     }
                 });
-
             })
 
             scope.selectCategoryChannel = (category) => {
@@ -3151,6 +3189,7 @@ angular.module('netbase')
                     })
                     .catch((err) => {
                         alert("The channel does not exist for this <" + scope.curCategory.title + "> category");
+                        scope.messages = [];
                         scope.loading = false;
                         scope.$apply();
                     });
@@ -3209,6 +3248,7 @@ angular.module('netbase')
                         })
                         .catch((err) => {
                             alert("The channel does not exist for this <" + scope.curCategory.title + "> category");
+                            scope.messages = [];
                             scope.loading = false;
                             scope.$apply();
                         });
