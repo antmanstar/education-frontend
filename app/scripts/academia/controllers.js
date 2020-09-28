@@ -1956,7 +1956,6 @@ angular.module('netbase')
 }])
 
 .controller('AcademiaTimelineCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Forum', 'User', 'Students', '$sce', '$filter', 'ngDialog', '$timeout', function($rootScope, $scope, $location, $route, University, Forum, User, Students, $sce, $filter, ngDialog, $timeout) {
-
     let universityUrl = $route.current.params.academiaName;
 
     $scope.loaded = false;
@@ -1976,7 +1975,6 @@ angular.module('netbase')
         if (!$rootScope.logged) {
             $rootScope.accountSuggestion = $timeout(function() {
                 if (!displayinvite) {
-
                     console.log("time out!");
                     //ngDialog.open({ template: 'partials/modals/accountsuggestion.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default ngdialog-plans modal-accountsuggestion', data : { university : $scope.university } });
                     $timeout.cancel()
@@ -1985,8 +1983,6 @@ angular.module('netbase')
             }, 13500, true);
         }
     } else {
-        console.log("not stored")
-
         University.getUniversity(universityUrl).then(function(res) {
             $scope.university = res.data.data;
             University.storeLocal($scope.university);
@@ -2020,7 +2016,7 @@ angular.module('netbase')
         if ($scope.isAdmin(student._id) === true) {
             Intercom("boot", {
                 app_id: "qq74p5y0",
-                email: "antman357357@gmail.com",
+                email: student.email,
                 created_at: student.createdAt,
                 name: student.name,
                 user_id: student._id,
@@ -2232,11 +2228,12 @@ angular.module('netbase')
 
     Students.getStudentById(User.getId()).then(res => {
         let student = res.data.data;
+        console.log("GGG", student.email)
 
         if ($scope.isAdmin(student._id) === true) {
             Intercom("boot", {
                 app_id: "qq74p5y0",
-                email: "antman357357@gmail.com",
+                email: student.email,
                 created_at: student.createdAt,
                 name: student.name,
                 user_id: student._id,
@@ -2248,7 +2245,6 @@ angular.module('netbase')
             });
 
             $rootScope.$on("$routeChangeStart", function(event, next, current) {
-                console.log("KK", next.$$route.controller)
                 if (next.$$route.controller !== "AcademiaForumCtrl" &&
                     next.$$route.controller !== "AcademiaTimelineCtrl" &&
                     next.$$route.controller !== "AcademiaForumCategoryAllCtrl" &&
