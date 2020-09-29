@@ -1,7 +1,6 @@
 'use strict';
 
 /* Controllers */
-
 angular.module('netbase')
 
 .filter('unsafe', function($sce) { return $sce.trustAsHtml; })
@@ -63,8 +62,6 @@ angular.module('netbase')
 
                 // Time Tracking
                 Students.getStudentById($scope.video.accountId).success(function(res) {
-                    console.log("student: ")
-                    console.log(res);
                     $scope.student = res.data;
                 });
 
@@ -81,9 +78,7 @@ angular.module('netbase')
                             }
                         }
                     }
-                    //END viewers
                 }
-                //END logged
 
                 // FIX
                 setInterval(function() {
@@ -132,7 +127,6 @@ angular.module('netbase')
         console.log("duration: " + duration)
         ngDialog.open({ template: 'partials/modals/videoaccountviewer.html', controller: 'VideoViewersCtrl', className: 'ngdialog-theme-default', data: { viewers: viewers, duration: duration } });
     }
-
 }])
 
 .controller('VideoCreateCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Playlist', 'Videos', 'Courses', function($rootScope, $scope, $location, $route, University, Playlist, Videos, Courses) {
@@ -216,7 +210,6 @@ angular.module('netbase')
             $scope.errorDisplay = true;
         }
     }
-
 }])
 
 .controller('PlaylistCreateCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Courses', 'Playlist', 'ngDialog', function($rootScope, $scope, $location, $route, University, Courses, Playlist, ngDialog) {
@@ -287,20 +280,14 @@ angular.module('netbase')
             $scope.errors = errors;
         }
     };
-
 }])
 
 .controller('VideoViewersCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Videos', '$sce', '$localStorage', 'User', 'Forum', 'Students', function($rootScope, $scope, $location, $route, University, Videos, $sce, $localStorage, User, Forum, Students) {
-
     let viewers = $scope.ngDialogData.viewers;
     let playerDuration = $scope.ngDialogData.duration;
 
     $scope.viewers = viewers;
     $scope.playerDuration = playerDuration;
-
-    console.log("viewers: ")
-    console.log($scope.viewers)
-
 }])
 
 .directive('accountviewer', ['Students', function(Students) {
@@ -310,24 +297,15 @@ angular.module('netbase')
         replace: true,
         scope: true,
         link: function(scope, element, attr) {
-
             let viewer = JSON.parse(attr.v);
             let playerDuration = attr.pd;
 
-            console.log("playerDuration: ");
-            console.log(playerDuration);
-
             scope.playerDuration = playerDuration;
             scope.viewer = viewer;
-
             scope.percentage = Math.floor(viewer.time / playerDuration * 100);
 
             Students.getStudentById(viewer.accountId).then(function(res) {
-
-                console.log("student by id: ")
-                console.log(res);
                 let account = res.data.data;
-
                 scope.account = account;
 
                 if (account.imageUrl != undefined) {
@@ -335,9 +313,7 @@ angular.module('netbase')
                 } else {
                     scope.picture = "/img/user/user.png";
                 }
-
             });
-
         }
     }
 }])

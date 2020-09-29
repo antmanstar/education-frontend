@@ -96,7 +96,7 @@
           <div class="order" ng-repeat="order in orders">
 
             <div class="info">
-              <div class="id">{{'DASH_ORDER' | translate}} #{{order._id}}</div>
+              <div class="id">{{'DASH_ORDERS' | translate}} #{{order._id}}</div>
               <div class="date"><b>{{'DATE' | translate}}:</b> <span am-time-ago="order.createdAt | amFromUnix | amDateFormat:'MM.DD.YYYY HH:mm:ss' "></span></div>
               <div class="total"><b>{{'TOTAL' | translate}}:</b> {{'CURRENCY' | translate}}{{order.amount / 100}}</div>
             </div>
