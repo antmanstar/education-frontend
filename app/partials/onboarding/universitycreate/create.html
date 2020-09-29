@@ -1,176 +1,133 @@
 <div class="container-fluid">
-
-  <div class="row" style="margin-top: 20px; margin-bottom: 50px;">
-
-    <div class="col-xs-4">
-
-      <a href="/home/explore">
-        <img src="img/universidade_logo.png" height="20px" />
-      </a>
-
-    </div>
-
-    <div class="col-xs-2" style="text-align: center;">
-
-    </div>
-
-    <div class="col-xs-6" style="text-align: right; line-height: 30px;">
-
-      <b style="font-size: 1.1em;">{{'TEACH' | translate}}</b>
-
-    </div>
-
-  </div>
-  <!-- end row -->
-
-  <style>
-
-    textarea {
-      width: 100%;
-      border: none;
-      resize: none;
-      border-bottom: 3px solid #cdcdcd;
-    }
-
-  </style>
-
-  <div class="row" style="margin-bottom: 40px;">
-
-    <div class="col-xs-12">
-
-      <div style="cursor: pointer;" ng-click="lastpageReturn()">< Voltar</div>
-
-      <div style="width: 100%; text-align: left; margin-bottom: 30px;">
-
-        <div style="font-weight: bolder; font-size: 1.8em; color: #2d4255;">{{'CREATEYOUREDCOMM' | translate}}</div>
-
-      </div>
-
-      <div class="alert bg-primary-red" ng-show="error.exists">{{displayError(error.text)}}</div>
-
-      <div class="form">
-
-        <div class="form-group">
-          <label>{{'YOUREDCOMMNAME' | translate}}</label>
-          <input class="input-email" ng-model="name" placeholder="" type="text" />
+    <div class="row" style="margin-top: 20px; margin-bottom: 30px;">
+        <div class="col-xs-4">
+            <a href="/home/explore">
+                <img src="img/universidade_logo.png" height="20px" />
+            </a>
         </div>
-        <!-- end form group -->
-
-        <div class="form-group">
-          <label>{{'URL' | translate}}</label>
-          <input class="input-email" ng-model="url" placeholder="" type="text"></input>
+        <div class="col-xs-2" style="text-align: center;">
         </div>
-        <!-- end form group -->
-
-        <div class="form-group">
-          <label>{{'DESCRIPTION' | translate}}</label>
-          <textarea placeholder="" ng-model="about" type="text"></textarea>
+        <div class="col-xs-6" style="text-align: right; line-height: 30px;">
+            <b style="font-size: 1.1em;">{{'TEACH' | translate}}</b>
         </div>
-        <!-- end form group -->
-
-      </div>
-      <!-- end form -->
-
     </div>
-    <!-- end COL XS 12 -->
 
-  </div>
-  <!-- end ROW -->
-
-  <div class="row" style="margin-bottom: 25px;">
-
-    <div class="col-xs-12">
-
-
-    </div>
-    <!-- end COL XS 12 -->
-
-  </div>
-  <!-- end ROW -->
-
-  <div class="row animated fadeIn" ng-show="mode == 'teach'">
-
-    <div class="col-xs-12">
-
-      <div style="font-weight: bold; font-size: 1.4em; color: #2d4255;">{{'CREATE_EDUCATIONAL_COMMUNITY' | translate}}:</div>
-
-      <div class="user-collections" style="margin-top: 30px;">
-
-        <div style="height: unset;" ng-repeat="n in [['Professor','Ambiente educacional dedicado ao ensino e aprendizado dos seus alunos', '#52bfea'],['Amigos e Família','Inicie um grupo de estudos e troca de conhecimento', '#30b39f'],['Instituição de Ensino', 'Empodere os seus alunos com soluções educacional integradas', '#aa2c26'], ['Empresa', 'Treinamento interno e armazenamento do know-how operacional ', '#b460a2'], ['Crianças', 'Plataforma educacional dedicada a crianças de 3 até 8 anos', '#ee5748']]" class="collection teaching-option option">
-
-          <div class="dot" style="background-color: {{n[2]}};"></div>
-
-          <div style="font-size: 1.2em; font-weight: bold;">{{n[0]}}</div>
-          <div style="color: #909090;">{{n[1]}}</div>
-
+    <div class="row" style="margin-bottom: 40px;">
+        <div class="col-xs-12">
+            <div style="cursor: pointer; margin-bottom: 20px;" ng-click="lastpageReturn()">
+                <i class="fa fa-arrow-left"></i><span style="margin-left: 10px;">Back</span>
+            </div>
+            <div style="width: 100%; text-align: left; margin-bottom: 30px;">
+                <div style="font-weight: bolder; font-size: 1.8em; color: #2d4255;">{{'CREATEYOUREDCOMM' | translate}}</div>
+            </div>
+            <div class="alert bg-primary-red" ng-show="error.exists">{{displayError(error.text)}}</div>
+            <div class="form">
+                <div class="form-group">
+                    <label>{{'YOUREDCOMMNAME' | translate}}</label>
+                    <input class="input-email" ng-model="name" placeholder="" type="text" />
+                </div>
+                <div class="form-group">
+                    <label>{{'URL' | translate}}</label>
+                    <input class="input-email" ng-model="url" placeholder="" type="text"></input>
+                </div>
+                <div class="form-group">
+                    <label>{{'DESCRIPTION' | translate}}</label>
+                    <textarea placeholder="" ng-model="about" type="text"></textarea>
+                </div>
+            </div>
         </div>
-        <!-- -->
-
-      </div>
-      <!-- end user-collections -->
-
     </div>
-    <!-- -->
 
-  </div>
-  <!-- end row -->
-
-  <style>
-
-    .onboarding-knowledge {
-      padding-bottom: 10px;
-      border-bottom: 1px solid #cdcdcd;
-      margin-bottom: 10px;
-    }
-
-    .onboarding-knowledge .title {
-      font-size: 1.5em;
-      display: inline-block;
-      font-weight: bolder;
-      color: #2d4255;
-    }
-
-    .onboarding-knowledge .icon {
-      float: right;
-      font-size: 1.5em;
-      display: inline-block;
-      vertical-align: top;
-    }
-
-    .onboarding-knowledge-university-row {
-
-    }
-
-    .onboarding-knowledge-university-row .name {
-      display: inline-block;
-      font-weight: bolder;
-      font-size: 1.2em;
-      padding-left: 10px;
-    }
-
-    .onboarding-knowledge-university-row .logo-bg {
-      display: inline-block;
-    }
-
-    .onboarding-knowledge-university-row .buttons {
-      text-align: right; float: right; vertical-align: top;
-      line-height: 60px;
-      font-size: 0.7em;
-    }
-
-    .footer-onboarding {
-
-    }
-
-  </style>
-
-  <div class="row" style="margin-top: 15px; margin-bottom: 15px;">
-    <div class="col-xs-12">
-      <button ng-click="create()" class="btn btn-success" style="font-size: 1.15em; font-weight: bold;">{{'PROCEED' | translate}}</button>
+    <div class="row" style="margin-bottom: 25px;">
+        <div class="col-xs-12">
+        </div>
     </div>
-    <!-- -->
-  </div>
-  <!-- -->
 
+    <div class="row animated fadeIn" ng-show="mode == 'teach'">
+        <div class="col-xs-12">
+            <div style="font-weight: bold; font-size: 1.4em; color: #2d4255;">{{'CREATE_EDUCATIONAL_COMMUNITY' | translate}}:</div>
+            <div class="user-collections" style="margin-top: 30px;">
+                <div style="height: unset;" ng-repeat="n in [['Professor','Ambiente educacional dedicado ao ensino e aprendizado dos seus alunos', '#52bfea'],['Amigos e Família','Inicie um grupo de estudos e troca de conhecimento', '#30b39f'],['Instituição de Ensino', 'Empodere os seus alunos com soluções educacional integradas', '#aa2c26'], ['Empresa', 'Treinamento interno e armazenamento do know-how operacional ', '#b460a2'], ['Crianças', 'Plataforma educacional dedicada a crianças de 3 até 8 anos', '#ee5748']]"
+                    class="collection teaching-option option">
+                    <div class="dot" style="background-color: {{n[2]}};"></div>
+                    <div style="font-size: 1.2em; font-weight: bold;">{{n[0]}}</div>
+                    <div style="color: #909090;">{{n[1]}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+        <div class="col-xs-12">
+            <button ng-click="openSelectPlan()" class="btn btn-success" style="font-size: 1.15em; font-weight: bold;">Select Plan</button>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+        <div class="col-xs-12">
+            <button ng-click="create()" class="btn btn-success" style="font-size: 1.15em; font-weight: bold;">{{'PROCEED' | translate}}</button>
+        </div>
+    </div>
 </div>
-<!-- end container fluid -->
+</div>
+
+<style>
+    .form input {
+        border: 1px solid black !important;
+        margin-bottom: 10px;
+    }
+    
+    .form textarea {
+        width: 100%;
+        border: none;
+        resize: none;
+        border: 1px solid black;
+    }
+    
+    .onboarding-knowledge {
+        padding-bottom: 10px;
+        border-bottom: 1px solid #cdcdcd;
+        margin-bottom: 10px;
+    }
+    
+    .onboarding-knowledge .title {
+        font-size: 1.5em;
+        display: inline-block;
+        font-weight: bolder;
+        color: #2d4255;
+    }
+    
+    .onboarding-knowledge .icon {
+        float: right;
+        font-size: 1.5em;
+        display: inline-block;
+        vertical-align: top;
+    }
+    
+    .onboarding-knowledge-university-row {
+        background-color: white;
+    }
+    
+    .onboarding-knowledge-university-row .name {
+        display: inline-block;
+        font-weight: bolder;
+        font-size: 1.2em;
+        padding-left: 10px;
+    }
+    
+    .onboarding-knowledge-university-row .logo-bg {
+        display: inline-block;
+    }
+    
+    .onboarding-knowledge-university-row .buttons {
+        text-align: right;
+        float: right;
+        vertical-align: top;
+        line-height: 60px;
+        font-size: 0.7em;
+    }
+    
+    .footer-onboarding {
+        background-color: white;
+    }
+</style>

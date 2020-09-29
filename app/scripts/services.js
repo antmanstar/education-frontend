@@ -1,9 +1,8 @@
 'use strict';
+
 angular.module('netbase')
-    //35.229.52.103
 
 .factory('TimelineNew', ['$http', '$localStorage', function($http, $localStorage) {
-
     //var baseUrl = "https://api.universida.de/search";
     //var baseUrl = "https://educationalcommunity-uni.herokuapp.com";
     // var baseUrl = "http://api.universida.de/university"
@@ -11,11 +10,8 @@ angular.module('netbase')
     //var baseUrl = "http://localhost:7555"
 
     return {
-
         getTimelineAll: function(universitiesSubscribed, page) {
-
             var url = '/timeline?universities=' + universitiesSubscribed;
-            console.log($localStorage.token)
 
             return $http({
                 method: 'GET',
@@ -25,13 +21,10 @@ angular.module('netbase')
                     'x-access-token': $localStorage.token
                 }
             });
-
         },
 
         getTimelineRePostCount: function(modelId) {
-
             var url = '/timeline/repost/count?modelId=' + modelId;
-            console.log($localStorage.token)
 
             return $http({
                 method: 'GET',
@@ -41,26 +34,18 @@ angular.module('netbase')
                     'x-access-token': $localStorage.token
                 }
             });
-
         }
-
     }
-
 }])
 
 .factory('Timeline', ['$http', '$localStorage', function($http, $localStorage) {
-
     //var baseUrl = "https://api.universida.de/search";
     var baseUrl = "https://educationalcommunity-uni.herokuapp.com";
     //var baseUrl = "http://192.168.1.7:9003"
 
     return {
-
         getTimelineActivityByStudentId: function(studentId, page) {
-
             var url = '/university/student/' + studentId + '/timeline?page=' + page;
-
-            console.log($localStorage.token)
 
             return $http({
                 method: 'GET',
@@ -70,14 +55,10 @@ angular.module('netbase')
                     'x-access-token': $localStorage.token
                 }
             });
-
         },
 
         getTimelineByStudentId: function(studentId, page) {
-
             var url = '/university/student/' + studentId + '/timeline?page=' + page;
-
-            console.log($localStorage.token)
 
             return $http({
                 method: 'GET',
@@ -87,32 +68,22 @@ angular.module('netbase')
                     'x-access-token': $localStorage.token
                 }
             });
-
         }
-
     }
-
 }])
 
 .factory('PokerHands', ['$http', '$localStorage', function($http, $localStorage) {
-
     var baseUrl = "https://educationalcommunity-uni.herokuapp.com";
     //var baseUrl = "http://localhost:9003";
 
     return {
-
         getAll: function() {
-
             var url = '/pokerhands/all';
-
             return $http.get(baseUrl + url);
-
         },
 
         getById: function(id) {
-
             var url = '/pokerhands/id/' + id;
-
             return $http({
                 method: 'GET',
                 url: baseUrl + url,
@@ -121,11 +92,9 @@ angular.module('netbase')
                     'x-access-token': $localStorage.token
                 }
             })
-
         },
 
         answer: function(id, data) {
-
             let url = "https://educationalcommunity-uni.herokuapp.com/pokerhands/id/" + id + "/answer";
 
             return $http({
@@ -142,11 +111,9 @@ angular.module('netbase')
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             });
-
         },
 
         create: function(data) {
-
             let url = "https://educationalcommunity-uni.herokuapp.com/pokerhands/create";
 
             return $http({
@@ -163,11 +130,9 @@ angular.module('netbase')
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             });
-
         },
 
         animateHand: function(handtext) {
-
             let url = "https://educationalcommunity-uni.herokuapp.com/pokerhands/embed/create";
 
             return $http({
@@ -184,32 +149,22 @@ angular.module('netbase')
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             });
-
         }
-
     }
-
 }])
 
 .factory('Chat', ['$http', '$localStorage', function($http, $localStorage) {
-
     //var baseUrl = "";
     var baseUrl = "http://localhost:6969";
 
     return {
-
         getUniversityChannels: function(universityId) {
-
             let url = "/chat/channel/university/" + universityId;
-
             return $http.get(baseUrl + url);
-
         },
 
         getTwilioToken: function(payload) {
-
             let url = "/chat/token/device/" + payload.deviceID;
-
             return $http({
                 method: 'GET',
                 url: baseUrl + url,
@@ -218,11 +173,8 @@ angular.module('netbase')
                     'x-access-token': $localStorage.token
                 }
             });
-
         }
-
     }
-
 }])
 
 .factory('Playlist', ['$http', function($http) {
@@ -230,13 +182,6 @@ angular.module('netbase')
     //var baseUrl = "https://api.universida.de/university";
     //var baseUrl = "http://192.168.1.7:9003/university";
     //var baseUrl = "http://localhost:9003/university";
-    /*
-
-    router.get('/id/:id/playlist', university_controller.getAllPlaylistByUniversityId)
-
-    router.get('/playlist/id/:id', university_controller.getPlaylistById)
-
-    */
 
     return {
         getPlaylistById: function(playlistId) {
@@ -267,7 +212,6 @@ angular.module('netbase')
             });
         }
     }
-
 }])
 
 .factory('Forum', ['$http', '$localStorage', function($http, $localStorage) {
@@ -345,21 +289,17 @@ angular.module('netbase')
 }])
 
 .factory('University', ['$http', '$localStorage', function($http, $localStorage) {
-
     var baseUrl = "https://educationalcommunity-uni.herokuapp.com/university";
     //var baseUrl = "https://api.universida.de/university";
     //var baseUrl = "http://localhost:9003/university";
 
     return {
-
         storeLocal: function(university) {
-            //$localStorage.studentsStorage = {}
             if ($localStorage.universityStorage == undefined) {
                 $localStorage.universityStorage = {};
             }
 
             let ts = Math.round((new Date()).getTime() / 1000);
-
             university.updated = ts;
 
             $localStorage.universityStorage[university._id] = university;
@@ -368,7 +308,6 @@ angular.module('netbase')
         },
 
         isStoredLocal: function(query) {
-
             let ts = Math.round((new Date()).getTime() / 1000);
 
             if ($localStorage.universityStorage == undefined) {
@@ -378,9 +317,7 @@ angular.module('netbase')
             let university = $localStorage.universityStorage;
 
             // check timestamp, 3hr updates
-
             if (query in university) {
-
                 let lastUpdate = university[query].updated;
 
                 if (lastUpdate + (3600 * 2) < ts) {
@@ -392,26 +329,19 @@ angular.module('netbase')
             } else {
                 return false;
             }
-
-
         },
 
         retrieveStorage: function() {
-
             return $localStorage.universityStorage;
-
         },
+
         getallCategorybyUniversity: function() {
-
             var url = '/owner/members/university/category';
-
             return $http.get(baseUrl + url);
-
         },
+
         create: function(data) {
-
             var url = '/';
-
             return $http({
                 method: 'POST',
                 data: data,
@@ -426,13 +356,10 @@ angular.module('netbase')
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             });
-
         },
 
         update: function(id, data) {
-
             var url = '/id/' + id;
-
             return $http({
                 method: 'PUT',
                 data: data,
@@ -447,57 +374,40 @@ angular.module('netbase')
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             });
-
         },
+
         getUniversitiesByAdminMembers: function() {
             var url = '/owner/members/university';
             return $http.get(baseUrl + url);
         },
 
         getUniversitiesByOwnerId: function(id) {
-
             var url = '/ownerid/' + id;
-
             return $http.get(baseUrl + url);
-
         },
 
         getUniversities: function() {
-
             var url = '/';
-
             return $http.get(baseUrl + url);
-
         },
 
         getAllUniversities: function() {
-
             var url = '/all';
-
             return $http.get(baseUrl + url);
-
         },
 
         getUniversityById: function(universityId) {
-
             var url = '/id/' + universityId;
-
             return $http.get(baseUrl + url);
-
         },
 
         getUniversity: function(universityUrl) {
-
             var url = '/url/' + universityUrl;
-
             return $http.get(baseUrl + url);
-
         },
 
         getUniversityForumPosts: function(universityId, page) {
-
             var url = "/id/" + universityId + "/forum" + "?page=" + page;
-
             return $http({
                 method: 'GET',
                 url: baseUrl + url,
@@ -506,13 +416,10 @@ angular.module('netbase')
                     'x-access-token': $localStorage.token
                 }
             });
-
         },
 
         subscribeOnUniversity: function(universityUrl) {
-
             var url = '/url/' + universityUrl + "/subscribe";
-
             return $http({
                 method: 'POST',
                 url: baseUrl + url,
@@ -520,13 +427,10 @@ angular.module('netbase')
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             });
-
         },
 
         createForumPostTimeline: function(data) {
-
             var url = '/timeline/forumpost';
-
             return $http({
                 method: 'POST',
                 data: data,
@@ -542,13 +446,10 @@ angular.module('netbase')
                     'x-access-token': $localStorage.token
                 }
             });
-
         },
 
         createForumPost: function(universityId, data) {
-
             var url = '/id/' + universityId + '/forum';
-
             return $http({
                 method: 'POST',
                 data: data,
@@ -563,13 +464,10 @@ angular.module('netbase')
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             });
-
         },
 
         updateForumPost: function(universityId, postId, data) {
-
             var url = '/id/' + universityId + '/forum/post/id/' + postId;
-
             return $http({
                 method: 'PUT',
                 data: data,
@@ -584,13 +482,10 @@ angular.module('netbase')
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             });
-
         },
 
         upvoteForumPost: function(universityId, postId) {
-
             var url = '/id/' + universityId + '/forum/post/id/' + postId + '/vote/up';
-
             return $http({
                 method: 'POST',
                 url: baseUrl + url,
@@ -604,13 +499,10 @@ angular.module('netbase')
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             });
-
         },
 
         downvoteForumPost: function(universityId, postId) {
-
             var url = '/id/' + universityId + '/forum/post/id/' + postId + '/vote/down';
-
             return $http({
                 method: 'POST',
                 url: baseUrl + url,
@@ -624,13 +516,10 @@ angular.module('netbase')
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             });
-
         },
 
         upvoteForumPostAnswer: function(universityId, postId, answerId) {
-
             var url = "/id/" + universityId + "/forum/post/id/" + postId + "/answer/id/" + answerId + "/vote/up";
-
             return $http({
                 method: 'PUT',
                 url: baseUrl + url,
@@ -644,13 +533,10 @@ angular.module('netbase')
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             });
-
         },
 
         downvoteForumPostAnswer: function(universityId, postId, answerId) {
-
             var url = "/id/" + universityId + "/forum/post/id/" + postId + "/answer/id/" + answerId + "/vote/down";
-
             return $http({
                 method: 'PUT',
                 url: baseUrl + url,
@@ -664,13 +550,10 @@ angular.module('netbase')
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             });
-
         },
 
         setMemberPrivilege: function(universityId, accountId, data) {
-
             var url = '/id/' + universityId + '/member/' + accountId;
-
             return $http({
                 method: 'PUT',
                 data: data,
@@ -685,13 +568,10 @@ angular.module('netbase')
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             });
-
         },
 
         createPlan: function(universityId, data) {
-
             var url = '/id/' + universityId + '/premium/plan';
-
             return $http({
                 method: 'POST',
                 data: data,
@@ -706,13 +586,10 @@ angular.module('netbase')
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             });
-
         },
 
         updatePlan: function(universityId, data) {
-
             var url = '/id/' + universityId + '/premium/plan/' + data.stripeId;
-
             return $http({
                 method: 'PUT',
                 data: data,
@@ -727,7 +604,6 @@ angular.module('netbase')
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             });
-
         },
 
         getChatAccessToken: function(url) {
@@ -742,14 +618,10 @@ angular.module('netbase')
             }
             return $http(req);
         }
-
     }
-
 }])
 
 .factory('Classroom', ['$http', '$localStorage', function($http, $localStorage) {
-
-    console.log('here entered.');
     return {
         getAllClassroomsByUniversity: function(url) {
 
@@ -758,6 +630,7 @@ angular.module('netbase')
             console.log(token);
             return $http.get(url + "?token=" + token);
         },
+
         createNewClassroom: function(url, title, privilege, universityId) {
             let token = $localStorage.token;
             var req = {
@@ -778,6 +651,7 @@ angular.module('netbase')
             }
             return $http(req);
         },
+
         deleteClassroom: function(url, roomId, privilege) {
             let token = $localStorage.token;
             var req = {
@@ -797,6 +671,7 @@ angular.module('netbase')
             }
             return $http(req);
         },
+
         joinClassroom: function(url) {
             let token = $localStorage.token;
 
@@ -810,6 +685,7 @@ angular.module('netbase')
             }
             return $http(req);
         },
+
         getAccessToken: function(url) {
             let token = $localStorage.token;
             var req = {
@@ -823,6 +699,7 @@ angular.module('netbase')
             }
             return $http(req);
         },
+
         getChatAccessToken: function(url) {
             var token = $localStorage.token;
             var req = {
@@ -839,27 +716,21 @@ angular.module('netbase')
 }])
 
 .factory('Students', ['$http', '$localStorage', function($http, $localStorage) {
-
     //var baseUrl = "https://api.universida.de/accounts/students";
     var baseUrl = "https://educationalcommunity-accounts.herokuapp.com/accounts/students";
     // var baseUrl = "http://localhost:9009/accounts/students";
 
     return {
-
         storeLocal: function(student) {
             //$localStorage.studentsStorage = {}
             if ($localStorage.studentsStorage == undefined) {
                 $localStorage.studentsStorage = {};
             }
-
             $localStorage.studentsStorage[student._id] = student;
-
         },
 
         isStoredLocal: function(studentId) {
-
             // check if it's stored local
-
             if ($localStorage.studentsStorage == undefined) {
                 $localStorage.studentsStorage = {};
             }
@@ -871,19 +742,14 @@ angular.module('netbase')
             } else {
                 return false;
             }
-
         },
 
         retrieveStorage: function() {
-
             return $localStorage.studentsStorage;
-
         },
 
         update: function(accountId, data) {
-
             var url = "/id/" + accountId + "/update";
-
             return $http({
                 method: 'PUT',
                 url: baseUrl + url,
@@ -898,13 +764,10 @@ angular.module('netbase')
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             });
-
         },
 
         getCards: function(userId) {
-
             var url = '/id/' + userId + "/cards";
-
             return $http({
                 method: 'GET',
                 url: baseUrl + url,
@@ -913,13 +776,10 @@ angular.module('netbase')
                     'x-access-token': $localStorage.token
                 }
             });
-
         },
 
         resetPasswordStepThree: function(data) {
-
             let url = "/forgot/newpassword/token";
-
             return $http({
                 method: 'PUT',
                 url: baseUrl + url,
@@ -934,13 +794,10 @@ angular.module('netbase')
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             });
-
         },
 
         resetPasswordStepOne: function(data) {
-
             let url = "/forgot";
-
             return $http({
                 method: 'POST',
                 url: baseUrl + url,
@@ -955,13 +812,10 @@ angular.module('netbase')
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             });
-
         },
 
         resetPasswordStepTwo: function(data) {
-
             let url = "/forgot/newpassword";
-
             return $http({
                 method: 'PUT',
                 url: baseUrl + url,
@@ -976,13 +830,10 @@ angular.module('netbase')
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             });
-
         },
 
         postCards: function(userId, data) {
-
             var url = '/id/' + userId + "/cards";
-
             return $http({
                 method: 'POST',
                 url: baseUrl + url,
@@ -997,13 +848,10 @@ angular.module('netbase')
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             });
-
         },
 
         login: function(data) {
-
             var url = '/authenticate/';
-
             return $http({
                 method: 'POST',
                 url: baseUrl + url,
@@ -1018,13 +866,10 @@ angular.module('netbase')
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             });
-
         },
 
         createAccount: function(data) {
-
             var url = '/create/';
-
             data.language = "PT";
 
             return $http({
@@ -1041,15 +886,11 @@ angular.module('netbase')
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             });
-
         },
 
         getStudentById: function(id) {
-
             var url = '/id/' + id;
-
             return $http.get(baseUrl + url);
-
         },
 
         getStudentById_J: function(id) {
@@ -1067,107 +908,69 @@ angular.module('netbase')
         },
 
         getStudentByUsername: function(id) {
-
             var url = '/username/' + id;
-
             return $http.get(baseUrl + url);
-
         },
 
         getAllStudents: function(id) {
             var url = '/all';
-
             return $http.get(baseUrl + url);
         }
-
     }
-
 }])
 
 .factory('Search', ['$http', function($http) {
-
     //var baseUrl = "https://api.universida.de/search";
     //var baseUrl = "https://network-search-prod.herokuapp.com/search";
     var baseUrl = "https://network-search-prod.herokuapp.com/search"
 
     return {
-
         all: function(query) {
-
             var url = '/all?q=' + query;
-
             return $http.get(baseUrl + url);
-
         }
-
     }
-
 }])
 
 .factory('Knowledge', ['$http', '$localStorage', function($http, $localStorage) {
-
     //var baseUrl = "https://api.universida.de/search";
     //var baseUrl = "http://192.168.1.7:9003/knowledge";
     var baseUrl = "https://educationalcommunity-uni.herokuapp.com/knowledge";
 
     return {
-
         getAllPaginated: function(query) {
-
             // do paginated here
-
             var url = '/all';
-
             return $http.get(baseUrl + url);
-
         },
 
         getById: function(id) {
-
             // do paginated here
-
             var url = '/id/' + id;
-
             return $http.get(baseUrl + url);
-
         },
 
         getByUrl: function(urlArg) {
-
             // do paginated here
-
             var url = '/url/' + urlArg;
-
             return $http.get(baseUrl + url);
-
         },
 
         getAllPostsByIdPaginated: function(id) {
-
             // do paginated here
-
             var url = '/id/' + id + '/posts';
-
             return $http.get(baseUrl + url);
-
         },
 
         getAllPostsByUrlPaginated: function(id, page) {
-
             // do paginated here
-
             var url = '/url/' + id + '/posts' + "?page=" + page;
-
             return $http.get(baseUrl + url);
-
         },
 
         subscribe: function(knowledgeId) {
-
             // do paginated here
-
             var url = '/id/' + knowledgeId + "/subscribe";
-
             return $http({
                 method: 'POST',
                 url: baseUrl + url,
@@ -1176,22 +979,16 @@ angular.module('netbase')
                     'x-access-token': $localStorage.token
                 }
             });
-
         }
-
     }
-
 }])
 
 .factory('Videos', ['$http', function($http) {
-
     var baseUrl = "https://educationalcommunity-uni.herokuapp.com/university";
     //var baseUrl = "http://localhost:9003/university";
 
     return {
-
         progress: function(payload, videoid) {
-
             var url = '/video/id/' + videoid + "/progress";
 
             return $http({
@@ -1208,25 +1005,20 @@ angular.module('netbase')
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             });
-
         },
 
         getById: function(id) {
-
             var url = "/video/id/" + id;
-
             return $http.get(baseUrl + url);
-
         },
+
         getByPlaylist: function(id) {
             var url = "/video/playlist/" + id;
-
             return $http.get(baseUrl + url);
         },
+
         create: function(payload) {
-
             var url = '/video';
-
             return $http({
                 method: 'POST',
                 url: baseUrl + url,
@@ -1241,37 +1033,26 @@ angular.module('netbase')
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             });
-
         },
 
         parse: function(youtubeId, type) {
-
             if (type == 'yt') {
 
                 var ytApiKey = "AIzaSyBO5oxAd6H-Au_lPyQiV2QU-7vCL_Li3GY";
                 var url = "https://www.googleapis.com/youtube/v3/videos?part=snippet&id=" + youtubeId + "&key=" + ytApiKey
 
             }
-
-            console.log(url)
-
             return $http.get(url);
-
         }
-
     }
-
 }])
 
 .factory('SocialMarketPlace', ['$http', '$localStorage', 'jwtHelper', function($http, $localStorage, jwtHelper) {
-
     //var baseUrl = "https://api.universida.de/listing";
     var baseUrl = "https://network-socialmarketplace-prod.herokuapp.com/listing";
 
     return {
-
         create: function(data) {
-
             var url = "/";
 
             return $http({
@@ -1289,13 +1070,10 @@ angular.module('netbase')
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             });
-
         },
 
         update: function(data) {
-
             var url = "/id/" + data.id;
-
             return $http({
                 method: 'PUT',
                 url: baseUrl + url,
@@ -1311,29 +1089,20 @@ angular.module('netbase')
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             });
-
         },
 
         getListingById: function(id) {
-
             var url = '/id/' + id;
-
             return $http.get(baseUrl + url);
-
         },
 
         getListingsByUniversity: function(universityId) {
-
             var url = '/university/id/' + universityId;
-
             return $http.get(baseUrl + url);
-
         },
 
         want: function(id) {
-
             var url = '/id/' + id + '/want';
-
             return $http({
                 method: 'POST',
                 url: baseUrl + url,
@@ -1348,29 +1117,19 @@ angular.module('netbase')
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             });
-
         },
 
         getListingsByAccountId: function(id) {
-
             var url = '/accounts/id/' + id + '/listings';
-
             return $http.get(baseUrl + url);
-
         }
-
     }
-
 }])
 
 .factory('Uploads', ['$http', function($http) {
-
     var baseUrl = "http://35.229.52.103:9007/images/college";
-
     return {
-
         upload: function(file) {
-
             var url = baseUrl;
 
             var fd = new FormData();
@@ -1380,40 +1139,26 @@ angular.module('netbase')
                 transformRequest: angular.identity,
                 headers: { 'Content-Type': undefined }
             });
-
         }
-
     }
-
 }])
 
 .factory("User", ['$localStorage', 'jwtHelper', function($localStorage, jwtHelper) {
-
     return {
-
         getId: function() {
-
             return jwtHelper.decodeToken($localStorage.token)._id;
-
         }
-
     }
-
 }])
 
 .factory('Payments', ['$http', '$localStorage', function($http, $localStorage) {
-
     //var baseUrl = "https://api.universida.de/search";
-
     var baseUrl = "https://educationalcommunity-pay.herokuapp.com/payments";
     //var baseUrl = "http://192.168.1.7:9004/payments";
     //var baseUrl = "http://localhost:9004/payments"
     return {
-
         subscription: function(data) {
-
             var url = '/subscription';
-
             return $http({
                 method: 'POST',
                 url: baseUrl + url,
@@ -1429,15 +1174,11 @@ angular.module('netbase')
                     'x-access-token': $localStorage.token
                 }
             });
-
         },
 
         subscribePro: function(interval) {
-
             var url = '/subscription/pro';
-
             let data = { interval: interval };
-
             return $http({
                 method: 'POST',
                 url: baseUrl + url,
@@ -1453,12 +1194,10 @@ angular.module('netbase')
                     'x-access-token': $localStorage.token
                 }
             });
-
         },
+
         coursePayment: function(data) {
-
             var url = '/course';
-
             return $http({
                 method: 'POST',
                 url: baseUrl + url, // for now base url is localhost
@@ -1471,59 +1210,36 @@ angular.module('netbase')
         },
 
         getAllOrders: function(id) {
-
             var url = '/students/id/' + id + '/orders';
-
             return $http.get(baseUrl + url);
-
         }
-
     }
-
-
 }])
 
 .factory('News', ['$http', function($http) {
-
     //var baseUrl = "https://api.universida.de/search";
-
     var baseUrl = "https://network-news-prod.herokuapp.com";
-
     //var baseUrl = "http://192.168.1.7:8888";
     //var baseUrl = "http://192.168.1.7:9004";
 
     return {
-
         getAllSections: function() {
-
             var url = '/news/section';
-
             return $http.get(baseUrl + url);
-
         },
 
         getAllTrends: function() {
-
             var url = '/news/trends';
-
             return $http.get(baseUrl + url);
-
         },
 
         getNewsBySection: function(id) {
-
-            ///section/id/:id/news
-
             var url = '/news/section/id/' + id + '/news';
-
             return $http.get(baseUrl + url);
-
         },
 
         writeComment: function(id, data) {
-
             var url = '/news/id/' + id + '/comment';
-
             return $http({
                 method: 'POST',
                 url: baseUrl + url,
@@ -1538,13 +1254,10 @@ angular.module('netbase')
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             });
-
         },
 
         vote: function(id) {
-
             var url = '/news/id/' + id + '/vote';
-
             return $http({
                 method: 'POST',
                 url: baseUrl + url,
@@ -1558,13 +1271,10 @@ angular.module('netbase')
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             });
-
         },
 
         voteCommentById: function(newsId, commentId) {
-
             var url = '/news/id/' + newsId + '/comment/' + commentId + '/vote';
-
             return $http({
                 method: 'PUT',
                 url: baseUrl + url,
@@ -1578,62 +1288,42 @@ angular.module('netbase')
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             });
-
         }
-
     }
-
 }])
 
 .factory('Sales', ['$http', function($http) {
-
     //var baseUrl = "https://api.universida.de/search";
-
     var baseUrl = "https://educationalcommunity-pay.herokuapp.com";
     //var baseUrl = "http://192.168.1.7:9004";
 
     return {
-
         reports: function(id) {
-
             var url = '/payments/sales/universityid/' + id;
-
             return $http.get(baseUrl + url);
-
         },
 
         reportsByDate: function(id, y, m, d) {
-
             var url = '/payments/sales/universityid/' + id + "/year/" + y + "/month/" + m + "/day/" + d;
-
             return $http.get(baseUrl + url);
-
         },
 
         saleDetails: function(id) {
             var url = '/payments/sales/' + id;
-
             return $http.get(baseUrl + url);
         }
-
     }
-
 }])
 
 .factory('Courses', ['$http', '$localStorage', function($http, $localStorage) {
-
     //var baseUrl = "https://api.universida.de/search";
-
     //var baseUrl = "https://educationalcommunity-pay.herokuapp.com";
     var baseUrl = "https://educationalcommunity-courses.herokuapp.com/courses";
     //var baseUrl = "http://localhost:9888/courses";
 
     return {
-
         subscribeFree: function(courseId, data) {
-
             let url = "/id/" + courseId + "/subscribe/free";
-
             return $http({
                 method: 'PUT',
                 url: baseUrl + url,
@@ -1642,13 +1332,10 @@ angular.module('netbase')
                     'Content-Type': 'application/json'
                 }
             });
-
         },
 
         addForFree: function(courseId, data) {
-
             let url = "/id/" + courseId + "/paid/free";
-
             return $http({
                 method: 'PUT',
                 url: baseUrl + url,
@@ -1657,24 +1344,16 @@ angular.module('netbase')
                     'Content-Type': 'application/json'
                 }
             });
-            //
-
         },
 
         getByUniversityId: function(id) {
-
             let url = "/universityid/" + id;
-
             return $http.get(baseUrl + url);
-
         },
 
         userViewedContentInsideCourse: function(courseId, moduleId, contentId) {
-
             let url = "/id/" + courseId + "/module/id/" + moduleId + "/content/id/" + contentId + "/viewed";
-
             return $http({
-
                 url: baseUrl + url,
                 method: 'POST',
                 transformRequest: function(obj) {
@@ -1688,29 +1367,20 @@ angular.module('netbase')
                     'x-access-token': $localStorage.token
                 }
             });
-            //
-
         },
 
         getAll: function(id) {
-
             let url = "/all";
-
             return $http.get(baseUrl + url);
-
         },
 
         getquizResult: function(qid, uid, rid) {
-
             let url = "/quiz-result/" + qid + "/" + uid + "/" + rid;
-
             return $http.get(baseUrl + url);
-
         },
+
         updateQuiz: function(quizId, data) {
-
             var url = '/module/content/update/' + quizId;
-
             return $http({
                 method: 'PUT',
                 url: baseUrl + url,
@@ -1726,6 +1396,7 @@ angular.module('netbase')
                 }
             });
         },
+
         deleteCourseById: function(courseId) {
             var url = '/courses/' + courseId;
 
@@ -1761,8 +1432,8 @@ angular.module('netbase')
                 }
             });
         },
-        saveQuizResult: function(payload) {
 
+        saveQuizResult: function(payload) {
             var url = "/quiz/id/submit";
             console.log(payload)
             return $http({
@@ -1773,12 +1444,10 @@ angular.module('netbase')
                     'Content-Type': 'application/json',
                 }
             });
-
         },
+
         progress: function(payload, videoid) {
-
             var url = '/page/id/' + videoid + "/progress";
-
             return $http({
                 method: 'PUT',
                 url: baseUrl + url,
@@ -1793,13 +1462,13 @@ angular.module('netbase')
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             });
-
         },
 
         fileUploadUrl: function() {
             let url = baseUrl + "/jwt";
             return $http.post(url, {});
         },
+
         addInstructor: function(courseId, instructorId) {
             var url = '/instructor/' + courseId;
             return $http({
@@ -1813,9 +1482,7 @@ angular.module('netbase')
         },
 
         updateCourse: function(courseId, data) {
-
             var url = '/update/' + courseId;
-
             return $http({
                 method: 'PUT',
                 url: baseUrl + url,
@@ -1833,9 +1500,7 @@ angular.module('netbase')
         },
 
         updateModule: function(moduleId, data) {
-
             var url = '/module/update/' + moduleId;
-
             return $http({
                 method: 'PUT',
                 url: baseUrl + url,
@@ -1851,13 +1516,12 @@ angular.module('netbase')
                 }
             });
         },
+
         getById: function(id) {
-
             let url = "/id/" + id;
-
             return $http.get(baseUrl + url);
-
         },
+
         updateViewers: function(mId, cId) {
             console.log("update course module content viewers")
             let url = "/module/" + mId + "/" + cId + "/"
@@ -1870,10 +1534,9 @@ angular.module('netbase')
                 }
             });
         },
+
         createQuiz: function(data) {
-
             var url = '/module/content/create';
-
             return $http({
                 method: 'POST',
                 url: baseUrl + url,
@@ -1891,9 +1554,7 @@ angular.module('netbase')
         },
 
         addQuizQuestions: function(contentId, data) {
-
             var url = '/quiz/questions/' + contentId;
-
             return $http({
                 method: 'POST',
                 url: baseUrl + url,
@@ -1904,9 +1565,7 @@ angular.module('netbase')
             });
         },
 
-
         getContentModulesByIdmultiple: function(post) {
-
             let url = "/module/content/all/id";
             return $http({
                 method: 'POST',
@@ -1923,10 +1582,9 @@ angular.module('netbase')
                 }
             });
         },
+
         createPage: function(data) {
-
             var url = '/module/content/create';
-
             return $http({
                 method: 'POST',
                 data: data,
@@ -1941,12 +1599,10 @@ angular.module('netbase')
                     'Content-Type': 'application/x-www-form-urlencoded',
                 }
             });
-
         },
+
         savePage: function(data, id) {
-
             var url = '/module/content/update/' + id;
-
             return $http({
                 method: 'PUT',
                 data: data,
@@ -1961,12 +1617,10 @@ angular.module('netbase')
                     'Content-Type': 'application/x-www-form-urlencoded',
                 }
             });
-
         },
+
         create: function(data) {
-
             var url = '/create';
-
             return $http({
                 method: 'POST',
                 data: data,
@@ -1981,19 +1635,15 @@ angular.module('netbase')
                     'Content-Type': 'application/x-www-form-urlencoded',
                 }
             });
-
         },
+
         getTimeline: function(id) {
-
             let url = "/module/get/timeline/" + id;
-
             return $http.get(baseUrl + url);
-
         },
+
         insertTimeline: function(id, data) {
-
             var url = '/module/create/timeline/' + id;
-
             return $http({
                 method: 'POST',
                 data: data,
@@ -2008,12 +1658,10 @@ angular.module('netbase')
                     'Content-Type': 'application/x-www-form-urlencoded',
                 }
             });
-
         },
+
         updateModuleById: function(id, data) {
-
             var url = '/module/id/' + id;
-
             return $http({
                 method: 'PUT',
                 data: data,
@@ -2028,13 +1676,10 @@ angular.module('netbase')
                     'Content-Type': 'application/x-www-form-urlencoded',
                 }
             });
-
         },
 
         createModule: function(data) {
-
             var url = '/module/create';
-
             return $http({
                 method: 'POST',
                 data: data,
@@ -2049,13 +1694,10 @@ angular.module('netbase')
                     'Content-Type': 'application/x-www-form-urlencoded',
                 }
             });
-
         },
 
         createContentModule: function(data) {
-
             var url = '/module/content/create';
-
             return $http({
                 method: 'POST',
                 data: data,
@@ -2070,15 +1712,13 @@ angular.module('netbase')
                     'Content-Type': 'application/x-www-form-urlencoded',
                 }
             });
-
         },
+
         getQuestionsByQuizId: function(id) {
-
             let url = "/quiz/questions/" + id;
-
             return $http.get(baseUrl + url);
-
         },
+
         getMediaModulesByAccount: function() {
             var url = '/my/';
             return $http({
@@ -2090,10 +1730,9 @@ angular.module('netbase')
                 }
             })
         },
+
         getContentModulesByAccount: function() {
-
             var url = '/module/content/owner';
-
             return $http({
                 method: 'GET',
                 url: baseUrl + url,
@@ -2102,12 +1741,10 @@ angular.module('netbase')
                     'x-access-token': $localStorage.token
                 }
             })
-
         },
+
         getKnowledgeId: function(universityId) {
-
             var url = '/knowledge/' + universityId;
-
             return $http({
                 method: 'GET',
                 url: baseUrl + url,
@@ -2116,12 +1753,10 @@ angular.module('netbase')
                     'x-access-token': $localStorage.token
                 }
             })
-
         },
+
         getCoursesByAccount: function(universityId) {
-
             var url = '/owner';
-
             return $http({
                 method: 'GET',
                 url: baseUrl + url,
@@ -2130,21 +1765,15 @@ angular.module('netbase')
                     'x-access-token': $localStorage.token
                 }
             })
-
         },
 
         getModuleById: function(id) {
-
             let url = "/module/id/" + id;
-
             return $http.get(baseUrl + url);
-
         },
 
         getModulesByAccount: function() {
-
             var url = '/module/owner';
-
             return $http({
                 method: 'GET',
                 url: baseUrl + url,
@@ -2153,25 +1782,19 @@ angular.module('netbase')
                     'x-access-token': $localStorage.token
                 }
             })
-
         },
+
         getContentModuleBymodelId: function(id) {
-
             let url = "/module/content/BymodelId/" + id;
-
             return $http.get(baseUrl + url);
-
         },
+
         getContentModuleById: function(id) {
-
             let url = "/module/content/id/" + id;
-
             return $http.get(baseUrl + url);
-
         },
 
         payment: function(courseId, data) {
-
             var url = '/payment/' + courseId;
 
             return $http({
@@ -2183,9 +1806,7 @@ angular.module('netbase')
                 }
             });
         },
-
     }
-
 }])
 
 .factory('throttle', ['$timeout', function($timeout) {
@@ -2219,7 +1840,6 @@ angular.module('netbase')
                 timeout_id = $timeout(debounce_mode ? clear : exec, debounce_mode === undefined ? delay - elapsed : delay);
             }
         };
-
         return wrapper;
     };
 }]);

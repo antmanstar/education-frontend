@@ -1,46 +1,31 @@
 'use strict';
 
 /* Controllers */
-
 angular.module('netbase')
 
 .controller('AccountCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', function($rootScope, $scope, $location, $route, $localStorage, Students) {
-
     // Messages
     $scope.loginMessageBox = false;
     $scope.createMessageBox = false;
 
     $scope.login = function() {
-
         let login = {
             email: $scope.loginEmail,
             password: $scope.loginPassword
         };
 
-        console.log("being inputed while login");
-        console.log(login);
-
         validateCreateForms(login, "login").then(function(boolean) {
-
             Students.login(login).then(function(res) {
-
                 let success = res.data.success;
                 let token = res.data.token;
 
-                console.log(res);
-
                 if (success) {
-
                     $localStorage.token = token;
                     $localStorage.logged = true;
 
                     $location.path("/home")
 
                 } else {
-
-                    console.log("error while creating account. check status code: ");
-                    console.log(res.data.status);
-
                     let statusCode = res.data.status;
 
                     if (statusCode == 5000) {
@@ -52,20 +37,12 @@ angular.module('netbase')
                     } else {
                         $scope.loginMessageBox = false;
                     }
-
                 }
-
             }).catch(function(e) {
-
                 console.log("response error: ");
                 console.log(e);
-
             });
-
         }).catch(function(e) {
-
-            console.log("Error while signin up the account");
-            console.log(e);
             if (e == "EMAILINVALIDATED") {
                 console.log("invalid email")
                 $scope.loginMessage = "Please, type a valid email.";
@@ -77,13 +54,10 @@ angular.module('netbase')
                 $scope.loginMessage = "";
                 $scope.loginMessageBox = false;
             }
-
         });
-
     };
 
     $scope.create = function() {
-
         let create = {
             email: $scope.createEmail,
             password: $scope.createPassword,
@@ -92,23 +66,16 @@ angular.module('netbase')
         };
 
         validateCreateForms(create, "create").then(function(boolean) {
-
             Students.createAccount(create).then(function(res) {
-
                 let success = res.data.success;
                 let token = res.data.token;
 
-                console.log(res);
-
                 if (success) {
-
                     $localStorage.token = token;
                     $localStorage.logged = true;
-
                     $location.path("/home")
 
                 } else {
-
                     let statusCode = res.data.status;
 
                     if (statusCode == 5002) {
@@ -120,21 +87,12 @@ angular.module('netbase')
                     } else {
                         $scope.createMessageBox = false;
                     }
-
                 }
-
             }).catch(function(e) {
-
                 console.log("response: ");
                 console.log(e);
-
             });
-
         }).catch(function(e) {
-
-            console.log("Error while creating account");
-            console.log(e);
-
             if (e == "EMAILINVALIDATED") {
                 $scope.createMessage = "Please, type a valid email.";
                 $scope.createMessageBox = true;
@@ -151,13 +109,10 @@ angular.module('netbase')
                 $scope.createMessage = "";
                 $scope.createMessageBox = false;
             }
-
         });
-
     };
 
     function validateCreateForms(data, type) {
-
         let passwordValidated = false;
         let nameValidated = false;
         let emailValidated = false;
@@ -166,12 +121,10 @@ angular.module('netbase')
         let emailPattern = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
 
         return new Promise(function(resolve, reject) {
-
             let password = new String(data.password).valueOf();
             let passwordConfirm = new String(data.passwordConfirm).valueOf();
 
             if (type == "create") {
-
                 if (password == passwordConfirm) {
                     passwordValidated = true;
                 } else {
@@ -187,141 +140,95 @@ angular.module('netbase')
                 }
 
                 if (data.name != undefined) {
-
                     if (data.name.length > 2) {
                         nameValidated = true;
                     } else {
                         reject("NAMEINVALIDATED");
                     }
-
                 }
-
             } else if (type == "login") {
-
                 if (data.password != undefined) {
-
                     if (password.length > 0) {
                         passwordValidated = true;
                     } else {
                         reject("PASSWORDEMPTY");
                     }
-
                 } else {
-
                     reject("PASSWORDEMPTY");
-
                 }
-
             } else {
-
                 console.log("error on validateCreateForms")
-
             }
 
             if (emailPattern.test(data.email)) {
-                console.log("email valited")
                 emailValidated = true;
             } else {
-                console.log("email non validated")
                 reject("EMAILINVALIDATED");
             }
 
             if (type == "create") {
-
                 if (nameValidated && emailValidated && passwordValidated) {
                     resolve(true);
                 }
-
             } else {
-
                 if (emailValidated && passwordValidated) {
                     resolve(true);
                 }
-
             }
-
-
         });
-
     }
-
 }])
 
 /* dashboard university feed */
 .controller('DashboardUniversityFeedCtrl', ['$rootScope', '$scope', '$location', function($rootScope, $scope, $location) {
-
-
 
 }])
 
 /* home - social marketplace */
 .controller('HomeSocialMarketPlaceCtrl', ['$rootScope', '$scope', '$location', function($rootScope, $scope, $location) {
 
-
 }])
 
 .controller('HomeSocialMarketPlaceHashTagCtrl', ['$rootScope', '$scope', '$location', function($rootScope, $scope, $location) {
-
-
 
 }])
 
 /* home - universidades */
 .controller('HomeUniversidadesCtrl', ['$rootScope', '$scope', '$location', 'University', function($rootScope, $scope, $location, University) {
-
     console.log("universidades!!!")
-
 }])
 
 /* home - empregos */
 .controller('HomeJobsCtrl', ['$rootScope', '$scope', '$location', function($rootScope, $scope, $location) {
 
-
 }])
 
 .controller('HomeJobsCategoryCtrl', ['$rootScope', '$scope', '$location', 'ngDialog', function($rootScope, $scope, $location, ngDialog) {
-
     $scope.jobListingOpen = function() {
         ngDialog.open({ template: 'partials/jobmodal.html', className: 'ngdialog-theme-default jobmodal' });
     };
-
 }])
 
 /* reset */
-
 .controller('ResetPasswordCtrl', ['$rootScope', '$scope', '$location', function($rootScope, $scope, $location) {
-
-
 
 }])
 
 .controller('ResetPasswordNewCtrl', ['$rootScope', '$scope', '$location', function($rootScope, $scope, $location) {
 
-
-
 }])
 
 /* messenger */
 .controller('MessengerCtrl', ['$rootScope', '$scope', '$location', function($rootScope, $scope, $location) {
-
     let tc = {};
-
     $scope.connect = function() {
-
-        console.log("aeeee");
-
         connectClientWithUsername();
-
     }
 
     function connectClientWithUsername() {
-
         var usernameText = "test";
-
         tc.username = usernameText;
-
         fetchAccessToken(tc.username, connectMessagingClient);
-
     }
 
     function connectMessagingClient(token) {
@@ -338,56 +245,40 @@ angular.module('netbase')
     }
 
     tc.joinGeneralChannel = function() {
-        console.log('Attempting to join "general" chat channel...');
         if (!tc.generalChannel) {
             // If it doesn't exist, let's create it
             tc.messagingClient.createChannel({
                 uniqueName: GENERAL_CHANNEL_UNIQUE_NAME,
                 friendlyName: GENERAL_CHANNEL_NAME
             }).then(function(channel) {
-                console.log('Created general channel');
                 tc.generalChannel = channel;
                 tc.loadChannelList(tc.joinGeneralChannel);
             });
         } else {
-            console.log('Found general channel:');
             setupChannel(tc.generalChannel);
         }
     };
 
     function fetchAccessToken(username, handler) {
-
         $.post('http://localhost:7000/', { identity: username, device: 'browser' }, null, 'json')
             .done(function(response) {
-
-                //handler(response.token);
                 console.log("response token: ")
                 console.log(response.token)
 
             })
             .fail(function(error) {
-
                 console.log('Failed to fetch the Access Token with error: ' + error);
-                console.log("tey")
-
             });
-
     }
-
-
 }])
 
 .controller('MessengerMenuCtrl', ['$rootScope', '$scope', '$location', function($rootScope, $scope, $location) {
-
     $rootScope.messengerMenuClass = "col-sm-4 col-md-3 col-lg-2 messenger-menu";
     //$scope.filterGly = "glyphicon glyphicon-triangle-bottom";
-
 }])
 
 /* end messenger */
-
 .controller('HeaderCtrl', ['$rootScope', '$scope', '$location', '$localStorage', 'jwtHelper', 'Search', 'Students', '$route', 'ngDialog', function($rootScope, $scope, $location, $localStorage, jwtHelper, Search, Students, $route, ngDialog) {
-
     /* header variables */
     let logged = $scope.logged = $localStorage.logged;
 
@@ -403,13 +294,11 @@ angular.module('netbase')
     }
 
     $scope.homeCheck = function() {
-
         if (url.$$route.originalPath.indexOf('/home') != -1) {
             return true
         } else {
             return false
         }
-
     }
 
     // Class
@@ -425,34 +314,22 @@ angular.module('netbase')
 
     //imageUrl
     if (logged) {
-
         let studentId = jwtHelper.decodeToken($localStorage.token)._id;
 
         Students.getStudentById(studentId).then(function(res) {
-
-            console.log("header get student by id")
-            console.log(res);
-
             let data = res.data.data;
-
             $scope.user = data;
 
             if (data.imageUrl != undefined && data.imageUrl != null) {
                 $scope.userImage = data.imageUrl;
             }
-
-        }).catch(function(e) {
-
-        });
-
+        }).catch(function(e) {});
     }
-
     /* end Search */
 
     /* home header selected option */
     let url = $route.current;
     let originalPath = url.$$route.originalPath;
-
     $scope.originalPath = originalPath;
 
     /* Functions */
@@ -460,11 +337,8 @@ angular.module('netbase')
     let logo = $("#logo");
     let logoIcon = $("#logoIcon");
     let brandArrow = $(".navbar-top .brand span i");
-
     let navbarMobile = $(".navbar-mobile");
-
     let menuRight = $("nav .navbar-top .menu-right");
-
     let searchButton = $("#searchButtonMobile");
     let searchTextInput = $(".navbar-top .menu-right .form-group input");
 
@@ -474,11 +348,8 @@ angular.module('netbase')
 
     /* open/close menu mobile */
     brand.click(function() {
-
         let width = $(window).width();
-
         if (width <= 768) {
-
             if (navbarMobileOpen) {
                 navbarMobile.css("display", "none");
                 brandArrow.attr("class", "fas fa-angle-down");
@@ -488,85 +359,55 @@ angular.module('netbase')
                 brandArrow.attr("class", "fas fa-angle-up");
                 navbarMobileOpen = true;
             }
-
         } else {
-
             window.location.href = '/home'
-
         }
-
     });
     /* end open/close menu mobile */
 
     /* open/close search */
     searchButton.click(function() {
-
         logo.css("display", "none");
         logoIcon.css("display", "inline-block");
-
         $("#searchButtonMobile").css("display", "none");
-
         menuRight.addClass("expand");
-
         $("nav .navbar-top .menu-right .search .form-group").css("display", "inline-block");
-
         searchTextInput.css("display", "inline-block");
-
     });
     /* end open/close search */
 
     /* menu profile */
-
     let profileMenu = $("#profileMenu");
     let profileExpanded = $(".profile-expanded");
-
     let profileExpandedOpen = false;
 
     profileMenu.hover(function() {
-
         profileExpanded.css("display", "block");
         profileExpandedOpen = true;
-
     });
 
     $(window).click(function() {
-
         if (profileExpandedOpen) {
             profileExpanded.css("display", "none");
         }
-
     });
-
 }])
 
 .controller('FooterCtrl', ['$rootScope', '$scope', '$location', function($rootScope, $scope, $location) {
 
-
-
 }])
 
 .controller('SearchCtrl', ['$rootScope', '$scope', '$location', 'Search', '$localStorage', 'jwtHelper', 'Students', function($rootScope, $scope, $location, Search, $localStorage, jwtHelper, Students) {
-
     $scope.displayMobileMenu = function() {
-
         if (mobileAndTabletCheck() || $(window).width() < 768) {
-
             if ($scope.showMobileMenu) {
-
                 $scope.showMobileMenu = false;
-
             } else {
-
                 $scope.showMobileMenu = true;
-
             }
-
         } else {
-
             $location.path("/home");
-
         }
-
     };
 
     function mobileAndTabletCheck() {
@@ -583,26 +424,15 @@ angular.module('netbase')
 
     //imageUrl
     if (logged) {
-
         let studentId = jwtHelper.decodeToken($localStorage.token)._id;
-
         Students.getStudentById(studentId).then(function(res) {
-
-            console.log("header get student by id")
-            console.log(res);
-
             let data = res.data.data;
-
             $scope.user = data;
 
             if (data.imageUrl != undefined && data.imageUrl != null) {
                 $scope.userImage = data.imageUrl;
             }
-
-        }).catch(function(e) {
-
-        });
-
+        }).catch(function(e) {});
     }
 
     // Class
@@ -627,227 +457,147 @@ angular.module('netbase')
     // Handle with query
     let query = $location.search().query;
     let resultDisplay = $location.search().result;
-
     $scope.searchQuery = query;
 
     $scope.$watch("searchQuery", function(newValue, oldValue) {
-
         if ($scope.searchQuery.length > 0) {
             $scope.searchSuggestions = true;
 
             Search.all(newValue).then(function(res) {
-
                 let data = res.data.data;
-
-                console.log(data);
-
                 $scope.results = data;
-
             });
-
         } else {
             $scope.searchSuggestions = false;
         }
-
     });
 
     if (resultDisplay) {
         $scope.searchSuggestions = false;
     }
-
-
 }])
 
 .controller('DashboardJobsManageMyListingsCtrl', ['$rootScope', '$scope', '$location', function($rootScope, $scope, $location) {
 
-
-
 }])
 
 .controller('DashboardSmpManageIwantCtrl', ['$rootScope', '$scope', '$location', 'SocialMarketPlace', 'jwtHelper', '$localStorage', function($rootScope, $scope, $location, SocialMarketPlace, jwtHelper, $localStorage) {
-
     let studentId = jwtHelper.decodeToken($localStorage.token)._id;
-
     SocialMarketPlace.getListingsByAccountId(studentId).then(function(res) {
-
         let listings = res.data.data;
-
         $scope.listings = listings;
-
-        console.log(listings);
-
     });
-
 }])
 
 .controller('DashboardSmpManageListingStatsCtrl', ['$rootScope', '$scope', '$location', function($rootScope, $scope, $location) {
 
-
-
 }])
 
 .controller('DashboardSmpManageListingEditCtrl', ['$rootScope', '$scope', '$location', 'Upload', '$timeout', 'Search', 'SocialMarketPlace', '$route', 'University', function($rootScope, $scope, $location, Upload, $timeout, Search, SocialMarketPlace, $route, University) {
-
     var listing;
-
     $scope.universitySearch = [];
     $scope.pictures = [];
 
     /* Verification */
-
     $scope.titleOk = false;
     $scope.descriptionOk = false;
     $scope.priceOk = false;
     $scope.universityOk = false;
     $scope.universitySelected = "";
     $scope.universityId = "";
-
     $scope.hashtag = "";
 
     /* Load Listing */
     let listingId = $route.current.params.id;
 
     SocialMarketPlace.getListingById(listingId).then(function(res) {
-
         let success = res.data.success;
 
-        console.log(res)
-
         if (success) {
-
             listing = res.data.data;
-
             $scope.listing = listing;
-
             $scope.title = listing.title;
             $scope.titleOk = true;
-
             $scope.description = listing.description;
             $scope.descriptionOk = true;
-
             $scope.price = listing.price;
             $scope.priceOk = true;
 
             listing.pictures.forEach(function(e, idx) {
-
                 $scope.pictures.push(e.url);
                 $scope.filesListing.push(e);
-
             });
 
             listing.hashtags.forEach(function(e, idx, a) {
-
                 if (a.length == idx + 1) {
-                    console.log(e);
-                    console.log("finish hashtag");
                     $scope.hashtag += e.text;
                 } else {
                     $scope.hashtag += e.text + " ";
                 }
-
             });
 
             University.getUniversityById(listing.universityId).then(function(res) {
-
-                console.log("university res: ")
-                console.log(res);
-
                 let success = res.data.success;
 
                 if (success) {
-
                     let university = res.data.data;
-
                     $scope.universityId = university._id;
                     $scope.university = university.name;
                     $scope.universitySelected = university.name;
                     $scope.universityOk = true;
-
                 }
-
             });
-
-            console.log(listing)
-
-        } else {
-
-
-
-        }
-
+        } else {}
     });
 
     /* Watch */
-
     $scope.$watch("university", function(newValue, oldValue) {
-
         if ($scope.universitySelected != newValue && newValue.length > 2) {
-
             Search.all(newValue).then(function(res) {
-
                 let results = res.data.data;
-
                 $scope.universitySearch = results;
-
             });
-
         }
 
         if ($scope.universitySelected != newValue) {
-
             $scope.universityOk = false;
-
         }
-
     });
 
     $scope.$watch("title", function(newValue, oldValue) {
-
         if (newValue != undefined) {
-
             if (newValue.length > 1) {
                 $scope.titleOk = true;
             } else {
                 $scope.titleOk = false;
             }
-
         }
-
     });
 
     $scope.$watch("description", function(newValue, oldValue) {
-
         if (newValue != undefined) {
-
             if (newValue.length > 1) {
                 $scope.descriptionOk = true;
             } else {
                 $scope.descriptionOk = false;
             }
-
         }
-
     });
 
     $scope.$watch("price", function(newValue, oldValue) {
-
         // Check if just number
-
         let exp = /^[0-9.,]+$/;
 
         var patt = new RegExp(exp);
         var res = patt.test(newValue);
 
         if (newValue != undefined) {
-
             if (res) {
                 $scope.priceOk = true;
             } else {
                 $scope.priceOk = false;
             }
-
         }
-
     });
 
     $scope.$watch('files', function() {
@@ -855,27 +605,21 @@ angular.module('netbase')
     });
 
     $scope.$watch('file', function() {
-
         if ($scope.file != null) {
             $scope.files = [$scope.file];
         }
-
     });
 
     $scope.log = '';
 
     /* Upload */
-
     $scope.filesListing = [];
     $scope.imageUploading = false;
 
     function addIntoUploadImages(res, list) {
-
         let img = res.data.data[0];
-
         $scope.pictures.push(img.path);
         $scope.filesListing.push(img);
-
     };
 
     $scope.upload = function(files) {
@@ -891,29 +635,22 @@ angular.module('netbase')
                             file: file
                         }
                     }).then(function(resp) {
-
                         $timeout(function() {
                             $scope.log = 'file: ' +
                                 resp.config.data.file.name +
                                 ', Response: ' + JSON.stringify(resp.data) +
                                 '\n' + $scope.log;
                         });
-
                         addIntoUploadImages(resp, listing);
-
                         $scope.imageUploading = false;
 
-                        console.log(resp);
-
                     }, null, function(evt) {
-
                         let progressPercentage = parseInt(100.0 *
                             evt.loaded / evt.total);
 
                         $scope.log = 'progress: ' + progressPercentage +
                             '% ' + evt.config.data.file.name + '\n' +
                             $scope.log;
-
                     });
                 }
             }
@@ -921,11 +658,8 @@ angular.module('netbase')
     };
 
     /* Button */
-
     $scope.updateListing = function() {
-
         var listingUpdate = {
-
             id: listing._id,
             title: $scope.title,
             pictures: $scope.pictures,
@@ -933,87 +667,57 @@ angular.module('netbase')
             price: $scope.price,
             hashtags: $scope.hashtag.split(" "),
             universityId: $scope.universityId
-
         };
 
-        console.log("listing update: ")
-        console.log(listingUpdate);
-
         SocialMarketPlace.update(listingUpdate).then(function(res) {
-
             let success = res.data.success;
-
             if (success) {
-
                 let listing = res.data.data;
-
-                console.log(listing);
                 $scope.listing = listing;
-
-            } else {
-
-            }
-
+            } else {}
         });
-
     }
 
     function removeImage(index) {
-
         let idx = listing.pictures.indexOf($scope.filesListing[index].url);
-
         $scope.pictures.splice(idx, 1);
         $scope.filesListing.splice(index, 1);
-
     }
 
     $scope.removeImage = function(index) {
-
         removeImage(index);
-
     }
 
     $scope.selectUniversity = function(university) {
-
         $scope.university = university._source.name;
         $scope.universityId = university._id;
-
         $scope.universitySearch = [];
-
         $scope.universitySelected = university._source.name;
         $scope.universityOk = true;
 
     };
-
 }])
 
 .controller('DashboardCtrl', ['$rootScope', '$scope', '$location', '$localStorage', function($rootScope, $scope, $location, $localStorage) {
-
     console.log($localStorage.logged)
-
 }])
 
 .controller('DashboardMenuCtrl', ['$rootScope', '$scope', '$location', function($rootScope, $scope, $location) {
 
-
-
 }])
 
 .controller('DashboardSmpCreateCtrl', ['$rootScope', '$scope', '$location', 'Upload', '$timeout', 'Search', 'SocialMarketPlace', '$route', function($rootScope, $scope, $location, Upload, $timeout, Search, SocialMarketPlace, $route) {
-
     $scope.universitySearch = [];
     $scope.pictures = [];
 
     // Social Marketplace create listing
     var listing = {
-
         title: $scope.title,
         pictures: [],
         description: $scope.description,
         price: $scope.price,
         tags: [],
         university: ""
-
     };
 
     /* Verification */
@@ -1025,76 +729,52 @@ angular.module('netbase')
     $scope.universityId = "";
 
     /* Watch */
-
     $scope.$watch("university", function(newValue, oldValue) {
-
         if ($scope.universitySelected != newValue && newValue.length > 2) {
-
             Search.all(newValue).then(function(res) {
-
                 let results = res.data.data;
-
                 $scope.universitySearch = results;
-
             });
-
         }
 
         if ($scope.universitySelected != newValue) {
-
             $scope.universityOk = false;
-
         }
-
     });
 
     $scope.$watch("title", function(newValue, oldValue) {
-
         if (newValue != undefined) {
-
             if (newValue.length > 1) {
                 $scope.titleOk = true;
             } else {
                 $scope.titleOk = false;
             }
-
         }
-
     });
 
     $scope.$watch("description", function(newValue, oldValue) {
-
         if (newValue != undefined) {
-
             if (newValue.length > 1) {
                 $scope.descriptionOk = true;
             } else {
                 $scope.descriptionOk = false;
             }
-
         }
-
     });
 
     $scope.$watch("price", function(newValue, oldValue) {
-
         // Check if just number
-
         let exp = /^[0-9.,]+$/;
-
         var patt = new RegExp(exp);
         var res = patt.test(newValue);
 
         if (newValue != undefined) {
-
             if (newValue.length > 1 && res) {
                 $scope.priceOk = true;
             } else {
                 $scope.priceOk = false;
             }
-
         }
-
     });
 
     $scope.$watch('files', function() {
@@ -1102,27 +782,21 @@ angular.module('netbase')
     });
 
     $scope.$watch('file', function() {
-
         if ($scope.file != null) {
             $scope.files = [$scope.file];
         }
-
     });
 
     $scope.log = '';
 
     /* Upload */
-
     $scope.filesListing = [];
     $scope.imageUploading = false;
 
     function addIntoUploadImages(res, list) {
-
         let img = res.data.data[0];
-
         $scope.pictures.push(img.path);
         $scope.filesListing.push(img);
-
     };
 
     $scope.upload = function(files) {
@@ -1138,29 +812,21 @@ angular.module('netbase')
                             file: file
                         }
                     }).then(function(resp) {
-
                         $timeout(function() {
                             $scope.log = 'file: ' +
                                 resp.config.data.file.name +
                                 ', Response: ' + JSON.stringify(resp.data) +
                                 '\n' + $scope.log;
                         });
-
                         addIntoUploadImages(resp, listing);
-
                         $scope.imageUploading = false;
-
-                        console.log(resp);
-
                     }, null, function(evt) {
-
                         let progressPercentage = parseInt(100.0 *
                             evt.loaded / evt.total);
 
                         $scope.log = 'progress: ' + progressPercentage +
                             '% ' + evt.config.data.file.name + '\n' +
                             $scope.log;
-
                     });
                 }
             }
@@ -1168,99 +834,58 @@ angular.module('netbase')
     };
 
     /* Button */
-
     $scope.createListing = function() {
-
         var listing = {
-
             title: $scope.title,
             pictures: $scope.pictures,
             description: $scope.description,
             price: $scope.price,
             hashtags: $scope.hashtag.split(" "),
             universityId: $scope.universityId
-
         };
 
         // Hashtags are uploaded as an array
-
-        console.log(listing);
-
         SocialMarketPlace.create(listing).then(function(res) {
-
-            console.log("create listing response: ");
-            console.log(res);
-
             let listing = res.data.data;
-
             $location.path('/smp/listing/id/' + listing._id);
-
         });
-
     }
 
     function removeImage(index) {
-
         let idx = listing.pictures.indexOf($scope.filesListing[index].path);
-
         $scope.pictures.splice(idx, 1);
         $scope.filesListing.splice(index, 1);
-
     }
 
     $scope.removeImage = function(index) {
-
         removeImage(index);
-
     }
 
     $scope.selectUniversity = function(university) {
-
         $scope.university = university._source.name;
         $scope.universityId = university._id;
-
         $scope.universitySearch = [];
-
         $scope.universitySelected = university._source.name;
         $scope.universityOk = true;
-
     };
-
-
 }])
 
 .controller('DashboardSmpManageCtrl', ['$rootScope', '$scope', '$location', 'SocialMarketPlace', 'jwtHelper', '$localStorage', function($rootScope, $scope, $location, SocialMarketPlace, jwtHelper, $localStorage) {
-
     let studentId = jwtHelper.decodeToken($localStorage.token)._id;
-
     SocialMarketPlace.getListingsByAccountId(studentId).then(function(res) {
-
         let listings = res.data.data;
-
         $scope.listings = listings;
-
-        console.log(listings);
-
     });
-
 }])
 
 .controller('SmpListingCtrl', ['$rootScope', '$scope', '$location', '$route', 'SocialMarketPlace', 'University', 'Students', 'ngDialog', 'jwtHelper', '$localStorage', function($rootScope, $scope, $location, $route, SocialMarketPlace, University, Students, ngDialog, jwtHelper, $localStorage) {
-
     // Id
     let listingId = $route.current.params.id;
-
     let studentId = jwtHelper.decodeToken($localStorage.token)._id;
-
     $scope.pictureMain = "";
 
     SocialMarketPlace.getListingById(listingId).then(function(res) {
-
-        console.log("response: ");
-        console.log(res);
         $scope.listing = res.data.data;
-
-        console.log($scope.listing.pictures)
 
         if ($scope.listing.pictures[0] == undefined || $scope.listing.pictures[0].url == "") {
             $scope.pictureMain = "/img/misc/noimage.jpg";
@@ -1268,80 +893,41 @@ angular.module('netbase')
             $scope.pictureMain = res.data.data.pictures[0].url;
         }
 
-        console.log($scope.listing);
-
         if ($scope.listing.accountId == studentId) {
-
             $scope.listingOwner = true;
-
         }
 
         $scope.listing.want.forEach(function(e, idx) {
-
-            console.log("inside foreach: ")
-            console.log(e.accountId);
-            console.log(studentId);
-
             if (e.accountId == studentId) {
                 $scope.listingWants = true;
             }
-
         });
-
-        // Load Student information
 
         // Load University information
         if ($scope.listing.universityId != undefined) {
-
             University.getUniversityById($scope.listing.universityId).then(function(res) {
-
-                console.log("university get: ")
-                console.log(res);
                 $scope.university = res.data.data;
-
             });
-
         }
 
         Students.getStudentById($scope.listing.accountId).then(function(res) {
-
-            console.log("response student: ");
-            console.log(res);
             $scope.student = res.data.data;
-
         });
-
     });
 
     /* Display Image */
-
     $scope.pictureSelected = "/t";
-
     $scope.pictureSelect = function(idx) {
-
         $scope.pictureSelected = $scope.listing.pictures[idx].url;
-
-        console.log("picture selected: ")
-        console.log($scope.pictureSelected);
-
-        console.log($scope.listing.pictures)
-
         ngDialog.open({ template: 'templateId', className: 'ngdialog-theme-default ngdialog-theme-smp', scope: $scope });
-
     };
 
     /* want */
-
     $scope.listingOwner = false;
     $scope.listingWants = false;
 
     $scope.want = function() {
-
         SocialMarketPlace.want(listingId).then(function(res) {
-
-            console.log("social marketplace button: ")
-            console.log(res);
-
             let listing = res.data.data;
 
             if ($scope.listingWants) {
@@ -1351,80 +937,53 @@ angular.module('netbase')
             }
 
             if (listing != undefined) {
-
                 $scope.listing.want = listing.want;
-
             }
-
         });
-
     }
-
 }])
 
 .controller('ProfileCtrl', ['$rootScope', '$scope', '$location', function($rootScope, $scope, $location) {
 
-
-
 }])
 
 .controller('IndexCtrl', ['$rootScope', '$scope', '$location', '$localStorage', function($rootScope, $scope, $location, $localStorage) {
-
     $scope.search = '';
-
     $scope.$watch("search", function(newValue, oldValue) {
         if ($scope.search.length > 0) {
             $location.path("/search").search({ query: $scope.search });
         }
     });
 
-    console.log("heyy");
-
     // If isn't the first visit, redirects to home
     if ($localStorage.indexVisited) {
         //$location.path("/home");
     }
-
     $localStorage.indexVisited = true;
-
 }])
 
 .controller('HomeCtrl', ['$rootScope', '$scope', 'ngDialog', 'University', function($rootScope, $scope, ngDialog, University) {
-
     $scope.showMobileMenu = false;
-
     $scope.universities = [];
-
     $scope.clickToOpen = function() {
         ngDialog.open({ template: 'partials/jobmodal.html', className: 'ngdialog-theme-default jobmodal' });
     };
 
     University.getUniversities().then(function(res) {
-        console.log(res);
-
         $scope.universities = res.data.data;
-
     });
-
 }])
 
 /* Business */
-
 .controller('BusinessIndexCtrl', ['$rootScope', '$scope', '$location', function($rootScope, $scope, $location) {
-
-
 
 }])
 
 .controller('BusinessSigninCtrl', ['$rootScope', '$scope', '$location', function($rootScope, $scope, $location) {
 
-
-
 }])
 
 .controller('BusinessRegisterCtrl', ['$rootScope', '$scope', '$location', function($rootScope, $scope, $location) {
-
-
 
 }])
 
@@ -1435,66 +994,42 @@ angular.module('netbase')
         replace: true,
         scope: true,
         link: function(scope, element, attr) {
-
             let answer = JSON.parse(attr.a);
             let postId = attr.p;
             let universityId = attr.u;
-
             scope.answer = answer;
-
             let studentId = answer.accountId;
-
             scope.userImage = "img/user/user.png";
 
             // Get Account information
             Students.getStudentById(answer.accountId).then(function(res) {
-
-                console.log("student info: ")
-                console.log(res.data)
                 let user = res.data.data;
-
                 scope.user = user;
-
                 if (user.imageUrl != undefined && user.imageUrl != null) {
                     scope.userImage = data.imageUrl;
                 }
-
             });
 
             // Votes
-
             scope.votesCount = answer.votesCount;
 
             // Up vote
             scope.upvoteForumPostAnswer = function() {
-
-                console.log(universityId)
-                console.log(postId)
-                console.log(answer._id)
-
                 University.upvoteForumPostAnswer(universityId, postId, answer._id).then(function(res) {
-
                     if (res.data.success) {
                         scope.votesCount += 1;
                     }
-
                 });
-
             };
 
             // Down vote
             scope.downvoteForumPostAnswer = function() {
-
                 University.downvoteForumPostAnswer(universityId, postId, answer._id).then(function(res) {
-
                     if (res.data.success) {
                         scope.votesCount -= 1;
                     }
-
                 });
-
             };
-
         }
     }
 }])
@@ -1506,11 +1041,8 @@ angular.module('netbase')
         replace: true,
         scope: true,
         link: function(scope, element, attr) {
-
             let post = JSON.parse(attr.p);
-
             scope.post = post;
-
         }
     }
 }])
@@ -1522,16 +1054,9 @@ angular.module('netbase')
         replace: true,
         scope: true,
         link: function(scope, element, attr) {
-
             let want = JSON.parse(attr.w);
 
-            console.log("want: ");
-            console.log(want);
-
             Students.getStudentById(want.accountId).then(function(res) {
-
-                console.log("student by id: ")
-                console.log(res);
                 let account = res.data.data;
 
                 if (account.imageUrl != undefined) {
@@ -1539,9 +1064,7 @@ angular.module('netbase')
                 } else {
                     scope.picture = "/img/user/user.png";
                 }
-
             });
-
         }
     }
 }])
@@ -1553,13 +1076,9 @@ angular.module('netbase')
         replace: true,
         scope: true,
         link: function(scope, element, attr) {
-
             let listing = JSON.parse(attr.l);
-
             scope.listing = listing;
-
             SocialMarketPlace.getListingById(listing._id).then(function(res) {
-
                 let smppost = res.data.data;
 
                 if (smppost.pictures[0].url == "" || smppost.pictures[0].url == undefined) {
@@ -1567,9 +1086,7 @@ angular.module('netbase')
                 } else {
                     scope.picture = smppost.pictures[0].url;
                 }
-
             });
-
         }
     }
 }])
@@ -1583,6 +1100,4 @@ angular.module('netbase')
             }, 0);
         }
     };
-})
-
-;
+});

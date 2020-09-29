@@ -1,67 +1,57 @@
 'use strict';
 
 angular.module('netbase', [
-        '720kb.socialshare',
-        'ngStorage',
-        'ngRoute',
-        'ngCookies',
-        'ui.tinymce',
-        'pascalprecht.translate',
-        'ngDialog',
-        'angular-jwt',
-        'angularTrix',
-        'ngFileUpload',
-        'ngDialog',
-        'angularMoment',
-        'angularjs-stripe-elements',
-        'chart.js',
-        'dibari.angular-ellipsis',
-        'ngSanitize',
-        'infinite-scroll',
-        'updateMeta',
-        'as.sortable',
-        'oc.lazyLoad'
-    ])
-    .config(['$translateProvider', '$localStorageProvider', 'StripeElementsProvider', function($translateProvider, $localStorageProvider, StripeElementsProvider) {
+    '720kb.socialshare',
+    'ngStorage',
+    'ngRoute',
+    'ngCookies',
+    'ui.tinymce',
+    'pascalprecht.translate',
+    'ngDialog',
+    'angular-jwt',
+    'angularTrix',
+    'ngFileUpload',
+    'ngDialog',
+    'angularMoment',
+    'angularjs-stripe-elements',
+    'chart.js',
+    'dibari.angular-ellipsis',
+    'ngSanitize',
+    'infinite-scroll',
+    'updateMeta',
+    'as.sortable',
+    'oc.lazyLoad'
+])
 
-        let stripeKey = "pk_live_ZBmOf7GNQ13AIEGeP9WkPv3M";
-        //let stripeKey = "pk_test_2XclbP1INDqkspKrbRn6oBZR";
+.config(['$translateProvider', '$localStorageProvider', 'StripeElementsProvider', function($translateProvider, $localStorageProvider, StripeElementsProvider) {
+    // let stripeKey = "pk_live_ZBmOf7GNQ13AIEGeP9WkPv3M";
+    let stripeKey = "pk_test_2XclbP1INDqkspKrbRn6oBZR";
+    //AnalyticsProvider.setAccount('UA-125408424-1');
 
-        //AnalyticsProvider.setAccount('UA-125408424-1');
+    StripeElementsProvider.setAPIKey(stripeKey);
 
-        StripeElementsProvider.setAPIKey(stripeKey);
+    $translateProvider.useStaticFilesLoader({
+        prefix: 'locales/locale-',
+        suffix: '.json'
+    });
 
-        $translateProvider.useStaticFilesLoader({
-            prefix: 'locales/locale-',
-            suffix: '.json'
-        });
-
-        $translateProvider.preferredLanguage('pt');
-        //$translateProvider.uniformLanguageTag('bcp47').determinePreferredLanguage();
-        //console.log("PREFERRED LANGUAGE: ", $translateProvider.uniformLanguageTag('bcp47').determinePreferredLanguage())
-
-    }])
+    $translateProvider.preferredLanguage('pt');
+    //$translateProvider.uniformLanguageTag('bcp47').determinePreferredLanguage();
+    //console.log("PREFERRED LANGUAGE: ", $translateProvider.uniformLanguageTag('bcp47').determinePreferredLanguage())
+}])
 
 .config(['$routeProvider', '$httpProvider', '$locationProvider', function($routeProvider, $httpProvider, $locationProvider) {
-
     let auth = {
-
         app: function($q, $location, $localStorage) {
-
             var deferred = $q.defer();
-
             deferred.resolve();
-
             let logged = $localStorage.logged;
 
             if (!logged) {
                 $location.path('/home/explore');
             }
-
             return deferred.promise;
-
         }
-
     };
 
     $routeProvider.
@@ -544,9 +534,6 @@ angular.module('netbase', [
         .otherwise({
             redirectTo: '/home/explore'
         });
-    //.otherwise({
-    //  redirectTo: '/home'
-    //});
 
     if (window.history && window.history.pushState) {
         $locationProvider.html5Mode(true);
@@ -556,7 +543,6 @@ angular.module('netbase', [
     $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
     $httpProvider.interceptors.push(['$q', '$location', '$localStorage', function($q, $location, $localStorage) {
-
         return {
             'request': function(config) {
                 config.headers = config.headers || {};
@@ -567,13 +553,10 @@ angular.module('netbase', [
                 return config;
             }
         }
-
     }]);
-
 }])
 
 .run(function($rootScope, $location, $localStorage, $http, $route, $translate, amMoment) {
-
     // Sees Index page just one time
     if ($localStorage.indexVisited == undefined) {
         $localStorage.indexVisited = false;
@@ -590,18 +573,13 @@ angular.module('netbase', [
     }
 
     $rootScope.logged = $localStorage.logged;
-
     $rootScope.logout = function() {
-
         $localStorage.$reset();
-
         $rootScope.logged = false;
         $localStorage.logged = false;
         $localStorage.token = undefined;
 
         $location.path('/home/explore');
         $route.reload();
-
     };
-
 });
