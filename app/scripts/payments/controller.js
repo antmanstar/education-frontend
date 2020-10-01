@@ -118,7 +118,6 @@ angular.module('netbase')
     }
 
     $scope.cardAdd = function() {
-        console.log("AAAA")
         let additionalData = {
             name: $scope.cardName
         };
@@ -128,12 +127,10 @@ angular.module('netbase')
         } else {
             $scope.loading = true;
             StripeElements.createToken(card, additionalData).then(function(result) {
-                console.log("BBBB", result)
                 if (result.token) {
                     // Send card to API, then use routes below
                     let data = { source: result.token.id };
                     Students.postCards(userId, data).success(function(res) {
-                        console.log("CCC", res)
                         if (res.success) {
                             if ($scope.flow == "addCard") {
                                 $scope.information.title = "Card added";
