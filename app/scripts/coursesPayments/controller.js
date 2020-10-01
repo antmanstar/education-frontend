@@ -1,7 +1,6 @@
 'use strict';
 
 /* Controllers */
-
 angular.module('netbase')
 
 .controller('CoursesPaymentsCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'StripeElements', 'Payments', 'Courses', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, StripeElements, Payments, Courses) {
@@ -30,7 +29,6 @@ angular.module('netbase')
     var card = elements.create('card', { style: style });
     $scope.card = card;
     card.on('change', handleChange);
-
     $scope.form = {};
 
     function handleChange(e) {
@@ -73,7 +71,6 @@ angular.module('netbase')
                             memberId: $scope.accountId,
                             saleId: res.salesId
                         }
-
                         Courses.payment($scope.course._id, paymentData).success(function(paymentRes) {
                             $scope.loading = false;
                             $scope.successMsg = 'Payment Done Successfully';
@@ -84,5 +81,4 @@ angular.module('netbase')
             }
         })
     }
-
 }])

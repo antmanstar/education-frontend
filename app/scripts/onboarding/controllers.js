@@ -1,7 +1,6 @@
 'use strict';
 
 /* Controllers */
-
 angular.module('netbase')
 
 .controller('OnboardingUniversityCreateCtrl', ['$rootScope', '$scope', 'ngDialog', 'University', 'Knowledge', '$location', '$window', function($rootScope, $scope, ngDialog, University, Knowledge, $location, $window) {

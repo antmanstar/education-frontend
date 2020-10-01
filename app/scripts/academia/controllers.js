@@ -2915,7 +2915,6 @@ angular.module('netbase')
 
             attr.$observe('university', function(value) {
                 scope.university = JSON.parse(value);
-
                 Forum.getCategoriesByUniversityId(scope.university._id).success(function(resCategory) {
                     if (resCategory.success) {
                         scope.categories = resCategory.data;
@@ -2976,6 +2975,7 @@ angular.module('netbase')
                 scope.loading = true;
                 scope.curCategory = category;
                 scope.getCurrentCategoryChannel().then(() => { // Load current acive channels and define
+                        scope.messagingClient.removeAllListeners();
                         scope.messagingClient.on('channelAdded', scope.getCurrentCategoryChannel); // events
                         scope.messagingClient.on('channelRemoved', scope.getCurrentCategoryChannel);
                         scope.messagingClient.on('tokenExpired', scope.updateToken); // recreate access token when expired
@@ -2994,6 +2994,7 @@ angular.module('netbase')
                     scope.messagingClient = client;
                     scope.updateConnectedUI();
                     scope.getCurrentCategoryChannel().then(() => { // Load current acive channels and define
+                            scope.messagingClient.removeAllListeners();
                             scope.messagingClient.on('channelAdded', scope.getCurrentCategoryChannel); // events
                             scope.messagingClient.on('channelRemoved', scope.chatRemoved);
                             scope.messagingClient.on('tokenAboutToExpire', scope.updateToken); // recreate access token when expired
@@ -3011,10 +3012,8 @@ angular.module('netbase')
                 let url = '/university/chat_token/';
                 University.getChatAccessToken(baseUrl + url).then((res) => {
                     if (res.data.success == false) { // and device Id
-                        console.log("ERROR")
                     } else {
                         scope.messagingClient.updateToken(res.data.token);
-                        console.log('token updated', res.data.token);
                     }
                 }).catch(err => {
                     alert("ERROR" + err)
