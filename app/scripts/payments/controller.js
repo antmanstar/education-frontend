@@ -15,7 +15,7 @@ angular.module('netbase')
 
     /* plan amount */
     $scope.planAmount = function(amount) {
-        return amount.substr(0, amount.length - 2) + "." + amount.substr(amount.length - 2, amount.length);
+        return amount === undefined ? 0 : amount.substr(0, amount.length - 2) + "." + amount.substr(amount.length - 2, amount.length);
     }
 
     /* Get Cards */

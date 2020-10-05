@@ -3583,7 +3583,6 @@ angular.module('netbase')
     });
 
     Knowledge.getAllPaginated().success(function(res) {
-        console.log('knowledge res', res);
         $scope.knowledge = res.data.docs;
     });
 
@@ -3625,7 +3624,6 @@ angular.module('netbase')
     Knowledge.getAllPostsByUrlPaginated(knowledgeUrl).success(function(res) {
         $scope.forumPosts = res.data.docs;
         $scope.pages = res.data.pages;
-
     });
 
     $scope.busy = false;
@@ -3793,9 +3791,7 @@ angular.module('netbase')
                         $scope.text = "";
                     } else {}
                 });
-                //END News.writeComment
             }
-            //END data.text.length
         } else {
             ngDialog.open({ template: 'partials/modals/login.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
         }
@@ -3829,7 +3825,6 @@ angular.module('netbase')
             if (University.isStoredLocal(universityId)) {
                 let universityStorage = University.retrieveStorage(universityId);
                 scope.university = universityStorage[universityId];
-                console.log(scope.university)
             } else {
                 University.getUniversityById(universityId).success(function(res) {
                     scope.university = res.data;
@@ -3879,21 +3874,19 @@ angular.module('netbase')
     } else {}
 
     $scope.stepThree = function() {
-            let payload = {
-                newpassword: $scope.password,
-                tokenTwo: tokenTwo,
-                type: "student"
-            };
+        let payload = {
+            newpassword: $scope.password,
+            tokenTwo: tokenTwo,
+            type: "student"
+        };
 
-            // Start Step 2
-            Students.resetPasswordStepThree(payload).success(function(res) {
-                if (res.success) {
-                    $scope.flowSuccess = true;
-                } else {}
-            });
-            //END resetPasswordStepThree
-        }
-        //END stepThree
+        // Start Step 2
+        Students.resetPasswordStepThree(payload).success(function(res) {
+            if (res.success) {
+                $scope.flowSuccess = true;
+            } else {}
+        });
+    }
 }])
 
 .controller('ResetPasswordNewCtrl', ['$rootScope', '$scope', '$location', function($rootScope, $scope, $location) {
@@ -3935,9 +3928,7 @@ angular.module('netbase')
     } else if (controllerActive == "AcademiaJobsCtrl") {
         $scope.jobsClass = "active";
         $scope.actionPostButton = true;
-    } else {
-
-    }
+    } else {}
 
     // Finish
     $scope.subscribe = function() {
@@ -4024,17 +4015,17 @@ angular.module('netbase')
     let CORPORATION_PRICE_YEARLY = 539,
         CORPORATION_PRICE_MONTHLY = 49;
 
-    $scope.currentPlan = "basic" // ----> check university current plan subscription
-    $scope.buttonLabel = "Buy Plan"
-    $scope.disableButton = false
+    $scope.currentPlan = "basic"; // ----> check university current plan subscription
+    $scope.buttonLabel = "Buy Plan";
+    $scope.disableButton = false;
 
-    $scope.planType = "essential"
-    $scope.billingInterval = "yearly"
-    $scope.planAmountYearly = 0
-    $scope.planAmountMonthly = 0
+    $scope.planType = "essential";
+    $scope.billingInterval = "yearly";
+    $scope.planAmountYearly = 0;
+    $scope.planAmountMonthly = 0;
 
     // Perform checking of plan on load
-    checkPlanSelected($scope.currentPlan)
+    checkPlanSelected($scope.currentPlan);
 
     // Function that will redirect the user to the pricing page
     $scope.gotopricing = function() {
@@ -4043,7 +4034,6 @@ angular.module('netbase')
 
     // Function that selects plan type ("basic", "pro", "team")
     $scope.selectPlan = function(plan) {
-        console.log("selecting plan: ", plan)
         if (plan === "essential") {
             $scope.planType = "essential";
             $scope.planAmountYearly = 0;
@@ -4057,16 +4047,16 @@ angular.module('netbase')
             $scope.planAmountYearly = CORPORATION_PRICE_YEARLY;
             $scope.planAmountMonthly = CORPORATION_PRICE_MONTHLY;
         }
-        checkPlanSelected(plan)
+        checkPlanSelected(plan);
     }
 
     // Function that selects plan billing interval ("monthly", "yearly")
     $scope.selectBillingInterval = function(interval) {
-        console.log("selecting plan billing interval: ", interval)
+        console.log("selecting plan billing interval: ", interval);
         if (interval === "yearly") {
-            $scope.billingInterval = "yearly"
+            $scope.billingInterval = "yearly";
         } else {
-            $scope.billingInterval = "monthly"
+            $scope.billingInterval = "monthly";
         }
     }
 
@@ -4093,11 +4083,11 @@ angular.module('netbase')
     // PURPOSE to avoid opening of the Add card dialog
     function checkPlanSelected(plan) {
         if ($scope.currentPlan === plan) {
-            $scope.buttonLabel = "This is your current plan"
-            $scope.activateButton = true
+            $scope.buttonLabel = "This is your current plan";
+            $scope.activateButton = true;
         } else {
-            $scope.buttonLabel = "Buy Plan"
-            $scope.activateButton = false
+            $scope.buttonLabel = "Buy Plan";
+            $scope.activateButton = false;
         }
     }
 }])
@@ -4107,7 +4097,6 @@ angular.module('netbase')
     let tc = {};
 
     $scope.connect = function() {
-        console.log("aeeee");
         connectClientWithUsername();
     }
 
@@ -4131,7 +4120,6 @@ angular.module('netbase')
     }
 
     tc.joinGeneralChannel = function() {
-        console.log('Attempting to join "general" chat channel...');
         if (!tc.generalChannel) {
             // If it doesn't exist, let's create it
             tc.messagingClient.createChannel({
@@ -4147,14 +4135,11 @@ angular.module('netbase')
     };
 
     function fetchAccessToken(username, handler) {
-        $.post('http://localhost:7000/', { identity: username, device: 'browser' }, null, 'json')
-            .done(function(response) {
-                console.log("response token: ")
-                console.log(response.token)
-            })
+        $.post('https://educationalcommunity-classroom.herokuapp.com/', { identity: username, device: 'browser' }, null, 'json')
+            .done(function(response) {})
             .fail(function(error) {
                 console.log('Failed to fetch the Access Token with error: ' + error);
-                console.log("tey")
+                console.log("tey");
             });
     }
 }])
@@ -4165,12 +4150,9 @@ angular.module('netbase')
 
 /* end messenger */
 .controller('HeaderCtrl', ['$rootScope', '$scope', '$location', '$localStorage', 'jwtHelper', 'Search', 'Students', '$route', 'ngDialog', '$timeout', 'Chat', '$translate', function($rootScope, $scope, $location, $localStorage, jwtHelper, Search, Students, $route, ngDialog, $timeout, Chat, $translate) {
-
     /* header variables */
     let logged = $rootScope.logged;
-
     $scope.whitelabel = false;
-
     $scope.searchBarDisplay = false;
 
     /* get selected language from the localstorage*/
@@ -4178,62 +4160,48 @@ angular.module('netbase')
 
     /* function that change the language */
     $scope.changeLanguage = function(langKey) {
-      $translate.use(langKey);
+        $translate.use(langKey);
 
-      // set selected language to localstorage
-      $localStorage.setLanguage = langKey
-      $scope.selectedLanguage = langKey
+        // set selected language to localstorage
+        $localStorage.setLanguage = langKey
+        $scope.selectedLanguage = langKey
     };
 
     // start - WHITELABEL IMPLEMENTATION
 
-
     // #1 = If ?wl=1, then
-
     if ($location.search().wl == 1) {
+        console.log("IS WHITELABELLLLLLL REQUEST!!!!!!!!!!!!!!!!!!!");
+        var universityUrl = $routeParams.academiaName;
+        console.log("university url: ")
+        console.log(universityUrl)
 
-      console.log("IS WHITELABELLLLLLL REQUEST!!!!!!!!!!!!!!!!!!!")
+        // #2.1 = Load University
 
-      var universityUrl = $routeParams.academiaName;
-      console.log("university url: ")
-      console.log(universityUrl)
-
-      // #2.1 = Load University
-
-      if (University.isStoredLocal(universityUrl)) {
-
-        // #2 =  replace “Universidade”/”College”/”Universidad” logo for University custom logo
-        // #3 = Remove Universidades and Explorar from Tab
-        let universityStorage = University.retrieveStorage(universityUrl);
-        $scope.university = universityStorage[universityUrl];
-        if ($scope.university.whitelabel == true) {
-          $scope.whitelabel = true;
-        }
-        console.log("universit111111111111111y: ")
-        console.log($scope.university)
-
-      } else {
-
-        // #2 =  replace “Universidade”/”College”/”Universidad” logo for University custom logo
-        // #3 = Remove Universidades and Explorar from Tab
-
-          University.getUniversity(universityUrl).then(function(res) {
-
-              console.log("universit22222222222222y: ")
-              console.log(res.data.data)
-              $scope.university = res.data.data;
-              if ($scope.university.whitelabel == true) {
+        if (University.isStoredLocal(universityUrl)) {
+            // #2 =  replace “Universidade”/”College”/”Universidad” logo for University custom logo
+            // #3 = Remove Universidades and Explorar from Tab
+            let universityStorage = University.retrieveStorage(universityUrl);
+            $scope.university = universityStorage[universityUrl];
+            if ($scope.university.whitelabel == true) {
                 $scope.whitelabel = true;
-              }
-              University.storeLocal($scope.university);
+            }
+            console.log("universit111111111111111y: ")
+            console.log($scope.university);
+        } else {
+            // #2 =  replace “Universidade”/”College”/”Universidad” logo for University custom logo
+            // #3 = Remove Universidades and Explorar from Tab
 
-
-          });
-          //
-
-      }
-
-
+            University.getUniversity(universityUrl).then(function(res) {
+                console.log("universit22222222222222y: ")
+                console.log(res.data.data)
+                $scope.university = res.data.data;
+                if ($scope.university.whitelabel == true) {
+                    $scope.whitelabel = true;
+                }
+                University.storeLocal($scope.university);
+            });
+        }
     }
 
     // end - WHITELABEL IMPLEMENTATION
@@ -4248,13 +4216,11 @@ angular.module('netbase')
     }
 
     $scope.login = function() {
-        console.log("login")
         $timeout.cancel($rootScope.accountSuggestion);
         ngDialog.open({ template: 'partials/modals/login.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
     }
 
     $scope.signup = function() {
-        console.log("signup")
         $timeout.cancel($rootScope.accountSuggestion);
         ngDialog.open({ template: 'partials/modals/signup.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
     }
@@ -4583,7 +4549,6 @@ angular.module('netbase')
             Search.all(newValue).then(function(res) {
                 let results = res.data.data;
                 $scope.universitySearch = results;
-
             });
         }
 
@@ -4678,7 +4643,6 @@ angular.module('netbase')
                         $scope.log = 'progress: ' + progressPercentage +
                             '% ' + evt.config.data.file.name + '\n' +
                             $scope.log;
-
                     });
                 }
             }
@@ -4857,7 +4821,6 @@ angular.module('netbase')
                         $scope.log = 'progress: ' + progressPercentage +
                             '% ' + evt.config.data.file.name + '\n' +
                             $scope.log;
-
                     });
                 }
             }
@@ -4975,7 +4938,6 @@ angular.module('netbase')
             }
         });
     }
-
 }])
 
 .controller('ProfileCtrl', ['$rootScope', '$scope', '$location', '$localStorage', 'jwtHelper', 'Students', 'University', 'Forum', function($rootScope, $scope, $location, $localStorage, jwtHelper, Students, University, Forum) {
@@ -5082,7 +5044,6 @@ angular.module('netbase')
         }
 
         if ($scope.pwd.length === 0) delete payload.password;
-
         Students.update(studentId, payload).success(function(res) {
             let success = res.success;
             let data = res.data;
@@ -5295,8 +5256,8 @@ angular.module('netbase')
         replace: true,
         scope: true,
         link: function(scope, element, attr) {
-            let course = JSON.parse(attr.c);
-            scope.course = course;
+            // let course = JSON.parse(attr.c);
+            scope.course = attr.c;
         }
     }
 }])
@@ -5497,7 +5458,6 @@ angular.module('netbase')
                     }
 
                 } else {
-
                     // attached order field from modulecontent
                     for (let x = 0; x < modulecontentMC.length; x++) {
                         for (let i = 0; i < mContents.length; i++) {

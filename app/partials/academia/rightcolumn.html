@@ -103,7 +103,6 @@
     </div>
 
     <div class="academia-supportcol-info" ng-controller="CoursesNavBarCtrl">
-
         <div class="academia-supportcol-info-title" ng-if="studentIsAdmin == true">
             {{'MANAGEMENT' | translate}}
         </div>
@@ -114,10 +113,10 @@
         <a href="/p/create?universityId={{university._id}}" ng-if="studentIsAdmin == true"><button class="btn bg-base" style="margin-top: 2px; height: 29px; width: unset;">{{'CREATE_PLAYLIST' | translate}}</button></a>
         <a href="/cursos/a/{{university._id}}/suite/owner" ng-if="studentIsAdmin == true"><button class="btn bg-base" style="margin-top: 2px; height: 29px; width: unset;">{{'COURSES_SUITE' | translate}}</button></a>
         <!--<a href="" ng-if="studentIsAdmin == true"><button class="btn bg-base" style="margin-top: 2px; height: 29px; width: unset;" ng-click="coursesCreate(university._id)">Criar curso</button></a>-->
-
+        <a href="" ng-if="studentIsAdmin == true"><button class="btn bg-base" style="margin-top: 2px; height: 29px; width: unset;">{{'PLAN' | translate}}</button></a>
     </div>
 
-    <div class="academia-supportcol-info" ng-if="university.plans.length > 0">
+    <div class="academia-supportcol-info">
         <div class="academia-supportcol-info-title">
             {{'PREMIUM_MEMBER' | translate}}
         </div>

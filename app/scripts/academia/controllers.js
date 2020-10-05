@@ -1865,6 +1865,7 @@ angular.module('netbase')
 
     $scope.loaded = false;
     let displayinvite = false;
+    let INTERCOME_APP_ID = "qq74p5y0";
 
     /* Accounts suggestion */
     if (University.isStoredLocal(universityUrl)) {
@@ -1884,6 +1885,8 @@ angular.module('netbase')
                     displayinvite = true;
                 }
             }, 13500, true);
+        } else {
+            $scope.setupIntercom();
         }
     } else {
         University.getUniversity(universityUrl).then(function(res) {
@@ -1904,39 +1907,43 @@ angular.module('netbase')
                         displayinvite = true;
                     }
                 }, 13500, true);
+            } else {
+                $scope.setupIntercom();
             }
         });
     }
 
-    Students.getStudentById(User.getId()).then(res => {
-        let student = res.data.data;
+    $scope.setupIntercom = () => {
+        Students.getStudentById(User.getId()).then(res => {
+            let student = res.data.data;
 
-        if ($scope.isAdmin(student._id) === true) {
-            Intercom("boot", {
-                app_id: "qq74p5y0",
-                email: student.email,
-                created_at: student.createdAt,
-                name: student.name,
-                user_id: student._id,
-                language: student.language,
-                imageUrl: student.imageUrl,
-                widget: {
-                    activator: "#IntercomDefaultWidget"
-                }
-            });
+            if ($scope.isAdmin(student._id) === true) {
+                Intercom("boot", {
+                    app_id: INTERCOME_APP_ID,
+                    email: student.email,
+                    created_at: student.createdAt,
+                    name: student.name,
+                    user_id: student._id,
+                    language: student.language,
+                    imageUrl: student.imageUrl,
+                    widget: {
+                        activator: "#IntercomDefaultWidget"
+                    }
+                });
 
-            $rootScope.$on("$routeChangeStart", function(event, next, current) {
-                if (next.$$route.controller !== "AcademiaForumCtrl" &&
-                    next.$$route.controller !== "AcademiaTimelineCtrl" &&
-                    next.$$route.controller !== "AcademiaForumCategoryAllCtrl" &&
-                    next.$$route.controller !== "AcademiaPlaylistsCtrl" &&
-                    next.$$route.controller !== "AcademiaCoursesCtrl" &&
-                    next.$$route.controller !== "AcademiaClassroomsCtrl") {
-                    Intercom("shutdown");
-                }
-            });
-        }
-    })
+                $rootScope.$on("$routeChangeStart", function(event, next, current) {
+                    if (next.$$route.controller !== "AcademiaForumCtrl" &&
+                        next.$$route.controller !== "AcademiaTimelineCtrl" &&
+                        next.$$route.controller !== "AcademiaForumCategoryAllCtrl" &&
+                        next.$$route.controller !== "AcademiaPlaylistsCtrl" &&
+                        next.$$route.controller !== "AcademiaCoursesCtrl" &&
+                        next.$$route.controller !== "AcademiaClassroomsCtrl") {
+                        Intercom("shutdown");
+                    }
+                });
+            }
+        })
+    }
 
     $scope.isAdmin = (id) => {
         let membersOfUniversity = $scope.university.members;
@@ -2734,7 +2741,7 @@ angular.module('netbase')
     }
 }])
 
-.directive('academiastatus', ['University', 'Students', '$localStorage', '$route', 'jwtHelper', function(University, Students, $localStorage, $route, jwtHelper) {
+.directive('academiastatus', ['University', 'Students', '$localStorage', '$route', 'jwtHelper', 'ngDialog', function(University, Students, $localStorage, $route, jwtHelper, ngDialog) {
     return {
         restrict: 'EA',
         templateUrl: '../partials/academia/status.html',
@@ -2792,27 +2799,30 @@ angular.module('netbase')
                     // if the current university is included in user's universitiesSubscribed array
                     let unisub = false;
 
-                    for (let i = 0; i < data.universitiesSubscribed.length; i++) {
-                        if (data.universitiesSubscribed[i].universityId == university._id && data.universitiesSubscribed[i].unsubscribed === false) {
-                            scope.userSubscribed = true;
+                    if (res.data.success == false) {
+                        scope.userSubscribed = false;
+                    } else {
+                        for (let i = 0; i < data.universitiesSubscribed.length; i++) {
+                            if (data.universitiesSubscribed[i].universityId == university._id && data.universitiesSubscribed[i].unsubscribed === false) {
+                                scope.userSubscribed = true;
+                            }
+
+                            if (data.universitiesSubscribed[i].universityId == university._id && data.universitiesSubscribed[i].unsubscribed === true) {
+                                scope.userSubscribed = false;
+                            }
+
+                            if (data.universitiesSubscribed[i].universityId == university._id) {
+                                unisub = true;
+                            }
                         }
 
-                        if (data.universitiesSubscribed[i].universityId == university._id && data.universitiesSubscribed[i].unsubscribed === true) {
+                        // if unisub variable is false, it means that the current university is
+                        // not a member of the students universitiesSubscribed array
+                        // Means the button should display INSCREVER
+                        if (!unisub) {
                             scope.userSubscribed = false;
                         }
-
-                        if (data.universitiesSubscribed[i].universityId == university._id) {
-                            unisub = true;
-                        }
                     }
-
-                    // if unisub variable is false, it means that the current university is
-                    // not a member of the students universitiesSubscribed array
-                    // Means the button should display INSCREVER
-                    if (!unisub) {
-                        scope.userSubscribed = false;
-                    }
-
                 })
 
                 /* check if student is a premium member */
@@ -2915,7 +2925,6 @@ angular.module('netbase')
 
             attr.$observe('university', function(value) {
                 scope.university = JSON.parse(value);
-
                 Forum.getCategoriesByUniversityId(scope.university._id).success(function(resCategory) {
                     if (resCategory.success) {
                         scope.categories = resCategory.data;
@@ -2951,6 +2960,7 @@ angular.module('netbase')
 
                         if ($localStorage.token != undefined && $localStorage.token != null) { // Check if logged in user
                             let stdId = jwtHelper.decodeToken($localStorage.token)._id;
+                            scope.logged = true;
 
                             Students.getStudentById(stdId).then(res => {
                                 let url = '/university/chat_token/';
@@ -2966,6 +2976,8 @@ angular.module('netbase')
                                     alert("ERROR" + err)
                                 });
                             });
+                        } else {
+                            scope.logged = false;
                         }
                     }
                 });
@@ -2976,6 +2988,7 @@ angular.module('netbase')
                 scope.loading = true;
                 scope.curCategory = category;
                 scope.getCurrentCategoryChannel().then(() => { // Load current acive channels and define
+                        scope.messagingClient.removeAllListeners();
                         scope.messagingClient.on('channelAdded', scope.getCurrentCategoryChannel); // events
                         scope.messagingClient.on('channelRemoved', scope.getCurrentCategoryChannel);
                         scope.messagingClient.on('tokenExpired', scope.updateToken); // recreate access token when expired
@@ -2994,6 +3007,7 @@ angular.module('netbase')
                     scope.messagingClient = client;
                     scope.updateConnectedUI();
                     scope.getCurrentCategoryChannel().then(() => { // Load current acive channels and define
+                            scope.messagingClient.removeAllListeners();
                             scope.messagingClient.on('channelAdded', scope.getCurrentCategoryChannel); // events
                             scope.messagingClient.on('channelRemoved', scope.chatRemoved);
                             scope.messagingClient.on('tokenAboutToExpire', scope.updateToken); // recreate access token when expired
@@ -3011,10 +3025,8 @@ angular.module('netbase')
                 let url = '/university/chat_token/';
                 University.getChatAccessToken(baseUrl + url).then((res) => {
                     if (res.data.success == false) { // and device Id
-                        console.log("ERROR")
                     } else {
                         scope.messagingClient.updateToken(res.data.token);
-                        console.log('token updated', res.data.token);
                     }
                 }).catch(err => {
                     alert("ERROR" + err)
@@ -3355,7 +3367,6 @@ angular.module('netbase')
                 }
             }
 
-            /* */
             attr.$observe('university', function(value) {
                 university = JSON.parse(value);
 
@@ -3367,27 +3378,30 @@ angular.module('netbase')
                         // has once been subscribed to a university or
                         // if the current university is included in user's universitiesSubscribed array
                         let unisub = false;
-                        for (let i = 0; i < data.universitiesSubscribed.length; i++) {
-                            if (data.universitiesSubscribed[i].universityId == university._id && data.universitiesSubscribed[i].unsubscribed === false) {
-                                scope.userSubscribed = true;
-                                console.log("user subscribed")
+
+                        if (res.data.success == false) {
+                            scope.userSubscribed = true;
+                        } else {
+                            for (let i = 0; i < data.universitiesSubscribed.length; i++) {
+                                if (data.universitiesSubscribed[i].universityId == university._id && data.universitiesSubscribed[i].unsubscribed === false) {
+                                    scope.userSubscribed = true;
+                                }
+
+                                if (data.universitiesSubscribed[i].universityId == university._id && data.universitiesSubscribed[i].unsubscribed === true) {
+                                    scope.userSubscribed = false;
+                                }
+
+                                if (data.universitiesSubscribed[i].universityId == university._id) {
+                                    unisub = true;
+                                }
                             }
 
-                            if (data.universitiesSubscribed[i].universityId == university._id && data.universitiesSubscribed[i].unsubscribed === true) {
+                            // if unisub variable is false, it means that the current university is
+                            // not a member of the students universitiesSubscribed array
+                            // Means the button should display INSCREVER
+                            if (!unisub) {
                                 scope.userSubscribed = false;
-                                console.log("user NOT subscribed")
                             }
-
-                            if (data.universitiesSubscribed[i].universityId == university._id) {
-                                unisub = true;
-                            }
-                        }
-
-                        // if unisub variable is false, it means that the current university is
-                        // not a member of the students universitiesSubscribed array
-                        // Means the button should display INSCREVER
-                        if (!unisub) {
-                            scope.userSubscribed = false;
                         }
                     })
                     // End Handle Subscribe Functionality

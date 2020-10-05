@@ -28,6 +28,7 @@
                 </div>
                 <div class="panel-body-chat" id="scrollbar">
                     <img id="gif" src="https://gifimage.net/wp-content/uploads/2017/08/loading-animated-gif-1.gif" class="loading-gif" width="50" height="50" ng-hide="loading == false" /></img>
+                    <div ng-hide="logged == true" style="text-align:center">Not logged user</div>
                     <ul class="chat" id="chat-list" ng-hide="loading == true">
                         <li ng-repeat-start="message in messages" ng-if="message.author == currentMember._id" class="left clearfix li">
                             <span class="chat-img pull-left">
@@ -64,7 +65,7 @@
                     </div> -->
                     <div class="chat-controller">
                         <textarea class="textarea" ng-keypress='sendingInputKeyPress($event)'></textarea>
-                        <button class="send-btn"><span class="glyphicon glyphicon-send" ng-click='sendMSG()'></span></button>
+                        <button class="send-btn" ng-click='sendMSG()'><span class="glyphicon glyphicon-send"></span></button>
                     </div>
                 </div>
             </div>

@@ -1,7 +1,6 @@
 'use strict';
 
 /* Controllers */
-
 angular.module('netbase')
 
 .controller('OnboardingUniversityCreateCtrl', ['$rootScope', '$scope', 'ngDialog', 'University', 'Knowledge', '$location', '$window', function($rootScope, $scope, ngDialog, University, Knowledge, $location, $window) {
@@ -305,7 +304,6 @@ angular.module('netbase')
             if (University.isStoredLocal(universityId)) {
                 let universityStorage = University.retrieveStorage(universityId);
                 scope.university = universityStorage[universityId];
-
             } else {
                 University.getUniversityById(universityId).success(function(res) {
                     scope.university = res.data;
@@ -333,6 +331,7 @@ angular.module('netbase')
                     return false;
                 }
             };
+
 
             /* start subscribe */
             scope.subscribe = function() {
