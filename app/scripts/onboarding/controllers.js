@@ -304,7 +304,6 @@ angular.module('netbase')
             if (University.isStoredLocal(universityId)) {
                 let universityStorage = University.retrieveStorage(universityId);
                 scope.university = universityStorage[universityId];
-
             } else {
                 University.getUniversityById(universityId).success(function(res) {
                     scope.university = res.data;
@@ -332,6 +331,7 @@ angular.module('netbase')
                     return false;
                 }
             };
+
 
             /* start subscribe */
             scope.subscribe = function() {
