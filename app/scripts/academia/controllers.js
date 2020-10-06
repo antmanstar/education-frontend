@@ -2088,6 +2088,7 @@ angular.module('netbase')
                         $scope.forumPostsNew.push($scope.forumPosts[idx]);
                     }
                 }
+                $scope.setupIntercom();
             }
         }).catch(function(e) {});
     } else {
@@ -2108,6 +2109,8 @@ angular.module('netbase')
                             $timeout.cancel()
                         }, 13500, true);
                     }
+                } else {
+                    $scope.setupIntercom();
                 }
             }).catch(function(e) {
                 console.log("forum post error request: ");
@@ -2116,36 +2119,37 @@ angular.module('netbase')
         });
     }
 
+    $scope.setupIntercom = () => {
+        Students.getStudentById(User.getId()).then(res => {
+            let student = res.data.data;
 
-    Students.getStudentById(User.getId()).then(res => {
-        let student = res.data.data;
+            if ($scope.isAdmin(student._id) === true) {
+                Intercom("boot", {
+                    app_id: "qq74p5y0",
+                    email: student.email,
+                    created_at: student.createdAt,
+                    name: student.name,
+                    user_id: student._id,
+                    language: student.language,
+                    imageUrl: student.imageUrl,
+                    widget: {
+                        activator: "#IntercomDefaultWidget"
+                    }
+                });
 
-        if ($scope.isAdmin(student._id) === true) {
-            Intercom("boot", {
-                app_id: "qq74p5y0",
-                email: student.email,
-                created_at: student.createdAt,
-                name: student.name,
-                user_id: student._id,
-                language: student.language,
-                imageUrl: student.imageUrl,
-                widget: {
-                    activator: "#IntercomDefaultWidget"
-                }
-            });
-
-            $rootScope.$on("$routeChangeStart", function(event, next, current) {
-                if (next.$$route.controller !== "AcademiaForumCtrl" &&
-                    next.$$route.controller !== "AcademiaTimelineCtrl" &&
-                    next.$$route.controller !== "AcademiaForumCategoryAllCtrl" &&
-                    next.$$route.controller !== "AcademiaPlaylistsCtrl" &&
-                    next.$$route.controller !== "AcademiaCoursesCtrl" &&
-                    next.$$route.controller !== "AcademiaClassroomsCtrl") {
-                    Intercom("shutdown");
-                }
-            });
-        }
-    })
+                $rootScope.$on("$routeChangeStart", function(event, next, current) {
+                    if (next.$$route.controller !== "AcademiaForumCtrl" &&
+                        next.$$route.controller !== "AcademiaTimelineCtrl" &&
+                        next.$$route.controller !== "AcademiaForumCategoryAllCtrl" &&
+                        next.$$route.controller !== "AcademiaPlaylistsCtrl" &&
+                        next.$$route.controller !== "AcademiaCoursesCtrl" &&
+                        next.$$route.controller !== "AcademiaClassroomsCtrl") {
+                        Intercom("shutdown");
+                    }
+                });
+            }
+        })
+    }
 
     $scope.isAdmin = (id) => {
         let membersOfUniversity = $scope.university.members;
