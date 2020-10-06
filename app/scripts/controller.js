@@ -5256,8 +5256,8 @@ angular.module('netbase')
         replace: true,
         scope: true,
         link: function(scope, element, attr) {
-            // let course = JSON.parse(attr.c);
-            scope.course = attr.c;
+            let course = JSON.parse(attr.c);
+            scope.course = course;
         }
     }
 }])
