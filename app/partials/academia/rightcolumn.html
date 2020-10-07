@@ -33,54 +33,100 @@
 
 <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 section-menu-col">
 
+  <style>
+    .section-menu .option {
+      padding-top: 9px;
+      padding-bottom: 9px;
+      padding-left: 15px;
+      padding-right: 15px;
+      font-size: 1.03em;
+      color: #2d4255;
+      font-weight: bold;
+    }
+  </style>
+
     <div class="section-menu">
+
         <div class="section-menu-title" style="padding-left: 0px;">{{university.name}}</div>
         <div class="academia-supportcol-stats">
 
-            <div class="academia-supportcol-stats-stat">
-                {{ (university.members | filter : { 'unsubscribed' : 'false' }).length }} {{'MEMBERS' | translate}}
-            </div>
+          <!--
+            <button class="btn bg-base" style="margin-top: 2px; height: 29px; width: unset;" ng-click="createPost(university.url)">{{'CREATE_POST' | translate}}</button>
+          -->
 
-            <div style="height: 5px"></div>
+          <!--
+          <div style="line-height: 30px; display: inline-block; border-radius: 42px; border: 1px solid #bbb; padding: 5px; padding-right: 15px; padding-left: 15px; box-shadow: 0px 0px 5px 0px rgba(82,82,82,1); font-size: 0.9em; margin-bottom: 10px;">
+            <div style="display: inline-block; margin-right: 5px;"><img height="30px" src="https://www.flaticon.com/svg/static/icons/svg/148/148764.svg" /></div>
+            <div style="display: inline-block; font-weight: bold;">Create</div>
+          </div>
+          -->
 
+          <div style="height: 5px"></div>
+
+        </div>
+        <!--  {{'MEMBERS' | translate}} -->
+        <div style="border-top: 1px solid #cacaca; border-bottom: 1px solid #cacaca; padding-top: 5px; padding-bottom: 5px; margin-bottom: 10px; heigth: 35px; line-height: 35px; ">
+          <div style="display: inline-block;"><i style="margin-right: 8px;" class="fas fa-user-friends"></i>{{ (university.members | filter : { 'unsubscribed' : 'false' }).length }}</div>
+          <button class="btn bg-primary-purple" style="float: right; margin-top: 2px; height: 29px; width: unset;" ng-if="!userSubscribed" ng-click="subscribe()">{{'SUBSCRIBE' | translate}}</button>
+          <button class="btn bg-primary-purple" style="float: right; margin-top: 2px; height: 29px; width: unset;" ng-if="userSubscribed" ng-click="subscribe()">{{'UNSUBSCRIBE' | translate}}</button>
         </div>
 
         <!-- <i class="fa fa-rss" aria-hidden="true"></i> -->
 
-        <div class="option" style="padding-left: 0px;">
-            <a href="/a/{{university.url}}/timeline"><img src="/img/icon/timeline.png" style="margin-right: 14px;" height="20px" width="20px" />{{'TIMELINE' | translate}}</a>
+        <div style="font-size: 1.1em;">
+
+          <div class="option" style="padding-left: 0px;">
+              <a href="/a/{{university.url}}/timeline"><img src="/img/icon/timeline.png" style="margin-right: 14px;" height="20px" width="20px" />{{'TIMELINE' | translate}}</a>
+          </div>
+          <div class="option" style="padding-left: 0px;">
+              <a href="/a/{{university.url}}/forum"><img src="https://visualpharm.com/assets/116/Open%20Book-595b40b65ba036ed117d154c.svg" style="margin-right: 14px;" height="20px" width="20px" />{{'FEED' | translate}}</a>
+          </div>
+          <div class="option" style="padding-left: 0px;">
+              <a href="/a/{{university.url}}/playlist/all"><img src="https://visualpharm.com/assets/459/Film-595b40b75ba036ed117d9cd1.svg" style="margin-right: 14px;" height="20px" width="20px" />{{'PLAYLIST' | translate}}</a>
+          </div>
+          <div class="option" style="padding-left: 0px;">
+              <a href="/a/{{university.url}}/cursos"><img src="https://visualpharm.com/assets/311/Graduation%20Cap-595b40b65ba036ed117d2d97.svg" style="margin-right: 14px;" height="20px" width="20px" />{{'COURSES' | translate}}</a>
+          </div>
+          <!--div class="option" style="padding-left: 0px;"><a href="/a/{{university.url}}/classroom"><img src="https://visualpharm.com/assets/311/Graduation%20Cap-595b40b65ba036ed117d2d97.svg" style="margin-right: 14px;" height="20px" width="20px" />Classroom</a></div-->
+          <div class="option" style="padding-left: 0px;"><a href="/a/{{university.url}}/classroom"><i class='fas fa-chalkboard-teacher' style='padding-right:15px;color: #4986bf; font-size: 0.85em;'></i>{{'CLASSROOM' | translate}}</a></div>
+          <div class="option" style="padding-left: 0px;">
+              <a href="/a/{{university.url}}/forum/category/all"><img src="https://visualpharm.com/assets/811/Discussion%20Forum-595b40b65ba036ed117d396c.svg" style="margin-right: 14px;" height="20px" width="20px" />{{'FORUM' | translate}}</a>
+          </div>
+
         </div>
-        <div class="option" style="padding-left: 0px;">
-            <a href="/a/{{university.url}}/forum"><img src="https://visualpharm.com/assets/116/Open%20Book-595b40b65ba036ed117d154c.svg" style="margin-right: 14px;" height="20px" width="20px" />{{'FEED' | translate}}</a>
-        </div>
-        <div class="option" style="padding-left: 0px;">
-            <a href="/a/{{university.url}}/forum/category/all"><img src="https://visualpharm.com/assets/811/Discussion%20Forum-595b40b65ba036ed117d396c.svg" style="margin-right: 14px;" height="20px" width="20px" />{{'FORUM' | translate}}</a>
-        </div>
-        <div class="option" style="padding-left: 0px;">
-            <a href="/a/{{university.url}}/playlist/all"><img src="https://visualpharm.com/assets/459/Film-595b40b75ba036ed117d9cd1.svg" style="margin-right: 14px;" height="20px" width="20px" />{{'PLAYLIST' | translate}}</a>
-        </div>
-        <div class="option" style="padding-left: 0px;">
-            <a href="/a/{{university.url}}/cursos"><img src="https://visualpharm.com/assets/311/Graduation%20Cap-595b40b65ba036ed117d2d97.svg" style="margin-right: 14px;" height="20px" width="20px" />{{'COURSES' | translate}}</a>
-        </div>
-        <!--div class="option" style="padding-left: 0px;"><a href="/a/{{university.url}}/classroom"><img src="https://visualpharm.com/assets/311/Graduation%20Cap-595b40b65ba036ed117d2d97.svg" style="margin-right: 14px;" height="20px" width="20px" />Classroom</a></div-->
-        <div class="option" style="padding-left: 0px;"><a href="/a/{{university.url}}/classroom"><i class='fas fa-chalkboard-teacher' style='padding-right:15px;color: #4986bf;'></i>{{'CLASSROOM' | translate}}</a></div>
+        <!-- end -->
+
+        <style>
+          .channel-row {
+            height: 35px;
+            line-height: 35px;
+            padding-left: 15px;
+          }
+        </style>
+
         <!--
-    <p style="font-size: 0.9em; padding-top: 15px; color: #7d7d7d; font-weight: bold;">ADMINISTRAÇÃO</p>
 
-    <div class="option" style="padding-left: 0px;"><a href="/a/{{university.url}}/videostudio"><img src="https://visualpharm.com/assets/987/Video%20Editing-595b40b65ba036ed117d35e3.svg" style="margin-right: 14px;" height="20px" width="20px" />Video Studio</a></div>
-    -->
+        <div class="channel-row"># channel1</div>
+        <div class="channel-row"># channel2</div>
+        <div class="channel-row"># channel3</div>
+        <div class="channel-row"># channel4</div>
+        <div class="channel-row"># channel5</div>
+        <div class="channel-row"># channel6</div>
+        -->
+        <!--
+        <p style="font-size: 0.9em; padding-top: 15px; color: #7d7d7d; font-weight: bold;">ADMINISTRAÇÃO</p>
+
+        <div class="option" style="padding-left: 0px;"><a href="/a/{{university.url}}/videostudio"><img src="https://visualpharm.com/assets/987/Video%20Editing-595b40b65ba036ed117d35e3.svg" style="margin-right: 14px;" height="20px" width="20px" />Video Studio</a></div>
+        -->
+
+            <!--
+        <p ng-if="studentIsTeam == true" style="font-size: 0.9em; padding-top: 15px; color: #7d7d7d; font-weight: bold;">TIME</p>
+        <div class="option" style="padding-left: 0px;"><a href="/a/{{university.url}}/driver"><img src="/img/icon/driver.svg" style="margin-right: 14px;" height="20px" width="20px" />Driver</a></div>
+        -->
+
+        <!--<p style="font-size: 0.9em; padding-top: 15px; color: #7d7d7d; font-weight: bold;">{{'ACTIONS' | translate}}</p>-->
 
         <!--
-    <p ng-if="studentIsTeam == true" style="font-size: 0.9em; padding-top: 15px; color: #7d7d7d; font-weight: bold;">TIME</p>
-    <div class="option" style="padding-left: 0px;"><a href="/a/{{university.url}}/driver"><img src="/img/icon/driver.svg" style="margin-right: 14px;" height="20px" width="20px" />Driver</a></div>
-    -->
-
-        <p style="font-size: 0.9em; padding-top: 15px; color: #7d7d7d; font-weight: bold;">{{'ACTIONS' | translate}}</p>
-
-        <button class="btn bg-primary-purple" style="margin-top: 2px; height: 29px; width: unset;" ng-if="!userSubscribed" ng-click="subscribe()">{{'SUBSCRIBE' | translate}}</button>
-        <button class="btn bg-primary-purple" style="margin-top: 2px; height: 29px; width: unset;" ng-if="userSubscribed" ng-click="subscribe()">{{'UNSUBSCRIBE' | translate}}</button>
-        <button class="btn bg-base" style="margin-top: 2px; height: 29px; width: unset;" ng-click="createPost(university.url)">{{'CREATE_POST' | translate}}</button>
-
         <div style="height: 5px"></div>
 
         <p style="font-size: 0.9em; padding-top: 15px; color: #7d7d7d; font-weight: bold;" ng-if="universityVisitsTodayList.length > 0">{{'ONLINE_TODAY' | translate}}</p>
@@ -88,20 +134,11 @@
         <div class="academia-supportcol-info-text" ng-if="universityVisitsTodayList.length > 0">
             <studentinfo ng-repeat="id in universityVisitsTodayList | limitTo: 10" sid="{{id}}"></studentinfo>
         </div>
-    </div>
-
-    <div class="academia-supportcol-info">
-
-        <div class="academia-supportcol-info-title">
-            {{'ABOUT' | translate}}
-        </div>
-
-        <div class="academia-supportcol-info-text">
-            {{university.about}}
-        </div>
+        -->
 
     </div>
 
+    <!--
     <div class="academia-supportcol-info" ng-controller="CoursesNavBarCtrl">
         <div class="academia-supportcol-info-title" ng-if="studentIsAdmin == true">
             {{'MANAGEMENT' | translate}}
@@ -112,10 +149,12 @@
         <a href="/v/create?universityId={{university._id}}" ng-if="studentIsAdmin == true"><button class="btn bg-base" style="margin-top: 2px; height: 29px; width: unset;">{{'CREATE_VIDEO' | translate}}</button></a>
         <a href="/p/create?universityId={{university._id}}" ng-if="studentIsAdmin == true"><button class="btn bg-base" style="margin-top: 2px; height: 29px; width: unset;">{{'CREATE_PLAYLIST' | translate}}</button></a>
         <a href="/cursos/a/{{university._id}}/suite/owner" ng-if="studentIsAdmin == true"><button class="btn bg-base" style="margin-top: 2px; height: 29px; width: unset;">{{'COURSES_SUITE' | translate}}</button></a>
-        <!--<a href="" ng-if="studentIsAdmin == true"><button class="btn bg-base" style="margin-top: 2px; height: 29px; width: unset;" ng-click="coursesCreate(university._id)">Criar curso</button></a>-->
+        <a href="" ng-if="studentIsAdmin == true"><button class="btn bg-base" style="margin-top: 2px; height: 29px; width: unset;" ng-click="coursesCreate(university._id)">Criar curso</button></a>
         <a href="" ng-if="studentIsAdmin == true"><button class="btn bg-base" style="margin-top: 2px; height: 29px; width: unset;">{{'PLAN' | translate}}</button></a>
     </div>
+    -->
 
+    <!--
     <div class="academia-supportcol-info">
         <div class="academia-supportcol-info-title">
             {{'PREMIUM_MEMBER' | translate}}
@@ -125,6 +164,8 @@
         <button ng-show="studentIsPremium" class="btn bg-primary-purple" style="margin-top: 2px; height: 29px; width: unset;" ng-click="premium()">{{'VIEW_PLANS' | translate}}</button>
         <button ng-hide="studentIsPremium" class="btn bg-primary-purple" style="margin-top: 2px; height: 29px; width: unset;" ng-click="premium()">{{'PREMIUM_SUBSCRIBE' | translate}}</button>
     </div>
+    -->
+
 </div>
 <!-- end -->
 
