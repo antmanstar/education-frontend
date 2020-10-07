@@ -2843,7 +2843,7 @@ angular.module('netbase')
 
         // When the user has access, redirect to course timeline
         if ($scope.useraccess) {
-            $location.path('/cursos/id/' + $scope.course._id + '/timeline')
+            $location.path('/cursos/id/' + $scope.course._id + '/timeline');
         }
 
         if (logged) {
@@ -2861,11 +2861,9 @@ angular.module('netbase')
                     userRegistered = true;
                 }
             }
-            console.log(userRegistered)
 
             if (userRegistered) {
-                $location.path('/cursos/id/' + $scope.course._id + '/timeline')
-
+                $location.path('/cursos/id/' + $scope.course._id + '/timeline');
             } else {
                 let memberData = {
                     course_id: $scope.course._id,
@@ -2912,15 +2910,15 @@ angular.module('netbase')
     $scope.course = $scope.ngDialogData.course;
     $scope.accountId = $scope.ngDialogData.accountId;
     $scope.flow = "order";
-    $scope.page = "order"
+    $scope.page = "order";
 
     // if the student does not have entered a credit card / debit card
     // disable the Confirm button and display a notification
     // that the student needs to add card first before the course can
     // be accessed
-    $scope.hasCard = false
-    $scope.savedCard = null
-    $scope.customer_id = null
+    $scope.hasCard = false;
+    $scope.savedCard = null;
+    $scope.customer_id = null;
 
     let userId;
 
@@ -2948,9 +2946,7 @@ angular.module('netbase')
                         }
                     }
                 }
-
             } else {}
-
         });
     }
 
