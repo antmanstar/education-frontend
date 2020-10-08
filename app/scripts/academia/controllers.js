@@ -2243,7 +2243,6 @@ angular.module('netbase')
             console.log("error while loading university");
         }
     });
-
     /* get all forum posts */
 }])
 
@@ -2286,7 +2285,6 @@ angular.module('netbase')
     let universityUrl = $route.current.params.academiaName;
 
     University.getUniversity(universityUrl).then(function(res) {
-        console.log(res.data.data);
         let university = res.data.data;
 
         $scope.university = university;
