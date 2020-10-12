@@ -1514,7 +1514,7 @@ angular.module('netbase')
                     ques_id: $scope.question.qes_id,
                     answer: $scope.selectedOption
                 }
-            } else if ($scope.question.title_type == 'descriptive') {
+            } else if ($scope.question.title_type == 'Descriptive') {
                 data = {
                     ques_id: $scope.question.qes_id,
                     answer: $scope.descriptiveAnswer
@@ -1525,6 +1525,7 @@ angular.module('netbase')
                 quiz_id: videoId,
                 answers: $scope.quizResult
             }
+
             Courses.saveQuizResult(formData).success(function(msg) {
                 let res = msg.data;
 
@@ -2843,7 +2844,7 @@ angular.module('netbase')
 
         // When the user has access, redirect to course timeline
         if ($scope.useraccess) {
-            $location.path('/cursos/id/' + $scope.course._id + '/timeline')
+            $location.path('/cursos/id/' + $scope.course._id + '/timeline');
         }
 
         if (logged) {
@@ -2861,11 +2862,9 @@ angular.module('netbase')
                     userRegistered = true;
                 }
             }
-            console.log(userRegistered)
 
             if (userRegistered) {
-                $location.path('/cursos/id/' + $scope.course._id + '/timeline')
-
+                $location.path('/cursos/id/' + $scope.course._id + '/timeline');
             } else {
                 let memberData = {
                     course_id: $scope.course._id,
@@ -2912,15 +2911,15 @@ angular.module('netbase')
     $scope.course = $scope.ngDialogData.course;
     $scope.accountId = $scope.ngDialogData.accountId;
     $scope.flow = "order";
-    $scope.page = "order"
+    $scope.page = "order";
 
     // if the student does not have entered a credit card / debit card
     // disable the Confirm button and display a notification
     // that the student needs to add card first before the course can
     // be accessed
-    $scope.hasCard = false
-    $scope.savedCard = null
-    $scope.customer_id = null
+    $scope.hasCard = false;
+    $scope.savedCard = null;
+    $scope.customer_id = null;
 
     let userId;
 
@@ -2948,9 +2947,7 @@ angular.module('netbase')
                         }
                     }
                 }
-
             } else {}
-
         });
     }
 
@@ -3322,6 +3319,7 @@ angular.module('netbase')
 
 .controller('AccountCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', '$timeout', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, $timeout) {
     let university;
+    $scope.loading = false
     if ($scope.ngDialogData != undefined) {
         if ($scope.ngDialogData.university != undefined) {
             university = $scope.ngDialogData.university;
@@ -3372,6 +3370,7 @@ angular.module('netbase')
     }
 
     $scope.login = function() {
+        $scope.loading = true
         let login = {
             email: $scope.loginEmail,
             password: $scope.loginPassword
@@ -3396,6 +3395,7 @@ angular.module('netbase')
                         $route.reload();
                     }
                 } else {
+                    $scope.loading = false
                     let statusCode = res.data.status;
                     if (statusCode == 5000) {
                         $scope.loginMessageBox = true;
@@ -3408,9 +3408,11 @@ angular.module('netbase')
                     }
                 }
             }).catch(function(e) {
+                $scope.loading = false
                 console.log(e);
             });
         }).catch(function(e) {
+            $scope.loading = false
             if (e == "EMAILINVALIDATED") {
                 console.log("invalid email")
                 $scope.loginMessage = "Please, type a valid email.";
@@ -3426,6 +3428,7 @@ angular.module('netbase')
     };
 
     $scope.create = function() {
+        $scope.loading = true
         let create = {
             email: $scope.createEmail,
             username: $scope.createUsername,
@@ -3440,6 +3443,7 @@ angular.module('netbase')
                 let token = res.data.token;
 
                 if (success) {
+                    $scope.loading = false
                     $localStorage.token = token;
                     $localStorage.logged = true;
                     $rootScope.logged = true;
@@ -3458,6 +3462,7 @@ angular.module('netbase')
                         $route.reload();
                     }
                 } else {
+                    $scope.loading = false
                     let statusCode = res.data.status;
                     if (statusCode == 5002) {
                         $scope.createMessageBox = true;
@@ -3470,10 +3475,12 @@ angular.module('netbase')
                     }
                 }
             }).catch(function(e) {
+                $scope.loading = false
                 console.log(e);
             });
 
         }).catch(function(e) {
+            $scope.loading = false
             if (e == "EMAILINVALIDATED") {
                 $scope.createMessage = "Por favor, escreva um email válido.";
                 $scope.createMessageBox = true;
@@ -5004,6 +5011,7 @@ angular.module('netbase')
         if (success) {
             $scope.student = res.data;
             $scope.name = res.data.name;
+            $scope.bio = res.data.bioShort;
 
             let universityUrl = $scope.student._id;
             University.getUniversity(universityUrl).then(function(res) {
@@ -5027,7 +5035,6 @@ angular.module('netbase')
     // save changed info to the db
     $scope.save = function() {
         let imageUrl = $("#file").attr("value");
-        console.log("IMGURL", imageUrl)
 
         if ($scope.pwd !== $scope.rpwd) {
             alert("Password not matched");
@@ -5040,7 +5047,7 @@ angular.module('netbase')
             bioLong: $scope.student.bioLong,
             bioShort: $scope.bio,
             password: $scope.pwd,
-            imageUrl: imageUrl == undefined ? $scope.student.imageUrl : imageUrl
+            imageUrl: imageUrl
         }
 
         if ($scope.pwd.length === 0) delete payload.password;
@@ -5199,7 +5206,7 @@ angular.module('netbase')
                 scope.user = user;
 
                 if (user.imageUrl != undefined && user.imageUrl != null) {
-                    scope.userImage = data.imageUrl;
+                    scope.userImage = user.imageUrl;
                 }
             });
 

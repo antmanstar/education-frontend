@@ -332,7 +332,6 @@ angular.module('netbase')
                 }
             };
 
-
             /* start subscribe */
             scope.subscribe = function() {
                 if ($localStorage.token != undefined && $localStorage.token != null) {

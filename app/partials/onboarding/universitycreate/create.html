@@ -49,7 +49,7 @@
             <div class="user-collections" style="margin-top: 30px;">
                 <div style="height: unset;" ng-repeat="n in [['Professor','Ambiente educacional dedicado ao ensino e aprendizado dos seus alunos', '#52bfea'],['Amigos e Família','Inicie um grupo de estudos e troca de conhecimento', '#30b39f'],['Instituição de Ensino', 'Empodere os seus alunos com soluções educacional integradas', '#aa2c26'], ['Empresa', 'Treinamento interno e armazenamento do know-how operacional ', '#b460a2'], ['Crianças', 'Plataforma educacional dedicada a crianças de 3 até 8 anos', '#ee5748']]"
                     class="collection teaching-option option">
-                    <div class="dot" style="background-color: {{n[2]}};"></div>
+                    <div class="dot" ng-style="background-color: {{n[2]}};"></div>
                     <div style="font-size: 1.2em; font-weight: bold;">{{n[0]}}</div>
                     <div style="color: #909090;">{{n[1]}}</div>
                 </div>
