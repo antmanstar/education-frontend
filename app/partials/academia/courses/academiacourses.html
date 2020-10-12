@@ -23,7 +23,7 @@
 
         <div academiarightcolumn university="{{university}}"></div>
 
-        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 academia-content">
+        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-6 academia-content" style="padding-top: 0px;">
 
             <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
             <div class="row academia-coverimage" ng-if="university.backgroundImage == undefined" style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
@@ -32,7 +32,20 @@
 
             <div academiastatus university="{{university}}"></div>
 
-            <div style="font-size: 2.0em; font-weight: bolder;">Cursos</div>
+            <div class="classroom-list-header">
+                <div>
+                    <div style="font-size: 2.0em; font-weight: bolder;">{{'COURSES' | translate}}</div>
+                    <div class='classroom-arrange-iconview'>
+                        <!-- <img src="/img/icon/listview.svg" class="list-view-style" /> -->
+                        <!-- <img src="/img/icon/gridview.svg" class="grid-view-style" /> -->
+                    </div>
+                </div>
+                <div class="classroom-btn-view">
+                    <a href="/cursos/a/{{university._id}}/suite/owner" class="btn btn-green" style="height: unset;">
+                        Curso Suite
+                    </a>
+                </div>
+            </div>
 
             <div ng-show="courses.length == 0" style="margin-top: 30px;">
                 Nenhum curso cadastrado
