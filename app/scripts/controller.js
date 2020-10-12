@@ -5000,6 +5000,7 @@ angular.module('netbase')
         if (success) {
             $scope.student = res.data;
             $scope.name = res.data.name;
+            $scope.bio = res.data.bioShort;
 
             let universityUrl = $scope.student._id;
             University.getUniversity(universityUrl).then(function(res) {
@@ -5023,7 +5024,6 @@ angular.module('netbase')
     // save changed info to the db
     $scope.save = function() {
         let imageUrl = $("#file").attr("value");
-        console.log("IMGURL", imageUrl)
 
         if ($scope.pwd !== $scope.rpwd) {
             alert("Password not matched");
@@ -5036,11 +5036,12 @@ angular.module('netbase')
             bioLong: $scope.student.bioLong,
             bioShort: $scope.bio,
             password: $scope.pwd,
-            imageUrl: imageUrl == undefined ? $scope.student.imageUrl : imageUrl
+            imageUrl: imageUrl
         }
 
         if ($scope.pwd.length === 0) delete payload.password;
         Students.update(studentId, payload).success(function(res) {
+            console.log(res)
             let success = res.success;
             let data = res.data;
 
@@ -5195,7 +5196,7 @@ angular.module('netbase')
                 scope.user = user;
 
                 if (user.imageUrl != undefined && user.imageUrl != null) {
-                    scope.userImage = data.imageUrl;
+                    scope.userImage = user.imageUrl;
                 }
             });
 

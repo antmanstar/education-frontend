@@ -1,9 +1,9 @@
-<div class="container chat-box">
+<div class="container chat-box" ng-hide="categories.length == 0">
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-primary">
                 <div class="panel-heading chat-heading">
-                    <div class="btn-group pull-left">
+                    <div class="btn-group pull-left" ng-show="boxToggle">
                         <button type="button" class="btn btn-default btn-xs dropdown-toggle setting-btn" data-toggle="dropdown" title='channels'>
                             <span class="glyphicon glyphicon-chevron-down"></span>
                         </button>
@@ -13,6 +13,12 @@
                         </ul>
                     </div>&nbsp;{{curCategory.title}}
                     <div class="btn-group pull-right">
+                        <button type="button" class="btn btn-default btn-xs setting-btn" title="toggle" ng-click="toggleBox()">
+                            <span class="glyphicon glyphicon-minus" ng-show="boxToggle"></span>
+                            <span class="glyphicon glyphicon-plus" ng-hide="boxToggle"></span>
+                        </button>
+                    </div>
+                    <div class="btn-group pull-right" ng-show="boxToggle">
                         <button type="button" class="btn btn-default btn-xs dropdown-toggle setting-btn" data-toggle="dropdown" title="settings">
                             <span class="glyphicon glyphicon-cog"></span>
                         </button>
@@ -26,7 +32,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="panel-body-chat" id="scrollbar">
+                <div class="panel-body-chat" id="scrollbar" ng-show="boxToggle">
                     <img id="gif" src="https://gifimage.net/wp-content/uploads/2017/08/loading-animated-gif-1.gif" class="loading-gif" width="50" height="50" ng-hide="loading == false" /></img>
                     <div ng-hide="logged == true" style="text-align:center">Not logged user</div>
                     <ul class="chat" id="chat-list" ng-hide="loading == true">
@@ -59,7 +65,7 @@
                         </li>
                     </ul>
                 </div>
-                <div class="panel-footer chat-footer">
+                <div class="panel-footer chat-footer" ng-show="boxToggle">
                     <!-- <div class="notification">
                         {{chattingNotification}}
                     </div> -->

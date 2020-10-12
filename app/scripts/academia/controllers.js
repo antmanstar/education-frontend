@@ -1867,6 +1867,39 @@ angular.module('netbase')
     let displayinvite = false;
     let INTERCOME_APP_ID = "qq74p5y0";
 
+    $scope.setupIntercom = () => {
+        Students.getStudentById(User.getId()).then(res => {
+            let student = res.data.data;
+
+            if ($scope.isAdmin(student._id) === true) {
+                Intercom("boot", {
+                    app_id: INTERCOME_APP_ID,
+                    email: student.email,
+                    created_at: student.createdAt,
+                    name: student.name,
+                    user_id: student._id,
+                    language: student.language,
+                    imageUrl: student.imageUrl,
+                    widget: {
+                        activator: "#IntercomDefaultWidget"
+                    }
+                });
+
+                $rootScope.$on("$routeChangeStart", function(event, next, current) {
+                    if (next.$$route.controller !== "AcademiaForumCtrl" &&
+                        next.$$route.controller !== "AcademiaTimelineCtrl" &&
+                        next.$$route.controller !== "AcademiaForumCategoryAllCtrl" &&
+                        next.$$route.controller !== "AcademiaForumPostCtrl" &&
+                        next.$$route.controller !== "AcademiaPlaylistsCtrl" &&
+                        next.$$route.controller !== "AcademiaCoursesCtrl" &&
+                        next.$$route.controller !== "AcademiaClassroomsCtrl") {
+                        Intercom("shutdown");
+                    }
+                });
+            }
+        })
+    }
+
     /* Accounts suggestion */
     if (University.isStoredLocal(universityUrl)) {
         let universityStorage = University.retrieveStorage(universityUrl);
@@ -1911,38 +1944,6 @@ angular.module('netbase')
                 $scope.setupIntercom();
             }
         });
-    }
-
-    $scope.setupIntercom = () => {
-        Students.getStudentById(User.getId()).then(res => {
-            let student = res.data.data;
-
-            if ($scope.isAdmin(student._id) === true) {
-                Intercom("boot", {
-                    app_id: INTERCOME_APP_ID,
-                    email: student.email,
-                    created_at: student.createdAt,
-                    name: student.name,
-                    user_id: student._id,
-                    language: student.language,
-                    imageUrl: student.imageUrl,
-                    widget: {
-                        activator: "#IntercomDefaultWidget"
-                    }
-                });
-
-                $rootScope.$on("$routeChangeStart", function(event, next, current) {
-                    if (next.$$route.controller !== "AcademiaForumCtrl" &&
-                        next.$$route.controller !== "AcademiaTimelineCtrl" &&
-                        next.$$route.controller !== "AcademiaForumCategoryAllCtrl" &&
-                        next.$$route.controller !== "AcademiaPlaylistsCtrl" &&
-                        next.$$route.controller !== "AcademiaCoursesCtrl" &&
-                        next.$$route.controller !== "AcademiaClassroomsCtrl") {
-                        Intercom("shutdown");
-                    }
-                });
-            }
-        })
     }
 
     $scope.isAdmin = (id) => {
@@ -2141,6 +2142,7 @@ angular.module('netbase')
                     if (next.$$route.controller !== "AcademiaForumCtrl" &&
                         next.$$route.controller !== "AcademiaTimelineCtrl" &&
                         next.$$route.controller !== "AcademiaForumCategoryAllCtrl" &&
+                        next.$$route.controller !== "AcademiaForumPostCtrl" &&
                         next.$$route.controller !== "AcademiaPlaylistsCtrl" &&
                         next.$$route.controller !== "AcademiaCoursesCtrl" &&
                         next.$$route.controller !== "AcademiaClassroomsCtrl") {
@@ -2332,7 +2334,8 @@ angular.module('netbase')
     let postId = $route.current.params.postId;
     let university;
 
-    $scope.tinymceOptions = {
+    tinymce.init({
+        selector: 'textarea',
         file_picker_types: 'file image media',
         tinydrive_token_provider: function(success, failure) {
             Courses.fileUploadUrl().success(function(msg) {
@@ -2344,7 +2347,7 @@ angular.module('netbase')
         tinydrive_google_drive_client_id: '102507978919142111240',
         plugins: 'print preview powerpaste casechange importcss tinydrive searchreplace autolink autosave save directionality advcode visualblocks visualchars fullscreen image link media mediaembed  codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists checklist wordcount tinymcespellchecker a11ychecker textpattern noneditable help formatpainter pageembed charmap mentions quickbars linkchecker emoticons advtable',
         toolbar: 'insertfile|undo redo | bold italic | alignleft aligncenter alignright | code|styleselect|outdent indent|link image'
-    };
+    });
 
     /* load information */
     University.getUniversity(universityUrl).then(function(res) {
@@ -2401,7 +2404,7 @@ angular.module('netbase')
     }
 
     $scope.createAnswerPost = function() {
-        var data = { text: $scope.answer };
+        var data = { text: tinymce.activeEditor.getContent() };
         if ($localStorage.token != undefined || $localStorage.token != null) {
             Forum.postAnswerByForumPostId(postId, data).then(function(res) {
                 let status = res.data.status;
@@ -2412,6 +2415,7 @@ angular.module('netbase')
                     data.votesCount = 0;
                     data.createdAt = Math.round((new Date()).getTime() / 1000);
                     $scope.forumPost.answers.push(data);
+                    tinymce.activeEditor.setContent("");
                     var timelineData = {
                         entryType: "comment",
                         modelId: $scope.forumPost._id,
@@ -2536,7 +2540,8 @@ angular.module('netbase')
     let universityUrl = $route.current.params.academiaName;
     let university;
 
-    $scope.tinymceOptions = {
+    tinymce.init({
+        selector: 'textarea',
         file_picker_types: 'file image media',
         tinydrive_token_provider: function(success, failure) {
             Courses.fileUploadUrl().success(function(msg) {
@@ -2548,7 +2553,7 @@ angular.module('netbase')
         tinydrive_google_drive_client_id: '102507978919142111240',
         plugins: 'print preview powerpaste casechange importcss tinydrive searchreplace autolink autosave save directionality advcode visualblocks visualchars fullscreen image link media mediaembed  codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists checklist wordcount tinymcespellchecker a11ychecker textpattern noneditable help formatpainter pageembed charmap mentions quickbars linkchecker emoticons advtable',
         toolbar: 'insertfile|undo redo | bold italic | alignleft aligncenter alignright | code|styleselect|outdent indent|link image'
-    };
+    });
 
     if ($location.search().categoryId != undefined) {
         $scope.categoryForum = { _id: $location.search().categoryId };
@@ -2633,6 +2638,7 @@ angular.module('netbase')
 
                         let success = res.data.success;
                         if (success) {
+                            // tinymce.activeEditor.setContent("")
                             $location.path('/a/' + university.url + '/forum/post/id/' + data._id)
                             window.scrollTo(0, 0);
                         }
@@ -2905,7 +2911,7 @@ angular.module('netbase')
     }
 }])
 
-.directive('categorychat', ['University', 'Forum', '$localStorage', '$route', 'jwtHelper', 'ngDialog', '$location', 'Chat', 'Students', 'Courses', function(University, Forum, $localStorage, $route, jwtHelper, ngDialog, $location, Chat, Students, Courses) {
+.directive('categorychat', ['University', 'Forum', '$localStorage', '$route', 'jwtHelper', 'ngDialog', '$location', 'Chat', 'Students', 'Courses', 'User', function(University, Forum, $localStorage, $route, jwtHelper, ngDialog, $location, Chat, Students, Courses, User) {
     return {
         restrict: 'EA',
         templateUrl: '../partials/academia/chat.html',
@@ -2923,63 +2929,68 @@ angular.module('netbase')
             scope.chattingNotification = '';
             scope.messages = [];
             scope.currentMember = null;
+            scope.currentMember = null;
             scope.loading = true;
+            scope.boxToggle = true;
 
             attr.$observe('university', function(value) {
                 scope.university = JSON.parse(value);
                 Forum.getCategoriesByUniversityId(scope.university._id).success(function(resCategory) {
                     if (resCategory.success) {
                         scope.categories = resCategory.data;
-                        scope.curCategory = scope.categories[0];
 
-                        tinymce.init({
-                            selector: 'textarea',
-                            menuitem: 'textarea',
-                            wordcound: 'count',
-                            menubar: false,
-                            branding: false,
-                            wordcounts: false,
-                            resize: false,
-                            statusbar: false,
-                            toolbar_location: 'bottom',
-                            forced_root_block: false,
-                            height: 100,
-                            width: '100%',
-                            readonly: scope.curCategory === undefined ? true : false,
-                            placeholder: "Type here...",
-                            plugins: [
-                                'autolink lists link image charmap print preview',
-                                'searchreplace visualblocks code fullscreen',
-                                'table paste code codesample emoticons'
-                            ],
-                            toolbar: 'bold italic underline strikethrough codesample link | bullist numlist outdent indent | emoticons',
-                            tinydrive_token_provider: function(success, failure) {
-                                Courses.fileUploadUrl().success(function(msg) {
-                                    success({ token: msg.token });
-                                })
-                            },
-                        });
+                        if (resCategory.data.length != 0) {
+                            scope.curCategory = scope.categories[0];
 
-                        if ($localStorage.token != undefined && $localStorage.token != null) { // Check if logged in user
-                            let stdId = jwtHelper.decodeToken($localStorage.token)._id;
-                            scope.logged = true;
-
-                            Students.getStudentById(stdId).then(res => {
-                                let url = '/university/chat_token/';
-                                scope.currentMember = res.data.data;
-                                University.getChatAccessToken(baseUrl + url).then((res) => {
-                                    if (res.data.success == false) { // and device Id
-                                        console.log("ERROR")
-                                    } else {
-                                        scope.chatCreate(res.data.token);
-                                        console.log('here chat created', res.data.token);
-                                    }
-                                }).catch(err => {
-                                    alert("ERROR" + err)
-                                });
+                            tinymce.init({
+                                selector: 'textarea',
+                                menuitem: 'textarea',
+                                wordcound: 'count',
+                                menubar: false,
+                                branding: false,
+                                wordcounts: false,
+                                resize: false,
+                                statusbar: false,
+                                toolbar_location: 'bottom',
+                                forced_root_block: false,
+                                height: 100,
+                                width: '100%',
+                                readonly: scope.curCategory === undefined ? true : false,
+                                placeholder: "Type here...",
+                                plugins: [
+                                    'autolink lists link image charmap print preview',
+                                    'searchreplace visualblocks code fullscreen',
+                                    'table paste code codesample emoticons'
+                                ],
+                                toolbar: 'bold italic underline strikethrough codesample link | bullist numlist outdent indent | emoticons',
+                                tinydrive_token_provider: function(success, failure) {
+                                    Courses.fileUploadUrl().success(function(msg) {
+                                        success({ token: msg.token });
+                                    })
+                                },
                             });
-                        } else {
-                            scope.logged = false;
+
+                            if ($localStorage.token != undefined && $localStorage.token != null) { // Check if logged in user
+                                let stdId = jwtHelper.decodeToken($localStorage.token)._id;
+                                scope.logged = true;
+
+                                Students.getStudentById(stdId).then(res => {
+                                    let url = '/university/chat_token/';
+                                    scope.currentMember = res.data.data;
+                                    University.getChatAccessToken(baseUrl + url).then((res) => {
+                                        if (res.data.success == false) { // and device Id
+                                            console.log("ERROR")
+                                        } else {
+                                            scope.chatCreate(res.data.token);
+                                            console.log('here chat created', res.data.token);
+                                        }
+                                    }).catch(err => {
+                                        alert("ERROR" + err)
+                                    });
+                                });
+                            } else {
+                                scope.logged = false;
+                            }
                         }
                     }
                 });
@@ -3008,7 +3019,7 @@ angular.module('netbase')
                 Twilio.Chat.Client.create(token).then(client => {
                     scope.messagingClient = client;
                     scope.updateConnectedUI();
-                    scope.getCurrentCategoryChannel().then(() => { // Load current acive channels and define
+                    scope.getCurrentCategoryChannel().then(() => { // Load current active channels and define
                             scope.messagingClient.removeAllListeners();
                             scope.messagingClient.on('channelAdded', scope.getCurrentCategoryChannel); // events
                             scope.messagingClient.on('channelRemoved', scope.chatRemoved);
@@ -3080,8 +3091,7 @@ angular.module('netbase')
                         scope.loadAndSortMessages();
                         resolve();
                     } else {
-                        var r = confirm("You did not join this channel yet. Will join now?");
-                        if (r == true) {
+                        if (scope.isAdmin(User.getId()) === true) {
                             scope.initChannel(scope.currentChannel).then((channel) => {
                                 scope.currentChannel = channel;
                                 scope.joinChannel(channel).then((_channel) => {
@@ -3091,11 +3101,31 @@ angular.module('netbase')
                                 })
                             })
                         } else {
-                            scope.loading = false;
-                            scope.$apply();
+                            var r = confirm("You did not join this channel yet. Will join now?");
+                            if (r == true) {
+                                scope.initChannel(scope.currentChannel).then((channel) => {
+                                    scope.currentChannel = channel;
+                                    scope.joinChannel(channel).then((_channel) => {
+                                        scope.currentChannel = _channel;
+                                        scope.initChannelEvents();
+                                        resolve();
+                                    })
+                                })
+                            } else {
+                                scope.loading = false;
+                                scope.$apply();
+                            }
                         }
                     }
                 });
+            }
+
+            // is admin?
+            scope.isAdmin = (id) => {
+                let membersOfUniversity = scope.university.members;
+                return membersOfUniversity.filter(val => {
+                    return val.accountId == id && val.privilege == 99
+                }).length == 0 ? false : true
             }
 
             // get channel by channel id 
@@ -3182,7 +3212,7 @@ angular.module('netbase')
                     }
                     if (currentMember == "") {
                         Students.getStudentById(message.author).then((res) => {
-                            currentMember = res.data.data.name;
+                            currentMember = res.data.success == true ? res.data.data.name : "Deactivated User"
                             scope.members.push({
                                 id: message.author,
                                 name: currentMember
@@ -3247,7 +3277,7 @@ angular.module('netbase')
                 }
 
                 var h = hash % 360;
-                return hslToHex(h, 90, 50);
+                return str == "Deactivated User" ? "CCCCCC" : hslToHex(h, 90, 50);
             }
 
             // get display of the timestamp
@@ -3334,6 +3364,10 @@ angular.module('netbase')
                 Students.getStudentById(member.identity).then((res) => {
                     scope.chattingNotification = res.data.data.name + ' left the channel.';
                 });
+            }
+
+            scope.toggleBox = () => {
+                scope.boxToggle = !scope.boxToggle;
             }
         }
     }
