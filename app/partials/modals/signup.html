@@ -40,6 +40,10 @@
         </div>
         <!-- end form group -->
 
+        <div ng-show="loading" style="width: 100%; text-align: center; padding-top: 30px; padding-bottom: 30px;">
+            <img src="/img/loader.gif" height="50px" />
+        </div>
+
         <button ng-click="create()" class="btn btn-bluebase">{{'CRIAR_CONTA' | translate}}</button>
 
       </div>

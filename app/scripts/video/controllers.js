@@ -131,6 +131,7 @@ angular.module('netbase')
 
 .controller('VideoCreateCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Playlist', 'Videos', 'Courses', function($rootScope, $scope, $location, $route, University, Playlist, Videos, Courses) {
     let universityId;
+    $scope.loading = false
 
     $scope.tinymceOptions = {
         file_picker_types: 'file image media',
@@ -168,6 +169,7 @@ angular.module('netbase')
     }
 
     $scope.createVideo = function() {
+        $scope.loading = true
         let file = $("#file").attr("value");
         let upload = true;
 
@@ -202,11 +204,13 @@ angular.module('netbase')
         }
 
         if (upload) {
+            $scope.loading = false
             Videos.create(payload).success(function(res) {
                 console.log(res);
                 $location.path("/v/id/" + res.data._id)
             });
         } else {
+            $scope.loading = false
             $scope.errorDisplay = true;
         }
     }

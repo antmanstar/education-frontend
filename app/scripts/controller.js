@@ -1514,7 +1514,7 @@ angular.module('netbase')
                     ques_id: $scope.question.qes_id,
                     answer: $scope.selectedOption
                 }
-            } else if ($scope.question.title_type == 'descriptive') {
+            } else if ($scope.question.title_type == 'Descriptive') {
                 data = {
                     ques_id: $scope.question.qes_id,
                     answer: $scope.descriptiveAnswer
@@ -1525,6 +1525,7 @@ angular.module('netbase')
                 quiz_id: videoId,
                 answers: $scope.quizResult
             }
+
             Courses.saveQuizResult(formData).success(function(msg) {
                 let res = msg.data;
 
@@ -3318,6 +3319,7 @@ angular.module('netbase')
 
 .controller('AccountCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', '$timeout', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, $timeout) {
     let university;
+    $scope.loading = false
     if ($scope.ngDialogData != undefined) {
         if ($scope.ngDialogData.university != undefined) {
             university = $scope.ngDialogData.university;
@@ -3368,6 +3370,7 @@ angular.module('netbase')
     }
 
     $scope.login = function() {
+        $scope.loading = true
         let login = {
             email: $scope.loginEmail,
             password: $scope.loginPassword
@@ -3392,6 +3395,7 @@ angular.module('netbase')
                         $route.reload();
                     }
                 } else {
+                    $scope.loading = false
                     let statusCode = res.data.status;
                     if (statusCode == 5000) {
                         $scope.loginMessageBox = true;
@@ -3404,9 +3408,11 @@ angular.module('netbase')
                     }
                 }
             }).catch(function(e) {
+                $scope.loading = false
                 console.log(e);
             });
         }).catch(function(e) {
+            $scope.loading = false
             if (e == "EMAILINVALIDATED") {
                 console.log("invalid email")
                 $scope.loginMessage = "Please, type a valid email.";
@@ -3422,6 +3428,7 @@ angular.module('netbase')
     };
 
     $scope.create = function() {
+        $scope.loading = true
         let create = {
             email: $scope.createEmail,
             username: $scope.createUsername,
@@ -3436,6 +3443,7 @@ angular.module('netbase')
                 let token = res.data.token;
 
                 if (success) {
+                    $scope.loading = false
                     $localStorage.token = token;
                     $localStorage.logged = true;
                     $rootScope.logged = true;
@@ -3454,6 +3462,7 @@ angular.module('netbase')
                         $route.reload();
                     }
                 } else {
+                    $scope.loading = false
                     let statusCode = res.data.status;
                     if (statusCode == 5002) {
                         $scope.createMessageBox = true;
@@ -3466,10 +3475,12 @@ angular.module('netbase')
                     }
                 }
             }).catch(function(e) {
+                $scope.loading = false
                 console.log(e);
             });
 
         }).catch(function(e) {
+            $scope.loading = false
             if (e == "EMAILINVALIDATED") {
                 $scope.createMessage = "Por favor, escreva um email válido.";
                 $scope.createMessageBox = true;
@@ -5041,7 +5052,6 @@ angular.module('netbase')
 
         if ($scope.pwd.length === 0) delete payload.password;
         Students.update(studentId, payload).success(function(res) {
-            console.log(res)
             let success = res.success;
             let data = res.data;
 

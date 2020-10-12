@@ -35,6 +35,10 @@
         </div>
         <!-- end form group -->
 
+        <div ng-show="loading" style="width: 100%; text-align: center; padding-top: 30px; padding-bottom: 30px;">
+            <img src="/img/loader.gif" height="50px" />
+        </div>
+
         <button ng-click="login()" class="btn btn-bluebase">{{'LOGIN' | translate}}</button>
 
         <div style="widht: 100%; text-align: center; padding-top: 30px; padding-bottom: 15px; font-size: 0.9em;"><a ng-click="forgotPassword()">{{'FORGET_PASSWORD' | translate}}</a></div>
