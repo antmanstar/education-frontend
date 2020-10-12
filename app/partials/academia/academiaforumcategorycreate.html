@@ -15,19 +15,21 @@
 
 <div class="container-fluid container-full">
 
-  <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
-  <div class="row academia-coverimage" ng-if="university.backgroundImage == undefined"  style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
-  <!-- end academia-coverimage -->
+
 
   <div class="row">
+
+    <div academiarightcolumn university="{{university}}"></div>
 
     <div class="col-xs-12 col-sm-8 col-md-8 col-lg-6 academia-content" style="padding-top: 0px;">
 
       <div academiastatus university="{{university}}"></div>
 
-      <div academiarightcolumn university="{{university}}"></div>
+      <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
+      <div class="row academia-coverimage" ng-if="university.backgroundImage == undefined"  style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
+      <!-- end academia-coverimage -->
 
-      <div class="academia-content-forum-answer">
+      <div class="academia-content-forum-answer" style="padding-top: 30px;">
 
         <label>{{'CATEGORY_TITLE' | translate}}</label></br>
         <input class="academia-content-forum-post-create-title" placeholder="{{'WRITE_CATEGORY_TITLE' | translate}}" ng-model="title"></input>
