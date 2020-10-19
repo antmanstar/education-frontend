@@ -325,7 +325,6 @@ angular.module('netbase')
                 } else {
                     return false;
                 }
-
             } else {
                 return false;
             }

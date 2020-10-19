@@ -918,7 +918,7 @@ angular.module('netbase')
     };
 }])
 
-.controller('CoursesEstudarCtrl', ['$cookies', 'User', '$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'University', 'Playlist', 'Forum', 'User', '$window', function($cookies, User, $rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, University, Playlist, Forum, Users, $window) {
+.controller('CoursesEstudarCtrl', ['$cookies', 'User', '$rootScope', '$scope', '$location', '$route', '$localStorage', '$timeout', 'Students', 'ngDialog', 'Courses', 'University', 'Playlist', 'Forum', 'User', '$window', function($cookies, User, $rootScope, $scope, $location, $route, $localStorage, $timeout, Students, ngDialog, Courses, University, Playlist, Forum, Users, $window) {
     $localStorage.estudarModulos = [];
     $scope.showControlButton = $localStorage.showControlButton;
 
@@ -927,10 +927,55 @@ angular.module('netbase')
     $scope.courseId = id;
     $scope.access = false;
     $scope.studying = false;
+    let displayinvite = false;
 
-    // check if course id is already saved in cookies
-    let userId = User.getId();
-    $scope.cookieId = "course_" + id + "_" + userId
+    if (!$rootScope.logged) {
+        $rootScope.accountSuggestion = $timeout(function() {
+            if (!displayinvite) {
+                $timeout.cancel()
+                displayinvite = true;
+            }
+        }, 13500, true);
+    } else {
+        let userId = User.getId();
+        $scope.cookieId = "course_" + id + "_" + userId;
+        Courses.getById(id).success(function(msg) {
+            $scope.course = msg.data;
+            if (msg.data.free == true) {
+                $scope.access = true;
+            }
+
+            let mem = msg.data.members;
+
+            if (mem.indexOf(User.getId()) >= 0) {
+                console.log("user id indexOf greater than 0")
+            }
+
+            $scope.access = true;
+            if ($scope.access == false) {
+                $location.path('/cursos/id/' + res.data._id);
+            }
+
+            // Get the last module
+            let len = $scope.course.module.length
+            let lastModule = $scope.course.module[len - 1].moduleId._id
+            $localStorage.lastModuleId = lastModule
+        }, function error(response) {
+            $location.path('/home/cursos');
+        })
+
+        // auto check if student finished the course
+        $scope.$watch('estudarModulos', function(newValue, oldValue) {
+            console.log("viewRequest: ", $scope.viewRequest)
+                // Check if request to view content comes from Course contents menu
+            if ($scope.viewRequest !== "course_menu") {
+                if (newValue.length > 0) {
+                    $scope.courseFinished = viewedAll()
+                }
+            }
+        }, true)
+    }
+
     let cookieCheck = $cookies.getObject($scope.cookieId)
     let module_id = ""
     let type = "";
@@ -948,41 +993,7 @@ angular.module('netbase')
     $scope.hasPrev = true;
     $scope.hasNext = true;
 
-    Courses.getById(id).success(function(msg) {
-        $scope.course = msg.data;
-        if (msg.data.free == true) {
-            $scope.access = true;
-        }
 
-        let mem = msg.data.members;
-
-        if (mem.indexOf(User.getId()) >= 0) {
-            console.log("user id indexOf greater than 0")
-        }
-
-        $scope.access = true;
-        if ($scope.access == false) {
-            $location.path('/cursos/id/' + res.data._id);
-        }
-
-        // Get the last module
-        let len = $scope.course.module.length
-        let lastModule = $scope.course.module[len - 1].moduleId._id
-        $localStorage.lastModuleId = lastModule
-    }, function error(response) {
-        $location.path('/home/cursos');
-    })
-
-    // auto check if student finished the course
-    $scope.$watch('estudarModulos', function(newValue, oldValue) {
-        console.log("viewRequest: ", $scope.viewRequest)
-            // Check if request to view content comes from Course contents menu
-        if ($scope.viewRequest !== "course_menu") {
-            if (newValue.length > 0) {
-                $scope.courseFinished = viewedAll()
-            }
-        }
-    }, true)
 
     if (cookieCheck) {
         module_id = cookieCheck.module_id;
@@ -1404,8 +1415,7 @@ angular.module('netbase')
                 className: 'ngdialog-theme-default',
                 data: { title: $scope.data.title, "questions": $scope.data.questions, result: $scope.first },
                 closeByNavigation: true,
-                width: '70%',
-
+                width: '70%'
             });
         }
     }).error(function(msg) {
@@ -1474,7 +1484,6 @@ angular.module('netbase')
         console.log("user viewed content inside course")
     })
 
-    let logged = $rootScope.logged;
     $scope.quesNo = 0;
     $scope.quesArr = [];
     $scope.quizResult = [];
@@ -2377,7 +2386,7 @@ angular.module('netbase')
     $scope.selectedKnowledge = $scope.courseData.knowledgeId;
 
     $scope.hasError = false;
-    $scope.createcourseerrmessage = ""
+    $scope.createcourseerrmessage = "";
 
     $scope.tinymceOptions = {
         file_picker_types: 'file image media',
@@ -2413,19 +2422,19 @@ angular.module('netbase')
         //form validation
         if ($scope.title == '') {
             $scope.hasError = true;
-            $scope.createcourseerrmessage = "PLEASE_ENTER_COURSE_TITLE"
+            $scope.createcourseerrmessage = "PLEASE_ENTER_COURSE_TITLE";
             return
         } else if ($scope.selectedKnowledge == '') {
             $scope.hasError = true;
-            $scope.createcourseerrmessage = "PLEASE_SELECT_COURSE_KNOWLEDGE"
+            $scope.createcourseerrmessage = "PLEASE_SELECT_COURSE_KNOWLEDGE";
             return
         } else if ($scope.free == undefined) {
             $scope.hasError = true;
-            $scope.createcourseerrmessage = "PLEASE_SELECT_COURSE_PAYMENT"
+            $scope.createcourseerrmessage = "PLEASE_SELECT_COURSE_PAYMENT";
             return
         } else if ($scope.description == '') {
             $scope.hasError = true;
-            $scope.createcourseerrmessage = "PLEASE_ENTER_COURSE_DESCRIPTION"
+            $scope.createcourseerrmessage = "PLEASE_ENTER_COURSE_DESCRIPTION";
             return
         }
 

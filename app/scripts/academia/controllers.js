@@ -2608,17 +2608,17 @@ angular.module('netbase')
 
         if (data.categoryId == undefined) {
             createPost = false;
-            errors.push("Selecione a categoria do post.")
+            errors.push("Selecione a categoria do post.");
         }
 
         if (data.title == undefined || data.title.length == 0) {
             createPost = false;
-            errors.push("Escreva um título para a postagem")
+            errors.push("Escreva um título para a postagem");
         }
 
         if (data.text == undefined || data.text.length == 0) {
             createPost = false;
-            errors.push("Escreva um texto na postagem")
+            errors.push("Escreva um texto na postagem");
         }
 
         if (createPost) {
@@ -3373,7 +3373,7 @@ angular.module('netbase')
     }
 }])
 
-.directive('academiarightcolumn', ['University', '$localStorage', '$route', 'jwtHelper', 'ngDialog', '$location', 'Chat', 'Students', function(University, $localStorage, $route, jwtHelper, ngDialog, $location, Chat, Students) {
+.directive('academiarightcolumn', ['University', 'Forum', '$localStorage', '$route', 'jwtHelper', 'ngDialog', '$location', 'Chat', 'Students', function(University, Forum, $localStorage, $route, jwtHelper, ngDialog, $location, Chat, Students) {
     return {
         restrict: 'EA',
         templateUrl: '../partials/academia/rightcolumn.html',
@@ -3395,6 +3395,8 @@ angular.module('netbase')
             scope.userSubscribed = false;
             scope.chatDisplay = true;
 
+            scope.categoryListOpen = true;
+
             scope.chatToggle = function() {
                 if (scope.chatDisplay) {
                     scope.chatDisplay = false;
@@ -3405,6 +3407,10 @@ angular.module('netbase')
 
             attr.$observe('university', function(value) {
                 university = JSON.parse(value);
+
+                Forum.getCategoriesByUniversityId(university._id).success(function(resCategory) {
+                    scope.categories = resCategory.data;
+                })
 
                 // Handle Subscribe Functionality
                 Students.getStudentById(studentId).then(function(res) {

@@ -1,904 +1,651 @@
 /* premium content - create */
 
 .academia-content-forum-post-create-premium {
-
-  padding-top: 15px;
-  padding-bottom: 15px;
-
+    padding-top: 15px;
+    padding-bottom: 15px;
 }
 
 .academia-content-forum-post-create-premium .form-group {
-
-  margin-top: 15px;
-
+    margin-top: 15px;
 }
 
 .premium-alert {
-  text-align: center;
+    text-align: center;
 }
+
 
 /* timeline */
 
 .timeline-post {
-  padding-bottom: 35px;
+    padding-bottom: 35px;
 }
 
 .timeline-post .top .user-image {
-  display: inline-block;
-  vertical-align: top;
+    display: inline-block;
+    vertical-align: top;
 }
 
 .timeline-post .top .user-image img {
-  height: 60px;
-  width: 60px;
-  border-radius: 50%;
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
 }
 
 @media only screen and (max-width: 768px) {
-
-  .timeline-post .top .user-image img {
-    height: 30px;
-    width: 30px;
-    border-radius: 50%;
-  }
-
+    .timeline-post .top .user-image img {
+        height: 30px;
+        width: 30px;
+        border-radius: 50%;
+    }
 }
 
 .timeline-post .top .texts {
-  display: inline-block;
-  padding-left: 15px;
-  padding-right: 15px;
-  height: 60px;
+    display: inline-block;
+    padding-left: 15px;
+    padding-right: 15px;
+    height: 60px;
 }
 
 @media only screen and (max-width: 768px) {
-
-  .timeline-post .top .texts {
-    display: inline-block;
-    padding-left: 7px;
-    padding-right: 7px;
-    height: 60px;
-  }
-
+    .timeline-post .top .texts {
+        display: inline-block;
+        padding-left: 7px;
+        padding-right: 7px;
+        height: 60px;
+    }
 }
 
 .timeline-post .top .texts .name {
-  font-size: 1.5em;
-  font-weight: 500;
+    font-size: 1.5em;
+    font-weight: 500;
 }
 
 .timeline-post .top .texts .date {
-  font-weight: bold;
-  color: #6f6f6f;
+    font-weight: bold;
+    color: #6f6f6f;
 }
 
 @media only screen and (max-width: 768px) {
-
-  .timeline-post .top .texts .name {
-    font-size: 1.4em;
-    font-weight: 600;
-  }
-
-  .timeline-post .top .texts .date {
-    font-weight: bold;
-    color: #6f6f6f;
-    font-size: 0.9em;
-  }
-
+    .timeline-post .top .texts .name {
+        font-size: 1.4em;
+        font-weight: 600;
+    }
+    .timeline-post .top .texts .date {
+        font-weight: bold;
+        color: #6f6f6f;
+        font-size: 0.9em;
+    }
 }
 
 .timeline-post .content .text iframe {
-  width: 100%;
-  height: 300px;
-  max-width: 650px;
+    width: 100%;
+    height: 300px;
+    max-width: 650px;
 }
 
 .timeline-post .content {
-  padding-top: 15px;
-  padding-bottom: 15px;
+    padding-top: 15px;
+    padding-bottom: 15px;
 }
 
 @media only screen and (max-width: 768px) {
-
-  .timeline-post .content {
-    padding: 0;
-  }
-
+    .timeline-post .content {
+        padding: 0;
+    }
 }
 
 .timeline-post .content .title {
-  font-size: 1.6em;
-  font-weight: bold;
+    font-size: 1.6em;
+    font-weight: bold;
 }
 
 .timeline-post .content .text {
-  font-size: 1.2em;
-  line-height: 1.7em;
+    font-size: 1.2em;
+    line-height: 1.7em;
 }
 
 .timeline-post .more {
-  text-align: center;
-  height: 1.5em;
-  font-weight: bold;
-  line-height: 1.5em;
-  font-size: 1.2em;
+    text-align: center;
+    height: 1.5em;
+    font-weight: bold;
+    line-height: 1.5em;
+    font-size: 1.2em;
 }
+
 
 /* */
 
 .academia {
-
-  margin-top: 77px;
-
-  font-family: 'Roboto', sans-serif;
-
+    margin-top: 77px;
+    font-family: 'Roboto', sans-serif;
 }
 
 .academia-content-viewers {
-  padding-top: 5px;
-  border-top: 3px solid #f3f3f3;
+    padding-top: 5px;
+    border-top: 3px solid #f3f3f3;
 }
 
 .academia-content-viewers-user {
-  display: inline-block;
-  padding-right: 10px;
+    display: inline-block;
+    padding-right: 10px;
 }
 
 .academia-content-viewers-user-pic {
-  height: 20px;
-  width: 20px;
-  border-radius: 50%;
-  margin-right: 5px;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    margin-right: 5px;
 }
 
 .academia-content-forum-post-info-text.text {
-
-  border: 1px solid #2d42552e;
-  border-radius: 5px;
-  margin-top: 15px;
-  margin-bottom: 15px;
-
-  padding: 10px;
-
-  width: 100%;
-
+    border: 1px solid #2d42552e;
+    border-radius: 5px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    padding: 10px;
+    width: 100%;
 }
 
-.academia-content-forum-post-info-text > div {
-  font-size: 1.25em;
+.academia-content-forum-post-info-text>div {
+    font-size: 1.25em;
+    overflow: auto;
 }
 
 .academia-content-forum-post-info-text figure iframe {
-  width: 100%;
+    width: 100%;
 }
 
 @media only screen and (min-width: 992px) {
-
-  .academia-content-forum-post-info-text figure iframe {
-    height: 500px;
-  }
-
+    .academia-content-forum-post-info-text figure iframe {
+        height: 500px;
+    }
 }
 
 @media only screen and (max-width: 768px) {
-
-  .academia-content-forum-post-info-text figure iframe {
-    height: 300px;
-  }
-
+    .academia-content-forum-post-info-text figure iframe {
+        height: 300px;
+    }
 }
 
 .academia-coverimage {
-
-  height: 240px;
-
-  content: '';
-
-  background-size: cover;
-  background-position: 50% 50%;
-
-  border-radius: 4px;
-
+    height: 240px;
+    content: '';
+    background-size: cover;
+    background-position: 50% 50%;
+    border-radius: 4px;
 }
 
 .academia-content {
-
-  padding: 30px;
-
+    padding: 30px;
 }
 
 .academia-content-navigation {
-
-  display: none;
-  padding-bottom: 10px;
-
+    display: none;
+    padding-bottom: 10px;
 }
 
 .academia-content-navigation-option {
-
-  font-weight: 400;
-  font-size: 1.5em;
-
-  display: inline-block;
-
+    font-weight: 400;
+    font-size: 1.5em;
+    display: inline-block;
 }
 
 .academia-content-navigation-option a {
-
-  color: #484848;
-
+    color: #484848;
 }
 
 .academia-content-navigation-option a:hover {
-
-  font-size: 1.5em;
-  text-decoration: underline;
-
+    font-size: 1.5em;
+    text-decoration: underline;
 }
 
 .academia-content-navigation-option .active {
-
-  font-weight: 400;
-  font-size: 1.55em;
-
-  color: #353535;
-
-  text-decoration: underline;
-  text-transform: capitalize;
-
-
+    font-weight: 400;
+    font-size: 1.55em;
+    color: #353535;
+    text-decoration: underline;
+    text-transform: capitalize;
 }
 
-.academia-content-actions {
+.academia-content-actions {}
 
-}
-
-.academia-content-actions-action {
-
-
-}
+.academia-content-actions-action {}
 
 .academia-content-actions-action a {
-
-  color: #3e3e3e;
-  font-weight: bold;
-
+    color: #3e3e3e;
+    font-weight: bold;
 }
+
 
 /* forum category */
+
 .academia-category {
-  margin-bottom: 20px;
+    margin-bottom: 20px;
 }
 
-.academia-category > .texts > .title > .icon {
-  display: inline-block;
-  vertical-align: top;
-  font-size: 1em;
-  padding-right: 15px;
+.academia-category>.texts>.title>.icon {
+    display: inline-block;
+    vertical-align: top;
+    font-size: 1em;
+    padding-right: 15px;
 }
 
-.academia-category > .texts {
-  display: inline-block;
-  padding-left: 15px;
-  padding-right: 15px;
+.academia-category>.texts {
+    display: inline-block;
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
-.academia-category > .texts > .title {
-  display: block;
-  font-size: 1.8em;
+.academia-category>.texts>.title {
+    display: block;
+    font-size: 1.8em;
 }
 
-.academia-category > .texts > .description {
-  display: block;
+.academia-category>.texts>.description {
+    display: block;
 }
+
 
 /* forum */
 
 .academia-content-forum {
-
-  padding-bottom: 15px;
-
+    padding-bottom: 15px;
 }
 
 .academia-content-forum-post {
-
-  margin-bottom: 10px;
-  display: table;
-
+    margin-bottom: 10px;
+    display: table;
 }
 
 .academia-content-forum-post-stats {
-
-  margin-right: 15px;
-  display: table-cell;
-
+    margin-right: 15px;
+    display: table-cell;
 }
 
 .academia-content-forum-post-stats-ranking {
-
-  display: table-cell;
-  vertical-align: top;
-
-  padding-top: 20px;
-  padding-right: 10px;
-  margin-right: 15px;
-
-  color: #797979;
-
+    display: table-cell;
+    vertical-align: top;
+    padding-top: 20px;
+    padding-right: 10px;
+    margin-right: 15px;
+    color: #797979;
 }
 
 .academia-content-forum-post-stats-votes {
-
-  display: table-cell;
-  padding-right: 10px;
-
+    display: table-cell;
+    padding-right: 10px;
 }
 
-.academia-content-forum-post-stats-upvote {
-
-
-}
+.academia-content-forum-post-stats-upvote {}
 
 .academia-content-forum-post-stats-votes-number {
-
-  text-align: center;
-  color: #797979;
-  font-size: 1.5em;
-
+    text-align: center;
+    color: #797979;
+    font-size: 1.5em;
 }
 
-.academia-content-forum-post-stats-downvote {
-
-
-}
+.academia-content-forum-post-stats-downvote {}
 
 .academia-content-forum-post-info {
-
-  width: 100%;
-  display: table-cell;
-  vertical-align: top;
-
+    width: 100%;
+    display: table-cell;
+    vertical-align: top;
 }
 
 .academia-content-forum-post-info-title {
-
-  font-size: 1.3em;
-  width: calc(100% - 75px);
-
+    font-size: 1.3em;
+    width: calc(100% - 75px);
 }
 
 .academia-content-forum-post-info-title a {
-
     color: #2f6a9c;
-
 }
 
 .academia-content-forum-post-info-stats {
-
-  font-size: 0.7em;
-  color: #797979;
-
+    font-size: 0.7em;
+    color: #797979;
 }
 
 .academia-content-forum-post-info-manage {
-
-  text-align: right;
-
+    text-align: right;
 }
 
 .academia-content-forum-post-info-actions {
-
-  display: inline-block;
-  font-size: small;
-  font-weight: 500;
-
-  padding-top: 5px;
-
+    display: inline-block;
+    font-size: small;
+    font-weight: 500;
+    padding-top: 5px;
 }
 
 .academia-content-forum-post-info-actions .action {
-
-  display: inline-block;
-  padding-right: 5px;
-
+    display: inline-block;
+    padding-right: 5px;
 }
 
 .academia-content-forum-post-create-title {
-
-  border: none;
-  margin-bottom: 30px;
-  outline: none;
-  height: 2em;
-  font-size: 2em;
-  padding-bottom: 5px;
-  border-bottom: 3px solid #555;
-  width: 100%;
-
+    border: none;
+    margin-bottom: 30px;
+    outline: none;
+    height: 2em;
+    font-size: 2em;
+    padding-bottom: 5px;
+    border-bottom: 3px solid #555;
+    width: 100%;
 }
 
 .academia-content-forum-answers {
-
-  font-size: 1.2em;
-
-  border-bottom: 1px solid #e4e6e8;
-
-  margin-top: 20px;
-  margin-bottom: 20px;
-
-  padding-bottom: 15px;
-
+    font-size: 1.2em;
+    border-bottom: 1px solid #e4e6e8;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
 }
 
 .academia-content-forum-post-answer {
-
-  float: right;
-
+    float: right;
 }
 
 .academia-content-forum-post-answer-user-picture {
-
-  height: 30px;
-  width: 30px;
-
-  display: inline-block;
-
+    height: 30px;
+    width: 30px;
+    display: inline-block;
 }
 
 .academia-content-forum-post-answer-user-picture img {
-
-  height: 100%;
-  width: 100%;
-
+    height: 100%;
+    width: 100%;
 }
 
 .academia-content-forum-post-answer-user-name {
-
-  display: inline-block;
-
-  padding-left: 15px;
-
+    display: inline-block;
+    padding-left: 15px;
 }
 
 .academia-content-forum-post-answer-time {
-
-  color: #6a737c;
-  padding-bottom: 5px;
-
+    color: #6a737c;
+    padding-bottom: 5px;
 }
+
 
 /* mobile */
 
 .academia-content-mobile {
-
-  display: none;
-  width: 100%;
-  text-align: center;
-  padding-bottom: 15px;
-
+    display: none;
+    width: 100%;
+    text-align: center;
+    padding-bottom: 15px;
 }
 
 .academia-content-mobile-academia-title {
-
-  font-family: 'Georgia', serif;
-  font-weight: bolder;
-
-  font-size: 1.5em;
-
+    font-family: 'Georgia', serif;
+    font-weight: bolder;
+    font-size: 1.5em;
 }
 
 .academia-content-mobile-academia-title a {
-
-  color: #000;
-
+    color: #000;
 }
 
 .academia-content-mobile-academia-stats {
-
-  font-size: 1.0em;
-
+    font-size: 1.0em;
 }
 
 .academia-content-mobile-navigation {
-
-  display: none;
-
+    display: none;
 }
+
 
 /* end mobile */
 
 .academia-content-button {
-
-  background-color: #cc86d0;
-  border: none;
-
-  font-weight: lighter;
-
-  color: #fff;
-
-  font-size: 0.8em;
-
-  padding-left: 25px;
-  padding-right: 25px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-
-  border-radius: 5px;
-
-  margin-top: 5px;
-  margin-bottom: 5px;
-
+    background-color: #cc86d0;
+    border: none;
+    font-weight: lighter;
+    color: #fff;
+    font-size: 0.8em;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
+
 
 /* supportcol */
 
 .academia-supportcol {
-
-  padding: 15px;
-
+    padding: 15px;
 }
 
 .academia-supportcol button {
-
-  outline: none;
-
+    outline: none;
 }
 
 .academia-supportcol-title {
-
-  font-family: 'Georgia', serif;
-  font-weight: bolder;
-
-  font-size: 1.5em;
-
-  margin-top: 15px;
-  margin-bottom: 15px;
-
+    font-family: 'Georgia', serif;
+    font-weight: bolder;
+    font-size: 1.5em;
+    margin-top: 15px;
+    margin-bottom: 15px;
 }
 
 .academia-supportcol-title a {
-
-  color: #000;
-
+    color: #000;
 }
 
-.academia-supportcol-stats {
+.academia-supportcol-stats {}
 
-}
-
-.academia-supportcol-stats-stat {
-
-
-
-}
+.academia-supportcol-stats-stat {}
 
 .academia-supportcol-button {
-
-  margin-top: 15px;
-  margin-bottom: 15px;
-
-  background-color: #cc86d0;
-  border: none;
-
-  font-weight: lighter;
-
-  color: #fff;
-
-  padding-left: 25px;
-  padding-right: 25px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-
-  border-radius: 5px;
-
+    margin-top: 15px;
+    margin-bottom: 15px;
+    background-color: #cc86d0;
+    border: none;
+    font-weight: lighter;
+    color: #fff;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 5px;
 }
 
-.academia-supportcol-info {
-
-}
+.academia-supportcol-info {}
 
 .academia-supportcol-info-title {
-
-  font-size: 1.3em;
-  padding-bottom: 5px;
-
-  border-bottom: 1px solid #e4e4e4;
-
-  margin-top: 15px;
-  margin-bottom: 15px;
-
+    font-size: 1.3em;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #e4e4e4;
+    margin-top: 15px;
+    margin-bottom: 15px;
 }
 
 .academia-supportcol-info-text {
-
-  color: #222222;
-
+    color: #222222;
 }
 
-.academia-supportcol-info-user {
-
-}
+.academia-supportcol-info-user {}
 
 .academia-supportcol-info-user-img {
-
-  height: 30px;
-  width: 30px;
-
-  display: inline-block;
-
+    height: 30px;
+    width: 30px;
+    display: inline-block;
 }
 
 .academia-supportcol-info-user-img img {
-
-  height: 100%;
-  width: 100%;
-
+    height: 100%;
+    width: 100%;
 }
 
 .academia-supportcol-info-user-text {
-
-  display: inline-block;
-
+    display: inline-block;
 }
+
 
 /* answer */
 
 .academia-content-forum-answer {
-
-  padding-bottom: 60px;
-
+    padding-bottom: 60px;
 }
 
 .academia-content-forum-answer-title {
-
-  margin-top: 20px;
-  margin-bottom: 20px;
-
-  padding-top: 15px;
-
-  border-top: 1px solid #e4e6d8;
-
-  font-size: 1.2em;
-
-  font-weight: 500;
-
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #e4e6d8;
+    font-size: 1.2em;
+    font-weight: 500;
 }
 
 .academia-content-forum-answer-box {
-
-  margin-bottom: 15px;
-
+    margin-bottom: 15px;
 }
 
 .academia-content-forum-answer-box-edit {
-
-  padding: 10px;
-  padding-left: 15px;
-  padding-right: 15px;
-
-  border-bottom: 1px solid #c8ccd0;
-
+    padding: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-bottom: 1px solid #c8ccd0;
 }
 
 .academia-content-forum-answer-box-edit-group {
-
-  padding-right: 30px;
-
+    padding-right: 30px;
 }
 
 .academia-content-forum-answer-box-edit-group span {
-
-  margin-right: 7px;
-  margin-left: 7px;
-
+    margin-right: 7px;
+    margin-left: 7px;
 }
 
 .academia-content-forum-answer-box-edit-group span:hover {
-
-  text-shadow: 0px 0px 4px rgba(105, 210, 231, 0.7);
-
+    text-shadow: 0px 0px 4px rgba(105, 210, 231, 0.7);
 }
 
 .academia-content-forum-answer-box-textarea {
-
-  width: 100%;
-
+    width: 100%;
 }
 
 .academia-content-forum-answer-box-textarea textarea:focus {
-
-  border: 1px solid #3b4045;
-
+    border: 1px solid #3b4045;
 }
 
 .academia-content-forum-answer-box-textarea textarea {
-
-  border: none;
-  outline: none;
-
-  vertical-align: top;
-
-  padding: 15px;
-
-  resize: vertical;
-
-  width: 100%;
-
+    border: none;
+    outline: none;
+    vertical-align: top;
+    padding: 15px;
+    resize: vertical;
+    width: 100%;
 }
+
 
 /* footer */
 
 .academia-footer {
-
-  display: none;
-
-  bottom: 0;
-  left: 0;
-  height: 60px;
-
-  position: fixed;
-
-  min-width: 100vw;
-
-  border-top: 1px solid #d0d0d0;
-
-  background-color: white;
-
+    display: none;
+    bottom: 0;
+    left: 0;
+    height: 60px;
+    position: fixed;
+    min-width: 100vw;
+    border-top: 1px solid #d0d0d0;
+    background-color: white;
 }
 
 .academia-footer ul {
-
-  overflow-x: scroll;
-  overflow-y: none;
-
-  white-space: nowrap;
-
-  margin-bottom: 0px;
-
-  height: 60px;
-
-  padding-left: 0;
-
-  display: inline-block;
-
-  float: left;
-
+    overflow-x: scroll;
+    overflow-y: none;
+    white-space: nowrap;
+    margin-bottom: 0px;
+    height: 60px;
+    padding-left: 0;
+    display: inline-block;
+    float: left;
 }
 
 .academia-footer li {
-
-  display: inline-block;
-  list-style: none;
-  cursor: pointer;
-  user-select: none;
-
-  box-sizing: border-box;
-
-  min-width: 25vw;
-  text-align: center;
-
-  line-height: 60px;
-  height: 60px;
-
-  padding-left: 5px;
-  padding-right: 15px;
-
+    display: inline-block;
+    list-style: none;
+    cursor: pointer;
+    user-select: none;
+    box-sizing: border-box;
+    min-width: 25vw;
+    text-align: center;
+    line-height: 60px;
+    height: 60px;
+    padding-left: 5px;
+    padding-right: 15px;
 }
 
 .academia-footer li a {
-
-  color: #000;
-
+    color: #000;
 }
 
 .academia-footer-button {
-
-  background-color: #52bfea;
-  border-right: 1px solid #449cbf;
-
-  color: #fff;
-  font-weight: bold;
-
-  display: inline-block;
-
-  width: 25vw;
-
-  float: left;
-
-  height: 50px;
-  line-height: 50px;
-
-  padding-left: 15px;
-  padding-right: 15px;
-
-  text-align: center;
-
+    background-color: #52bfea;
+    border-right: 1px solid #449cbf;
+    color: #fff;
+    font-weight: bold;
+    display: inline-block;
+    width: 25vw;
+    float: left;
+    height: 50px;
+    line-height: 50px;
+    padding-left: 15px;
+    padding-right: 15px;
+    text-align: center;
 }
 
 .academia-footer .active {
-
-  font-weight: bold;
-
+    font-weight: bold;
 }
 
 .academia-footer ul::-webkit-scrollbar {
-
-  padding-top: 5px;
-  display: none;
-
+    padding-top: 5px;
+    display: none;
 }
 
 .academia-footer ul::-moz-scrollbar {
-
-  display: none;
-
+    display: none;
 }
 
 @media screen and (max-width: 768px) {
-
-  .academia {
-
-    margin-top: 68px;
-
-  }
-
-  .academia-content {
-
-    padding: 15px;
-    padding-bottom: 50px;
-
-  }
-
-  .academia-supportcol {
-
-    display: none;
-
-  }
-
-  .academia-coverimage {
-
-    height: 170px;
-    border-radius: 0px !important;
-
-  }
-
-  .academia-content-mobile {
-
-    display: block;
-
-  }
-
-  .academia-content-navigation {
-
-    display: block;
-
-  }
-
-  .academia-content-mobile-navigation {
-
-    display: block;
-
-  }
-
-  .academia-footer {
-
-    display: block;
-
-  }
-
+    .academia {
+        margin-top: 68px;
+    }
+    .academia-content {
+        padding: 15px;
+        padding-bottom: 50px;
+    }
+    .academia-supportcol {
+        display: none;
+    }
+    .academia-coverimage {
+        height: 170px;
+        border-radius: 0px !important;
+    }
+    .academia-content-mobile {
+        display: block;
+    }
+    .academia-content-navigation {
+        display: block;
+    }
+    .academia-content-mobile-navigation {
+        display: block;
+    }
+    .academia-footer {
+        display: block;
+    }
 }
 
 @media screen and (max-width: 468px) {
-
-  .academia {
-
-    margin-top: 56px;
-
-  }
-
-  .academia-content-mobile-navigation {
-
-    display: block;
-
-  }
-
+    .academia {
+        margin-top: 56px;
+    }
+    .academia-content-mobile-navigation {
+        display: block;
+    }
 }
