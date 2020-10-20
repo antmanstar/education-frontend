@@ -2199,6 +2199,20 @@ angular.module('netbase')
         let university = res.data.data;
 
         if (success) {
+
+            Forum.getCategoriesByUniversityId(university._id).success(function(resCategory) {
+              if (resCategory.success) {
+                  $scope.categories = resCategory.data;
+
+                  for(let i = 0; i < $scope.categories.length; i++) {
+                    if ($scope.categories[i]._id == $scope.categoryId) {
+                      $scope.catHeader = $scope.categories[i].title
+                    }
+                  }
+              }
+            });
+
+
             $scope.university = university;
             Forum.getForumPostsByCategoryId(university._id, categoryId, $scope.page).success(function(res) {
                 if (res.success) {

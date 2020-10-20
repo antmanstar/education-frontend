@@ -1484,6 +1484,7 @@ angular.module('netbase')
         console.log("user viewed content inside course")
     })
 
+    let logged = $rootScope.logged;
     $scope.quesNo = 0;
     $scope.quesArr = [];
     $scope.quizResult = [];
@@ -1910,7 +1911,7 @@ angular.module('netbase')
     Courses.getModuleById(moduleId).success(function(res) {
         if (res.success) {
             $scope.module = res.data;
-            Courses.getContentModulesByAccount().success(function(res) {
+            Courses.getContentModulesByAccount(universityid).success(function(res) {
                 if (res.success) {
                     let mods = res.data;
                     $scope.modulesByAccount = mods;
@@ -1930,14 +1931,19 @@ angular.module('netbase')
     });
 }])
 
-.controller('CoursesModulosCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses) {
+.controller('CoursesModulosCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'University', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, University) {
         let universityid = $route.current.params.universityid;
         $scope.universityid = universityid;
+
+        let universities = University.retrieveStorage()
+        $scope.universityName = universities[universityid].name
 
         $scope.page = false;
         $scope.activeSection = "modulos";
 
-        Courses.getModulesByAccount().success(function(res) {
+        Courses.getModulesByAccount($scope.universityid).success(function(res) {
+
+          console.log("modules: ", res)
             if (res.success) {
                 $scope.modules = res.data;
             }
@@ -2196,7 +2202,7 @@ angular.module('netbase')
         }
 
         $scope.moduleCreate = function(id) {
-            ngDialog.open({ template: 'partials/courses/modals/modulecreate.html', data: { id: id }, controller: 'CoursesModulosCriarCtrl', className: 'ngdialog-theme-default' });
+            ngDialog.open({ template: 'partials/courses/modals/modulecreate.html', data: { id: id, universityId: $scope.universityid }, controller: 'CoursesModulosCriarCtrl', className: 'ngdialog-theme-default' });
         }
 
         $scope.addInstructors = function(universityId, courseId, members) {
@@ -2204,9 +2210,13 @@ angular.module('netbase')
         }
     }])
 
-.controller('CoursesContentModulosCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', '$cookies', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, $cookies) {
+.controller('CoursesContentModulosCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', '$cookies', 'University', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, $cookies, University) {
     $scope.page = false;
     $scope.universityid = $cookies.get('ownedUniversityId')
+    let universities = University.retrieveStorage()
+    $scope.universityName = universities[$scope.universityid].name
+
+
     $scope.activeSection = "content";
     $scope.conteudocriar = function() {
         ngDialog.open({
@@ -2214,11 +2224,11 @@ angular.module('netbase')
             template: 'partials/courses/modals/createContent.html',
             controller: 'CoursesContentCreateCtrl',
             className: 'ngdialog-theme-default',
-            data: { "universityId": "fdasdfa" }
+            data: { "universityId": $scope.universityid }
         });
     }
 
-    Courses.getContentModulesByAccount().success(function(res) {
+    Courses.getContentModulesByAccount($scope.universityid).success(function(res) {
         if (res.success) {
             $scope.modulesByAccount = res.data;
         }
@@ -2278,7 +2288,7 @@ angular.module('netbase')
     }
 }])
 
-.controller('CoursesOwnerCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', '$cookies', 'Students', 'ngDialog', 'Courses', function($rootScope, $scope, $location, $route, $localStorage, $cookies, Students, ngDialog, Courses) {
+.controller('CoursesOwnerCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', '$cookies', 'Students', 'ngDialog', 'Courses', 'University', function($rootScope, $scope, $location, $route, $localStorage, $cookies, Students, ngDialog, Courses, University) {
     let universityid = $route.current.params.universityid;
     $scope.universityid = universityid;
 
@@ -2289,6 +2299,8 @@ angular.module('netbase')
     $cookies.put("ownedUniversityId", universityid);
     $scope.page = false;
     $scope.activeSection = "owner";
+    let universities = University.retrieveStorage()
+    $scope.universityName = universities[universityid].name
 
     $scope.moduleCreate = function(id) {
         ngDialog.open({ template: 'partials/courses/modals/modulecreate.html', data: { id: id }, controller: 'CoursesModulosCriarCtrl', className: 'ngdialog-theme-default' });
@@ -2386,7 +2398,7 @@ angular.module('netbase')
     $scope.selectedKnowledge = $scope.courseData.knowledgeId;
 
     $scope.hasError = false;
-    $scope.createcourseerrmessage = "";
+    $scope.createcourseerrmessage = ""
 
     $scope.tinymceOptions = {
         file_picker_types: 'file image media',
@@ -2422,19 +2434,19 @@ angular.module('netbase')
         //form validation
         if ($scope.title == '') {
             $scope.hasError = true;
-            $scope.createcourseerrmessage = "PLEASE_ENTER_COURSE_TITLE";
+            $scope.createcourseerrmessage = "PLEASE_ENTER_COURSE_TITLE"
             return
         } else if ($scope.selectedKnowledge == '') {
             $scope.hasError = true;
-            $scope.createcourseerrmessage = "PLEASE_SELECT_COURSE_KNOWLEDGE";
+            $scope.createcourseerrmessage = "PLEASE_SELECT_COURSE_KNOWLEDGE"
             return
         } else if ($scope.free == undefined) {
             $scope.hasError = true;
-            $scope.createcourseerrmessage = "PLEASE_SELECT_COURSE_PAYMENT";
+            $scope.createcourseerrmessage = "PLEASE_SELECT_COURSE_PAYMENT"
             return
         } else if ($scope.description == '') {
             $scope.hasError = true;
-            $scope.createcourseerrmessage = "PLEASE_ENTER_COURSE_DESCRIPTION";
+            $scope.createcourseerrmessage = "PLEASE_ENTER_COURSE_DESCRIPTION"
             return
         }
 
@@ -2547,7 +2559,13 @@ angular.module('netbase')
     $scope.universityid = universityId;
 
     $scope.saveContent = function() {
-        Courses.createPage({ text: $scope.tinymceModel, contentType: 'page', title: $scope.title, moduleId: $route.current.params.id }).
+        Courses.createPage({
+          text: $scope.tinymceModel,
+          contentType: 'page',
+          title: $scope.title,
+          moduleId: $route.current.params.id,
+          universityId: $scope.universityid
+         }).
         success(function(res) {
             console.log("create page response: ", JSON.stringify(res))
             $location.path("/cursos/a/" + $scope.universityid + "/suite/content")
@@ -2609,7 +2627,8 @@ angular.module('netbase')
                 modleId: moduleId,
                 title: $scope.quizTitle,
                 contentType: 'quiz',
-                description: $scope.quizDescription
+                description: $scope.quizDescription,
+                universityId: $scope.universityid,
             }
 
             Courses.createQuiz(data).success(function(res) {
@@ -3157,7 +3176,8 @@ angular.module('netbase')
             duration: $scope.duration,
             description: $scope.description,
             goal: $scope.goal,
-            course_id: $scope.ngDialogData.id
+            course_id: $scope.ngDialogData.id,
+            universityId: $scope.ngDialogData.universityId,
         };
 
         Courses.createModule(formdata).success(function(res) {

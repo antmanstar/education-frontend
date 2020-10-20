@@ -1732,8 +1732,9 @@ angular.module('netbase')
             })
         },
 
-        getContentModulesByAccount: function() {
-            var url = '/module/content/owner';
+        getContentModulesByAccount: function(universityId) {
+            var url = '/module/content/owner/' + universityId;
+            console.log("content by account url: ", url)
             return $http({
                 method: 'GET',
                 url: baseUrl + url,
@@ -1773,8 +1774,10 @@ angular.module('netbase')
             return $http.get(baseUrl + url);
         },
 
-        getModulesByAccount: function() {
-            var url = '/module/owner';
+        getModulesByAccount: function(universityId) {
+            var url = '/module/owner/' + universityId;
+
+            console.log("modules by account url: ", url)
             return $http({
                 method: 'GET',
                 url: baseUrl + url,
