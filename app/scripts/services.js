@@ -896,8 +896,6 @@ angular.module('netbase')
             var url = '/id/' + id;
             return new Promise((resolve, reject) => {
                 $http.get(baseUrl + url).then((res) => {
-                        console.log('here000000000000');
-                        console.log(res);
                         resolve(res.data.data);
                     })
                     .catch((err) => {
@@ -978,7 +976,7 @@ angular.module('netbase')
                     'x-access-token': $localStorage.token
                 }
             });
-        }
+        },
     }
 }])
 
@@ -1121,6 +1119,10 @@ angular.module('netbase')
         getListingsByAccountId: function(id) {
             var url = '/accounts/id/' + id + '/listings';
             return $http.get(baseUrl + url);
+        },
+
+        getListingById: () => {
+
         }
     }
 }])

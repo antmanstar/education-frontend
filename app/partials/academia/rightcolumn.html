@@ -74,7 +74,6 @@
         <!-- <i class="fa fa-rss" aria-hidden="true"></i> -->
 
         <div style="font-size: 1.1em;">
-
             <div class="option" style="padding-left: 0px;">
                 <a href="/a/{{university.url}}/timeline"><img src="/img/icon/timeline.png" style="margin-right: 14px;" height="20px" width="20px" />{{'TIMELINE' | translate}}</a>
             </div>
@@ -99,7 +98,7 @@
                     <i class='fas fa-caret-down' ng-hide="categoryListOpen == false" style='padding-right:15px;color: #4986bf; font-size: 0.85em; width: 25px;'></i>
                     <span>Categories</span>
                 </div>
-                <div ng-repeat="category in categories" style="margin-left: 10px;">
+                <div ng-repeat="category in categories" ng-hide="categoryListOpen == false" style="margin-left: 10px;">
                     <span># {{category.title}}</span>
                 </div>
             </div>
