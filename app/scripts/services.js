@@ -325,7 +325,6 @@ angular.module('netbase')
                 } else {
                     return false;
                 }
-
             } else {
                 return false;
             }
@@ -897,8 +896,6 @@ angular.module('netbase')
             var url = '/id/' + id;
             return new Promise((resolve, reject) => {
                 $http.get(baseUrl + url).then((res) => {
-                        console.log('here000000000000');
-                        console.log(res);
                         resolve(res.data.data);
                     })
                     .catch((err) => {
@@ -979,7 +976,7 @@ angular.module('netbase')
                     'x-access-token': $localStorage.token
                 }
             });
-        }
+        },
     }
 }])
 
@@ -1122,6 +1119,10 @@ angular.module('netbase')
         getListingsByAccountId: function(id) {
             var url = '/accounts/id/' + id + '/listings';
             return $http.get(baseUrl + url);
+        },
+
+        getListingById: () => {
+
         }
     }
 }])
@@ -1731,8 +1732,9 @@ angular.module('netbase')
             })
         },
 
-        getContentModulesByAccount: function() {
-            var url = '/module/content/owner';
+        getContentModulesByAccount: function(universityId) {
+            var url = '/module/content/owner/' + universityId;
+            console.log("content by account url: ", url)
             return $http({
                 method: 'GET',
                 url: baseUrl + url,
@@ -1772,8 +1774,10 @@ angular.module('netbase')
             return $http.get(baseUrl + url);
         },
 
-        getModulesByAccount: function() {
-            var url = '/module/owner';
+        getModulesByAccount: function(universityId) {
+            var url = '/module/owner/' + universityId;
+
+            console.log("modules by account url: ", url)
             return $http({
                 method: 'GET',
                 url: baseUrl + url,
