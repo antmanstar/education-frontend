@@ -586,6 +586,9 @@ angular.module('netbase')
     $scope.ownedUniversityId = ownedUniversityId
     $scope.universityUrl = $localStorage.universityUrl
 
+    let universities = University.retrieveStorage()
+    $scope.university = universities[$scope.universityid]
+
     $scope.universities = [];
     $scope.customPlaylist = [];
     $scope.cusloading = 0;
@@ -605,13 +608,17 @@ angular.module('netbase')
     };
 
     $scope.loadForumPosts = function() {
-        University.getallCategorybyUniversity().success(function(res) {
-            if (res.success) {
-                $scope.categories = res.data;
-            } else {
-                console.log("error while loading university")
-            }
-        });
+        Forum.getCategoriesByUniversityId($scope.university._id).success(function(resCategory) {
+            $scope.categories = resCategory.data;
+        })
+        // University.getallCategorybyUniversity().success(function(res) {
+        //     if (res.success) {
+        //         $scope.categories = res.data;
+        //         console.log("categories: ", res.data)
+        //     } else {
+        //         console.log("error while loading university")
+        //     }
+        // });
     }
 
     $scope.loadForumPostCategory = function(uni_id, categoryId) {
@@ -1804,12 +1811,16 @@ angular.module('netbase')
     let universityId;
 }])
 
-.controller('CoursesModulosByIdCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', '$window', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, $window) {
+.controller('CoursesModulosByIdCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', '$window', 'University', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, $window, University) {
     $scope.page = false;
     $scope.activeSection = "modulos";
     let moduleId = $route.current.params.id;
     let universityid = $route.current.params.universityid;
     $scope.universityid = universityid;
+
+    let universities = University.retrieveStorage()
+    $scope.university = universities[universityid]
+
     $scope.save_module_success = false;
 
     $scope.back = function() {
@@ -1937,6 +1948,7 @@ angular.module('netbase')
 
         let universities = University.retrieveStorage()
         $scope.universityName = universities[universityid].name
+        $scope.university = universities[universityid]
 
         $scope.page = false;
         $scope.activeSection = "modulos";
@@ -1979,9 +1991,14 @@ angular.module('netbase')
             });
         }
     }])
-    .controller('CoursesModulosSingleCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'Sales', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, Sales) {
+    .controller('CoursesModulosSingleCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'Sales', 'University', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, Sales, University) {
         $scope.page = false;
         let universityid = $route.current.params.universityid;
+
+        let universities = University.retrieveStorage()
+        $scope.universityName = universities[universityid].name
+        $scope.university = universities[universityid]
+
         $scope.universityid = universityid;
         $scope.section = 'module';
         $scope.addmemberstatus = false;
@@ -2215,6 +2232,7 @@ angular.module('netbase')
     $scope.universityid = $cookies.get('ownedUniversityId')
     let universities = University.retrieveStorage()
     $scope.universityName = universities[$scope.universityid].name
+    $scope.university = universities[$scope.universityid]
 
 
     $scope.activeSection = "content";
@@ -2301,6 +2319,7 @@ angular.module('netbase')
     $scope.activeSection = "owner";
     let universities = University.retrieveStorage()
     $scope.universityName = universities[universityid].name
+    $scope.university = universities[universityid]
 
     $scope.moduleCreate = function(id) {
         ngDialog.open({ template: 'partials/courses/modals/modulecreate.html', data: { id: id }, controller: 'CoursesModulosCriarCtrl', className: 'ngdialog-theme-default' });
@@ -2549,7 +2568,7 @@ angular.module('netbase')
     };
 }])
 
-.controller('CoursesCreatePageCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', '$cookies', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, $cookies) {
+.controller('CoursesCreatePageCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', '$cookies', 'University', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, $cookies, University) {
     ngDialog.close();
     $scope.activeSection = "createPage";
     $scope.tinymceModel = 'Initial content';
@@ -2557,6 +2576,9 @@ angular.module('netbase')
     // Get university id from the cookies
     let universityId = $cookies.get("ownedUniversityId");
     $scope.universityid = universityId;
+
+    let universities = University.retrieveStorage()
+    $scope.university = universities[$scope.universityid]
 
     $scope.saveContent = function() {
         Courses.createPage({
@@ -2592,7 +2614,7 @@ angular.module('netbase')
     };
 }])
 
-.controller('CoursesCreateQuizCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', '$cookies', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, $cookies) {
+.controller('CoursesCreateQuizCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', '$cookies', 'University', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, $cookies, University) {
     ngDialog.close();
     $scope.activeSection = "createQuiz";
     $scope.quesArr = [];
@@ -2602,6 +2624,9 @@ angular.module('netbase')
     // Get university id from the cookies
     let universityId = $cookies.get("ownedUniversityId");
     $scope.universityid = universityId;
+
+    let universities = University.retrieveStorage()
+    $scope.university = universities[$scope.universityid]
 
     let moduleId = $route.current.params.id;
 
@@ -3877,7 +3902,6 @@ angular.module('netbase')
         let data = res.data;
         let docs = data.docs;
         $scope.knowledges = docs;
-
     });
 
     University.getUniversities().then(function(res) {
@@ -5104,7 +5128,7 @@ angular.module('netbase')
 }])
 
 .controller('IndexCtrl', ['$rootScope', '$scope', '$location', '$localStorage', '$route', function($rootScope, $scope, $location, $localStorage, $route) {
-    // If isn't the first visit, redirects to home
+    // If isn't the first visit, retts to home
     if ($localStorage.logged) {
         $location.path("/home/timeline");
     } else {

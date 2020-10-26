@@ -1,34 +1,13 @@
 <div ng-include="'partials/headerhome.html'"></div>
-
-<style>
-    figure img {
-        width: 100% !important;
-        height: unset !important;
-    }
-    @media only screen and (max-width: 1200px) {
-      body {
-        padding-left: 0%;
-        padding-right: 0%;
-      }
-    }
-</style>
-
 <div class="container-fluid container-full">
-
-
     <div class="row">
-
         <div academiarightcolumn university="{{university}}"></div>
-
-        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-6 academia-content" style="padding-top: 0px;">
-
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 academia-content">
             <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
             <div class="row academia-coverimage" ng-if="university.backgroundImage == undefined" style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
 
             <div style="height: 30px"></div>
-
             <div academiastatus university="{{university}}"></div>
-
             <div class="classroom-list-header">
                 <div>
                     <div style="font-size: 2.0em; font-weight: bolder;">{{'PLAYLISTS' | translate}}</div>
@@ -37,17 +16,15 @@
                         <!-- <img src="/img/icon/gridview.svg" class="grid-view-style" /> -->
                     </div>
                 </div>
-                <div class="classroom-btn-view">
+                <div class="classroom-btn-view" ng-show="showButton">
                     <a href="/p/create?universityId={{university._id}}" class="btn btn-green" style="height: unset;">
-                        Criar playlist
+                        {{'CREATE_PLAYLIST' | translate}}
                     </a>
                 </div>
             </div>
 
             <div class="academia-content-forum" style="margin-top: 15px;">
-
                 <div class="academia-category" ng-repeat="playlist in playlists">
-
                     <div class="texts">
                         <div class="title">
                             <div class="icon" style="padding-right: 30px;"><i class="fa fa-video-camera"></i>
@@ -58,19 +35,18 @@
                 </div>
                 <!-- end academia-category -->
 
-                <div ng-show="playlists.length == 0">
-                    {{'NO_REGISTERED_PLAYLIST' | translate}}
+                <div ng-show="playlists.length == 0" style="display: flex; flex-direction: column; align-items: center; margin-top: 30px;">
+                    <img src="/img/academy/empty_playlist.png" width="300px" style="align-self: center">
+                    <span style="font-size: 30px; font-weight: 600; text-align: center; width: 300px; margin-top: 10px;">Create your own playlist</span>
+                    <span style="text-align: center; width:300px; margin-top: 10px;">You can create your own customizable playlist from tons of video tutorials.</span>
+                    <!-- {{'NO_REGISTERED_PLAYLIST' | translate}} -->
                 </div>
-
             </div>
             <!-- academia-content-forum-->
-
         </div>
         <!-- end col-xs-12 -->
-
     </div>
     <!-- end row -->
-
 </div>
 <!-- container-full -->
 <categorychat university={{university}} />

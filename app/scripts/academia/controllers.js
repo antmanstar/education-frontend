@@ -76,8 +76,9 @@ angular.module('netbase')
 }])
 
 /* end landing pages */
-.controller('AcademiaCoursesCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Courses', function($rootScope, $scope, $location, $route, University, Courses) {
+.controller('AcademiaCoursesCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Courses', '$localStorage', function($rootScope, $scope, $location, $route, University, Courses, $localStorage) {
     let universityUrl = $route.current.params.academiaName;
+    $scope.showButton = $localStorage.studentIsAdmin
     University.getUniversity(universityUrl).then(function(res) {
         $scope.university = res.data.data;
         Courses.getByUniversityId($scope.university._id).success(function(res) {
@@ -317,7 +318,7 @@ angular.module('netbase')
         $rootScope.currentChatChannel.on('memberLeft', $scope.notifyMemberLeft);
     }
 
-    $scope.sendMSG = function() { // Send message        
+    $scope.sendMSG = function() { // Send message
         $rootScope.currentChatChannel.sendMessage($scope.sendingMessage);
         $scope.sendingMessage = '';
     }
@@ -1653,6 +1654,8 @@ angular.module('netbase')
     $scope.confirmDelete = false;
     $scope.classroomViewMode = false;
 
+    $scope.isAdmin = $localStorage.studentIsAdmin
+
     //var baseUrl = "http://localhost:9000"; //Back-end server base url
     //var baseUrl = "http://localhost:9001"; //Back-end server base url
     var baseUrl = "https://educationalcommunity-classroom.herokuapp.com";
@@ -1962,9 +1965,12 @@ angular.module('netbase')
     }
 }])
 
-.controller('AcademiaPlaylistsByIdCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Playlist', 'Videos', function($rootScope, $scope, $location, $route, University, Playlist, Videos) {
+.controller('AcademiaPlaylistsByIdCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Playlist', 'Videos', '$localStorage', function($rootScope, $scope, $location, $route, University, Playlist, Videos, $localStorage) {
     let universityUrl = $route.current.params.academiaName;
     let playlistId = $route.current.params.playlistId;
+    $scope.showButton = $localStorage.studentIsAdmin
+        //set playlist id to localStorage
+    $localStorage.createVideoPlaylistId = playlistId
 
     if (University.isStoredLocal(universityUrl)) {
         let universityStorage = University.retrieveStorage(universityUrl);
@@ -1985,8 +1991,10 @@ angular.module('netbase')
     }
 }])
 
-.controller('AcademiaPlaylistsCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Playlist', function($rootScope, $scope, $location, $route, University, Playlist) {
+.controller('AcademiaPlaylistsCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Playlist', '$localStorage', function($rootScope, $scope, $location, $route, University, Playlist, $localStorage) {
     let universityUrl = $route.current.params.academiaName;
+    $scope.showButton = $localStorage.studentIsAdmin
+    console.log("showButton: ", $scope.showButton)
     if (University.isStoredLocal(universityUrl)) {
         let universityStorage = University.retrieveStorage(universityUrl);
         $scope.university = universityStorage[universityUrl];
@@ -2029,6 +2037,7 @@ angular.module('netbase')
 
     //Set to localstorage for use in creating category
     $localStorage.universityUrl = universityUrl
+    $localStorage.createPostCategoryId = null
 
     /* forum posts */
     $scope.forumPosts = [];
@@ -2123,7 +2132,7 @@ angular.module('netbase')
     $scope.setupIntercom = () => {
         Students.getStudentById(User.getId()).then(res => {
             let student = res.data.data;
-
+            $scope.showButton = $scope.isAdmin(student._id)
             if ($scope.isAdmin(student._id) === true) {
                 Intercom("boot", {
                     app_id: "qq74p5y0",
@@ -2171,9 +2180,13 @@ angular.module('netbase')
     };
 }])
 
-.controller('AcademiaForumCategoryByIdCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', '$timeout', 'Forum', function($rootScope, $scope, $location, $route, University, $timeout, Forum) {
+.controller('AcademiaForumCategoryByIdCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', '$timeout', 'Forum', '$localStorage', function($rootScope, $scope, $location, $route, University, $timeout, Forum, $localStorage) {
     let universityUrl = $route.current.params.academiaName;
     let categoryId = $route.current.params.categoryId;
+    $localStorage.createPostCategoryId = categoryId
+
+    $scope.showButton = $localStorage.studentIsAdmin
+    $scope.universityUrl = universityUrl
 
     /* forum posts */
     $scope.forumPosts = [];
@@ -2201,15 +2214,15 @@ angular.module('netbase')
         if (success) {
 
             Forum.getCategoriesByUniversityId(university._id).success(function(resCategory) {
-              if (resCategory.success) {
-                  $scope.categories = resCategory.data;
+                if (resCategory.success) {
+                    $scope.categories = resCategory.data;
 
-                  for(let i = 0; i < $scope.categories.length; i++) {
-                    if ($scope.categories[i]._id == $scope.categoryId) {
-                      $scope.catHeader = $scope.categories[i].title
+                    for (let i = 0; i < $scope.categories.length; i++) {
+                        if ($scope.categories[i]._id == $scope.categoryId) {
+                            $scope.catHeader = $scope.categories[i].title
+                        }
                     }
-                  }
-              }
+                }
             });
 
 
@@ -2238,9 +2251,10 @@ angular.module('netbase')
     };
 }])
 
-.controller('AcademiaForumCategoryAllCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', '$timeout', 'Forum', function($rootScope, $scope, $location, $route, University, $timeout, Forum) {
+.controller('AcademiaForumCategoryAllCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', '$timeout', 'Forum', '$localStorage', function($rootScope, $scope, $location, $route, University, $timeout, Forum, $localStorage) {
     let universityUrl = $route.current.params.academiaName;
-    /* forum posts */
+    $scope.showButton = $localStorage.studentIsAdmin
+        /* forum posts */
     $scope.forumPosts = [];
 
     /* get university informations */
@@ -2550,7 +2564,7 @@ angular.module('netbase')
     }
 }])
 
-.controller('AcademiaForumPostCreateCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'ngDialog', 'Forum', 'Courses', function($rootScope, $scope, $location, $route, University, ngDialog, Forum, Courses) {
+.controller('AcademiaForumPostCreateCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'ngDialog', 'Forum', 'Courses', '$localStorage', function($rootScope, $scope, $location, $route, University, ngDialog, Forum, Courses, $localStorage) {
     let universityUrl = $route.current.params.academiaName;
     let university;
 
@@ -2575,6 +2589,15 @@ angular.module('netbase')
         $scope.categoryForum = { _id: undefined };
     }
 
+
+    //
+    // If the admin accessed the create post page inside the category page
+    //
+    let categoryId = $localStorage.createPostCategoryId
+    if (categoryId) {
+        $scope.categoryForum._id = categoryId
+    }
+
     University.getUniversity(universityUrl).then(function(res) {
         $scope.university = res.data.data;
         university = res.data.data;
@@ -2586,32 +2609,32 @@ angular.module('netbase')
         });
     });
 
-    /* edit editor */
-    $scope.trixInitialize = function(e, editor) {
-        var document = editor.getDocument()
-        $rootScope.trix = editor;
+    // /* edit editor */
+    // $scope.trixInitialize = function(e, editor) {
+    //     var document = editor.getDocument()
+    //     $rootScope.trix = editor;
 
-        $(".block_tools").append('<button class="trix-icon yt" type="button" data-attribute="video" id="videoAppend"><i class="fab fa-youtube"></i></button>');
-        $(".block_tools").append('<button class="trix-icon pic" type="button" data-attribute="pic" id="picAppend"><i class="glyphicon glyphicon-picture"></i></button>');
-        $(".block_tools").append('<button class="trix-icon sound" type="button" data-attribute="sound" id="soundAppend"><i class="glyphicon glyphicon-picture"></i></button>');
-        $("#soundAppend").click(function() {
-            ngDialog.open({ template: 'partials/modals/forumpostoption.html', data: { type: "sound" }, controller: "AcademiaForumPostCreateOptionCtrl", className: 'ngdialog-theme-default' });
-        });
+    //     $(".block_tools").append('<button class="trix-icon yt" type="button" data-attribute="video" id="videoAppend"><i class="fab fa-youtube"></i></button>');
+    //     $(".block_tools").append('<button class="trix-icon pic" type="button" data-attribute="pic" id="picAppend"><i class="glyphicon glyphicon-picture"></i></button>');
+    //     $(".block_tools").append('<button class="trix-icon sound" type="button" data-attribute="sound" id="soundAppend"><i class="glyphicon glyphicon-picture"></i></button>');
+    //     $("#soundAppend").click(function() {
+    //         ngDialog.open({ template: 'partials/modals/forumpostoption.html', data: { type: "sound" }, controller: "AcademiaForumPostCreateOptionCtrl", className: 'ngdialog-theme-default' });
+    //     });
 
-        $("#picAppend").click(function() {
-            ngDialog.open({ template: 'partials/modals/forumpostoption.html', data: { type: "pic" }, controller: "AcademiaForumPostCreateOptionCtrl", className: 'ngdialog-theme-default' });
-        });
+    //     $("#picAppend").click(function() {
+    //         ngDialog.open({ template: 'partials/modals/forumpostoption.html', data: { type: "pic" }, controller: "AcademiaForumPostCreateOptionCtrl", className: 'ngdialog-theme-default' });
+    //     });
 
-        $("#videoAppend").click(function() {
-            ngDialog.open({ template: 'partials/modals/forumpostoption.html', data: { type: "video" }, controller: "AcademiaForumPostCreateOptionCtrl", className: 'ngdialog-theme-default' });
-        });
-    }
+    //     $("#videoAppend").click(function() {
+    //         ngDialog.open({ template: 'partials/modals/forumpostoption.html', data: { type: "video" }, controller: "AcademiaForumPostCreateOptionCtrl", className: 'ngdialog-theme-default' });
+    //     });
+    // }
 
     /* create forum post by id */
     $scope.premium = { value: "0" };
     $scope.createForumPost = function() {
         var data = {
-            text: $scope.text,
+            text: tinymce.activeEditor.getContent(),
             title: $scope.title,
             premium: $scope.premium.value,
             categoryId: $scope.categoryForum._id
@@ -2652,7 +2675,7 @@ angular.module('netbase')
 
                         let success = res.data.success;
                         if (success) {
-                            // tinymce.activeEditor.setContent("")
+                            tinymce.activeEditor.setContent("")
                             $location.path('/a/' + university.url + '/forum/post/id/' + data._id)
                             window.scrollTo(0, 0);
                         }
@@ -3142,7 +3165,7 @@ angular.module('netbase')
                 }).length == 0 ? false : true
             }
 
-            // get channel by channel id 
+            // get channel by channel id
             scope.initChannel = channel => {
                 return scope.messagingClient.getChannelBySid(channel.sid);
             }
@@ -3396,7 +3419,7 @@ angular.module('netbase')
         link: function(scope, element, attr) {
             let university;
             let studentId;
-
+            $localStorage.studentIsAdmin = false
             if ($localStorage.token != undefined && $localStorage.token != null) {
                 studentId = jwtHelper.decodeToken($localStorage.token)._id;
             }
@@ -3520,6 +3543,7 @@ angular.module('netbase')
 
                     if (studentId != undefined && member.accountId == studentId && member.privilege == 99) {
                         scope.studentIsAdmin = true;
+                        $localStorage.studentIsAdmin = true
                     }
 
                 }

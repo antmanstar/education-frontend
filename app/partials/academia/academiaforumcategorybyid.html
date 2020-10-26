@@ -15,73 +15,82 @@
 
 <div class="container-fluid container-full">
 
-  <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
-  <div class="row academia-coverimage" ng-if="university.backgroundImage == undefined"  style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
+    <div class="row">
 
-  <div class="row">
+        <div academiarightcolumn university="{{university}}"></div>
 
-    <div academiarightcolumn university="{{university}}"></div>
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 academia-content">
+            <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
+            <div class="row academia-coverimage" ng-if="university.backgroundImage == undefined" style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
+            <div style="height: 30px"></div>
 
-    <div class="col-xs-12 col-sm-8 col-md-8 col-lg-6 academia-content" style="padding-top: 0px;">
+            <div academiastatus university="{{university}}"></div>
 
-      <div academiastatus university="{{university}}"></div>
+            <div class="academia-content-forum">
 
-      <div class="academia-content-forum">
+              <div class="classroom-list-header">
+                  <div>
+                      <div style="font-size: 1.3em; color: #2f6a9c">{{catHeader}} Category</div>
+                  </div>
+                  <div class="classroom-btn-view" ng-show="showButton">
+                      <a href="/a/{{universityUrl}}/forum/post/create" class="btn btn-green" style="height: unset;">
+                          {{'CREATE_POST' | translate}}
+                      </a>
+                  </div>
+              </div>
 
-        <div style="font-size: 1.3em; color: #2f6a9c;">
-          {{catHeader}} Category
-        </div>
+                <!-- ordering -->
 
-        <!-- ordering -->
+                <div style="border-bottom: 1px solid #d6d6d6; border-top: 1px solid #d6d6d6; padding-bottom: 10px; padding-top: 10px; margin-bottom: 10px; text-align: right;">
 
-        <div style="border-bottom: 1px solid #d6d6d6; border-top: 1px solid #d6d6d6; padding-bottom: 10px; padding-top: 10px; margin-bottom: 10px; text-align: right;">
+                    <div style="display: inline-block; padding-right: 5px;"><b>{{'SORTBY' | translate}}: </b></div>
 
-          <div style="display: inline-block; padding-right: 5px;"><b>{{'SORTBY' | translate}}: </b></div>
-
-          <div class="dropdown" style="display: inline-block;">
-            <button class="btn btn-default dropdown-toggle" type="button" style="height: 30px; background-color: #cecece;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <div class="dropdown" style="display: inline-block;">
+                        <button class="btn btn-default dropdown-toggle" type="button" style="height: 30px; background-color: #cecece;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
               <b ng-if="forumPostsOrder == '-createdAt'">{{'DATE_CREATEDAT' | translate}}</b>
               <b ng-if="forumPostsOrder == '-votesCount'">{{'VOTE_MOST' | translate}}</b>
               <span class="caret"></span>
             </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-              <li ng-click="orderForumPosts('createdAt')"><a href="#">{{'DATE_CREATEDAT' | translate}}</a></li>
-              <li ng-click="orderForumPosts('votesCount')"><a href="#">{{'VOTE_MOST' | translate}}</a></li>
-            </ul>
-          </div>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <li ng-click="orderForumPosts('createdAt')"><a href="#">{{'DATE_CREATEDAT' | translate}}</a></li>
+                            <li ng-click="orderForumPosts('votesCount')"><a href="#">{{'VOTE_MOST' | translate}}</a></li>
+                        </ul>
+                    </div>
+
+                </div>
+                <!-- end ordering -->
+
+                <div ng-show="forumPosts.length == 0" style="display: flex; flex-direction: column; align-items: center; margin-top: 30px;">
+                    <img src="/img/academy/empty_forum.png" width="300px" style="align-self: center">
+                    <span style="font-size: 30px; font-weight: 600; text-align: center; width: 300px; margin-top: 10px;">Ainda sem mensagens no fórum</span>
+                    <!-- {{'NO_FORUM_POSTS_YET' | translate}} -->
+                </div>
+
+                <div ng-show="forumPosts.length > 0">
+
+                    <forumpost ng-repeat="post in forumPosts | orderBy:forumPostsOrder" p="{{post}}"></forumpost>
+
+                </div>
+                <!-- forumPosts.length > 0 -->
+
+            </div>
+            <!-- academia-content-forum-->
+
+            <div>
+                <ul class="pagination" ng-if="pages > 1">
+                    <li class="page-item" ng-if="page != 1"><a class="page-link" href="/a/{{university.url}}/forum/category/id/{{categoryId}}?page={{page - 1}}">{{'RETURN' | translate}}</a></li>
+                    <li class="page-item" ng-repeat="p in range(1, pages)"><a class="page-link" ng-style="p == page && {'font-weight':'bold'}" href="/a/{{university.url}}/forum/category/id/{{categoryId}}?page={{p}}">{{p}}</a></li>
+                    <li class="page-item"><a class="page-link" href="/a/{{university.url}}/forum/category/id/{{categoryId}}?page={{page + 1}}">{{'NEXT' | translate}}</a></li>
+                </ul>
+            </div>
 
         </div>
-        <!-- end ordering -->
-
-        <div ng-show="forumPosts.length == 0">
-          {{'NO_FORUM_POSTS_YET' | translate}}
-        </div>
-
-        <div ng-show="forumPosts.length > 0">
-
-          <forumpost ng-repeat="post in forumPosts | orderBy:forumPostsOrder" p="{{post}}"></forumpost>
-
-        </div>
-        <!-- forumPosts.length > 0 -->
-
-      </div>
-      <!-- academia-content-forum-->
-
-      <div>
-        <ul class="pagination" ng-if="pages > 1">
-          <li class="page-item" ng-if="page != 1"><a class="page-link" href="/a/{{university.url}}/forum/category/id/{{categoryId}}?page={{page - 1}}">{{'RETURN' | translate}}</a></li>
-          <li class="page-item" ng-repeat="p in range(1, pages)"><a class="page-link" ng-style="p == page && {'font-weight':'bold'}" href="/a/{{university.url}}/forum/category/id/{{categoryId}}?page={{p}}">{{p}}</a></li>
-          <li class="page-item"><a class="page-link" href="/a/{{university.url}}/forum/category/id/{{categoryId}}?page={{page + 1}}">{{'NEXT' | translate}}</a></li>
-        </ul>
-      </div>
+        <!-- end col-xs-12 -->
 
     </div>
-    <!-- end col-xs-12 -->
-
-  </div>
-  <!-- end row -->
-
-  <footermobile></footermobile>
+    <!-- end row -->
+    <categorychat university={{university}} />
+    <footermobile></footermobile>
 
 </div>
 <!-- container-full -->

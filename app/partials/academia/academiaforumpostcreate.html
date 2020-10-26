@@ -15,15 +15,16 @@
 
 <div class="container-fluid container-full">
 
-    <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
-    <div class="row academia-coverimage" ng-if="university.backgroundImage == undefined" style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
-    <!-- end academia-coverimage -->
-
     <div class="row">
 
         <div academiarightcolumn university="{{university}}"></div>
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 academia-content">
+            <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
+            <div class="row academia-coverimage" ng-if="university.backgroundImage == undefined" style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
 
-        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-6 academia-content" style="padding-top: 0px;">
+            <div style="height: 30px"></div>
+
+            <div academiastatus university="{{university}}"></div>
 
             <div class="academia-content-navigation">
 
@@ -41,10 +42,6 @@
             <div class="academia-content-forum-answer">
 
                 <input class="academia-content-forum-post-create-title" placeholder="{{'TYPE_POST_TITLE' | translate}}" ng-model="title"></input>
-
-                <!-- <trix-toolbar id="my_toolbar"></trix-toolbar>
-                <trix-editor angular-trix toolbar="my_toolbar" ng-model="text" trix-change="trixChange(e, editor);" trix-initialize="trixInitialize(e, editor);"></trix-editor> -->
-
                 <textarea class="textarea" ng-model="text"></textarea>
                 <div class="academia-content-forum-post-create-premium">
 
@@ -75,7 +72,7 @@
         -->
 
                 <div class="academia-content-forum-answer-action" style="margin-top: 15px;">
-                    <button class="btn btn-bluebase" ng-click="createForumPost()">{{'CREATE_POST' | translate}}</button>
+                    <button class="btn btn-green" ng-click="createForumPost()">{{'CREATE_POST' | translate}}</button>
                 </div>
                 <!-- academia-content-forum-answer -->
 
@@ -87,7 +84,6 @@
 
     </div>
     <!-- end row -->
-
     <footermobile></footermobile>
 
 </div>

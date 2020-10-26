@@ -1,19 +1,31 @@
 <div ng-include="'partials/headerhome.html'"></div>
 
-<div class="container-fluid ">
-    <!-- <div class="row" style="margin-top: 15px;">
+<div class="container-fluid container-full">
 
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <div class="row">
 
-      <div class="title" style="font-size: 3em; font-weight: bold;">Cursos</div>
+        <div academiarightcolumn university="{{university}}"></div>
 
-      <div ng-include="'/partials/courses/suite/navbar.html'"></div>
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 academia-content">
 
-    </div>
-  </div> -->
+            <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
+            <div class="row academia-coverimage" ng-if="university.backgroundImage == undefined" style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
 
-    <div class="container-fluid" style="margin-top: 15px; margin-bottom: 30px;">
-        <div class="row">
+            <div style="height: 30px"></div>
+
+            <div academiastatus university="{{university}}"></div>
+
+            <div>
+
+              <div class="title" style="font-size: 2.0em; font-weight: bolder;">{{'CURSOS' | translate}}</div>
+
+              <div ng-include="'/partials/courses/suite/navbar.html'"></div>
+
+              <!-- -->
+
+            </div>
+            <!-- end col-xs-12 -->
+
             <div class="col-md-12">
                 <form>
                     <input class="form-control input-lg" type="text" placeholder="{{'ADD_TITLE_HERE' | translate}}" style="margin-bottom: 20px;" ng-model="title">
@@ -36,12 +48,14 @@
 
                     </div>
 
-                    <button ng-click="saveContent()" type="button" class="btn btn-mini btn-green" style="width: 20%;">{{'CREATE_A_PAGE' | translate}}</button>
+                    <button ng-click="saveContent()" type="button" class="btn btn-mini btn-green">{{'CREATE_A_PAGE' | translate}}</button>
 
                 </form>
             </div>
         </div>
     </div>
+    <categorychat university={{university}} />
+    <footermobile></footermobile>
 </div>
 
 <style>

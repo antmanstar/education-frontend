@@ -45,12 +45,12 @@
                           <!-- <img src="/img/icon/gridview.svg" class="grid-view-style" /> -->
                       </div>
                   </div>
-                  <div class="classroom-btn-view">
+                  <div class="classroom-btn-view" ng-show="showButton">
                       <a href="/a/{{university.url}}/forum/post/create" class="btn btn-green" style="height: unset;">
                           Criar post
                       </a>
-                  </div>
-              </div>
+                    </div>
+                </div>
 
                 <div ng-show="forumPosts.length > 0">
 
@@ -99,8 +99,12 @@
                     <img src="/img/loader.gif" height="50px" />
                 </div>
 
-                <div ng-show="forumPosts.length == 0 && loaded">
-                    {{'NO_POST' | translate}}
+                <div ng-show="forumPosts.length == 0 && loaded" style="display: flex; flex-direction: column; align-items: center; margin-top: 30px;">
+                    <img src="/img/academy/empty_feed.png" width="300px" style="align-self: center">
+                    <span style="font-size: 30px; font-weight: 600; text-align: center; width: 300px; margin-top: 10px;">No post yet!</span>
+                    <span style="text-align: center; width:300px; margin-top: 10px;">Stay Active and  Get ahead
+                        with Learning</span>
+                    <!-- {{'NO_POST' | translate}} -->
                 </div>
 
             </div>

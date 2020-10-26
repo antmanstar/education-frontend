@@ -254,18 +254,31 @@ span i {
 
 </style>
 
-<div class="container-fluid container-home">
+<div class="container-fluid container-full">
 
-  <div class="row">
+    <div class="row">
 
-    <div ng-class="{'alert alert-danger danger': addmembererr, 'alert alert-success success': !addmembererr}" style="margin-top: 2rem; height: 6rem;" ng-show="addmemberstatus">
-      {{ addmembermessage | translate}}
-    </div>
+        <div academiarightcolumn university="{{university}}"></div>
 
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      <div style="height: 10px;"></div>
-      <a href="/cursos/a/{{universityid}}/suite/owner"><i class="fas fa-arrow-left"></i> {{'BACK_TO_COURSE' | translate}}</a>
-      <div class="title" style="font-size: 3em; font-weight: bold; line-height: 1em; margin: 4rem 0;">{{course.title}}</div>
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 academia-content">
+
+            <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
+            <div class="row academia-coverimage" ng-if="university.backgroundImage == undefined" style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
+
+            <div style="height: 30px"></div>
+
+            <div academiastatus university="{{university}}"></div>
+
+            <div class="row">
+
+              <div ng-class="{'alert alert-danger danger': addmembererr, 'alert alert-success success': !addmembererr}" style="margin-top: 2rem; height: 6rem;" ng-show="addmemberstatus">
+                {{ addmembermessage | translate}}
+              </div>
+
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div style="height: 10px;"></div>
+                <a href="/cursos/a/{{universityid}}/suite/owner"><i class="fas fa-arrow-left"></i> {{'BACK_TO_COURSE' | translate}}</a>
+                <div class="title" style="font-size: 2.0em; font-weight: bolder;">{{course.title}}</div>
 
       <!-- NAVIGATION -->
       <nav style="position: relative; z-index: 0 !important;">
@@ -302,7 +315,7 @@ span i {
                   <b>{{'NO_MODULE_ADDED' | translate}}</b>
                 </div>
 
-                <div class="col-xs-12 col-sm-4" ng-repeat="module in course.module" ng-if="module.moduleId.active == true">
+                          <div class="col-xs-12 col-sm-6" ng-repeat="module in course.module" ng-if="module.moduleId.active == true">
 
                   <div class="course-card" style="cursor: pointer;">
                     <a style="color: unset;" href="/cursos/a/{{universityid}}/suite/modulos/id/{{module.moduleId._id}}">
@@ -455,14 +468,14 @@ span i {
               </div>
             </div>
 
-            <!-- ng-controller="CoursesContentModulosCtrl" -->
-            <div class="tab-pane active" ng-controller="CoursesContentModulosCtrl" ng-show="section == 'content'">
-              <!-- content section -->
-              <div class="col-xs-12 col-sm-12">
-                <div style="padding-top: 10px;">
-                  <div style="float: right;"><button  class="btn bg-base" style="margin-top: 2px; height: 29px; width: unset;" ng-click="conteudocriar()">{{'CREATE_CONTENT' | translate}}</button></div>
-                </div>
-              </div>
+                      <!-- ng-controller="CoursesContentModulosCtrl" -->
+                      <div class="tab-pane active" ng-controller="CoursesContentModulosCtrl" ng-show="section == 'content'">
+                        <!-- content section -->
+                        <div class="col-xs-12 col-sm-12">
+                          <div style="padding-top: 10px;">
+                            <div style="float: right;"><button  class="btn btn-green" style="margin-top: 2px; height: 29px; width: unset;" ng-click="conteudocriar()">{{'CREATE_CONTENT' | translate}}</button></div>
+                          </div>
+                        </div>
 
               <div class="row" style="margin-top: 10px;">
                 <div class="col-md-6" ng-repeat="item in modulesByAccount"  style="cursor: pointer;">
@@ -535,7 +548,13 @@ span i {
     </div>
     <!-- col-sm-12 -->
 
-  </div>
+            </div>
+        </div>
+    </div>
+
+    <categorychat university={{university}} />
+    <footermobile></footermobile>
+
 </div>
 
 <!-- content delete popup-->
