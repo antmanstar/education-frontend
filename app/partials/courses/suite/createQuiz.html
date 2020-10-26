@@ -1,15 +1,38 @@
 <div ng-include="'partials/headerhome.html'"></div>
 
-<div class="container-fluid ">
+<div class="container-fluid container-full">
 
-    <div class="container-fluid" style="margin-top: 15px; margin-bottom: 30px;">
-        <div class="row">
-            <div class="col-md-12">
+    <div class="row">
 
-                <!-- show this section before creating the quiz -->
-                <div ng-show="addQuestions == undefined">
-                    <h3 class="quiz-heading text-center">{{'ADD_QUIZ' | translate}}</h3>
-                    <br>
+        <div academiarightcolumn university="{{university}}"></div>
+
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 academia-content">
+
+            <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
+            <div class="row academia-coverimage" ng-if="university.backgroundImage == undefined" style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
+
+            <div style="height: 30px"></div>
+
+            <div academiastatus university="{{university}}"></div>
+
+            <div>
+
+              <div class="title" style="font-size: 2.0em; font-weight: bolder;">{{'CURSOS' | translate}}</div>
+
+              <div ng-include="'/partials/courses/suite/navbar.html'"></div>
+
+              <!-- -->
+
+            </div>
+            <!-- end col-xs-12 -->
+
+            <div class="row">
+                <div class="col-md-12">
+
+                    <!-- show this section before creating the quiz -->
+                    <div ng-show="addQuestions == undefined">
+                        <h3 class="quiz-heading">{{'ADD_QUIZ' | translate}}</h3>
+                        <br>
 
                     <!-- create quiz section start -->
                     <div class="panel panel-default">
@@ -131,14 +154,17 @@
                                 <li class="pull-right">
                                     <button class="btn btn-small btn-bluebase" ng-click="addNewQues()">{{'ADD_NEW_QUESTION' | translate}}</button>
 
-                                </li>
-                            </ul>
-                        </form>
+                                    </li>
+                                </ul>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <categorychat university={{university}} />
+    <footermobile></footermobile>
 </div>
 
 <style>

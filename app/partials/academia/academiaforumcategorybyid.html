@@ -2,22 +2,31 @@
 
 <div class="container-fluid container-full">
 
-    <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
-    <div class="row academia-coverimage" ng-if="university.backgroundImage == undefined" style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
-
     <div class="row">
 
         <div academiarightcolumn university="{{university}}"></div>
 
-        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-6 academia-content">
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 academia-content">
+
+            <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
+            <div class="row academia-coverimage" ng-if="university.backgroundImage == undefined" style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
+
+            <div style="height: 30px"></div>
 
             <div academiastatus university="{{university}}"></div>
 
             <div class="academia-content-forum">
 
-                <div style="font-size: 1.3em; color: #2f6a9c;">
-                    {{catHeader}} Category
-                </div>
+              <div class="classroom-list-header">
+                  <div>
+                      <div style="font-size: 1.3em; color: #2f6a9c">{{catHeader}} Category</div>
+                  </div>
+                  <div class="classroom-btn-view" ng-show="showButton">
+                      <a href="/a/{{universityUrl}}/forum/post/create" class="btn btn-green" style="height: unset;">
+                          {{'CREATE_POST' | translate}}
+                      </a>
+                  </div>
+              </div>
 
                 <!-- ordering -->
 
@@ -69,7 +78,7 @@
 
     </div>
     <!-- end row -->
-
+    <categorychat university={{university}} />
     <footermobile></footermobile>
 
 </div>

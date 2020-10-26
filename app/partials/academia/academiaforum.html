@@ -24,16 +24,16 @@
 
             <div class="academia-content-forum">
 
-                <div class="classroom-list-header">
-                    <div>
-                        <div style="font-size: 2.0em; font-weight: bolder;">{{'FEED' | translate}}</div>
-                        <div class='classroom-arrange-iconview'>
-                            <!-- <img src="/img/icon/listview.svg" class="list-view-style" /> -->
-                            <!-- <img src="/img/icon/gridview.svg" class="grid-view-style" /> -->
-                        </div>
-                    </div>
-                    <div class="classroom-btn-view">
-                        <a href="/a/{{university.url}}/forum/post/create" class="btn btn-green" style="height: unset;">
+              <div class="classroom-list-header">
+                  <div>
+                      <div style="font-size: 2.0em; font-weight: bolder;">{{'FEED' | translate}}</div>
+                      <div class='classroom-arrange-iconview'>
+                          <!-- <img src="/img/icon/listview.svg" class="list-view-style" /> -->
+                          <!-- <img src="/img/icon/gridview.svg" class="grid-view-style" /> -->
+                      </div>
+                  </div>
+                  <div class="classroom-btn-view" ng-show="showButton">
+                      <a href="/a/{{university.url}}/forum/post/create" class="btn btn-green" style="height: unset;">
                           Criar post
                       </a>
                     </div>

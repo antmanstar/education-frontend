@@ -80,6 +80,7 @@
     margin-right: 5px;
     min-height: 50px;
     position: fixed;
+    z-index: 100;
 }
 
 .chat-heading {

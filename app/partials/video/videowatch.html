@@ -24,7 +24,7 @@
     .plyr {
         height: 100% !important;
     }
-    
+
     .plyr__video-wrapper {
         height: 100% !important;
     }
@@ -48,7 +48,9 @@
             </div>
 
             <div class="video-author" ng-if="university != undefined">
-                <div class="pic" style="background-image: unset !important;"><img src="{{university.backgroundImage}}" /></div>
+                <div class="pic" style="background-image: unset !important;" ng-if="university.backgroundImage != undefined"><img src="{{university.backgroundImage}}" /></div>
+                <div class="pic" style="background-image: unset !important;" ng-if="university.backgroundImage == undefined"><img src="/img/misc/noimageacademia.jpg" /></div>
+
                 <div class="name"><a href="https://universida.de/a/{{university.url}}">{{university.name}}</a></div>
             </div>
 

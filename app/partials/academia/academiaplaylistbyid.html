@@ -2,18 +2,28 @@
 
 <div class="container-fluid container-full">
 
-    <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
-    <div class="row academia-coverimage" ng-if="university.backgroundImage == undefined" style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
-
     <div class="row">
 
         <div academiarightcolumn university="{{university}}"></div>
 
-        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9 academia-content">
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 academia-content">
+            <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
+            <div class="row academia-coverimage" ng-if="university.backgroundImage == undefined" style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
+
+            <div style="height: 30px"></div>
 
             <div academiastatus university="{{university}}"></div>
 
-            <h2 style="border-bottom: 3px solid #dedddd; padding-bottom: 15px;">{{playlist.title}}</h2>
+            <div class="classroom-list-header">
+                <div>
+                    <div style="font-size: 2.0em; font-weight: bolder;">{{playlist.title}}</div>
+                </div>
+                <div class="classroom-btn-view" ng-show="showButton">
+                    <a href="/v/create?universityId={{university._id}}" class="btn btn-green" style="height: unset;">
+                        {{'CREATE_VIDEO' | translate}}
+                    </a>
+                </div>
+            </div>
 
             <div class="academia-content-forum">
 

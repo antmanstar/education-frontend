@@ -117,13 +117,24 @@
 
 </style>
 
-<div class="container-fluid ">
+<div class="container-fluid container-full">
 
-  <div class="row" style="margin-top: 15px;">
+    <div class="row">
 
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div academiarightcolumn university="{{university}}"></div>
 
-      <div class="title" style="font-size: 3em; font-weight: bold;">{{universityName}} {{'COURSES' | translate}}</div>
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 academia-content">
+
+            <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
+            <div class="row academia-coverimage" ng-if="university.backgroundImage == undefined" style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
+
+            <div style="height: 30px"></div>
+
+            <div academiastatus university="{{university}}"></div>
+
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+              <div class="title" style="font-size: 2.0em; font-weight: bolder;">{{universityName}} {{'COURSES' | translate}}</div>
 
       <div ng-include="'/partials/courses/suite/navbar.html'"></div>
 
@@ -193,13 +204,14 @@
           </span>
         </div>
 
-      </div>
+              </div>
+            </div>
+            <!-- MODULO -->
+
+        </div>
     </div>
-    <!-- MODULO -->
-
-
-  </div>
-  <!-- end row -->
+    <categorychat university={{university}} />
+    <footermobile></footermobile>
 
 </div>
 <!-- container-full -->

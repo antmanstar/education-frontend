@@ -129,9 +129,11 @@ angular.module('netbase')
     }
 }])
 
-.controller('VideoCreateCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Playlist', 'Videos', 'Courses', function($rootScope, $scope, $location, $route, University, Playlist, Videos, Courses) {
+.controller('VideoCreateCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Playlist', 'Videos', 'Courses', '$cookies', '$localStorage', function($rootScope, $scope, $location, $route, University, Playlist, Videos, Courses, $cookies, $localStorage) {
     let universityId;
     $scope.loading = false
+
+    let createVideoPlaylistId = $localStorage.createVideoPlaylistId
 
     $scope.tinymceOptions = {
         file_picker_types: 'file image media',
@@ -153,8 +155,26 @@ angular.module('netbase')
         universityId = { _id: undefined };
     }
 
-    $scope.playlistSelect = { _id: undefined };
-    $scope.universityId = universityId;
+    $scope.universityId = universityId
+    console.log('university ID: ', $scope.universityId)
+
+    let universityid = universityId._id
+
+    $scope.playlistSelect = { _id: createVideoPlaylistId };
+    $scope.universityid = universityid;
+
+    if (University.isStoredLocal($scope.universityid)) {
+        let universityStorage = University.retrieveStorage($scope.universityid);
+        $scope.university = universityStorage[$scope.universityid];
+
+        console.log("university: ", $scope.university)
+    } else {
+        University.getUniversityById($scope.universityid).success(function(res) {
+            $scope.university = res.data;
+            console.log("university: ", $scope.university)
+            University.storeLocal($scope.university);
+        });
+    }
 
     Playlist.getAllPlaylistByUniversityId(universityId._id).success(function(res) {
         $scope.playlists = res.data;
@@ -240,6 +260,22 @@ angular.module('netbase')
         universityId = { _id: $location.search().universityId };
     } else {
         universityId = { _id: undefined };
+    }
+
+    let universityid = universityId._id
+    $scope.universityid = universityid;
+
+    if (University.isStoredLocal($scope.universityid)) {
+        let universityStorage = University.retrieveStorage($scope.universityid);
+        $scope.university = universityStorage[$scope.universityid];
+
+        console.log("university: ", $scope.university)
+    } else {
+        University.getUniversityById($scope.universityid).success(function(res) {
+            $scope.university = res.data;
+            console.log("university: ", $scope.university)
+            University.storeLocal($scope.university);
+        });
     }
 
     $scope.createPlaylist = () => {

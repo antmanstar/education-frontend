@@ -16,9 +16,9 @@
                         <!-- <img src="/img/icon/gridview.svg" class="grid-view-style" /> -->
                     </div>
                 </div>
-                <div class="classroom-btn-view">
+                <div class="classroom-btn-view" ng-show="showButton">
                     <a href="/p/create?universityId={{university._id}}" class="btn btn-green" style="height: unset;">
-                        Criar playlist
+                        {{'CREATE_PLAYLIST' | translate}}
                     </a>
                 </div>
             </div>
