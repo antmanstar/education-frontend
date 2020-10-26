@@ -16,12 +16,24 @@
     }
 </style>
 
+<style>
+    figure img {
+        width: 100% !important;
+        height: unset !important;
+    }
+    @media only screen and (max-width: 1200px) {
+      body {
+        padding-left: 0%;
+        padding-right: 0%;
+      }
+    }
+</style>
+
 <div class="container-fluid container-full">
 
     <div class="row">
 
         <div academiarightcolumn university="{{university}}"></div>
-
       <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 academia-content">
           <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
           <div class="row academia-coverimage" ng-if="university.backgroundImage == undefined" style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
