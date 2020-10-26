@@ -53,17 +53,17 @@
                     </tbody>
                 </table>
 
-                <div ng-show="categories.length == 0">
-                    {{'NO_REGISTERED_CATEGORY' | translate}}
+                <div ng-show="categories.length == 0" style="display: flex; flex-direction: column; align-items: center; margin-top: 30px;">
+                    <img src="/img/academy/empty_feed.png" width="300px" style="align-self: center">
+                    <span style="font-size: 30px; font-weight: 600; text-align: center; width: 300px; margin-top: 10px;">No Category yet!</span>
+                    <span style="text-align: center; width:300px; margin-top: 10px;">Create your own categroy here</span>
+                    <!-- {{'NO_REGISTERED_CATEGORY' | translate}} -->
                 </div>
 
                 <div ng-show="forumPosts.length > 0">
-
                     <forumpost ng-repeat="post in forumPosts | orderBy:'-votesCount'" p="{{post}}"></forumpost>
-
                 </div>
                 <!-- forumPosts.length > 0 -->
-
             </div>
             <!-- academia-content-forum-->
 

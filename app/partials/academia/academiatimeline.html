@@ -12,11 +12,12 @@
         width: 100% !important;
         height: unset !important;
     }
+    
     @media only screen and (max-width: 1200px) {
-      body {
-        padding-left: 0%;
-        padding-right: 0%;
-      }
+        body {
+            padding-left: 0%;
+            padding-right: 0%;
+        }
     }
 </style>
 
@@ -28,40 +29,43 @@
 
         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 academia-content">
 
-        <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
-        <div class="row academia-coverimage" ng-if="university.backgroundImage == undefined" style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
+            <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
+            <div class="row academia-coverimage" ng-if="university.backgroundImage == undefined" style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
 
-        <div style="height: 30px"></div>
+            <div style="height: 30px"></div>
 
-        <div academiastatus university="{{university}}"></div>
+            <div academiastatus university="{{university}}"></div>
 
-      <style>
-        .onboarding-row {
-          padding: 10px;
-          padding-bottom: 15px;
-          padding-top: 15px;
-          background-color: #52bfea;
-          margin-bottom: 20px;
-          border-radius: 5px;
-        }
-        .onboarding-row .card-wrapper {
-          min-height: 90px;
-          color: #163642;
-          font-weight: bold;
-        }
-        .onboarding-row .card-inside {
-          background-color: #fff;
-          min-height: 90px;
-          border-radius: 7px;
-          padding: 10px;
-          cursor: pointer;
-        }
-        .onboarding-row .card-inside:hover {
-          border: 3px solid #ee5748;
-        }
-      </style>
+            <style>
+                .onboarding-row {
+                    padding: 10px;
+                    padding-bottom: 15px;
+                    padding-top: 15px;
+                    background-color: #52bfea;
+                    margin-bottom: 20px;
+                    border-radius: 5px;
+                }
+                
+                .onboarding-row .card-wrapper {
+                    min-height: 90px;
+                    color: #163642;
+                    font-weight: bold;
+                }
+                
+                .onboarding-row .card-inside {
+                    background-color: #fff;
+                    min-height: 90px;
+                    border-radius: 7px;
+                    padding: 10px;
+                    cursor: pointer;
+                }
+                
+                .onboarding-row .card-inside:hover {
+                    border: 3px solid #ee5748;
+                }
+            </style>
 
-      <!-- ONBOARDING
+            <!-- ONBOARDING
       <div class="row onboarding-row">
         <div class="col-xs-12" style="font-weight: bold; margin-bottom: 10px; padding-left: 5px; color: #fff; font-size: 1.1em;">Get started with your Educational Platform</div>
         <div class="col-xs-3 card-wrapper">
@@ -87,20 +91,20 @@
       </div>
       -->
 
-      <div class="academia-content-forum">
+            <div class="academia-content-forum">
 
                 <div ng-hide="loaded" style="text-align: center;">
                     <img src="/img/loader.gif" height="50px" />
                 </div>
 
-                <div ng-show="forumPosts.length == 0 && loaded">
-                    {{'NO_POST' | translate}}
+                <div ng-show="forumPosts.length == 0 && loaded" style="display: flex; flex-direction: column; align-items: center; margin-top: 30px;">
+                    <img src="/img/academy/empty_timeline.png" width="300px" style="align-self: center">
+                    <span style="font-size: 30px; font-weight: 600; text-align: center; width: 300px; margin-top: 10px;">Expanding Your Reach!</span>
+                    <span style="text-align: center; width:300px; margin-top: 10px;">Big Collection of educational stuff for both students and teachers. Be the first to crate the post.</span>
                 </div>
 
                 <div ng-show="forumPosts.length > 0">
-
                     <timelinepost p="{{post}}" u="{{university}}" ng-repeat="post in forumPosts"></timelinepost>
-
                 </div>
                 <!-- forumPosts.length > 0 -->
 

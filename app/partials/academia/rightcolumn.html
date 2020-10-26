@@ -46,23 +46,18 @@
     </style>
 
     <div class="section-menu">
-
         <div class="section-menu-title" style="padding-left: 0px;">{{university.name}}</div>
         <div class="academia-supportcol-stats">
-
             <!--
             <button class="btn bg-base" style="margin-top: 2px; height: 29px; width: unset;" ng-click="createPost(university.url)">{{'CREATE_POST' | translate}}</button>
           -->
-
             <!--
           <div style="line-height: 30px; display: inline-block; border-radius: 42px; border: 1px solid #bbb; padding: 5px; padding-right: 15px; padding-left: 15px; box-shadow: 0px 0px 5px 0px rgba(82,82,82,1); font-size: 0.9em; margin-bottom: 10px;">
             <div style="display: inline-block; margin-right: 5px;"><img height="30px" src="https://www.flaticon.com/svg/static/icons/svg/148/148764.svg" /></div>
             <div style="display: inline-block; font-weight: bold;">Create</div>
           </div>
           -->
-
             <div style="height: 5px"></div>
-
         </div>
         <!--  {{'MEMBERS' | translate}} -->
         <div style="border-top: 1px solid #cacaca; border-bottom: 1px solid #cacaca; padding-top: 5px; padding-bottom: 5px; margin-bottom: 10px; heigth: 35px; line-height: 35px; ">
@@ -70,9 +65,6 @@
             <button class="btn bg-primary-purple" style="float: right; margin-top: 2px; height: 29px; width: unset;" ng-if="!userSubscribed" ng-click="subscribe()">{{'SUBSCRIBE' | translate}}</button>
             <button class="btn bg-primary-purple" style="float: right; margin-top: 2px; height: 29px; width: unset;" ng-if="userSubscribed" ng-click="subscribe()">{{'UNSUBSCRIBE' | translate}}</button>
         </div>
-
-        <!-- <i class="fa fa-rss" aria-hidden="true"></i> -->
-
         <div style="font-size: 1.1em;">
             <div class="option" style="padding-left: 0px;">
                 <a href="/a/{{university.url}}/timeline"><img src="/img/icon/timeline.png" style="margin-right: 14px;" height="20px" width="20px" />{{'TIMELINE' | translate}}</a>
@@ -91,7 +83,6 @@
             <div class="option" style="padding-left: 0px;">
                 <a href="/a/{{university.url}}/forum/category/all"><img src="https://visualpharm.com/assets/811/Discussion%20Forum-595b40b65ba036ed117d396c.svg" style="margin-right: 14px;" height="20px" width="20px" />{{'FORUM' | translate}}</a>
             </div>
-
             <div class="category" style="display: flex; flex-direction: column;">
                 <div ng-click="categoryListOpen = !categoryListOpen">
                     <i class='fas fa-caret-right' ng-hide="categoryListOpen == true" style='padding-right:15px;color: #4986bf; font-size: 0.85em; width: 25px;'></i>
@@ -146,7 +137,7 @@
     </div>
 
 
-    <div class="academia-supportcol-info" ng-controller="CoursesNavBarCtrl">
+    <!-- <div class="academia-supportcol-info" ng-controller="CoursesNavBarCtrl">
         <div class="academia-supportcol-info-title" ng-if="studentIsAdmin == true">
             {{'MANAGEMENT' | translate}}
         </div>
@@ -158,7 +149,7 @@
         <a href="/cursos/a/{{university._id}}/suite/owner" ng-if="studentIsAdmin == true"><button class="btn bg-base" style="margin-top: 2px; height: 29px; width: unset;">{{'COURSES_SUITE' | translate}}</button></a>
         <a href="" ng-if="studentIsAdmin == true"><button class="btn bg-base" style="margin-top: 2px; height: 29px; width: unset;" ng-click="coursesCreate(university._id)">Criar curso</button></a>
         <a href="" ng-if="studentIsAdmin == true"><button class="btn bg-base" style="margin-top: 2px; height: 29px; width: unset;">{{'PLAN' | translate}}</button></a>
-    </div>
+    </div> -->
 
 
     <!--
