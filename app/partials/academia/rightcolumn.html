@@ -1,38 +1,4 @@
-<!--
-<div id="chat" style="-webkit-box-shadow: 0px -3px 35px -1px rgba(133,133,133,0.25); -moz-box-shadow: 0px -3px 35px -1px rgba(133,133,133,0.25); box-shadow: 0px -3px 35px -1px rgba(133,133,133,0.25);z-index: 999999; position: fixed; min-width: 290px; right: 8%; border: 1px solid #cecccc; border-bottom: 0px; bottom: 0; padding: 0; border-top-left-radius: 2px; border-top-right-radius: 2px;" class="col-sm-2 col-md-2 col-lg-3">
-
-  <div class="chat-header" ng-click="chatToggle()">
-    <i class="fa fa-circle" aria-hidden="true" style="padding-right: 10px; font-size: 0.55em; vertical-align: 2px; color: #37bb74;"></i>Samba Poker Chat
-  </div>
-
-  <div class="chat-channel" ng-show="chatDisplay">
-    <select>
-      <option ng-repeat="channel in channels">{{channel.title}}</option>
-    </select>
-  </div>
-
-  <div class="chat-area" style="min-height: 285px;" ng-show="chatDisplay">
-
-    <div class="message" style="padding-bottom: 10px; padding-top: 5px;" ng-repeat="n in [1,2]">
-
-      <div class="user" style="padding-bottom: 7px;">
-        <img style="height: 20px; width: 20px; border-radius: 50px; margin-right: 5px;" src="https://storage.googleapis.com/networkbase-images/images/1537853209/a40.jpg" /><b>Nome</b>
-      </div>
-      <div class="txt">Mensagem enviada pelo usuário</div>
-
-    </div>
-
-  </div>
-
-  <div class="chat-textarea" ng-show="chatDisplay">
-    <textarea resize="no" placeholder="Escreva uma mensagem..."></textarea><button>Enviar</button>
-  </div>
-
-</div>
--->
-
 <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 section-menu-col">
-
     <style>
         .section-menu .option {
             padding-top: 9px;
@@ -42,31 +8,104 @@
             font-size: 1.03em;
             color: #2d4255;
             font-weight: bold;
+            padding-left: 0px;
+        }
+        
+        .section-menu .section-menu-title {
+            padding-left: 0px;
+        }
+        
+        .members-list {
+            line-height: 35px;
+        }
+        
+        .split-line {
+            background-color: #cacaca;
+            height: 1px;
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+        
+        .subscribe-btn {
+            float: right;
+            margin-top: 2px;
+            height: 29px;
+            width: unset;
+        }
+        
+        .category-header {
+            margin-top: 5px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        
+        .category-header .title {
+            font-size: 22px;
+            font-weight: 600;
+        }
+        
+        .category-caret {
+            padding-right: 15px;
+            color: #4986bf;
+            font-size: 0.85em;
+            width: 25px;
+        }
+        
+        .category-add-btn {
+            background-color: dodgerblue;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            padding-top: 2px;
+            padding-bottom: 2px;
+            text-align: center;
+            color: white;
+            font-size: 16px;
+        }
+        
+        .category-list-wrapper {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .category-list {
+            margin-left: 10px;
+            padding-left: 20px;
+        }
+        
+        .category-list:hover {
+            background-color: darkturquoise;
+        }
+        
+        .category {
+            margin-top: 5px;
+            margin-bottom: 5px;
+            color: black;
+            font-size: 20px;
+            text-align: center;
+            text-decoration: none !important;
         }
     </style>
 
     <div class="section-menu">
-        <div class="section-menu-title" style="padding-left: 0px;">{{university.name}}</div>
+        <div class="section-menu-title">{{university.name}}</div>
         <div class="academia-supportcol-stats">
-            <!--
-            <button class="btn bg-base" style="margin-top: 2px; height: 29px; width: unset;" ng-click="createPost(university.url)">{{'CREATE_POST' | translate}}</button>
-          -->
-            <!--
-          <div style="line-height: 30px; display: inline-block; border-radius: 42px; border: 1px solid #bbb; padding: 5px; padding-right: 15px; padding-left: 15px; box-shadow: 0px 0px 5px 0px rgba(82,82,82,1); font-size: 0.9em; margin-bottom: 10px;">
-            <div style="display: inline-block; margin-right: 5px;"><img height="30px" src="https://www.flaticon.com/svg/static/icons/svg/148/148764.svg" /></div>
-            <div style="display: inline-block; font-weight: bold;">Create</div>
-          </div>
-          -->
             <div style="height: 5px"></div>
         </div>
-        <!--  {{'MEMBERS' | translate}} -->
-        <div style="border-top: 1px solid #cacaca; border-bottom: 1px solid #cacaca; padding-top: 5px; padding-bottom: 5px; margin-bottom: 10px; heigth: 35px; line-height: 35px; ">
-            <div style="display: inline-block;"><i style="margin-right: 8px;" class="fas fa-user-friends"></i>{{ (university.members | filter : { 'unsubscribed' : 'false' }).length }}</div>
-            <button class="btn bg-primary-purple" style="float: right; margin-top: 2px; height: 29px; width: unset;" ng-if="!userSubscribed" ng-click="subscribe()">{{'SUBSCRIBE' | translate}}</button>
-            <button class="btn bg-primary-purple" style="float: right; margin-top: 2px; height: 29px; width: unset;" ng-if="userSubscribed" ng-click="subscribe()">{{'UNSUBSCRIBE' | translate}}</button>
+        <div class="split-line"></div>
+        <div class="members-list">
+            <div style="display: inline-block;">
+                <i style="margin-right: 8px;" class="fas fa-user-friends"></i>{{ (university.members | filter : { 'unsubscribed' : 'false' }).length }}
+            </div>
+            <button class="btn bg-primary-purple subscribe-btn" ng-if="!userSubscribed" ng-click="subscribe()">{{'SUBSCRIBE' | translate}}</button>
+            <button class="btn bg-primary-purple subscribe-btn" ng-if="userSubscribed" ng-click="subscribe()">{{'UNSUBSCRIBE' | translate}}</button>
         </div>
+        <div class="split-line"></div>
         <div style="font-size: 1.1em;">
-            <div class="option" style="padding-left: 0px;">
+            <div class="option">
                 <a href="/a/{{university.url}}/timeline"><img src="/img/icon/timeline.png" style="margin-right: 14px;" height="20px" width="20px" />{{'TIMELINE' | translate}}</a>
             </div>
             <div class="option" style="padding-left: 0px;">
@@ -78,194 +117,25 @@
             <div class="option" style="padding-left: 0px;">
                 <a href="/a/{{university.url}}/cursos"><img src="https://visualpharm.com/assets/311/Graduation%20Cap-595b40b65ba036ed117d2d97.svg" style="margin-right: 14px;" height="20px" width="20px" />{{'COURSES' | translate}}</a>
             </div>
-            <!--div class="option" style="padding-left: 0px;"><a href="/a/{{university.url}}/classroom"><img src="https://visualpharm.com/assets/311/Graduation%20Cap-595b40b65ba036ed117d2d97.svg" style="margin-right: 14px;" height="20px" width="20px" />Classroom</a></div-->
             <div class="option" style="padding-left: 0px;"><a href="/a/{{university.url}}/classroom"><i class='fas fa-chalkboard-teacher' style='padding-right:15px;color: #4986bf; font-size: 0.85em;'></i>{{'CLASSROOM' | translate}}</a></div>
             <div class="option" style="padding-left: 0px;">
                 <a href="/a/{{university.url}}/forum/category/all"><img src="https://visualpharm.com/assets/811/Discussion%20Forum-595b40b65ba036ed117d396c.svg" style="margin-right: 14px;" height="20px" width="20px" />{{'FORUM' | translate}}</a>
             </div>
-            <div class="category" style="display: flex; flex-direction: column;">
-                <div ng-click="categoryListOpen = !categoryListOpen">
-                    <i class='fas fa-caret-right' ng-hide="categoryListOpen == true" style='padding-right:15px;color: #4986bf; font-size: 0.85em; width: 25px;'></i>
-                    <i class='fas fa-caret-down' ng-hide="categoryListOpen == false" style='padding-right:15px;color: #4986bf; font-size: 0.85em; width: 25px;'></i>
-                    <span>Categories</span>
+            <div class="split-line"></div>
+            <div class="category-list-wrapper">
+                <div class="category-header">
+                    <div>
+                        <i class='fas fa-caret-right category-caret' ng-hide="categoryListOpen == true" ng-click="categoryListOpen = !categoryListOpen"></i>
+                        <i class='fas fa-caret-down category-caret' ng-hide="categoryListOpen == false" ng-click="categoryListOpen = !categoryListOpen"></i>
+                        <span class="title" ng-click="categoryListOpen = !categoryListOpen">Categories</span>
+                    </div>
+                    <i class='fas fa-plus category-add-btn' ng-hide="studentIsAdmin == false" ng-click="gotoCategoryCreatPage()"></i>
                 </div>
-                <div ng-repeat="category in categories" ng-hide="categoryListOpen == false" style="margin-left: 10px;">
-                    <span># {{category.title}}</span>
+                <div ng-repeat="category in categories" ng-hide="categoryListOpen == false" class="category-list">
+                    <a href="/a/{{university.url}}/forum/category/id/{{category._id}}" class="category">{{category.title}}</a>
                 </div>
             </div>
         </div>
-        <!-- end -->
-
-        <style>
-            .channel-row {
-                height: 35px;
-                line-height: 35px;
-                padding-left: 15px;
-            }
-        </style>
-        <!--
-        <div class="channel-row"># channel1</div>
-        <div class="channel-row"># channel2</div>
-        <div class="channel-row"># channel3</div>
-        <div class="channel-row"># channel4</div>
-        <div class="channel-row"># channel5</div>
-        <div class="channel-row"># channel6</div>
-        -->
-        <!--
-        <p style="font-size: 0.9em; padding-top: 15px; color: #7d7d7d; font-weight: bold;">ADMINISTRAÇÃO</p>
-
-        <div class="option" style="padding-left: 0px;"><a href="/a/{{university.url}}/videostudio"><img src="https://visualpharm.com/assets/987/Video%20Editing-595b40b65ba036ed117d35e3.svg" style="margin-right: 14px;" height="20px" width="20px" />Video Studio</a></div>
-        -->
-
-        <!--
-        <p ng-if="studentIsTeam == true" style="font-size: 0.9em; padding-top: 15px; color: #7d7d7d; font-weight: bold;">TIME</p>
-        <div class="option" style="padding-left: 0px;"><a href="/a/{{university.url}}/driver"><img src="/img/icon/driver.svg" style="margin-right: 14px;" height="20px" width="20px" />Driver</a></div>
-        -->
-
-        <!--<p style="font-size: 0.9em; padding-top: 15px; color: #7d7d7d; font-weight: bold;">{{'ACTIONS' | translate}}</p>-->
-
-        <!--
-        <div style="height: 5px"></div>
-
-        <p style="font-size: 0.9em; padding-top: 15px; color: #7d7d7d; font-weight: bold;" ng-if="universityVisitsTodayList.length > 0">{{'ONLINE_TODAY' | translate}}</p>
-
-        <div class="academia-supportcol-info-text" ng-if="universityVisitsTodayList.length > 0">
-            <studentinfo ng-repeat="id in universityVisitsTodayList | limitTo: 10" sid="{{id}}"></studentinfo>
-        </div>
-        -->
-
     </div>
-
-
-    <!-- <div class="academia-supportcol-info" ng-controller="CoursesNavBarCtrl">
-        <div class="academia-supportcol-info-title" ng-if="studentIsAdmin == true">
-            {{'MANAGEMENT' | translate}}
-        </div>
-
-        <a href="/dashboard/a/manage/id/{{university._id}}" ng-if="studentIsAdmin == true"><button class="btn bg-base" style="margin-top: 2px; height: 29px; width: unset;">{{'ACCESS_DASHBOARD' | translate}}</button></a>
-        <a href="/a/{{university.url}}/forum/category/create" ng-if="studentIsAdmin == true"><button class="btn bg-base" style="margin-top: 2px; height: 29px; width: unset;">{{'CREATE_CATEGORY' | translate}}</button></a>
-        <a href="/v/create?universityId={{university._id}}" ng-if="studentIsAdmin == true"><button class="btn bg-base" style="margin-top: 2px; height: 29px; width: unset;">{{'CREATE_VIDEO' | translate}}</button></a>
-        <a href="/p/create?universityId={{university._id}}" ng-if="studentIsAdmin == true"><button class="btn bg-base" style="margin-top: 2px; height: 29px; width: unset;">{{'CREATE_PLAYLIST' | translate}}</button></a>
-        <a href="/cursos/a/{{university._id}}/suite/owner" ng-if="studentIsAdmin == true"><button class="btn bg-base" style="margin-top: 2px; height: 29px; width: unset;">{{'COURSES_SUITE' | translate}}</button></a>
-        <a href="" ng-if="studentIsAdmin == true"><button class="btn bg-base" style="margin-top: 2px; height: 29px; width: unset;" ng-click="coursesCreate(university._id)">Criar curso</button></a>
-        <a href="" ng-if="studentIsAdmin == true"><button class="btn bg-base" style="margin-top: 2px; height: 29px; width: unset;">{{'PLAN' | translate}}</button></a>
-    </div> -->
-
-
-    <!--
-    <div class="academia-supportcol-info">
-        <div class="academia-supportcol-info-title">
-            {{'PREMIUM_MEMBER' | translate}}
-        </div>
-
-        <p ng-show="studentIsPremium">{{'YOU_ARE_PREMIUM' | translate}}</p>
-        <button ng-show="studentIsPremium" class="btn bg-primary-purple" style="margin-top: 2px; height: 29px; width: unset;" ng-click="premium()">{{'VIEW_PLANS' | translate}}</button>
-        <button ng-hide="studentIsPremium" class="btn bg-primary-purple" style="margin-top: 2px; height: 29px; width: unset;" ng-click="premium()">{{'PREMIUM_SUBSCRIBE' | translate}}</button>
-    </div>
-    -->
 
 </div>
-<!-- end -->
-
-<!--
-<div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 academia-supportcol">
-
-  <div class="academia-supportcol-title">
-    <a href="/a/{{university.url}}/">{{university.name}}</a>
-  </div>
-
-  <div class="academia-supportcol-stats">
-
-    <div class="academia-supportcol-stats-stat">
-      {{ (university.members | filter : { 'unsubscribed' : 'false' }).length }} members
-    </div>
-
-
-    <div style="height: 5px"></div>
-
-    <button class="btn bg-base" style="margin-top: 2px; height: 29px; width: unset;" ng-click="createPost(university.url)">Criar postagem</button>
-    <button class="btn bg-primary-purple" style="margin-top: 2px; height: 29px; width: unset;" ng-hide="userSubscribed(university.members)" ng-click="subscribe()">Inscrever</button>
-    <button class="btn bg-primary-purple" style="margin-top: 2px; height: 29px; width: unset;" ng-show="userSubscribed(university.members)" ng-click="subscribe()">Desinscrever</button>
-
-    <p style="font-size: 0.9em; padding-top: 15px; color: #7d7d7d; font-weight: bold;" ng-if="universityVisitsTodayList.length > 0">ONLINE HOJE</p>
-
-    <div class="academia-supportcol-info-text" ng-if="universityVisitsTodayList.length > 0">
-      <studentinfo ng-repeat="id in universityVisitsTodayList | limitTo: 10" sid="{{id}}"></studentinfo>
-    </div>
-
-  </div>
-
-  <div class="academia-supportcol-info">
-
-    <div class="academia-supportcol-info-title" ng-if="studentIsAdmin == true">
-      administração
-    </div>
-
-    <a href="/a/{{university.url}}/forum/category/create" ng-if="studentIsAdmin == true"><button class="btn bg-base" style="margin-top: 2px; height: 29px; width: unset;">Criar categoria</button></a>
-    <a href="/v/create?universityId={{university._id}}" ng-if="studentIsAdmin == true"><button class="btn bg-base" style="margin-top: 2px; height: 29px; width: unset;">Criar video</button></a>
-    <a href="/p/create?universityId={{university._id}}" ng-if="studentIsAdmin == true"><button class="btn bg-base" style="margin-top: 2px; height: 29px; width: unset;">Criar playlist</button></a>
-
-  </div>
-
-  <div class="academia-supportcol-info">
-
-    <div class="academia-supportcol-info-title">
-      sobre
-    </div>
-
-    <div class="academia-supportcol-info-text">
-      {{university.about}}
-    </div>
-
-  </div>
-
-  <div class="academia-supportcol-info" ng-if="university.plans.length > 0">
-
-    <div class="academia-supportcol-info-title">
-      membro premium
-    </div>
-
-    <p ng-show="studentIsPremium">Você é membro premium!</p>
-    <button ng-show="studentIsPremium" class="btn bg-primary-purple" style="margin-top: 2px; height: 29px; width: unset;" ng-click="premium()">Ver planos</button>
-    <button ng-hide="studentIsPremium" class="btn bg-primary-purple" style="margin-top: 2px; height: 29px; width: unset;" ng-click="premium()">Assinar premium</button>
-
-  </div>
-
-</div>
--->
-
-<!--
-<div class="academia-footer" style="z-index: 9999; background-color: #fff; box-shadow: 0px -2px 4px -1px rgba(0,0,0,0.15); -moz-box-shadow: 0px -2px 4px -1px rgba(0,0,0,0.15); -webkit-box-shadow: 0px -2px 4px -1px rgba(0,0,0,0.15);">
-
-  <ul style="width: 100vw" style="color: #565656 !important;">
-
-    <li style="width: 25%; line-height: unset; padding-top: 10px; vertical-align: top;">
-      <a style="color: #565656 !important;" href="/a/{{university.url}}/forum" ng-class="forumClass">
-        <i style="font-size: 1.3em;" class="far fa-newspaper"></i>
-        <div style="font-size: 0.9em; font-weight: 600;">Forum</div>
-      </a>
-    </li>
-
-    <li style="width: 25%; line-height: unset; padding-top: 10px; vertical-align: top;">
-      <a style="color: #565656 !important;" href="/a/{{university.url}}/forum/post/create">
-        <i style="font-size: 1.3em;" class="fas fa-pen-square"></i>
-        <div style="font-size: 0.9em; font-weight: 600;">Escrever</div>
-      </a>
-    </li>
-
-    <li style="width: 25%; line-height: unset; padding-top: 10px; vertical-align: top;">
-      <a style="color: #565656 !important;" href="/a/{{university.url}}/forum/category/all" ng-class="forumClass">
-        <i style="font-size: 1.3em;" class="fas fa-graduation-cap"></i>
-        <div style="font-size: 0.9em; font-weight: 600;">Categorias</div>
-      </a>
-    </li>
-
-    <li style="width: 25%; color: #565656 !important; line-height: unset; padding-top: 10px; vertical-align: top;" ng-click="premium()">
-      <i style="font-size: 1.3em;" class="fas fa-star"></i>
-      <div style="font-size: 0.9em; font-weight: 600;">Premium</div>
-    </li>
-
-  </ul>
-
-</div>
--->

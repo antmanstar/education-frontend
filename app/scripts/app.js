@@ -302,10 +302,6 @@ angular.module('netbase', [
             templateUrl: 'partials/profile/profilebyusername.html',
             controller: 'ProfileByUsernameCtrl',
         })
-        .when('/login', {
-            templateUrl: 'partials/account.html',
-            controller: 'AccountCtrl',
-        })
         .when('/signup', {
             templateUrl: 'partials/account.html',
             controller: 'AccountCtrl',

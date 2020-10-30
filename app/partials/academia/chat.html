@@ -3,15 +3,19 @@
         <div class="col-md-12">
             <div class="panel panel-primary">
                 <div class="panel-heading chat-heading">
-                    <div class="btn-group pull-left" ng-show="boxToggle">
-                        <button type="button" class="btn btn-default btn-xs dropdown-toggle setting-btn" data-toggle="dropdown" title='channels'>
-                            <span class="glyphicon glyphicon-chevron-down"></span>
-                        </button>
-                        <ul class="dropdown-menu slidedown channel-list">
-                            <li class="channel-list-item" ng-repeat="category in categories" ng-click="selectCategoryChannel(category)"><a href="#"># {{category.title}}</a>
-                                <!-- <span class="badge"></span> --></li>
-                        </ul>
-                    </div>&nbsp;{{curCategory.title}}
+                    <div class="btn-group pull-left">
+                        <div style="display: flex; flex-direction: row;">
+                            <div style="background-color: dimgray; border-radius: 50%; width: 25px; text-align: center; font-size: 15px; padding-top: 2px; margin-right: 10px;">#</div>
+                            <div>{{curCategory.title}}&nbsp;</div>
+                            <button type="button" class="btn btn-default btn-xs dropdown-toggle setting-btn" data-toggle="dropdown" title='channels' ng-show="boxToggle">
+                                <span class="glyphicon glyphicon-chevron-down"></span>
+                            </button>
+                            <ul class="dropdown-menu slidedown channel-list">
+                                <li class="channel-list-item" ng-repeat="category in categories" ng-click="selectCategoryChannel(category)"><a href="#"># {{category.title}}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>&nbsp;
                     <div class="btn-group pull-right">
                         <button type="button" class="btn btn-default btn-xs setting-btn" title="toggle" ng-click="toggleBox()">
                             <span class="glyphicon glyphicon-minus" ng-show="boxToggle"></span>
@@ -20,15 +24,17 @@
                     </div>
                     <div class="btn-group pull-right" ng-show="boxToggle">
                         <button type="button" class="btn btn-default btn-xs dropdown-toggle setting-btn" data-toggle="dropdown" title="settings">
-                            <span class="glyphicon glyphicon-cog"></span>
+                            <span class="glyphicon glyphicon-option-horizontal"></span>
                         </button>
                         <ul class="dropdown-menu slidedown">
-                            <li ng-click="getChannelMembers(currentChannel.sid)"><a href="#"><span class="glyphicon glyphicon-user" style='color: blue'></span>&nbsp;View All Memebers</a></li>
-                            <li><a href="#"><span class="glyphicon glyphicon-ok-sign" style='color: green'></span>&nbsp;Available</a></li>
-                            <li><a href="#"><span class="glyphicon glyphicon-remove" style='color: red'></span>&nbsp;Busy</a></li>
-                            <li><a href="#"><span class="glyphicon glyphicon-time" style='color: orange'></span>&nbsp;Away</a></li>
+                            <li ng-click="getChannelMembers(currentChannel.sid)">
+                                <a href="#"></span>&nbsp;View All Memebers</a>
+                            </li>
+                            <li><a href="#">&nbsp;Available</a></li>
+                            <li><a href="#">&nbsp;Busy</a></li>
+                            <li><a href="#">&nbsp;Away</a></li>
                             <li class="divider"></li>
-                            <li ng-click="leaveCurrentChannel()"><a href="#"><span class="glyphicon glyphicon-off"></span>&nbsp;Leave</a></li>
+                            <li ng-click="leaveCurrentChannel()"><a href="#" style="color: red;">&nbsp;Leave</a></li>
                         </ul>
                     </div>
                 </div>
@@ -71,7 +77,8 @@
                     </div> -->
                     <div class="chat-controller">
                         <textarea class="textarea" ng-keypress='sendingInputKeyPress($event)'></textarea>
-                        <button class="send-btn" ng-click='sendMSG()'><span class="glyphicon glyphicon-send"></span></button>
+                        <!-- <button class="send-btn" ng-click='sendMSG()'><span class="glyphicon glyphicon-send"></span></button> -->
+                        <button class="send-btn" ng-click='sendMSG()'>Send</button>
                     </div>
                 </div>
             </div>
