@@ -2320,9 +2320,24 @@ angular.module('netbase')
     });
 }])
 
-.controller('AcademiaForumCategoryCreateCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Forum', '$sce', '$localStorage', 'ngDialog', 'jwtHelper', function($rootScope, $scope, $location, $route, University, Forum, $sce, $localStorage, ngDialog, jwtHelper) {
+.controller('AcademiaForumCategoryCreateCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Forum', '$sce', '$localStorage', 'ngDialog', 'jwtHelper', 'Courses', function($rootScope, $scope, $location, $route, University, Forum, $sce, $localStorage, ngDialog, jwtHelper, Courses) {
     let universityUrl = $route.current.params.academiaName;
     let university;
+
+    $scope.tinymceOptions = {
+        file_picker_types: 'file image media',
+        tinydrive_token_provider: function(success, failure) {
+            Courses.fileUploadUrl().success(function(msg) {
+                success({ token: msg.token });
+            })
+        },
+        height: 400,
+        tinydrive_google_drive_key: "carbisa-document-upload@carbisa.iam.gserviceaccount.com",
+        tinydrive_google_drive_client_id: '102507978919142111240',
+        plugins: 'print preview powerpaste casechange importcss tinydrive searchreplace autolink autosave save directionality advcode visualblocks visualchars fullscreen image link media mediaembed  codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists checklist wordcount tinymcespellchecker a11ychecker textpattern noneditable help formatpainter pageembed charmap mentions quickbars linkchecker emoticons advtable',
+        toolbar: 'insertfile|undo redo | bold italic | alignleft aligncenter alignright | code|styleselect|outdent indent|link image'
+    };
+
     University.getUniversity(universityUrl).then(function(res) {
         $scope.university = res.data.data;
         university = res.data.data;
@@ -3033,7 +3048,7 @@ angular.module('netbase')
                         scope.messagingClient.on('tokenExpired', scope.updateToken); // recreate access token when expired
                     })
                     .catch((err) => {
-                        alert("The channel does not exist for this <" + scope.curCategory.title + "> category");
+                        // alert("The channel does not exist for this <" + scope.curCategory.title + "> category");
                         scope.messages = [];
                         scope.loading = false;
                         scope.$apply();
@@ -3052,7 +3067,7 @@ angular.module('netbase')
                             scope.messagingClient.on('tokenAboutToExpire', scope.updateToken); // recreate access token when expired
                         })
                         .catch((err) => {
-                            alert("The channel does not exist for this <" + scope.curCategory.title + "> category");
+                            // alert("The channel does not exist for this <" + scope.curCategory.title + "> category");
                             scope.loading = false;
                             scope.$apply();
                         });
@@ -3095,7 +3110,7 @@ angular.module('netbase')
                             });
                         })
                         .catch((err) => {
-                            alert("The channel does not exist for this <" + scope.curCategory.title + "> category");
+                            // alert("The channel does not exist for this <" + scope.curCategory.title + "> category");
                             scope.messages = [];
                             scope.loading = false;
                             scope.$apply();
