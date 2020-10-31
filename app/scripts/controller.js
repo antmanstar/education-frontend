@@ -2607,6 +2607,7 @@ angular.module('netbase')
                 })
                 // failure('Could not create a jwt token')
         },
+        height: 400,
         tinydrive_google_drive_key: "carbisa-document-upload@carbisa.iam.gserviceaccount.com",
         tinydrive_google_drive_client_id: '102507978919142111240',
         plugins: 'print preview powerpaste casechange importcss tinydrive searchreplace autolink autosave save directionality advcode visualblocks visualchars fullscreen image link media mediaembed  codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists checklist wordcount tinymcespellchecker a11ychecker textpattern noneditable help formatpainter pageembed charmap mentions quickbars linkchecker emoticons advtable',
@@ -2873,18 +2874,13 @@ angular.module('netbase')
     Courses.getById(id).success(function(res) {
         if (res.success) {
             $scope.course = res.data;
-            //let mem = res.data.members;
-
-            // if (mem.indexOf(User.getId()) >= 0) {
-            //     $scope.useraccess = true;
-            //     $sce.trustAsHtml($scope.course)
-            // }
+            let mem = res.data.members;
 
             // Check if the student / user id is in the members array
             // if its in the array, it means user has access to the course
             let userid = User.getId();
-            const userExists = $scope.course.members.some(user => user.member = userid);
-            if (userExists) {
+
+            if (mem.indexOf(userid) >= 0) {
                 $scope.useraccess = true;
                 $sce.trustAsHtml($scope.course)
             }
@@ -2965,6 +2961,16 @@ angular.module('netbase')
     $scope.accountId = $scope.ngDialogData.accountId;
     $scope.flow = "order";
     $scope.page = "order";
+
+
+    let data = {
+        customer: $scope.customer_id,
+        amount: $scope.plan.amount,
+        currency: $scope.plan.currency,
+        accountId: $scope.accountId,
+        universityId: $scope.course.university,
+    }
+    console.log("payment data: ", data)
 
     // if the student does not have entered a credit card / debit card
     // disable the Confirm button and display a notification
@@ -3134,7 +3140,8 @@ angular.module('netbase')
             customer: $scope.customer_id,
             amount: $scope.plan.amount,
             currency: $scope.plan.currency,
-            accountId: $scope.accountId
+            accountId: $scope.accountId,
+            universityId: $scope.course.university,
         }
 
         Payments.coursePayment(data).success(function(res) {

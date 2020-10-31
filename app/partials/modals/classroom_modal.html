@@ -12,55 +12,78 @@
         Boolean, to allow donations to be sent
     - Chat
         Boolean, to allow chat usage
-
         ng-controller='AcademiaClassroomsCtrl'
 -->
+<style>
+    .headerline-title {
+        font-size: 30px;
+        font-weight: 600;
+    }
+    
+    .headerline-sub-title {
+        font-size: 15px;
+        line-height: normal;
+        margin-top: 10px;
+    }
+    
+    .roomname-label {
+        font-size: 15px;
+        margin-top: 30px;
+    }
+    
+    .roomname-input {
+        height: 40px;
+        width: 100%;
+        border: 2px solid #999999;
+        border-radius: 5px;
+        font-size: 15px;
+        padding-left: 10px;
+        padding-right: 10px;
+        margin-bottom: 20px;
+    }
+    
+    .roomtype-wrapper {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-top: 10px;
+    }
+    
+    .roomtype-description {
+        display: flex;
+        flex-direction: column;
+        padding-left: 10px;
+        padding-right: 10px;
+        margin-top: -5px;
+    }
+    
+    .confirm-btn {
+        border: none;
+        width: 100%;
+        margin-top: 30px;
+        border-radius: 5px;
+        font-weight: 600;
+    }
+</style>
+
 <div class="container-fluid modal-accounts">
-
-  <div class="row">
-
-    <div class="col-xs-12">
-
-      <div class="headline-sub-one">{{'CREATE_VIDEOCONF' | translate}}</div>
-
-      <div class="form">
-
-        <div class="form-group">
-          <i class="fas fa-video"></i>
-          <input class="input-email" ng-model='addingClassroom.uniqueName' placeholder="{{'CLASS_NAME' | translate}}" type="text" />
-
-        </div>
-        <!-- end form group -->
-
-        <div class="row">
-
-          <div class="col-xs-6">
-            <div class='inputGroup-radio'>
-                <input id='i1' name='room_type' type='radio' ng-model='addingClassroom.roomType' value=0 checked />
-                <label style="font-size: 14px;" for='i1'>&nbsp;&nbsp;{{'PUBLIC' | translate}}</label>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="headerline-title">Inicie uma Videoconferência</div>
+            <div class="headerline-sub-title">Videoconferência, você poderá ter total colaboração com sua equipe</div>
+            <div class="roomname-label">Name da sala</div>
+            <input class="roomname-input" ng-model='addingClassroom.uniqueName' placeholder="{{'CLASS_NAME' | translate}}" type="text" />
+            <div class="roomtype-wrapper">
+                <img src="../../img/classroom/lock.png" height="20px">
+                <div class="roomtype-description">
+                    <span style="font-size: 15px;">Tornar o quarto privado</span>
+                    <span style="color:#999999; font-size: 15px; line-height: normal;">Se a sala de aula for privada, ninguém poderá sem a sua primissão</span>
+                </div>
+                <img src="../../img/classroom/Switch On.png" height="25px" ng-click="addingClassroom.roomType=0" ng-hide="addingClassroom.roomType==0">
+                <img src="../../img/classroom/Switch Off.png" height="25px" ng-click="addingClassroom.roomType=1" ng-hide="addingClassroom.roomType==1">
             </div>
-          </div>
-
-          <div class="col-xs-6">
-            <div class='inputGroup-radio'>
-                <input id='i4' name='room_type' type='radio' ng-model='addingClassroom.roomType' value=1 />
-                <label style="font-size: 14px;" for='i4'>&nbsp;&nbsp;{{'PRIVATE' | translate}}</label>
-            </div>
-          </div>
-
+            <button ng-click="confirmCreateClassroom()" class="confirm-btn" ng-style="{'background-color' : (addingClassroom.uniqueName == '') ? '#eeeeee' : '#5dbcd2', 'color' : (addingClassroom.uniqueName == '') ? 'black' : 'white'}">{{'CREATE_CLASS' | translate}}</button>
         </div>
-
-        <div style="height: 15px"></div>
-        <button ng-click="confirmCreateClassroom()" class="btn btn-bluebase">{{'CREATE_CLASS' | translate}}</button>
-
-      </div>
-      <!-- end form -->
-
     </div>
-
-    <!-- end col-xs-12 -->
-
-  </div>
-  <!-- end row -->
-
+    <!-- end row -->
 </div>

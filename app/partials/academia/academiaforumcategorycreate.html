@@ -30,7 +30,7 @@
         <input class="academia-content-forum-post-create-title" placeholder="{{'WRITE_CATEGORY_TITLE' | translate}}" ng-model="title"></input>
 
         <label>{{'CATEGORY_DESCRIPTION' | translate}}</label></br>
-        <textarea style="height: unset" class="academia-content-forum-post-create-title" placeholder="{{'WRITE_CATEGORY_DESCRIPTION' | translate}}" ng-model="description"></textarea>
+        <textarea ui-tinymce="tinymceOptions" ng-model="description"></textarea>
 
         <div class="academia-content-forum-post-create-premium">
 

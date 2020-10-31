@@ -1656,7 +1656,6 @@ angular.module('netbase')
 
     $scope.isAdmin = $localStorage.studentIsAdmin
 
-    //var baseUrl = "http://localhost:9000"; //Back-end server base url
     //var baseUrl = "http://localhost:9001"; //Back-end server base url
     var baseUrl = "https://educationalcommunity-classroom.herokuapp.com";
 
@@ -2201,7 +2200,6 @@ angular.module('netbase')
 
     /* forum posts order */
     $scope.forumPostsOrder = "-createdAt";
-
     $scope.orderForumPosts = function(order) {
         $scope.forumPostsOrder = "-" + order;
     }
@@ -2212,7 +2210,6 @@ angular.module('netbase')
         let university = res.data.data;
 
         if (success) {
-
             Forum.getCategoriesByUniversityId(university._id).success(function(resCategory) {
                 if (resCategory.success) {
                     $scope.categories = resCategory.data;
@@ -2224,7 +2221,6 @@ angular.module('netbase')
                     }
                 }
             });
-
 
             $scope.university = university;
             Forum.getForumPostsByCategoryId(university._id, categoryId, $scope.page).success(function(res) {
@@ -2324,9 +2320,24 @@ angular.module('netbase')
     });
 }])
 
-.controller('AcademiaForumCategoryCreateCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Forum', '$sce', '$localStorage', 'ngDialog', 'jwtHelper', function($rootScope, $scope, $location, $route, University, Forum, $sce, $localStorage, ngDialog, jwtHelper) {
+.controller('AcademiaForumCategoryCreateCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Forum', '$sce', '$localStorage', 'ngDialog', 'jwtHelper', 'Courses', function($rootScope, $scope, $location, $route, University, Forum, $sce, $localStorage, ngDialog, jwtHelper, Courses) {
     let universityUrl = $route.current.params.academiaName;
     let university;
+
+    $scope.tinymceOptions = {
+        file_picker_types: 'file image media',
+        tinydrive_token_provider: function(success, failure) {
+            Courses.fileUploadUrl().success(function(msg) {
+                success({ token: msg.token });
+            })
+        },
+        height: 400,
+        tinydrive_google_drive_key: "carbisa-document-upload@carbisa.iam.gserviceaccount.com",
+        tinydrive_google_drive_client_id: '102507978919142111240',
+        plugins: 'print preview powerpaste casechange importcss tinydrive searchreplace autolink autosave save directionality advcode visualblocks visualchars fullscreen image link media mediaembed  codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists checklist wordcount tinymcespellchecker a11ychecker textpattern noneditable help formatpainter pageembed charmap mentions quickbars linkchecker emoticons advtable',
+        toolbar: 'insertfile|undo redo | bold italic | alignleft aligncenter alignright | code|styleselect|outdent indent|link image'
+    };
+
     University.getUniversity(universityUrl).then(function(res) {
         $scope.university = res.data.data;
         university = res.data.data;
@@ -2689,7 +2700,6 @@ angular.module('netbase')
 }])
 
 .controller('AcademiaForumPostUpdateCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'ngDialog', 'Forum', function($rootScope, $scope, $location, $route, University, ngDialog, Forum) {
-
     let universityUrl = $route.current.params.academiaName;
     let postId = $route.current.params.postId;
     let university;
@@ -2728,24 +2738,6 @@ angular.module('netbase')
             } else {}
         });
     });
-
-    // /* edit editor */
-    // $scope.trixInitialize = function(e, editor) {
-    //     var document = editor.getDocument()
-    //     $rootScope.trix = editor;
-
-    //     $(".block_tools").append('<button class="yt" type="button" data-attribute="video" id="videoAppend"><i class="fab fa-youtube"></i></button>')
-
-    //     $("#videoAppend").click(function() {
-    //         ngDialog.open({ template: 'partials/modals/forumpostoption.html', controller: "AcademiaForumPostCreateOptionCtrl", className: 'ngdialog-theme-default' });
-    //     });
-    // }
-
-    // $scope.trixChange = function(e, editor) {
-    //     console.log(e.srcElement.innerText);
-    //     console.log(e.srcElement.textContent);
-    //     console.log($scope.text)
-    // }
 
     /* create forum post by id */
     $scope.updateForumPost = function() {
@@ -2970,6 +2962,12 @@ angular.module('netbase')
             scope.loading = true;
             scope.boxToggle = true;
 
+            let categoryId = null;
+
+            attr.$observe('category', function(value) {
+                categoryId = value;
+            })
+
             attr.$observe('university', function(value) {
                 scope.university = JSON.parse(value);
                 Forum.getCategoriesByUniversityId(scope.university._id).success(function(resCategory) {
@@ -2978,6 +2976,12 @@ angular.module('netbase')
 
                         if (resCategory.data.length != 0) {
                             scope.curCategory = scope.categories[0];
+
+                            for (let i = 0; i < scope.categories.length; i++) {
+                                if (scope.categories[i]._id == categoryId) {
+                                    scope.curCategory = scope.categories[i];
+                                }
+                            }
 
                             tinymce.init({
                                 selector: 'textarea',
@@ -3044,7 +3048,7 @@ angular.module('netbase')
                         scope.messagingClient.on('tokenExpired', scope.updateToken); // recreate access token when expired
                     })
                     .catch((err) => {
-                        alert("The channel does not exist for this <" + scope.curCategory.title + "> category");
+                        // alert("The channel does not exist for this <" + scope.curCategory.title + "> category");
                         scope.messages = [];
                         scope.loading = false;
                         scope.$apply();
@@ -3063,7 +3067,7 @@ angular.module('netbase')
                             scope.messagingClient.on('tokenAboutToExpire', scope.updateToken); // recreate access token when expired
                         })
                         .catch((err) => {
-                            alert("The channel does not exist for this <" + scope.curCategory.title + "> category");
+                            // alert("The channel does not exist for this <" + scope.curCategory.title + "> category");
                             scope.loading = false;
                             scope.$apply();
                         });
@@ -3106,7 +3110,7 @@ angular.module('netbase')
                             });
                         })
                         .catch((err) => {
-                            alert("The channel does not exist for this <" + scope.curCategory.title + "> category");
+                            // alert("The channel does not exist for this <" + scope.curCategory.title + "> category");
                             scope.messages = [];
                             scope.loading = false;
                             scope.$apply();
@@ -3486,50 +3490,6 @@ angular.module('netbase')
                     // End Handle Subscribe Functionality
                     /* REAL TIME MODULE */
 
-                /*
-                var socket = io("https://educationalcommunity-realtime.herokuapp.com");
-                let student = { _id: studentId };
-
-                if (value) {
-                    university = JSON.parse(value);
-                    Chat.getUniversityChannels(university._id).success(function(res) {
-                        if (res.success) {
-                            scope.channels = res.data;
-                            const chatClient = new Twilio.Chat.Client($localStorage.tokenTwilio);
-                            chatClient.on('channelJoined', function(channel) {
-                                console.log('Joined channel ' + channel.friendlyName);
-                            });
-                            console.log("hey")
-                            chatClient.getSubscribedChannels().then(function(paginator) {
-                                console.log("paginator: ")
-                                console.log(paginator)
-                                for (let i = 0; i < paginator.items.length; i++) {
-                                    const channel = paginator.items[i];
-                                    console.log('Channel: ' + channel.friendlyName);
-                                }
-                            });
-                        } else {
-                        }
-                    });
-                    */
-                /*
-                    socket.on('connect', function(data) {
-                        console.log(data)
-                        if (studentId != undefined) {
-                            if (studentId.length > 0) {
-                                socket.emit('universityVisit', { universityUrl: university.url, student: student });
-                                socket.on('universityVisitsTodayList', function(data) {
-                                    scope.universityVisitsTodayList = data;
-                                });
-                                //END socket.on('universityVisitsTodayList')
-                            }
-                            //END if (studentId.length > 0)
-                        }
-                        //END studentId
-                    });
-                    //END socket.on('connect')
-                  */
-
                 /* check if student is a premium member */
                 for (let idx = 0; idx < university.members.length; idx++) {
                     var member = university.members[idx];
@@ -3568,6 +3528,10 @@ angular.module('netbase')
                     }
                 };
             });
+
+            scope.gotoCategoryCreatPage = function() {
+                $location.path("/a/abcuni/forum/category/create")
+            }
 
             scope.createPost = function(url) {
                     if ($localStorage.token != undefined && $localStorage.token != null) {
