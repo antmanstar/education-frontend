@@ -335,25 +335,39 @@ angular.module('netbase')
         }
 
         Classroom.createNewClassroom(baseUrl + url, title, privilege, $scope.university._id).then((data) => {
-                let newClassroom = data.data;
-                let url = '/classroom/university/' + $scope.university._id + '/all'
-                Classroom.getAllClassroomsByUniversity(baseUrl + url).then((data) => {
-                    $scope.wholeClassroomList = data;
-                    let text = "/a/university/" + universityUrl + "/roomid/" + newClassroom.id + "/accountid/" + newClassroom.sid + "/roomname/" + $scope.addingClassroom.uniqueName + "/";
-                    $route.reload();
-                });
-                ngDialog.close();
+                if (title == "") {
+                    ngDialog.close();
+                    if ($rootScope.alertDialog == null || $rootScope.alertDialog == undefined) $rootScope.alertDialog = [];
+                    $rootScope.alertDialog.push(ngDialog.open({ template: 'partials/modals/classroom_alert_modal.html', controller: "AcademiaClassroomsAlertCtrl", className: 'ngdialog-theme-default classroom-alert-modal', data: { type: "ERROR", msg: "Please fill the classroom name" } }));
+                } else {
+                    let newClassroom = data.data;
+                    let url = '/classroom/university/' + $scope.university._id + '/all'
+                    Classroom.getAllClassroomsByUniversity(baseUrl + url).then((data) => {
+                        $scope.wholeClassroomList = data;
+                        let text = "/a/university/" + universityUrl + "/roomid/" + newClassroom.id + "/accountid/" + newClassroom.sid + "/roomname/" + $scope.addingClassroom.uniqueName + "/";
+                        $route.reload();
+                    });
+                    ngDialog.close();
+                }
             })
             .catch((err) => {
                 ngDialog.close();
-                ngDialog.open({ template: 'partials/modals/classroom_alert_modal.html', controller: "AcademiaClassroomsAlertCtrl", className: 'ngdialog-theme-default classroom-alert-modal', data: { type: "ERROR", msg: err } });
+                if ($rootScope.alertDialog == null || $rootScope.alertDialog == undefined) $rootScope.alertDialog = [];
+                $rootScope.alertDialog.push(ngDialog.open({ template: 'partials/modals/classroom_alert_modal.html', controller: "AcademiaClassroomsAlertCtrl", className: 'ngdialog-theme-default classroom-alert-modal', data: { type: "ERROR", msg: err } }));
             });
     }
 
     $scope.copyLink = function(classroom) {
         let text = domain + "/a/university/" + universityUrl + "/roomid/" + classroom.roomSID + "/accountid/" + classroom.accountSid + "/roomname/" + classroom.uniqueName + "/";
         Clipboard.copy(text);
-        ngDialog.open({ template: 'partials/modals/classroom_alert_modal.html', controller: "AcademiaClassroomsAlertCtrl", className: 'ngdialog-theme-default classroom-alert-modal', data: { type: "Universidade", msg: 'Copied link to clipboard' } });
+        if ($rootScope.alertDialog == null || $rootScope.alertDialog == undefined) $rootScope.alertDialog = [];
+
+        $rootScope.alertDialog.push(ngDialog.open({
+            template: 'partials/modals/classroom_alert_modal.html',
+            controller: "AcademiaClassroomsAlertCtrl",
+            className: 'ngdialog-theme-default classroom-alert-modal',
+            data: { type: "Universidade", msg: 'Copied link to clipboard' }
+        }));
     }
 
     $scope.joinClassroom = function(classroom) {
@@ -609,16 +623,16 @@ angular.module('netbase')
 
     $scope.loadForumPosts = function() {
         Forum.getCategoriesByUniversityId($scope.university._id).success(function(resCategory) {
-            $scope.categories = resCategory.data;
-        })
-        // University.getallCategorybyUniversity().success(function(res) {
-        //     if (res.success) {
-        //         $scope.categories = res.data;
-        //         console.log("categories: ", res.data)
-        //     } else {
-        //         console.log("error while loading university")
-        //     }
-        // });
+                $scope.categories = resCategory.data;
+            })
+            // University.getallCategorybyUniversity().success(function(res) {
+            //     if (res.success) {
+            //         $scope.categories = res.data;
+            //         console.log("categories: ", res.data)
+            //     } else {
+            //         console.log("error while loading university")
+            //     }
+            // });
     }
 
     $scope.loadForumPostCategory = function(uni_id, categoryId) {
@@ -1955,7 +1969,7 @@ angular.module('netbase')
 
         Courses.getModulesByAccount($scope.universityid).success(function(res) {
 
-          console.log("modules: ", res)
+            console.log("modules: ", res)
             if (res.success) {
                 $scope.modules = res.data;
             }
@@ -2582,12 +2596,12 @@ angular.module('netbase')
 
     $scope.saveContent = function() {
         Courses.createPage({
-          text: $scope.tinymceModel,
-          contentType: 'page',
-          title: $scope.title,
-          moduleId: $route.current.params.id,
-          universityId: $scope.universityid
-         }).
+            text: $scope.tinymceModel,
+            contentType: 'page',
+            title: $scope.title,
+            moduleId: $route.current.params.id,
+            universityId: $scope.universityid
+        }).
         success(function(res) {
             console.log("create page response: ", JSON.stringify(res))
             $location.path("/cursos/a/" + $scope.universityid + "/suite/content")
@@ -3420,12 +3434,17 @@ angular.module('netbase')
     }
 
     $scope.resetPasswordStepOne = function() {
+        const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if (!re.test($scope.resetpasswordEmail)) {
+            alert("email is invalid");
+            return;
+        }
+
         let payload = { email: $scope.resetpasswordEmail, type: "student" }
         Students.resetPasswordStepOne(payload).success(function(res) {
             if (res.success) {
                 $location.path('/reset/password?tokenOne=' + res.tokenOne + '&email=' + $scope.resetpasswordEmail);
                 $scope.resetPasswordSuccess = true;
-
             }
         });
     }
@@ -5095,6 +5114,11 @@ angular.module('netbase')
     // save changed info to the db
     $scope.save = function() {
         let imageUrl = $("#file").attr("value");
+
+        if ($scope.name == "") {
+            alert("Name is empty");
+            return;
+        }
 
         if ($scope.pwd !== $scope.rpwd) {
             alert("Password not matched");

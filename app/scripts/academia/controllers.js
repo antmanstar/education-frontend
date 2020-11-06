@@ -304,9 +304,7 @@ angular.module('netbase')
                     $scope.loadMessages();
                     return channel;
                 }
-
                 $scope.openDialog('ERROR', "Couldn't join channel " + channel.friendlyName + ' because -> ' + err);
-
             });
     }
 
@@ -324,22 +322,23 @@ angular.module('netbase')
     }
 
     $scope.addMessageToList = function(message) {
-        let currentMember = '';
+        let currentMember = null;
         let i;
         for (i = 0; i < $scope.members.length; i++) {
             if ($scope.members[i].id == message.author) {
-                currentMember = $scope.members[i].name;
+                currentMember = $scope.members[i];
                 break;
             }
         }
-        if (currentMember == '') {
+        if (currentMember == null || (currentMember != null && currentMember.name == '')) {
             Students.getStudentById(message.author).then((res) => {
                 $scope.members.push({
                     id: message.author,
-                    name: res.data.data.name
+                    name: res.data.data.name,
+                    img_url: res.data.data.imageUrl
                 });
 
-                $scope.applyMessage(message, res.data.data.name);
+                $scope.applyMessage(message, { name: res.data.data.name, img_url: res.data.data.imageUrl });
                 return;
             })
         } else {
@@ -359,10 +358,10 @@ angular.module('netbase')
             }
             if (currentMember == "") {
                 Students.getStudentById(message.author).then((res) => {
-                    currentMember = res.data.data.name;
                     $scope.members.push({
                         id: message.author,
-                        name: currentMember
+                        name: res.data.data.name,
+                        img_url: res.data.data.imageUrl
                     });
                     resolve();
                 });
@@ -415,10 +414,11 @@ angular.module('netbase')
         messageBodyTextDom.innerText = messageBody;
 
         let avatar = document.createElement('img');
-        avatar.setAttribute('src', '/img/icon/msg_man_icon.jpeg');
+        let avatar_url = currentMember.img_url == undefined ? "http://virtual-strategy.com/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png" : currentMember.img_url
+        avatar.setAttribute('src', avatar_url);
 
         let nameDom = document.createElement('div');
-        nameDom.innerText = currentMember;
+        nameDom.innerText = currentMember.name;
         nameDom.setAttribute('class', 'chat-name-st');
         messageTimeDom.innerText = sentTime;
 
@@ -1581,7 +1581,7 @@ angular.module('netbase')
         }
     }
 
-    $scope.copyLink = function() { // Copy link button event handler
+    $scope.copyLink = function() { // Copy link button event handler  
         let universityUrl = $route.current.params.academiaName;
         let roomSID = $route.current.params.roomSID;
         let accountSid = $route.current.params.accountSid;
@@ -1633,7 +1633,7 @@ angular.module('netbase')
 .controller('AcademiaClassroomsAlertCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Classroom', 'Students', 'ngDialog', 'jwtHelper', '$localStorage', '$window', function($rootScope, $scope, $location, $route, University, Classroom, Students, ngDialog, jwtHelper, $localStorage, $window) {
     $scope.alertMsg = $scope.ngDialogData.msg;
     $scope.alertType = $scope.ngDialogData.type;
-    $scope.confirmAlert = function() {
+    $scope.confirmAlertFrom = function() {
         if ($rootScope.alertDialog.length == 0) return;
         $rootScope.alertDialog[$rootScope.alertDialog.length - 1].close();
         $rootScope.alertDialog.splice($rootScope.alertDialog.length - 1, 1);
