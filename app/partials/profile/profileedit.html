@@ -4,8 +4,8 @@
     var socket = io.connect("https://totemic-chimera-237707.appspot.com");
 
     var siofu = new SocketIOFileUpload(socket);
-    let filesCount = 0;
-    let progressCloud = 0;
+    var filesCount = 0;
+    var progressCloud = 0;
     var progressPercent = 0;
 
     document.getElementById("upload_btn").addEventListener("click", siofu.prompt, false);

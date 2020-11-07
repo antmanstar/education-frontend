@@ -335,25 +335,39 @@ angular.module('netbase')
         }
 
         Classroom.createNewClassroom(baseUrl + url, title, privilege, $scope.university._id).then((data) => {
-                let newClassroom = data.data;
-                let url = '/classroom/university/' + $scope.university._id + '/all'
-                Classroom.getAllClassroomsByUniversity(baseUrl + url).then((data) => {
-                    $scope.wholeClassroomList = data;
-                    let text = "/a/university/" + universityUrl + "/roomid/" + newClassroom.id + "/accountid/" + newClassroom.sid + "/roomname/" + $scope.addingClassroom.uniqueName + "/";
-                    $route.reload();
-                });
-                ngDialog.close();
+                if (title == "") {
+                    ngDialog.close();
+                    if ($rootScope.alertDialog == null || $rootScope.alertDialog == undefined) $rootScope.alertDialog = [];
+                    $rootScope.alertDialog.push(ngDialog.open({ template: 'partials/modals/classroom_alert_modal.html', controller: "AcademiaClassroomsAlertCtrl", className: 'ngdialog-theme-default classroom-alert-modal', data: { type: "ERROR", msg: "Please fill the classroom name" } }));
+                } else {
+                    let newClassroom = data.data;
+                    let url = '/classroom/university/' + $scope.university._id + '/all'
+                    Classroom.getAllClassroomsByUniversity(baseUrl + url).then((data) => {
+                        $scope.wholeClassroomList = data;
+                        let text = "/a/university/" + universityUrl + "/roomid/" + newClassroom.id + "/accountid/" + newClassroom.sid + "/roomname/" + $scope.addingClassroom.uniqueName + "/";
+                        $route.reload();
+                    });
+                    ngDialog.close();
+                }
             })
             .catch((err) => {
                 ngDialog.close();
-                ngDialog.open({ template: 'partials/modals/classroom_alert_modal.html', controller: "AcademiaClassroomsAlertCtrl", className: 'ngdialog-theme-default classroom-alert-modal', data: { type: "ERROR", msg: err } });
+                if ($rootScope.alertDialog == null || $rootScope.alertDialog == undefined) $rootScope.alertDialog = [];
+                $rootScope.alertDialog.push(ngDialog.open({ template: 'partials/modals/classroom_alert_modal.html', controller: "AcademiaClassroomsAlertCtrl", className: 'ngdialog-theme-default classroom-alert-modal', data: { type: "ERROR", msg: err } }));
             });
     }
 
     $scope.copyLink = function(classroom) {
         let text = domain + "/a/university/" + universityUrl + "/roomid/" + classroom.roomSID + "/accountid/" + classroom.accountSid + "/roomname/" + classroom.uniqueName + "/";
         Clipboard.copy(text);
-        ngDialog.open({ template: 'partials/modals/classroom_alert_modal.html', controller: "AcademiaClassroomsAlertCtrl", className: 'ngdialog-theme-default classroom-alert-modal', data: { type: "Universidade", msg: 'Copied link to clipboard' } });
+        if ($rootScope.alertDialog == null || $rootScope.alertDialog == undefined) $rootScope.alertDialog = [];
+
+        $rootScope.alertDialog.push(ngDialog.open({
+            template: 'partials/modals/classroom_alert_modal.html',
+            controller: "AcademiaClassroomsAlertCtrl",
+            className: 'ngdialog-theme-default classroom-alert-modal',
+            data: { type: "Universidade", msg: 'Copied link to clipboard' }
+        }));
     }
 
     $scope.joinClassroom = function(classroom) {
@@ -458,7 +472,6 @@ angular.module('netbase')
     });
 
     Courses.getAll().success(function(res) {
-        console.log("response courses: ")
         $scope.courses = res.data;
     });
 
@@ -609,16 +622,16 @@ angular.module('netbase')
 
     $scope.loadForumPosts = function() {
         Forum.getCategoriesByUniversityId($scope.university._id).success(function(resCategory) {
-            $scope.categories = resCategory.data;
-        })
-        // University.getallCategorybyUniversity().success(function(res) {
-        //     if (res.success) {
-        //         $scope.categories = res.data;
-        //         console.log("categories: ", res.data)
-        //     } else {
-        //         console.log("error while loading university")
-        //     }
-        // });
+                $scope.categories = resCategory.data;
+            })
+            // University.getallCategorybyUniversity().success(function(res) {
+            //     if (res.success) {
+            //         $scope.categories = res.data;
+            //         console.log("categories: ", res.data)
+            //     } else {
+            //         console.log("error while loading university")
+            //     }
+            // });
     }
 
     $scope.loadForumPostCategory = function(uni_id, categoryId) {
@@ -1955,7 +1968,7 @@ angular.module('netbase')
 
         Courses.getModulesByAccount($scope.universityid).success(function(res) {
 
-          console.log("modules: ", res)
+            console.log("modules: ", res)
             if (res.success) {
                 $scope.modules = res.data;
             }
@@ -2582,12 +2595,12 @@ angular.module('netbase')
 
     $scope.saveContent = function() {
         Courses.createPage({
-          text: $scope.tinymceModel,
-          contentType: 'page',
-          title: $scope.title,
-          moduleId: $route.current.params.id,
-          universityId: $scope.universityid
-         }).
+            text: $scope.tinymceModel,
+            contentType: 'page',
+            title: $scope.title,
+            moduleId: $route.current.params.id,
+            universityId: $scope.universityid
+        }).
         success(function(res) {
             console.log("create page response: ", JSON.stringify(res))
             $location.path("/cursos/a/" + $scope.universityid + "/suite/content")
@@ -2870,6 +2883,7 @@ angular.module('netbase')
     let id = $route.current.params.id;
     $scope.activeSection = "comprados";
     $scope.useraccess = false;
+    $scope.course = {free: true};
 
     Courses.getById(id).success(function(res) {
         if (res.success) {
@@ -3420,12 +3434,17 @@ angular.module('netbase')
     }
 
     $scope.resetPasswordStepOne = function() {
+        const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if (!re.test($scope.resetpasswordEmail)) {
+            alert("email is invalid");
+            return;
+        }
+
         let payload = { email: $scope.resetpasswordEmail, type: "student" }
         Students.resetPasswordStepOne(payload).success(function(res) {
             if (res.success) {
                 $location.path('/reset/password?tokenOne=' + res.tokenOne + '&email=' + $scope.resetpasswordEmail);
                 $scope.resetPasswordSuccess = true;
-
             }
         });
     }
@@ -3474,17 +3493,24 @@ angular.module('netbase')
             });
         }).catch(function(e) {
             $scope.loading = false
-            if (e == "EMAILINVALIDATED") {
-                console.log("invalid email")
-                $scope.loginMessage = "Please, type a valid email.";
+            if (e == "LOGINEMPTY") {
+                $scope.loginMessage = "LOGINEMPTY";
+                $scope.loginMessageBox = true;
+            } else if (e == "EMAILINVALIDATED") {
+                $scope.loginMessage = "EMAILINVALIDATED";
+                $scope.loginMessageBox = true;
+            } else if (e == "EMAILEMPTY") {
+                $scope.loginMessage = "EMAILEMPTY";
                 $scope.loginMessageBox = true;
             } else if (e == "PASSWORDEMPTY") {
-                $scope.loginMessage = "Please, type a password.";
+                $scope.loginMessage = "PASSWORDEMPTY";
                 $scope.loginMessageBox = true;
             } else {
                 $scope.loginMessage = "";
                 $scope.loginMessageBox = false;
             }
+
+            $scope.$apply();
         });
     };
 
@@ -3541,23 +3567,44 @@ angular.module('netbase')
             });
 
         }).catch(function(e) {
+            console.log("rejected: ", e)
             $scope.loading = false
-            if (e == "EMAILINVALIDATED") {
-                $scope.createMessage = "Por favor, escreva um email válido.";
+            if (e == "SIGNUPEMPTY") {
+                $scope.createMessage = "SIGNUPEMPTY";
+                $scope.createMessageBox = true;
+            } else if (e == "EMAILINVALIDATED") {
+                $scope.createMessage = "EMAILINVALIDATED";
                 $scope.createMessageBox = true;
             } else if (e == "NAMEINVALIDATED") {
-                $scope.createMessage = "Por favor, escreva um nome com mais de dois caracteres.";
+                $scope.createMessage = "NAMEINVALIDATED";
+                $scope.createMessageBox = true;
+            } else if (e == "EMAILEMPTY") {
+                $scope.createMessage = "EMAILEMPTY";
+                $scope.createMessageBox = true;
+            } else if (e == "NAMEEMPTY") {
+                $scope.createMessage = "NAMEEMPTY";
+                $scope.createMessageBox = true;
+            } else if (e == "USERNAMEEMPTY") {
+                $scope.createMessage = "USERNAMEEMPTY";
+                $scope.createMessageBox = true;
+            } else if (e == "PASSWORDEMPTY") {
+                $scope.createMessage = "PASSWORDEMPTY";
+                $scope.createMessageBox = true;
+            } else if (e == "PASSWORDCONFIRMEMPTY") {
+                $scope.createMessage = "PASSWORDCONFIRMEMPTY";
                 $scope.createMessageBox = true;
             } else if (e == "PASSWORDNOTMATCH") {
-                $scope.createMessage = "As senhas precisam ser iguais. Digite novamente";
+                $scope.createMessage = "PASSWORDNOTMATCH";
                 $scope.createMessageBox = true;
             } else if (e == "PASSWORDLESSTHANSIX") {
-                $scope.createMessage = "Por favor, a senha deve ter no mínimo 6 caracteres.";
+                $scope.createMessage = "PASSWORDLESSTHANSIX";
                 $scope.createMessageBox = true;
             } else {
                 $scope.createMessage = "";
                 $scope.createMessageBox = false;
             }
+
+            $scope.$apply();
         });
     };
 
@@ -3574,37 +3621,79 @@ angular.module('netbase')
             let passwordConfirm = new String(data.passwordConfirm).valueOf();
 
             if (type == "create") {
-                if (password == passwordConfirm) {
-                    passwordValidated = true;
-                } else {
-                    passwordValidated = false;
-                    reject("PASSWORDNOTMATCH");
-                }
 
-                if (password.length > 5) {
-                    passwordValidated = true;
-                } else {
-                    passwordValidated = true;
-                    reject("PASSWORDLESSTHANSIX");
-                }
+              if ((data.email == "" || data.email == undefined) &&
+                (data.password == "" || data.password == undefined) &&
+                (data.name =="" || data.name == undefined) &&
+                (data.username == "" || data.username == undefined) &&
+                (data.passwordConfirm == "" || data.passwordConfirm == undefined)) {
+                  reject("SIGNUPEMPTY")
+              }
 
-                if (data.name != undefined) {
-                    if (data.name.length > 2) {
-                        nameValidated = true;
-                    } else {
-                        reject("NAMEINVALIDATED");
-                    }
-                }
+              if (data.name == undefined) {
+                reject("NAMEEMPTY");
+              }
 
-                if (data.username != undefined) {
-                    if (data.name.length > 1) {
-                        nameValidated = true;
-                    } else {
-                        reject("USERNAMEINVALIDATED");
-                    }
-                }
+              if (data.name != undefined) {
+                  if (data.name.length > 2) {
+                      nameValidated = true;
+                  } else {
+                      reject("NAMEINVALIDATED");
+                  }
+              }
+
+              if (data.username == undefined) {
+                reject("USERNAMEEMPTY");
+              }
+
+              if (data.username != undefined) {
+                  if (data.name.length > 1) {
+                      nameValidated = true;
+                  } else {
+                      reject("USERNAMEINVALIDATED");
+                  }
+              }
+
+              if (data.email == "") {
+                reject("EMAILEMPTY");
+              }
+
+              if (data.password == "" || data.password == undefined) {
+                reject("PASSWORDEMPTY");
+              }
+
+              if (data.passwordConfirm == "" || data.passwordConfirm == undefined) {
+                reject("PASSWORDCONFIRMEMPTY");
+              }
+
+              if (password.length > 5) {
+                  passwordValidated = true;
+              } else {
+                  passwordValidated = true;
+                  reject("PASSWORDLESSTHANSIX");
+              }
+
+              if (password == passwordConfirm) {
+                  passwordValidated = true;
+              } else {
+                  passwordValidated = false;
+                  reject("PASSWORDNOTMATCH");
+              }
+
             } else if (type == "login") {
-                if (data.password != undefined) {
+              console.log("email: ", data.email)
+              console.log("password: ", data.password)
+
+                if (data.email == undefined && data.password == undefined) {
+                    reject("LOGINEMPTY");
+                }
+                if (data.email == "" && data.password == "") {
+                    reject("LOGINEMPTY");
+                }
+                if (data.email == "" || data.email == undefined) {
+                    reject("EMAILEMPTY");
+                }
+                if (data.password != undefined || data.password == "") {
                     if (password.length > 0) {
                         passwordValidated = true;
                     } else {
@@ -5095,6 +5184,11 @@ angular.module('netbase')
     // save changed info to the db
     $scope.save = function() {
         let imageUrl = $("#file").attr("value");
+
+        if ($scope.name == "") {
+            alert("Name is empty");
+            return;
+        }
 
         if ($scope.pwd !== $scope.rpwd) {
             alert("Password not matched");

@@ -11,25 +11,27 @@ angular.module('netbase')
     let viewers = {};
     let logged = $rootScope.logged;
 
-    $scope.tinymceOptions = {
-        file_picker_types: 'file image media',
-        tinydrive_token_provider: function(success, failure) {
-            Courses.fileUploadUrl().success(function(msg) {
-                success({ token: msg.token });
-            })
-        },
-        height: 400,
-        tinydrive_google_drive_key: "carbisa-document-upload@carbisa.iam.gserviceaccount.com",
-        tinydrive_google_drive_client_id: '102507978919142111240',
-        plugins: 'print preview powerpaste casechange importcss tinydrive searchreplace autolink autosave save directionality advcode visualblocks visualchars fullscreen image link media mediaembed  codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists checklist wordcount tinymcespellchecker a11ychecker textpattern noneditable help formatpainter pageembed charmap mentions quickbars linkchecker emoticons advtable',
-        toolbar: 'insertfile|undo redo | bold italic | alignleft aligncenter alignright | code|styleselect|outdent indent|link image'
-    };
-
     Videos.getById(videoId).success(function(res) {
         let status = res.status;
         if (status == 90010) {
             $location.path('/home');
         } else {
+            // setting up the textarea
+            tinymce.init({
+                selector: 'textarea',
+                file_picker_types: 'file image media',
+                tinydrive_token_provider: function(success, failure) {
+                    Courses.fileUploadUrl().success(function(msg) {
+                        success({ token: msg.token });
+                    })
+                },
+                height: 400,
+                tinydrive_google_drive_key: "carbisa-document-upload@carbisa.iam.gserviceaccount.com",
+                tinydrive_google_drive_client_id: '102507978919142111240',
+                plugins: 'print preview powerpaste casechange importcss tinydrive searchreplace autolink autosave save directionality advcode visualblocks visualchars fullscreen image link media mediaembed  codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists checklist wordcount tinymcespellchecker a11ychecker textpattern noneditable help formatpainter pageembed charmap mentions quickbars linkchecker emoticons advtable',
+                toolbar: 'insertfile|undo redo | bold italic | alignleft aligncenter alignright | code|styleselect|outdent indent|link image'
+            });
+
             $scope.video = res.data;
             if ($scope.video != null && $scope.video != undefined) {
                 // Get University
@@ -100,10 +102,8 @@ angular.module('netbase')
     });
 
     $scope.createAnswerPost = function() {
-        var data = { text: $scope.answer };
-
         // change forum post structure
-        var data = { text: $scope.answer };
+        var data = { text: tinymce.activeEditor.getContent() };
         if ($localStorage.token != undefined || $localStorage.token != null) {
             Forum.postAnswerByForumPostId($scope.forumPost._id, data).then(function(res) {
                 let status = res.data.status;
@@ -114,6 +114,7 @@ angular.module('netbase')
                     data.votesCount = 0;
                     data.createdAt = Math.round((new Date()).getTime() / 1000);
                     $scope.forumPost.answers.push(data);
+                    tinymce.activeEditor.setContent("");
                 }
             });
         } else {

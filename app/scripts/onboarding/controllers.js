@@ -41,6 +41,9 @@ angular.module('netbase')
             language: 'PT'
         };
 
+        // Only allow alpanumeric characters, dash and underscore ^[a-zA-Z0-9]+(?:[\w -]*[a-zA-Z0-9]+)*$
+        let urlpattern = new RegExp(/^[a-zA-Z0-9_-]*$/)
+
         if (data.name == undefined) {
             validated = false;
             $scope.error.text.push("Escreva um nome para a sua comunidade educacional.");
@@ -53,11 +56,20 @@ angular.module('netbase')
             $scope.error.exists = true;
         }
 
-        if (data.about == undefined) {
-            validated = false;
-            $scope.error.text.push("Escreva uma pequena descrição para explicar a sua comunidade educacional.");
-            $scope.error.exists = true;
+        if (!urlpattern.test(data.url)) {
+          validated = false;
+          $scope.error.text.push("O campo Url deve conter apenas letras, números, hífen e sublinhado.");
+          $scope.error.exists = true;
+        } else {
+          console.log("url pattern test success")
         }
+
+        // removed because Description field is optional
+        // if (data.about == undefined) {
+        //     validated = false;
+        //     $scope.error.text.push("Escreva uma pequena descrição para explicar a sua comunidade educacional.");
+        //     $scope.error.exists = true;
+        // }
 
         if (validated) {
             University.create(data).success(function(res) {

@@ -23,10 +23,9 @@ angular.module('netbase', [
     'oc.lazyLoad'
 ])
 
-.config(['$translateProvider', '$localStorageProvider', 'StripeElementsProvider', '$routeProvider', function($translateProvider, $localStorageProvider, StripeElementsProvider, $routeProvider) {
-
-    let stripeKey = "pk_live_ZBmOf7GNQ13AIEGeP9WkPv3M";
-    //let stripeKey = "pk_test_2XclbP1INDqkspKrbRn6oBZR";
+.config(['$translateProvider', '$localStorageProvider', 'StripeElementsProvider', function($translateProvider, $localStorageProvider, StripeElementsProvider) {
+    // let stripeKey = "pk_live_ZBmOf7GNQ13AIEGeP9WkPv3M";
+    let stripeKey = "pk_test_2XclbP1INDqkspKrbRn6oBZR";
     //AnalyticsProvider.setAccount('UA-125408424-1');
 
     StripeElementsProvider.setAPIKey(stripeKey);
@@ -40,16 +39,17 @@ angular.module('netbase', [
     console.log(window.location.href)
 
     let url = window.location.href;
+    //let url = "https://universida.de/home/explore"
 
     if (url.indexOf('colle.ge') > 0) {
       $translateProvider.preferredLanguage('en');
     } else if (url.indexOf('universida.de') > 0) {
       $translateProvider.preferredLanguage('pt');
     } else {
-      console.log("else fiooo")
       $translateProvider.preferredLanguage('en');
     }
 
+    //$translateProvider.preferredLanguage('pt');
     //$translateProvider.uniformLanguageTag('bcp47').determinePreferredLanguage();
     //console.log("PREFERRED LANGUAGE: ", $translateProvider.uniformLanguageTag('bcp47').determinePreferredLanguage())
 }])
@@ -572,14 +572,25 @@ angular.module('netbase', [
         $localStorage.indexVisited = false;
     }
 
+
     // check localStorage for set language
-    if ($localStorage.setLanguage == "en") {
-        $translate.use("en")
-        amMoment.changeLocale('en');
+    // if (currentLanguage == "en-US") {
+    //     $translate.use("en")
+    //     amMoment.changeLocale('en');
+    // } else {
+    //     $translate.use("pt")
+    //     amMoment.changeLocale('pt-br');
+    //     $localStorage.setLanguage = "pt"
+    // }
+
+    let url = window.location.href;
+    //let url = "https://universida.de/home/explore"
+    if (url.indexOf('colle.ge') > 0) {
+      amMoment.changeLocale('en');
+    } else if (url.indexOf('universida.de') > 0) {
+      amMoment.changeLocale('pt-br');
     } else {
-        $translate.use("pt")
-        amMoment.changeLocale('pt-br');
-        $localStorage.setLanguage = "pt"
+      amMoment.changeLocale('en');
     }
 
     $rootScope.logged = $localStorage.logged;

@@ -436,3 +436,17 @@
 .tox-notification {
     display: none !important
 }
+
+.timeline-uni-list {
+  display: none;
+}
+
+@media only screen and (max-width: 768px) {
+  .timeline-uni-list {
+    display: block;
+  }
+}
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}

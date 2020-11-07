@@ -88,6 +88,11 @@
             text-align: center;
             text-decoration: none !important;
         }
+
+        [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+          display: none !important;
+        }
+
     </style>
 
     <div class="section-menu">
@@ -96,7 +101,7 @@
             <div style="height: 5px"></div>
         </div>
         <div class="split-line"></div>
-        <div class="members-list">
+        <div class="members-list ng-cloak">
             <div style="display: inline-block;">
                 <i style="margin-right: 8px;" class="fas fa-user-friends"></i>{{ (university.members | filter : { 'unsubscribed' : 'false' }).length }}
             </div>
@@ -120,6 +125,12 @@
             <div class="option" style="padding-left: 0px;"><a href="/a/{{university.url}}/classroom"><i class='fas fa-chalkboard-teacher' style='padding-right:15px;color: #4986bf; font-size: 0.85em;'></i>{{'CLASSROOM' | translate}}</a></div>
             <div class="option" style="padding-left: 0px;">
                 <a href="/a/{{university.url}}/forum/category/all"><img src="https://visualpharm.com/assets/811/Discussion%20Forum-595b40b65ba036ed117d396c.svg" style="margin-right: 14px;" height="20px" width="20px" />{{'FORUM' | translate}}</a>
+            </div>
+            <div class="option" style="padding-left: 0px;">
+              <a href="/dashboard/a/manage/id/{{university._id}}">
+                <i class='fas fa-tachometer-alt' style='padding-right:15px;color: #4986bf; font-size: 0.85em;'></i>
+                {{'DASHBOARD' | translate}}
+              </a>
             </div>
             <div class="split-line"></div>
             <div class="category-list-wrapper">

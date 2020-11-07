@@ -1,58 +1,57 @@
 <div class="container-fluid modal-accounts">
+    <style>
+        .input-email {
+            text-transform: lowercase;
+        }
+        
+        .input-email::-webkit-input-placeholder {
+            text-transform: capitalize;
+        }
+        
+        .loading-gif {
+            width: 100%;
+            text-align: center;
+            padding-top: 30px;
+            padding-bottom: 30px;
+        }
+        
+        .fpwd-btn {
+            width: 100%;
+            text-align: center;
+            padding-top: 30px;
+            padding-bottom: 15px;
+            font-size: 0.9em;
+        }
+        
+        .create-acc-btn {
+            width: 100%;
+            text-align: center;
+            font-size: 0.9em;
+            color: #1faa95;
+        }
+    </style>
 
-  <style>
-
-    .input-email {
-      text-transform: lowercase;
-    }
-
-    .input-email::-webkit-input-placeholder {
-      text-transform: capitalize;
-    }
-
-
-  </style>
-
-  <div class="row">
-
-    <div class="col-xs-12">
-
-      <div class="headline-sub-one">{{'LOGIN' | translate}}</div>
-
-      <div class="alert bg-primary-red" ng-if="loginMessageBox">{{loginMessage}}</div>
-
-      <div class="form">
-
-        <div class="form-group">
-          <i class="fas fa-envelope"></i>
-          <input class="input-email" ng-model="loginEmail" placeholder="{{'EMAIL' | translate}}" type="text" />
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="headline-sub-one">{{'LOGIN' | translate}}</div>
+            <div class="alert bg-primary-red" ng-if="loginMessageBox">{{loginMessage | translate}}</div>
+            <div class="form">
+                <div class="form-group">
+                    <i class="fas fa-envelope"></i>
+                    <input class="input-email" ng-model="loginEmail" placeholder="{{'EMAIL' | translate}}" type="text" />
+                </div>
+                <div class="form-group">
+                    <i class="fas fa-key"></i>
+                    <input ng-keypress="($event.which === 13)?login():0" ng-model="loginPassword" placeholder="{{'SENHA' | translate}}" type="password" />
+                </div>
+                <div ng-show="loading" class="loading-gif">
+                    <img src="/img/loader.gif" height="50px" />
+                </div>
+                <button ng-click="login()" class="btn btn-bluebase">{{'LOGIN' | translate}}</button>
+                <div class="fpwd-btn"><a ng-click="forgotPassword()">{{'FORGET_PASSWORD' | translate}}</a></div>
+                <p style="text-align: center; font-size: 0.8em;">{{'OR' | translate}}</p>
+                <div class="create-acc-btn"><a ng-click="createDialog()">{{'CRIAR_UMA_CONTA' | translate}}</a></div>
+            </div>
         </div>
-        <!-- end form group -->
-
-        <div class="form-group">
-          <i class="fas fa-key"></i>
-          <input ng-keypress="($event.which === 13)?login():0" ng-model="loginPassword" placeholder="{{'SENHA' | translate}}" type="password" />
-        </div>
-        <!-- end form group -->
-
-        <div ng-show="loading" style="width: 100%; text-align: center; padding-top: 30px; padding-bottom: 30px;">
-            <img src="/img/loader.gif" height="50px" />
-        </div>
-
-        <button ng-click="login()" class="btn btn-bluebase">{{'LOGIN' | translate}}</button>
-
-        <div style="widht: 100%; text-align: center; padding-top: 30px; padding-bottom: 15px; font-size: 0.9em;"><a ng-click="forgotPassword()">{{'FORGET_PASSWORD' | translate}}</a></div>
-        <p style="text-align: center; font-size: 0.8em;">{{'OR' | translate}}</p>
-        <div style="widht: 100%; text-align: center; font-size: 0.9em; color: #1faa95;"><a ng-click="createDialog()">{{'CRIAR_UMA_CONTA' | translate}}</a></div>
-
-      </div>
-      <!-- end form -->
-
     </div>
-    <!-- end col-xs-12 -->
-
-  </div>
-  <!-- end row -->
-
 </div>
-<!-- end container-fluid -->

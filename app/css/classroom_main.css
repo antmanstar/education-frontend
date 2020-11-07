@@ -176,9 +176,9 @@
 }
 
 .alert-confirm-ok-btn {
-    position: absolute;
+    /* position: absolute;
     left: 70px;
-    bottom: 10px;
+    bottom: 10px; */
     width: 100px;
     border-radius: 3px;
     background: #323532;
@@ -186,9 +186,9 @@
 }
 
 .alert-confirm-cancel-btn {
-    position: absolute;
+    /* position: absolute;
     right: 70px;
-    bottom: 10px;
+    bottom: 10px; */
     width: 100px;
     border-radius: 3px;
     background: #0a290a;
@@ -284,7 +284,7 @@
 
 .chat-item-st {
     margin-bottom: 10px;
-    
+
 }
 
 .mine .chat-title-st {
@@ -419,22 +419,27 @@
 
 .classroom-select-device-container {
     display: flex;
-    background-color: #e6e6e6
+    background-color: #e6e6e6;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px;
 }
 
 .join-button-group {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 10px;
 }
 
 .join-button-group button {
-    width: 74px;
     border-radius: 5px;
     background-color: #333232;
     color: white;
-    margin: 20px;
     height: 36px;
-    margin-left: 10px;
+    width: 200px !important;
+    margin-left: 15px;
+    margin-right: 15px;
 }
 
 .video-setting-screen-controller {
@@ -449,15 +454,12 @@
     right: 180px;
 }
 
-#selecting_container {
-    position: relative;
-}
+#selecting_container {}
 
 #selecting_video {
-    width: 545px;
-    height: 460px;
+    width: 100%;
+    height: 430px;
     contain: strict;
-    margin: 20px;
     background-color: black;
 }
 
@@ -496,111 +498,91 @@
     .classroom-page-container {
         margin-top: 0px;
     }
-
     .meeting-display-container {
         margin-top: 0px;
         position: fixed;
         height: 100%;
         width: 100%;
     }
-    
     .meeting-classroom-main {
         padding: 0px;
         margin-top: 0px;
     }
-    
     .controller-container {
         width: 100%;
     }
-    
     .bottom-controller-container {
         margin-bottom: 10px;
         padding-left: 15px;
         padding-right: 15px;
     }
-    
     .classroom-chat-container>.avatar-container {
         margin-top: 25px;
     }
-    
     .mobile-invisible {
         display: none !important;
     }
-    
     .mobile-visible {
         display: flex !important;
     }
-
     .classroom-chatbox-initial {
         width: 100%;
         right: -100%;
         height: 100%;
         z-index: 50;
     }
-
     .drag-in-right-left {
         right: 0px !important;
         height: 100%;
     }
-
     .drag-out-left-right {
         right: -105% !important;
         height: 100%;
     }
-
     .drag-in-left-right {
         left: 0px !important;
         height: 100%;
     }
-    
     .drag-out-right-left {
         left: -105% !important;
         width: 100%;
         height: 100%;
     }
-    
     .classroom-participants-initial {
         width: 100%;
         left: -100%;
         height: 100%;
         z-index: 50;
     }
-
     .classroom-select-device-modal .ngdialog-content {
         width: 100vw !important;
     }
-
     .classroom-select-device-container {
         display: flex;
         flex-direction: column;
         padding-top: 47px;
     }
-
     #selecting_video {
         width: 100%;
         height: 300px;
         margin-top: 20px;
         margin-left: 0px;
     }
-
     .video-setting-screen-controller {
         position: absolute;
         bottom: 50px;
         left: 90px;
     }
-
     .voice-setting-screen-controller {
         position: absolute;
         bottom: 50px;
         right: 90px;
     }
-
     .join-button-group {
         display: flex;
         flex-direction: row;
         justify-content: center;
     }
-
     .sub-video-title {
         position: relative;
     }
@@ -610,111 +592,91 @@
     .classroom-page-container {
         margin-top: 0px;
     }
-
     .meeting-display-container {
         margin-top: 0px;
         position: fixed;
         height: 100%;
         width: 100%;
     }
-
     .meeting-classroom-main {
         padding: 0px;
         margin-top: 0px;
     }
-    
     .controller-container {
         width: 100%;
     }
-    
     .bottom-controller-container {
         margin-bottom: 10px;
         padding-left: 15px;
         padding-right: 15px;
     }
-    
     .classroom-chat-container>.avatar-container {
         margin-top: 25px;
     }
-    
     .mobile-invisible {
         display: none !important;
     }
-    
     .mobile-visible {
         display: flex !important;
     }
-
     .classroom-chatbox-initial {
         width: 100%;
         right: -100%;
         height: 100%;
         z-index: 50;
     }
-
     .drag-in-right-left {
         right: 0px !important;
         height: 100%;
     }
-
     .drag-out-left-right {
         right: -105% !important;
         height: 100%;
     }
-
     .drag-in-left-right {
         left: 0px !important;
         height: 100%;
     }
-    
     .drag-out-right-left {
         left: -105% !important;
         width: 100%;
         height: 100%;
     }
-    
     .classroom-participants-initial {
         width: 100%;
         left: -100%;
         height: 100%;
         z-index: 50;
     }
-
     .classroom-select-device-modal .ngdialog-content {
         width: 100vw !important;
     }
-
     .classroom-select-device-container {
         display: flex;
         flex-direction: column;
         padding-top: 47px;
     }
-
     #selecting_video {
         width: 100%;
         height: 300px;
         margin-top: 20px;
         margin-left: 0px;
     }
-
     .video-setting-screen-controller {
         position: absolute;
         bottom: 50px;
         left: 90px;
     }
-
     .voice-setting-screen-controller {
         position: absolute;
         bottom: 50px;
         right: 90px;
     }
-
     .join-button-group {
         display: flex;
         flex-direction: row;
         justify-content: center;
     }
-
     .sub-video-title {
         position: relative;
     }

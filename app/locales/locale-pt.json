@@ -72,7 +72,7 @@
     "TEACH": "Ensinar",
     "CREATEYOUREDCOMM": "Crie a sua comunidade educacional",
     "YOUREDCOMMNAME": "Nome da sua comunidade educacional",
-    "URL": "URL",
+    "URL": "Escolha seu URL personalizado (pode conter letras, números, hífen ou sublinhado)",
     "DESCRIPTION": "Descrição",
     "PROCEED": "Continuar",
 
@@ -140,7 +140,6 @@
     "UNSUBSCRIBE": "Desinscrever",
     "CREATE_POST": "Criar Postagem",
     "ABOUT": "Sobre",
-    "DESCRIPTION": "Descrição",
     "MANAGEMENT": "Administração",
     "ACCESS_DASHBOARD": "Acessar Dashboard",
     "CREATE_CATEGORY": "Criar Categoria",
@@ -655,5 +654,21 @@
     "SEPTEMBER": "Setembro",
     "OCTOBER": "Outubro",
     "NOVEMBER": "Novembro",
-    "DECEMBER": "Dezembro"
+    "DECEMBER": "Dezembro",
+
+    "SIGNUPEMPTY": "Por favor, preencha todos os campos.",
+    "EMAILINVALIDATED": "Por favor, digite um e-mail válido.",
+    "NAMEINVALIDATED": "Por favor, escreva um nome com mais de dois caracteres.",
+    "EMAILEMPTY": "Por favor, escreva um email.",
+    "NAMEEMPTY": "Por favor, escreva um nome.",
+    "USERNAMEEMPTY": "Por favor, escreva um nome de usuário.",
+    "PASSWORDEMPTY": "Por favor, insira uma senha.",
+    "PASSWORDCONFIRMEMPTY": "Favor preencher o campo de confirmação de senha.",
+    "PASSWORDNOTMATCH": "As senhas precisam ser iguais. Digite novamente.",
+    "PASSWORDLESSTHANSIX": "Por favor, a senha deve ter no mínimo 6 caracteres.",
+
+    "LOGINEMPTY": "Por favor, digite um e-mail e uma senha válidos.",
+    "EMAILINVALIDATED": "Por favor, digite um e-mail válido.",
+    "EMAILEMPTY": "Por favor, digite seu endereço de e-mail.",
+    "PASSWORDEMPTY": "Por favor, digite uma senha."
 }

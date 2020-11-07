@@ -1,59 +1,59 @@
 <div class="container-fluid modal-accounts">
 
-  <div class="row">
+    <div class="row">
 
-    <div class="col-xs-12">
+        <div class="col-xs-12">
 
-      <div class="headline-sub-one">{{'REGISTRAR' | translate}}</div>
+            <div class="headline-sub-one">{{'REGISTRAR' | translate}}</div>
 
-      <div class="alert bg-primary-red" ng-if="createMessageBox">{{createMessage}}</div>
+            <div class="alert bg-primary-red" ng-if="createMessageBox">{{createMessage | translate}}</div>
 
-      <div class="form">
+            <div class="form">
 
-        <div class="form-group">
-          <i class="fas fa-user"></i>
-          <input ng-model="createName" placeholder="{{'NOME' | translate}}" type="text" />
+                <div class="form-group">
+                    <i class="fas fa-user"></i>
+                    <input ng-model="createName" placeholder="{{'NOME' | translate}}" type="text" />
+                </div>
+                <!-- end form group -->
+
+                <div class="form-group">
+                    <i class="fas fa-user-circle"></i>
+                    <input ng-model="createUsername" placeholder="{{'USERNAME' | translate}}" type="text" />
+                </div>
+                <!-- end form group -->
+
+                <div class="form-group">
+                    <i class="fas fa-envelope"></i>
+                    <input ng-model="createEmail" placeholder="{{'EMAIL' | translate}}" type="text" />
+                </div>
+                <!-- end form group -->
+
+                <div class="form-group">
+                    <i class="fas fa-key"></i>
+                    <input ng-model="createPassword" placeholder="{{'SENHA' | translate}}" type="password" />
+                </div>
+                <!-- end form group -->
+
+                <div class="form-group">
+                    <i class="fas fa-key"></i>
+                    <input ng-model="createPasswordConfirm" placeholder="{{'CONFIRMAR_SENHA' | translate}}" type="password" />
+                </div>
+                <!-- end form group -->
+
+                <div ng-show="loading" style="width: 100%; text-align: center; padding-top: 30px; padding-bottom: 30px;">
+                    <img src="/img/loader.gif" height="50px" />
+                </div>
+
+                <button ng-click="create()" class="btn btn-bluebase">{{'CRIAR_CONTA' | translate}}</button>
+
+            </div>
+            <!-- end form -->
+
         </div>
-        <!-- end form group -->
-
-        <div class="form-group">
-          <i class="fas fa-user-circle"></i>
-          <input ng-model="createUsername" placeholder="{{'USERNAME' | translate}}" type="text" />
-        </div>
-        <!-- end form group -->
-
-        <div class="form-group">
-          <i class="fas fa-envelope"></i>
-          <input ng-model="createEmail" placeholder="{{'EMAIL' | translate}}" type="text" />
-        </div>
-        <!-- end form group -->
-
-        <div class="form-group">
-          <i class="fas fa-key"></i>
-          <input ng-model="createPassword" placeholder="{{'SENHA' | translate}}" type="password" />
-        </div>
-        <!-- end form group -->
-
-        <div class="form-group">
-          <i class="fas fa-key"></i>
-          <input ng-model="createPasswordConfirm" placeholder="{{'CONFIRMAR_SENHA' | translate}}" type="password" />
-        </div>
-        <!-- end form group -->
-
-        <div ng-show="loading" style="width: 100%; text-align: center; padding-top: 30px; padding-bottom: 30px;">
-            <img src="/img/loader.gif" height="50px" />
-        </div>
-
-        <button ng-click="create()" class="btn btn-bluebase">{{'CRIAR_CONTA' | translate}}</button>
-
-      </div>
-      <!-- end form -->
+        <!-- end col-xs-12 -->
 
     </div>
-    <!-- end col-xs-12 -->
-
-  </div>
-  <!-- end row -->
+    <!-- end row -->
 
 </div>
 <!-- end container-fluid -->
