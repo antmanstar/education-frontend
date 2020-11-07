@@ -35,7 +35,21 @@ angular.module('netbase', [
         suffix: '.json'
     });
 
-    $translateProvider.preferredLanguage('pt');
+    console.log("route provider is saying: ")
+    console.log(window.location.href)
+
+    let url = window.location.href;
+    //let url = "https://universida.de/home/explore"
+
+    if (url.indexOf('colle.ge') > 0) {
+      $translateProvider.preferredLanguage('en');
+    } else if (url.indexOf('universida.de') > 0) {
+      $translateProvider.preferredLanguage('pt');
+    } else {
+      $translateProvider.preferredLanguage('en');
+    }
+
+    //$translateProvider.preferredLanguage('pt');
     //$translateProvider.uniformLanguageTag('bcp47').determinePreferredLanguage();
     //console.log("PREFERRED LANGUAGE: ", $translateProvider.uniformLanguageTag('bcp47').determinePreferredLanguage())
 }])
@@ -558,14 +572,25 @@ angular.module('netbase', [
         $localStorage.indexVisited = false;
     }
 
+
     // check localStorage for set language
-    if ($localStorage.setLanguage == "en") {
-        $translate.use("en")
-        amMoment.changeLocale('en');
+    // if (currentLanguage == "en-US") {
+    //     $translate.use("en")
+    //     amMoment.changeLocale('en');
+    // } else {
+    //     $translate.use("pt")
+    //     amMoment.changeLocale('pt-br');
+    //     $localStorage.setLanguage = "pt"
+    // }
+
+    let url = window.location.href;
+    //let url = "https://universida.de/home/explore"
+    if (url.indexOf('colle.ge') > 0) {
+      amMoment.changeLocale('en');
+    } else if (url.indexOf('universida.de') > 0) {
+      amMoment.changeLocale('pt-br');
     } else {
-        $translate.use("pt")
-        amMoment.changeLocale('pt-br');
-        $localStorage.setLanguage = "pt"
+      amMoment.changeLocale('en');
     }
 
     $rootScope.logged = $localStorage.logged;

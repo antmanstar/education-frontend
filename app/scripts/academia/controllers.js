@@ -3530,7 +3530,8 @@ angular.module('netbase')
             });
 
             scope.gotoCategoryCreatPage = function() {
-                $location.path("/a/abcuni/forum/category/create")
+              let url = university.url
+                $location.path("/a/" + url + "/forum/category/create")
             }
 
             scope.createPost = function(url) {

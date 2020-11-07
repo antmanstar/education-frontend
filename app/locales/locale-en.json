@@ -71,7 +71,7 @@
     "TEACH": "Teach",
     "CREATEYOUREDCOMM": "Create your educational community",
     "YOUREDCOMMNAME": "Educational community name",
-    "URL": "URL",
+    "URL": "Choose your custom URL (can contain letters, numbers, hyphen or underscore)",
     "DESCRIPTION": "Description",
     "PROCEED": "Proceed",
 
@@ -139,7 +139,6 @@
     "UNSUBSCRIBE": "Unsubscribe",
     "CREATE_POST": "Create Post",
     "ABOUT": "About",
-    "DESCRIPTION": "Description",
     "MANAGEMENT": "Management",
     "ACCESS_DASHBOARD": "Access Dashboard",
     "CREATE_CATEGORY": "Create Category",
@@ -655,5 +654,21 @@
     "SEPTEMBER": "September",
     "OCTOBER": "October",
     "NOVEMBER": "November",
-    "DECEMBER": "December"
+    "DECEMBER": "December",
+
+    "SIGNUPEMPTY": "Please fill up all the fields.",
+    "EMAILINVALIDATED": "Please enter a valid email.",
+    "NAMEINVALIDATED": "Please write a name with more than two characters.",
+    "EMAILEMPTY": "Please write an email.",
+    "NAMEEMPTY": "Please write a name.",
+    "USERNAMEEMPTY": "Please write a username.",
+    "PASSWORDEMPTY": "Please enter a password.",
+    "PASSWORDCONFIRMEMPTY": "Please fill up confirm password field.",
+    "PASSWORDNOTMATCH": "The passwords need to be the same. Type them again.",
+    "PASSWORDLESSTHANSIX": "Please, the password must be at least 6 characters long.",
+
+    "LOGINEMPTY": "Please, type a valid email and password.",
+    "EMAILINVALIDATED": "Please, type a valid email.",
+    "EMAILEMPTY": "Please, type your email address.",
+    "PASSWORDEMPTY": "Please, type a password."
 }

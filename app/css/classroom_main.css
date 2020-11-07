@@ -176,9 +176,9 @@
 }
 
 .alert-confirm-ok-btn {
-    position: absolute;
+    /* position: absolute;
     left: 70px;
-    bottom: 10px;
+    bottom: 10px; */
     width: 100px;
     border-radius: 3px;
     background: #323532;
@@ -186,9 +186,9 @@
 }
 
 .alert-confirm-cancel-btn {
-    position: absolute;
+    /* position: absolute;
     right: 70px;
-    bottom: 10px;
+    bottom: 10px; */
     width: 100px;
     border-radius: 3px;
     background: #0a290a;
@@ -284,6 +284,7 @@
 
 .chat-item-st {
     margin-bottom: 10px;
+
 }
 
 .mine .chat-title-st {
@@ -316,13 +317,15 @@
     color: black;
 }
 
-.chat-item-st.mine .chat-main-st {
+.chat-item-st.mine .chat-main-st
+{
     border-top-right-radius: 0px;
     background-color: #52bfea;
     color: black;
 }
 
-.chat-item-st.other .chat-main-st {
+.chat-item-st.other .chat-main-st
+{
     border-top-left-radius: 0px;
     background-color: #dddddd;
     color: black;
