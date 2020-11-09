@@ -1,57 +1,57 @@
 <div ng-include="'partials/headerhome.html'"></div>
 
 <script type="text/javascript">
-    document.addEventListener("DOMContentLoaded", function(event) {
-        var socket = io.connect("https://totemic-chimera-237707.appspot.com");
+    // document.addEventListener("DOMContentLoaded", function(event) {
+    var socket = io.connect("https://totemic-chimera-237707.appspot.com");
 
-        var siofu = new SocketIOFileUpload(socket);
-        var filesCount = 0;
-        var progressCloud = 0;
-        var progressPercent = 0;
+    var siofu = new SocketIOFileUpload(socket);
+    var filesCount = 0;
+    var progressCloud = 0;
+    var progressPercent = 0;
 
-        document.getElementById("upload_btn").addEventListener("click", siofu.prompt, false);
+    document.getElementById("upload_btn").addEventListener("click", siofu.prompt, false);
 
-        // Do something on upload progress:
-        siofu.addEventListener("progress", function(event) {
-            var percent = event.bytesLoaded / event.file.size * 100;
-            console.log("File is", percent.toFixed(2), "percent loaded");
-            $("#file_drop").html("Upload: " + percent.toFixed(2) + "%");
+    // Do something on upload progress:
+    siofu.addEventListener("progress", function(event) {
+        var percent = event.bytesLoaded / event.file.size * 100;
+        console.log("File is", percent.toFixed(2), "percent loaded");
+        $("#file_drop").html("Upload: " + percent.toFixed(2) + "%");
 
-            $("#gif").show();
-            if (percent.toFixed(2) == 100) {
-                $("#file_drop").html("<b>Iniciando o processamento da imagem</b>");
-            }
-        });
+        $("#gif").show();
+        if (percent.toFixed(2) == 100) {
+            $("#file_drop").html("<b>Iniciando o processamento da imagem</b>");
+        }
+    });
 
-        socket.on("progressProgressing", function(a) {
-            let progressPercent = a;
-            $("#file_drop").html("<b>Processando o vídeo:</b> " + progressPercent.toFixed(2) + "%");
-        });
+    socket.on("progressProgressing", function(a) {
+        let progressPercent = a;
+        $("#file_drop").html("<b>Processando o vídeo:</b> " + progressPercent.toFixed(2) + "%");
+    });
 
-        socket.on("status", function(a) {
-            console.log("status: ")
-            console.log(a)
-            if (a == 1) {}
-            if (a == 2) {
-                $("#file_drop").html("<b>Upload completo!</b>");
-            }
-        });
+    socket.on("status", function(a) {
+        console.log("status: ")
+        console.log(a)
+        if (a == 1) {}
+        if (a == 2) {
+            $("#file_drop").html("<b>Upload completo!</b>");
+        }
+    });
 
-        socket.on("files", function(a) {
-            filesCount = a;
-        });
+    socket.on("files", function(a) {
+        filesCount = a;
+    });
 
-        // Do something when a file is uploaded:
-        siofu.addEventListener("complete", function(event) {
-            console.log("Upload Finished")
-            $("#gif").hide();
-        });
+    // Do something when a file is uploaded:
+    siofu.addEventListener("complete", function(event) {
+        console.log("Upload Finished")
+        $("#gif").hide();
+    });
 
-        socket.on("imagepath", function(a) {
+    socket.on("imagepath", function(a) {
             $("#file").attr("value", a);
             $(".profile-pic").attr("src", a);
         })
-    });
+        // });
 </script>
 
 <style>
