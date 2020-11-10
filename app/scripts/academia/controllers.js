@@ -2940,7 +2940,7 @@ angular.module('netbase')
     }
 }])
 
-.directive('categorychat', ['University', 'Forum', '$localStorage', '$route', 'jwtHelper', 'ngDialog', '$location', 'Chat', 'Students', 'Courses', 'User', function(University, Forum, $localStorage, $route, jwtHelper, ngDialog, $location, Chat, Students, Courses, User) {
+.directive('categorychat', ['University', 'Forum', '$localStorage', '$route', 'jwtHelper', 'ngDialog', '$location', 'Students', 'Courses', 'User', function(University, Forum, $localStorage, $route, jwtHelper, ngDialog, $location, Students, Courses, User) {
     return {
         restrict: 'EA',
         templateUrl: '../partials/academia/chat.html',
@@ -3414,7 +3414,7 @@ angular.module('netbase')
     }
 }])
 
-.directive('academiarightcolumn', ['University', 'Forum', '$localStorage', '$route', 'jwtHelper', 'ngDialog', '$location', 'Chat', 'Students', function(University, Forum, $localStorage, $route, jwtHelper, ngDialog, $location, Chat, Students) {
+.directive('academiarightcolumn', ['University', 'Forum', '$localStorage', '$route', 'jwtHelper', 'ngDialog', '$location', 'Students', function(University, Forum, $localStorage, $route, jwtHelper, ngDialog, $location, Students) {
     return {
         restrict: 'EA',
         templateUrl: '../partials/academia/rightcolumn.html',
@@ -3530,7 +3530,7 @@ angular.module('netbase')
             });
 
             scope.gotoCategoryCreatPage = function() {
-              let url = university.url
+                let url = university.url
                 $location.path("/a/" + url + "/forum/category/create")
             }
 

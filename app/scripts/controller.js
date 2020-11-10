@@ -4305,7 +4305,7 @@ angular.module('netbase')
 }])
 
 /* end messenger */
-.controller('HeaderCtrl', ['$rootScope', '$scope', '$location', '$localStorage', 'jwtHelper', 'Search', 'Students', '$route', 'ngDialog', '$timeout', 'Chat', '$translate', function($rootScope, $scope, $location, $localStorage, jwtHelper, Search, Students, $route, ngDialog, $timeout, Chat, $translate) {
+.controller('HeaderCtrl', ['$rootScope', '$scope', '$location', '$localStorage', 'jwtHelper', 'Search', 'Students', '$route', 'ngDialog', '$timeout', '$translate', function($rootScope, $scope, $location, $localStorage, jwtHelper, Search, Students, $route, ngDialog, $timeout, $translate) {
     /* header variables */
     let logged = $rootScope.logged;
     $scope.whitelabel = false;
@@ -4413,34 +4413,34 @@ angular.module('netbase')
                 $scope.userImage = data.imageUrl;
             }
 
-            /* chat */
-            if ($localStorage.tokenTwilio != undefined) {} else {
-                // Request token from API
-                let fingertips;
-                new Fingerprint2().get(function(result, components) {
-                    var info = {
-                        fingerprint: result
-                    };
+            // /* chat */
+            // if ($localStorage.tokenTwilio != undefined) {} else {
+            //     // Request token from API
+            //     let fingertips;
+            //     new Fingerprint2().get(function(result, components) {
+            //         var info = {
+            //             fingerprint: result
+            //         };
 
-                    processFingerprint(info);
-                    Chat.getTwilioToken(info).success(function(res) {
-                        let token = res.token;
-                        $localStorage.tokenTwilio = res.token;
-                    })
-                });
+            //         processFingerprint(info);
+            //         Chat.getTwilioToken(info).success(function(res) {
+            //             let token = res.token;
+            //             $localStorage.tokenTwilio = res.token;
+            //         })
+            //     });
 
-                function refreshToken() {
-                    fetchAccessToken(setNewToken);
-                }
+            //     function refreshToken() {
+            //         fetchAccessToken(setNewToken);
+            //     }
 
-                function setNewToken(tokenResponse) {
-                    accessManager.updateToken(tokenResponse.token);
-                }
+            //     function setNewToken(tokenResponse) {
+            //         accessManager.updateToken(tokenResponse.token);
+            //     }
 
-                function processFingerprint(data) {
-                    //alert(data.fingerprint);
-                }
-            }
+            //     function processFingerprint(data) {
+            //         //alert(data.fingerprint);
+            //     }
+            // }
         }).catch(function(e) {});
     }
     /* end Search */
