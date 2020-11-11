@@ -42,7 +42,8 @@
             <div class="academia-content-forum-answer">
 
                 <input class="academia-content-forum-post-create-title" placeholder="{{'TYPE_POST_TITLE' | translate}}" ng-model="title"></input>
-                <textarea class="textarea" ng-model="text"></textarea>
+
+                <textarea ui-tinymce="tinymceOptions" ng-model="text"></textarea>
                 <div class="academia-content-forum-post-create-premium">
 
                     <b>{{'POST_CATEGORY' | translate}}</b>

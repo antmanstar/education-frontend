@@ -19,9 +19,9 @@ var socket = io.connect("https://totemic-chimera-237707.appspot.com");
 //var socket = io.connect("http://localhost:8888");
 var siofu = new SocketIOFileUpload(socket);
 
-let filesCount = 0;
+//let filesCount = 0;
 
-let progressCloud = 0;
+//let progressCloud = 0;
 var progressPercent = 0;
 
 document.getElementById("upload_btn").addEventListener("click", siofu.prompt, false);
@@ -137,7 +137,7 @@ socket.on("imagepath", function(a) {
 
           <div class="form-group">
             <label>{{"UNIVERSITY_PICTURE" | translate}}</label>
-            <input type="hidden" ng-model="backgroundImage" id="file" ng-change="backgroundImageUpdate()">
+            <input type="hidden" ng-model="backgroundImage" id="file">
             <div id="university-background-image" style="background-image: url('https://universida.de/img/misc/noimageacademia.jpg')"></div>
 
             <div class="row">
@@ -147,7 +147,7 @@ socket.on("imagepath", function(a) {
               </div>
 
               <div class="col-xs-12 col-sm-6" style="margin-top: 15px;">
-                <button class="btn btn-red">{{"REMOVE_PICTURE" | translate}}</button>
+                <button id="remove_btn" class="btn btn-red" ng-click="removeBtn()">{{"REMOVE_PICTURE" | translate}}</button>
               </div>
 
             </div>
