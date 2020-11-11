@@ -1,4 +1,5 @@
 <div class="container-fluid">
+
     <div class="row" style="margin-top: 20px; margin-bottom: 30px;">
         <div class="col-xs-4">
             <a href="/home/explore">
@@ -29,10 +30,10 @@
                 <div class="form-group">
                     <label>{{'URL' | translate}}</label>
                     <div class="urlinput">
-                      <div class="url-domain-container">
-                        <div class="url-domain">https://universida.de/a/</div>
+                      <div class="url-domain-container" onClick="document.getElementById('url-domain-input').focus();">
+                        <div class="url-domain" id="url-domain-label">https://universida.de/a/</div>
                       </div>
-                      <input class="input-email" ng-model="url" placeholder="" style="border-left: 0 !important" type="text"></input>
+                      <input class="input-email" ng-model="url" placeholder="" style="border-left: 0 !important" type="text" id="url-domain-input"></input>
                     </div>
                 </div>
                 <div class="form-group">
@@ -54,7 +55,7 @@
             <div class="user-collections" style="margin-top: 30px;">
                 <div style="height: unset;" ng-repeat="n in [['Professor','Ambiente educacional dedicado ao ensino e aprendizado dos seus alunos', '#52bfea'],['Amigos e Família','Inicie um grupo de estudos e troca de conhecimento', '#30b39f'],['Instituição de Ensino', 'Empodere os seus alunos com soluções educacional integradas', '#aa2c26'], ['Empresa', 'Treinamento interno e armazenamento do know-how operacional ', '#b460a2'], ['Crianças', 'Plataforma educacional dedicada a crianças de 3 até 8 anos', '#ee5748']]"
                     class="collection teaching-option option">
-                    <div class="dot" ng-style="background-color: {{n[2]}};"></div>
+                    <div class="dot"></div>
                     <div style="font-size: 1.2em; font-weight: bold;">{{n[0]}}</div>
                     <div style="color: #909090;">{{n[1]}}</div>
                 </div>
@@ -73,7 +74,6 @@
             <button ng-click="create()" class="btn btn-success" style="font-size: 1.15em; font-weight: bold;">{{'DASH_CREATE_UNIVERSITY' | translate}}</button>
         </div>
     </div>
-</div>
 </div>
 
 <style>

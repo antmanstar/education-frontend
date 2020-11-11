@@ -1581,7 +1581,7 @@ angular.module('netbase')
         }
     }
 
-    $scope.copyLink = function() { // Copy link button event handler  
+    $scope.copyLink = function() { // Copy link button event handler
         let universityUrl = $route.current.params.academiaName;
         let roomSID = $route.current.params.roomSID;
         let accountSid = $route.current.params.accountSid;
@@ -2579,8 +2579,7 @@ angular.module('netbase')
     let universityUrl = $route.current.params.academiaName;
     let university;
 
-    tinymce.init({
-        selector: 'textarea',
+    $scope.tinymceOptions = {
         file_picker_types: 'file image media',
         tinydrive_token_provider: function(success, failure) {
             Courses.fileUploadUrl().success(function(msg) {
@@ -2592,7 +2591,7 @@ angular.module('netbase')
         tinydrive_google_drive_client_id: '102507978919142111240',
         plugins: 'print preview powerpaste casechange importcss tinydrive searchreplace autolink autosave save directionality advcode visualblocks visualchars fullscreen image link media mediaembed  codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists checklist wordcount tinymcespellchecker a11ychecker textpattern noneditable help formatpainter pageembed charmap mentions quickbars linkchecker emoticons advtable',
         toolbar: 'insertfile|undo redo | bold italic | alignleft aligncenter alignright | code|styleselect|outdent indent|link image'
-    });
+    };
 
     if ($location.search().categoryId != undefined) {
         $scope.categoryForum = { _id: $location.search().categoryId };
@@ -2940,7 +2939,7 @@ angular.module('netbase')
     }
 }])
 
-.directive('categorychat', ['University', 'Forum', '$localStorage', '$route', 'jwtHelper', 'ngDialog', '$location', 'Chat', 'Students', 'Courses', 'User', function(University, Forum, $localStorage, $route, jwtHelper, ngDialog, $location, Chat, Students, Courses, User) {
+.directive('categorychat', ['University', 'Forum', '$localStorage', '$route', 'jwtHelper', 'ngDialog', '$location', 'Students', 'Courses', 'User', function(University, Forum, $localStorage, $route, jwtHelper, ngDialog, $location, Students, Courses, User) {
     return {
         restrict: 'EA',
         templateUrl: '../partials/academia/chat.html',
@@ -3414,7 +3413,7 @@ angular.module('netbase')
     }
 }])
 
-.directive('academiarightcolumn', ['University', 'Forum', '$localStorage', '$route', 'jwtHelper', 'ngDialog', '$location', 'Chat', 'Students', function(University, Forum, $localStorage, $route, jwtHelper, ngDialog, $location, Chat, Students) {
+.directive('academiarightcolumn', ['University', 'Forum', '$localStorage', '$route', 'jwtHelper', 'ngDialog', '$location', 'Students', function(University, Forum, $localStorage, $route, jwtHelper, ngDialog, $location, Students) {
     return {
         restrict: 'EA',
         templateUrl: '../partials/academia/rightcolumn.html',
@@ -3530,7 +3529,7 @@ angular.module('netbase')
             });
 
             scope.gotoCategoryCreatPage = function() {
-              let url = university.url
+                let url = university.url
                 $location.path("/a/" + url + "/forum/category/create")
             }
 

@@ -52,19 +52,29 @@ angular.module('netbase')
     $scope.backgroundImageUpdate = function() {
         // Bug if undefined.
 
-        /*
         let backgroundImage = $("#file").attr("value");
 
         if (backgroundImage.indexOf("https") != -1) {
           $scope.backgroundImage = backgroundImage;
+          console.log("backgroundImage: ", $scope.backgroundImage)
         }
-        */
+
+    }
+
+    $scope.removeBtn = function() {
+      console.log("remove background")
+      $("#university-background-image").attr("style", "background-image: url('https://universida.de/img/misc/noimageacademia.jpg')");
+      $("#file").attr("value", 'https://universida.de/img/misc/noimageacademia.jpg');
+      $scope.backgroundImage = "https://universida.de/img/misc/noimageacademia.jpg";
     }
 
     /* step 1 */
     $scope.move = function(value) {
         $scope.step += Number(value);
-        $scope.backgroundImageUpdate();
+
+        if ($scope.step==3){
+          $scope.backgroundImageUpdate();
+        }
     }
 
     $scope.error = {

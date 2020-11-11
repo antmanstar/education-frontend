@@ -1,6 +1,7 @@
 <div ng-include="'partials/headerhome.html'"></div>
 
 <script type="text/javascript">
+    // document.addEventListener("DOMContentLoaded", function(event) {
     var socket = io.connect("https://totemic-chimera-237707.appspot.com");
 
     var siofu = new SocketIOFileUpload(socket);
@@ -47,9 +48,10 @@
     });
 
     socket.on("imagepath", function(a) {
-        $("#file").attr("value", a);
-        $(".profile-pic").attr("src", a);
-    })
+            $("#file").attr("value", a);
+            $(".profile-pic").attr("src", a);
+        })
+        // });
 </script>
 
 <style>

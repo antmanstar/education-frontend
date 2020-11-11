@@ -1,5 +1,4 @@
 <div ng-include="'partials/headerhome.html'"></div>
-
 <style>
     @media screen and (max-width: 768px) {
         .home-quick-options {
@@ -31,23 +30,23 @@
             <div class="section-menu-title">{{'UNIVERSITIES' | translate}}</div>
 
             <div class="section-menu">
-              <div ng-if="user.universitiesSubscribed.length > 1">
-                <a href="/home/universidades/" class="btn btn-green" style="height: unset; display: inline-block; white-space: normal;">
+                <div ng-if="user.universitiesSubscribed.length > 1">
+                    <a href="/home/universidades/" class="btn btn-green" style="height: unset; display: inline-block; white-space: normal;">
                     Subscribe to more universities
                 </a>
-              </div>
+                </div>
                 <timelinemenuuniversity accountid="{{user._id}}" uid="{{u.universityId}}" ng-if="u.unsubscribed == false" ng-repeat="u in user.universitiesSubscribed"></timelinemenuuniversity>
             </div>
 
             <div ng-if="user.universitiesSubscribed.length == 1" style="padding-left: 15px;">
-              <div class="option">
-                <p align="justify">{{'NOT_YET_REGISTERED_IN_UNI' | translate}}</p>
-              </div>
-              <div>
-                <a href="/home/universidades/" class="btn btn-green" style="height: unset; display: inline-block; white-space: normal;">
+                <div class="option">
+                    <p align="justify">{{'NOT_YET_REGISTERED_IN_UNI' | translate}}</p>
+                </div>
+                <div>
+                    <a href="/home/universidades/" class="btn btn-green" style="height: unset; display: inline-block; white-space: normal;">
                     Subscribe to a university
                 </a>
-              </div>
+                </div>
             </div>
 
         </div>
@@ -62,25 +61,25 @@
 
                 <div class="section-menu-title">{{'UNIVERSITIES' | translate}}</div>
 
-                <div class="section-menu">
-                  <div ng-if="user.universitiesSubscribed.length > 1">
-                    <a href="/home/universidades/" class="btn btn-green" style="height: unset; display: inline-block; white-space: normal;">
+                <!--div class="section-menu">
+                    <div ng-if="user.universitiesSubscribed.length > 1">
+                        <a href="/home/universidades/" class="btn btn-green" style="height: unset; display: inline-block; white-space: normal;">
                         Subscribe to more universities
                     </a>
-                  </div>
-                  <timelinemenuuniversity accountid="{{user._id}}" uid="{{u.universityId}}" ng-if="u.unsubscribed == false" ng-repeat="u in user.universitiesSubscribed"></timelinemenuuniversity>
+                    </div>
+                    <timelinemenuuniversity accountid="{{user._id}}" uid="{{u.universityId}}" ng-if="u.unsubscribed == false" ng-repeat="u in user.universitiesSubscribed"></timelinemenuuniversity>
                 </div>
 
                 <div ng-if="user.universitiesSubscribed.length == 1" style="padding: 16px;">
-                  <div class="option">
-                    <p align="justify">{{'NOT_YET_REGISTERED_IN_UNI' | translate}}</p>
-                  </div>
-                  <div>
-                    <a href="/home/universidades/" class="btn btn-green" style="height: unset; display: inline-block; white-space: normal;">
+                    <div class="option">
+                        <p align="justify">{{'NOT_YET_REGISTERED_IN_UNI' | translate}}</p>
+                    </div>
+                    <div>
+                        <a href="/home/universidades/" class="btn btn-green" style="height: unset; display: inline-block; white-space: normal;">
                         Subscribe to a university
                     </a>
-                  </div>
-                </div>
+                    </div>
+                </div-->
 
             </div>
 

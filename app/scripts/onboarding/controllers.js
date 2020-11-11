@@ -78,7 +78,9 @@ angular.module('netbase')
                     $location.path('/a/' + res.data.url + '/forum')
 
                 } else {
-                    if (res.err.errmsg.indexOf("url") != 1) {
+                    //console.log("university create: ", res.err)
+                    //if (res.err.errmsg.indexOf("url") != 1) {
+                    if (res.err.code == 11000) {
                         $scope.error.text.push("Type a different URL for your university. The one you choose already exists.");
                         $scope.error.exists = true;
                     }

@@ -2883,7 +2883,7 @@ angular.module('netbase')
     let id = $route.current.params.id;
     $scope.activeSection = "comprados";
     $scope.useraccess = false;
-    $scope.course = {free: true};
+    $scope.course = { free: true };
 
     Courses.getById(id).success(function(res) {
         if (res.success) {
@@ -3622,67 +3622,67 @@ angular.module('netbase')
 
             if (type == "create") {
 
-              if ((data.email == "" || data.email == undefined) &&
-                (data.password == "" || data.password == undefined) &&
-                (data.name =="" || data.name == undefined) &&
-                (data.username == "" || data.username == undefined) &&
-                (data.passwordConfirm == "" || data.passwordConfirm == undefined)) {
-                  reject("SIGNUPEMPTY")
-              }
+                if ((data.email == "" || data.email == undefined) &&
+                    (data.password == "" || data.password == undefined) &&
+                    (data.name == "" || data.name == undefined) &&
+                    (data.username == "" || data.username == undefined) &&
+                    (data.passwordConfirm == "" || data.passwordConfirm == undefined)) {
+                    reject("SIGNUPEMPTY")
+                }
 
-              if (data.name == undefined) {
-                reject("NAMEEMPTY");
-              }
+                if (data.name == undefined) {
+                    reject("NAMEEMPTY");
+                }
 
-              if (data.name != undefined) {
-                  if (data.name.length > 2) {
-                      nameValidated = true;
-                  } else {
-                      reject("NAMEINVALIDATED");
-                  }
-              }
+                if (data.name != undefined) {
+                    if (data.name.length > 2) {
+                        nameValidated = true;
+                    } else {
+                        reject("NAMEINVALIDATED");
+                    }
+                }
 
-              if (data.username == undefined) {
-                reject("USERNAMEEMPTY");
-              }
+                if (data.username == undefined) {
+                    reject("USERNAMEEMPTY");
+                }
 
-              if (data.username != undefined) {
-                  if (data.name.length > 1) {
-                      nameValidated = true;
-                  } else {
-                      reject("USERNAMEINVALIDATED");
-                  }
-              }
+                if (data.username != undefined) {
+                    if (data.name.length > 1) {
+                        nameValidated = true;
+                    } else {
+                        reject("USERNAMEINVALIDATED");
+                    }
+                }
 
-              if (data.email == "") {
-                reject("EMAILEMPTY");
-              }
+                if (data.email == "") {
+                    reject("EMAILEMPTY");
+                }
 
-              if (data.password == "" || data.password == undefined) {
-                reject("PASSWORDEMPTY");
-              }
+                if (data.password == "" || data.password == undefined) {
+                    reject("PASSWORDEMPTY");
+                }
 
-              if (data.passwordConfirm == "" || data.passwordConfirm == undefined) {
-                reject("PASSWORDCONFIRMEMPTY");
-              }
+                if (data.passwordConfirm == "" || data.passwordConfirm == undefined) {
+                    reject("PASSWORDCONFIRMEMPTY");
+                }
 
-              if (password.length > 5) {
-                  passwordValidated = true;
-              } else {
-                  passwordValidated = true;
-                  reject("PASSWORDLESSTHANSIX");
-              }
+                if (password.length > 5) {
+                    passwordValidated = true;
+                } else {
+                    passwordValidated = true;
+                    reject("PASSWORDLESSTHANSIX");
+                }
 
-              if (password == passwordConfirm) {
-                  passwordValidated = true;
-              } else {
-                  passwordValidated = false;
-                  reject("PASSWORDNOTMATCH");
-              }
+                if (password == passwordConfirm) {
+                    passwordValidated = true;
+                } else {
+                    passwordValidated = false;
+                    reject("PASSWORDNOTMATCH");
+                }
 
             } else if (type == "login") {
-              console.log("email: ", data.email)
-              console.log("password: ", data.password)
+                console.log("email: ", data.email)
+                console.log("password: ", data.password)
 
                 if (data.email == undefined && data.password == undefined) {
                     reject("LOGINEMPTY");
@@ -4305,7 +4305,7 @@ angular.module('netbase')
 }])
 
 /* end messenger */
-.controller('HeaderCtrl', ['$rootScope', '$scope', '$location', '$localStorage', 'jwtHelper', 'Search', 'Students', '$route', 'ngDialog', '$timeout', 'Chat', '$translate', function($rootScope, $scope, $location, $localStorage, jwtHelper, Search, Students, $route, ngDialog, $timeout, Chat, $translate) {
+.controller('HeaderCtrl', ['$rootScope', '$scope', '$location', '$localStorage', 'jwtHelper', 'Search', 'Students', '$route', 'ngDialog', '$timeout', '$translate', function($rootScope, $scope, $location, $localStorage, jwtHelper, Search, Students, $route, ngDialog, $timeout, $translate) {
     /* header variables */
     let logged = $rootScope.logged;
     $scope.whitelabel = false;
@@ -4413,34 +4413,34 @@ angular.module('netbase')
                 $scope.userImage = data.imageUrl;
             }
 
-            /* chat */
-            if ($localStorage.tokenTwilio != undefined) {} else {
-                // Request token from API
-                let fingertips;
-                new Fingerprint2().get(function(result, components) {
-                    var info = {
-                        fingerprint: result
-                    };
+            // /* chat */
+            // if ($localStorage.tokenTwilio != undefined) {} else {
+            //     // Request token from API
+            //     let fingertips;
+            //     new Fingerprint2().get(function(result, components) {
+            //         var info = {
+            //             fingerprint: result
+            //         };
 
-                    processFingerprint(info);
-                    Chat.getTwilioToken(info).success(function(res) {
-                        let token = res.token;
-                        $localStorage.tokenTwilio = res.token;
-                    })
-                });
+            //         processFingerprint(info);
+            //         Chat.getTwilioToken(info).success(function(res) {
+            //             let token = res.token;
+            //             $localStorage.tokenTwilio = res.token;
+            //         })
+            //     });
 
-                function refreshToken() {
-                    fetchAccessToken(setNewToken);
-                }
+            //     function refreshToken() {
+            //         fetchAccessToken(setNewToken);
+            //     }
 
-                function setNewToken(tokenResponse) {
-                    accessManager.updateToken(tokenResponse.token);
-                }
+            //     function setNewToken(tokenResponse) {
+            //         accessManager.updateToken(tokenResponse.token);
+            //     }
 
-                function processFingerprint(data) {
-                    //alert(data.fingerprint);
-                }
-            }
+            //     function processFingerprint(data) {
+            //         //alert(data.fingerprint);
+            //     }
+            // }
         }).catch(function(e) {});
     }
     /* end Search */

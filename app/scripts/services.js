@@ -153,29 +153,29 @@ angular.module('netbase')
     }
 }])
 
-.factory('Chat', ['$http', '$localStorage', function($http, $localStorage) {
-    //var baseUrl = "";
-    var baseUrl = "http://localhost:6969";
+// .factory('Chat', ['$http', '$localStorage', function($http, $localStorage) {
+//     //var baseUrl = "";
+//     var baseUrl = "http://localhost:6969";
 
-    return {
-        getUniversityChannels: function(universityId) {
-            let url = "/chat/channel/university/" + universityId;
-            return $http.get(baseUrl + url);
-        },
+//     return {
+//         getUniversityChannels: function(universityId) {
+//             let url = "/chat/channel/university/" + universityId;
+//             return $http.get(baseUrl + url);
+//         },
 
-        getTwilioToken: function(payload) {
-            let url = "/chat/token/device/" + payload.deviceID;
-            return $http({
-                method: 'GET',
-                url: baseUrl + url,
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                    'x-access-token': $localStorage.token
-                }
-            });
-        }
-    }
-}])
+//         getTwilioToken: function(payload) {
+//             let url = "/chat/token/device/" + payload.deviceID;
+//             return $http({
+//                 method: 'GET',
+//                 url: baseUrl + url,
+//                 headers: {
+//                     'Content-Type': 'application/x-www-form-urlencoded',
+//                     'x-access-token': $localStorage.token
+//                 }
+//             });
+//         }
+//     }
+// }])
 
 .factory('Playlist', ['$http', function($http) {
     var baseUrl = "https://educationalcommunity-uni.herokuapp.com/university";
