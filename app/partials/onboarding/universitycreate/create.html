@@ -69,9 +69,16 @@
         </div>
     </div-->
 
+    <div ng-show="loading" class="loading-spinner">
+        <img src="/img/loader.gif" height="50px" />
+    </div>
+
     <div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+
         <div class="col-xs-12">
-            <button ng-click="create()" class="btn btn-success" style="font-size: 1.15em; font-weight: bold;">{{'DASH_CREATE_UNIVERSITY' | translate}}</button>
+            <button ng-click="create()" class="btn btn-success" style="font-size: 1.15em; font-weight: bold;" ng-disabled="loading">
+              {{'DASH_CREATE_UNIVERSITY' | translate}}
+            </button>
         </div>
     </div>
 </div>
@@ -155,5 +162,9 @@
       color: gray;
     }
 
+    .loading-spinner {
+      display: flex;
+      justify-content: center;
+    }
 
 </style>

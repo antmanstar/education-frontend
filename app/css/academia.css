@@ -20,6 +20,10 @@
     padding-bottom: 35px;
 }
 
+.top {
+  display: flex;
+}
+
 .timeline-post .top .user-image {
     display: inline-block;
     vertical-align: top;

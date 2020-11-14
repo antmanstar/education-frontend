@@ -69,6 +69,7 @@ angular.module('netbase')
     }
 
     $scope.informationAction = function() {
+      console.log("using the first one")
         if ($scope.flow == "addCard") {
             $scope.closeThisDialog();
         }
@@ -114,7 +115,9 @@ angular.module('netbase')
     }
 
     $scope.informationAction = function() {
+      console.log("no, its using the second one")
         ngDialog.closeAll();
+        window.location.reload()
     }
 
     $scope.cardAdd = function() {

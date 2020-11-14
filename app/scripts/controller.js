@@ -8,8 +8,19 @@ angular.module('netbase')
     let originalPath = url.$$route.originalPath;
     $scope.originalPath = originalPath;
 
+    // check if the user if logged in or logged out
+    if ($localStorage.token) {
+      console.log("log in user")
+    } else {
+      console.log("log out user")
+    }
+
     $scope.login = function() {
+      if ($localStorage.token) {
+        window.location.href = "/onboarding/universities/create"
+      } else {
         ngDialog.open({ template: 'partials/modals/login.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
+      }
     }
 
     $scope.signup = function() {
@@ -987,7 +998,8 @@ angular.module('netbase')
         // auto check if student finished the course
         $scope.$watch('estudarModulos', function(newValue, oldValue) {
             console.log("viewRequest: ", $scope.viewRequest)
-                // Check if request to view content comes from Course contents menu
+
+            // Check if request to view content comes from Course contents menu
             if ($scope.viewRequest !== "course_menu") {
                 if (newValue.length > 0) {
                     $scope.courseFinished = viewedAll()
@@ -1012,8 +1024,6 @@ angular.module('netbase')
     $scope.courseFinished = false;
     $scope.hasPrev = true;
     $scope.hasNext = true;
-
-
 
     if (cookieCheck) {
         module_id = cookieCheck.module_id;
@@ -3976,7 +3986,7 @@ angular.module('netbase')
             let universityId = attr.uid;
 
             scope.openUniversity = function(url) {
-                $location.path('/a/' + url)
+                $location.path('/a/' + url + '/timeline')
             }
 
             if (University.isStoredLocal(universityId)) {

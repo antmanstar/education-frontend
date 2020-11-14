@@ -214,3 +214,16 @@
     border-radius: 10px;
     background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.44, rgb(142, 149, 163)), color-stop(0.72, rgb(48, 70, 97)), color-stop(0.86, #061227));
 }
+
+@media only screen and (max-width: 600px) {
+  .chat-box {
+      width: 320px;
+      right: -5px;
+      bottom: 0;
+      float: right;
+      margin-right: -5px;
+      min-height: 50px;
+      position: fixed;
+      z-index: 100;
+  }
+}

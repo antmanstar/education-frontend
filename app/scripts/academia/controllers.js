@@ -2030,9 +2030,12 @@ angular.module('netbase')
     }
 }])
 
-.controller('AcademiaForumCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'User', 'Students', '$timeout', 'ngDialog', 'jwtHelper', '$localStorage', function($rootScope, $scope, $location, $route, University, User, Students, $timeout, ngDialog, jwtHelper, $localStorage) {
+.controller('AcademiaForumCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'User', 'Students', '$timeout', 'ngDialog', 'jwtHelper', '$localStorage', '$cookies', function($rootScope, $scope, $location, $route, University, User, Students, $timeout, ngDialog, jwtHelper, $localStorage, $cookies) {
     let universityUrl = $route.current.params.academiaName;
     let displayinvite = false;
+
+    let ownedUniversityId = $cookies.get("ownedUniversityId");
+    console.log("university id: ", ownedUniversityId)
 
     //Set to localstorage for use in creating category
     $localStorage.universityUrl = universityUrl
@@ -3431,6 +3434,7 @@ angular.module('netbase')
             scope.studentIsAdmin = false;
             scope.studentIsTeam = false;
             scope.showSubscribe = undefined;
+            scope.hideButton = false;
 
             scope.userSubscribed = false;
             scope.chatDisplay = true;
@@ -3460,6 +3464,7 @@ angular.module('netbase')
                         // has once been subscribed to a university or
                         // if the current university is included in user's universitiesSubscribed array
                         let unisub = false;
+                        scope.hideButton = true;
 
                         if (res.data.success == false) {
                             scope.userSubscribed = true;

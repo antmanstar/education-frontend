@@ -8,40 +8,23 @@
 </style>
 
 <div class="container-fluid container-home animated fadeIn" style="padding-bottom: 30px;">
-
     <div class="row">
-
         <div class="col-xs-12" style="padding-left: 20px; padding-right: 20px;">
-
             <div class="headline-container" style="text-align: left">{{'EXPLOREEDCOMMUNITY' | translate}}</div>
-
         </div>
-        <!-- -->
-
         <div class="col-xs-12 col-sm-6 col-md-6" style="margin-bottom: 15px; padding-left: 20px; padding-right: 20px;" ng-if="k.universities.length > 0" ng-repeat="k in knowledges | orderBy: '-universities.length'">
-
             <div class="headline-container">{{k.title}}</div>
-
             <div class="section-cards" style="padding-bottom: 0px !important;">
-
                 <homeuniversitynewcard uid={{university.universityId}} ng-repeat="university in k.universities">
                 </homeuniversitynewcard>
-
             </div>
-            <!-- end section-cards -->
-
         </div>
-        <!-- end col-sm-8 -->
-
     </div>
-    <!-- end row -->
 
     <div class="col-xs-12 hide-mobile" style="margin-top: 30px; border-top: 1px solid #2d425524; padding-top: 35px; padding-bottom: 20px; line-height: 25px; font-size: 0.95em;">
-
         <div class="col-xs-4">
             <div><img height="28px" style="padding-right: 5px;" src="img/universidade_icon.png" /><img height="19px" style="margin-top: 4px; margin-left: 4px;" src="https://universida.de/img/universidade_logo.png" /></div>
         </div>
-
         <div class="col-xs-2" style="text-align: left;">
             <div style="color: #2d4255; font-weight: bolder; font-size: 1em; margin-bottom: 30px;">{{'FOOTER_TITLE_1' | translate}}</div>
             <div style="margin-right: 25px; margin-bottom: 20px; font-size: 0.9em;"><a style="color: #000;" href="/ensinar">{{'FOOTER_T1_SUBTITLE_1' | translate}}</b>
@@ -57,24 +40,17 @@
       <div style="color: #2d4255; font-weight: bolder; font-size: 1em; margin-bottom: 30px;">{{'FOOTER_TITLE_2' | translate}}</div>
       <div style="display: inline-block; margin-right: 25px; font-size: 0.9em;"><a style="color: #000;"
           href="/sobre">{{'FOOTER_T2_SUBTITLE_1' | translate}}</a></div>
-            <!--<div style="display: inline-block; margin-right: 25px;"><a href="#"><b>Para estudantes</b></a></div>-->
         </div>
-
         <div class="col-xs-2" style="text-align: left;">
             <div style="color: #2d4255; font-weight: bolder; font-size: 1em; margin-bottom: 30px;">{{'FOOTER_TITLE_3' | translate}}</div>
             <div style="margin-bottom: 20px; margin-right: 25px; font-size: 0.9em;"><a style="color: #000;" href="/a/universidade/forum/category/id/5efadbb98c383600174f3b6d">{{'FOOTER_T3_SUBTITLE_1' | translate}}</a></div>
             <div style="margin-bottom: 20px; margin-right: 25px; font-size: 0.9em;"><a style="color: #000;" href="/a/universidade/forum/category/id/5efadb8f8c383600174f3b6c">{{'FOOTER_T3_SUBTITLE_2' | translate}}</a></div>
             <div style="margin-bottom: 20px; margin-right: 25px; font-size: 0.9em;"><a style="color: #000;" ng-click="downloadVRAndroid()">{{'FOOTER_T3_SUBTITLE_3' | translate}}</a></div>
-            <!--<div style="display: inline-block; margin-right: 25px;"><a href="#"><b>Para estudantes</b></a></div>-->
         </div>
-
         <div class="col-xs-2" style="text-align: left;">
             <div style="color: #2d4255; font-weight: bolder; font-size: 1em; margin-bottom: 30px;">{{'FOOTER_TITLE_4' | translate}}</div>
             <div style="display: inline-block; margin-right: 25px; font-size: 0.9em;"><a style="color: #000;" href="/sobre">{{'FOOTER_T4_SUBTITLE_1' | translate}}</a></div>
-            <!--<div style="display: inline-block; margin-right: 25px;"><a href="#"><b>Para estudantes</b></a></div>-->
         </div>
-
     </div>
 
 </div>
-<!-- container-fluid container-full -->
