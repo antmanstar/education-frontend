@@ -670,5 +670,8 @@
     "LOGINEMPTY": "Por favor, digite um e-mail e uma senha válidos.",
     "EMAILINVALIDATED": "Por favor, digite um e-mail válido.",
     "EMAILEMPTY": "Por favor, digite seu endereço de e-mail.",
-    "PASSWORDEMPTY": "Por favor, digite uma senha."
+    "PASSWORDEMPTY": "Por favor, digite uma senha.",
+
+    "SUBSCRIBE_MORE": "Inscrever-se em mais universidades",
+    "SUBSCRIBE_TO_UNI": "Inscrever-se em uma universidade"
 }

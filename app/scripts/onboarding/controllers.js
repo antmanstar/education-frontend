@@ -6,6 +6,7 @@ angular.module('netbase')
 .controller('OnboardingUniversityCreateCtrl', ['$rootScope', '$scope', 'ngDialog', 'University', 'Knowledge', '$location', '$window', function($rootScope, $scope, ngDialog, University, Knowledge, $location, $window) {
     $scope.mode = "";
     $scope.universityType = '';
+    $scope.loading = false;
 
     $scope.error = {
         text: [],
@@ -30,8 +31,10 @@ angular.module('netbase')
     }
 
     $scope.create = function() {
+        $scope.loading = true;
         let validated = true;
         $scope.error.text = []
+        $scope.error.exists = false;
 
         // LANGUAGE MUST BE PT OR EN, LOWERCASE OR DIFFERENT WILL CAUSE A BUG
         let data = {
@@ -44,13 +47,13 @@ angular.module('netbase')
         // Only allow alpanumeric characters, dash and underscore ^[a-zA-Z0-9]+(?:[\w -]*[a-zA-Z0-9]+)*$
         let urlpattern = new RegExp(/^[a-zA-Z0-9_-]*$/)
 
-        if (data.name == undefined) {
+        if (data.name == undefined || data.name == "") {
             validated = false;
             $scope.error.text.push("Escreva um nome para a sua comunidade educacional.");
             $scope.error.exists = true;
         }
 
-        if (data.url == undefined) {
+        if (data.url == undefined || data.url == "") {
             validated = false;
             $scope.error.text.push("Escreva uma URL para a sua comunidade educacional.");
             $scope.error.exists = true;
@@ -73,6 +76,7 @@ angular.module('netbase')
 
         if (validated) {
             University.create(data).success(function(res) {
+                $scope.loading = false;
                 if (res.success) {
                     console.log(res.data);
                     $location.path('/a/' + res.data.url + '/forum')
@@ -86,7 +90,9 @@ angular.module('netbase')
                     }
                 }
             });
-        } else {}
+        } else {
+          $scope.loading = false;
+        }
     }
 
     $scope.openSelectPlan = function() {

@@ -57,7 +57,7 @@
             <div class="section-menu">
                 <div ng-if="user.universitiesSubscribed.length > 1">
                     <a href="/home/universidades/" class="btn btn-green" style="height: unset; display: inline-block; white-space: normal;">
-                    Subscribe to more universities
+                    {{'SUBSCRIBE_MORE' | translate}}
                 </a>
                 </div>
                 <timelinemenuuniversity accountid="{{user._id}}" uid="{{u.universityId}}" ng-if="u.unsubscribed == false" ng-repeat="u in user.universitiesSubscribed"></timelinemenuuniversity>
@@ -69,7 +69,7 @@
                 </div>
                 <div>
                     <a href="/home/universidades/" class="btn btn-green" style="height: unset; display: inline-block; white-space: normal;">
-                    Subscribe to a university
+                    {{'SUBSCRIBE_TO_UNI' | translate}}
                 </a>
                 </div>
             </div>

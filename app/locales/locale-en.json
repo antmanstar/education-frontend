@@ -670,5 +670,8 @@
     "LOGINEMPTY": "Please, type a valid email and password.",
     "EMAILINVALIDATED": "Please, type a valid email.",
     "EMAILEMPTY": "Please, type your email address.",
-    "PASSWORDEMPTY": "Please, type a password."
+    "PASSWORDEMPTY": "Please, type a password.",
+
+    "SUBSCRIBE_MORE": "Subscribe to more universities",
+    "SUBSCRIBE_TO_UNI": "Subscribe to a university"
 }

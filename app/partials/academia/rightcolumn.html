@@ -101,12 +101,12 @@
             <div style="height: 5px"></div>
         </div>
         <div class="split-line"></div>
-        <div class="members-list ng-cloak">
+        <div class="members-list ng-cloak" ng-if="hideButton">
             <div style="display: inline-block;">
                 <i style="margin-right: 8px;" class="fas fa-user-friends"></i>{{ (university.members | filter : { 'unsubscribed' : 'false' }).length }}
             </div>
-            <button class="btn bg-primary-purple subscribe-btn" ng-if="!userSubscribed" ng-click="subscribe()">{{'SUBSCRIBE' | translate}}</button>
-            <button class="btn bg-primary-purple subscribe-btn" ng-if="userSubscribed && studentIsAdmin == false" ng-click="subscribe()">{{'UNSUBSCRIBE' | translate}}</button>
+            <button class="btn bg-primary-purple subscribe-btn ng-cloak" ng-if="!userSubscribed" ng-click="subscribe()">{{'SUBSCRIBE' | translate}}</button>
+            <button class="btn bg-primary-purple subscribe-btn ng-cloak" ng-if="userSubscribed && studentIsAdmin == false" ng-click="subscribe()">{{'UNSUBSCRIBE' | translate}}</button>
         </div>
         <div class="split-line"></div>
         <div style="font-size: 1.1em;">

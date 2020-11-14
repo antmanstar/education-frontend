@@ -34,6 +34,7 @@ angular.module('netbase')
             if (!uni.unsubscribed) {
                 universityParse.push(uId)
             }
+
         }
 
         TimelineNew.getTimelineAll(universityParse, $scope.page).success(function(res) {
@@ -60,7 +61,6 @@ angular.module('netbase')
         }
     };
 }])
-
 
 .directive('timelinenewforumpost', ['University', 'Students', '$filter', '$sce', '$location', 'Forum', '$localStorage', "TimelineNew", function(University, Students, $filter, $sce, $location, Forum, $localStorage, TimelineNew) {
     return {
@@ -96,14 +96,22 @@ angular.module('netbase')
                     let success = res.data.success;
 
                     if (status != 90010) {
+                      console.log("not premium")
                         scope.forumPost = data;
                         scope.forumPost.text = $sce.trustAsHtml(scope.forumPost.text);
                         scope.loaded = true;
                     } else {
+                        console.log("premium")
                         // Premium content
                         scope.getPremium = true;
                         scope.forumPost = data;
                     }
+
+                    console.log("text: ", scope.forumPost.text)
+                    let url = "https://universida.de/a/" + scope.university.url + "/forum/post/id/"
+                    console.log("url: ", url)
+                    console.log("title: ", scope.forumPost.title)
+
                 });
 
                 /* get account id */
