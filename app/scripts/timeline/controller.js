@@ -34,7 +34,6 @@ angular.module('netbase')
             if (!uni.unsubscribed) {
                 universityParse.push(uId)
             }
-
         }
 
         TimelineNew.getTimelineAll(universityParse, $scope.page).success(function(res) {
@@ -61,6 +60,7 @@ angular.module('netbase')
         }
     };
 }])
+
 
 .directive('timelinenewforumpost', ['University', 'Students', '$filter', '$sce', '$location', 'Forum', '$localStorage', "TimelineNew", function(University, Students, $filter, $sce, $location, Forum, $localStorage, TimelineNew) {
     return {

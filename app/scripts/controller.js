@@ -987,7 +987,8 @@ angular.module('netbase')
         // auto check if student finished the course
         $scope.$watch('estudarModulos', function(newValue, oldValue) {
             console.log("viewRequest: ", $scope.viewRequest)
-                // Check if request to view content comes from Course contents menu
+
+            // Check if request to view content comes from Course contents menu
             if ($scope.viewRequest !== "course_menu") {
                 if (newValue.length > 0) {
                     $scope.courseFinished = viewedAll()
@@ -1012,8 +1013,6 @@ angular.module('netbase')
     $scope.courseFinished = false;
     $scope.hasPrev = true;
     $scope.hasNext = true;
-
-
 
     if (cookieCheck) {
         module_id = cookieCheck.module_id;

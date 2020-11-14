@@ -1,5 +1,35 @@
 <div ng-include="'partials/headerhome.html'"></div>
+
 <style>
+    .onboarding-knowledge {
+        padding-bottom: 20px;
+        border-bottom: 1px solid #cdcdcd;
+        margin-bottom: 10px;
+        text-align: center;
+        padding-top: 20px;
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+    
+    .onboarding-knowledge p {
+        font-size: 1.1em;
+        margin-bottom: 15px;
+    }
+    
+    .onboarding-knowledge .picture {}
+    
+    .onboarding-knowledge .title {
+        font-size: 1.3em;
+        display: inline-block;
+        font-weight: bolder;
+        color: #2d4255;
+        margin-bottom: 15px;
+    }
+    
+    .onboarding-knowledge .buttons {
+        text-align: center;
+    }
+    
     @media screen and (max-width: 768px) {
         .home-quick-options {
             padding-left: 15px;
@@ -21,14 +51,9 @@
 </style>
 
 <div class="container-fluid container-home animated fadeIn" style="padding-bottom: 30px;">
-
-    <!-- Welcome -->
     <div class="row" ng-controller="HomeTimelineCtrl">
-
         <div class="col-xs-12 col-sm-4 col-md-3 section-menu-col">
-
             <div class="section-menu-title">{{'UNIVERSITIES' | translate}}</div>
-
             <div class="section-menu">
                 <div ng-if="user.universitiesSubscribed.length > 1">
                     <a href="/home/universidades/" class="btn btn-green" style="height: unset; display: inline-block; white-space: normal;">
@@ -48,88 +73,15 @@
                 </a>
                 </div>
             </div>
-
         </div>
-        <!-- col-sm-8 -->
 
         <div class="col-xs-12 col-sm-8 col-md-9 section-content-col">
-
             <ballmenu></ballmenu>
-
-
             <div class="col-xs-12 timeline-uni-list">
-
                 <div class="section-menu-title">{{'UNIVERSITIES' | translate}}</div>
-
-                <!--div class="section-menu">
-                    <div ng-if="user.universitiesSubscribed.length > 1">
-                        <a href="/home/universidades/" class="btn btn-green" style="height: unset; display: inline-block; white-space: normal;">
-                        Subscribe to more universities
-                    </a>
-                    </div>
-                    <timelinemenuuniversity accountid="{{user._id}}" uid="{{u.universityId}}" ng-if="u.unsubscribed == false" ng-repeat="u in user.universitiesSubscribed"></timelinemenuuniversity>
-                </div>
-
-                <div ng-if="user.universitiesSubscribed.length == 1" style="padding: 16px;">
-                    <div class="option">
-                        <p align="justify">{{'NOT_YET_REGISTERED_IN_UNI' | translate}}</p>
-                    </div>
-                    <div>
-                        <a href="/home/universidades/" class="btn btn-green" style="height: unset; display: inline-block; white-space: normal;">
-                        Subscribe to a university
-                    </a>
-                    </div>
-                </div-->
-
             </div>
 
-            <!--
-
-      <div style="height: 20px"></div>
-
-      <div style="padding-left: 15px; padding-right: 15px;">
-        <div style="font-size: 1.7em; font-weight: bold;">Timeline</div>
-      </div>
-
-      <div style="height: 15px"></div>
-
-      <div ng-repeat="activity in activities">
-        <timelinenewforumpost ng-if="activity.entryType != 'comment'" reshare="{{activity.rePost}}" like="{{activity.like}}" comments="{{activity.comments}}" cid="{{activity.modelId}}" aid="{{activity.creatorId}}" uid="{{activity.universityId}}"></timelinenewforumpost>
-      -->
-
-            <style>
-                .onboarding-knowledge {
-                    padding-bottom: 20px;
-                    border-bottom: 1px solid #cdcdcd;
-                    margin-bottom: 10px;
-                    text-align: center;
-                    padding-top: 20px;
-                    padding-left: 30px;
-                    padding-right: 30px;
-                }
-
-                .onboarding-knowledge p {
-                    font-size: 1.1em;
-                    margin-bottom: 15px;
-                }
-
-                .onboarding-knowledge .picture {}
-
-                .onboarding-knowledge .title {
-                    font-size: 1.3em;
-                    display: inline-block;
-                    font-weight: bolder;
-                    color: #2d4255;
-                    margin-bottom: 15px;
-                }
-
-                .onboarding-knowledge .buttons {
-                    text-align: center;
-                }
-            </style>
-
             <div class="onboarding-knowledge" ng-show="user.universitiesSubscribed.length == 1">
-
                 <div class="picture"><img src="/img/vr/vr_animation.gif" height="120px;" /></div>
                 <div class="title">{{'NEW_ENROLL' | translate}}</div>
                 <p><b>{{'FOLLOW_EDUCATORS' | translate}}</b> {{'START_LEARNING_IN_COMM' | translate}}</p>
@@ -138,15 +90,11 @@
                 <div class="buttons">
                     <a href="/onboarding/universities"><button class="btn btn-success" style="width: unset;">{{'FOLLOW_UNIVERISITIES' | translate}}</button></a>
                 </div>
-
             </div>
 
             <div ng-show="loading" style="width: 100%; text-align: center; padding-top: 30px; padding-bottom: 30px;">
                 <img src="/img/loader.gif" height="50px" />
             </div>
-            <!-- -->
-
-            <!--  ng-if="activity.entryType != 'comment'"  -->
             <div ng-repeat="activity in activities | orderBy: '-createdAt'" ng-if="user.universitiesSubscribed.length > 0">
                 <timelinenewforumpost reshare="{{activity.rePost}}" like="{{activity.like}}" comments="{{activity.comments}}" cid="{{activity.modelId}}" aid="{{activity.creatorId}}" uid="{{activity.universityId}}"></timelinenewforumpost>
             </div>
@@ -156,15 +104,7 @@
             </div>
 
         </div>
-        <!-- end col-xs-12 col-sm-8 -->
-
     </div>
-    <!-- emd -->
-
 </div>
-<!-- end row -->
-
 </div>
-<!-- container-fluid container-full -->
-
 <footermobile></footermobile>
