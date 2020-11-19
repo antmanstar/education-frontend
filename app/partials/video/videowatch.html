@@ -16,11 +16,11 @@
     .plyr {
         height: 100% !important;
     }
-    
+
     .plyr__video-wrapper {
         height: 100% !important;
     }
-    
+
     .ta-toolbar {
         background-color: #f0f0f0;
         padding-bottom: 5px;
@@ -61,6 +61,10 @@
             <div class="academia-content-forum-answer">
                 <div class="academia-content-forum-answer-title">
                     {{'VIDEO_WRITE_COMMENT' | translate}}
+                </div>
+
+                <div class="alert alert-danger" style="color: #a94442 !important;" ng-if="hasError">
+                  {{errorMessage | translate}}
                 </div>
 
                 <div class="academia-content-forum-answer-box">

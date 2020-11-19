@@ -19,18 +19,18 @@
         font-size: 30px;
         font-weight: 600;
     }
-    
+
     .headerline-sub-title {
         font-size: 15px;
         line-height: normal;
         margin-top: 10px;
     }
-    
+
     .roomname-label {
         font-size: 15px;
         margin-top: 30px;
     }
-    
+
     .roomname-input {
         height: 40px;
         width: 100%;
@@ -41,14 +41,14 @@
         padding-right: 10px;
         margin-bottom: 20px;
     }
-    
+
     .roomtype-wrapper {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         margin-top: 10px;
     }
-    
+
     .roomtype-description {
         display: flex;
         flex-direction: column;
@@ -56,7 +56,7 @@
         padding-right: 10px;
         margin-top: -5px;
     }
-    
+
     .confirm-btn {
         border: none;
         width: 100%;
@@ -69,15 +69,15 @@
 <div class="container-fluid modal-accounts">
     <div class="row">
         <div class="col-xs-12">
-            <div class="headerline-title">Inicie uma Videoconferência</div>
-            <div class="headerline-sub-title">Videoconferência, você poderá ter total colaboração com sua equipe</div>
-            <div class="roomname-label">Name da sala</div>
+            <div class="headerline-title">{{'HOME_CALL_START_VIDEOCON' | translate}}</div>
+            <div class="headerline-sub-title">{{'HOME_CALL_VIDEOCON_SUBTITLE' | translate}}</div>
+            <div class="roomname-label">{{'ROOM_NAME' | translate}}</div>
             <input class="roomname-input" ng-model='addingClassroom.uniqueName' placeholder="{{'CLASS_NAME' | translate}}" type="text" />
             <div class="roomtype-wrapper">
                 <img src="../../img/classroom/lock.png" height="20px">
                 <div class="roomtype-description">
-                    <span style="font-size: 15px;">Tornar o quarto privado</span>
-                    <span style="color:#999999; font-size: 15px; line-height: normal;">Se a sala de aula for privada, ninguém poderá sem a sua primissão</span>
+                    <span style="font-size: 15px;">{{'ROOM_PRIVATE' | translate}}</span>
+                    <span style="color:#999999; font-size: 15px; line-height: normal;">{{'ROOM_PRIVATE_SUBTITLE' | translate}}</span>
                 </div>
                 <img src="../../img/classroom/Switch On.png" height="25px" ng-click="addingClassroom.roomType=0" ng-hide="addingClassroom.roomType==0">
                 <img src="../../img/classroom/Switch Off.png" height="25px" ng-click="addingClassroom.roomType=1" ng-hide="addingClassroom.roomType==1">

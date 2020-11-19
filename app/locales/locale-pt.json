@@ -54,6 +54,7 @@
 
     "VIDEOCONFERENCES": "Videoconferências",
     "HOME_CALL_START_VIDEOCON": "Inicie uma Videoconferência",
+    "HOME_CALL_VIDEOCON_SUBTITLE": "Videoconferência, você poderá ter total colaboração com sua equipe",
     "HOME_CALL_CREATE": "Criar",
     "HOME_CALL_CREATEVR": "Criar Sala Virtual",
     "HOME_CALL_CREATEAVIRTUALROOM": "Crie uma sala virtual",
@@ -66,6 +67,9 @@
     "HOME_CALL_ROOM_JOIN": "Entrar na Sala",
     "HOME_CALL_ROOM_COPYLINK": "Copiar Link",
     "HOME_CALL_ROOM_DELETE": "Deletar Sala",
+    "ROOM_NAME": "Nome da sala",
+    "ROOM_PRIVATE": "Tornar o quarto privado",
+    "ROOM_PRIVATE_SUBTITLE": "Se a sala de aula for privada, ninguém poderá sem a sua primissão",
 
     "NEXT": "Próximo",
     "RETURN": "Voltar",
@@ -88,18 +92,34 @@
     "BIG_BOX_LOGIN_BUTTON": "Entrar na Universidade",
     "WHAT_IS_TITLE": "O que é uma comunidade educacional?",
     "WHAT_IS_DESCRIPTION": "A Universidade oferece todas as ferramentas digitais e de criação de conteúdo que professores e alunos precisam para criar uma experiência de aprendizado mais intuitiva e conectada.",
+    "FEATURE_MAIN_TITLE": "Aqui está o que você recebe com cada plano universitário",
     "FEATURE_TITLE_1": "TIMELINE",
+    "FEATURE_SUBTITLE_1": "Integrar suas ações e mensagens educacionais da comunidade em uma visão cronológica",
     "FEATURE_DESCRIPTION_1": "Mantém um registro cronológico das atividades realizadas na sala de aula virtual.",
     "FEATURE_TITLE_2": "CURSOS",
+    "FEATURE_SUBTITLE_2": "Assinaturas integradas, cursos e produtos digitais",
     "FEATURE_DESCRIPTION_2": "Mantém um registro cronológico das atividades realizadas na sala de aula virtual.",
     "FEATURE_TITLE_3": "FÓRUM & CHAT",
+    "FEATURE_SUBTITLE_3": "Conectar estudantes e professores através de um poderoso chat e fórum",
     "FEATURE_DESCRIPTION_3": "É um lugar onde as conversas acontecem, alunos e professores podem acompanhar discussões relevantes sobre assuntos favoritos.",
     "FEATURE_TITLE_4": "REALIDADE VIRTUAL",
+    "FEATURE_SUBTITLE_4": "Integrar suas ações e mensagens educacionais da comunidade em uma visão cronológica",
     "FEATURE_DESCRIPTION_4": "Os alunos da Escola da Inteligência podem acompanhar todas as aulas e cursos em uma experiência imersiva de aprendizado.",
     "FEATURE_TITLE_5": "VIDEOCONFERÊNCIA",
-    "FEATURE_DESCRIPTION_5": "Professores e alunos participam ao vivo de aulas remotas transmitindo áudio, vídeo e texto.",
+    "FEATURE_SUBTITLE_5": "Comunicação em vídeo para as salas de aula colaborativas atuais",
+    "FEATURE_DESCRIPTION_5": "Amplie as salas de aula tradicionais com comunicações de vídeo para atender as necessidades dos alunos da atualidade.",
     "FEATURE_TITLE_6": "VÍDEOS",
+    "FEATURE_SUBTITLE_6": "Integrar suas ações e mensagens educacionais da comunidade em uma visão cronológica",
     "FEATURE_DESCRIPTION_6": "Plataforma para compartilhamento de vídeo. Os professores e alunos podem armazenar e compartilhar vídeos dentro da sala de aula virtual.",
+    "REPLACES": "Substitui...",
+    "LAUNCH_YOUR_PRODUCT": "Lance seu produto gratuitamente por 14 dias",
+    "START_FREE_TRIAL": "Iniciar o teste gratuito",
+    "LEARN_MORE": "Saiba mais",
+    "CREATE_YOUR_EDUCATIONAL_PLATFORM": "Crie a sua plataforma educacional agora!",
+    "OLYMPIC_MEDALIST": "Medalhista das Olimpíadas",
+    "BLOCKCHAIN_ACADEMY_FOUNDER": "Fundador da Blockchain Academy",
+    "PIRAPORIANDO_FOUNDER": "Fundador da Piraporiando",
+    "MINDKIDS_FOUNDER": "Fundador da Mindkids",
 
     "MAIN_TITLE": "É hora de começar a educar",
     "MAIN_SUBTITLE": "Qualquer um pode criar sua própria universidade e começar a compartilhar conhecimento organizado. Crie sua comunidade e inicie discussões, crie cursos, envie vídeos e gerencie sua lista de alunos.",
@@ -507,6 +527,8 @@
     "VIDEO_WRITE_COMMENT": "Escreva o seu comentário",
     "VIDEO_POST": "Postar",
     "VIDEO_ADMINISTRATION": "ADMINISTRAÇÃO",
+    "NO_VIEWERS_TO_DISPLAY": "Nenhuma visualização realizada",
+    "VIDEO_LIST_OF_PROGRESS": "Lista com progresso das visualizações de cada estudante em porcentagem",
 
     "TYPE_POST_TITLE": "Escreva o título da sua postagem",
     "POST_CATEGORY": "Categoria do Post",
@@ -662,7 +684,6 @@
     "EMAILEMPTY": "Por favor, escreva um email.",
     "NAMEEMPTY": "Por favor, escreva um nome.",
     "USERNAMEEMPTY": "Por favor, escreva um nome de usuário.",
-    "PASSWORDEMPTY": "Por favor, insira uma senha.",
     "PASSWORDCONFIRMEMPTY": "Favor preencher o campo de confirmação de senha.",
     "PASSWORDNOTMATCH": "As senhas precisam ser iguais. Digite novamente.",
     "PASSWORDLESSTHANSIX": "Por favor, a senha deve ter no mínimo 6 caracteres.",
@@ -671,7 +692,48 @@
     "EMAILINVALIDATED": "Por favor, digite um e-mail válido.",
     "EMAILEMPTY": "Por favor, digite seu endereço de e-mail.",
     "PASSWORDEMPTY": "Por favor, digite uma senha.",
+    "EMAILNOTEXIST": "Email não existe.",
+    "PASSWORDINCORRECT": "Senha esta errada.",
 
     "SUBSCRIBE_MORE": "Inscrever-se em mais universidades",
-    "SUBSCRIBE_TO_UNI": "Inscrever-se em uma universidade"
+    "SUBSCRIBE_TO_UNI": "Inscrever-se em uma universidade",
+
+    "COMMENT_NO_TEXT": "Por favor, escreva uma mensagem",
+
+    "YOUR_CARD_NUMBER_IS_INCOMPLETE": "O número de seu cartão está incompleto.",
+    "YOUR_CARD_NUMBER_IS_INVALID": "O número de seu cartão é inválido.",
+    "YOUR_CARD_EXP_IS_INCOMPLETE": "A data de expiração de seu cartão está incompleta.",
+    "YOUR_CARD_EXP_IS_IN_THE_PAST": "O ano de expiração de seu cartão está no passado.",
+    "YOUR_POSTAL_CODE_IS_INCOMPLETE": "Seu código postal está incompleto.",
+    "YOUR_CARD_SECURITY_CODE_IS_INCOMPLETE": "O código de segurança de seu cartão está incompleto.",
+
+    "UNI_CREATE_NAME_EMPTY": "Escreva um nome para a sua comunidade educacional.",
+    "UNI_CREATE_URL_EMPTY": "Escreva uma URL para a sua comunidade educacional.",
+    "UNI_CREATE_URL_INVALID": "O campo Url deve conter apenas letras, números, hífen e sublinhado.",
+    "UNI_CREATE_URL_EXISTS": "Digite um URL diferente para sua universidade. A que você escolher já existe.",
+    "UNI_CREATE_FIELDS_EMPTY": "Escreva um nome para a sua comunidade educacional., Escreva uma URL para a sua comunidade educacional.",
+
+    "DOMAIN_PLACEHOLDER": "universida.de",
+
+    "TIMELINE_EMPTY_TITLE": "Expandindo Seu Alcance!",
+    "TIMELINE_EMPTY_SUBTITLE": "Grande coleção de material educativo tanto para alunos quanto para professores. Seja o primeiro a engradar o posto.",
+
+    "FEED_EMPTY_TITLE": "Ainda sem postagem!",
+    "FEED_EMPTY_SUBTITLE": "Fique Ativo e Avance com a Aprendizagem",
+
+    "PLAYLIST_EMPTY_TITLE": "Crie sua própria playlist",
+    "PLAYLIST_EMPTY_SUBTITLE": "Você pode criar sua própria lista de reprodução personalizável a partir de toneladas de tutoriais em vídeo.",
+
+    "CURSOS_EMPTY_TITLE": "Cursos de acesso a partir do topo",
+    "CURSOS_EMPTY_SUBTITLE": "Grande coleção de cursos das melhores instituições em todo o mundo. Comece hoje mesmo!",
+
+    "FORUM_EMPTY_TITLE": "Nenhuma categoria ainda!",
+    "FORUM_EMPTY_SUBTITLE": "Crie sua própria categoria aqui",
+
+    "CREATE_POST_EMPTY": "Por favor, preencha todos os campos.",
+    "CREATE_POST_CATEGORY_ERROR": "Selecione a categoria do post.",
+    "CREATE_POST_TITLE_ERROR": "Escreva um título para a postagem",
+    "CREATE_POST_TEXT_ERROR": "Escreva um texto na postagem",
+
+    "CATEGORIES": "Categorias"
 }

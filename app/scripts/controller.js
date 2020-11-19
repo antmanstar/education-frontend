@@ -10,17 +10,17 @@ angular.module('netbase')
 
     // check if the user if logged in or logged out
     if ($localStorage.token) {
-        console.log("log in user")
+      console.log("log in user")
     } else {
-        console.log("log out user")
+      console.log("log out user")
     }
 
     $scope.login = function() {
-        if ($localStorage.token) {
-            window.location.href = "/onboarding/universities/create"
-        } else {
-            ngDialog.open({ template: 'partials/modals/login.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
-        }
+      if ($localStorage.token) {
+        window.location.href = "/onboarding/universities/create"
+      } else {
+        ngDialog.open({ template: 'partials/modals/login.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
+      }
     }
 
     $scope.signup = function() {
@@ -3502,10 +3502,10 @@ angular.module('netbase')
                     let statusCode = res.data.status;
                     if (statusCode == 5000) {
                         $scope.loginMessageBox = true;
-                        $scope.loginMessage = "Email não existe.";
+                        $scope.loginMessage = "EMAILNOTEXIST";
                     } else if (statusCode == 5001) {
                         $scope.loginMessageBox = true;
-                        $scope.loginMessage = "Senha esta errada.";
+                        $scope.loginMessage = "PASSWORDINCORRECT";
                     } else {
                         $scope.loginMessageBox = false;
                     }

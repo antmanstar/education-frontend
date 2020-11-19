@@ -62,7 +62,19 @@ angular.module('netbase')
     function handleChange(e) {
         $scope.cardErrors = e.error ? e.error.message : ''
         if (e.error != undefined) {
-            $scope.validationError = e.error.message;
+          if (e.error.message == "Your card number is incomplete.") {
+            $scope.validationError = "YOUR_CARD_NUMBER_IS_INCOMPLETE";
+          } else if (e.error.message == "Your card number is invalid.") {
+            $scope.validationError = "YOUR_CARD_NUMBER_IS_INVALID";
+          } else if (e.error.message == "Your card's expiration date is incomplete.") {
+            $scope.validationError = "YOUR_CARD_EXP_IS_INCOMPLETE";
+          } else if (e.error.message == "Your card's expiration year is in the past.") {
+            $scope.validationError = "YOUR_CARD_EXP_IS_IN_THE_PAST";
+          } else if (e.error.message == "Your postal code is incomplete.") {
+            $scope.validationError = "YOUR_POSTAL_CODE_IS_INCOMPLETE";
+          } else if (e.error.message == "Your card's security code is incomplete.") {
+            $scope.validationError = "YOUR_CARD_SECURITY_CODE_IS_INCOMPLETE";
+          }
         } else {
             $scope.validationError = undefined;
         }
@@ -149,7 +161,9 @@ angular.module('netbase')
                     // end student post card
                 } else {
                     // Otherwise, un-disable inputs.
-                    enableInputs();
+                    //enableInputs();
+                    $scope.loading = false;
+                    $scope.$apply()
                 }
                 $scope.loading = false;
             });

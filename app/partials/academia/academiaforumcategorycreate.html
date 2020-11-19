@@ -27,7 +27,7 @@
       <div class="academia-content-forum-answer" style="padding-top: 30px;">
 
         <label>{{'CATEGORY_TITLE' | translate}}</label></br>
-        <input class="academia-content-forum-post-create-title" placeholder="{{'WRITE_CATEGORY_TITLE' | translate}}" ng-model="title"></input>
+        <input class="academia-content-forum-post-create-title" maxlength="25" placeholder="{{'WRITE_CATEGORY_TITLE' | translate}}" ng-model="title"></input>
 
         <label>{{'CATEGORY_DESCRIPTION' | translate}}</label></br>
         <textarea ui-tinymce="tinymceOptions" ng-model="description"></textarea>

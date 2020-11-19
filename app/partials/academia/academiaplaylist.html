@@ -27,7 +27,7 @@
                 <div class="academia-category" ng-repeat="playlist in playlists">
                     <div class="texts">
                         <div class="title">
-                            <div class="icon" style="padding-right: 30px;"><i class="fa fa-video-camera"></i>
+                            <div class="icon" style="padding-right: 30px; padding-right: 30px; line-height: 1.8em; vertical-align: baseline;"><i class="fa fa-film"></i>
                                 <a href="/a/{{university.url}}/playlist/id/{{playlist._id}}"></div>{{playlist.title}}</a>
                         </div>
                     </div>
@@ -37,8 +37,8 @@
 
                 <div ng-show="playlists.length == 0" style="display: flex; flex-direction: column; align-items: center; margin-top: 30px;">
                     <img src="/img/academy/empty_playlist.png" width="300px" style="align-self: center">
-                    <span style="font-size: 30px; font-weight: 600; text-align: center; width: 300px; margin-top: 10px;">Create your own playlist</span>
-                    <span style="text-align: center; width:300px; margin-top: 10px;">You can create your own customizable playlist from tons of video tutorials.</span>
+                    <span style="font-size: 30px; font-weight: 600; text-align: center; width: 300px; margin-top: 10px;">{{'PLAYLIST_EMPTY_TITLE' | translate}}</span>
+                    <span style="text-align: center; width:300px; margin-top: 10px;">{{'PLAYLIST_EMPTY_SUBTITLE' | translate}}</span>
                     <!-- {{'NO_REGISTERED_PLAYLIST' | translate}} -->
                 </div>
             </div>

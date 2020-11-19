@@ -35,7 +35,7 @@
     "HOME_POPULAR": "Popular",
     "HOME_EXPLORE_NEWHERE": "New at Universidade?",
     "HOME_EXPLORE_REGISTERANDGO": "Register to start learning and teaching",
-    "HOME_EXPLORE_BESTPLATFORM": "A melhor ferramenta para educar e aprender online",
+    "HOME_EXPLORE_BESTPLATFORM": "The best tool to educate and learn online",
     "HOME_EXPLORE_USERPLATFORM": "USE THE PLATFORM",
     "HOME_EXPLORE_VR": "Virtual Reality Education",
     "CREATEEDCOMMUNITY": "Create an Educational Community",
@@ -53,6 +53,7 @@
 
     "VIDEOCONFERENCES": "Videoconferences",
     "HOME_CALL_START_VIDEOCON": "Start a Video Conference",
+    "HOME_CALL_VIDEOCON_SUBTITLE": "Videoconference, you can have full collaboration with your team",
     "HOME_CALL_CREATE": "Create",
     "HOME_CALL_CREATEVR": "Create Virtual Room",
     "HOME_CALL_CREATEAVIRTUALROOM": "Create a virtual room",
@@ -65,6 +66,9 @@
     "HOME_CALL_ROOM_JOIN": "Join Class",
     "HOME_CALL_ROOM_COPYLINK": "Copy URL",
     "HOME_CALL_ROOM_DELETE": "Delete Class",
+    "ROOM_NAME": "Room Name",
+    "ROOM_PRIVATE": "Make the room private",
+    "ROOM_PRIVATE_SUBTITLE": "If the classroom is private, no one will be able to join without its permission",
 
     "NEXT": "Next",
     "RETURN": "Return",
@@ -87,18 +91,34 @@
     "BIG_BOX_LOGIN_BUTTON": "Join Universidade",
     "WHAT_IS_TITLE": "What is an educational community?",
     "WHAT_IS_DESCRIPTION": "The University offers all the digital and content creation tools that teachers and students need to create a more intuitive and connected learning experience.",
+    "FEATURE_MAIN_TITLE": "Here’s what you get with every single College plan",
     "FEATURE_TITLE_1": "TIMELINE",
+    "FEATURE_SUBTITLE_1": "Integrate your educational community actions and messages on a chronology view",
     "FEATURE_DESCRIPTION_1": "Keeps a chronological record of the activities carried out in the virtual classroom.",
     "FEATURE_TITLE_2": "COURSES",
+    "FEATURE_SUBTITLE_2": "Integrated subscriptions, courses, and digital products",
     "FEATURE_DESCRIPTION_2": "Keeps a chronological record of the activities carried out in the virtual classroom.",
     "FEATURE_TITLE_3": "FORUM & CHAT",
+    "FEATURE_SUBTITLE_3": "Connect students and teachers through a powerful chat and forum",
     "FEATURE_DESCRIPTION_3": "It is a place where conversations take place. Students and teachers can follow relevant discussions on favorite subjects.",
     "FEATURE_TITLE_4": "VIRTUAL REALITY",
+    "FEATURE_SUBTITLE_4": "Integrate your educational community actions and messages on a chronology view",
     "FEATURE_DESCRIPTION_4": "Students from Escola da Inteligência can follow all classes and courses in an immersive learning experience.",
     "FEATURE_TITLE_5": "VIDEO CONFERENCE",
-    "FEATURE_DESCRIPTION_5": "Teachers and students participate in remote classes live by transmitting audio, video and text.",
+    "FEATURE_SUBTITLE_5": "Video communications for current collaborative classrooms",
+    "FEATURE_DESCRIPTION_5": "Expand traditional classrooms with video communications to meet the needs of today's students.",
     "FEATURE_TITLE_6": "VIDEOS",
+    "FEATURE_SUBTITLE_6": "Integrate your educational community actions and messages on a chronology view",
     "FEATURE_DESCRIPTION_6": "Platform for video sharing. Teachers and students can store and share videos within the virtual classroom.",
+    "REPLACES": "Replaces...",
+    "LAUNCH_YOUR_PRODUCT": "Launch your product free for 14 days",
+    "START_FREE_TRIAL": "Start free trial",
+    "LEARN_MORE": "Learn more",
+    "CREATE_YOUR_EDUCATIONAL_PLATFORM": "Create your educational platform now!",
+    "OLYMPIC_MEDALIST": "Olympics Medalist",
+    "BLOCKCHAIN_ACADEMY_FOUNDER": "Blockchain Academy Founder",
+    "PIRAPORIANDO_FOUNDER": "Piraporiando Founder",
+    "MINDKIDS_FOUNDER": "Mindkids Founder",
 
     "MAIN_TITLE": "It's time to start educating",
     "MAIN_SUBTITLE": "Anyone can create their own university and start sharing organized knowledge. Create your community to start discussions, create courses, upload videos and manage your student list.",
@@ -506,6 +526,8 @@
     "VIDEO_WRITE_COMMENT": "Write your comment",
     "VIDEO_POST": "Post",
     "VIDEO_ADMINISTRATION": "ADMINISTRATION",
+    "NO_VIEWERS_TO_DISPLAY": "No views to display",
+    "VIDEO_LIST_OF_PROGRESS": "List with progress of each student's views in percent",
 
     "TYPE_POST_TITLE": "Write the title of your post",
     "POST_CATEGORY": "Post Category",
@@ -662,7 +684,6 @@
     "EMAILEMPTY": "Please write an email.",
     "NAMEEMPTY": "Please write a name.",
     "USERNAMEEMPTY": "Please write a username.",
-    "PASSWORDEMPTY": "Please enter a password.",
     "PASSWORDCONFIRMEMPTY": "Please fill up confirm password field.",
     "PASSWORDNOTMATCH": "The passwords need to be the same. Type them again.",
     "PASSWORDLESSTHANSIX": "Please, the password must be at least 6 characters long.",
@@ -671,7 +692,48 @@
     "EMAILINVALIDATED": "Please, type a valid email.",
     "EMAILEMPTY": "Please, type your email address.",
     "PASSWORDEMPTY": "Please, type a password.",
+    "EMAILNOTEXIST": "Email does not exist.",
+    "PASSWORDINCORRECT": "Password is incorrect.",
 
     "SUBSCRIBE_MORE": "Subscribe to more universities",
-    "SUBSCRIBE_TO_UNI": "Subscribe to a university"
+    "SUBSCRIBE_TO_UNI": "Subscribe to a university",
+
+    "COMMENT_NO_TEXT": "Please write a message",
+
+    "YOUR_CARD_NUMBER_IS_INCOMPLETE": "Your card number is incomplete.",
+    "YOUR_CARD_NUMBER_IS_INVALID": "Your card number is invalid.",
+    "YOUR_CARD_EXP_IS_INCOMPLETE": "Your card's expiration date is incomplete.",
+    "YOUR_CARD_EXP_IS_IN_THE_PAST": "Your card's expiration year is in the past.",
+    "YOUR_POSTAL_CODE_IS_INCOMPLETE": "Your postal code is incomplete.",
+    "YOUR_CARD_SECURITY_CODE_IS_INCOMPLETE": "Your card's security code is incomplete.",
+
+    "UNI_CREATE_NAME_EMPTY": "Write a name for your educational community.",
+    "UNI_CREATE_URL_EMPTY": "Write a URL for your educational community.",
+    "UNI_CREATE_URL_INVALID": "The Url field must contain only letters, numbers, hyphen and underscore.",
+    "UNI_CREATE_URL_EXISTS": "Type a different URL for your university. The one you choose already exists.",
+    "UNI_CREATE_FIELDS_EMPTY": "Write a name for your educational community., Write a URL for your educational community.",
+
+    "DOMAIN_PLACEHOLDER": "colle.de",
+
+    "TIMELINE_EMPTY_TITLE": "Expanding Your Reach!",
+    "TIMELINE_EMPTY_SUBTITLE": "Big Collection of educational stuff for both students and teachers. Be the first to crate the post.",
+
+    "FEED_EMPTY_TITLE": "No post yet!",
+    "FEED_EMPTY_SUBTITLE": "Stay Active and  Get ahead with Learning",
+
+    "PLAYLIST_EMPTY_TITLE": "Create your own playlist",
+    "PLAYLIST_EMPTY_SUBTITLE": "You can create your own customizable playlist from tons of video tutorials.",
+
+    "CURSOS_EMPTY_TITLE": "Access Courses from top",
+    "CURSOS_EMPTY_SUBTITLE": "Big collection of courses from top institutions all around the world. Start today!",
+
+    "FORUM_EMPTY_TITLE": "No Category yet!",
+    "FORUM_EMPTY_SUBTITLE": "Create your own categroy here",
+
+    "CREATE_POST_EMPTY": "Please fill up all fields.",
+    "CREATE_POST_CATEGORY_ERROR": "Select the post category.",
+    "CREATE_POST_TITLE_ERROR": "Write a title for the post.",
+    "CREATE_POST_TEXT_ERROR": "Write a text at the post.",
+
+    "CATEGORIES": "Categories"
 }

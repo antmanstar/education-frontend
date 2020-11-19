@@ -10,6 +10,8 @@ angular.module('netbase')
     $scope.videoId = videoId;
     let viewers = {};
     let logged = $rootScope.logged;
+    $scope.hasError = false;
+    $scope.errMessage = '';
 
     Videos.getById(videoId).success(function(res) {
         let status = res.status;
@@ -103,8 +105,15 @@ angular.module('netbase')
 
     $scope.createAnswerPost = function() {
         // change forum post structure
+        let text = tinymce.activeEditor.getContent()
         var data = { text: tinymce.activeEditor.getContent() };
+
+        $scope.hasError = false;
+        $scope.errorMessage = '';
+
         if ($localStorage.token != undefined || $localStorage.token != null) {
+          // check if user enter a text
+          if (text.length > 0) {
             Forum.postAnswerByForumPostId($scope.forumPost._id, data).then(function(res) {
                 let status = res.data.status;
                 let data = res.data.data;
@@ -117,6 +126,10 @@ angular.module('netbase')
                     tinymce.activeEditor.setContent("");
                 }
             });
+          } else {
+            $scope.hasError = true;
+            $scope.errorMessage = 'COMMENT_NO_TEXT';
+          }
         } else {
             ngDialog.open({ template: 'partials/modals/login.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
         }

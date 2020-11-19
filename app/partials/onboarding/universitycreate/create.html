@@ -21,7 +21,7 @@
             <div style="width: 100%; text-align: left; margin-bottom: 30px;">
                 <div style="font-weight: bolder; font-size: 1.8em; color: #2d4255;">{{'CREATEYOUREDCOMM' | translate}}</div>
             </div>
-            <div class="alert bg-primary-red" ng-show="error.exists">{{displayError(error.text)}}</div>
+            <div class="alert bg-primary-red" ng-show="error.exists">{{error.text | translate}}</div>
             <div class="form">
                 <div class="form-group">
                     <label>{{'YOUREDCOMMNAME' | translate}}</label>
@@ -31,7 +31,7 @@
                     <label>{{'URL' | translate}}</label>
                     <div class="urlinput">
                       <div class="url-domain-container" onClick="document.getElementById('url-domain-input').focus();">
-                        <div class="url-domain" id="url-domain-label">https://universida.de/a/</div>
+                        <div class="url-domain" id="url-domain-label">https://{{'DOMAIN_PLACEHOLDER' | translate}}/a/</div>
                       </div>
                       <input class="input-email" ng-model="url" placeholder="" style="border-left: 0 !important" type="text" id="url-domain-input"></input>
                     </div>
@@ -88,49 +88,49 @@
         border: 1px solid black !important;
         margin-bottom: 10px;
     }
-    
+
     .form textarea {
         width: 100%;
         border: none;
         resize: none;
         border: 1px solid black;
     }
-    
+
     .onboarding-knowledge {
         padding-bottom: 10px;
         border-bottom: 1px solid #cdcdcd;
         margin-bottom: 10px;
     }
-    
+
     .onboarding-knowledge .title {
         font-size: 1.5em;
         display: inline-block;
         font-weight: bolder;
         color: #2d4255;
     }
-    
+
     .onboarding-knowledge .icon {
         float: right;
         font-size: 1.5em;
         display: inline-block;
         vertical-align: top;
     }
-    
+
     .onboarding-knowledge-university-row {
         background-color: white;
     }
-    
+
     .onboarding-knowledge-university-row .name {
         display: inline-block;
         font-weight: bolder;
         font-size: 1.2em;
         padding-left: 10px;
     }
-    
+
     .onboarding-knowledge-university-row .logo-bg {
         display: inline-block;
     }
-    
+
     .onboarding-knowledge-university-row .buttons {
         text-align: right;
         float: right;
@@ -138,7 +138,7 @@
         line-height: 60px;
         font-size: 0.7em;
     }
-    
+
     .footer-onboarding {
         background-color: white;
     }

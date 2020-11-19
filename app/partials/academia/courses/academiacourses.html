@@ -10,7 +10,7 @@
         padding: 15px;
         cursor: pointer;
     }
-    
+
     .course-box .title {
         font-size: 1.3em;
         font-weight: bold;
@@ -34,7 +34,7 @@
 
             <div class="classroom-list-header">
                 <div>
-                    <div style="font-size: 2.0em; font-weight: bolder;">Cursos</div>
+                    <div style="font-size: 2.0em; font-weight: bolder;">{{'COURSES' | translate}}</div>
                 </div>
                 <div class="classroom-btn-view" ng-show="showButton">
                     <a href="/cursos/a/{{university._id}}/suite/owner" class="btn btn-green" style="height: unset;">
@@ -45,8 +45,8 @@
 
             <div ng-show="courses.length == 0" style="display: flex; flex-direction: column; align-items: center; margin-top: 30px;">
                 <img src="/img/academy/empty_courses.png" width="300px" style="align-self: center">
-                <span style="font-size: 30px; font-weight: 600; text-align: center; width: 300px; margin-top: 10px;">Access Courses from top</span>
-                <span style="text-align: center; width:300px; margin-top: 10px;">Big collection of courses from top institutions all around the world. Start today!</span>
+                <span style="font-size: 30px; font-weight: 600; text-align: center; width: 300px; margin-top: 10px;">{{'CURSOS_EMPTY_TITLE' | translate}}</span>
+                <span style="text-align: center; width:300px; margin-top: 10px;">{{'CURSOS_EMPTY_SUBTITLE' | translate}}</span>
             </div>
 
             <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4" style="margin-top: 15px;" ng-repeat="course in courses">

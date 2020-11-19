@@ -47,24 +47,26 @@ angular.module('netbase')
         // Only allow alpanumeric characters, dash and underscore ^[a-zA-Z0-9]+(?:[\w -]*[a-zA-Z0-9]+)*$
         let urlpattern = new RegExp(/^[a-zA-Z0-9_-]*$/)
 
-        if (data.name == undefined || data.name == "") {
+        if ((data.name == undefined || data.name == "") && (data.url == undefined || data.url == "")) {
+          console.log("both empty")
             validated = false;
-            $scope.error.text.push("Escreva um nome para a sua comunidade educacional.");
+            $scope.error.text = "UNI_CREATE_FIELDS_EMPTY";
             $scope.error.exists = true;
-        }
-
-        if (data.url == undefined || data.url == "") {
+            console.log("text: ", $scope.error.text)
+        }else if (data.name == undefined || data.name == "") {
             validated = false;
-            $scope.error.text.push("Escreva uma URL para a sua comunidade educacional.");
+            $scope.error.text = "UNI_CREATE_NAME_EMPTY";
             $scope.error.exists = true;
-        }
-
-        if (!urlpattern.test(data.url)) {
+            return;
+        }else if (data.url == undefined || data.url == "") {
             validated = false;
-            $scope.error.text.push("O campo Url deve conter apenas letras, números, hífen e sublinhado.");
+            $scope.error.text = "UNI_CREATE_URL_EMPTY";
             $scope.error.exists = true;
-        } else {
-            console.log("url pattern test success")
+            return;
+        } else if (!urlpattern.test(data.url)) {
+          validated = false;
+          $scope.error.text = "UNI_CREATE_URL_INVALID";
+          $scope.error.exists = true;
         }
 
         // removed because Description field is optional
@@ -85,13 +87,13 @@ angular.module('netbase')
                     //console.log("university create: ", res.err)
                     //if (res.err.errmsg.indexOf("url") != 1) {
                     if (res.err.code == 11000) {
-                        $scope.error.text.push("Type a different URL for your university. The one you choose already exists.");
+                        $scope.error.text = "UNI_CREATE_URL_EXISTS";
                         $scope.error.exists = true;
                     }
                 }
             });
         } else {
-            $scope.loading = false;
+          $scope.loading = false;
         }
     }
 
