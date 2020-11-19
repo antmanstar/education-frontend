@@ -2376,6 +2376,9 @@ angular.module('netbase')
     let postId = $route.current.params.postId;
     let university;
 
+    $scope.hasError = false;
+    $scope.errorMessage = '';
+
     tinymce.init({
         selector: 'textarea',
         file_picker_types: 'file image media',
@@ -2446,8 +2449,15 @@ angular.module('netbase')
     }
 
     $scope.createAnswerPost = function() {
-        var data = { text: tinymce.activeEditor.getContent() };
+        let text = tinymce.activeEditor.getContent()
+        var data = { text: text};
+
+        $scope.hasError = false;
+        $scope.errorMessage = '';
+
         if ($localStorage.token != undefined || $localStorage.token != null) {
+          // check if user enter a text
+          if (text.length > 0) {
             Forum.postAnswerByForumPostId(postId, data).then(function(res) {
                 let status = res.data.status;
                 let data = res.data.data;
@@ -2467,6 +2477,11 @@ angular.module('netbase')
                     University.createForumPostTimeline(timelineData).then(function(res) {})
                 }
             });
+          } else {
+            console.log("write a message")
+            $scope.hasError = true;
+            $scope.errorMessage = 'COMMENT_NO_TEXT';
+          }
         } else {
             ngDialog.open({ template: 'partials/modals/login.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
         }
@@ -2656,19 +2671,22 @@ angular.module('netbase')
         let createPost = true;
         let errors = [];
 
-        if (data.categoryId == undefined) {
+        if ((data.categoryId == undefined) && (data.title == undefined || data.title.length == 0) && (data.text == undefined || data.text.length == 0)) {
+          createPost = false;
+          errors.push("CREATE_POST_EMPTY");
+        }else if ((data.title == undefined || data.title.length == 0) && (data.text == undefined || data.text.length == 0)) {
+          createPost = false;
+          errors.push("CREATE_POST_CATEGORY_ERROR");
+          errors.push("CREATE_POST_TITLE_ERROR");
+        }else if (data.categoryId == undefined) {
             createPost = false;
-            errors.push("Selecione a categoria do post.");
-        }
-
-        if (data.title == undefined || data.title.length == 0) {
+            errors.push("CREATE_POST_CATEGORY_ERROR");
+        }else if (data.title == undefined || data.title.length == 0) {
             createPost = false;
-            errors.push("Escreva um título para a postagem");
-        }
-
-        if (data.text == undefined || data.text.length == 0) {
+            errors.push("CREATE_POST_TITLE_ERROR");
+        }else if (data.text == undefined || data.text.length == 0) {
             createPost = false;
-            errors.push("Escreva um texto na postagem");
+            errors.push("CREATE_POST_TEXT_ERROR");
         }
 
         if (createPost) {
@@ -2985,6 +3003,7 @@ angular.module('netbase')
                                 }
                             }
 
+
                             tinymce.init({
                                 selector: 'textarea',
                                 menuitem: 'textarea',
@@ -2998,6 +3017,10 @@ angular.module('netbase')
                                 forced_root_block: false,
                                 height: 100,
                                 width: '100%',
+                                relative_urls: false,
+                                link_assume_external_targets: true,
+                                default_link_target: "_blank",
+                                extended_valid_elements: "a[href|target=_blank]",
                                 readonly: scope.curCategory === undefined ? true : false,
                                 placeholder: "Type here...",
                                 plugins: [
@@ -3011,6 +3034,37 @@ angular.module('netbase')
                                         success({ token: msg.token });
                                     })
                                 },
+                                setup: function(editor) {
+                                    var fnc = editor.convertURL;
+                                    editor.convertURL = convertURL_;
+
+                                    function convertURL_(url, name, elm) {
+                                        fnc.apply(this, arguments);
+                                        var regex = new RegExp("(http:|https:)?\/\/");
+                                        if (!regex.test(url)) {
+                                            return url = "http://" + url
+                                        }
+                                        return url;
+                                    }
+
+                                    editor.on('init', function(e) {
+                                        var fn = editor.windowManager.open;
+                                        editor.windowManager.open = function(t, r) {
+                                            if (t.title == 'Insert link') {
+                                                var oldsubmit = t.onSubmit;
+                                                t.onSubmit = function(e) {
+                                                    if (!e.data.href.match(/(ftp|https?):\/\//i)) {
+                                                        e.data.href = "http://" + e.data.href;
+                                                    }
+                                                    return oldsubmit(e);
+                                                }
+                                                fn.apply(this, [t, r]);
+                                            } else {
+                                                return fn(t, r);
+                                            }
+                                        }
+                                    });
+                                }
                             });
 
                             if ($localStorage.token != undefined && $localStorage.token != null) { // Check if logged in user
@@ -3229,7 +3283,8 @@ angular.module('netbase')
                     Students.getStudentById(message.author).then((res) => {
                         scope.members.push({
                             id: message.author,
-                            name: res.data.data.name
+                            name: res.data.data.name,
+                            imgUrl: res.data.data.imageUrl
                         });
 
                         scope.messages.push(message);
@@ -3258,7 +3313,8 @@ angular.module('netbase')
                             currentMember = res.data.success == true ? res.data.data.name : "Deactivated User"
                             scope.members.push({
                                 id: message.author,
-                                name: currentMember
+                                name: currentMember,
+                                imgUrl: res.data.data.imageUrl
                             });
                             resolve();
                         });
@@ -3272,6 +3328,12 @@ angular.module('netbase')
             scope.getName = (id) => {
                 let user = scope.members.filter(item => { return item.id === id; });
                 return user[0].name;
+            }
+
+            // get image url of channel member
+            scope.getImgUrl = (id) => {
+                let user = scope.members.filter(item => { return item.id === id; });
+                return user[0].imgUrl;
             }
 
             // get first capitals of the name
@@ -3423,8 +3485,9 @@ angular.module('netbase')
         replace: false,
         scope: true,
         link: function(scope, element, attr) {
-            let university;
+            scope.university;
             let studentId;
+            let url = attr.url;
             $localStorage.studentIsAdmin = false
             if ($localStorage.token != undefined && $localStorage.token != null) {
                 studentId = jwtHelper.decodeToken($localStorage.token)._id;
@@ -3450,9 +3513,9 @@ angular.module('netbase')
             }
 
             attr.$observe('university', function(value) {
-                university = JSON.parse(value);
+                scope.university = JSON.parse(value);
 
-                Forum.getCategoriesByUniversityId(university._id).success(function(resCategory) {
+                Forum.getCategoriesByUniversityId(scope.university._id).success(function(resCategory) {
                     scope.categories = resCategory.data;
                 })
 
@@ -3470,15 +3533,15 @@ angular.module('netbase')
                             scope.userSubscribed = true;
                         } else {
                             for (let i = 0; i < data.universitiesSubscribed.length; i++) {
-                                if (data.universitiesSubscribed[i].universityId == university._id && data.universitiesSubscribed[i].unsubscribed === false) {
+                                if (data.universitiesSubscribed[i].universityId == scope.university._id && data.universitiesSubscribed[i].unsubscribed === false) {
                                     scope.userSubscribed = true;
                                 }
 
-                                if (data.universitiesSubscribed[i].universityId == university._id && data.universitiesSubscribed[i].unsubscribed === true) {
+                                if (data.universitiesSubscribed[i].universityId == scope.university._id && data.universitiesSubscribed[i].unsubscribed === true) {
                                     scope.userSubscribed = false;
                                 }
 
-                                if (data.universitiesSubscribed[i].universityId == university._id) {
+                                if (data.universitiesSubscribed[i].universityId == scope.university._id) {
                                     unisub = true;
                                 }
                             }
@@ -3495,8 +3558,8 @@ angular.module('netbase')
                     /* REAL TIME MODULE */
 
                 /* check if student is a premium member */
-                for (let idx = 0; idx < university.members.length; idx++) {
-                    var member = university.members[idx];
+                for (let idx = 0; idx < scope.university.members.length; idx++) {
+                    var member = scope.university.members[idx];
                     if (studentId != undefined && member.accountId == studentId && member.privilege >= 10) {
                         scope.studentIsPremium = true;
                     }
@@ -3512,29 +3575,29 @@ angular.module('netbase')
 
                 }
 
-                function userMembersLocation(array) {
-                    function findStudentId(sId) {
-                        return sId.accountId = studentId;
-                    }
-                    return array.findIndex(findStudentId);
-                }
-
-                let userSubscribed = scope.userSubscribed = function userSubscribed(array) {
-                    let studentIdMembersLocation = userMembersLocation(array);
-                    if (studentIdMembersLocation != -1) {
-                        if (array[studentIdMembersLocation].unsubscribed) {
-                            return false;
-                        } else {
-                            return true;
-                        }
-                    } else {
-                        return false;
-                    }
-                };
+                // function userMembersLocation(array) {
+                //     function findStudentId(sId) {
+                //         return sId.accountId = studentId;
+                //     }
+                //     return array.findIndex(findStudentId);
+                // }
+                //
+                // let userSubscribed = scope.userSubscribed = function userSubscribed(array) {
+                //     let studentIdMembersLocation = userMembersLocation(array);
+                //     if (studentIdMembersLocation != -1) {
+                //         if (array[studentIdMembersLocation].unsubscribed) {
+                //             return false;
+                //         } else {
+                //             return true;
+                //         }
+                //     } else {
+                //         return false;
+                //     }
+                // };
             });
 
             scope.gotoCategoryCreatPage = function() {
-                let url = university.url
+                let url = scope.university.url
                 $location.path("/a/" + url + "/forum/category/create")
             }
 
@@ -3552,35 +3615,44 @@ angular.module('netbase')
                 ngDialog.open({ template: 'partials/modals/planbuy.html', controller: 'AcademiaPlanPurchaseCtrl', className: 'ngdialog-theme-default ngdialog-plans', data: { university: university } });
             }
 
-            function userMembersLocation(array) {
-                function findStudentId(sId) {
-                    return sId.accountId = studentId;
-                }
-                return array.findIndex(findStudentId);
-            }
-
-            let userSubscribed = scope.userSubscribed = function userSubscribed(array) {
-                let studentIdMembersLocation = userMembersLocation(array);
-                if (studentIdMembersLocation != -1) {
-                    if (array[studentIdMembersLocation].unsubscribed) {
-                        return false;
-                    } else {
-                        return true;
-                    }
-                } else {
-                    return false;
-                }
-            };
+            // function userMembersLocation(array) {
+            //     function findStudentId(sId) {
+            //         return sId.accountId = studentId;
+            //     }
+            //     return array.findIndex(findStudentId);
+            // }
+            //
+            // let userSubscribed = scope.userSubscribed = function userSubscribed(array) {
+            //     let studentIdMembersLocation = userMembersLocation(array);
+            //     if (studentIdMembersLocation != -1) {
+            //         if (array[studentIdMembersLocation].unsubscribed) {
+            //             return false;
+            //         } else {
+            //             return true;
+            //         }
+            //     } else {
+            //         return false;
+            //     }
+            // };
 
             scope.subscribe = function() {
                 if ($localStorage.token != undefined && $localStorage.token != null) {
-                    University.subscribeOnUniversity(university.url).then(function(res) {
-                        if (userSubscribed(scope.university.members)) {
-                            let studentIdMembersLocation = userMembersLocation(scope.university.members);
-                            scope.university.members.splice(studentIdMembersLocation, 1);
-                        } else {
-                            scope.university.members.push({ accountId: studentId, unsubscribed: false });
+                    University.subscribeOnUniversity(scope.university.url).then(function(res) {
+
+                        if(res.data.success) {
+                          // fetch university to update members
+                          University.getUniversityById(scope.university._id).then(function(res) {
+                            if(res.data.success) {
+                              scope.university = res.data.data
+                            }
+                          })
                         }
+                        // if (userSubscribed(scope.university.members)) {
+                        //     let studentIdMembersLocation = userMembersLocation(scope.university.members);
+                        //     scope.university.members.splice(studentIdMembersLocation, 1);
+                        // } else {
+                        //     scope.university.members.push({ accountId: studentId, unsubscribed: true });
+                        // }
                     });
                 } else {
                     ngDialog.open({ template: 'partials/modals/login.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });

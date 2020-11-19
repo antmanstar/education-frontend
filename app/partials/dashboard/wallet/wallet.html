@@ -71,14 +71,14 @@
             </div>
             <!-- end wallet card -->
 
-            <div class="wallet-card" ng-repeat="card in cards" style="text-align: center; padding-top: 65px;">
+            <div class="wallet-card" ng-repeat="card in cards" style="padding-top: 20px; padding-left: 1.5em;">
 
               <div class="content">
-                <b>{{card.brand}}</b>
+                <h2>{{card.brand}}</h2>
                 <div>
-                  <b>{{card.name}}</b></br>
-                  <b>{{card.last4}}</b> {{card.last4}}</br>
-                  <b>{{card.exp_month}}/{{card.exp_year}}</b>
+                  <b>{{'CARDHOLDER' | translate}}</b> {{card.name}}</br>
+                  <b>{{'LAST_4_DIGITS' | translate}}</b> {{card.last4}}</br>
+                  <b>{{'EXPIRY' | translate}}</b> {{card.exp_month}}/{{card.exp_year}}
                 </div>
               </div>
               <!-- end content -->

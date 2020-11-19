@@ -19,7 +19,7 @@
 
                 <div class="classroom-list-header">
                     <div>
-                        <div style="font-size: 2.0em; font-weight: bolder;">Classroom</div>
+                        <div style="font-size: 2.0em; font-weight: bolder;">{{'CLASSROOM' | translate}}</div>
                         <div class='classroom-arrange-iconview'>
                             <!-- <img src="/img/icon/listview.svg" class="list-view-style" /> -->
                             <!-- <img src="/img/icon/gridview.svg" class="grid-view-style" /> -->
@@ -27,7 +27,7 @@
                     </div>
                     <div class="classroom-btn-view" ng-show="isAdmin">
                         <div ng-click="createNewClassroom()" class="btn btn-green" style="height: unset;">
-                            Criar sala
+                            {{'HOME_CALL_CREATEVR' | translate}}
                         </div>
                     </div>
                 </div>
@@ -42,14 +42,14 @@
                         padding-left: 30px;
                         padding-right: 30px;
                     }
-                    
+
                     .onboarding-knowledge p {
                         font-size: 1.1em;
                         margin-bottom: 15px;
                     }
-                    
+
                     .onboarding-knowledge .picture {}
-                    
+
                     .onboarding-knowledge .title {
                         font-size: 1.3em;
                         display: inline-block;
@@ -57,7 +57,7 @@
                         color: #2d4255;
                         margin-bottom: 15px;
                     }
-                    
+
                     .onboarding-knowledge .buttons {
                         text-align: center;
                     }

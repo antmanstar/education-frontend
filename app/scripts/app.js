@@ -35,11 +35,12 @@ angular.module('netbase', [
         suffix: '.json'
     });
 
-    console.log("route provider is saying: ")
-    console.log(window.location.href)
+    //console.log("route provider is saying: ")
+    //console.log(window.location.href)
 
     let url = window.location.href;
     //let url = "https://universida.de/home/explore"
+    //let url = "https://colle.ge/home/explore"
 
     if (url.indexOf('colle.ge') > 0) {
       $translateProvider.preferredLanguage('en');

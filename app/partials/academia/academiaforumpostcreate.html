@@ -1,6 +1,12 @@
 <div ng-include="'partials/headerhome.html'"></div>
 
 <style>
+    select_cat {
+      width: 100px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
     figure img {
         width: 100% !important;
         height: unset !important;
@@ -35,7 +41,7 @@
 
             <div class="alert bg-primary-red" ng-if="errors.length > 0">
                 <ul>
-                    <li ng-repeat="e in errors">{{e}}</li>
+                    <li ng-repeat="e in errors">{{e | translate}}</li>
                 </ul>
             </div>
 
@@ -48,7 +54,7 @@
 
                     <b>{{'POST_CATEGORY' | translate}}</b>
 
-                    <div class="form-group">
+                    <div class="form-group select_cat">
                         <select ng-model="categoryForum._id">
               <option ng-repeat="category in categories" ng-selected="category._id == categoryForum._id"
                 value="{{category._id}}" ng-selected="">{{category.title}}</option>

@@ -355,8 +355,21 @@ angular.module('netbase')
                     let url = '/classroom/university/' + $scope.university._id + '/all'
                     Classroom.getAllClassroomsByUniversity(baseUrl + url).then((data) => {
                         $scope.wholeClassroomList = data;
-                        let text = "/a/university/" + universityUrl + "/roomid/" + newClassroom.id + "/accountid/" + newClassroom.sid + "/roomname/" + $scope.addingClassroom.uniqueName + "/";
                         $route.reload();
+                    });
+
+                    url = '/classroom/chat_token/';
+                    Classroom.getChatAccessToken(baseUrl + url).then((res) => {
+                        Twilio.Chat.Client.create(res.data.token).then(function(client) {
+                            $rootScope.messagingClient = client;
+
+                            $rootScope.messagingClient.createChannel({ // create admin channel
+                                uniqueName: newClassroom.data.roomData.roomSID,
+                                friendlyName: newClassroom.data.roomData.uniqueName
+                            }).then((channel) => {
+                                $rootScope.currentChatChannel = channel;
+                            });
+                        });
                     });
                     ngDialog.close();
                 }
@@ -3489,10 +3502,10 @@ angular.module('netbase')
                     let statusCode = res.data.status;
                     if (statusCode == 5000) {
                         $scope.loginMessageBox = true;
-                        $scope.loginMessage = "Email não existe.";
+                        $scope.loginMessage = "EMAILNOTEXIST";
                     } else if (statusCode == 5001) {
                         $scope.loginMessageBox = true;
-                        $scope.loginMessage = "Senha esta errada.";
+                        $scope.loginMessage = "PASSWORDINCORRECT";
                     } else {
                         $scope.loginMessageBox = false;
                     }

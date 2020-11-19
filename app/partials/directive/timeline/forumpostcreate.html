@@ -23,11 +23,15 @@
             <div style="padding-top: 5px; font-size: 1.05em; text-align: center; font-weight: 700; font-size: 1.06em;"><a href="/a/{{university.url}}/forum/post/id/{{activity.modelId}}">{{'CONTINUE_READING' | translate}}</a></div>
             <div class="row" style="margin-top: 10px; font-size: 1.1em; color: #717171;">
                 <div class="col-xs-4" title="Comments" style="text-align: left; padding-top: 5px; display: inline-block;"><i class="far fa-comment" style="cursor: pointer;" ng-click="handleCommentSection()"></i> {{forumPost.answers.length || 0}}</div>
-                <div class="col-xs-4" title="Votes" style="text-align: left; padding-top: 5px; display: inline-block;"><i class="far fa-lightbulb" style="cursor: pointer;" ng-click="upvoteForumPost()"></i> {{forumPost.votes.length || 0}}</div>
+                <div class="col-xs-4" title="Votes" style="text-align: left; padding-top: 5px; display: inline-block;"><i class="far fa-lightbulb"></i> {{forumPost.votes.length || 0}}</div>
+                <!--div class="col-xs-4" title="Votes" style="text-align: left; padding-top: 5px; display: inline-block;"><i class="far fa-lightbulb" style="cursor: pointer;" ng-click="upvoteForumPost()"></i> {{forumPost.votes.length || 0}}</div-->
                 <!--<div title="Re-Post" style="width: 60px; text-align: left; padding-top: 5px; display: inline-block;"><i class="fas fa-retweet" style="cursor: pointer;" ng-click="rePost(activity.entryType)"> {{rePostCount || 0}} </i></div>-->
                 <div class="col-xs-4" title="Share" style=" text-align: left; padding-top: 5px; display: inline-block;"><i class="fas fa-share-alt" style="cursor: pointer;" ng-click="handleSharePost()"></i></div>
             </div>
             <div ng-if="commentSection">
+                <div class="alert alert-danger" style="color: #a94442 !important;" ng-if="hasError">
+                  {{errorMessage | translate}}
+                </div>
                 <div class="academia-content-forum-answer-box">
 
                     <style>

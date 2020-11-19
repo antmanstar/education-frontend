@@ -12,7 +12,7 @@
         width: 100% !important;
         height: unset !important;
     }
-    
+
     @media only screen and (max-width: 1200px) {
         body {
             padding-left: 0%;
@@ -45,13 +45,13 @@
                     margin-bottom: 20px;
                     border-radius: 5px;
                 }
-                
+
                 .onboarding-row .card-wrapper {
                     min-height: 90px;
                     color: #163642;
                     font-weight: bold;
                 }
-                
+
                 .onboarding-row .card-inside {
                     background-color: #fff;
                     min-height: 90px;
@@ -59,7 +59,7 @@
                     padding: 10px;
                     cursor: pointer;
                 }
-                
+
                 .onboarding-row .card-inside:hover {
                     border: 3px solid #ee5748;
                 }
@@ -99,8 +99,8 @@
 
                 <div ng-show="forumPosts.length == 0 && loaded" style="display: flex; flex-direction: column; align-items: center; margin-top: 30px;">
                     <img src="/img/academy/empty_timeline.png" width="300px" style="align-self: center">
-                    <span style="font-size: 30px; font-weight: 600; text-align: center; width: 300px; margin-top: 10px;">Expanding Your Reach!</span>
-                    <span style="text-align: center; width:300px; margin-top: 10px;">Big Collection of educational stuff for both students and teachers. Be the first to crate the post.</span>
+                    <span style="font-size: 30px; font-weight: 600; text-align: center; width: 300px; margin-top: 10px;">{{'TIMELINE_EMPTY_TITLE' | translate}}</span>
+                    <span style="text-align: center; width:300px; margin-top: 10px;">{{'TIMELINE_EMPTY_SUBTITLE' | translate}}</span>
                 </div>
 
                 <div ng-show="forumPosts.length > 0">

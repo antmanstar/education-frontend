@@ -81,6 +81,9 @@ angular.module('netbase')
             scope.sharePost = false;
             scope.loaded = false;
 
+            scope.hasError = false;
+            scope.errorMessage = '';
+
             TimelineNew.getTimelineRePostCount(contentId).success(function(res) {
                 scope.rePostCount = res.data.count - 1;
             });
@@ -96,21 +99,17 @@ angular.module('netbase')
                     let success = res.data.success;
 
                     if (status != 90010) {
-                      console.log("not premium")
                         scope.forumPost = data;
                         scope.forumPost.text = $sce.trustAsHtml(scope.forumPost.text);
                         scope.loaded = true;
                     } else {
-                        console.log("premium")
                         // Premium content
                         scope.getPremium = true;
                         scope.forumPost = data;
                     }
 
-                    console.log("text: ", scope.forumPost.text)
                     let url = "https://universida.de/a/" + scope.university.url + "/forum/post/id/"
-                    console.log("url: ", url)
-                    console.log("title: ", scope.forumPost.title)
+
 
                 });
 
@@ -157,7 +156,12 @@ angular.module('netbase')
             scope.createAnswerPost = function(answer) {
                 var data = { text: answer };
 
+                scope.hasError = false;
+                scope.errorMessage = '';
+
                 if ($localStorage.token != undefined || $localStorage.token != null) {
+
+                  if (answer) {
                     Forum.postAnswerByForumPostId(contentId, data).then(function(res) {
 
                         let status = res.data.status;
@@ -179,6 +183,10 @@ angular.module('netbase')
                         }
 
                     });
+                  } else {
+                    scope.hasError = true;
+                    scope.errorMessage = 'COMMENT_NO_TEXT';
+                  }
                 } else {
                     ngDialog.open({ template: 'partials/modals/login.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
                 }

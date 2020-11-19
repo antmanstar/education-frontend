@@ -126,6 +126,9 @@
                     {{'REPLY' | translate}}
                 </div>
                 <!-- academia-content-forum-answer-title -->
+                <div class="alert alert-danger" style="color: #a94442 !important;" ng-if="hasError">
+                  {{errorMessage | translate}}
+                </div>
 
                 <div class="academia-content-forum-answer-box">
 
