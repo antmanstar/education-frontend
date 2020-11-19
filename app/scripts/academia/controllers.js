@@ -205,6 +205,9 @@ angular.module('netbase')
                         reject(new Error('none admin channel'));
                     }
 
+                    console.log("KOKROOMSID", roomSID)
+                    console.log("KOKAAA", $scope.publicChannelArr)
+
                     $rootScope.messagingClient.getChannelBySid($scope.publicChannelArr[i].sid).then((comparingChannel) => {
                         $rootScope.currentChatChannel = comparingChannel;
                         resolve(comparingChannel);
@@ -2985,6 +2988,7 @@ angular.module('netbase')
                                 }
                             }
 
+
                             tinymce.init({
                                 selector: 'textarea',
                                 menuitem: 'textarea',
@@ -2998,6 +3002,10 @@ angular.module('netbase')
                                 forced_root_block: false,
                                 height: 100,
                                 width: '100%',
+                                relative_urls: false,
+                                link_assume_external_targets: true,
+                                default_link_target: "_blank",
+                                extended_valid_elements: "a[href|target=_blank]",
                                 readonly: scope.curCategory === undefined ? true : false,
                                 placeholder: "Type here...",
                                 plugins: [
@@ -3011,6 +3019,37 @@ angular.module('netbase')
                                         success({ token: msg.token });
                                     })
                                 },
+                                setup: function(editor) {
+                                    var fnc = editor.convertURL;
+                                    editor.convertURL = convertURL_;
+
+                                    function convertURL_(url, name, elm) {
+                                        fnc.apply(this, arguments);
+                                        var regex = new RegExp("(http:|https:)?\/\/");
+                                        if (!regex.test(url)) {
+                                            return url = "http://" + url
+                                        }
+                                        return url;
+                                    }
+
+                                    editor.on('init', function(e) {
+                                        var fn = editor.windowManager.open;
+                                        editor.windowManager.open = function(t, r) {
+                                            if (t.title == 'Insert link') {
+                                                var oldsubmit = t.onSubmit;
+                                                t.onSubmit = function(e) {
+                                                    if (!e.data.href.match(/(ftp|https?):\/\//i)) {
+                                                        e.data.href = "http://" + e.data.href;
+                                                    }
+                                                    return oldsubmit(e);
+                                                }
+                                                fn.apply(this, [t, r]);
+                                            } else {
+                                                return fn(t, r);
+                                            }
+                                        }
+                                    });
+                                }
                             });
 
                             if ($localStorage.token != undefined && $localStorage.token != null) { // Check if logged in user
@@ -3229,7 +3268,8 @@ angular.module('netbase')
                     Students.getStudentById(message.author).then((res) => {
                         scope.members.push({
                             id: message.author,
-                            name: res.data.data.name
+                            name: res.data.data.name,
+                            imgUrl: res.data.data.imageUrl
                         });
 
                         scope.messages.push(message);
@@ -3258,7 +3298,8 @@ angular.module('netbase')
                             currentMember = res.data.success == true ? res.data.data.name : "Deactivated User"
                             scope.members.push({
                                 id: message.author,
-                                name: currentMember
+                                name: currentMember,
+                                imgUrl: res.data.data.imageUrl
                             });
                             resolve();
                         });
@@ -3272,6 +3313,12 @@ angular.module('netbase')
             scope.getName = (id) => {
                 let user = scope.members.filter(item => { return item.id === id; });
                 return user[0].name;
+            }
+
+            // get image url of channel member
+            scope.getImgUrl = (id) => {
+                let user = scope.members.filter(item => { return item.id === id; });
+                return user[0].imgUrl;
             }
 
             // get first capitals of the name

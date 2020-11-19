@@ -60,11 +60,11 @@ angular.module('netbase')
         }
 
         if (!urlpattern.test(data.url)) {
-          validated = false;
-          $scope.error.text.push("O campo Url deve conter apenas letras, números, hífen e sublinhado.");
-          $scope.error.exists = true;
+            validated = false;
+            $scope.error.text.push("O campo Url deve conter apenas letras, números, hífen e sublinhado.");
+            $scope.error.exists = true;
         } else {
-          console.log("url pattern test success")
+            console.log("url pattern test success")
         }
 
         // removed because Description field is optional
@@ -91,7 +91,7 @@ angular.module('netbase')
                 }
             });
         } else {
-          $scope.loading = false;
+            $scope.loading = false;
         }
     }
 

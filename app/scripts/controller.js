@@ -10,17 +10,17 @@ angular.module('netbase')
 
     // check if the user if logged in or logged out
     if ($localStorage.token) {
-      console.log("log in user")
+        console.log("log in user")
     } else {
-      console.log("log out user")
+        console.log("log out user")
     }
 
     $scope.login = function() {
-      if ($localStorage.token) {
-        window.location.href = "/onboarding/universities/create"
-      } else {
-        ngDialog.open({ template: 'partials/modals/login.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
-      }
+        if ($localStorage.token) {
+            window.location.href = "/onboarding/universities/create"
+        } else {
+            ngDialog.open({ template: 'partials/modals/login.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
+        }
     }
 
     $scope.signup = function() {
@@ -355,8 +355,21 @@ angular.module('netbase')
                     let url = '/classroom/university/' + $scope.university._id + '/all'
                     Classroom.getAllClassroomsByUniversity(baseUrl + url).then((data) => {
                         $scope.wholeClassroomList = data;
-                        let text = "/a/university/" + universityUrl + "/roomid/" + newClassroom.id + "/accountid/" + newClassroom.sid + "/roomname/" + $scope.addingClassroom.uniqueName + "/";
                         $route.reload();
+                    });
+
+                    url = '/classroom/chat_token/';
+                    Classroom.getChatAccessToken(baseUrl + url).then((res) => {
+                        Twilio.Chat.Client.create(res.data.token).then(function(client) {
+                            $rootScope.messagingClient = client;
+
+                            $rootScope.messagingClient.createChannel({ // create admin channel
+                                uniqueName: newClassroom.data.roomData.roomSID,
+                                friendlyName: newClassroom.data.roomData.uniqueName
+                            }).then((channel) => {
+                                $rootScope.currentChatChannel = channel;
+                            });
+                        });
                     });
                     ngDialog.close();
                 }
