@@ -48,7 +48,6 @@ angular.module('netbase')
         Forum.getAllOwnerForumPost(universityId).then(function(res) {
             $scope.loaded = true;
             $scope.forumPosts = res.data.data.docs;
-
         });
     });
 
@@ -2450,38 +2449,38 @@ angular.module('netbase')
 
     $scope.createAnswerPost = function() {
         let text = tinymce.activeEditor.getContent()
-        var data = { text: text};
+        var data = { text: text };
 
         $scope.hasError = false;
         $scope.errorMessage = '';
 
         if ($localStorage.token != undefined || $localStorage.token != null) {
-          // check if user enter a text
-          if (text.length > 0) {
-            Forum.postAnswerByForumPostId(postId, data).then(function(res) {
-                let status = res.data.status;
-                let data = res.data.data;
-                let success = res.data.success;
+            // check if user enter a text
+            if (text.length > 0) {
+                Forum.postAnswerByForumPostId(postId, data).then(function(res) {
+                    let status = res.data.status;
+                    let data = res.data.data;
+                    let success = res.data.success;
 
-                if (success) {
-                    data.votesCount = 0;
-                    data.createdAt = Math.round((new Date()).getTime() / 1000);
-                    $scope.forumPost.answers.push(data);
-                    tinymce.activeEditor.setContent("");
-                    var timelineData = {
-                        entryType: "comment",
-                        modelId: $scope.forumPost._id,
-                        creatorType: "user",
-                        universityId: $scope.forumPost.universityId
+                    if (success) {
+                        data.votesCount = 0;
+                        data.createdAt = Math.round((new Date()).getTime() / 1000);
+                        $scope.forumPost.answers.push(data);
+                        tinymce.activeEditor.setContent("");
+                        var timelineData = {
+                            entryType: "comment",
+                            modelId: $scope.forumPost._id,
+                            creatorType: "user",
+                            universityId: $scope.forumPost.universityId
+                        }
+                        University.createForumPostTimeline(timelineData).then(function(res) {})
                     }
-                    University.createForumPostTimeline(timelineData).then(function(res) {})
-                }
-            });
-          } else {
-            console.log("write a message")
-            $scope.hasError = true;
-            $scope.errorMessage = 'COMMENT_NO_TEXT';
-          }
+                });
+            } else {
+                console.log("write a message")
+                $scope.hasError = true;
+                $scope.errorMessage = 'COMMENT_NO_TEXT';
+            }
         } else {
             ngDialog.open({ template: 'partials/modals/login.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
         }
@@ -2672,19 +2671,19 @@ angular.module('netbase')
         let errors = [];
 
         if ((data.categoryId == undefined) && (data.title == undefined || data.title.length == 0) && (data.text == undefined || data.text.length == 0)) {
-          createPost = false;
-          errors.push("CREATE_POST_EMPTY");
-        }else if ((data.title == undefined || data.title.length == 0) && (data.text == undefined || data.text.length == 0)) {
-          createPost = false;
-          errors.push("CREATE_POST_CATEGORY_ERROR");
-          errors.push("CREATE_POST_TITLE_ERROR");
-        }else if (data.categoryId == undefined) {
+            createPost = false;
+            errors.push("CREATE_POST_EMPTY");
+        } else if ((data.title == undefined || data.title.length == 0) && (data.text == undefined || data.text.length == 0)) {
             createPost = false;
             errors.push("CREATE_POST_CATEGORY_ERROR");
-        }else if (data.title == undefined || data.title.length == 0) {
+            errors.push("CREATE_POST_TITLE_ERROR");
+        } else if (data.categoryId == undefined) {
+            createPost = false;
+            errors.push("CREATE_POST_CATEGORY_ERROR");
+        } else if (data.title == undefined || data.title.length == 0) {
             createPost = false;
             errors.push("CREATE_POST_TITLE_ERROR");
-        }else if (data.text == undefined || data.text.length == 0) {
+        } else if (data.text == undefined || data.text.length == 0) {
             createPost = false;
             errors.push("CREATE_POST_TEXT_ERROR");
         }
@@ -3639,13 +3638,13 @@ angular.module('netbase')
                 if ($localStorage.token != undefined && $localStorage.token != null) {
                     University.subscribeOnUniversity(scope.university.url).then(function(res) {
 
-                        if(res.data.success) {
-                          // fetch university to update members
-                          University.getUniversityById(scope.university._id).then(function(res) {
-                            if(res.data.success) {
-                              scope.university = res.data.data
-                            }
-                          })
+                        if (res.data.success) {
+                            // fetch university to update members
+                            University.getUniversityById(scope.university._id).then(function(res) {
+                                if (res.data.success) {
+                                    scope.university = res.data.data
+                                }
+                            })
                         }
                         // if (userSubscribed(scope.university.members)) {
                         //     let studentIdMembersLocation = userMembersLocation(scope.university.members);
