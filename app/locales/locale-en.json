@@ -247,6 +247,13 @@
     "CONFIRM_NEW_PASS": "Enter and confirm your new password.",
     "TYPE_NEW_PASSWORD": "TYPE NEW PASSWORD",
     "TYPE_AND_CONFIRM_NEW_PASSWORD": "Type and confirm your new password.",
+    "NEW_PASSWORD": "New Password",
+    "CONFIRM_PASSWORD": "Confirm Password",
+    "RESET_EMPTY_ALL_FIELDS": "Please fill up all fields.",
+    "RESET_EMPTY_PASSWORD": "Please fill up password field.",
+    "RESET_EMPTY_CONFIRM_PASSWORD": "Please fill up confirm password field.",
+    "RESET_PASSWORD_LENGHT_ERROR": "Password must be more than 5 characters.",
+    "RESET_PASSWORD_NOT_MATCH": "Password not match.",
 
     "PREMIUM_MEMBER": "Premium Member",
     "ACCESS_ALL_CONTENT": "Access all content",
@@ -687,6 +694,7 @@
     "PASSWORDCONFIRMEMPTY": "Please fill up confirm password field.",
     "PASSWORDNOTMATCH": "The passwords need to be the same. Type them again.",
     "PASSWORDLESSTHANSIX": "Please, the password must be at least 6 characters long.",
+    "EMAIL_ALREADY_REGISTERED": "Email already registered.",
 
     "LOGINEMPTY": "Please, type a valid email and password.",
     "EMAILINVALIDATED": "Please, type a valid email.",
@@ -713,7 +721,7 @@
     "UNI_CREATE_URL_EXISTS": "Type a different URL for your university. The one you choose already exists.",
     "UNI_CREATE_FIELDS_EMPTY": "Write a name for your educational community., Write a URL for your educational community.",
 
-    "DOMAIN_PLACEHOLDER": "colle.de",
+    "DOMAIN_PLACEHOLDER": "colle.ge",
 
     "TIMELINE_EMPTY_TITLE": "Expanding Your Reach!",
     "TIMELINE_EMPTY_SUBTITLE": "Big Collection of educational stuff for both students and teachers. Be the first to crate the post.",
@@ -735,5 +743,13 @@
     "CREATE_POST_TITLE_ERROR": "Write a title for the post.",
     "CREATE_POST_TEXT_ERROR": "Write a text at the post.",
 
-    "CATEGORIES": "Categories"
+    "CATEGORIES": "Categories",
+
+    "INPUT_LENGTH_ERROR": "Maximum characters reached.",
+
+    "UPLOAD_VIDEO_IN_PROGRESS": "Upload video in progress...",
+    "VIDEO_UPLOAD_MUST_BE_COMPLETE": "The video upload must be complete.",
+    "WRITE_VIDEO_TITLE_ERROR": "Write a title for the video.",
+    "WRITE_VIDEO_DESC_ERROR": "Write a description for the video.",
+    "WRITE_VIDEO_UNI_ERROR": "The video must be created inside a university page."
 }

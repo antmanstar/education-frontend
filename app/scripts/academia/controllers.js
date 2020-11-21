@@ -82,9 +82,7 @@ angular.module('netbase')
         $scope.university = res.data.data;
         Courses.getByUniversityId($scope.university._id).success(function(res) {
             if (res.success) {
-                console.log(res.data)
                 $scope.courses = res.data;
-
             }
         });
     });
@@ -927,10 +925,8 @@ angular.module('netbase')
                 let k;
                 for (k = 0; k < titleDom[0].childElementCount; k++) {
                     if (titleDom[0].children[k].tagName == 'VIDEO') {
-
                         titleDom[0].children[k].style.width = "100%";
                         titleDom[0].children[k].style.height = "100%";
-
                     }
                 }
 
@@ -2353,6 +2349,13 @@ angular.module('netbase')
     $scope.createCategory = function() {
         let date = new Date().getTime().toString();
 
+        console.log($scope.title)
+
+        if ($scope.title == "" || $scope.title == undefined) {
+            alert("category title is empty");
+            return;
+        }
+
         let data = {
             title: $scope.title,
             description: $scope.description,
@@ -2595,6 +2598,7 @@ angular.module('netbase')
 .controller('AcademiaForumPostCreateCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'ngDialog', 'Forum', 'Courses', '$localStorage', function($rootScope, $scope, $location, $route, University, ngDialog, Forum, Courses, $localStorage) {
     let universityUrl = $route.current.params.academiaName;
     let university;
+    $scope.inputLengthWarningShow = false;
 
     $scope.tinymceOptions = {
         file_picker_types: 'file image media',
@@ -2614,6 +2618,14 @@ angular.module('netbase')
         $scope.categoryForum = { _id: $location.search().categoryId };
     } else {
         $scope.categoryForum = { _id: undefined };
+    }
+
+    $scope.titleCounter = function() {
+      if($scope.title.length >= 50) {
+        $scope.inputLengthWarningShow = true;
+      }else {
+        $scope.inputLengthWarningShow = false;
+      }
     }
 
 
@@ -2844,6 +2856,7 @@ angular.module('netbase')
             }
 
             attr.$observe('university', function(value) {
+                if (value == '') return;
                 university = JSON.parse(value);
 
                 // Handle Subscribe Functionality
@@ -2988,6 +3001,7 @@ angular.module('netbase')
             })
 
             attr.$observe('university', function(value) {
+                if (value == '') return;
                 scope.university = JSON.parse(value);
                 Forum.getCategoriesByUniversityId(scope.university._id).success(function(resCategory) {
                     if (resCategory.success) {
@@ -3512,6 +3526,7 @@ angular.module('netbase')
             }
 
             attr.$observe('university', function(value) {
+                if (value == '') return;
                 scope.university = JSON.parse(value);
 
                 Forum.getCategoriesByUniversityId(scope.university._id).success(function(resCategory) {

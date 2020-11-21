@@ -10,29 +10,29 @@
             font-weight: bold;
             padding-left: 0px;
         }
-
+        
         .section-menu .section-menu-title {
             padding-left: 0px;
         }
-
+        
         .members-list {
             line-height: 35px;
         }
-
+        
         .split-line {
             background-color: #cacaca;
             height: 1px;
             margin-top: 5px;
             margin-bottom: 5px;
         }
-
+        
         .subscribe-btn {
             float: right;
             margin-top: 2px;
             height: 29px;
             width: unset;
         }
-
+        
         .category-header {
             margin-top: 5px;
             display: flex;
@@ -41,19 +41,19 @@
             align-items: center;
             margin-bottom: 5px;
         }
-
+        
         .category-header .title {
             font-size: 22px;
             font-weight: 600;
         }
-
+        
         .category-caret {
             padding-right: 15px;
             color: #4986bf;
             font-size: 0.85em;
             width: 25px;
         }
-
+        
         .category-add-btn {
             background-color: dodgerblue;
             border-radius: 50%;
@@ -65,22 +65,22 @@
             color: white;
             font-size: 16px;
         }
-
+        
         .category-list-wrapper {
             display: flex;
             flex-direction: column;
         }
-
+        
         .category-list {
             margin-left: 10px;
             padding-left: 20px;
             margin-top: 16px;
         }
-
+        
         .category-list:hover {
             background-color: darkturquoise;
         }
-
+        
         .category {
             margin-top: 5px;
             margin-bottom: 5px;
@@ -89,11 +89,15 @@
             text-align: center;
             text-decoration: none !important;
         }
-
-        [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
-          display: none !important;
+        
+        [ng\:cloak],
+        [ng-cloak],
+        [data-ng-cloak],
+        [x-ng-cloak],
+        .ng-cloak,
+        .x-ng-cloak {
+            display: none !important;
         }
-
     </style>
 
     <div class="section-menu">
@@ -124,16 +128,15 @@
                 <a href="{{university ? ('/a/'+university.url+'/cursos') : '#'}}"><img src="https://visualpharm.com/assets/311/Graduation%20Cap-595b40b65ba036ed117d2d97.svg" style="margin-right: 14px;" height="20px" width="20px" />{{'COURSES' | translate}}</a>
             </div>
             <div class="option" style="padding-left: 0px;">
-              <a href="{{university ? ('/a/'+university.url+'/classroom') : '#'}}"><i class='fas fa-chalkboard-teacher' style='padding-right:15px;color: #4986bf; font-size: 0.85em;'></i>{{'CLASSROOM' | translate}}</a>
+                <a href="{{university ? ('/a/'+university.url+'/classroom') : '#'}}"><i class='fas fa-chalkboard-teacher' style='padding-right:15px;color: #4986bf; font-size: 0.85em;'></i>{{'CLASSROOM' | translate}}</a>
             </div>
             <div class="option" style="padding-left: 0px;">
                 <a href="{{university ? ('/a/'+university.url+'/forum/category/all') : '#'}}"><img src="https://visualpharm.com/assets/811/Discussion%20Forum-595b40b65ba036ed117d396c.svg" style="margin-right: 14px;" height="20px" width="20px" />{{'FORUM' | translate}}</a>
             </div>
             <div class="option" style="padding-left: 0px;" ng-if="studentIsAdmin">
-              <a href="{{university ? '/dashboard/a/manage/id/'+university._id : '#'}}">
-                <i class='fas fa-tachometer-alt' style='padding-right:15px;color: #4986bf; font-size: 0.85em;'></i>
-                {{'DASHBOARD' | translate}}
-              </a>
+                <a href="{{university ? '/dashboard/a/manage/id/'+university._id : '#'}}">
+                    <i class='fas fa-tachometer-alt' style='padding-right:15px;color: #4986bf; font-size: 0.85em;'></i> {{'DASHBOARD' | translate}}
+                </a>
             </div>
             <div class="split-line"></div>
             <div class="category-list-wrapper">

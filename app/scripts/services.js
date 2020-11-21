@@ -625,8 +625,6 @@ angular.module('netbase')
         getAllClassroomsByUniversity: function(url) {
 
             let token = $localStorage.token;
-            console.log('loacl storage token');
-            console.log(token);
             return $http.get(url + "?token=" + token);
         },
 

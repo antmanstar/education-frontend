@@ -9,6 +9,9 @@
     var progressCloud = 0;
     var progressPercent = 0;
 
+    $("#upload_btn").click(() => {
+        siofu = new SocketIOFileUpload(socket);
+    });
     document.getElementById("upload_btn").addEventListener("click", siofu.prompt, false);
 
     // Do something on upload progress:
@@ -29,8 +32,6 @@
     });
 
     socket.on("status", function(a) {
-        console.log("status: ")
-        console.log(a)
         if (a == 1) {}
         if (a == 2) {
             $("#file_drop").html("<b>Upload completo!</b>");
@@ -47,11 +48,20 @@
         $("#gif").hide();
     });
 
+    // Avatar image validation
+    siofu.addEventListener("choose", event => {
+        var fileExtension = ['jpeg', 'jpg', 'png', 'gif', 'bmp'];
+
+        if ($.inArray(event.files[0].name.split('.').pop().toLowerCase(), fileExtension) == -1) {
+            alert("Please upload right image file");
+            return false;
+        }
+    })
+
     socket.on("imagepath", function(a) {
-            $("#file").attr("value", a);
-            $(".profile-pic").attr("src", a);
-        })
-        // });
+        $("#file").attr("value", a);
+        $(".profile-pic").attr("src", a);
+    })
 </script>
 
 <style>
