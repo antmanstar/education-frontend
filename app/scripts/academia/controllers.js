@@ -82,9 +82,7 @@ angular.module('netbase')
         $scope.university = res.data.data;
         Courses.getByUniversityId($scope.university._id).success(function(res) {
             if (res.success) {
-                console.log(res.data)
                 $scope.courses = res.data;
-
             }
         });
     });
@@ -927,10 +925,8 @@ angular.module('netbase')
                 let k;
                 for (k = 0; k < titleDom[0].childElementCount; k++) {
                     if (titleDom[0].children[k].tagName == 'VIDEO') {
-
                         titleDom[0].children[k].style.width = "100%";
                         titleDom[0].children[k].style.height = "100%";
-
                     }
                 }
 
@@ -3512,6 +3508,7 @@ angular.module('netbase')
             }
 
             attr.$observe('university', function(value) {
+                if (value == '') return;
                 scope.university = JSON.parse(value);
 
                 Forum.getCategoriesByUniversityId(scope.university._id).success(function(resCategory) {

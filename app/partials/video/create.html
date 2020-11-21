@@ -6,13 +6,14 @@
     var socket = io.connect("https://educationalcommunity-videouplo.herokuapp.com/");
     var siofu = new SocketIOFileUpload(socket);
 
-    // let filesCount = 0;
-    // let progressCloud = 0;
-    // var progressPercent = 0;
+    var filesCount = 0;
+    var progressCloud = 0;
+    var progressPercent = 0;
 
     $("#btn_hide").hide();
 
     siofu.listenOnDrop(document.getElementById("file_drop"));
+    document.getElementById("file_drop").addEventListener("click", siofu.prompt, false);
 
     // Do something on upload progress:
     siofu.addEventListener("progress", function(event) {
@@ -27,14 +28,8 @@
     });
 
     socket.on("progressCloud", function(a) {
-        // console.log("cloud progress: ")
-        // console.log(a)
         progressCloud = progressCloud + 1;
         progressPercent = (progressCloud / filesCount) * 100;
-
-        // console.log("process cloud is: " + progressCloud)
-        // console.log("process percent is: " + progressPercent)
-
         $("#file_drop").html("<b>Salvando o vídeo:</b> " + progressPercent.toFixed(2) + "%");
     });
 
@@ -44,8 +39,6 @@
     });
 
     socket.on("status", function(a) {
-        // console.log("status: ")
-        // console.log(a)
         if (a == 1) {}
         if (a == 2) {
             $("#file_drop").html("<b>O vídeo foi salvo no servidor! Estamos processando o vídeo na melhor qualidade possível.</b>");
@@ -55,44 +48,37 @@
     });
 
     socket.on("files", function(a) {
-        // console.log("files: ")
-        // console.log(a)
         filesCount = a;
     });
 
     // Do something when a file is uploaded:
-    siofu.addEventListener("complete", function(event) {
-        // console.log("A1", event.success);
-        // console.log("A2", event.file);
-        // console.log("A3", event)
-    });
+    siofu.addEventListener("complete", function(event) {});
 
     socket.on("videopath", function(a) {
         $("#file").attr("value", a);
-        console.log(a)
     })
 </script>
 
 <div class="container-fluid container-full">
-
     <div class="row">
 
-      <div academiarightcolumn university="{{university}}"></div>
+        <div academiarightcolumn university="{{university}}"></div>
 
-      <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 academia-content">
-          <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
-          <div class="row academia-coverimage" ng-if="university.backgroundImage == undefined" style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 academia-content">
+            <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
+            <div class="row academia-coverimage" ng-if="university.backgroundImage == undefined" style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
 
-          <div style="height: 30px"></div>
+            <div style="height: 30px"></div>
 
-          <div academiastatus university="{{university}}"></div>
+            <div academiastatus university="{{university}}"></div>
 
 
             <div style="font-size: 2em; padding-bottom: 30px;">{{'CREATE_VIDEO' | translate}}</div>
 
 
             <div class="alert bg-primary-red" ng-show="errorDisplay">
-                <p ng-repeat="m in errorMessages">{{m}}<p>
+                <p ng-repeat="m in errorMessages">{{m}}
+                    <p>
             </div>
 
             <div ng-show="loading" style="width: 100%; text-align: center; padding-top: 30px; padding-bottom: 30px;">
@@ -103,7 +89,7 @@
 
             <div>
                 <input type="hidden" id="file" ng-model="file">
-                <div id="file_drop" dropzone="copy" title="drop files for upload" class="file-drop-area"><b>{{'START_UPLOAD' | translate}}</b> {{'DRAG_VIDEO_FILE_HERE' | translate}}</div>
+                <div id="file_drop" dropzone="copy" title="drop files or click for upload" class="file-drop-area"><b>{{'START_UPLOAD' | translate}}</b> {{'DRAG_VIDEO_FILE_HERE' | translate}}</div>
                 <!-- end file-drop-area -->
             </div>
             <!-- end file -->
@@ -168,10 +154,10 @@
             <button id="btn_hide" ng-click="createVideo()" class="btn btn-green">{{'CREATE' | translate}}</button>
 
 
-    </div>
-    <!-- end row -->
-    <!-- end row -->
-    <categorychat university={{university}} />
-    <footermobile></footermobile>
+        </div>
+        <!-- end row -->
+        <!-- end row -->
+        <categorychat university={{university}} />
+        <footermobile></footermobile>
 
-</div>
+    </div>

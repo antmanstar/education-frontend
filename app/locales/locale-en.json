@@ -512,7 +512,7 @@
     "UPLOAD": "Upload",
     "START_UPLOAD": "To start the upload,",
     "DRAG_FILE_HERE": "drag the file here",
-    "DRAG_VIDEO_FILE_HERE": "drag the video file here",
+    "DRAG_VIDEO_FILE_HERE": "drag the video file or click here",
     "VIDEO_DESCRIPTION": "Video description",
     "VIDEO_PLAYLIST": "Video Playlist",
     "START_VIDEO_PROCESSING": "Starting video processing",
