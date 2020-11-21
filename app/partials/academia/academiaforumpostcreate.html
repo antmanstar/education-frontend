@@ -47,7 +47,8 @@
 
             <div class="academia-content-forum-answer">
 
-                <input class="academia-content-forum-post-create-title" placeholder="{{'TYPE_POST_TITLE' | translate}}" ng-model="title"></input>
+                <span ng-if="inputLengthWarningShow" style="color: #721c24;">{{'INPUT_LENGTH_ERROR' | translate}}</span>
+                <input class="academia-content-forum-post-create-title" ng-change="titleCounter()" maxlength="50" placeholder="{{'TYPE_POST_TITLE' | translate}}" ng-model="title"></input>
 
                 <textarea ui-tinymce="tinymceOptions" ng-model="text"></textarea>
                 <div class="academia-content-forum-post-create-premium">

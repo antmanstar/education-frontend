@@ -3,6 +3,22 @@
 <script type="text/javascript">
     // Initialize instances:
 
+    let url = window.location.href;
+    
+    let UPLOAD_VIDEO_IN_PROGRESS = "";
+    let STARTING_VIDEO_PROCESSING = "";
+    let VIDEO_SAVED_MESSAGE = "";
+
+    if (url.indexOf('universida.de') > 0) {
+      UPLOAD_VIDEO_IN_PROGRESS = "Carregar vídeo em andamento...";
+      STARTING_VIDEO_PROCESSING = "<b>Iniciando o processamento do vídeo</b>"
+      VIDEO_SAVED_MESSAGE = "<b>O vídeo foi salvo no servidor! Estamos processando o vídeo na melhor qualidade possível.</b>"
+    } else {
+      UPLOAD_VIDEO_IN_PROGRESS = "Upload video in progress...";
+      STARTING_VIDEO_PROCESSING = "<b>Starting video processing</b>"
+      VIDEO_SAVED_MESSAGE = "<b>The video was saved on the server! We are processing the video in the best possible quality.</b>"
+    }
+
     var socket = io.connect("https://educationalcommunity-videouplo.herokuapp.com/");
     var siofu = new SocketIOFileUpload(socket);
 
@@ -18,12 +34,11 @@
     // Do something on upload progress:
     siofu.addEventListener("progress", function(event) {
         var percent = event.bytesLoaded / event.file.size * 100;
-        console.log("File is", percent.toFixed(2), "percent loaded");
-
+        $("#btn_show").text(UPLOAD_VIDEO_IN_PROGRESS);
         $("#file_drop").html("Upload: " + percent.toFixed(2) + "%");
 
         if (percent.toFixed(2) == 100) {
-            $("#file_drop").html("<b>Iniciando o processamento do vídeo</b>");
+            $("#file_drop").html(STARTING_VIDEO_PROCESSING);
         }
     });
 
@@ -41,7 +56,7 @@
     socket.on("status", function(a) {
         if (a == 1) {}
         if (a == 2) {
-            $("#file_drop").html("<b>O vídeo foi salvo no servidor! Estamos processando o vídeo na melhor qualidade possível.</b>");
+            $("#file_drop").html(VIDEO_SAVED_MESSAGE);
             $("#btn_hide").show();
             $("#btn_show").hide();
         }
@@ -77,8 +92,7 @@
 
 
             <div class="alert bg-primary-red" ng-show="errorDisplay">
-                <p ng-repeat="m in errorMessages">{{m}}
-                    <p>
+                <p ng-repeat="m in errorMessages">{{m | translate}}<p>
             </div>
 
             <div ng-show="loading" style="width: 100%; text-align: center; padding-top: 30px; padding-bottom: 30px;">
@@ -150,7 +164,7 @@
 
             </div>
             <!-- academia-content-forum-answer -->
-            <button id="btn_show" ng-click="videoUploadAttension()" class="btn btn-green">{{'CREATE' | translate}}</button>
+            <button id="btn_show" ng-click="videoUploadAttension()" class="btn btn-green trn">{{'CREATE' | translate}}</button>
             <button id="btn_hide" ng-click="createVideo()" class="btn btn-green">{{'CREATE' | translate}}</button>
 
 

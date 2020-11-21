@@ -218,22 +218,22 @@ angular.module('netbase')
         };
 
         if (payload.file == undefined) {
-            $scope.errorMessages.push("O upload do vídeo precisa estar completo.");
+            $scope.errorMessages.push("VIDEO_UPLOAD_MUST_BE_COMPLETE");
             upload = false;
         }
 
         if (payload.title == undefined || payload.title.length == 0) {
-            $scope.errorMessages.push("Escreva um título para o vídeo.");
+            $scope.errorMessages.push("WRITE_VIDEO_TITLE_ERROR");
             upload = false;
         }
 
         if (payload.description == undefined || payload.description.length == 0) {
-            $scope.errorMessages.push("Escreva uma descricao para o vídeo.");
+            $scope.errorMessages.push("WRITE_VIDEO_DESC_ERROR");
             upload = false;
         }
 
         if (payload.universityId == undefined || payload.universityId.length == 0) {
-            $scope.errorMessages.push("O video deve ser criado dentro da página de uma universidade.");
+            $scope.errorMessages.push("WRITE_VIDEO_UNI_ERROR");
             upload = false;
         }
 

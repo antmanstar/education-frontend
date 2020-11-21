@@ -2598,6 +2598,7 @@ angular.module('netbase')
 .controller('AcademiaForumPostCreateCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'ngDialog', 'Forum', 'Courses', '$localStorage', function($rootScope, $scope, $location, $route, University, ngDialog, Forum, Courses, $localStorage) {
     let universityUrl = $route.current.params.academiaName;
     let university;
+    $scope.inputLengthWarningShow = false;
 
     $scope.tinymceOptions = {
         file_picker_types: 'file image media',
@@ -2617,6 +2618,14 @@ angular.module('netbase')
         $scope.categoryForum = { _id: $location.search().categoryId };
     } else {
         $scope.categoryForum = { _id: undefined };
+    }
+
+    $scope.titleCounter = function() {
+      if($scope.title.length >= 50) {
+        $scope.inputLengthWarningShow = true;
+      }else {
+        $scope.inputLengthWarningShow = false;
+      }
     }
 
 

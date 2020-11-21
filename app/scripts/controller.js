@@ -3576,7 +3576,7 @@ angular.module('netbase')
                     let statusCode = res.data.status;
                     if (statusCode == 5002) {
                         $scope.createMessageBox = true;
-                        $scope.createMessage = "Email já cadastrado.";
+                        $scope.createMessage = "EMAIL_ALREADY_REGISTERED";
                     } else if (statusCode == 5003) {
                         $scope.createMessageBox = true;
                         $scope.createMessage = "xxx.";
@@ -4015,7 +4015,7 @@ angular.module('netbase')
     }
 }])
 
-.controller('HomeUniversidadesCtrl', ['$rootScope', '$scope', '$location', 'University', 'Knowledge', function($rootScope, $scope, $location, University, Knowledge) {
+.controller('HomeUniversidadesCtrl', ['$rootScope', '$scope', '$location', 'University', 'Knowledge', '$window', function($rootScope, $scope, $location, University, Knowledge, $window) {
     Knowledge.getAllPaginated().success(function(res) {
         let success = res.success;
         let data = res.data;
@@ -4026,6 +4026,10 @@ angular.module('netbase')
     University.getUniversities().then(function(res) {
         $scope.universities = res.data.data;
     });
+
+    $scope.downloadVRAndroid = function() {
+        $window.open('https://play.google.com/store/apps/details?id=com.AnduraStudio.SalaDeAula', '_blank');
+    }
 }])
 
 .controller('HomeJobsCategoryCtrl', ['$rootScope', '$scope', '$location', 'ngDialog', function($rootScope, $scope, $location, ngDialog) {
@@ -4040,6 +4044,8 @@ angular.module('netbase')
     let email = $location.search().email;
     let tokenTwo;
     $scope.flowSuccess = false;
+    $scope.validationError = false;
+    $scope.validationMessage = "";
 
     if (tokenOne != undefined && email != undefined) {
         let payload = { tokenOne: tokenOne, email: email, type: "student" };
@@ -4053,6 +4059,30 @@ angular.module('netbase')
     } else {}
 
     $scope.stepThree = function() {
+        $scope.validationError = false;
+        // validate passwords
+        if (($scope.password == undefined || $scope.password == '') && ($scope.confirm_password == undefined || $scope.confirm_password == '')){
+          $scope.validationError = true;
+          $scope.validationMessage = "RESET_EMPTY_ALL_FIELDS";
+          return
+        } else if ($scope.password == undefined || $scope.password == '') {
+          $scope.validationError = true;
+          $scope.validationMessage = "RESET_EMPTY_PASSWORD";
+          return
+        } else if ($scope.confirm_password == undefined || $scope.confirm_password == '') {
+          $scope.validationError = true;
+          $scope.validationMessage = "RESET_EMPTY_CONFIRM_PASSWORD";
+          return
+        } else if ($scope.password.length < 6) {
+          $scope.validationError = true;
+          $scope.validationMessage = "RESET_PASSWORD_LENGHT_ERROR";
+          return
+        } else if ($scope.password != $scope.confirm_password) {
+          $scope.validationError = true;
+          $scope.validationMessage = "RESET_PASSWORD_NOT_MATCH";
+          return
+        }
+
         let payload = {
             newpassword: $scope.password,
             tokenTwo: tokenTwo,

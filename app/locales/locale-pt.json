@@ -248,6 +248,13 @@
     "CONFIRM_NEW_PASS": "Digite e confirme a sua nova senha.",
     "TYPE_NEW_PASSWORD": "DIGITE NOVA SENHA",
     "TYPE_AND_CONFIRM_NEW_PASSWORD": "Digite e confirme sua nova senha.",
+    "NEW_PASSWORD": "Nova senha",
+    "CONFIRM_PASSWORD": "Confirmar senha",
+    "RESET_EMPTY_ALL_FIELDS": "Por favor, preencha todos os campos.",
+    "RESET_EMPTY_PASSWORD": "Favor preencher o campo de senha.",
+    "RESET_EMPTY_CONFIRM_PASSWORD": "Favor preencher o campo de confirmação de senha.",
+    "RESET_PASSWORD_LENGHT_ERROR": "A senha deve ter mais de 5 caracteres.",
+    "RESET_PASSWORD_NOT_MATCH": "A senha não corresponde.",
 
     "PREMIUM_MEMBER": "Membro Premium",
     "ACCESS_ALL_CONTENT": "Acesse todo o conteúdo",
@@ -513,7 +520,7 @@
     "UPLOAD": "Upload",
     "START_UPLOAD": "Para iniciar o upload,",
     "DRAG_FILE_HERE": "arraste o arquivo aqui",
-    "DRAG_VIDEO_FILE_HERE": "arraste o arquivo de vídeo ou clique aqui",
+    "DRAG_VIDEO_FILE_HERE": "arraste o arquivo do vídeo aqui",
     "VIDEO_DESCRIPTION": "Descrição do Video",
     "VIDEO_PLAYLIST": "Playlist do video",
     "START_VIDEO_PROCESSING": "Iniciando o processamento do vídeo",
@@ -687,6 +694,7 @@
     "PASSWORDCONFIRMEMPTY": "Favor preencher o campo de confirmação de senha.",
     "PASSWORDNOTMATCH": "As senhas precisam ser iguais. Digite novamente.",
     "PASSWORDLESSTHANSIX": "Por favor, a senha deve ter no mínimo 6 caracteres.",
+    "EMAIL_ALREADY_REGISTERED": "Email já cadastrado.",
 
     "LOGINEMPTY": "Por favor, digite um e-mail e uma senha válidos.",
     "EMAILINVALIDATED": "Por favor, digite um e-mail válido.",
@@ -735,5 +743,13 @@
     "CREATE_POST_TITLE_ERROR": "Escreva um título para a postagem",
     "CREATE_POST_TEXT_ERROR": "Escreva um texto na postagem",
 
-    "CATEGORIES": "Categorias"
+    "CATEGORIES": "Categorias",
+
+    "INPUT_LENGTH_ERROR": "Máximo de caracteres alcançado.",
+
+    "UPLOAD_VIDEO_IN_PROGRESS": "Carregar vídeo em andamento...",
+    "VIDEO_UPLOAD_MUST_BE_COMPLETE": "O upload do vídeo precisa estar completo.",
+    "WRITE_VIDEO_TITLE_ERROR": "Escreva um título para o vídeo.",
+    "WRITE_VIDEO_DESC_ERROR": "Escreva uma descricao para o vídeo.",
+    "WRITE_VIDEO_UNI_ERROR": "O video deve ser criado dentro da página de uma universidade."
 }
