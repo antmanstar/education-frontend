@@ -96,7 +96,7 @@
                 <img src="/img/loader.gif" height="50px" />
             </div>
             <div ng-repeat="activity in activities | orderBy: '-createdAt'" ng-if="user.universitiesSubscribed.length > 0">
-                <timelinenewforumpost reshare="{{activity.rePost}}" like="{{activity.like}}" comments="{{activity.comments}}" cid="{{activity.modelId}}" aid="{{activity.creatorId}}" uid="{{activity.universityId}}"></timelinenewforumpost>
+                <timelinenewforumpost reshare="{{activity.rePost}}" ng-hide="activity.entryType=='comment'" like="{{activity.like}}" comments="{{activity.comments}}" cid="{{activity.modelId}}" aid="{{activity.creatorId}}" uid="{{activity.universityId}}"></timelinenewforumpost>
             </div>
 
             <div ng-if="user.universitiesSubscribed.length > 0" infinite-scroll='nextPage()' infinite-scroll-disabled='busy' infinite-scroll-distance='1'>

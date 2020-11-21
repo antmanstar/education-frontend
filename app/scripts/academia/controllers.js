@@ -2349,6 +2349,13 @@ angular.module('netbase')
     $scope.createCategory = function() {
         let date = new Date().getTime().toString();
 
+        console.log($scope.title)
+
+        if ($scope.title == "" || $scope.title == undefined) {
+            alert("category title is empty");
+            return;
+        }
+
         let data = {
             title: $scope.title,
             description: $scope.description,
@@ -2840,6 +2847,7 @@ angular.module('netbase')
             }
 
             attr.$observe('university', function(value) {
+                if (value == '') return;
                 university = JSON.parse(value);
 
                 // Handle Subscribe Functionality
@@ -2984,6 +2992,7 @@ angular.module('netbase')
             })
 
             attr.$observe('university', function(value) {
+                if (value == '') return;
                 scope.university = JSON.parse(value);
                 Forum.getCategoriesByUniversityId(scope.university._id).success(function(resCategory) {
                     if (resCategory.success) {

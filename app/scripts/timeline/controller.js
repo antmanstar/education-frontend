@@ -109,8 +109,6 @@ angular.module('netbase')
                     }
 
                     let url = "https://universida.de/a/" + scope.university.url + "/forum/post/id/"
-
-
                 });
 
                 /* get account id */
@@ -161,32 +159,32 @@ angular.module('netbase')
 
                 if ($localStorage.token != undefined || $localStorage.token != null) {
 
-                  if (answer) {
-                    Forum.postAnswerByForumPostId(contentId, data).then(function(res) {
+                    if (answer) {
+                        Forum.postAnswerByForumPostId(contentId, data).then(function(res) {
 
-                        let status = res.data.status;
-                        let data = res.data.data;
-                        let success = res.data.success;
+                            let status = res.data.status;
+                            let data = res.data.data;
+                            let success = res.data.success;
 
-                        if (success) {
-                            scope.commentSection = !scope.commentSection;
+                            if (success) {
+                                scope.commentSection = !scope.commentSection;
 
-                            data.votesCount = 0;
-                            data.createdAt = Math.round((new Date()).getTime() / 1000);
-                            scope.forumPost.answers.push(data);
-                            var timelineData = {
-                                entryType: "comment",
-                                modelId: contentId,
-                                universityId: universityId
+                                data.votesCount = 0;
+                                data.createdAt = Math.round((new Date()).getTime() / 1000);
+                                scope.forumPost.answers.push(data);
+                                var timelineData = {
+                                    entryType: "comment",
+                                    modelId: contentId,
+                                    universityId: universityId
+                                }
+                                University.createForumPostTimeline(timelineData).then(function(res) {})
                             }
-                            University.createForumPostTimeline(timelineData).then(function(res) {})
-                        }
 
-                    });
-                  } else {
-                    scope.hasError = true;
-                    scope.errorMessage = 'COMMENT_NO_TEXT';
-                  }
+                        });
+                    } else {
+                        scope.hasError = true;
+                        scope.errorMessage = 'COMMENT_NO_TEXT';
+                    }
                 } else {
                     ngDialog.open({ template: 'partials/modals/login.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
                 }
