@@ -50,6 +50,8 @@ angular.module('netbase', [
       $translateProvider.preferredLanguage('en');
     }
 
+    $translateProvider.useSanitizeValueStrategy('escape')
+
     //$translateProvider.preferredLanguage('pt');
     //$translateProvider.uniformLanguageTag('bcp47').determinePreferredLanguage();
     //console.log("PREFERRED LANGUAGE: ", $translateProvider.uniformLanguageTag('bcp47').determinePreferredLanguage())
@@ -588,10 +590,16 @@ angular.module('netbase', [
     //let url = "https://universida.de/home/explore"
     if (url.indexOf('colle.ge') > 0) {
       amMoment.changeLocale('en');
+      $localStorage.company_logo = "img/college_logo.png";
+      $localStorage.user_language = "EN";
     } else if (url.indexOf('universida.de') > 0) {
       amMoment.changeLocale('pt-br');
+      $localStorage.company_logo = "img/universidade_logo.png"
+      $localStorage.user_language = "PT";
     } else {
       amMoment.changeLocale('en');
+      $localStorage.company_logo = "img/college_logo.png"
+      $localStorage.user_language = "EN";
     }
 
     $rootScope.logged = $localStorage.logged;

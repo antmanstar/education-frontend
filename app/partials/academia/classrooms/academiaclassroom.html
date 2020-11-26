@@ -11,12 +11,12 @@
     <div class="meeting-display-container">
         <div ng-class='mobileToggleParticipantsList' class="fixed-position classroom-participants-initial classroom-participants-container col-xs-7 col-sm-3 col-md-2 col-lg-2">
             <button class="participant-close-btn" ng-click="toggleParticipantsBox()"><i class="fas fa-times"></i></button>
-            <div class='classroom-students-title'>Administrators</div>
+            <div class='classroom-students-title'>{{'ADMINISTRATORS' | translate}}</div>
             <div ng-repeat="admin in administrator" class='classroom-administrator-container'>
                 <img ng-class="adminActive" ng-if="admin.imageUrl != undefined" src="{{admin.imageUrl}}" alt="HN" title="User Avatar" class="ava1">
                 <img ng-class="adminActive" ng-if="admin.imageUrl == undefined" style="background-image: url('http://virtual-strategy.com/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png')" alt="HN" title="User Avatar" class="ava1">                {{admin.username}}
             </div>
-            <div class='classroom-students-title top-margin-20'>Participants</div>
+            <div class='classroom-students-title top-margin-20'>{{'PARTICIPANTS' | translate}}</div>
             <div ng-model='showingParticipants' data-ng-repeat="part in showingParticipants" class='classroom-administrator-container'>
                 <img ng-class="adminActive" ng-if="part.imageUrl != undefined" src="{{part.imageUrl}}" alt="HN" title="User Avatar" class="ava1">
                 <img ng-class="adminActive" ng-if="part.imageUrl == undefined" style="background-image: url('http://virtual-strategy.com/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png')" alt="HN" title="User Avatar" class="ava1">                {{part.username}}
@@ -31,7 +31,7 @@
                     <i class="fas fa-bars"></i>
                 </div>
                 <div class="calssroom-logo">
-                    <div style="font-size: 25px;">Universidade</div>
+                    <div style="font-size: 25px;">{{'PAGETITLE' | translate}}</div>
                 </div>
                 <div id="msg_menu_ctrl" ng-click="toggleChatBox()" class="screen-controller chat-menu-icon">
                     <i class="far fa-comment-alt"></i>
@@ -51,7 +51,7 @@
                             </i>
                         </div>
                     </div>
-                    <div class='func-name' style=" white-space: pre;">{{videoStatus}}</div>
+                    <div class='func-name' style=" white-space: pre;">{{videoStatus | translate}}</div>
                 </div>
                 <div ng-click="toggleVoice()" class="screen-controller">
                     <div class="icon-container-bottom">
@@ -59,7 +59,7 @@
                             <i ng-class="voiceToggle"></i>
                         </div>
                     </div>
-                    <div class='func-name'>{{voiceStatus}}</div>
+                    <div class='func-name'>{{voiceStatus | translate}}</div>
                 </div>
                 <div ng-click="copyLink()" ng-class="mobileVisibleToggle" class="screen-controller">
                     <div class="icon-container-bottom">
@@ -67,7 +67,7 @@
                             <i class="fa fa-link"></i>
                         </div>
                     </div>
-                    <div class='func-name'>Copy&nbsp;Link</div>
+                    <div class='func-name'>{{'COPY_LINK' | translate}}</div>
                 </div>
                 <div ng-click="recordVideo()" class="screen-controller">
                     <div class="icon-container-bottom">
@@ -75,7 +75,7 @@
                             <i ng-class="recordToggle"></i>
                         </div>
                     </div>
-                    <div class='func-name'>{{recordToggleCaption}}</div>
+                    <div class='func-name'>{{recordToggleCaption | translate}}</div>
                 </div>
 
                 <div ng-click="shareScreen()" ng-class="shareScreenCaption" class="screen-controller mobile-invisible">
@@ -94,7 +94,7 @@
                         </div>
 
                     </div>
-                    <div class='func-name'>Full&nbsp;Screen</div>
+                    <div class='func-name'>{{'FULL_SCREEN' | translate}}</div>
                 </div>
 
                 <div ng-click="returnBack()" class="screen-controller">
@@ -103,7 +103,7 @@
                             <i class="fas fa-phone-slash call-end-icon"></i>
                         </div>
                     </div>
-                    <div class='func-name'>Leave&nbsp;Meeting</div>
+                    <div class='func-name'>{{'LEAVE_MEETING' | translate}}</div>
                 </div>
                 <div ng-click="toggleAllControllers()" class="screen-controller mobile-visible">
                     <div class="icon-container-bottom">

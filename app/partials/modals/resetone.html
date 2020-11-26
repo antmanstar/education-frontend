@@ -7,6 +7,7 @@
       <div class="headline-sub-one">{{'RESET_PASS' | translate}}</div>
 
       <div ng-show="resetPasswordSuccess" style="margin-top: 25px;" class="alert bg-primary-green">{{'RESET_PASS_MESSAGE' | translate}}</div>
+      <div class="alert bg-primary-red" ng-if="resetError">{{resetErrorMessage | translate}}</div>
 
       <div class="form" ng-hide="resetPasswordSuccess">
 

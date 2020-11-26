@@ -1,7 +1,7 @@
 <div ng-include="'partials/headerhome.html'"></div>
 
-<update-title title="{{forumPost.title}} | {{university.name}} | Universidade"></update-title>
-<update-meta property="og:title" content="{{forumPost.title}} em {{university.name}} | Universidade"></update-meta>
+<update-title title="{{forumPost.title}} | {{university.name}} | {{'PAGETITLE' | translate}}"></update-title>
+<update-meta property="og:title" content="{{forumPost.title}} em {{university.name}} | {{'PAGETITLE' | translate}}"></update-meta>
 <update-meta property="og:url" content="https://universida.de/a/{{university.url}}/forum/post/id/{{forumPost._id}}">
 </update-meta>
 <meta property="og:description" content="{{university.name}} ensina, debate e compartilhar conhecimento na plataforma Universidade." />
