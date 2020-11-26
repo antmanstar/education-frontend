@@ -37,8 +37,11 @@
 
                 <div ng-show="playlists.length == 0" style="display: flex; flex-direction: column; align-items: center; margin-top: 30px;">
                     <img src="/img/academy/empty_playlist.png" width="300px" style="align-self: center">
-                    <span style="font-size: 30px; font-weight: 600; text-align: center; width: 300px; margin-top: 10px;">{{'PLAYLIST_EMPTY_TITLE' | translate}}</span>
-                    <span style="text-align: center; width:300px; margin-top: 10px;">{{'PLAYLIST_EMPTY_SUBTITLE' | translate}}</span>
+                    <span ng-if="userSubscribed" style="font-size: 30px; font-weight: 600; text-align: center; width: 300px; margin-top: 10px;">{{'PLAYLIST_EMPTY_TITLE' | translate}}</span>
+                    <span ng-if="userSubscribed" style="text-align: center; width:300px; margin-top: 10px;">{{'PLAYLIST_EMPTY_SUBTITLE' | translate}}</span>
+
+                    <span ng-if="!userSubscribed" style="font-size: 30px; font-weight: 600; text-align: center; width: 300px; margin-top: 10px;">{{'PLAYLIST_EMPTY_TITLE_NOT_MEMBER' | translate}}</span>
+                    <span ng-if="!userSubscribed" style="text-align: center; width:300px; margin-top: 10px;">{{'PLAYLIST_EMPTY_SUBTITLE_NOT_MEMBER' | translate}}</span>
                     <!-- {{'NO_REGISTERED_PLAYLIST' | translate}} -->
                 </div>
             </div>

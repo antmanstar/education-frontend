@@ -3,10 +3,11 @@
 /* Controllers */
 angular.module('netbase')
 
-.controller('OnboardingUniversityCreateCtrl', ['$rootScope', '$scope', 'ngDialog', 'University', 'Knowledge', '$location', '$window', function($rootScope, $scope, ngDialog, University, Knowledge, $location, $window) {
+.controller('OnboardingUniversityCreateCtrl', ['$rootScope', '$scope', 'ngDialog', 'University', 'Knowledge', '$location', '$window', '$localStorage', function($rootScope, $scope, ngDialog, University, Knowledge, $location, $window, $localStorage) {
     $scope.mode = "";
     $scope.universityType = '';
     $scope.loading = false;
+    $scope.company_logo = $localStorage.company_logo;
 
     $scope.error = {
         text: [],
@@ -81,7 +82,7 @@ angular.module('netbase')
                 $scope.loading = false;
                 if (res.success) {
                     console.log(res.data);
-                    $location.path('/a/' + res.data.url + '/forum')
+                    $location.path('/a/' + res.data.url + '/timeline')
 
                 } else {
                     //console.log("university create: ", res.err)

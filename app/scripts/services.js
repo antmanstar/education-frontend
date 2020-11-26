@@ -867,7 +867,7 @@ angular.module('netbase')
 
         createAccount: function(data) {
             var url = '/create/';
-            data.language = "PT";
+            //data.language = "PT";
 
             return $http({
                 method: 'POST',

@@ -7,6 +7,7 @@ angular.module('netbase')
     let url = $route.current;
     let originalPath = url.$$route.originalPath;
     $scope.originalPath = originalPath;
+    $scope.company_logo = $localStorage.company_logo;
 
     // check if the user if logged in or logged out
     if ($localStorage.token) {
@@ -32,7 +33,7 @@ angular.module('netbase')
     let url = $route.current;
     let originalPath = url.$$route.originalPath;
     $scope.originalPath = originalPath;
-
+    $scope.company_logo = $localStorage.company_logo;
 }])
 
 .controller('HomeCuratorshipForumPostCreate', ['$rootScope', '$scope', '$location', '$route', 'University', 'ngDialog', 'Forum', function($rootScope, $scope, $location, $route, University, ngDialog, Forum) {
@@ -265,6 +266,7 @@ angular.module('netbase')
     $scope.showingParticipants = [];
     $scope.shareScreenCaption = "Share Screen";
     $scope.confirmDelete = false;
+    $scope.company_logo = $localStorage.company_logo;
 
     var video = Twilio.Video;
     var localVideo = Twilio.createLocalTracks;
@@ -281,9 +283,9 @@ angular.module('netbase')
         $scope.getAllClassrooms();
     });
 
-    angular.element($window).bind('resize', function() {
-        $scope.videoSizeSet();
-    });
+    // angular.element($window).bind('resize', function() {
+    //     $scope.videoSizeSet();
+    // });
 
     /****************** Mobile / Web **************************/
     $scope.isMobile = function() {
@@ -482,6 +484,7 @@ angular.module('netbase')
     let originalPath = url.$$route.originalPath;
     $scope.originalPath = originalPath;
     $scope.universitiesKnowledgeDisplay = 'popular';
+    $scope.company_logo = $localStorage.company_logo;
 
     Knowledge.getAllPaginated().success(function(res) {
         let data = res.data;
@@ -3418,6 +3421,7 @@ angular.module('netbase')
 .controller('AccountCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', '$timeout', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, $timeout) {
     let university;
     $scope.loading = false
+    let language = $localStorage.user_language;
     if ($scope.ngDialogData != undefined) {
         if ($scope.ngDialogData.university != undefined) {
             university = $scope.ngDialogData.university;
@@ -3452,22 +3456,37 @@ angular.module('netbase')
     $scope.createMessageBox = false;
     $scope.resetPasswordSuccess = false;
 
+    // Reset Validation
+    $scope.resetError = false;
+    $scope.resetErrorMessage = '';
+
     $scope.forgotPassword = function() {
         ngDialog.open({ template: 'partials/modals/resetone.html', className: 'ngdialog-theme-default', controller: 'AccountCtrl' });
     }
 
     $scope.resetPasswordStepOne = function() {
         const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        if (!re.test($scope.resetpasswordEmail)) {
-            alert("email is invalid");
-            return;
+        $scope.resetError = false;
+        // Validate reset input
+        if ($scope.resetpasswordEmail == undefined || $scope.resetpasswordEmail == '') {
+          $scope.resetError = true;
+          $scope.resetErrorMessage = 'RESET_EMAIL_EMPTY';
+          return
+        } else if (!re.test($scope.resetpasswordEmail)) {
+          $scope.resetError = true;
+          $scope.resetErrorMessage = 'RESET_EMAIL_INVALID';
+          return
         }
 
         let payload = { email: $scope.resetpasswordEmail, type: "student" }
         Students.resetPasswordStepOne(payload).success(function(res) {
+
             if (res.success) {
                 $location.path('/reset/password?tokenOne=' + res.tokenOne + '&email=' + $scope.resetpasswordEmail);
                 $scope.resetPasswordSuccess = true;
+            } else {
+              $scope.resetError = true;
+              $scope.resetErrorMessage = 'RESET_EMAIL_DONT_EXIST';
             }
         });
     }
@@ -3544,7 +3563,8 @@ angular.module('netbase')
             username: $scope.createUsername,
             password: $scope.createPassword,
             name: $scope.createName,
-            passwordConfirm: $scope.createPasswordConfirm
+            passwordConfirm: $scope.createPasswordConfirm,
+            language: language,
         };
 
         validateCreateForms(create, "create").then(function(boolean) {
@@ -3590,7 +3610,7 @@ angular.module('netbase')
             });
 
         }).catch(function(e) {
-            console.log("rejected: ", e)
+            //console.log("rejected: ", e)
             $scope.loading = false
             if (e == "SIGNUPEMPTY") {
                 $scope.createMessage = "SIGNUPEMPTY";
@@ -3704,8 +3724,6 @@ angular.module('netbase')
                 }
 
             } else if (type == "login") {
-                console.log("email: ", data.email)
-                console.log("password: ", data.password)
 
                 if (data.email == undefined && data.password == undefined) {
                     reject("LOGINEMPTY");
@@ -3979,9 +3997,9 @@ angular.module('netbase')
 }])
 
 /* home - universidades */
-.controller('HomeUserUniversidadesCtrl', ['$rootScope', '$scope', '$location', 'University', 'Knowledge', 'User', function($rootScope, $scope, $location, University, Knowledge, User) {
+.controller('HomeUserUniversidadesCtrl', ['$rootScope', '$scope', '$location', 'University', 'Knowledge', 'User', '$localStorage', function($rootScope, $scope, $location, University, Knowledge, User, $localStorage) {
     $scope.activeSection = 'seguindo';
-
+    $scope.company_logo = $localStorage.company_logo;
     University.getUniversitiesByOwnerId(User.getId()).success(function(res) {
         if (res.success) {
             $scope.universitiesOwner = res.data;
@@ -4015,7 +4033,8 @@ angular.module('netbase')
     }
 }])
 
-.controller('HomeUniversidadesCtrl', ['$rootScope', '$scope', '$location', 'University', 'Knowledge', '$window', function($rootScope, $scope, $location, University, Knowledge, $window) {
+.controller('HomeUniversidadesCtrl', ['$rootScope', '$scope', '$location', 'University', 'Knowledge', '$window', '$localStorage', function($rootScope, $scope, $location, University, Knowledge, $window, $localStorage) {
+    $scope.company_logo = $localStorage.company_logo;
     Knowledge.getAllPaginated().success(function(res) {
         let success = res.success;
         let data = res.data;
@@ -4363,6 +4382,14 @@ angular.module('netbase')
     let logged = $rootScope.logged;
     $scope.whitelabel = false;
     $scope.searchBarDisplay = false;
+    $scope.company_logo = $localStorage.company_logo
+
+
+    // if (dom.indexOf('universida.de') > 0) {
+    //   $scope.company_logo = "img/universidade_logo.png"
+    // } else {
+    //   $scope.company_logo = "img/college_logo.png"
+    // }
 
     /* get selected language from the localstorage*/
     $scope.selectedLanguage = $localStorage.setLanguage
@@ -5115,8 +5142,8 @@ angular.module('netbase')
         }
 
         Students.getStudentById($scope.listing.accountId).then(function(res) {
-            console.log("response student: ");
-            console.log(res);
+            //console.log("response student: ");
+            //console.log(res);
             $scope.student = res.data.data;
         });
     });
@@ -5155,7 +5182,7 @@ angular.module('netbase')
 
     if ($localStorage.token != undefined && $localStorage.token != null) {
         studentId = jwtHelper.decodeToken($localStorage.token)._id;
-        console.log("OT", $localStorage.token)
+        //console.log("OT", $localStorage.token)
     } else {
         $location.path("/");
     }
@@ -5471,8 +5498,8 @@ angular.module('netbase')
         replace: true,
         scope: true,
         link: function(scope, element, attr) {
-            let course = JSON.parse(attr.c);
-            scope.course = course;
+            //let course = JSON.parse(attr.c);
+            //scope.course = course;
         }
     }
 }])

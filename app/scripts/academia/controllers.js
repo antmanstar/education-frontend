@@ -1987,8 +1987,9 @@ angular.module('netbase')
 
 .controller('AcademiaPlaylistsCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Playlist', '$localStorage', function($rootScope, $scope, $location, $route, University, Playlist, $localStorage) {
     let universityUrl = $route.current.params.academiaName;
-    $scope.showButton = $localStorage.studentIsAdmin
-    console.log("showButton: ", $scope.showButton)
+    $scope.showButton = $localStorage.studentIsAdmin;
+    $scope.userSubscribed = $localStorage.userSubscribed;
+    //console.log("showButton: ", $scope.showButton)
     if (University.isStoredLocal(universityUrl)) {
         let universityStorage = University.retrieveStorage(universityUrl);
         $scope.university = universityStorage[universityUrl];
@@ -2628,6 +2629,11 @@ angular.module('netbase')
       }
     }
 
+    $scope.updateSelected = function() {
+      if ($scope.categoryForum._id == "create_category") {
+        $location.path("/a/" + universityUrl + "/forum/category/create")
+      }
+    }
 
     //
     // If the admin accessed the create post page inside the category page
@@ -3502,6 +3508,7 @@ angular.module('netbase')
             let studentId;
             let url = attr.url;
             $localStorage.studentIsAdmin = false
+            $localStorage.userSubscribed = false
             if ($localStorage.token != undefined && $localStorage.token != null) {
                 studentId = jwtHelper.decodeToken($localStorage.token)._id;
             }
@@ -3549,10 +3556,12 @@ angular.module('netbase')
                             for (let i = 0; i < data.universitiesSubscribed.length; i++) {
                                 if (data.universitiesSubscribed[i].universityId == scope.university._id && data.universitiesSubscribed[i].unsubscribed === false) {
                                     scope.userSubscribed = true;
+                                    $localStorage.userSubscribed = true;
                                 }
 
                                 if (data.universitiesSubscribed[i].universityId == scope.university._id && data.universitiesSubscribed[i].unsubscribed === true) {
                                     scope.userSubscribed = false;
+                                    $localStorage.userSubscribed = false;
                                 }
 
                                 if (data.universitiesSubscribed[i].universityId == scope.university._id) {
@@ -3565,6 +3574,7 @@ angular.module('netbase')
                             // Means the button should display INSCREVER
                             if (!unisub) {
                                 scope.userSubscribed = false;
+                                $localStorage.userSubscribed = false;
                             }
                         }
                     })
@@ -3896,10 +3906,11 @@ angular.module('netbase')
         scope: true,
         link: function(scope, element, attr) {
             let universityId = attr.uid;
-
-            University.getUniversityById(universityId).success(function(res) {
-                scope.university = res.data;
-            });
+            if (universityId) {
+              University.getUniversityById(universityId).success(function(res) {
+                  scope.university = res.data;
+              });
+            }
         }
     }
 }])

@@ -56,10 +56,11 @@
                     <b>{{'POST_CATEGORY' | translate}}</b>
 
                     <div class="form-group select_cat">
-                        <select ng-model="categoryForum._id">
-              <option ng-repeat="category in categories" ng-selected="category._id == categoryForum._id"
-                value="{{category._id}}" ng-selected="">{{category.title}}</option>
-            </select>
+                        <select ng-model="categoryForum._id" ng-change="updateSelected()">
+                          <option ng-if="categories.length == 0" value="create_category">+ {{'CREATE_CATEGORY' | translate}}</option>
+                          <option ng-repeat="category in categories" ng-selected="category._id == categoryForum._id"
+                            value="{{category._id}}" ng-selected="">{{category.title}}</option>
+                        </select>
                     </div>
 
                 </div>
