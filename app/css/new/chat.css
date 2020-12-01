@@ -116,11 +116,12 @@
     flex-direction: row;
 }
 
-.tox.tox-tinymce-aux .tox-toolbar__overflow {
+
+/* .tox.tox-tinymce-aux .tox-toolbar__overflow {
     position: fixed !important;
     bottom: 57.5781px !important;
     right: 147px !important;
-}
+} */
 
 .channel-list-item .badge {
     background-color: forestgreen !important;

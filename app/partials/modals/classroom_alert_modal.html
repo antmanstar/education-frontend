@@ -1,8 +1,8 @@
 <div class='classroom-alert-modal'>
 
-    <label class='classroom-alert-modal-caption'><h1>{{alertType}}</h1></label>
+    <label class='classroom-alert-modal-caption'><h1>{{alertType | translate}}</h1></label>
     <div>
-        {{alertMsg}}
+        {{alertMsg | translate}}
     </div>
     <button ng-click='confirmAlertFrom()' class='alert-confirm-btn'>{{'OK' | translate}}</button>
 </div>

@@ -27,6 +27,10 @@
 
       <div class="dashboard-orders">
 
+        <div class="alert bg-primary-blue" ng-if="orders.length == 0">
+          {{'NO_PAYMENTS_TO_DISPLAY' | translate}}
+        </div>
+
         <div class="order" ng-repeat="order in orders">
 
           <div class="info">

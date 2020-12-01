@@ -5,8 +5,8 @@
     <div class="col-xs-12">
 
       <div class="alert bg-primary-green" style="color: white;">
-        <label>{{information.title}}</label>
-        <p>{{information.text}}</p>
+        <label>{{information.title | translate}}</label>
+        <p>{{information.text | translate}}</p>
       </div>
       <div class="alert bg-primary-red" ng-show="errorMsg != null">{{errorMsg}}</div>
       <div class="headline-sub-one" style="margin-bottom: 30px;">{{course.title}}</div>

@@ -275,6 +275,7 @@
   display: inline-block;
   margin-right: 15px;
   width: 250px;
+  margin-bottom: 36px;
 }
 
 @media screen and (max-width: 768px) {
@@ -305,6 +306,7 @@
   font-size: 1.3em;
   padding-top: 15px;
   padding-bottom: 15px;
+  min-height: 100px;
 }
 
 @media screen and (max-width: 768px) {

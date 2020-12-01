@@ -1,0 +1,121 @@
+<div ng-include="'partials/headerhome.html'"></div>
+
+<style>
+  .header-profile {
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+  }
+  .wallet-name {
+    font-weight: bold;
+  }
+  .wallet-method {
+    color: #7e7b7b;
+  }
+  .price-options-container {
+    display: flex;
+    justify-content: space-around;
+  }
+  .price-option {
+    display: grid;
+    min-width: 150px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    border: 4px solid aquamarine;
+    border-radius: 8px;
+    padding: 8px;
+  }
+  .center {
+    text-align: center;
+    margin-bottom: 36px;
+  }
+  .add-div {
+    border: 8px solid aquamarine;
+    border-radius: 50px;
+    width: 96px;
+    margin: auto;
+  }
+  .add-fund-plus {
+    font-size: 48px;
+    color: aquamarine;
+  }
+  .add-fund-text {
+    font-size: 28px;
+    color: aquamarine;
+  }
+  .cursor {
+    cursor: pointer;
+  }
+  .method-title {
+    font-weight: bold;
+    font-size: 1.1em;
+  }
+  .method-subtitle {
+    color: #7e7b7b;
+  }
+  .dash-container {
+    margin-bottom: 24px;
+  }
+
+</style>
+
+<div class="col-md-8 col-md-offset-2 container-fluid container-full">
+    <div class="header-profile">
+      <div>
+        <div class="picture" ng-if="user.imageUrl == undefined" style="background-image: url('img/user/user.png'); background-size: cover; height: 40px; width: 40px; margin-right: 8px;"></div>
+        <div class="picture" ng-if="user.imageUrl != undefined" style="background-image: url('{{user.imageUrl}}'); background-size: cover; height: 40px; width: 40px; margin-right: 8px;"></div>
+      </div>
+      <div style="display: grid;">
+        <span class="wallet-name">{{user.name}}</span>
+        <span class="wallet-method">{{'ADD_FUNDS' | translate}}</span>
+      </div>
+    </div>
+
+    <div class="center" syle="margin-top: 40px;">
+      <span>{{'WALLET_BALANCE'| translate}}</span>
+      <h2>${{balance}}</h2>
+    </div>
+
+    <div class="dash-container">
+      <span class="method-title">{{'BALANCE' | translate}}</span>
+      <div class="price-options-container">
+        <div class="price-option" ng-click="selectPrice(10)">
+          <span class="method-title">{{'TOP_UP' | translate}}</span>
+          <span class="method-subtitle">{{'ADD_BALANCE' | translate}}</span>
+        </div>
+        <div class="price-option" ng-click="selectPrice(50)">
+          <span class="method-title">{{'WITHDRAW' | translate}}</span>
+          <span class="method-subtitle">{{'GET_FUNDS' | translate}}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="dash-container">
+      <span class="method-title">{{'TRANSFER' | translate}}</span>
+      <div class="price-options-container">
+        <div class="price-option" ng-click="selectPrice(10)">
+          <span class="method-title">{{'P2P' | translate}}</span>
+          <span>{{'INSIDE_PLATFROM' | translate}}</span>
+        </div>
+        <div class="price-option" ng-click="selectPrice(50)">
+          <span class="method-title">{{'PAYMENT' | translate}}</span>
+          <span class="method-subtitle">{{'PAY_VIA_QR_CODE' | translate}}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="dash-container">
+      <span class="method-title">{{'CARDS' | translate}}</span>
+      <div class="price-options-container">
+        <div class="price-option" ng-click="selectPrice(10)">
+          <span class="method-title">{{'DEBIT' | translate}}</span>
+          <span class="method-subtitle">{{'VIRTUAL_CARD' | translate}}</span>
+        </div>
+        <div class="price-option" ng-click="selectPrice(50)">
+          <span class="method-title">{{'CREDIT' | translate}}</span>
+          <span class="method-subtitle">{{'APPLY_NOW' | translate}}</span>
+        </div>
+      </div>
+    </div>
+
+</div>

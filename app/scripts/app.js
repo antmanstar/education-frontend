@@ -540,6 +540,21 @@ angular.module('netbase', [
             templateUrl: 'partials/home/homesocialmarketplacehashtag.html',
             controller: 'HomeSocialMarketPlaceHashTagCtrl',
         })
+        .when('/wallet/dashboard', {
+            templateUrl: 'partials/ewallet/dashboard.html',
+            controller: 'EwalletTopupCtrl',
+            resolve: auth
+        })
+        .when('/wallet/funds/add/amount', {
+            templateUrl: 'partials/ewallet/topup.html',
+            controller: 'EwalletTopupCtrl',
+            resolve: auth
+        })
+        .when('/wallet/funds/add/method', {
+            templateUrl: 'partials/ewallet/addMethod.html',
+            controller: 'EwalletTopupCtrl',
+            resolve: auth
+        })
         .when('/', {
             templateUrl: 'partials/index.html',
             controller: 'IndexCtrl',

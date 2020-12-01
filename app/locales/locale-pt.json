@@ -1,4 +1,5 @@
 {
+    "PAGETITLE": "Universidade",
     "HEADER_NAV_1": "Timeline",
     "HEADER_NAV_2": "Explorar",
     "HEADER_NAV_3": "Universidades",
@@ -184,6 +185,7 @@
     "INTERVIEWS": "Entrevistas",
     "NO_REGISTERED_CATEGORY": "Nenhuma categoria cadastrada",
     "NO_FORUM_POSTS_YET": "Ainda sem mensagens no fórum.",
+    "CATEGORY": "Categoria",
 
     "COURSE_ABOUT": "Sobre o Curso",
     "INTRODUCTION": "Introdução",
@@ -298,6 +300,7 @@
     "DASH_PAYMENTS": "Pagamentos",
     "DASH_WALLET": "Carteira",
     "DASH_DATE": "Data",
+    "NO_PAYMENTS_TO_DISPLAY": "Nenhuma transação a ser exibida.",
 
     "DASH_WELCOME": "Bem Vindo a Dashboard",
     "CREATE_YOUR_UNIVERSITY": "Crie Sua Universidade",
@@ -357,7 +360,7 @@
     "MONTH": "Mês",
     "WEEK": "Semana",
     "DAY": "Dia",
-    "FREE_PERIOD": "Período Grátis",
+    "FREE_PERIOD": "Período Grátis (número de dias)",
     "FREE_TRIAL_MESSAGE": "Período grátis. Deixar vazio se não existir período gratuito",
     "CREATE_SUBSCRIPTION": "Criar Plano",
     "ALL_USERS": "Todos usuários",
@@ -739,6 +742,8 @@
 
     "PLAYLIST_EMPTY_TITLE": "Crie sua própria playlist",
     "PLAYLIST_EMPTY_SUBTITLE": "Você pode criar sua própria lista de reprodução personalizável a partir de toneladas de tutoriais em vídeo.",
+    "PLAYLIST_EMPTY_TITLE_NOT_MEMBER": "Sem Playlist ainda!",
+    "PLAYLIST_EMPTY_SUBTITLE_NOT_MEMBER": "Não há playlist por sua administração.",
 
     "CURSOS_EMPTY_TITLE": "Cursos de acesso a partir do topo",
     "CURSOS_EMPTY_SUBTITLE": "Grande coleção de cursos das melhores instituições em todo o mundo. Comece hoje mesmo!",
@@ -759,5 +764,54 @@
     "VIDEO_UPLOAD_MUST_BE_COMPLETE": "O upload do vídeo precisa estar completo.",
     "WRITE_VIDEO_TITLE_ERROR": "Escreva um título para o vídeo.",
     "WRITE_VIDEO_DESC_ERROR": "Escreva uma descricao para o vídeo.",
-    "WRITE_VIDEO_UNI_ERROR": "O video deve ser criado dentro da página de uma universidade."
+    "WRITE_VIDEO_UNI_ERROR": "O video deve ser criado dentro da página de uma universidade.",
+
+    "RESET_EMAIL_EMPTY": "Favor preencher o campo de e-mail.",
+    "RESET_EMAIL_INVALID": "Por favor, digite um e-mail válido.",
+    "RESET_EMAIL_DONT_EXIST": "O e-mail que você entrou não existe.",
+
+    "CARD_ADDED_TITLE": "Cartão adicionado",
+    "CARD_ADDED_MESSAGE": "Seu cartão foi adicionado com sucesso em sua conta. Você pode começar a usar agora mesmo.",
+
+    "ERROR": "Erro",
+    "ERROR_EMPTY_CLASSROOM_NAME": "Favor preencher o nome da sala de aula",
+    "DB error": "Erro na Database",
+    "Not Found": "Não Encontrada",
+    "University ID undefiend.": "ID da universidade indefinida.",
+    "Insufficient Privilege": "Privilégio Insuficiente",
+    "Room already completed!": "Sala já concluída!",
+    "Successfully deleted": "Eliminado com sucesso",
+    "You are not a Administrator": "Você não é um Administrador",
+
+    "COURSE_IN_PROGRESS": "Curso ainda em andamento ...",
+    "COURSE_IN_PROGRESS_MESSAGE": "Por favor, volte mais tarde enquanto os módulos e conteúdos estão sendo adicionados.",
+
+    "TOP_UP_TITLE": "Quanto você gostaria de recarregar?",
+    "EWALLET_TOPUP_NEW_BALANCE": "Seu novo balanço será de $",
+    "FUND_YOUR_ACCOUNT": "Financie sua conta",
+    "SELECT_A_METHOD_TO_FUND": "Selecione um método para financiar ",
+    "INTO_YOUR_ACCOUNT": "into your account.",
+    "CARDS": "Cards",
+    "BALANCE": "Balance",
+    "TRANSFER": "Transfer",
+    "BANK_TRANSFER": "Bank Transfer",
+    "ADD_FUNDS": "ADD FUNDS",
+    "FEES_6%": "Fees: 6%",
+    "WALLET_BALANCE": "WALLET BALANCE",
+    "TOP_UP": "Top Up",
+    "ADD_BALANCE": "Add Balance",
+    "WITHDRAW": "Withdraw",
+    "GET_FUNDS": "Get Funds",
+    "P2P": "P2P",
+    "INSIDE_PLATFROM": "Inside Platform",
+    "PAYMENT": "Payment",
+    "PAY_VIA_QR_CODE": "Pay via QR Code",
+    "DEBIT": "Debit",
+    "VIRTUAL_CARD": "Virtual Card",
+    "CREDIT": "Credit",
+    "APPLY_NOW": "Apply Now",
+    "EXPIRATION_DATE": "EXPIRATION DATE",
+    "SECURITY_CODE": "SECURITY CODE",
+    "ERASE_CARD": "ERASE CARD",
+    "BLOCK_CARD": "BLOCK CARD"
 }

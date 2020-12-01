@@ -142,14 +142,16 @@ angular.module('netbase')
         } else {
             $scope.loading = true;
             StripeElements.createToken(card, additionalData).then(function(result) {
+              //console.log("add car result: ", result)
                 if (result.token) {
                     // Send card to API, then use routes below
                     let data = { source: result.token.id };
                     Students.postCards(userId, data).success(function(res) {
+                      //console.log("post card response: ", res)
                         if (res.success) {
                             if ($scope.flow == "addCard") {
-                                $scope.information.title = "Card added";
-                                $scope.information.text = "Your card was added with success on your account. You can start using right now.";
+                                $scope.information.title = "CARD_ADDED_TITLE";
+                                $scope.information.text = "CARD_ADDED_MESSAGE";
                                 $scope.goToPage("information");
                             }
                             if ($scope.flow == "order") {
