@@ -69,17 +69,17 @@
             <div class="form-group">
               <label>{{'PRICE' | translate}}</label>
               <div style="position: relative;">
-                <b style="position: absolute; left: 0; top: 12px; width: 40px; text-align: center;">{{'CURRENCY' | translate}}</b>
+                <b style="position: absolute; left: 0; top: 4px; width: 40px; text-align: center;">{{'CURRENCY' | translate}}</b>
                 <!--b ng-if="university.language == 'PT'" style="position: absolute; left: 0; top: 12px; width: 40px; text-align: center;">R$</b>
                 <b ng-if="university.language == 'EN'" style="position: absolute; left: 0; top: 12px; width: 40px; text-align: center;">$</b-->
-                <input style="padding-left: 40px; display: inline-block;" ng-model="amount" type="text" />
+                <input style="padding-left: 40px; display: inline-block;" ng-model="amount" type="number" class="form-control"/>
               </div>
             </div>
             <!-- end form group -->
 
             <div class="form-group">
               <label>{{'CHARGES_INTERVAL' | translate}}</label>
-              <input ng-model="intervalCount" placeholder="{{'CHARGES_INTERVAL_DIGITS' | translate}}" type="text" />
+              <input ng-model="intervalCount" placeholder="{{'CHARGES_INTERVAL_DIGITS' | translate}}" type="number" class="form-control"/>
             </div>
             <!-- end form group -->
 
@@ -96,7 +96,7 @@
 
             <div class="form-group">
               <label>{{'FREE_PERIOD' | translate}}</label>
-              <input ng-model="trialPeriodDays" placeholder="{{'FREE_TRIAL_MESSAGE' | translate}}" type="text" />
+              <input ng-model="trialPeriodDays" placeholder="{{'FREE_TRIAL_MESSAGE' | translate}}" type="number" class="form-control"/>
             </div>
             <!-- end form group -->
 

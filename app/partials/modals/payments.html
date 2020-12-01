@@ -1,8 +1,8 @@
 <div class="container-fluid modal-accounts">
     <div class="row" ng-show="page == 'information'">
         <div class="col-xs-12">
-            <div class="headline-sub-one" style="margin-bottom: 30px;">{{information.title}}</div>
-            <p>{{information.text}}</p>
+            <div class="headline-sub-one" style="margin-bottom: 30px;">{{information.title | translate}}</div>
+            <p>{{information.text | translate}}</p>
         </div>
         <!-- end col-xs-12 -->
 
@@ -17,7 +17,7 @@
     <div class="row" ng-show="page == 'cardAdd'">
         <div class="col-xs-12">
             <div class="headline-sub-one" style="margin-bottom: 30px;">{{'ADD_CARD' | translate}}</div>
-            <div class="alert bg-primary-red" ng-show="validationError != undefined">{{validationError | translate}}</div>
+            <div class="alert bg-primary-blue" ng-show="validationError != undefined">{{validationError | translate}}</div>
             <form ng-model="form">
 
                 <div class="form-group">

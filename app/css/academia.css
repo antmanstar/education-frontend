@@ -155,6 +155,11 @@
     overflow: auto;
 }
 
+.academia-content-forum-post-info-text img {
+  max-width:100% !important;
+  max-height:100% !important;
+}
+
 .academia-content-forum-post-info-text figure iframe {
     width: 100%;
 }

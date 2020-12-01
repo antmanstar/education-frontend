@@ -1,0 +1,97 @@
+<div ng-include="'partials/headerhome.html'"></div>
+
+<style>
+
+  .header-profile {
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+  }
+  .wallet-name {
+    font-weight: bold;
+  }
+  .wallet-method {
+    color: #7e7b7b;
+  }
+  .method-container {
+
+  }
+  .addfund-method-container {
+    border-bottom: 2px solid #eeeeee;
+    margin-bottom: 24px;
+  }
+  .method-title {
+    margin-bottom: 24px;
+  }
+  .method-fees {
+    color: #7e7b7b;
+    margin-bottom: 16px;
+  }
+  .center {
+    text-align: center;
+    margin-bottom: 36px;
+  }
+  .add-div {
+    border: 8px solid aquamarine;
+    border-radius: 50px;
+    width: 96px;
+    margin: auto;
+  }
+  .add-fund-plus {
+    font-size: 48px;
+    color: aquamarine;
+  }
+  .add-fund-text {
+    font-size: 28px;
+    color: aquamarine;
+  }
+  .cursor {
+    cursor: pointer;
+  }
+
+</style>
+
+<div class="col-md-8 col-md-offset-2 container-fluid container-full">
+    <div class="header-profile">
+      <div>
+        <div class="picture" ng-if="user.imageUrl == undefined" style="background-image: url('img/user/user.png'); background-size: cover; height: 40px; width: 40px; margin-right: 8px;"></div>
+        <div class="picture" ng-if="user.imageUrl != undefined" style="background-image: url('{{user.imageUrl}}'); background-size: cover; height: 40px; width: 40px; margin-right: 8px;"></div>
+      </div>
+      <div style="display: grid;">
+        <span class="wallet-name">{{user.name}}</span>
+        <span class="wallet-method">{{'ADD_FUNDS' | translate}}</span>
+      </div>
+
+    </div>
+
+    <div class="center" syle="margin-top: 40px;">
+      <h2>{{'SELECT_A_METHOD_TO_FUND' | translate}} {{amount}} {{'INTO_YOUR_ACCOUNT' | translate}}</h2>
+    </div>
+
+    <div class="method-container">
+      <div class="addfund-method-container">
+        <div class="method-title">
+          <span>{{'CARDS' | translate}}</span>
+          <div></div>
+        </div>
+        <span class="method-fees">{{'FEES_6%' | translate}}</span>
+      </div>
+
+      <div class="addfund-method-container">
+        <div class="method-title">
+          <span>{{'BANK_TRANSFER' | translate}}</span>
+          <div></div>
+        </div>
+        <span class="method-fees">{{'FEES_6%' | translate}}</span>
+      </div>
+
+      <div class="center cursor">
+        <div class="add-div">
+          <p class="add-fund-plus">+</p>
+        </div>
+      </div>
+    </div>
+
+
+
+</div>

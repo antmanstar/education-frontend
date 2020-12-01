@@ -7,19 +7,21 @@
 
           <div ng-show="showInitiarCursoButton && !courseFinished">
 
-            <div style="font-size: 2em; font-weight: bolder; ">{{'COURSE_START' | translate}}</div>
+            <div style="font-size: 2em; font-weight: bolder; " ng-hide="course.module.length == 0">{{'COURSE_START' | translate}}</div>
+            <div style="font-size: 2em; font-weight: bolder; " ng-show="course.module.length == 0">{{'COURSE_IN_PROGRESS' | translate}}</div>
 
             <img width="400px" src="https://static.dribbble.com/users/3116769/screenshots/9412016/media/a9fb86e2d046fa52f5676eaf72d78de2.jpg" />
 
             <button
               class="btn btn-green button-highlighter"
               style="font-size: 1em; margin-top: 15px; padding-top: 0px; padding-bottom: 0; line-height: 44px;"
+              ng-hide="course.module.length == 0"
               ng-click="startStudy(lastViewed.modelId)">
 
                 <b>{{'START' | translate}}</b>
 
             </button>
-
+            <div style="font-size: 1.5em;" ng-show="course.module.length == 0">{{'COURSE_IN_PROGRESS_MESSAGE' | translate}}</div>
           </div>
           <!-- -->
 

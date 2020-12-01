@@ -1707,6 +1707,7 @@ angular.module('netbase')
     };
 
     $scope.confirmCreateClassroom = function() {
+
         let studentId;
 
         let token = $localStorage.token;
@@ -1728,6 +1729,7 @@ angular.module('netbase')
         }
 
         Classroom.createNewClassroom(baseUrl + url, title, privilege, $scope.university._id).then((response) => {
+
             if (response.data.success) {
                 let url = '/classroom/university/' + $scope.university._id + '/all'
                 Classroom.getAllClassroomsByUniversity(baseUrl + url).then((data) => {
@@ -2181,7 +2183,8 @@ angular.module('netbase')
 .controller('AcademiaForumCategoryByIdCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', '$timeout', 'Forum', '$localStorage', function($rootScope, $scope, $location, $route, University, $timeout, Forum, $localStorage) {
     let universityUrl = $route.current.params.academiaName;
     let categoryId = $route.current.params.categoryId;
-    $localStorage.createPostCategoryId = categoryId
+    $localStorage.createPostCategoryId = categoryId;
+    $scope.user_language = $localStorage.user_language;
 
     $scope.showButton = $localStorage.studentIsAdmin
     $scope.universityUrl = universityUrl
@@ -2322,6 +2325,7 @@ angular.module('netbase')
 .controller('AcademiaForumCategoryCreateCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Forum', '$sce', '$localStorage', 'ngDialog', 'jwtHelper', 'Courses', function($rootScope, $scope, $location, $route, University, Forum, $sce, $localStorage, ngDialog, jwtHelper, Courses) {
     let universityUrl = $route.current.params.academiaName;
     let university;
+    $scope.inputLengthWarningShow = false;
 
     $scope.tinymceOptions = {
         file_picker_types: 'file image media',
@@ -2342,6 +2346,15 @@ angular.module('netbase')
         university = res.data.data;
     });
     // END getUniversity
+
+    $scope.titleCounter = function() {
+      console.log("counting title")
+      if($scope.title.length >= 25) {
+        $scope.inputLengthWarningShow = true;
+      }else {
+        $scope.inputLengthWarningShow = false;
+      }
+    }
 
     $scope.privilege = {
         value: 0
