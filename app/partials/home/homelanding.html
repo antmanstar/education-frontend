@@ -1,0 +1,1003 @@
+<div ng-include="'partials/headerlanding.html'"></div>
+
+<style>
+    .section-cards {
+        scrollbar-width: none;
+    }
+
+    .section-cards::-webkit-scrollbar {
+        display: none;
+    }
+
+    .section-cards {
+        -ms-overflow-style: none;
+        overflow: -moz-scrollbars-none;
+        margin-bottom: 10px;
+    }
+
+    .headline-container {
+        padding-top: 5px;
+        font-size: 1.7em;
+        padding-bottom: 10px;
+    }
+
+    @media screen and (max-width: 768px) {
+        body {
+            font-size: 18px !important;
+        }
+        .headline-sub-container {
+            padding-left: 15px;
+            padding-right: 15px;
+            padding-bottom: 10px;
+            line-height: 1.3em;
+        }
+        .headline-container {
+            padding-top: 10px;
+            padding-left: 15px;
+            padding-right: 15px;
+            padding-bottom: 5px;
+            font-size: 1.4em;
+            line-height: 1.2em;
+        }
+        .academia-footer {
+            font-size: 14px;
+        }
+        .navbar-slider {
+            display: none;
+        }
+        .navbar-top-first {
+            margin-bottom: 2px;
+        }
+        .container-home {
+            padding-top: 43px !important;
+        }
+        .section-content-col {
+            padding-left: 0px;
+            padding-right: 0px;
+        }
+        #newuser-title {
+            padding-top: 5px !important;
+            font-size: 1.3em !important;
+        }
+    }
+
+    /* first block */
+
+    .first-block {
+      margin-top: 40px;
+      margin-bottom: 165px;
+    }
+
+    .first-block .title-wrap {
+      font-size: 4.5em;
+      margin-bottom: 15px;
+      line-height: 1.1em;
+      font-weight: bold;
+    }
+
+    @media only screen and (max-width: 768px) {
+
+      .first-block .title-wrap {
+        font-size: 1.5em;
+        margin-bottom: 15px;
+        line-height: 1.1em;
+      }
+
+    }
+
+    .first-block .description {
+      font-size: 1.2em;
+      margin-bottom: 45px;
+    }
+
+    @media only screen and (max-width: 768px) {
+
+      .first-block .description {
+        font-size: 1em;
+        margin-bottom: 45px;
+      }
+
+    }
+
+    .video-wrap {
+    position: absolute;
+    display: block;
+    width: 100%;
+    object-fit: cover;
+    }
+
+    .four-block .logos-wrap {
+
+      display: flex;
+
+    }
+
+    .sub-title {
+      padding-bottom: 45px;
+      line-height: 2.32em;
+      font-size: 1.1em;
+      font-weight: 500;
+      color: #2b2b2b;
+    }
+
+    .four-block .sub-title {
+      color: #2d4255;
+      font-size: 1.6em;
+      font-weight: 400;
+      margin-top: 17px;
+    }
+
+    .first-rect-wrap {
+    margin-top: 53px;
+    }
+
+    .four-block .logos-wrap {
+
+    display: flex;
+    }
+
+    .second-rect-wrap {
+      margin-top: 32px;
+    }
+    .rect-wrap {
+        display: flex;
+        width: 364px;
+        margin-left: calc(50% - 182px);
+    }
+
+    .start-btn {
+      font-size: 17px;
+      font-weight: 600;
+      width: 166px;
+      height: 40px;
+      color: #ffffff;
+      border-radius: 2px;
+      background-color: #30b39f;
+      border: none;
+    }
+
+    .contact-btn {
+      margin-left: 20px;
+      font-size: 17px;
+      font-weight: 600;
+      width: 166px;
+      height: 40px;
+      color: #30b39f;
+      border: 1px solid #30b39f;
+      background-color: #ffffff;
+      border-radius: 2px;
+    }
+
+    @media only screen and (max-width: 768px) {
+
+      .four-block .sub-title {
+        font-size: 1em;
+        padding-bottom: 0px;
+      }
+
+      .second-block {
+        padding-left: 30px;
+        padding-right: 30px;
+      }
+
+      .third-block {
+        padding-left: 30px;
+        padding-right: 30px;
+      }
+
+      .start-btn {
+        font-size: 17px;
+        font-weight: 600;
+        width: 126px;
+        height: 40px;
+        color: #ffffff;
+        border-radius: 2px;
+        background-color: #30b39f;
+        border: none;
+      }
+
+      .contact-btn {
+        margin-left: 10px;
+        font-size: 17px;
+        font-weight: 600;
+        width: 126px;
+        height: 40px;
+        color: #30b39f;
+        border: 1px solid #30b39f;
+        background-color: #ffffff;
+        border-radius: 2px;
+      }
+
+    }
+
+    .download-button {
+      font-size: 17px;
+      font-weight: 600;
+      width: 126px;
+      height: 40px;
+      color: #ffffff;
+      border-radius: 2px;
+      background-color: #30b39f;
+      border: none;
+    }
+
+    @media only screen and (max-width: 768px) {
+
+      .download-button {
+        width: 100% !important;
+      }
+
+    }
+
+</style>
+
+<div class="container-fluid container-home animated fadeIn" style="padding-bottom: 30px;">
+
+    <div ng-show="actionMenuDisplay" style="border-top-left-radius: 15px; border-top-right-radius: 15px; -webkit-box-shadow: 0px -2px 4px -1px rgba(0,0,0,0.15); position: fixed; background-color: #fff; bottom: 55px; left: 0px; right: 0px; height: 250px; z-index: 999999999;"></div>
+
+    <style>
+
+      .platform-users-mobile {
+
+
+
+      }
+
+      .start-btn {
+        width: 100% !important;
+      }
+
+      @media screen and (max-width: 768px) {
+
+        .big-title {
+          line-height: 1.3em;
+        }
+
+        .start-btn {
+          width: 126px !important;
+        }
+
+        .platform-users-mobile {
+
+          margin-top: 50px;
+
+        }
+
+        .first-block {
+          margin-top: 40px;
+          margin-bottom: 30px;
+        }
+
+      }
+
+    </style>
+
+    <!-- FIRST BLOCK -->
+    <div class="row first-block">
+
+        <div class="col-sm-7 col-md-7">
+
+            <div class="title-wrap"><b style="color: #395467;">Educational infrastructure</b> for the internet</div>
+            <div class="description">Communication infrastructure, courses platform, payment processing, funding, debit cards and immersive virtual reality spaces.</br></br>All in one place. <b>Start now</b>.</div>
+
+            <div class="row" style="padding-left: 0px; padding-right: 0px;">
+
+              <div class="col-xs-6" style="text-align: right;"><a href="/iniciar"><button class="start-btn">Start Now!</button></a></div>
+              <div class="col-xs-6" style="text-align: left;"><a href="/iniciar"><button class="contact-btn">Login</button></a></div>
+
+            </div>
+
+        </div>
+        <!-- col-sm-6 -->
+
+        <div class="col-sm-5 col-md-5 platform-users-mobile">
+
+            <div class="section-cards" ng-show="universitiesKnowledgeDisplay == 'popular'" style="padding-bottom: unset; margin-top: 5px; padding-left: 15px; padding-top: 4px;">
+                <homeuniversitynewcard uid="5fcf223a26ce980017e8602b"></homeuniversitynewcard>
+                <homeuniversitynewcard uid="5fcf23ab26ce980017e8608f"></homeuniversitynewcard>
+            </div>
+
+            <div class="section-cards" ng-show="universitiesKnowledgeDisplay == 'category'" style="padding-bottom: unset; margin-top: 5px; padding-left: 15px; padding-top: 4px;">
+                <homeuniversitynewcard ng-repeat="uni in universities" uid="{{uni.universityId}}"></homeuniversitynewcard>
+            </div>
+
+        </div>
+        <!-- col-sm-6 -->
+
+    </div>
+    <!-- end first block-->
+
+    <style>
+
+      .card-article-large .picture {
+          height: 429px !important;
+          border-radius: 5px;
+      }
+
+      .second-block {
+        margin-bottom: 75px;
+      }
+
+      .second-block .color-title {
+          font-size: 28px;
+          font-weight: 600;
+          margin-bottom: 15px;
+          color: #34c0b2;
+      }
+
+      .second-block .big-title {
+          color: #2d4255;
+          font-size: 2.5em;
+          font-weight: 700;
+      }
+
+      .four-block .logos-wrap {
+
+        display: flex;
+      }
+
+      .four-block .logos-wrap .img-logo {
+          width: 60px;
+          height: 60px;
+          margin-left: calc(50% - 71px);
+      }
+
+      .four-block .logos-wrap .img-kit {
+          width: 71px;
+          height: 60px;
+          margin-left: 10px;
+      }
+
+      .four-block {
+        margin-top: 69px;
+        text-align: center;
+      }
+
+      .four-block .sub-title {
+        color: #2d4255;
+        font-weight: 400;
+        margin-top: 17px;
+      }
+
+      .rect-wrap {
+        display: flex;
+        width: 364px;
+        margin-left: calc(50% - 182px);
+      }
+
+      .first-rect-wrap {
+          margin-top: 53px;
+        }
+
+      .second-rect-wrap {
+          margin-top: 32px;
+      }
+
+      .rect-wrap {
+        display: flex;
+        width: 364px;
+        margin-left: calc(50% - 182px);
+      }
+
+      .five-block {
+          margin-top: 30px;
+          text-align: center;
+          position: relative;
+      }
+
+      .five-block .description-wrap {
+        position: absolute;
+        bottom: 40px;
+        right: 0;
+        left: 0;
+      }
+
+      .five-block h6 {
+          color: #ffffff;
+          font-size: 40px;
+          font-weight: 900;
+      }
+
+      .five-block p {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 18px;
+        font-weight: 400;
+      }
+
+      @media (max-width: 600px) {
+        .first-block {
+            padding: 10px;
+            text-align: center;
+        }
+      }
+
+      @media screen and (max-width: 768px) {
+
+        .second-block .big-title {
+          color: #2d4255;
+          font-size: 2em;
+          font-weight: 700;
+        }
+
+        nav .navbar-top {
+          box-shadow: unset !important;
+          webkit-box-shadow: !important;
+        }
+
+        .card-article-large .picture {
+            height: 150px !important;
+            border-radius: 5px;
+        }
+
+      }
+
+      @media (min-width: 992px)
+        .p-lg-5 {
+            padding: 3rem!important;
+        }
+      }
+
+    </style>
+
+    <!-- FIRST BLOCK -->
+    <div class="row p-lg-5 p-md-3 second-block">
+
+        <div class="col-sm-12">
+          <div class="color-title">Unified educational platform</div>
+          <div class="big-title">A fully integrated suite for online education</div>
+        </div>
+
+    </div>
+    <!-- end first block-->
+
+    <style>
+
+      .third-block {
+        margin-bottom: 200px;
+      }
+
+    </style>
+
+    <div class="row p-lg-5 p-md-3 third-block">
+
+        <div class="col-md-6 col-12">
+
+          <div class="sub-title">We bring together everything that’s required to build next-gen online education platform. College’s products power infrastructure for online and in-person educators, subscriptions businesses, small and medium educational business, and everything in between.</div>
+
+        </div>
+        <!-- -->
+
+        <div class="col-md-6 col-12">
+
+          <div class="sub-title">We also help companies beat content piracy, create Virtual Reality spaces, issue virtual and physical cards, get financing, and much more.</div>
+
+        </div>
+        <!-- -->
+
+      </div>
+
+    <!-- FIRST BLOCK -->
+    <div class="row four-block">
+
+      <div class="col-md-6 col-12">
+
+        <div class="square">
+
+          <div class="logos-wrap">
+            <img class="img-logo" style='width: unset;' src="https://storage.googleapis.com/educationalcommunity-upload/university-bg/kitcollege.png">
+          </div>
+
+          <div class="sub-title">Bundle up to 6 Modules and unlock<br>benefits of online education</div>
+
+          <div style="height: 40px;"></div>
+
+          <div class="row" style="padding-left: 15px; padding-right: 15px;">
+            <div class="col-xs-4" style="text-align: right;"><img src="https://universida.de/img/icon/timeline.png" width="65px" height="65px" /><div style="padding-top: 10px; font-size: 0.9em;">Timeline</div></div>
+            <div class="col-xs-4" style="text-align: center;"><img src="https://visualpharm.com/assets/116/Open%20Book-595b40b65ba036ed117d154c.svg" width="65px" height="65px" /><div style="padding-top: 10px; font-size: 0.9em;">Feed</div></div>
+            <div class="col-xs-4" style="text-align: left;"><img src="https://visualpharm.com/assets/459/Film-595b40b75ba036ed117d9cd1.svg" width="65px" height="65px" /><div style="padding-top: 10px; font-size: 0.9em;">Playlist</div></div>
+          </div>
+
+          <div style="height: 40px;"></div>
+
+          <div class="row" style="padding-left: 15px; padding-right: 15px;">
+            <div class="col-xs-4" style="text-align: right;"><img src="https://visualpharm.com/assets/311/Graduation%20Cap-595b40b65ba036ed117d2d97.svg" width="65px" height="65px" /><div style="padding-top: 10px; font-size: 0.9em;">Courses</div></div>
+            <div class="col-xs-4" style="text-align: center;"><img src="https://media.istockphoto.com/vectors/illustration-of-diverse-group-of-friends-or-colleagues-in-a-video-vector-id1219032147?k=6&m=1219032147&s=170667a&w=0&h=VCOAwdKBjKgPwkCzt8e5IG5U0PmipRdkgp7LUeom1IY=" width="65px" height="65px"  /><div style="padding-top: 10px; font-size: 0.9em;">Videocall</div></div>
+            <div class="col-xs-4" style="text-align: left;"><img src="https://visualpharm.com/assets/811/Discussion%20Forum-595b40b65ba036ed117d396c.svg" width="65px" height="65px" /><div style="padding-top: 10px; font-size: 0.9em;">Forum</div></div>
+          </div>
+
+        </div>
+        <!-- end square -->
+
+      </div>
+      <!-- end col-md-6 -->
+
+      <style>
+        #videoDiv {width: 100%; height: 360px; position: relative;}
+        #video1 {
+    margin: auto;
+    display: block;
+    left: -196px;
+    position: absolute;
+}
+        #videoMessage { position: absolute; top: 0; left: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;}
+
+        #videoMessage {padding:0.4em; margin:0}
+        #videoMessage {color:white;z-index:99 }
+        #videoMessage h1{font-size: 2em;color:#ffffff;text-align:center;}
+        #videoMessage h2{font-size: 1.5em;color:#ffffff;text-align:center;}
+        #videoMessage h3{font-size: 1.2em;color:#ffffff;text-align:center;}
+        .vr-box-title {
+          font-size: 2em;
+        }
+        .videoClick {text-align:center}
+        .videoClick a{color:white;background-color:rgba(241, 241, 241, 0.25);font-size: 1.7em;cursor:pointer;cursor:hand}
+
+        .vr-box {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          -moz-transform: translateX(-50%) translateY(-50%);
+          -webkit-transform: translateX(-50%) translateY(-50%);
+          transform: translateX(-50%) translateY(-50%);
+        }
+
+        .vr-box-title {
+          font-weight: bold;
+        }
+
+      </style>
+
+        <div class="col-md-6 col-12">
+
+          <div class="square">
+
+            <div id="videoDiv vr-box">
+              <video id="video1" preload="" autoplay="" muted="" playsinline="" loop="">
+              <source src="https://storage.googleapis.com/educationalcommunity/pt/video/vrroom.mp4" type="video/mp4">
+              </video>
+              <div id="videoMessage" class="styling">
+              <div class="vr-box-title">Immersive education<br><div><button class="download-button" style="background-color: #fff; color: #000;">Download now!</button></div></div>
+              </div>
+            </div>
+
+          </div>
+          <!-- end square -->
+
+        </div>
+
+    </div>
+    <!-- end first block-->
+
+    <!-- -->
+
+    <style>
+      .first-rect-wrap {
+        margin-top: 53px;
+      }
+
+      .rect-wrap {
+        display: flex;
+        width: 364px;
+        margin-left: calc(50% - 182px);
+      }
+
+      .square {
+          padding: 40px;
+          position: relative;
+          width: unset;
+          margin: 1.66%;
+          background-position: center center;
+          background-repeat: no-repeat;
+          background-size: cover;
+          overflow: hidden;
+          background-color: #fbfbfd;
+          min-height: 650px;
+      }
+
+    </style>
+
+    <div class="row four-block five-block">
+
+        <div class="col-md-6 col-12">
+
+          <div class="square" style="background-image: url('https://jpimg.com.br/uploads/2017/04/1996240315-tiago-camilo-e-um-dos-atletas-mais-experientes-da-equipe-de-judo-1.jpeg');">
+            <div class="description-wrap">
+              <h6>Learn with Masters</h6>
+              <p>Tiago Camilo Educational Community is Online</p>
+            </div>
+          </div>
+
+        </div>
+        <!-- -->
+
+        <div class="col-md-6 col-12">
+
+          <div class="square">
+
+            <div class="logos-wrap">
+              <img class="img-logo" style='width: unset;' src="https://storage.googleapis.com/educationalcommunity-upload/university-bg/cardtitle.png">
+            </div>
+
+            <div class="sub-title">Get $50.000 credit line<br>for your educational business</div>
+
+            <div style="height: 30px;"></div>
+
+            <div>
+              <img src="https://storage.googleapis.com/educationalcommunity-upload/university-bg/card.png" height="140px" />
+            </div>
+
+            <div style="height: 30px;"></div>
+
+            <div><button class="start-btn" style="background-color: #ee5a4b; color: #fff;">Apply now</button></div>
+
+          </div>
+          <!-- end square -->
+
+        </div>
+        <!-- -->
+
+      </div>
+
+    <!-- -->
+
+    <!-- Welcome -->
+    <div class="row">
+
+        <div class="col-sm-6 col-md-6 section-menu-col">
+
+            <div></div>
+
+        </div>
+        <!-- col-sm-8 -->
+
+        <style>
+            .knowledge-home-title {
+                font-size: 1.2em;
+                font-weight: bold;
+                display: inline-block;
+                margin-right: 10px;
+                color: #ccc;
+            }
+
+            .knowledge-home-title:hover {
+                color: #000;
+                cursor: pointer;
+            }
+
+            .knowledge-active {
+                font-weight: bold;
+                color: #000;
+            }
+        </style>
+
+        <!--
+        <div class="col-xs-12 col-sm-6 col-md-6">
+
+            <div class="section-cards" style="padding-left: 15px; padding-right: 15px; padding-bottom: 0px;">
+                <div class="knowledge-home-title" ng-click="selectKnowledge('popular')" ng-class="{'knowledge-active': universitiesKnowledgeDisplay == 'popular'}" style="font-size: 1.2em; display: inline-block; margin-right: 10px;">{{'HOME_POPULAR' | translate}}</div>
+                <div class="knowledge-home-title" ng-click="selectKnowledge(knowledge._id)" ng-class="{'knowledge-active': universitiesKnowledgeDisplay == 'category' && knowledgeValidate(knowledge._id)}" ng-hide="knowledge.title == 'popular'" ng-repeat="knowledge in knowledges"
+                    ng-if="knowledge.universities.length > 0">{{knowledge.title}}</div>
+            </div>
+
+            <div style="height: 0px"></div>
+
+            <div class="section-cards" ng-show="universitiesKnowledgeDisplay == 'popular'" style="padding-bottom: unset; margin-top: 5px; padding-left: 15px; padding-top: 4px;">
+                <homeuniversitynewcard uid="5ee0690b9472191dd45407c4"></homeuniversitynewcard>
+                <homeuniversitynewcard uid="5ee06b5c9472191dd45407cd"></homeuniversitynewcard>
+                <homeuniversitynewcard uid="5efbb581e654760017009600"></homeuniversitynewcard>
+                <homeuniversitynewcard uid="5ee0699a9472191dd45407c7"></homeuniversitynewcard>
+            </div>
+
+            <div class="section-cards" ng-show="universitiesKnowledgeDisplay == 'category'" style="padding-bottom: unset; margin-top: 5px; padding-left: 15px; padding-top: 4px;">
+                <homeuniversitynewcard ng-repeat="uni in universities" uid="{{uni.universityId}}"></homeuniversitynewcard>
+            </div>
+
+        </div>
+        -->
+        <!-- end row -->
+
+        <div class="col-xs-12 hide-mobile" style="margin-top: 30px; border-top: 1px solid #2d425524; padding-top: 35px; padding-bottom: 20px; line-height: 25px; font-size: 0.95em;">
+
+            <div class="col-xs-4">
+                <div><img height="28px" style="padding-right: 5px;" src="img/universidade_icon.png" /><img height="19px" style="margin-top: 4px; margin-left: 4px;" src="{{company_logo}}" /></div>
+            </div>
+
+            <div class="col-xs-2" style="text-align: left;">
+                <div style="color: #2d4255; font-weight: bolder; font-size: 1em; margin-bottom: 30px;">{{'FOOTER_TITLE_1' | translate}}</div>
+                <div style="margin-right: 25px; margin-bottom: 20px; font-size: 0.9em;"><a style="color: #000;" href="/ensinar">{{'FOOTER_T1_SUBTITLE_1' | translate}}</b></div>
+
+      </div>
+
+      <div class="col-xs-2" style="text-align: left;">
+        <div style="color: #2d4255; font-weight: bolder; font-size: 1em; margin-bottom: 30px;">{{'FOOTER_TITLE_2' | translate}}</div>
+        <div style="display: inline-block; margin-right: 25px; font-size: 0.9em;"><a style="color: #000;"
+            href="/sobre">{{'FOOTER_T2_SUBTITLE_1' | translate}}</a></div>
+                <!--<div style="display: inline-block; margin-right: 25px;"><a href="#"><b>Para estudantes</b></a></div>-->
+            </div>
+
+            <div class="col-xs-2" style="text-align: left;">
+                <div style="color: #2d4255; font-weight: bolder; font-size: 1em; margin-bottom: 30px;">{{'FOOTER_TITLE_3' | translate}}</div>
+                <div style="margin-bottom: 20px; margin-right: 25px; font-size: 0.9em;"><a style="color: #000;" href="/a/universidade/forum/category/id/5efadbb98c383600174f3b6d">{{'FOOTER_T3_SUBTITLE_1' | translate}}</a></div>
+                <div style="margin-bottom: 20px; margin-right: 25px; font-size: 0.9em;"><a style="color: #000;" href="/a/universidade/forum/category/id/5efadb8f8c383600174f3b6c">{{'FOOTER_T3_SUBTITLE_2' | translate}}</a></div>
+                <div style="margin-bottom: 20px; margin-right: 25px; font-size: 0.9em;"><a style="color: #000;" ng-click="downloadVRAndroid()">{{'FOOTER_T3_SUBTITLE_3' | translate}}</a></div>
+                <!--<div style="display: inline-block; margin-right: 25px;"><a href="#"><b>Para estudantes</b></a></div>-->
+            </div>
+
+            <div class="col-xs-2" style="text-align: left;">
+                <div style="color: #2d4255; font-weight: bolder; font-size: 1em; margin-bottom: 30px;">{{'FOOTER_TITLE_4' | translate}}</div>
+                <div style="display: inline-block; margin-right: 25px; font-size: 0.9em;"><a style="color: #000;" href="/sobre">{{'FOOTER_T4_SUBTITLE_1' | translate}}</a></div>
+                <!--<div style="display: inline-block; margin-right: 25px;"><a href="#"><b>Para estudantes</b></a></div>-->
+            </div>
+
+        </div>
+
+    </div>
+    <!-- container-fluid container-full -->
+
+    <style>
+        .home-big-box {
+            /*min-height: 250px;*/
+            text-align: center;
+            border-radius: 5px;
+            padding-left: 30px;
+            padding-right: 30px;
+            padding-top: 50px;
+            padding-bottom: 50px;
+        }
+
+        .home-big-box .title {
+            font-size: 1.3em;
+            font-weight: bolder;
+        }
+
+        .home-big-box .button-row {
+            padding-top: 25px;
+        }
+
+        .home-big-box .button {
+            border-radius: 10px;
+            border: none;
+            font-size: 0.8em;
+            padding-left: 15px;
+            padding-right: 15px;
+            font-weight: bold;
+            padding-top: 15px;
+            padding-bottom: 15px;
+        }
+
+        .home-big-box .button.test {
+            background-color: #fff;
+            margin-right: 5px;
+        }
+
+        .home-big-box .button {
+            border-radius: 10px;
+            background-color: #fff;
+            border: none;
+            font-size: 0.8em;
+            padding-left: 15px;
+            padding-right: 15px;
+            font-weight: bold;
+            padding-top: 15px;
+            padding-bottom: 15px;
+            margin-bottom: 10px;
+        }
+    </style>
+
+    <style>
+    .swiper-container {
+            padding: 3px;
+            padding-bottom: 40px;
+        }
+
+        .swiper-slide {
+            text-align: left;
+        }
+
+        .knowledge-card {
+            border-radius: 5px;
+            width: 45%;
+            box-shadow: 0px 0px 3px 0px rgba(97, 97, 97, 0.15);
+            width: calc(100% / 4);
+        }
+
+        .knowledge-card .knowledge-card-image {
+            height: 70px;
+            background-size: cover;
+            border-top-right-radius: 5px;
+            border-top-left-radius: 5px;
+        }
+
+        .knowledge-card .title {
+            height: 45px;
+            padding: 10px;
+            font-weight: bold;
+        }
+
+        .section-cards {
+            padding-bottom: 10px;
+        }
+
+        .section-cards::-webkit-scrollbar {
+            width: 0px;
+            /* Remove scrollbar space */
+            background: transparent;
+            /* Optional: just make scrollbar invisible */
+        }
+        /* Optional: show position indicator in red */
+
+        .section-cards::-webkit-scrollbar-thumb {
+            background: transparent;
+        }
+
+        @media only screen and (min-width: 780px) {
+            .swiper-slide {
+                width: 50% !important;
+            }
+        }
+
+        .bar-sections {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            width: 100%;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            font-size: 0.95em;
+        }
+
+        .bar-sections .bar-section {
+            display: flex;
+            flex-direction: column;
+            flex-basis: 100%;
+            flex: 1;
+            text-align: center;
+            font-size: 1em;
+            font-weight: bold;
+            font-size: 0.95em;
+        }
+
+        .bar-sections.standard {
+            box-shadow: 0px 2px 4px 0px rgba(97, 97, 97, 0.15);
+            padding: 10px;
+        }
+
+        .bar-sections .bar-section.active {
+            color: #000;
+        }
+
+        .bar-sections .bar-section.active {
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        .bar-sections .bar-section {
+            color: #2d4255b8;
+        }
+
+        .bar-sections.orange .bar-section.active {
+            background-color: #ef62543b;
+            border-radius: 10px;
+            color: #ee5748;
+            font-weight: bold;
+        }
+    }
+    </style>
+
+    <style>
+        .course-box {
+            box-shadow: 0px 0px 17px 0px rgba(130, 130, 130, 0.23);
+            display: inline-block;
+            border-radius: 5px;
+            width: 100%;
+            padding: 15px;
+            cursor: pointer;
+            margin-bottom: 15px;
+            overflow: auto;
+            height: 250px;
+        }
+
+        .course-box .title {
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+
+        @media screen and (max-width: 860px) {
+            .course-box {
+                height: 190px;
+            }
+            .square {
+              min-height: 450px;
+            }
+        }
+    </style>
+
+    <style>
+        .button-highlighter {
+            box-shadow: 0px 8px 15px rgba(48, 179, 159, 0.51);
+            transition: all 0.3s ease 0s;
+            cursor: pointer;
+        }
+
+        .course-card {
+            box-shadow: 0px 0px 3px 0px rgba(171, 171, 171, 0.5);
+            border-radius: 4px;
+            padding-top: 20px;
+            padding-bottom: 20px;
+            padding-left: 20px;
+            padding-right: 20px;
+            margin-bottom: 15px;
+        }
+
+        .course-card .topic {
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+
+        .course-card .topic .text {
+            display: inline-block;
+            width: calc(100% - 39px);
+        }
+
+        .course-card .topic .title {
+            font-size: 1.3em;
+            display: inline-block;
+            font-weight: 500;
+        }
+
+        .course-card .topic .title {
+            font-size: 1.2em;
+            color: #3c3c3c;
+        }
+
+        .course-card .topic .subtitle {
+            color: #8c8c8c;
+        }
+
+        .course-card .topic .line {
+            width: 35px;
+            font-size: 0.5em;
+            padding-top: 7px;
+            vertical-align: top;
+            text-align: center;
+            display: inline-block;
+            color: #d8d8d8;
+        }
+
+        .instrutora {
+            margin-right: 15px;
+            display: inline-block;
+        }
+
+        .instrutora .author {
+            font-size: 1.25em;
+        }
+
+        .instrutora .author .name {
+            font-weight: 600;
+        }
+
+        .instrutora .author .title {
+            font-weight: 400;
+            font-size: 0.8em;
+        }
+
+        .instrutora .text {}
+
+        .instrutora .picture {
+            margin-bottom: 10px;
+        }
+
+        @media only screen and (max-width: 768px) {
+            .course-card {
+                padding-right: 10px;
+                padding-left: 10px;
+            }
+        }
+    </style>

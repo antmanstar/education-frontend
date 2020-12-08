@@ -469,6 +469,10 @@ angular.module('netbase', [
             templateUrl: 'partials/home/homestudentexplore.html',
             controller: 'HomeExploreCtrl'
         })
+        .when('/home/landing', {
+            templateUrl: 'partials/home/homelanding.html',
+            controller: 'HomeExploreCtrl'
+        })
         .when('/home/curadoria', {
             templateUrl: 'partials/home/curatorship.html',
             controller: 'HomeCuratorship'
@@ -560,7 +564,7 @@ angular.module('netbase', [
             controller: 'IndexCtrl',
         })
         .otherwise({
-            redirectTo: '/home/explore'
+            redirectTo: '/home/landing'
         });
 
     if (window.history && window.history.pushState) {
