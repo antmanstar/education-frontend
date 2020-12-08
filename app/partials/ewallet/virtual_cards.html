@@ -1,0 +1,139 @@
+<div ng-include="'partials/headerhome.html'"></div>
+
+<div class="col-md-12 container-fluid container-full margin-top-2">
+  <div class="col-md-3 universidade-blue-text-color">
+    <a href="/wallet/dashboard" style="text-decoration: none;"><div class="dash-option pointer">{{'DASHBOARD' | translate}}</div></a>
+    <a href="/wallet/virtual_card/index" style="text-decoration: none;"><div class="dash-selected pointer">{{'WALLET' | translate}}</div></a>
+    <a href="/wallet/payments" style="text-decoration: none;"><div class="dash-option pointer">{{'PAYMENT_METHODS' | translate}}</div></a>
+    <a href="/wallet/transaction/history" style="text-decoration: none;"><div class="dash-option pointer">{{'TRANSACTIONS' | translate}}</div></a>
+  </div>
+  <div class="col-md-9">
+    <div class="universidade-blue-text-color bold title margin-bottom-5">{{'MY_WALLET' | translate}}</div>
+
+    <!--TRANSACTIONS LIST CONTAINER--->
+    <div class="col-md-12">
+      <div class="col-md-12">
+
+        <!--WALLET BALANCE CONTAINER-->
+        <div class="col-md-12 wallet-balance-container">
+          <div class="margin-bottom-1 left-right">
+            <span>{{'WALLET_BALANCE'| translate}}</span>
+          </div>
+          <span class="title bold universidade-green-color margin-bottom-1">$12003.00</span>
+        </div>
+        <!--END OF WALLET BALANCE CONTAINER-->
+
+        <!--PAYMENT METHODS CONTAINER--->
+        <div class="col-md-12 margin-bottom-1">
+
+          <!--SEND PAYMENTS DIV-->
+          <div class="col-md-4 payment-container pointer" ng-click="openTopupModal()">
+              <div class="payment-container-icon-green">
+                <i class="fa fa-caret-square-o-down payment-option-icon"></i>
+              </div>
+              <div class="payment-container-text">
+                <span class="payment-option-title">{{'TOP_UP' | translate}}</span>
+                <span class="gray-text">{{'TOP_UP_YOUR_WALLET' | translate}}</span>
+              </div>
+          </div>
+
+          <!--SEND PAYMENTS DIV-->
+          <div class="col-md-4 payment-container pointer" ng-click="openWithdrawModal()">
+            <div class="payment-container-icon-blue">
+              <i class="fa fa-university payment-option-icon"></i>
+            </div>
+            <div class="payment-container-text">
+              <span class="payment-option-title">{{'WITHDRAW' | translate}}</span>
+              <span class="gray-text">{{'WITHDRAW_TO_YOUR_BANK' | translate}}</span>
+            </div>
+          </div>
+
+          <!--SEND PAYMENTS DIV-->
+          <div class="col-md-4 payment-container pointer" ng-click="gotoP2p()">
+            <div class="payment-container-icon-red">
+              <i class="fa fa-arrow-up payment-option-icon"></i>
+            </div>
+            <div class="payment-container-text">
+              <span class="payment-option-title">{{'SEND_PAYMENTS' | translate}}</span>
+              <span class="gray-text">{{'SEND_VIA_P2P_OR_QR' | translate}}</span>
+            </div>
+          </div>
+        </div>
+        <!--END OF PAYMENT METHODS CONTAINER--->
+
+        <!--VIRTUAL CARD CONTAINER-->
+        <div class="col-md-6 wallet-balance-container">
+          <div class="margin-bottom-1 left-right">
+            <span class="universidade-blue-text-color" style="font-size:2em;">{{'CARDS'| translate}}</span>
+          </div>
+          <div class="cards-container">
+            <div class="col-md-5 virtual-card"></div>
+            <div class="col-md-5 add-card cursor" ng-click="gotoRequestCard()">
+              <i class="fa fa-plus plus-icon"></i>
+              <span>{{'WALLET_CARD_ADD' | translate}}</span>
+            </div>
+          </div>
+        </div>
+        <!--END OF VIRTUAL CARD CONTAINER-->
+
+        <!--span class="universidade-blue-text-color dash-subtitle">{{'MY_CARDS'| translate}}</span>
+        <div class="virtual-cards-main-container">
+          <div class="col-md-3 virtual-card-container" id="card-div-parent">
+            <div class="add-card pointer" ng-click="gotoRequestCard()">
+              <i class="fa fa-plus plus-icon"></i>
+              <span>{{'WALLET_CARD_ADD' | translate}}</span>
+            </div>
+            <div class="virtual-card"></div>
+            <div class="virtual-card blurred"></div>
+          </div>
+
+          <div class="col-md-9 virtual-card-details">
+            <div class="detail-line">
+              <p class="detail-text">{{'CARDHOLDERS_NAME' | translate}}</p>
+              <span class="detail-value">Jonathan Gludo</span>
+            </div>
+            <div class="detail-line">
+              <p class="detail-text">{{'CARD_Number' | translate}}</p>
+              <span class="detail-value">1234 5678 9101 1234</span>
+            </div>
+            <div class="detail-line-two">
+              <div class="col-lg-5 col-md-12" style="display: flex">
+                <p class="detail-text">{{'EXPIRATION' | translate}}</p>
+                <span class="detail-value">19/22</span>
+              </div>
+              <div class="col-lg-5 col-md-12" style="display: flex">
+                <p class="detail-text">{{'SECURITY' | translate}}</p>
+                <span class="detail-value">123</span>
+              </div>
+            </div>
+            <div class="button-container">
+              <button class="btn btn-blue width48 bold" ng-click="openErasePopup(cardId)">{{'ERASE_CARD' | translate}}</button>
+              <button class="btn btn-white universidade-blue-text-color width48" ng-click="openBlockPopup(cardId)">{{'BLOCK_CARD' | translate}}</button>
+            </div>
+          </div>
+        </div-->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--CONFIRMATION MODALS FOR ERASE AND BLOCK CARD-->
+<script type="text/ng-template" id="eraseCardPopup">
+  <div class="container-fluid text-center delete-container">
+    <h3>{{'ERASE_VIRTUAL_CARD_MESSAGE' | translate}}</h3>
+    <div class="delete-buttons-div">
+      <button class="btn btn-blue white-text" ng-disabled="eraseLoading" ng-click="eraseCardRequest()">{{'YES' | translate}} <img style="width: 15px;" ng-show="deleteLoading == true" src="img/misc/loading.gif"/></button>
+      <button class="btn btn-secondary universidade-blue-text-color" ng-click="closeErasePopup()">{{'CANCEL' | translate}}</button>
+    </div>
+  </div>
+</script>
+
+<script type="text/ng-template" id="blockCardPopup">
+  <div class="container-fluid text-center delete-container">
+    <h3>{{'BLOCK_VIRTUAL_CARD_MESSAGE' | translate}}</h3>
+    <div class="delete-buttons-div">
+      <button class="btn btn-blue white-text" ng-disabled="blockLoading" ng-click="blockCardRequest()">{{'YES' | translate}} <img style="width: 15px;" ng-show="deleteLoading == true" src="img/misc/loading.gif"/></button>
+      <button class="btn btn-secondary universidade-blue-text-color" ng-click="closeBlockPopup()">{{'CANCEL' | translate}}</button>
+    </div>
+  </div>
+</script>

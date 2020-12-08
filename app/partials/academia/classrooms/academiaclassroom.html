@@ -6,7 +6,7 @@
         overflow: hidden !important;
     }
 </style>
-
+<update-title title="{{'PAGETITLE' | translate}}"></update-title>
 <div ng-init="initClassroom()" class="classroom-page-container">
     <div class="meeting-display-container">
         <div ng-class='mobileToggleParticipantsList' class="fixed-position classroom-participants-initial classroom-participants-container col-xs-7 col-sm-3 col-md-2 col-lg-2">
@@ -84,7 +84,7 @@
                             <i class="far fa-clone"></i>
                         </div>
                     </div>
-                    <div class='func-name'>{{shareScreenCaption}}</div>
+                    <div class='func-name'>{{shareScreenCaption | translate}}</div>
                 </div>
 
                 <div ng-click="toggleFullScreen()" class="screen-controller mobile-invisible">

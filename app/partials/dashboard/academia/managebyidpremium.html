@@ -55,6 +55,8 @@
 
         <div class="col-xs-12 col-sm-12">
 
+          <div class="alert bg-primary-red" ng-show="haserror">{{errorMessage | translate}}</div>
+
           <div class="alert bg-primary-red" ng-show="error.exists">{{displayError(error.text)}}</div>
           <div class="alert bg-primary-green" ng-show="success">{{'UPDATE_SUCCESS' | translate}}</div>
 

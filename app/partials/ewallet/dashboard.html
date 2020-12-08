@@ -1,65 +1,6 @@
 <div ng-include="'partials/headerhome.html'"></div>
 
-<style>
-  .header-profile {
-    margin-top: 16px;
-    display: flex;
-    align-items: center;
-  }
-  .wallet-name {
-    font-weight: bold;
-  }
-  .wallet-method {
-    color: #7e7b7b;
-  }
-  .price-options-container {
-    display: flex;
-    justify-content: space-around;
-  }
-  .price-option {
-    display: grid;
-    min-width: 150px;
-    padding-top: 12px;
-    padding-bottom: 12px;
-    border: 4px solid aquamarine;
-    border-radius: 8px;
-    padding: 8px;
-  }
-  .center {
-    text-align: center;
-    margin-bottom: 36px;
-  }
-  .add-div {
-    border: 8px solid aquamarine;
-    border-radius: 50px;
-    width: 96px;
-    margin: auto;
-  }
-  .add-fund-plus {
-    font-size: 48px;
-    color: aquamarine;
-  }
-  .add-fund-text {
-    font-size: 28px;
-    color: aquamarine;
-  }
-  .cursor {
-    cursor: pointer;
-  }
-  .method-title {
-    font-weight: bold;
-    font-size: 1.1em;
-  }
-  .method-subtitle {
-    color: #7e7b7b;
-  }
-  .dash-container {
-    margin-bottom: 24px;
-  }
-
-</style>
-
-<div class="col-md-8 col-md-offset-2 container-fluid container-full">
+<div class="col-md-8 col-md-offset-2 container-fluid container-full margin-top-1" id="content-mobile">
     <div class="header-profile">
       <div>
         <div class="picture" ng-if="user.imageUrl == undefined" style="background-image: url('img/user/user.png'); background-size: cover; height: 40px; width: 40px; margin-right: 8px;"></div>
@@ -72,11 +13,11 @@
     </div>
 
     <div class="center" syle="margin-top: 40px;">
-      <span>{{'WALLET_BALANCE'| translate}}</span>
+      <span>{{'WALLET_BALANCE_ALL_CAPS'| translate}}</span>
       <h2>${{balance}}</h2>
     </div>
 
-    <div class="dash-container">
+    <div class="dash-mobile-container">
       <span class="method-title">{{'BALANCE' | translate}}</span>
       <div class="price-options-container">
         <div class="price-option" ng-click="selectPrice(10)">
@@ -90,7 +31,7 @@
       </div>
     </div>
 
-    <div class="dash-container">
+    <div class="dash-mobile-container">
       <span class="method-title">{{'TRANSFER' | translate}}</span>
       <div class="price-options-container">
         <div class="price-option" ng-click="selectPrice(10)">
@@ -98,13 +39,13 @@
           <span>{{'INSIDE_PLATFROM' | translate}}</span>
         </div>
         <div class="price-option" ng-click="selectPrice(50)">
-          <span class="method-title">{{'PAYMENT' | translate}}</span>
+          <span class="method-title">{{'DASH_PAYMENT' | translate}}</span>
           <span class="method-subtitle">{{'PAY_VIA_QR_CODE' | translate}}</span>
         </div>
       </div>
     </div>
 
-    <div class="dash-container">
+    <div class="dash-mobile-container">
       <span class="method-title">{{'CARDS' | translate}}</span>
       <div class="price-options-container">
         <div class="price-option" ng-click="selectPrice(10)">
@@ -118,4 +59,112 @@
       </div>
     </div>
 
+</div>
+
+<div class="col-md-12 container-fluid container-full margin-top-2" id="content-desktop">
+  <div class="col-md-3 universidade-blue-text-color">
+    <a href="/wallet/dashboard" style="text-decoration: none;">
+      <div class="dash-selected pointer">{{'DASHBOARD' | translate}}</div>
+    </a>
+    <a href="/wallet/virtual_card/index" style="text-decoration: none;">
+      <div class="dash-option pointer">{{'WALLET' | translate}}</div>
+    </a>
+    <a href="/wallet/payments" style="text-decoration: none;">
+      <div class="dash-option pointer">{{'PAYMENT_METHODS' | translate}}</div>
+    </a>
+    <a href="/wallet/transaction/history" style="text-decoration: none;">
+      <div class="dash-option pointer">{{'TRANSACTIONS' | translate}}</div>
+    </a>
+  </div>
+
+  <div class="col-md-9">
+    <div class="universidade-blue-text-color bold title margin-bottom-5">{{'DASHBOARD' | translate}}</div>
+
+    <div class="col-md-12 dash-container">
+
+      <!--WALLET BALANCE AND CARDS--->
+      <div class="col-md-5 white-background wallet-balance-container">
+        <div class="margin-bottom-1 left-right">
+          <span>{{'WALLET_BALANCE'| translate}}</span>
+          <i class="fa fa-ellipsis-v"></i>
+        </div>
+        <span class="title bold universidade-green-color margin-bottom-1">$12003.00</span>
+        <div class="button-container">
+          <button class="btn btn-blue width48 bold" ng-click="openTopupModal()">{{'TOP_UP' | translate}}</button>
+          <button class="btn btn-white universidade-blue-text-color width48" ng-click="openWithdrawModal()">{{'WITHDRAW' | translate}}</button>
+        </div>
+      </div>
+      <div class="col-md-6 white-background wallet-balance-container">
+        <div class="margin-bottom-1 left-right">
+          <span class="universidade-blue-text-color dash-subtitle">{{'CARDS'| translate}}</span>
+          <i class="fa fa-ellipsis-v"></i>
+        </div>
+        <div class="cards-container">
+          <div class="col-md-5 virtual-card"></div>
+          <div class="col-md-5 add-card cursor" ng-click="gotoRequestCard()">
+            <i class="fa fa-plus plus-icon"></i>
+            <span>{{'WALLET_CARD_ADD' | translate}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--TRANSACTIONS LIST CONTAINER--->
+    <div class="col-md-12">
+      <div class="col-md-12 white-background wallet-balance-container">
+        <div class="left-right">
+          <span class="universidade-blue-text-color dash-subtitle">{{'TRANSACTIONS'| translate}}</span>
+          <div class="export-text">
+            <i class="fa fa-download"></i>
+            <span>{{'EXPORT_ALL_TRANSACTIONS' | translate}}</span>
+          </div>
+        </div>
+
+        <!--TRANSACTION DATE SELECT-->
+        <div class="form-group" style="width: 200px;">
+          <select ng-model="transactionDate" style="padding: 0; color:red; font-size: .8em;">
+            <option value="0" ng-selected="true">December 1, 2020</option>
+            <option value="10">December 2, 2020</option>
+            <option value="50">December 3, 2020</option>
+            <option value="99">December 4, 2020</option>
+          </select>
+        </div>
+
+        <!--TRANSACTIONS LIST CONTAINER--->
+        <div>
+          <table style="width:100%">
+
+            <tr style="background-color: #f3f3f3; color: #7e7b7b;">
+              <th>{{'DATE' | translate}}</th>
+              <th>{{'DESCRIPTION' | translate}}</th>
+              <th>{{'AMOUNT' | translate}}</th>
+              <th>{{'ID' | translate}}</th>
+            </tr>
+
+            <tr class="transactions-data">
+              <td>27/02/2020 12:20:55</td>
+              <td>Received: Upwork Escrow</td>
+              <td>+$250.00</td>
+              <td>123456ABC</td>
+            </tr>
+
+            <tr class="transactions-data">
+              <td>27/02/2020 12:20:55</td>
+              <td>Received: Upwork Escrow</td>
+              <td>+$250.00</td>
+              <td>123456ABC</td>
+            </tr>
+
+            <tr class="transactions-data">
+              <td>27/02/2020 12:20:55</td>
+              <td>Received: Upwork Escrow</td>
+              <td>+$250.00</td>
+              <td>123456ABC</td>
+            </tr>
+
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
