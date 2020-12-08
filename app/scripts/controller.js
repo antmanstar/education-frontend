@@ -5345,7 +5345,7 @@ angular.module('netbase')
         if (universityUrl != null && roomSID != null && accountSid != null) {
             redirectUrl = $route.params.url;
         } else
-            redirectUrl = "/home/explore";
+            redirectUrl = "/home/landing";
         $location.path(redirectUrl);
     }
     $localStorage.indexVisited = true;
