@@ -1,0 +1,88 @@
+<div ng-include="'partials/headerhome.html'"></div>
+
+<div class="col-md-12 container-fluid container-full margin-top-2">
+  <div class="col-md-3 universidade-blue-text-color">
+    <a href="/wallet/dashboard" style="text-decoration: none;"><div class="dash-option pointer">{{'DASHBOARD' | translate}}</div></a>
+    <a href="/wallet/virtual_card/index" style="text-decoration: none;"><div class="dash-selected pointer">{{'WALLET' | translate}}</div></a>
+    <a href="/wallet/payments" style="text-decoration: none;"><div class="dash-option pointer">{{'PAYMENT_METHODS' | translate}}</div></a>
+    <a href="/wallet/transaction/history" style="text-decoration: none;"><div class="dash-option pointer">{{'TRANSACTIONS' | translate}}</div></a>
+  </div>
+  <div class="col-md-9">
+    <div class="margin-bottom-5 payment-title">
+      <p class="universidade-blue-text-color bold title">{{'WALLET' | translate}}</p>
+      <i class="fa fa-chevron-right gray-text"></i>
+      <span class="gray-text">{{'TRANSFER_P2P' | translate}}</span>
+    </div>
+
+    <!--P2P PAYMENT FORM--->
+    <div class="col-md-12 margin-bottom-5">
+      <div class="col-md-12 ewallet-container">
+        <div class="p2p-payment-container">
+
+          <div class="form">
+            <div class="form-group">
+              <input type="text" placeholder="{{'CHOOSE_CONTACT' | translate}}" ng-model="email" ng-change="filterByValue(email)">
+            </div>
+          </div>
+
+          <div class="contacts-container">
+            <div ng-if="filtered.length==0">
+              No user with that email
+            </div>
+            <div
+              class="col-md-3 user-details"
+              ng-class="{'selected-user' : user._id==selectedUser._id}"
+              ng-repeat="user in filtered"
+              id="user-details"
+              ng-click="selectUser(user)"
+              ng-if="filtered.length > 0"
+            >
+                <img ng-if="user.imageUrl == undefined" src='img/user/user.png' class="contact-profile">
+                <img ng-if="user.imageUrl != undefined" src={{user.imageUrl}} class="contact-profile">
+                <p>{{user.username}}</p>
+                <p>{{user.email}}</p>
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <div class="col-md-8 col-md-offset-2 col-xs-12" id="topup-form" style="text-align:center; margin-bottom: 2.5em; font-size:1.5em;">
+              <span>{{'TOP_UP_TITLE2' | translate}}</span><span class="universidade-green-color" style="font-weight:bold;">{{selectedUser.name}}?</span>
+              <div class="center" style="position: relative;">
+                <b>{{'CURRENCY' | translate}}</b>
+                <input style="padding-left: 10px; display: inline-block;" ng-model="amount" type="number" ng-change="selectPrice(amount)"/>
+              </div>
+              <div class="price-options-container">
+                <div class="price-option" ng-click="selectPrice(10)">$10</div>
+                <div class="price-option" ng-click="selectPrice(50)">$50</div>
+                <div class="price-option" ng-click="selectPrice(100)">$100</div>
+              </div>
+
+              <span class="universidade-gray-color">{{'EWALLET_TOPUP_NEW_BALANCE' | translate}} {{newBalance}}</span>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--BUTTON CONTAINER-->
+    <div class="col-md-12">
+      <div class="button-container-right">
+        <button
+          class="btn btn-secondary universidade-blue-text-color width25 br5"
+          style="margin-right: 12px;"
+          ng-click="cancelP2PTransfer()"
+        >
+          {{'CANCEL' | translate}}
+        </button>
+        <button
+          class="btn btn-blue width25 bold br5"
+          ng-click="openReviewModal()"
+          ng-disabled="((amount==undefined) || (amount==''))"
+        >
+          {{'TRANSFER' | translate}}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

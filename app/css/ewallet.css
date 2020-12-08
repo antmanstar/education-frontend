@@ -1,0 +1,487 @@
+.header-profile {
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+}
+.wallet-name {
+  font-weight: bold;
+}
+.wallet-method {
+  color: #7e7b7b;
+}
+.price-options-container {
+  display: flex;
+  justify-content: space-around;
+}
+.price-option {
+  display: grid;
+  min-width: 150px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  border: 4px solid #09d2c9;
+  border-radius: 8px;
+  padding: 8px;
+}
+.center {
+  text-align: center;
+  margin-bottom: 36px;
+}
+.add-div {
+  border: 8px solid #09d2c9;
+  border-radius: 50px;
+  width: 96px;
+  margin: auto;
+}
+.add-fund-plus {
+  font-size: 48px;
+  color: #09d2c9;
+}
+.add-fund-text {
+  font-size: 28px;
+  color: #09d2c9;
+}
+.cursor {
+  cursor: pointer;
+}
+.method-title {
+  font-weight: bold;
+  font-size: 1.1em;
+}
+.method-subtitle {
+  color: #7e7b7b;
+}
+.dash-container {
+  margin-bottom: 24px;
+}
+
+#content-desktop {display: block;}
+#content-mobile {display: none;}
+
+@media screen and (max-width: 768px) {
+  #content-desktop {display: none;}
+  #content-mobile {display: block;}
+}
+
+.white-background {
+  background-color: #f7f5f5;
+  border-radius: 5px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.button-container-right {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 !important;
+}
+
+.wallet-balance-container {
+  display: grid;
+  padding: 1.5em;
+}
+
+.virtual-cards-main-container {
+  display: flex;
+  padding: 1.5em;
+}
+
+.width48 {
+  width: 48%;
+}
+
+.width25 {
+  width: 25%;
+}
+
+.universidade-blue-text-color {
+  color: #2b3c63 !important;
+  font-weight: bold !important;
+}
+
+.bold {
+  font-weight: bold !important;
+}
+
+.title {
+  font-size: 2.5em;
+}
+
+.universidade-green-color {
+  color: #34C0B2;
+}
+
+.dash-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.dash-mobile-container {
+  margin-bottom: 24px;
+}
+
+.dash-selected {
+  background: #08c6f1f2;
+  padding: 1em;
+  border-radius: 5px;
+  color: white;
+}
+
+.btn-blue {
+  background: #52BFEA;
+}
+
+.btn-white {
+  background: white;
+}
+
+.dash-option {
+  padding: 1em;
+  border-radius: 5px;
+}
+
+.margin-top-2 {
+  margin-top: 2em;
+}
+
+.margin-bottom-15 {
+  margin-bottom: 1.5em;
+}
+
+.margin-bottom-1 {
+  margin-bottom: 1em;
+}
+
+.margin-bottom-5 {
+  margin-bottom: .5em;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.dash-subtitle {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.export-text {
+  color: #FA735B;
+  font-size: .8em;
+}
+
+.left-right {
+  display: flex;
+  justify-content: space-between;
+}
+
+.left-right-around {
+  display: flex;
+  justify-content: space-around;
+}
+
+.transactions-data {
+  color: #395467 !important;
+  font-size: .8em;
+}
+
+.payment-option-title {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #395467;
+}
+
+.payment-container {
+  display: flex;
+  /* background-color: #f7f5f5; */
+  border-radius: 5px;
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+  height: 100px;
+}
+
+.payment-container-icon-green {
+  background-color: #34C0B2;
+  border-radius: 5px;
+  padding: 24px;
+}
+
+.payment-container-icon-red {
+  background-color: #FA735B;
+  border-radius: 5px;
+  padding: 24px;
+}
+
+.payment-container-icon-blue {
+  background-color: #52BFEA;
+  border-radius: 5px;
+  padding: 24px;
+}
+
+.payment-container-text {
+  display: grid;
+  padding: 8px;
+}
+
+.payment-option-icon {
+  font-size: 2em !important;
+  font-weight: bold;
+  color: white;
+}
+
+.p2p-payment-container {
+  display: grid;
+  padding: 1.5em;
+}
+
+.p2p-payment-container > * {
+  margin: 16px 0;
+}
+
+.payment-title > * {
+  margin-right: 24px;
+}
+
+.payment-title {
+  display: flex;
+  align-items: center;
+}
+
+.gray-text {
+  color: #7e7b7b;
+}
+
+.choose-contact-title {
+  font-weight: bold;
+  margin-right: 1em;
+}
+
+.virtual-card-details {
+  padding: 2em;
+}
+
+.detail-line{
+  margin-bottom: 1.5em;
+  padding-bottom: 1em;
+  border-bottom: 2px solid #cfd2d4;
+  display: flex;
+}
+.detail-line-two{
+  margin-bottom: 2em;
+  border-bottom: 2px solid #cfd2d4;
+  display: flex;
+}
+.detail-text{
+  width: 40%;
+  color: #7e7b7b;
+}
+.detail-value{
+  font-size: 1.1em;
+  font-weight: bold;
+  color: #395467;
+}
+
+#card-div-parent > * {
+  margin: 16px 0;
+}
+
+.delete-buttons-div {
+    display: inline-flex;
+    width: 50%;
+  }
+
+.delete-buttons-div button {
+  margin-top: 20px;
+  margin-right: 20px;
+  width: 50%;
+}
+
+.delete-container {
+  margin-top: 70px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.white-text {
+  color: white;
+}
+
+.virtual-card {
+  background-image: url("/img/ewallet/virtual_card.png");
+  background-repeat: no-repeat;
+  background-size: 100%;
+  min-height: 150px;
+}
+
+.blurred {
+  -webkit-filter: blur(5px);
+  -moz-filter: blur(5px);
+  -o-filter: blur(5px);
+  -ms-filter: blur(5px);
+  filter: blur(5px);
+}
+
+.add-card {
+  display: grid;
+  justify-content: center;
+  border: 2px solid #395467;
+  border-radius: 5px;
+  color: #395467;
+  padding: 24px 0;
+  height: 80%;
+  align-content: center;
+}
+
+.plus-icon {
+  text-align: center;
+  font-size: 1.5em;
+}
+
+.cards-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.modal-container {
+  margin-top: 2.5em;
+  padding: 2em;
+}
+
+.modal-container-review {
+  margin-top: 1em;
+  padding: 2em;
+}
+
+.withdraw-modal-container {
+  margin-top: 1.5em;
+  padding: 2em;
+}
+
+.modal-title-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.modal-title {
+  font-size: 36px;
+}
+
+.step-text {
+  font-size: 12px;
+}
+
+.universidade-blue-text-color {
+  color: #2b3c63 !important;
+  font-weight: bold !important;
+}
+
+.universidade-green-color {
+  color: #34C0B2;
+}
+
+.universidade-gray-color {
+  color: #7e7b7b;
+}
+
+#topup-form > * {
+  margin: 2em 0;
+}
+
+#topup-form > * {
+  margin: 1.5em 0;
+}
+
+#withdraw-form > * {
+  margin: 1em 0;
+}
+
+.btn-blue {
+  background: #52BFEA;
+}
+
+.br5 {
+  border-radius: 5px;
+}
+
+.addfund-method-container {
+  border-bottom: 2px solid #eeeeee;
+  margin-bottom: 24px;
+}
+
+.method-title {
+  margin-bottom: 24px;
+}
+
+.method-fees {
+  color: #7e7b7b;
+  margin-bottom: 16px;
+  font-size: .8em;
+}
+
+.contacts-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.contact-profile {
+  max-width: 75% !important;
+  max-height: 75% !important;
+  border-radius: 50%;
+}
+
+.contact-profile-review {
+  max-width: 25% !important;
+  max-height: 25% !important;
+  border-radius: 50%;
+}
+
+.user-details {
+  display: grid;
+  justify-content: center;
+  text-align: center;
+  border: 1px solid #d8dcdd;
+  padding: 12px;
+  border-radius: 8px;
+}
+
+.selectedUser {
+  border: 1px solid #09d2c9 !important;
+}
+
+#user-details img {
+  display:block;
+  margin:auto;
+}
+
+.ewallet-container {
+  border: 1px solid #d8dcdd;
+  border-radius: 5px;
+}
+
+.review-user-details {
+
+}
+
+.container-border-gray {
+  border: 1px solid #d8dcdd;
+  border-radius: 5px;
+}
+
+#payment-methods-container > * {
+  margin: 24px 0;
+}
+
+.light-gray-text {
+  color: #b2b5b5;
+}
+
+.payment-method-icon {
+  background: #d8dcdd;
+  color: #2b3c63;
+  padding: 12px;
+  border-radius: 50px;
+}

@@ -212,6 +212,8 @@ angular.module('netbase')
 /* Premium */
 .controller('DashboardAcademiaManageByIdPremiumCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Students', function($rootScope, $scope, $location, $route, University, Students) {
     let universityId = $route.current.params.id;
+    $scope.haserror = false;
+    $scope.errorMessage = "";
 
     /* get universities */
     let getUniversity = University.getUniversityById(universityId);
@@ -224,6 +226,41 @@ angular.module('netbase')
 
     /* functions */
     $scope.createPlan = function() {
+      $scope.haserror = false;
+      console.log("name: ", $scope.name)
+      console.log("amount: ", $scope.amount)
+      console.log("interval: ", $scope.interval)
+      console.log("intervalCount: ", $scope.intervalCount)
+      //validation
+      if (($scope.amount == "" || $scope.amount == undefined) &&
+          ($scope.name == "" || $scope.name == undefined) &&
+          ($scope.interval == "" || $scope.interval == undefined) &&
+          ($scope.intervalCount == "" || $scope.intervalCount == undefined)) {
+            $scope.haserror = true;
+            $scope.errorMessage = "PLEASE_FILL_UP_ALL_FIELDS";
+            return
+      } else if (($scope.name == "" || $scope.name == undefined)) {
+        $scope.haserror = true;
+        $scope.errorMessage = "PLEASE_FILL_UP_NAME_FIELD";
+        return
+      } else if (($scope.amount == "" || $scope.amount == undefined)) {
+        $scope.haserror = true;
+        $scope.errorMessage = "PLEASE_FILL_UP_AMOUNT_FIELD";
+        return
+      } else if (($scope.intervalCount == "" || $scope.intervalCount == undefined)) {
+        $scope.haserror = true;
+        $scope.errorMessage = "PLEASE_FILL_UP_INTERVAL_FIELD";
+        return
+      } else if (($scope.interval == "" || $scope.interval == undefined)) {
+        $scope.haserror = true;
+        $scope.errorMessage = "PLEASE_FILL_UP_INTERVAL_PERIOD";
+        return
+      } else if ($scope.intervalCount > 31) {
+        $scope.haserror = true;
+        $scope.errorMessage = "INTERVAL_COUNT_REACHED";
+        return
+      }
+
         let amount = parseFloat(Math.round($scope.amount * 100) / 100).toFixed(2);
         amount = (amount * 100);
 

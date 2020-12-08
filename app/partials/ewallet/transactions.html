@@ -1,0 +1,71 @@
+<div ng-include="'partials/headerhome.html'"></div>
+
+<div class="col-md-12 container-fluid container-full margin-top-2">
+  <div class="col-md-3 universidade-blue-text-color">
+    <a href="/wallet/dashboard" style="text-decoration: none;"><div class="dash-option pointer">{{'DASHBOARD' | translate}}</div></a>
+    <a href="/wallet/virtual_card/index" style="text-decoration: none;"><div class="dash-option pointer">{{'WALLET' | translate}}</div></a>
+    <a href="/wallet/payments" style="text-decoration: none;"><div class="dash-option pointer">{{'PAYMENT_METHODS' | translate}}</div></a>
+    <a href="/wallet/transaction/history" style="text-decoration: none;"><div class="dash-selected pointer">{{'TRANSACTIONS' | translate}}</div></a>
+  </div>
+  <div class="col-md-9">
+    <div class="universidade-blue-text-color bold title margin-bottom-5">{{'TRANSACTIONS' | translate}}</div>
+
+    <!--TRANSACTIONS LIST CONTAINER--->
+    <div class="col-md-12">
+      <div class="col-md-12 white-background wallet-balance-container">
+        <div class="left-right">
+          <span class="universidade-blue-text-color dash-subtitle">{{'TRANSACTIONS'| translate}}</span>
+          <div class="export-text">
+            <i class="fa fa-download"></i>
+            <span>{{'EXPORT_ALL_TRANSACTIONS' | translate}}</span>
+          </div>
+        </div>
+
+        <!--TRANSACTION DATE SELECT-->
+        <div class="form-group" style="width: 200px;">
+          <select ng-model="transactionDate" style="padding: 0; color:red; font-size: .8em;">
+            <option value="0" ng-selected="true">December 1, 2020</option>
+            <option value="10">December 2, 2020</option>
+            <option value="50">December 3, 2020</option>
+            <option value="99">December 4, 2020</option>
+          </select>
+        </div>
+
+        <!--TRANSACTIONS LIST CONTAINER--->
+        <div>
+          <table style="width:100%">
+
+            <tr style="background-color: #f3f3f3; color: #7e7b7b;">
+              <th>{{'DATE' | translate}}</th>
+              <th>{{'DESCRIPTION' | translate}}</th>
+              <th>{{'AMOUNT' | translate}}</th>
+              <th>{{'ID' | translate}}</th>
+            </tr>
+
+            <tr class="transactions-data">
+              <td>27/02/2020 12:20:55</td>
+              <td>Received: Upwork Escrow</td>
+              <td>+$250.00</td>
+              <td>123456ABC</td>
+            </tr>
+
+            <tr class="transactions-data">
+              <td>27/02/2020 12:20:55</td>
+              <td>Received: Upwork Escrow</td>
+              <td>+$250.00</td>
+              <td>123456ABC</td>
+            </tr>
+
+            <tr class="transactions-data">
+              <td>27/02/2020 12:20:55</td>
+              <td>Received: Upwork Escrow</td>
+              <td>+$250.00</td>
+              <td>123456ABC</td>
+            </tr>
+
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
