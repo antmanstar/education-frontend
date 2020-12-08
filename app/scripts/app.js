@@ -546,7 +546,37 @@ angular.module('netbase', [
         })
         .when('/wallet/dashboard', {
             templateUrl: 'partials/ewallet/dashboard.html',
+            controller: 'EwalletDashboardCtrl',
+            resolve: auth
+        })
+        .when('/wallet/transaction/history', {
+            templateUrl: 'partials/ewallet/transactions.html',
             controller: 'EwalletTopupCtrl',
+            resolve: auth
+        })
+        .when('/wallet/payments', {
+            templateUrl: 'partials/ewallet/payments.html',
+            controller: 'EwalletPaymentP2PCtrl',
+            resolve: auth
+        })
+        .when('/wallet/payments/add', {
+            templateUrl: 'partials/ewallet/add_payment_method.html',
+            controller: 'EwalletAddPaymentMethodCtrl',
+            resolve: auth
+        })
+        .when('/wallet/payments/p2p', {
+            templateUrl: 'partials/ewallet/payment_p2p.html',
+            controller: 'EwalletPaymentP2PCtrl',
+            resolve: auth
+        })
+        .when('/wallet/virtual_card/request', {
+            templateUrl: 'partials/ewallet/card_request.html',
+            controller: 'EwalletTopupCtrl',
+            resolve: auth
+        })
+        .when('/wallet/virtual_card/index', {
+            templateUrl: 'partials/ewallet/virtual_cards.html',
+            controller: 'EwalletCardsCtrl',
             resolve: auth
         })
         .when('/wallet/funds/add/amount', {

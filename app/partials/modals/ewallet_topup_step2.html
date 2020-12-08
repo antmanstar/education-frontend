@@ -1,0 +1,45 @@
+<div class="modal-container">
+  <div class="modal-title-container">
+    <p class="modal-title universidade-blue-text-color">{{'TOP_UP' | translate}}</p>
+    <p class="step-text universidade-gray-color">{{'STEP_2_OF_2' | translate}}</p>
+  </div>
+  <div class="col-md-8 col-md-offset-2 col-xs-12" id="topup-form" style="margin-bottom: 2.5em;">
+    <div class="center universidade-green-color" syle="margin-top: 40px;">
+      <h2>{{'SELECT_A_METHOD_TO_FUND' | translate}} {{amount}} {{'INTO_YOUR_ACCOUNT' | translate}}</h2>
+    </div>
+
+
+    <div class="addfund-method-container">
+      <div class="method-title">
+        <span>{{'CARDS' | translate}}</span>
+        <div></div>
+      </div>
+      <p class="method-fees universidade-gray-color">{{'FEES_6%' | translate}}</p>
+    </div>
+
+    <div class="addfund-method-container">
+      <div class="method-title">
+        <span>{{'BANK_TRANSFER' | translate}}</span>
+        <div></div>
+      </div>
+      <p class="method-fees universidade-gray-color">{{'FEES_6%' | translate}}</p>
+    </div>
+
+    <div>
+      <button
+        class="btn btn-blue width25 bold br5"
+        style="margin-bottom: 12px;"
+        ng-Click="performTopupOperation()"
+      >
+        {{'FINISH' | translate}}
+      </button>
+      <button
+        class="btn btn-secondary universidade-blue-text-color width25 br5"
+        ng-Click="modalTopupStep2Back()"
+      >
+        {{'BACK' | translate}}
+      </button>
+    </div>
+  </div>
+
+</div>

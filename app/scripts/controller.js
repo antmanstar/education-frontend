@@ -3569,7 +3569,7 @@ angular.module('netbase')
     };
 
     $scope.create = function() {
-
+        let url = window.location.href;
         if (language == undefined) {
           if (url.indexOf('universida.de') > 0) {
             language = "PT";

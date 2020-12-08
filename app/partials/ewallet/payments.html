@@ -1,0 +1,53 @@
+<div ng-include="'partials/headerhome.html'"></div>
+
+<div class="col-md-12 container-fluid container-full margin-top-2">
+  <div class="col-md-3 universidade-blue-text-color">
+    <a href="/wallet/dashboard" style="text-decoration: none;"><div class="dash-option pointer">{{'DASHBOARD' | translate}}</div></a>
+    <a href="/wallet/virtual_card/index" style="text-decoration: none;"><div class="dash-option pointer">{{'WALLET' | translate}}</div></a>
+    <a href="/wallet/payments" style="text-decoration: none;"><div class="dash-selected pointer">{{'PAYMENT_METHODS' | translate}}</div></a>
+    <a href="/wallet/transaction/history" style="text-decoration: none;"><div class="dash-option pointer">{{'TRANSACTIONS' | translate}}</div></a>
+  </div>
+  <div class="col-md-9">
+    <div class="left-right">
+      <div class="universidade-blue-text-color bold title margin-bottom-5">{{'PAYMENT_METHODS' | translate}}</div>
+      <a href="/wallet/payments/add" class="btn btn-blue" style="display:flex; width: auto; align-items: center; text-decoration: none;">
+        <i class="fa fa-plus" style="margin-right: 12px; font-szie=1.5em;"></i>
+        <p style="margin: 0;">{{'ADD_PAYMENT_METHOD' | translate}}</p>
+      </a>
+    </div>
+
+    <!--PAYMENT METHODS CONTAINER--->
+    <div class="col-md-12 container-border-gray" id="payment-methods-container">
+      <p class="payment-option-title">{{'MY_PAYMENT_METHODS' | translate}}</p>
+      <div class="container-border-gray pointer left-right" style="align-items: center; padding: 16px;">
+        <div style="display: flex;align-items: center;">
+          <div style="margin-right: 16px;">
+            <i class="fa fa-credit-card" style="font-size: 2em;"></i>
+          </div>
+          <div>
+            <p class="light-gray-text">{{'BANK_ACCOUNT' | translate}}</p>
+            <p>Bank of America (1234)</p>
+          </div>
+        </div>
+        <div ng-click="gotoP2p()">
+          <i class="fa fa-ellipsis-v"></i>
+        </div>
+      </div>
+
+      <div class="container-border-gray pointer left-right" style="align-items: center; padding: 16px;">
+        <div style="display: flex;align-items: center;">
+          <div style="margin-right: 16px;">
+            <i class="fa fa-credit-card" style="font-size: 2em;"></i>
+          </div>
+          <div>
+            <p class="light-gray-text">{{'CREDIT_CARD' | translate}}</p>
+            <p>Universidade Virtual Card(1234)</p>
+          </div>
+        </div>
+        <div ng-click="gotoP2p()">
+          <i class="fa fa-ellipsis-v"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,42 @@
+<div class="modal-container-review">
+  <div class="modal-title-container margin-bottom-15">
+    <p class="modal-title universidade-blue-text-color">{{'REVIEW_P2P_TRANSFER' | translate}}</p>
+  </div>
+
+  <!--TOP UP STEP 3 - TOP UP INPUTS REVIEW AND SUBMISSION-->
+  <div class="col-md-8 col-md-offset-2 col-xs-12" id="topup-review-form" style="margin-bottom: 2.5em; text-align:center;">
+
+    <p>{{'TRANSFER' | translate}}</p>
+    <div class="center universidade-green-color" syle="margin-top: 40px;">
+      <h2>${{amount}}</h2>
+    </div>
+
+    <p>{{'TO' | translate}}</p>
+    <div class="review-user-details margin-bottom-15">
+        <img ng-if="user.imageUrl == undefined" src='img/user/user.png' class="contact-profile-review">
+        <img ng-if="user.imageUrl != undefined" src={{user.imageUrl}} class="contact-profile-review">
+        <p>{{user.username}}</p>
+        <p>{{user.email}}</p>
+    </div>
+
+
+    <div>
+      <button
+        class="btn btn-blue bold br5"
+        style="margin-bottom: 12px;"
+        ng-Click="performTopupOperation()"
+      >
+        {{'TRANSFER' | translate}}
+      </button>
+      <button
+        class="btn btn-secondary universidade-blue-text-color br5"
+        ng-Click="reviewModalBack()"
+      >
+        {{'BACK' | translate}}
+      </button>
+    </div>
+  </div>
+  <!--END OF TOP UP STEP 3-->
+
+
+</div>

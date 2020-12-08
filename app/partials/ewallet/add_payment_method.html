@@ -1,0 +1,131 @@
+<div ng-include="'partials/headerhome.html'"></div>
+
+<div class="col-md-12 container-fluid container-full margin-top-2">
+  <div class="col-md-3 universidade-blue-text-color">
+    <a href="/wallet/dashboard" style="text-decoration: none;"><div class="dash-option pointer">{{'DASHBOARD' | translate}}</div></a>
+    <a href="/wallet/virtual_card/index" style="text-decoration: none;"><div class="dash-option pointer">{{'WALLET' | translate}}</div></a>
+    <a href="/wallet/payments" style="text-decoration: none;"><div class="dash-selected pointer">{{'PAYMENT_METHODS' | translate}}</div></a>
+    <a href="/wallet/transaction/history" style="text-decoration: none;"><div class="dash-option pointer">{{'TRANSACTIONS' | translate}}</div></a>
+  </div>
+  <div class="col-md-9">
+    <div class="margin-bottom-5 payment-title">
+      <p class="universidade-blue-text-color bold title">{{'PAYMENT_METHODS' | translate}}</p>
+      <i class="fa fa-chevron-right gray-text"></i>
+      <span class="gray-text">{{'ADD_PAYMENT_METHOD' | translate}}</span>
+    </div>
+
+    <!--PAYMENT METHODS CONTAINER--->
+    <div class="col-md-12 container-border-gray" id="payment-methods-container">
+
+      <!--BANK OR CREDIT CONTAINER-->
+      <div class="left-right-around">
+        <div class="container-border-gray pointer" style="display: flex;align-items: center; padding: 16px 24px;" ng-click="displayBankAccountForm()">
+          <div class="payment-method-icon" style="margin-right: 16px;">
+            <i class="fa fa-university" style="font-size: 2em;"></i>
+          </div>
+          <div>
+            <p class="universidade-blue-text-color" style="margin: 0 !important;">{{'BANK_ACCOUNT' | translate}}</p>
+            <p class="light-gray-text">{{'YOUR_PERSONAL_BANK_ACCOUNT' | translate}}</p>
+          </div>
+        </div>
+
+        <div class="container-border-gray pointer" style="display: flex;align-items: center; padding: 16px 24px;" ng-click="displayCreditCardForm()">
+          <div class="payment-method-icon" style="margin-right: 16px;">
+            <i class="fa fa-credit-card" style="font-size: 2em;"></i>
+          </div>
+          <div>
+            <p class="universidade-blue-text-color" style="margin: 0 !important;">{{'CREDIT_CARD' | translate}}</p>
+            <p class="light-gray-text">{{'CREDIT_CARD_SUBTITLE' | translate}}</p>
+          </div>
+        </div>
+      </div>
+      <!--END OF BANK OR CREDIT CONTAINER-->
+
+      <!--BANK ACCOUNT FORM-->
+      <div ng-if="showBankAccountForm">
+        <div class="col-md-12 col-xs-12" style="display: grid;">
+
+            <div class="p2p-payment-container">
+              <span class="universidade-blue-text-color dash-subtitle">{{'ENTER_THE_FOLLOWING_INFO'| translate}}</span>
+
+              <div class="form" id="request-form">
+                <div class="col-md-6 col-xs-12">
+                  <div class="form-group">
+                    <input type="text" placeholder="{{'ACCOUNT_NUMBER' | translate}}">
+                  </div>
+                </div>
+                <div class="col-md-6 col-xs-12">
+                  <div class="form-group">
+                    <input type="text" placeholder="{{'BANK_NAME' | translate}}">
+                  </div>
+                </div>
+                <div class="col-md-6 col-xs-12">
+                  <div class="form-group">
+                    <input type="text" placeholder="{{'IBAN' | translate}}">
+                  </div>
+                </div>
+                <div class="col-md-6 col-xs-12">
+                  <div class="form-group">
+                    <input type="text" placeholder="{{'ROUTING_NUMBER' | translate}}">
+                  </div>
+                </div>
+                <div class="col-md-6 col-xs-12">
+                  <div class="form-group">
+                    <input type="text" placeholder="{{'COUNTRY' | translate}}">
+                  </div>
+                </div>
+                <div class="col-md-6 col-xs-12">
+                  <div class="form-group">
+                    <input type="text" placeholder="{{'CURRENCY_TEXT' | translate}}">
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+      <!--END OF BANK ACCOUNT FORM-->
+
+      <!--CREDIT CARD FORM-->
+      <div ng-if="showCreditCardForm">
+        <div class="col-md-12 col-xs-12" style="display: grid;">
+            <div class="p2p-payment-container">
+              <span class="universidade-blue-text-color dash-subtitle">{{'ENTER_THE_FOLLOWING_INFO'| translate}}</span>
+
+              <div class="form" id="request-form">
+                <div class="col-md-12 col-xs-12">
+                  <div class="form-group">
+                    <input type="text" placeholder="{{'CARDHOLDERS_NAME' | translate}}" ng-model="cardholderName">
+                  </div>
+                </div>
+                <div class="col-md-6 col-xs-12">
+                  <div class="form-group">
+                    <input type="text" placeholder="{{'CARD_NUMBER' | translate}}" ng-model="cardNumber">
+                  </div>
+                </div>
+                <div class="col-md-3 col-xs-12">
+                  <div class="form-group">
+                    <input type="text" placeholder="{{'EXPIRY' | translate}}" ng-model="expiry">
+                  </div>
+                </div>
+                <div class="col-md-3 col-xs-12">
+                  <div class="form-group">
+                    <input type="text" placeholder="CVV" ng-model="cvv">
+                  </div>
+                </div>
+
+              </div>
+            </div>
+        </div>
+      </div>
+      <!--END OF CREDIT CARD FORM-->
+
+    </div>
+
+    <div class='col-md-12'>
+      <div class="button-container-right" style="margin-top: 1em;">
+        <button class="btn btn-secondary universidade-blue-text-color width25" style="margin-right: 12px;">{{'SAVE_FOR_LATER' | translate}}</button>
+        <button class="btn btn-blue width25 bold">{{'REQUEST_CARD' | translate}}</button>
+      </div>
+    </div>
+  </div>
+</div>

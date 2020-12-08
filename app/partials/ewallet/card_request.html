@@ -1,0 +1,75 @@
+<div ng-include="'partials/headerhome.html'"></div>
+
+<div class="col-md-12 container-fluid container-full margin-top-2">
+  <div class="col-md-3 universidade-blue-text-color">
+    <a href="/wallet/dashboard" style="text-decoration: none;"><div class="dash-option pointer">{{'DASHBOARD' | translate}}</div></a>
+    <a href="/wallet/virtual_card/index" style="text-decoration: none;"><div class="dash-selected pointer">{{'WALLET' | translate}}</div></a>
+    <a href="/wallet/payments" style="text-decoration: none;"><div class="dash-option pointer">{{'PAYMENT_METHODS' | translate}}</div></a>
+    <a href="/wallet/transaction/history" style="text-decoration: none;"><div class="dash-option pointer">{{'TRANSACTIONS' | translate}}</div></a>
+  </div>
+  <div class="col-md-9">
+    <div class="margin-bottom-5 payment-title">
+      <p class="universidade-blue-text-color bold title">{{'CARDS' | translate}}</p>
+      <i class="fa fa-chevron-right gray-text"></i>
+      <span class="gray-text">{{'REQUEST_CARD' | translate}}</span>
+    </div>
+
+    <!--P2P PAYMENT FORM--->
+    <div class="col-md-12 col-xs-12" style="display: grid;">
+      <div class="col-md-12 col-xs-12 white-background">
+        <div class="p2p-payment-container">
+          <span class="universidade-blue-text-color dash-subtitle">{{'ENTER_INFO_TO_REQUEST_CARD'| translate}}</span>
+
+          <div class="form" id="request-form">
+            <div class="col-md-6 col-xs-12">
+              <div class="form-group">
+                <input type="text" placeholder="{{'APPLICANT_NAME' | translate}}">
+              </div>
+            </div>
+            <div class="col-md-6 col-xs-12">
+              <div class="form-group">
+                <input type="text" placeholder="{{'PHONE_NUMBER' | translate}}">
+              </div>
+            </div>
+            <div class="col-md-12 col-xs-12">
+              <div class="form-group">
+                <input type="text" placeholder="{{'EMAIL_ADDRESS' | translate}}">
+              </div>
+            </div>
+            <div class="col-md-6 col-xs-12">
+              <div class="form-group">
+                <input type="text" placeholder="{{'COUNTRY' | translate}}">
+              </div>
+            </div>
+            <div class="col-md-6 col-xs-12">
+              <div class="form-group">
+                <input type="text" placeholder="{{'STATE_PROVINCE' | translate}}">
+              </div>
+            </div>
+            <div class="col-md-6 col-xs-12">
+              <div class="form-group">
+                <input type="text" placeholder="{{'TOWN_CITY' | translate}}">
+              </div>
+            </div>
+            <div class="col-md-6 col-xs-12">
+              <div class="form-group">
+                <input type="text" placeholder="{{'POSTAL_CODE_ZIP_CODE' | translate}}">
+              </div>
+            </div>
+            <div class="col-md-12 col-xs-12">
+              <div class="form-group">
+                <input type="text" placeholder="{{'ADDRESS_LINE_1' | translate}}">
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="button-container" style="margin-top: 1em;">
+        <button class="btn btn-secondary universidade-blue-text-color width25" style="margin-right: 12px;">{{'SAVE_FOR_LATER' | translate}}</button>
+        <button class="btn btn-blue width25 bold">{{'REQUEST_CARD' | translate}}</button>
+      </div>
+    </div>
+
+  </div>
+</div>
