@@ -637,6 +637,11 @@ angular.module('netbase', [
 
     let url = window.location.href;
     //let url = "https://universida.de/home/explore"
+
+    amMoment.changeLocale('en');
+    $localStorage.company_logo = "img/college_logo.png"
+    $localStorage.user_language = "EN";
+
     if (url.indexOf('colle.ge') > 0) {
       amMoment.changeLocale('en');
       $localStorage.company_logo = "img/college_logo.png";
