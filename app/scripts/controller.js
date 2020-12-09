@@ -3,6 +3,23 @@
 /* Controllers */
 angular.module('netbase')
 
+.controller('HomeLandingCtrl', ['$rootScope', '$scope', '$location', '$localStorage', 'jwtHelper', 'Students', '$route', 'University', 'ngDialog', function($rootScope, $scope, $location, $localStorage, jwtHelper, Students, $route, University, ngDialog) {
+
+  if ($localStorage.token) {
+      window.location.href = "/home/timeline"
+  }
+
+
+  $scope.login = function() {
+      ngDialog.open({ template: 'partials/modals/login.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
+  }
+
+  $scope.signup = function() {
+      ngDialog.open({ template: 'partials/modals/signup.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
+  }
+
+}])
+
 .controller('IniciarCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'University', 'Playlist', 'Forum', 'User', '$window', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, University, Playlist, Forum, User, $window) {
     let url = $route.current;
     let originalPath = url.$$route.originalPath;

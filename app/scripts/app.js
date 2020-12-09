@@ -65,7 +65,7 @@ angular.module('netbase', [
             let logged = $localStorage.logged;
 
             if (!logged) {
-                $location.path('/home/explore');
+                $location.path('/home/landing');
             }
             return deferred.promise;
         }
@@ -471,7 +471,7 @@ angular.module('netbase', [
         })
         .when('/home/landing', {
             templateUrl: 'partials/home/homelanding.html',
-            controller: 'HomeExploreCtrl'
+            controller: 'HomeLandingCtrl'
         })
         .when('/home/curadoria', {
             templateUrl: 'partials/home/curatorship.html',
@@ -658,7 +658,7 @@ angular.module('netbase', [
         $localStorage.logged = false;
         $localStorage.token = undefined;
 
-        $location.path('/home/explore');
+        $location.path('/home/landing');
         $route.reload();
     };
 });

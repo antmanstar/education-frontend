@@ -31,7 +31,7 @@
         <div class="row navbar-top-first" style="height: 40px; line-height: 40px; padding-bottom: 2px; padding-top: 6px;">
           <div id="logomaster" class="col-xs-3 col-sm-4" style="padding: 3px; height: 100%; padding-left: 15px;"><img height="100%" src="img/universidade_icon.png" /><span style="margin-left: 8px; font-size: 1.15em;"><i class="fas fa-angle-down" style="vertical-align: top; padding-top: 6px;"></i></span></div>
 
-          <div class="col-xs-6 col-sm-4" style="text-align: center; height: 100%; padding: 2px;" ng-show="!whitelabel"><a href="/home/explore"><img height="100%" src="{{company_logo}}" /></a></div>
+          <div class="col-xs-6 col-sm-4" style="text-align: center; height: 100%; padding: 2px;" ng-show="!whitelabel"><a href="/home/landing"><img height="100%" src="{{company_logo}}" /></a></div>
           <div class="col-xs-6 col-sm-4" style="text-align: center; height: 100%;" ng-show="whitelabel"><a href="/a/{{university.url}}/timeline"><img height="100%" src="{{university.logoWhitelabel}}" /></a></div>
 
           <!--<div class="col-xs-3 col-sm-4" id="mobile-credentials" ng-show="logged" ng-click="searchbar()" style="text-align: right; height: 100%; padding-right: 10px; line-height: 32px;"><div ng-click="searchBarToggle()" style="font-size: 1.4em; padding-bottom: 3px;"><i class="fas fa-search"></i></div></div>-->
@@ -51,9 +51,9 @@
                 </div>
                 -->
 
-                <div ng-hide="logged" ng-click="login()">{{'HEADER_MENU_1' | translate}}</div>
+                <div ng-hide="logged" style="cursor: pointer;" ng-click="login()">{{'HEADER_MENU_1' | translate}}</div>
 
-                <div ng-hide="logged" ng-click="signup()">{{'HEADER_MENU_2' | translate}}</div>
+                <div ng-hide="logged" style="cursor: pointer;" ng-click="signup()">{{'HEADER_MENU_2' | translate}}</div>
 
                 <div id="profileMenu" ng-show="logged" class="profile">
                   <span style="padding-top: 10px; padding-right: 5px;"><i class="fas fa-angle-down" style="margin-top: 15px; display: inline-block; vertical-align: top;"></i></span>
@@ -124,8 +124,8 @@
           <div class="header" style="border-top: 2px solid #2d4255; margin-left: 25px; margin-right: 25px; padding-bottom: 15px;"></div>
           <div class="option unselectable" ng-click="changeLanguage('en')" ng-class="{'selected-language': selectedLanguage === 'en'}">{{'ENGLISH' | translate}} (en-us)</div>
           <div class="option unselectable" ng-click="changeLanguage('pt')" ng-class="{'selected-language': selectedLanguage === 'pt'}">{{'PORTUGUESE' | translate}} (pt-br)</div>
-          <div class="option unselectable" ng-hide="logged" ng-click="login()">{{'HEADER_MENU_1' | translate}}</div>
-          <div class="option unselectable" ng-hide="logged" ng-click="signup()">{{'CRIAR_CONTA' | translate}}</div>
+          <div class="option unselectable" style="cursor: pointer;" ng-hide="logged" ng-click="login()">{{'HEADER_MENU_1' | translate}}</div>
+          <div class="option unselectable" style="cursor: pointer;" ng-hide="logged" ng-click="signup()">{{'CRIAR_CONTA' | translate}}</div>
         </div>
         <!-- end menu -->
 

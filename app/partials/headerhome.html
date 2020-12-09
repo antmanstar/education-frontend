@@ -31,8 +31,8 @@
         <div class="row navbar-top-first" style="height: 40px; line-height: 40px; padding-bottom: 2px; padding-top: 6px;">
           <div id="logomaster" class="col-xs-3 col-sm-4" style="padding: 3px; height: 100%; padding-left: 15px;"><img height="100%" src="img/universidade_icon.png" /><span style="margin-left: 8px; font-size: 1.15em;"><i class="fas fa-angle-down" style="vertical-align: top; padding-top: 6px;"></i></span></div>
 
-          <div class="col-xs-6 col-sm-4" style="text-align: center; height: 100%; padding: 2px;" ng-show="!whitelabel"><a href="/home/explore"><img height="100%" src="{{company_logo}}" /></a></div>
-          <div class="col-xs-6 col-sm-4" style="text-align: center; height: 100%;" ng-show="whitelabel"><a href="/a/{{university.url}}/timeline"><img height="100%" src="{{university.logoWhitelabel}}" /></a></div>
+          <div class="col-xs-6 col-sm-4" style="text-align: center; height: 100%; padding: 2px;" ng-show="!whitelabel"><a href="/home/landing"><img height="100%" src="{{company_logo}}" /></a></div>
+          <div class="col-xs-6 col-sm-4" style="text-align: center; height: 100%;" ng-show="whitelabel"><a href="/a/{{university.url}}/"><img height="100%" src="{{university.logoWhitelabel}}" /></a></div>
 
           <!--<div class="col-xs-3 col-sm-4" id="mobile-credentials" ng-show="logged" ng-click="searchbar()" style="text-align: right; height: 100%; padding-right: 10px; line-height: 32px;"><div ng-click="searchBarToggle()" style="font-size: 1.4em; padding-bottom: 3px;"><i class="fas fa-search"></i></div></div>-->
           <div class="col-xs-3 col-sm-4" id="mobile-credentials" ng-hide="logged" ng-click="login()" style="padding: 3px; text-align: right; height: 100%; padding-right: 10px;"><img height="100%" src="https://visualpharm.com/assets/880/Customer-595b40b65ba036ed117d413a.svg" /></div>
@@ -108,7 +108,7 @@
         <div class="navbar-slider hide-mobile" ng-hide="originalPath.indexOf('/dashboard') != -1">
 
           <div class="option unselectable" ng-if="logged" ng-class="{'active': originalPath == '/home/timeline' || originalPath == '/home/timeline/'}"><a href="/home/timeline">{{'HEADER_NAV_1' | translate}}</a></div>
-          <div class="option unselectable" ng-hide="whitelabel" ng-class="{'active': originalPath == '/home/explore' || originalPath == '/home/explore/'}"><a href="/home/explore">{{'HEADER_NAV_2' | translate}}</a></div>
+          <!--<div class="option unselectable" ng-hide="whitelabel" ng-class="{'active': originalPath == '/home/explore' || originalPath == '/home/explore/'}"><a href="/home/explore">{{'HEADER_NAV_2' | translate}}</a></div>-->
           <div class="option unselectable" ng-class="{'active': originalPath == '/home/universidades' || originalPath == '/home/universidades/' || originalPath.indexOf('/a/') != -1 }"><a href="/home/universidades">{{'HEADER_NAV_3' | translate}}</a></div><!--
           <div class="option unselectable" ng-class="{'active': originalPath == '/cursos' || originalPath.indexOf('/cursos') >= 0}"><a href="/home/cursos">Cursos</a></div>-->
           <div class="option unselectable" ng-class="{'active': originalPath == '/home/calls' || originalPath.indexOf('/videorooms') >= 0}"><a href="/home/calls">{{'HEADER_NAV_4' | translate}}</a></div>
