@@ -42,6 +42,8 @@ angular.module('netbase', [
     //let url = "https://universida.de/home/explore"
     //let url = "https://colle.ge/home/explore"
 
+    $translateProvider.preferredLanguage('en');
+
     if (url.indexOf('colle.ge') > 0) {
       $translateProvider.preferredLanguage('en');
     } else if (url.indexOf('universida.de') > 0) {
@@ -658,7 +660,23 @@ angular.module('netbase', [
 
     $rootScope.logged = $localStorage.logged;
     $rootScope.logout = function() {
+
         $localStorage.$reset();
+
+        if (url.indexOf('colle.ge') > 0) {
+          amMoment.changeLocale('en');
+          $localStorage.company_logo = "img/college_logo.png";
+          $localStorage.user_language = "EN";
+        } else if (url.indexOf('universida.de') > 0) {
+          amMoment.changeLocale('pt-br');
+          $localStorage.company_logo = "img/universidade_logo.png"
+          $localStorage.user_language = "PT";
+        } else {
+          amMoment.changeLocale('en');
+          $localStorage.company_logo = "img/college_logo.png"
+          $localStorage.user_language = "EN";
+        }
+
         $rootScope.logged = false;
         $localStorage.logged = false;
         $localStorage.token = undefined;
