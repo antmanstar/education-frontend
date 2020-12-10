@@ -12,6 +12,10 @@
     img {
       vertical-align: top;
     }
+    .navbar-mobile .menu .option {
+      line-height: 33px !important;
+      text-transform: unset;
+    }
   </style>
 
   <nav>
@@ -122,8 +126,10 @@
 
         <div class="menu" ng-hide="logged">
           <div class="header" style="border-top: 2px solid #2d4255; margin-left: 25px; margin-right: 25px; padding-bottom: 15px;"></div>
+          <!--
           <div class="option unselectable" ng-click="changeLanguage('en')" ng-class="{'selected-language': selectedLanguage === 'en'}">{{'ENGLISH' | translate}} (en-us)</div>
           <div class="option unselectable" ng-click="changeLanguage('pt')" ng-class="{'selected-language': selectedLanguage === 'pt'}">{{'PORTUGUESE' | translate}} (pt-br)</div>
+          -->
           <div class="option unselectable" style="cursor: pointer;" ng-hide="logged" ng-click="login()">{{'HEADER_MENU_1' | translate}}</div>
           <div class="option unselectable" style="cursor: pointer;" ng-hide="logged" ng-click="signup()">{{'CRIAR_CONTA' | translate}}</div>
         </div>
@@ -132,24 +138,25 @@
         <div class="profile" ng-show="logged">
           <div class="header"><span><i class="fas fa-user-circle"></i></span> {{user.name}}</div>
           <div class="menu">
-            <!-- <<div class="option">Editar perfil</div> -->
             <div class="option unselectable" ng-show="logged"><a href="/perfil">{{'HEADER_PROFILE_1' | translate}}</a></div>
-            <!--
-            <div class="option unselectable" ng-show="logged"><a href="/dashboard"><b>Dashboard</b></a></div>
-            <div class="option unselectable" ng-show="logged" style="padding-left: 40px; text-decoration: underline;">Universidades</div>
-            <div class="option unselectable" ng-show="logged" style="padding-left: 40px;"><a href="/dashboard">- Inscrito</a></div>
-            <div class="option unselectable" ng-show="logged" style="padding-left: 40px;"><a href="/dashboard">- Criar Universidade</a></div>
-            <div class="option unselectable" ng-show="logged" style="padding-left: 40px;"><a href="/dashboard">- Administrar Universidade</a></div>
-            <div class="option unselectable" ng-show="logged" style="padding-left: 40px; text-decoration: underline;">Pedidos</div>
-            <div class="option unselectable" ng-show="logged" style="padding-left: 40px;"><a href="/dashboard">- Todas compras</a></div>
-            <div class="option unselectable" ng-show="logged" style="padding-left: 40px; text-decoration: underline;">Pagamentos</div>
-            <div class="option unselectable" ng-show="logged" style="padding-left: 40px;"><a href="/dashboard">- Carteira</a></div>-->
             <div class="option" ng-click="logout()">{{'HEADER_PROFILE_2' | translate}}</div>
           </div>
-
           <!-- end menu -->
         </div>
         <!-- end profile -->
+
+        <div class="menu">
+
+          <div class="header" style="border-top: 2px solid #2d4255; margin-left: 25px; margin-right: 25px; padding-bottom: 15px;"></div>
+
+          <div class="option unselectable"><a href="https://univer.site"><img src="https://cdn.webshopapp.com/shops/94414/files/54002808/france-flag-icon-free-download.jpg" height="33px" width="33px" style="margin-right: 15px; border-radius: 50%;" />French</a></div>
+          <div class="option unselectable"><a href="https://universida.de"><img src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Flag_of_Portugal.svg" height="33px" width="33px" style="margin-right: 15px; border-radius: 50%;" />Portuguese</a></div>
+          <div class="option unselectable"><a href="https://universid.ad"><img src="https://cdn.webshopapp.com/shops/94414/files/52431402/flag-of-spain.jpg" height="33px" width="33px" style="margin-right: 15px; border-radius: 50%;" />Spanish</a></div>
+          <div class="option unselectable"><a href="#"><img src="https://cdn.countryflags.com/thumbs/finland/flag-800.png" height="33px" width="33px" style="margin-right: 15px; border-radius: 50%;" />Finnish</a></div>
+          <div class="option unselectable"><a href="#"><img src="https://cdn.webshopapp.com/shops/94414/files/52440074/flag-of-ukraine.jpg" height="33px" width="33px" style="margin-right: 15px; border-radius: 50%;" />Ukranian</a></div>
+
+        </div>
+        <!-- end menu -->
 
       </div>
       <!-- navbar mobile -->

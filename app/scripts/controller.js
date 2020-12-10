@@ -3,12 +3,15 @@
 /* Controllers */
 angular.module('netbase')
 
-.controller('HomeLandingCtrl', ['$rootScope', '$scope', '$location', '$localStorage', 'jwtHelper', 'Students', '$route', 'University', 'ngDialog', function($rootScope, $scope, $location, $localStorage, jwtHelper, Students, $route, University, ngDialog) {
+.controller('HomeLandingCtrl', ['$rootScope', '$scope', '$location', '$localStorage', 'jwtHelper', 'Students', '$route', 'University', 'ngDialog', '$window', function($rootScope, $scope, $location, $localStorage, jwtHelper, Students, $route, University, ngDialog, $window) {
 
   if ($localStorage.token) {
       window.location.href = "/home/timeline"
   }
 
+  $scope.downloadVRAndroid = function() {
+      $window.open('https://play.google.com/store/apps/details?id=com.AnduraStudio.SalaDeAula', '_blank');
+  }
 
   $scope.login = function() {
       ngDialog.open({ template: 'partials/modals/login.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });

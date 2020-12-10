@@ -88,13 +88,21 @@
     .first-block .description {
       font-size: 1.2em;
       margin-bottom: 45px;
+      color: #353535;
+    }
+
+    .first-block .description .start {
+      font-size: 1.2em;
+      color: #000;
     }
 
     @media only screen and (max-width: 768px) {
 
       .first-block .description {
-        font-size: 1em;
         margin-bottom: 45px;
+        font-family: 'Roboto';
+        font-size: 0.9em;
+        font-weight: 300;
       }
 
     }
@@ -116,8 +124,9 @@
       padding-bottom: 45px;
       line-height: 2.32em;
       font-size: 1.1em;
-      font-weight: 500;
-      color: #2b2b2b;
+      font-weight: 400;
+      color: #292929;
+      font-family: 'Roboto';
     }
 
     .four-block .sub-title {
@@ -173,6 +182,11 @@
       .four-block .sub-title {
         font-size: 1em;
         padding-bottom: 0px;
+      }
+
+      .sub-title {
+        line-height: 1.8em;
+        font-size: 1em;
       }
 
       .second-block {
@@ -277,10 +291,10 @@
 
         <div class="col-sm-7 col-md-7">
 
-            <div class="title-wrap"><b style="color: #395467;">Educational infrastructure</b> for the internet</div>
-            <div class="description">Communication infrastructure, courses platform, payment processing, funding, debit cards and immersive virtual reality spaces.</br></br>All in one place. <b>Start now</b>.</div>
+            <div class="title-wrap animated fadeIn"><b style="color: #395467;">Educational infrastructure</b> for the internet</div>
+            <div class="description animated fadeIn slow delay-2s">Communication infrastructure, courses platform, payment processing, funding, debit card issuing and immersive virtual reality spaces.</br></br><div class="start">All in one place. <b>Start now</b>.</div></div>
 
-            <div class="row" style="padding-left: 0px; padding-right: 0px;">
+            <div class="row slow delay-4s" style="padding-left: 0px; padding-right: 0px;">
 
               <div class="col-xs-6" style="text-align: right;"><a href="/iniciar"><button class="start-btn">Start Now!</button></a></div>
               <div class="col-xs-6" style="text-align: left;"><button class="contact-btn" ng-click="login()">Login</button></div>
@@ -392,17 +406,34 @@
         left: 0;
       }
 
-      .five-block h6 {
-          color: #ffffff;
-          font-size: 40px;
-          font-weight: 900;
+      .five-block .description-wrap .title {
+        color: #ffffff;
+        font-size: 2em;
+        font-weight: 900;
       }
 
-      .five-block p {
+      .five-block .description-wrap .description-title {
         color: rgba(255, 255, 255, 0.8);
         font-size: 18px;
         font-weight: 400;
       }
+
+      @media only screen and (max-width: 768px) {
+
+        .five-block .description-wrap .title {
+          color: #ffffff;
+          font-size: 1.6em;
+          font-weight: 900;
+        }
+
+        .five-block .description-wrap .description-title {
+          color: rgba(255, 255, 255, 0.9);
+          font-size: 0.8em;
+          font-weight: 400;
+        }
+
+      }
+
 
       @media (max-width: 600px) {
         .first-block {
@@ -453,7 +484,21 @@
     <style>
 
       .third-block {
-        margin-bottom: 200px;
+        margin-bottom: 150px;
+      }
+
+      .feature-icon {
+        height: 65px;
+        width: 65px;
+      }
+
+      @media only screen and (max-width: 768px) {
+
+        .feature-icon {
+          height: 45px;
+          width: 45px;
+        }
+
       }
 
     </style>
@@ -462,19 +507,20 @@
 
         <div class="col-md-6 col-12">
 
-          <div class="sub-title">We bring together everything that’s required to build next-gen online education platform. College’s products power infrastructure for online and in-person educators, subscriptions businesses, small and medium educational business, and everything in between.</div>
+          <div class="sub-title">We bring together everything that’s required to build next-gen online education platform. College’s products power infrastructure for <b>online and in-person educators</b>, <b>subscriptions businesses</b>, <b>small and medium educational business</b>, and everything in between.</div>
 
         </div>
         <!-- -->
 
         <div class="col-md-6 col-12">
 
-          <div class="sub-title">We also help companies beat content piracy, create Virtual Reality spaces, issue virtual and physical cards, get financing, and much more.</div>
+          <div class="sub-title">We also help companies <b>beat content piracy</b>, <b>create virtual reality spaces</b>, <b>issue virtual and physical cards</b>, <b>get financing</b>, and much more.</div>
 
         </div>
         <!-- -->
 
       </div>
+      <!-- -->
 
     <!-- FIRST BLOCK -->
     <div class="row four-block">
@@ -492,17 +538,17 @@
           <div style="height: 40px;"></div>
 
           <div class="row" style="padding-left: 15px; padding-right: 15px;">
-            <div class="col-xs-4" style="text-align: right;"><img src="https://universida.de/img/icon/timeline.png" width="65px" height="65px" /><div style="padding-top: 10px; font-size: 0.9em;">Timeline</div></div>
-            <div class="col-xs-4" style="text-align: center;"><img src="https://visualpharm.com/assets/116/Open%20Book-595b40b65ba036ed117d154c.svg" width="65px" height="65px" /><div style="padding-top: 10px; font-size: 0.9em;">Feed</div></div>
-            <div class="col-xs-4" style="text-align: left;"><img src="https://visualpharm.com/assets/459/Film-595b40b75ba036ed117d9cd1.svg" width="65px" height="65px" /><div style="padding-top: 10px; font-size: 0.9em;">Playlist</div></div>
+            <div class="col-xs-4" style="text-align: center;"><img class="feature-icon" src="https://storage.googleapis.com/educationalcommunity/timelineicon.png" /><div style="padding-top: 10px; font-size: 0.9em;">Timeline</div></div>
+            <div class="col-xs-4" style="text-align: center;"><img src="https://image.flaticon.com/icons/svg/745/745205.svg" class="feature-icon" /><div style="padding-top: 10px; font-size: 0.9em;">Chat</div></div>
+            <div class="col-xs-4" style="text-align: center;"><img src="https://image.flaticon.com/icons/svg/3039/3039381.svg" class="feature-icon" /><div style="padding-top: 10px; font-size: 0.9em;">Playlist</div></div>
           </div>
 
           <div style="height: 40px;"></div>
 
           <div class="row" style="padding-left: 15px; padding-right: 15px;">
-            <div class="col-xs-4" style="text-align: right;"><img src="https://visualpharm.com/assets/311/Graduation%20Cap-595b40b65ba036ed117d2d97.svg" width="65px" height="65px" /><div style="padding-top: 10px; font-size: 0.9em;">Courses</div></div>
-            <div class="col-xs-4" style="text-align: center;"><img src="https://media.istockphoto.com/vectors/illustration-of-diverse-group-of-friends-or-colleagues-in-a-video-vector-id1219032147?k=6&m=1219032147&s=170667a&w=0&h=VCOAwdKBjKgPwkCzt8e5IG5U0PmipRdkgp7LUeom1IY=" width="65px" height="65px"  /><div style="padding-top: 10px; font-size: 0.9em;">Videocall</div></div>
-            <div class="col-xs-4" style="text-align: left;"><img src="https://visualpharm.com/assets/811/Discussion%20Forum-595b40b65ba036ed117d396c.svg" width="65px" height="65px" /><div style="padding-top: 10px; font-size: 0.9em;">Forum</div></div>
+            <div class="col-xs-4" style="text-align: center;"><img src="https://visualpharm.com/assets/311/Graduation%20Cap-595b40b65ba036ed117d2d97.svg" class="feature-icon" /><div style="padding-top: 10px; font-size: 0.9em;">Courses</div></div>
+            <div class="col-xs-4" style="text-align: center;"><img src="https://image.flaticon.com/icons/svg/3048/3048415.svg" class="feature-icon"  /><div style="padding-top: 10px; font-size: 0.9em;">Videocall</div></div>
+            <div class="col-xs-4" style="text-align: center;"><img src="https://visualpharm.com/assets/811/Discussion%20Forum-595b40b65ba036ed117d396c.svg" class="feature-icon" /><div style="padding-top: 10px; font-size: 0.9em;">Forum</div></div>
           </div>
 
         </div>
@@ -514,11 +560,12 @@
       <style>
         #videoDiv {width: 100%; height: 360px; position: relative;}
         #video1 {
-    margin: auto;
-    display: block;
-    left: -196px;
-    position: absolute;
-}
+          margin: auto;
+          display: block;
+          left: -196px;
+          position: absolute;
+          top: 0px;
+        }
         #videoMessage { position: absolute; top: 0; left: 0;
         display: flex;
         flex-direction: column;
@@ -609,14 +656,26 @@
           <a href="/a/tiagocamilo/timeline">
           <div class="square" style="background-image: url('https://jpimg.com.br/uploads/2017/04/1996240315-tiago-camilo-e-um-dos-atletas-mais-experientes-da-equipe-de-judo-1.jpeg');">
             <div class="description-wrap">
-              <h6>Learn with Masters</h6>
-              <p>Tiago Camilo Educational Community is Online</p>
+              <div class="title">Learn with Masters</div>
+              <div class="description-title">Tiago Camilo Educational Community is Online</div>
             </div>
           </div>
           </a>
 
         </div>
         <!-- -->
+
+        <style>
+          .card-home {
+            height: 200px;
+          }
+
+          @media only screen and (max-width: 780px) {
+            .card-home {
+              height: 120px;
+            }
+          }
+        </style>
 
         <div class="col-md-6 col-12">
 
@@ -628,15 +687,15 @@
 
             <div class="sub-title">Get $50.000 credit line<br>for your educational business</div>
 
-            <div style="height: 30px;"></div>
+            <div style="height: 25px;"></div>
 
             <div>
-              <img src="https://storage.googleapis.com/educationalcommunity-upload/university-bg/card.png" height="140px" />
+              <img class="card-home" src="https://storage.googleapis.com/educationalcommunity-upload/university-bg/card.png" />
             </div>
 
-            <div style="height: 30px;"></div>
+            <div style="height: 45px;"></div>
 
-            <div><button class="start-btn" style="background-color: #ee5a4b; color: #fff;">Apply now</button></div>
+            <div><button class="start-btn" style="background-color: #ee5a4b; color: #fff;" ng-click="login()">Apply now</button></div>
 
           </div>
           <!-- end square -->
@@ -676,68 +735,98 @@
                 font-weight: bold;
                 color: #000;
             }
+
+            .hide-desktop {
+              display: none;
+            }
+
+            .footer-mobile-col {
+              min-height: 170px
+            }
+
+            @media only screen and (max-width: 768px) {
+              .show-mobile {
+                display: block;
+              }
+            }
+
         </style>
 
-        <!--
-        <div class="col-xs-12 col-sm-6 col-md-6">
+      <!-- footer mobile -->
+      <div class="col-xs-12 show-mobile hide-desktop" style="margin-top: 30px; border-top: 1px solid #2d425524; padding-top: 35px; padding-bottom: 20px; line-height: 25px; font-size: 0.95em;">
 
-            <div class="section-cards" style="padding-left: 15px; padding-right: 15px; padding-bottom: 0px;">
-                <div class="knowledge-home-title" ng-click="selectKnowledge('popular')" ng-class="{'knowledge-active': universitiesKnowledgeDisplay == 'popular'}" style="font-size: 1.2em; display: inline-block; margin-right: 10px;">{{'HOME_POPULAR' | translate}}</div>
-                <div class="knowledge-home-title" ng-click="selectKnowledge(knowledge._id)" ng-class="{'knowledge-active': universitiesKnowledgeDisplay == 'category' && knowledgeValidate(knowledge._id)}" ng-hide="knowledge.title == 'popular'" ng-repeat="knowledge in knowledges"
-                    ng-if="knowledge.universities.length > 0">{{knowledge.title}}</div>
-            </div>
+          <div class="col-xs-12 col-sm-4" style="padding-bottom: 30px;">
+            <div><img height="28px" style="padding-right: 5px;" src="img/universidade_icon.png" /><img height="19px" style="margin-top: 4px; margin-left: 4px;" src="{{company_logo}}" /></div>
+            </br>
+            <div style="font-size: 0.8em"><i class="fas fa-language"></i>&nbsp<b>:</b> English</div>
+            <div style="font-size: 0.8em">© COLLE.GE</div>
+            </br>
+          </div>
 
-            <div style="height: 0px"></div>
+          <div class="col-xs-6 footer-mobile-col" style="text-align: left;">
 
-            <div class="section-cards" ng-show="universitiesKnowledgeDisplay == 'popular'" style="padding-bottom: unset; margin-top: 5px; padding-left: 15px; padding-top: 4px;">
-                <homeuniversitynewcard uid="5ee0690b9472191dd45407c4"></homeuniversitynewcard>
-                <homeuniversitynewcard uid="5ee06b5c9472191dd45407cd"></homeuniversitynewcard>
-                <homeuniversitynewcard uid="5efbb581e654760017009600"></homeuniversitynewcard>
-                <homeuniversitynewcard uid="5ee0699a9472191dd45407c7"></homeuniversitynewcard>
-            </div>
+            <div style="color: #2d4255; font-weight: bolder; font-size: 1em; margin-bottom: 30px;">{{'FOOTER_TITLE_1' | translate}}</div>
+            <div style="margin-right: 25px; margin-bottom: 20px; font-size: 0.9em;"><a style="color: #000;" href="/ensinar">{{'FOOTER_T1_SUBTITLE_1' | translate}}</a></div>
 
-            <div class="section-cards" ng-show="universitiesKnowledgeDisplay == 'category'" style="padding-bottom: unset; margin-top: 5px; padding-left: 15px; padding-top: 4px;">
-                <homeuniversitynewcard ng-repeat="uni in universities" uid="{{uni.universityId}}"></homeuniversitynewcard>
-            </div>
+          </div>
 
-        </div>
-        -->
-        <!-- end row -->
+          <div class="col-xs-6 footer-mobile-col" style="text-align: left;">
+            <div style="color: #2d4255; font-weight: bolder; font-size: 1em; margin-bottom: 30px;">{{'FOOTER_TITLE_2' | translate}}</div>
+            <div style="display: inline-block; margin-right: 25px; font-size: 0.9em;"><a style="color: #000;" href="/sobre">{{'FOOTER_T2_SUBTITLE_1' | translate}}</a></div>
+          </div>
 
-        <div class="col-xs-12 hide-mobile" style="margin-top: 30px; border-top: 1px solid #2d425524; padding-top: 35px; padding-bottom: 20px; line-height: 25px; font-size: 0.95em;">
+          <!--
 
-            <div class="col-xs-4">
-                <div><img height="28px" style="padding-right: 5px;" src="img/universidade_icon.png" /><img height="19px" style="margin-top: 4px; margin-left: 4px;" src="{{company_logo}}" /></div>
-            </div>
+          <div class="col-xs-6 footer-mobile-col" style="text-align: left;">
 
-            <div class="col-xs-2" style="text-align: left;">
-                <div style="color: #2d4255; font-weight: bolder; font-size: 1em; margin-bottom: 30px;">{{'FOOTER_TITLE_1' | translate}}</div>
-                <div style="margin-right: 25px; margin-bottom: 20px; font-size: 0.9em;"><a style="color: #000;" href="/ensinar">{{'FOOTER_T1_SUBTITLE_1' | translate}}</b></div>
+            <div style="color: #2d4255; font-weight: bolder; font-size: 1em; margin-bottom: 30px;">{{'FOOTER_TITLE_1' | translate}}</div>
+            <div style="margin-right: 25px; margin-bottom: 20px; font-size: 0.9em;"><a style="color: #000;" href="/ensinar">{{'FOOTER_T1_SUBTITLE_1' | translate}}</a></div>
 
-      </div>
+          </div>
 
-      <div class="col-xs-2" style="text-align: left;">
-        <div style="color: #2d4255; font-weight: bolder; font-size: 1em; margin-bottom: 30px;">{{'FOOTER_TITLE_2' | translate}}</div>
-        <div style="display: inline-block; margin-right: 25px; font-size: 0.9em;"><a style="color: #000;"
-            href="/sobre">{{'FOOTER_T2_SUBTITLE_1' | translate}}</a></div>
-                <!--<div style="display: inline-block; margin-right: 25px;"><a href="#"><b>Para estudantes</b></a></div>-->
-            </div>
+          <div class="col-xs-6 footer-mobile-col" style="text-align: left;">
 
-            <div class="col-xs-2" style="text-align: left;">
-                <div style="color: #2d4255; font-weight: bolder; font-size: 1em; margin-bottom: 30px;">{{'FOOTER_TITLE_3' | translate}}</div>
-                <div style="margin-bottom: 20px; margin-right: 25px; font-size: 0.9em;"><a style="color: #000;" href="/a/universidade/forum/category/id/5efadbb98c383600174f3b6d">{{'FOOTER_T3_SUBTITLE_1' | translate}}</a></div>
-                <div style="margin-bottom: 20px; margin-right: 25px; font-size: 0.9em;"><a style="color: #000;" href="/a/universidade/forum/category/id/5efadb8f8c383600174f3b6c">{{'FOOTER_T3_SUBTITLE_2' | translate}}</a></div>
-                <div style="margin-bottom: 20px; margin-right: 25px; font-size: 0.9em;"><a style="color: #000;" ng-click="downloadVRAndroid()">{{'FOOTER_T3_SUBTITLE_3' | translate}}</a></div>
-                <!--<div style="display: inline-block; margin-right: 25px;"><a href="#"><b>Para estudantes</b></a></div>-->
-            </div>
+            <div style="color: #2d4255; font-weight: bolder; font-size: 1em; margin-bottom: 30px;">{{'FOOTER_TITLE_1' | translate}}</div>
+            <div style="margin-right: 25px; margin-bottom: 20px; font-size: 0.9em;"><a style="color: #000;" href="/ensinar">{{'FOOTER_T1_SUBTITLE_1' | translate}}</a></div>
 
-            <div class="col-xs-2" style="text-align: left;">
-                <div style="color: #2d4255; font-weight: bolder; font-size: 1em; margin-bottom: 30px;">{{'FOOTER_TITLE_4' | translate}}</div>
-                <div style="display: inline-block; margin-right: 25px; font-size: 0.9em;"><a style="color: #000;" href="/sobre">{{'FOOTER_T4_SUBTITLE_1' | translate}}</a></div>
-                <!--<div style="display: inline-block; margin-right: 25px;"><a href="#"><b>Para estudantes</b></a></div>-->
-            </div>
+          </div>
+
+          -->
 
         </div>
+      <!-- end footer desktop -->
+
+      <div class="col-xs-12 hide-mobile" style="margin-top: 30px; border-top: 1px solid #2d425524; padding-top: 35px; padding-bottom: 20px; line-height: 25px; font-size: 0.95em;">
+
+          <div class="col-xs-12 col-sm-4">
+            <div><img height="28px" style="padding-right: 5px;" src="img/universidade_icon.png" /><img height="19px" style="margin-top: 4px; margin-left: 4px;" src="{{company_logo}}" /></div>
+          </div>
+
+          <div class="col-xs-6 col-sm-2" style="text-align: left;">
+            <div style="color: #2d4255; font-weight: bolder; font-size: 1em; margin-bottom: 30px;">{{'FOOTER_TITLE_1' | translate}}</div>
+            <div style="margin-right: 25px; margin-bottom: 20px; font-size: 0.9em;"><a style="color: #000;" href="/ensinar">{{'FOOTER_T1_SUBTITLE_1' | translate}}</a></div>
+          </div><!--
+
+          --><div class="col-xs-6 col-sm-2" style="text-align: left;">
+            <div style="color: #2d4255; font-weight: bolder; font-size: 1em; margin-bottom: 30px;">{{'FOOTER_TITLE_2' | translate}}</div>
+            <div style="display: inline-block; margin-right: 25px; font-size: 0.9em;"><a style="color: #000;" href="/sobre">{{'FOOTER_T2_SUBTITLE_1' | translate}}</a></div>
+          </div><!--
+
+          --><div class="col-xs-6 col-sm-2" style="text-align: left;">
+            <div style="color: #2d4255; font-weight: bolder; font-size: 1em; margin-bottom: 30px;">{{'FOOTER_TITLE_3' | translate}}</div>
+            <div style="margin-bottom: 20px; margin-right: 25px; font-size: 0.9em;"><a style="color: #000;" href="/a/universidade/forum/category/id/5efadbb98c383600174f3b6d">{{'FOOTER_T3_SUBTITLE_1' | translate}}</a></div>
+            <div style="margin-bottom: 20px; margin-right: 25px; font-size: 0.9em;"><a style="color: #000;" href="/a/universidade/forum/category/id/5efadb8f8c383600174f3b6c">{{'FOOTER_T3_SUBTITLE_2' | translate}}</a></div>
+            <div style="margin-bottom: 20px; margin-right: 25px; font-size: 0.9em;"><a style="color: #000;" ng-click="downloadVRAndroid()">{{'FOOTER_T3_SUBTITLE_3' | translate}}</a></div>
+          </div><!--
+
+          --><div class="col-xs-6 col-sm-2" style="text-align: left;">
+            <div style="color: #2d4255; font-weight: bolder; font-size: 1em; margin-bottom: 30px;">{{'FOOTER_TITLE_4' | translate}}</div>
+            <div style="display: inline-block; margin-right: 25px; font-size: 0.9em;"><a style="color: #000;" href="/sobre">{{'FOOTER_T4_SUBTITLE_1' | translate}}</a></div>
+            <div style="margin-bottom: 20px; margin-right: 25px; font-size: 0.9em;"><a style="color: #000;" href="/a/universidade/forum/category/id/5efadb8f8c383600174f3b6c">{{'FOOTER_T3_SUBTITLE_2' | translate}}</a></div>
+          </div>
+
+        </div>
+        <!-- end footer desktop -->
 
     </div>
     <!-- container-fluid container-full -->
