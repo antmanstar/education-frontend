@@ -3,6 +3,26 @@
 /* Controllers */
 angular.module('netbase')
 
+.controller('HomeLandingCtrl', ['$rootScope', '$scope', '$location', '$localStorage', 'jwtHelper', 'Students', '$route', 'University', 'ngDialog', '$window', function($rootScope, $scope, $location, $localStorage, jwtHelper, Students, $route, University, ngDialog, $window) {
+
+  if ($localStorage.token) {
+      window.location.href = "/home/timeline"
+  }
+
+  $scope.downloadVRAndroid = function() {
+      $window.open('https://play.google.com/store/apps/details?id=com.AnduraStudio.SalaDeAula', '_blank');
+  }
+
+  $scope.login = function() {
+      ngDialog.open({ template: 'partials/modals/login.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
+  }
+
+  $scope.signup = function() {
+      ngDialog.open({ template: 'partials/modals/signup.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
+  }
+
+}])
+
 .controller('IniciarCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'University', 'Playlist', 'Forum', 'User', '$window', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, University, Playlist, Forum, User, $window) {
     let url = $route.current;
     let originalPath = url.$$route.originalPath;
@@ -5388,7 +5408,7 @@ angular.module('netbase')
         if (universityUrl != null && roomSID != null && accountSid != null) {
             redirectUrl = $route.params.url;
         } else
-            redirectUrl = "/home/explore";
+            redirectUrl = "/home/landing";
         $location.path(redirectUrl);
     }
     $localStorage.indexVisited = true;
