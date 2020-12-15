@@ -7,6 +7,8 @@
     <p class="step-text universidade-gray-color" ng-if="topup_step == 'step-3'">{{'STEP_3_OF_3' | translate}}</p>
   </div>
 
+  <div class="alert bg-primary-red" ng-show="hasError">{{errorMessage | translate}}</div>
+
   <!--TOP UP STEP 1 - AMOUNT INPUT-->
   <div ng-if="topup_step == 'step-1'">
     <div class="col-md-8 col-md-offset-2 col-xs-12" id="topup-form" style="text-align:center; margin-bottom: 2.5em;">
@@ -21,7 +23,7 @@
         <div class="price-option" ng-click="selectPrice(100)">$100</div>
       </div>
 
-      <span class="universidade-gray-color">{{'EWALLET_TOPUP_NEW_BALANCE' | translate}} {{newBalance}}</span>
+      <span class="universidade-gray-color">{{'EWALLET_TOPUP_NEW_BALANCE' | translate}} {{newBalance | number: 2 }}</span>
 
       <div style="display: grid;">
         <button
@@ -49,20 +51,36 @@
     <div class="center universidade-green-color" syle="margin-top: 40px;">
       <h2>{{'SELECT_A_METHOD_TO_FUND' | translate}}{{amount}} {{'INTO_YOUR_ACCOUNT' | translate}}</h2>
     </div>
-    <div class="addfund-method-container">
-      <div class="method-title">
-        <span>{{'CARDS' | translate}}</span>
-        <div></div>
+    <div
+      ng-class="{'payment-methods pointer addfund-method-container': card.id!=selectedMethod.id, 'payment-method-selected pointer addfund-method-container': card.id==selectedMethod.id }"
+      ng-click="selectPaymentMethod(card)"
+      ng-repeat="card in paymentMethods"
+    >
+      <div class="method-title left-right">
+        <p>{{card.name}}</p>
+        <p class="light-gray-text">{{card.brand}}</p>
       </div>
       <p class="method-fees universidade-gray-color">{{'FEES_6%' | translate}}</p>
     </div>
+    <div ng-if="paymentMethods.length == 0">
+      <p class="gray-text">{{'NO_SAVE_PAYMENT_METHODS' | translate}}</p>
+    </div>
 
-    <div class="addfund-method-container">
-      <div class="method-title">
-        <span>{{'BANK_TRANSFER' | translate}}</span>
-        <div></div>
-      </div>
-      <p class="method-fees universidade-gray-color">{{'FEES_6%' | translate}}</p>
+    <div class="center universidade-green-color" syle="margin-top: 40px;">
+      <h2>{{'OR_ONE_TIME_PAYMENT' | translate}}</h2>
+    </div>
+
+    <!--STRIPE ELEMENT FORM FOR ENTERING CARD DETAILS-->
+    <div class="form" id="request-form">
+      <div class="alert bg-primary-red" ng-show="validationError != undefined">{{validationError | translate}}</div>
+      <form ng-model="form">
+          <div class="form-group">
+              <input ng-model="cardData.cardholderName" placeholder="{{'CARDHOLDERS_NAME' | translate}}" type="text" />
+          </div>
+          <div class="form-group">
+              <stripe-element instance="card"></stripe-element>
+          </div>
+      </form>
     </div>
 
     <div style="display: grid;">
@@ -85,12 +103,23 @@
 
   <!--TOP UP STEP 3 - TOP UP INPUTS REVIEW AND SUBMISSION-->
   <div id="topup-review-form" style="margin: 2.5em 0; text-align: center;" ng-if="topup_step == 'step-3'">
+    <div ng-show="processing" style="display: flex;justify-content: center;">
+        <img src="/img/loader.gif" height="50px" />
+    </div>
+
     <p class="universidade-gray-color">{{'AMOUNT' | translate}}</p>
     <p class="universidade-green-color title">${{amount}}</p>
-    <p class="universidade-gray-color">{{'EWALLET_TOPUP_NEW_BALANCE' | translate}} {{newBalance}}</p>
-    <div class="virtual-card-details">
+    <p class="universidade-gray-color">{{'EWALLET_TOPUP_NEW_BALANCE' | translate}} {{newBalance | number: 2 }}</p>
+    <div class="virtual-card-details" ng-if="selectedMethod">
       <div class="detail-line left-right">
-        <p class="detail-text">{{'PAYMENT_METHOD' | translate}}</p>
+        <p class="detail-text">{{selectedMethod.name}}</p>
+        <p class="detail-text">{{'FEES_6%' | translate}}</p>
+      </div>
+    </div>
+
+    <div class="virtual-card-details" ng-if="oneTimeToken">
+      <div class="detail-line left-right">
+        <p class="detail-text">{{oneTimeToken.card.brand}} - ({{oneTimeToken.card.last4}})</p>
         <p class="detail-text">{{'FEES_6%' | translate}}</p>
       </div>
     </div>
@@ -100,6 +129,7 @@
         class="btn btn-blue bold br5"
         style="margin-bottom: 12px;"
         ng-Click="performTopupOperation()"
+        ng-disabled="processing"
       >
         {{'CONFIRM' | translate}}
       </button>

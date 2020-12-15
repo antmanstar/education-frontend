@@ -13,10 +13,10 @@
 
     <p>{{'TO' | translate}}</p>
     <div class="review-user-details margin-bottom-15">
-        <img ng-if="user.imageUrl == undefined" src='img/user/user.png' class="contact-profile-review">
-        <img ng-if="user.imageUrl != undefined" src={{user.imageUrl}} class="contact-profile-review">
-        <p>{{user.username}}</p>
-        <p>{{user.email}}</p>
+        <img ng-if="receiver.imageUrl == undefined" src='img/user/user.png' class="contact-profile-review">
+        <img ng-if="receiver.imageUrl != undefined" src={{receiver.imageUrl}} class="contact-profile-review">
+        <p>{{receiver.username}}</p>
+        <p>{{receiver.email}}</p>
     </div>
 
 
@@ -24,13 +24,13 @@
       <button
         class="btn btn-blue bold br5"
         style="margin-bottom: 12px;"
-        ng-Click="performTopupOperation()"
+        ng-click="performTransferOperation()"
       >
         {{'TRANSFER' | translate}}
       </button>
       <button
         class="btn btn-secondary universidade-blue-text-color br5"
-        ng-Click="reviewModalBack()"
+        ng-click="reviewModalBack()"
       >
         {{'BACK' | translate}}
       </button>

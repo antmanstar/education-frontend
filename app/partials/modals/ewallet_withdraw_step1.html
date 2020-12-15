@@ -6,13 +6,15 @@
     <p class="step-text universidade-gray-color" ng-if="withdraw_step == 'step-3'">{{'STEP_3_OF_3' | translate}}</p>
   </div>
 
+  <div class="alert bg-primary-red" ng-show="hasError">{{errorMessage | translate}}</div>
+
   <!--WITHDRAW STEP 1-->
   <div ng-if="withdraw_step == 'step-1'">
     <div class="col-md-8 col-md-offset-2 col-xs-12" id="topup-form" style="text-align:center; margin-bottom: 2.5em;">
       <p>{{'WITHDRAW_STEP1_TITLE' | translate}}</p>
       <div class="center" style="position: relative;">
         <b>{{'CURRENCY' | translate}}</b>
-        <input style="padding-left: 10px; display: inline-block;" ng-model="amount" type="number"/>
+        <input style="padding-left: 10px; display: inline-block;" ng-model="amount" type="number" ng-change="selectPrice(amount)"/>
       </div>
       <div class="price-options-container">
         <div class="price-option" ng-click="selectPrice(10)">$10</div>
@@ -20,7 +22,7 @@
         <div class="price-option" ng-click="selectPrice(100)">$100</div>
       </div>
 
-      <span class="universidade-gray-color">{{'EWALLET_TOPUP_NEW_BALANCE' | translate}} {{newBalance}}</span>
+      <span class="universidade-gray-color">{{'EWALLET_TOPUP_NEW_BALANCE' | translate}} {{newBalance | number: 2 }}</span>
     </div>
 
     <button
@@ -46,22 +48,25 @@
 
     <div class="col-md-12 col-xs-12 form" id="withdraw-form" style="margin-bottom: 2em;">
       <div class="form-group">
-        <input type="text" placeholder="{{'ACCOUNT_NUMBER' | translate}}" ng-model="accountNumber">
+        <input type="text" placeholder="{{'CARDHOLDERS_NAME' | translate}}" ng-model="cardholderName" ng-change="updateCardholderName(cardholderName)">
       </div>
       <div class="form-group">
-        <input type="text" placeholder="{{'BANK_NAME' | translate}}" ng-model="bankName">
+        <input type="text" placeholder="{{'ACCOUNT_NUMBER' | translate}}" ng-model="accountNumber" ng-change="updateAccountNumber(accountNumber)">
       </div>
       <div class="form-group">
-        <input type="text" placeholder="{{'SWIFT_CODE' | translate}}" ng-model="swiftCode">
+        <input type="text" placeholder="{{'BANK_NAME' | translate}}" ng-model="bankName" ng-change="updateBankName(bankName)">
       </div>
       <div class="form-group">
-        <input type="text" placeholder="{{'ROUTING_NUMBER' | translate}}" ng-model="routingNumber">
+        <input type="text" placeholder="{{'SWIFT_CODE' | translate}}" ng-model="swiftCode" ng-change="updateSwiftCode(swiftCode)">
       </div>
       <div class="form-group">
-        <input type="text" placeholder="{{'COUNTRY' | translate}}" ng-model="country">
+        <input type="text" placeholder="{{'ROUTING_NUMBER' | translate}}" ng-model="routingNumber" ng-change="updateRoutingNumber(routingNumber)">
       </div>
       <div class="form-group">
-        <input type="text" placeholder="{{'CURRENCY_TEXT' | translate}}" ng-model="currency">
+        <input type="text" placeholder="{{'COUNTRY' | translate}}" ng-model="country" ng-change="updateCountry(country)">
+      </div>
+      <div class="form-group">
+        <input type="text" placeholder="{{'CURRENCY_TEXT' | translate}}" ng-model="currency" ng-change="updateCurrency(currency)">
       </div>
 
     </div>
@@ -83,49 +88,60 @@
   <!--END OF WITHDRAW STEP 2-->
 
   <!--WITHDRAW STEP 3-->
-  <div class="col-md-8 col-md-offset-2 col-xs-12" id="topup-review-form" style="margin-bottom: 2.5em;" ng-if="withdraw_step == 'step-3'">
-    <div class="center universidade-green-color" syle="margin-top: 40px;">
-      <h2>{{'PLEASE_CONFIRM_YOUR_TRANSACTION_DETAILS' | translate}}</h2>
-    </div>
-    <div class="col-md-12 col-xs-12 form" id="withdraw-form" style="margin-bottom: 2em;">
+  <div class="col-md-12 col-xs-12" id="topup-review-form" style="margin-bottom: 2.5em;" ng-if="withdraw_step == 'step-3'">
+
+    <div class="form" id="withdraw-form" style="margin-bottom: 2em;">
       <div>
-        <p class="gray-text">{{'ACCOUNT_NUMBER' | translate}}</p>
+        <p class="gray-text withdraw-review-text">{{'AMOUNT_TO_WITHDRAW' | translate}}</p>
+        <p>${{amount}}</p>
+      </div>
+      <div>
+        <p class="gray-text withdraw-review-text">{{'CARDHOLDERS_NAME' | translate}}</p>
+        <p>{{cardholderName}}</p>
+      </div>
+      <div>
+        <p class="gray-text withdraw-review-text">{{'ACCOUNT_NUMBER' | translate}}</p>
         <p>{{accountNumber}}</p>
       </div>
       <div>
-        <p class="gray-text">{{'BANK_NAME' | translate}}</p>
+        <p class="gray-text withdraw-review-text">{{'BANK_NAME' | translate}}</p>
         <p>{{bankName}}</p>
       </div>
       <div>
-        <p class="gray-text">{{'SWIFT_CODE' | translate}}</p>
+        <p class="gray-text withdraw-review-text">{{'SWIFT_CODE' | translate}}</p>
         <p>{{swiftCode}}</p>
       </div>
       <div>
-        <p class="gray-text">{{'ROUTING_NUMBER' | translate}}</p>
+        <p class="gray-text withdraw-review-text">{{'ROUTING_NUMBER' | translate}}</p>
         <p>{{routingNumber}}</p>
       </div>
       <div>
-        <p class="gray-text">{{'COUNTRY' | translate}}</p>
+        <p class="gray-text withdraw-review-text">{{'COUNTRY' | translate}}</p>
         <p>{{country}}</p>
       </div>
       <div>
-        <p class="gray-text">{{'CURRENCY_TEXT' | translate}}</p>
+        <p class="gray-text withdraw-review-text">{{'CURRENCY_TEXT' | translate}}</p>
         <p>{{currency}}</p>
       </div>
 
     </div>
 
+    <div ng-show="processing" style="display: flex;justify-content: center;">
+        <img src="/img/loader.gif" height="50px" />
+    </div>
+
     <div>
       <button
-        class="btn btn-blue width25 bold br5"
+        class="btn btn-blue bold br5"
         style="margin-bottom: 12px;"
-        ng-Click="performWithdrawOperation()"
+        ng-click="performWithdrawOperation()"
+        ng-disabled="processing"
       >
         {{'FINISH' | translate}}
       </button>
       <button
-        class="btn btn-secondary universidade-blue-text-color width25 br5"
-        ng-Click="openWithdrawStep2()"
+        class="btn btn-secondary universidade-blue-text-color br5"
+        ng-click="openWithdrawStep2()"
       >
         {{'BACK' | translate}}
       </button>

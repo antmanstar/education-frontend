@@ -2072,6 +2072,7 @@ angular.module('netbase')
             if (!$rootScope.logged) {
                 if (!displayinvite) {
                     $rootScope.accountSuggestion = $timeout(function() {
+                        //ngDialog.open({ template: 'partials/modals/accountsuggestion.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default ngdialog-plans modal-accountsuggestion', data : { university : $scope.university } });
                         $timeout.cancel()
                     }, 13500, true);
                 }
@@ -2347,12 +2348,12 @@ angular.module('netbase')
     // END getUniversity
 
     $scope.titleCounter = function() {
-        console.log("counting title")
-        if ($scope.title.length >= 25) {
-            $scope.inputLengthWarningShow = true;
-        } else {
-            $scope.inputLengthWarningShow = false;
-        }
+      console.log("counting title")
+      if($scope.title.length >= 25) {
+        $scope.inputLengthWarningShow = true;
+      }else {
+        $scope.inputLengthWarningShow = false;
+      }
     }
 
     $scope.privilege = {
@@ -2634,17 +2635,17 @@ angular.module('netbase')
     }
 
     $scope.titleCounter = function() {
-        if ($scope.title.length >= 50) {
-            $scope.inputLengthWarningShow = true;
-        } else {
-            $scope.inputLengthWarningShow = false;
-        }
+      if($scope.title.length >= 50) {
+        $scope.inputLengthWarningShow = true;
+      }else {
+        $scope.inputLengthWarningShow = false;
+      }
     }
 
     $scope.updateSelected = function() {
-        if ($scope.categoryForum._id == "create_category") {
-            $location.path("/a/" + universityUrl + "/forum/category/create")
-        }
+      if ($scope.categoryForum._id == "create_category") {
+        $location.path("/a/" + universityUrl + "/forum/category/create")
+      }
     }
 
     //
@@ -3919,9 +3920,9 @@ angular.module('netbase')
         link: function(scope, element, attr) {
             let universityId = attr.uid;
             if (universityId) {
-                University.getUniversityById(universityId).success(function(res) {
-                    scope.university = res.data;
-                });
+              University.getUniversityById(universityId).success(function(res) {
+                  scope.university = res.data;
+              });
             }
         }
     }

@@ -383,6 +383,10 @@
   color: #34C0B2;
 }
 
+.universidade-red-color {
+  color: #FA735B;
+}
+
 .universidade-gray-color {
   color: #7e7b7b;
 }
@@ -427,6 +431,11 @@
   justify-content: space-between;
 }
 
+.search-result-container {
+  display: flex;
+  justify-content: center;
+}
+
 .contact-profile {
   max-width: 75% !important;
   max-height: 75% !important;
@@ -444,6 +453,29 @@
   justify-content: center;
   text-align: center;
   border: 1px solid #d8dcdd;
+  padding: 12px;
+  border-radius: 8px;
+}
+
+.user-details-selected {
+  display: grid;
+  justify-content: center;
+  text-align: center;
+  border: 1px solid #09d2c9;
+  padding: 12px;
+  border-radius: 8px;
+}
+
+.payment-methods {
+  display: grid;
+  border: 1px solid #d8dcdd;
+  padding: 12px;
+  border-radius: 8px;
+}
+
+.payment-method-selected {
+  display: grid;
+  border: 1px solid #09d2c9;
   padding: 12px;
   border-radius: 8px;
 }
@@ -484,4 +516,10 @@
   color: #2b3c63;
   padding: 12px;
   border-radius: 50px;
+}
+
+.withdraw-review-text {
+  margin-bottom: 0;
+  font-size: .8em;
+  line-height: .8em;
 }

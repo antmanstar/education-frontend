@@ -19,7 +19,7 @@
           <div class="margin-bottom-1 left-right">
             <span>{{'WALLET_BALANCE'| translate}}</span>
           </div>
-          <span class="title bold universidade-green-color margin-bottom-1">$12003.00</span>
+          <span class="title bold universidade-green-color margin-bottom-1">${{balance | number: 2 }}</span>
         </div>
         <!--END OF WALLET BALANCE CONTAINER-->
 
@@ -118,22 +118,12 @@
 </div>
 
 <!--CONFIRMATION MODALS FOR ERASE AND BLOCK CARD-->
-<script type="text/ng-template" id="eraseCardPopup">
+<script type="text/ng-template" id="alertNoBalancePopup">
   <div class="container-fluid text-center delete-container">
-    <h3>{{'ERASE_VIRTUAL_CARD_MESSAGE' | translate}}</h3>
+    <h3>{{'NO_BALANCE_MESSAGE' | translate}}</h3>
     <div class="delete-buttons-div">
-      <button class="btn btn-blue white-text" ng-disabled="eraseLoading" ng-click="eraseCardRequest()">{{'YES' | translate}} <img style="width: 15px;" ng-show="deleteLoading == true" src="img/misc/loading.gif"/></button>
-      <button class="btn btn-secondary universidade-blue-text-color" ng-click="closeErasePopup()">{{'CANCEL' | translate}}</button>
-    </div>
-  </div>
-</script>
-
-<script type="text/ng-template" id="blockCardPopup">
-  <div class="container-fluid text-center delete-container">
-    <h3>{{'BLOCK_VIRTUAL_CARD_MESSAGE' | translate}}</h3>
-    <div class="delete-buttons-div">
-      <button class="btn btn-blue white-text" ng-disabled="blockLoading" ng-click="blockCardRequest()">{{'YES' | translate}} <img style="width: 15px;" ng-show="deleteLoading == true" src="img/misc/loading.gif"/></button>
-      <button class="btn btn-secondary universidade-blue-text-color" ng-click="closeBlockPopup()">{{'CANCEL' | translate}}</button>
+      <button class="btn btn-blue white-text" ng-disabled="eraseLoading" ng-click="gotoDashboard()">{{'TOP_UP' | translate}} <img style="width: 15px;" ng-show="deleteLoading == true" src="img/misc/loading.gif"/></button>
+      <button class="btn btn-secondary universidade-blue-text-color" ng-click="closeAlertPopup()">{{'CANCEL' | translate}}</button>
     </div>
   </div>
 </script>

@@ -142,7 +142,7 @@ angular.module('netbase')
         } else {
             $scope.loading = true;
             StripeElements.createToken(card, additionalData).then(function(result) {
-              //console.log("add car result: ", result)
+              console.log("StripeElements createToken: ", result)
                 if (result.token) {
                     // Send card to API, then use routes below
                     let data = { source: result.token.id };
