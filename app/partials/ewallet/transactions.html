@@ -12,27 +12,32 @@
 
     <!--TRANSACTIONS LIST CONTAINER--->
     <div class="col-md-12">
-      <div class="col-md-12 white-background wallet-balance-container">
+      <div class="col-md-12 wallet-balance-container container-border-gray">
         <div class="left-right">
           <span class="universidade-blue-text-color dash-subtitle">{{'TRANSACTIONS'| translate}}</span>
-          <div class="export-text">
+          <!--div class="export-text" ng-if="transactions.length > 0">
             <i class="fa fa-download"></i>
             <span>{{'EXPORT_ALL_TRANSACTIONS' | translate}}</span>
-          </div>
+          </div-->
+        </div>
+
+        <!-- SHOW LOADER WHILE FETCHING IS ONGOING -->
+        <div ng-show="fetchingTransactions" class="loading-gif">
+            <img src="/img/loader.gif" height="50px" />
         </div>
 
         <!--TRANSACTION DATE SELECT-->
-        <div class="form-group" style="width: 200px;">
+        <!--div class="form-group" style="width: 200px;" ng-if="transactions.length > 0">
           <select ng-model="transactionDate" style="padding: 0; color:red; font-size: .8em;">
             <option value="0" ng-selected="true">December 1, 2020</option>
             <option value="10">December 2, 2020</option>
             <option value="50">December 3, 2020</option>
             <option value="99">December 4, 2020</option>
           </select>
-        </div>
+        </div-->
 
         <!--TRANSACTIONS LIST CONTAINER--->
-        <div>
+        <div ng-if="transactions.length > 0">
           <table style="width:100%">
 
             <tr style="background-color: #f3f3f3; color: #7e7b7b;">
@@ -42,28 +47,20 @@
               <th>{{'ID' | translate}}</th>
             </tr>
 
-            <tr class="transactions-data">
-              <td>27/02/2020 12:20:55</td>
-              <td>Received: Upwork Escrow</td>
-              <td>+$250.00</td>
-              <td>123456ABC</td>
-            </tr>
-
-            <tr class="transactions-data">
-              <td>27/02/2020 12:20:55</td>
-              <td>Received: Upwork Escrow</td>
-              <td>+$250.00</td>
-              <td>123456ABC</td>
-            </tr>
-
-            <tr class="transactions-data">
-              <td>27/02/2020 12:20:55</td>
-              <td>Received: Upwork Escrow</td>
-              <td>+$250.00</td>
-              <td>123456ABC</td>
+            <tr class="transactions-data pointer" ng-repeat="transaction in transactions" ng-click="repeatTransaction(transaction)" ng-mouseover="Repeat transaction">
+              <td>{{transaction._id.getTimestamp()}}</td>
+              <td>{{transaction.type}}: {{transaction.description}}</td>
+              <td ng-show="transaction.type=='ADD'" class="universidade-green-color">+${{transaction.amount}}</td>
+              <td ng-show="transaction.type!='ADD'" class="universidade-red-color">-${{transaction.amount}}</td>
+              <td>{{transaction._id}}</td>
             </tr>
 
           </table>
+        </div>
+
+        <!-- EMPTY TRANSACTIONS -->
+        <div ng-if="transactions.length == 0">
+          <p class="gray-text">{{'NO_TRANSACTIONS_TO_DISPLAY' | translate}}</p>
         </div>
       </div>
     </div>

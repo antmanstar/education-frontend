@@ -17,48 +17,49 @@
     <!--P2P PAYMENT FORM--->
     <div class="col-md-12 col-xs-12" style="display: grid;">
       <div class="col-md-12 col-xs-12 white-background">
+        <div class="alert bg-primary-red" ng-show="hasError">{{errorMessage | translate}}</div>
         <div class="p2p-payment-container">
           <span class="universidade-blue-text-color dash-subtitle">{{'ENTER_INFO_TO_REQUEST_CARD'| translate}}</span>
 
           <div class="form" id="request-form">
             <div class="col-md-6 col-xs-12">
               <div class="form-group">
-                <input type="text" placeholder="{{'APPLICANT_NAME' | translate}}">
+                <input type="text" placeholder="{{'APPLICANT_NAME' | translate}}" ng-model="applicantName">
               </div>
             </div>
             <div class="col-md-6 col-xs-12">
               <div class="form-group">
-                <input type="text" placeholder="{{'PHONE_NUMBER' | translate}}">
+                <input type="text" placeholder="{{'PHONE_NUMBER' | translate}}" ng-model="phoneNumber">
               </div>
             </div>
             <div class="col-md-12 col-xs-12">
               <div class="form-group">
-                <input type="text" placeholder="{{'EMAIL_ADDRESS' | translate}}">
+                <input type="text" placeholder="{{'EMAIL_ADDRESS' | translate}}" ng-model="emailAddress" disabled>
               </div>
             </div>
             <div class="col-md-6 col-xs-12">
               <div class="form-group">
-                <input type="text" placeholder="{{'COUNTRY' | translate}}">
+                <input type="text" placeholder="{{'COUNTRY' | translate}}" ng-model="country">
               </div>
             </div>
             <div class="col-md-6 col-xs-12">
               <div class="form-group">
-                <input type="text" placeholder="{{'STATE_PROVINCE' | translate}}">
+                <input type="text" placeholder="{{'STATE_PROVINCE' | translate}}" ng-model="stateProvince">
               </div>
             </div>
             <div class="col-md-6 col-xs-12">
               <div class="form-group">
-                <input type="text" placeholder="{{'TOWN_CITY' | translate}}">
+                <input type="text" placeholder="{{'TOWN_CITY' | translate}}" ng-model="townCity">
               </div>
             </div>
             <div class="col-md-6 col-xs-12">
               <div class="form-group">
-                <input type="text" placeholder="{{'POSTAL_CODE_ZIP_CODE' | translate}}">
+                <input type="text" placeholder="{{'POSTAL_CODE_ZIP_CODE' | translate}}" ng-model="postalzip">
               </div>
             </div>
             <div class="col-md-12 col-xs-12">
               <div class="form-group">
-                <input type="text" placeholder="{{'ADDRESS_LINE_1' | translate}}">
+                <input type="text" placeholder="{{'ADDRESS_LINE_1' | translate}}" ng-model="addressLine1">
               </div>
             </div>
           </div>
@@ -67,7 +68,7 @@
       </div>
       <div class="button-container" style="margin-top: 1em;">
         <button class="btn btn-secondary universidade-blue-text-color width25" style="margin-right: 12px;">{{'SAVE_FOR_LATER' | translate}}</button>
-        <button class="btn btn-blue width25 bold">{{'REQUEST_CARD' | translate}}</button>
+        <button class="btn btn-blue width25 bold" ng-Click="performRequestCardOperation()">{{'REQUEST_CARD' | translate}}</button>
       </div>
     </div>
 

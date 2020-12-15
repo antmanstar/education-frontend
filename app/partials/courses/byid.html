@@ -263,3 +263,14 @@
 
 </div>
 <!-- container-full -->
+
+<!--CONFIRMATION MODALS FOR NOT ENOUGH BALANCE-->
+<script type="text/ng-template" id="alertNoBalancePopup">
+  <div class="container-fluid text-center delete-container">
+    <h3>{{'NO_BALANCE_MESSAGE' | translate}}</h3>
+    <div class="delete-buttons-div">
+      <button class="btn btn-blue white-text" ng-disabled="eraseLoading" ng-click="gotoDashboard()">{{'TOP_UP' | translate}} <img style="width: 15px;" ng-show="deleteLoading == true" src="img/misc/loading.gif"/></button>
+      <button class="btn btn-secondary universidade-blue-text-color" ng-click="closeAlertPopup()">{{'CANCEL' | translate}}</button>
+    </div>
+  </div>
+</script>

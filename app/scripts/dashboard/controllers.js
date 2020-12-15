@@ -15,6 +15,7 @@ angular.module('netbase')
 
         if (success) {
             $scope.cards = data.sources.data;
+            console.log("card details: ", $scope.cards)
         }
     });
 
@@ -276,6 +277,7 @@ angular.module('netbase')
         }
 
         University.createPlan(universityId, data).success(function(res) {
+          console.log("create plan: ", res)
             if (res.success) {
                 $route.reload();
             }

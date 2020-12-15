@@ -26,15 +26,14 @@
   </div>
   <!-- end row -->
 
-  <div class="row" ng-show="page == 'cardAdd'">
+  <!-- disabled for new ewallet feature -->
+  <!--div class="row" ng-show="page == 'cardAdd'">
 
     <div class="col-xs-12">
 
-      <!-- Add back functionality-->
       <label ng-click="goToPage('order')"  style="margin-top: 8px; color: darkgray; cursor: pointer;">
         <i class="fas fa-chevron-left" style="margin-right: 8px;" ></i>{{'BACK' | translate}}
       </label>
-      <!-- end of Back -->
 
       <div class="headline-sub-one" style="margin-bottom: 30px;">{{'ADD_CARD' | translate}}</div>
 
@@ -46,25 +45,21 @@
           <label>{{'CARDHOLDER' | translate}}</label>
           <input ng-model="cardName" placeholder="{{'MR_CARDHOLDER' | translate}}" type="text" />
         </div>
-        <!-- end form group -->
 
         <div class="form-group">
           <label>{{'CARD' | translate}}</label>
           <stripe-element instance="card"></stripe-element>
         </div>
-        <!-- end form group -->
 
       </form>
 
     </div>
-    <!-- end col-xs-12 -->
 
     <div class="form" style="position: absolute; bottom: 0; left: 0; width: 100%; padding-left: 15px; padding-right: 15px;">
 
       <button ng-click="cardAdd()" class="btn btn-green"><b ng-hide="loading">{{'ADD_CARD' | translate}}</b><img style="width: 30px;" ng-show="loading" src="img/misc/loading.gif" /></button>
 
     </div>
-    <!-- end form -->
 
   </div>
   <!-- end row -->
@@ -93,20 +88,22 @@
       </div>
 
       <hr/>
-      <div class="form">
+
+      <div style="display: flex; justify-content: flex-end;">
+        <p class="gray-text">Your new ewallet balance will be ${{walletBalance}}</p>
+      </div>
+      <!--div class="form">
 
         <div class="form-group">
 
           <label style="padding-bottom: 15px;">{{'CREDIT_OR_DEBIT' | translate}}</label>
 
-          <!---Display notification if student does not have a credit card yet --->
 
           <div class="alert bg-primary-blue" ng-show="!hasCard">{{'NO_CARD_FOUND' | translate}}</div>
           <div style="margin-top: 15px;">
             <p class="text-color-primary-blue" ng-show="!hasCard" ng-click="goToPage('cardAdd')">+ {{'ADD_NEW_CARD' | translate}}</p>
           </div>
 
-          <!-- Since student can only update/change credit card and cannot add another one, so we just display the card info -->
           <div ng-show="hasCard">
             {{savedCard.brand}} - {{savedCard.last4}}
             <div style="float: right;">
@@ -114,22 +111,15 @@
             </div>
           </div>
 
-          <!--
-          <select ng-model="ae" ng-show="cards.sources.data.length > 0 ">
-            <option ng-repeat="card in cards.sources.data" ng-selected="card.id == cards.default_source" value="{{card.id}}">{{card.brand}} - {{card.last4}}</option>
-          </select>
-          -->
 
         </div>
-        <!-- end form-group -->
 
       </div>
-      <!-- end form -->
 
     </div>
     <!-- end col-xs-12 -->
 
-    <div class="form" style="position: absolute; bottom: 0; left: 0; width: 100%; padding-left: 15px; padding-right: 15px;">
+    <div class="form" style="bottom: 0; left: 0; width: 100%; padding-left: 15px; padding-right: 15px;">
 
       <button ng-disabled="!hasCard" ng-click="handleSubmit()" class="btn btn-green"><b ng-hide="loading">{{'CONFIRM' | translate}}</b><img style="width: 30px;" ng-show="loading" src="img/misc/loading.gif" /></button>
 

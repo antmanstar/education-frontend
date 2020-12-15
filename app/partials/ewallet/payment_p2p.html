@@ -21,28 +21,49 @@
 
           <div class="form">
             <div class="form-group">
-              <input type="text" placeholder="{{'CHOOSE_CONTACT' | translate}}" ng-model="email" ng-change="filterByValue(email)">
+              <!--input type="text" placeholder="{{'CHOOSE_CONTACT' | translate}}" ng-model="email" ng-change="filterByValue(email)"-->
+              <input
+                type="text"
+                placeholder="{{'CHOOSE_CONTACT' | translate}}"
+                ng-model="email"
+                ng-enter="searchUser(email);"
+              >
             </div>
           </div>
 
-          <div class="contacts-container">
-            <div ng-if="filtered.length==0">
+          <div class="search-result-container">
+            <div ng-if="searchNotFound">
+              {{'SEARCH_USER_NOT_FOUND' | translate}}
+            </div>
+            <div
+              class="col-md-3 user-details-selected"
+              id="user-details"
+              ng-if="users"
+            >
+                <img ng-if="users.imageUrl == undefined" src='img/user/user.png' class="contact-profile">
+                <img ng-if="users.imageUrl != undefined" src={{users.imageUrl}} class="contact-profile">
+                <p>{{users.username}}</p>
+                <p>{{users.email}}</p>
+            </div>
+          </div>
+
+          <!-- USERS FROM PREVIOUS TRANSACTIONS -->
+          <!--div class="contacts-container">
+            <div ng-if="!users">
               No user with that email
             </div>
             <div
-              class="col-md-3 user-details"
-              ng-class="{'selected-user' : user._id==selectedUser._id}"
-              ng-repeat="user in filtered"
+              ng-class="{'user-details': user._id!=selectedUser._id, 'user-details-selected': user._id==selectedUser._id }"
               id="user-details"
               ng-click="selectUser(user)"
-              ng-if="filtered.length > 0"
+              ng-if="users"
             >
                 <img ng-if="user.imageUrl == undefined" src='img/user/user.png' class="contact-profile">
                 <img ng-if="user.imageUrl != undefined" src={{user.imageUrl}} class="contact-profile">
-                <p>{{user.username}}</p>
-                <p>{{user.email}}</p>
+                <p>{{users.username}}</p>
+                <p>{{users.email}}</p>
             </div>
-          </div>
+          </div-->
 
           <div class="col-md-12">
             <div class="col-md-8 col-md-offset-2 col-xs-12" id="topup-form" style="text-align:center; margin-bottom: 2.5em; font-size:1.5em;">
@@ -78,7 +99,7 @@
         <button
           class="btn btn-blue width25 bold br5"
           ng-click="openReviewModal()"
-          ng-disabled="((amount==undefined) || (amount==''))"
+          ng-disabled="((amount==undefined) || (amount=='')) || (!selectedUser)"
         >
           {{'TRANSFER' | translate}}
         </button>

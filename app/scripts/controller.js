@@ -2928,7 +2928,18 @@ angular.module('netbase')
     }
 }])
 
-.controller('CoursesByIdCtrl', ['$sce', 'User', '$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', function($sce, User, $rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses) {
+.controller('CoursesByIdCtrl', ['$sce', 'User', '$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'Ewallet', 'jwtHelper', function($sce, User, $rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, Ewallet, jwtHelper) {
+  // GET USER'S EWALLET BALANCE
+    let studentId = jwtHelper.decodeToken($localStorage.token)._id;
+    console.log("studentId: ", studentId)
+    Ewallet.getAccount(studentId).then(function(res) {
+      console.log("get account: ", res.data.result.walletBalance)
+      if(res.data.message == 'Success') {
+        $scope.balance = res.data.result.walletBalance
+      }
+    })
+
+
     $scope.page = false;
     let id = $route.current.params.id;
     $scope.activeSection = "comprados";
@@ -3000,26 +3011,55 @@ angular.module('netbase')
     }
 
     $scope.openPaymentDialog = function() {
-      if (logged) {
-        let plan = { amount: $scope.course.price, currency: $scope.course.currency, name: $scope.course.title };
 
+      if($scope.balance > $scope.course.price) {
+        console.log("balance: ", $scope.balance)
+        //
+        // IF THE EWALLET HAS ENOUGH BALANCE, SHOW PAYMENT MODAL
+        //
+        if (logged) {
+          let plan = { amount: $scope.course.price, currency: $scope.course.currency, name: $scope.course.title };
+
+          ngDialog.open({
+              template: 'partials/courses/modals/payments.html',
+              controller: 'CoursesPaymentsCtrl',
+              className: 'ngdialog-theme-default',
+              closeByDocument: false,
+              closeByEscape: false,
+              closeByNavigation: true,
+              data: {
+                  plan: plan,
+                  course: $scope.course,
+                  accountId: $scope.course.accountId,
+                  walletBalance: $scope.balance - $scope.course.price
+              }
+          });
+        } else {
+            ngDialog.open({ template: 'partials/modals/login.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
+        }
+      }else{
+        //
+        // IF THE EWALLET HAS NO OR NOT HAVE ENOUGH BALANCE, REDIRECT TO EWALLET DASHBOARD
+        //
         ngDialog.open({
-            template: 'partials/courses/modals/payments.html',
-            controller: 'CoursesPaymentsCtrl',
-            className: 'ngdialog-theme-default',
-            closeByDocument: false,
-            closeByEscape: false,
-            closeByNavigation: true,
-            data: {
-                plan: plan,
-                course: $scope.course,
-                accountId: $scope.course.accountId
-            }
+            template: 'alertNoBalancePopup',
+            controller: 'EwalletCardsCtrl',
+            width: '50%',
+            height: '40%',
+            className: 'ngdialog-theme-default'
         });
-      } else {
-          ngDialog.open({ template: 'partials/modals/login.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
+
       }
     }
+
+    $scope.gotoDashboard = function(){
+      window.location.href = "/wallet/dashboard"
+    }
+
+    $scope.closeAlertPopup = function() {
+        ngDialog.close();
+    }
+
 }])
 
 .controller('CoursesPaymentsCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'StripeElements', 'Payments', 'Courses', 'User', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, StripeElements, Payments, Courses, User) {
@@ -3027,6 +3067,7 @@ angular.module('netbase')
     $scope.plan = $scope.ngDialogData.plan;
     $scope.course = $scope.ngDialogData.course;
     $scope.accountId = $scope.ngDialogData.accountId;
+    $scope.walletBalance = $scope.ngDialogData.walletBalance;
     $scope.flow = "order";
     $scope.page = "order";
 
@@ -3061,6 +3102,7 @@ angular.module('netbase')
         Students.getCards(userId).success(function(res) {
             if (res.success) {
                 $scope.cards = res.data;
+                console.log("card details: ", $scope.cards)
                 if ($scope.cards.sources.data.length > 0) {
                     $scope.hasCard = true
                     for (let i = 0; i < $scope.cards.sources.data.length; i++) {
@@ -4154,6 +4196,7 @@ angular.module('netbase')
 
         // Start Step 2
         Students.resetPasswordStepThree(payload).success(function(res) {
+          console.log("res:  ", res)
             if (res.success) {
                 $scope.flowSuccess = true;
             } else {}
@@ -5440,14 +5483,6 @@ angular.module('netbase')
 
 .controller('BusinessRegisterCtrl', ['$rootScope', '$scope', '$location', function($rootScope, $scope, $location) {
 
-}])
-
-.controller('EwalletTopupCtrl', ['$rootScope', '$scope', '$location', '$localStorage', function($rootScope, $scope, $location, $localStorage) {
-    $scope.amount;
-
-    $scope.selectPrice = function(amount) {
-      $scope.amount = amount
-    }
 }])
 
 .directive('studentinfooption', ['University', 'Students', function(University, Students) {

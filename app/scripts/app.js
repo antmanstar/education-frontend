@@ -26,6 +26,7 @@ angular.module('netbase', [
 .config(['$translateProvider', '$localStorageProvider', 'StripeElementsProvider', function($translateProvider, $localStorageProvider, StripeElementsProvider) {
     // let stripeKey = "pk_live_ZBmOf7GNQ13AIEGeP9WkPv3M";
     let stripeKey = "pk_test_2XclbP1INDqkspKrbRn6oBZR";
+
     //AnalyticsProvider.setAccount('UA-125408424-1');
 
     StripeElementsProvider.setAPIKey(stripeKey);
@@ -54,9 +55,6 @@ angular.module('netbase', [
 
     $translateProvider.useSanitizeValueStrategy('escape')
 
-    //$translateProvider.preferredLanguage('pt');
-    //$translateProvider.uniformLanguageTag('bcp47').determinePreferredLanguage();
-    //console.log("PREFERRED LANGUAGE: ", $translateProvider.uniformLanguageTag('bcp47').determinePreferredLanguage())
 }])
 
 .config(['$routeProvider', '$httpProvider', '$locationProvider', function($routeProvider, $httpProvider, $locationProvider) {
@@ -553,12 +551,12 @@ angular.module('netbase', [
         })
         .when('/wallet/transaction/history', {
             templateUrl: 'partials/ewallet/transactions.html',
-            controller: 'EwalletTopupCtrl',
+            controller: 'EwalletTransactionsDashboardCtrl',
             resolve: auth
         })
         .when('/wallet/payments', {
             templateUrl: 'partials/ewallet/payments.html',
-            controller: 'EwalletPaymentP2PCtrl',
+            controller: 'EwalletPaymentMethodCtrl',
             resolve: auth
         })
         .when('/wallet/payments/add', {
@@ -573,7 +571,7 @@ angular.module('netbase', [
         })
         .when('/wallet/virtual_card/request', {
             templateUrl: 'partials/ewallet/card_request.html',
-            controller: 'EwalletTopupCtrl',
+            controller: 'EwalletCardsRequestCtrl',
             resolve: auth
         })
         .when('/wallet/virtual_card/index', {
@@ -588,7 +586,7 @@ angular.module('netbase', [
         })
         .when('/wallet/funds/add/method', {
             templateUrl: 'partials/ewallet/addMethod.html',
-            controller: 'EwalletTopupCtrl',
+            controller: 'EwalletCardsCtrl',
             resolve: auth
         })
         .when('/', {
