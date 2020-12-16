@@ -43,6 +43,8 @@ angular.module('netbase', [
     //let url = "https://universida.de/home/explore"
     //let url = "https://colle.ge/home/explore"
 
+    $translateProvider.preferredLanguage('en');
+
     if (url.indexOf('colle.ge') > 0) {
       $translateProvider.preferredLanguage('en');
     } else if (url.indexOf('universida.de') > 0) {
@@ -63,7 +65,7 @@ angular.module('netbase', [
             let logged = $localStorage.logged;
 
             if (!logged) {
-                $location.path('/home/explore');
+                $location.path('/home/landing');
             }
             return deferred.promise;
         }
@@ -467,6 +469,10 @@ angular.module('netbase', [
             templateUrl: 'partials/home/homestudentexplore.html',
             controller: 'HomeExploreCtrl'
         })
+        .when('/home/landing', {
+            templateUrl: 'partials/home/homelanding.html',
+            controller: 'HomeLandingCtrl'
+        })
         .when('/home/curadoria', {
             templateUrl: 'partials/home/curatorship.html',
             controller: 'HomeCuratorship'
@@ -588,7 +594,7 @@ angular.module('netbase', [
             controller: 'IndexCtrl',
         })
         .otherwise({
-            redirectTo: '/home/explore'
+            redirectTo: '/home/landing'
         });
 
     if (window.history && window.history.pushState) {
@@ -631,6 +637,11 @@ angular.module('netbase', [
 
     let url = window.location.href;
     //let url = "https://universida.de/home/explore"
+
+    amMoment.changeLocale('en');
+    $localStorage.company_logo = "img/college_logo.png"
+    $localStorage.user_language = "EN";
+
     if (url.indexOf('colle.ge') > 0) {
       amMoment.changeLocale('en');
       $localStorage.company_logo = "img/college_logo.png";
@@ -647,12 +658,28 @@ angular.module('netbase', [
 
     $rootScope.logged = $localStorage.logged;
     $rootScope.logout = function() {
+
         $localStorage.$reset();
+
+        if (url.indexOf('colle.ge') > 0) {
+          amMoment.changeLocale('en');
+          $localStorage.company_logo = "img/college_logo.png";
+          $localStorage.user_language = "EN";
+        } else if (url.indexOf('universida.de') > 0) {
+          amMoment.changeLocale('pt-br');
+          $localStorage.company_logo = "img/universidade_logo.png"
+          $localStorage.user_language = "PT";
+        } else {
+          amMoment.changeLocale('en');
+          $localStorage.company_logo = "img/college_logo.png"
+          $localStorage.user_language = "EN";
+        }
+
         $rootScope.logged = false;
         $localStorage.logged = false;
         $localStorage.token = undefined;
 
-        $location.path('/home/explore');
+        $location.path('/home/landing');
         $route.reload();
     };
 });

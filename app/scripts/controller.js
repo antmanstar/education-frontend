@@ -3,6 +3,26 @@
 /* Controllers */
 angular.module('netbase')
 
+.controller('HomeLandingCtrl', ['$rootScope', '$scope', '$location', '$localStorage', 'jwtHelper', 'Students', '$route', 'University', 'ngDialog', '$window', function($rootScope, $scope, $location, $localStorage, jwtHelper, Students, $route, University, ngDialog, $window) {
+
+  if ($localStorage.token) {
+      window.location.href = "/home/timeline"
+  }
+
+  $scope.downloadVRAndroid = function() {
+      $window.open('https://play.google.com/store/apps/details?id=com.AnduraStudio.SalaDeAula', '_blank');
+  }
+
+  $scope.login = function() {
+      ngDialog.open({ template: 'partials/modals/login.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
+  }
+
+  $scope.signup = function() {
+      ngDialog.open({ template: 'partials/modals/signup.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
+  }
+
+}])
+
 .controller('IniciarCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'University', 'Playlist', 'Forum', 'User', '$window', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, University, Playlist, Forum, User, $window) {
     let url = $route.current;
     let originalPath = url.$$route.originalPath;
@@ -3042,7 +3062,7 @@ angular.module('netbase')
 
 }])
 
-.controller('CoursesPaymentsCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'StripeElements', 'Payments', 'Courses', 'User', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, StripeElements, Payments, Courses, User) {
+.controller('CoursesPaymentsCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'StripeElements', 'Payments', 'Courses', 'User', 'jwtHelper', 'Ewallet', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, StripeElements, Payments, Courses, User, jwtHelper, Ewallet) {
     /* FLOWS: -> addCard-> order */
     $scope.plan = $scope.ngDialogData.plan;
     $scope.course = $scope.ngDialogData.course;
@@ -3051,7 +3071,7 @@ angular.module('netbase')
     $scope.flow = "order";
     $scope.page = "order";
 
-
+    let studentId = jwtHelper.decodeToken($localStorage.token)._id;
     let data = {
         customer: $scope.customer_id,
         amount: $scope.plan.amount,
@@ -3263,6 +3283,35 @@ angular.module('netbase')
         //});
         //END StripeElements
         //}
+    }
+
+
+    //
+    //
+    //
+    $scope.handleEwalletCoursePayment = function() {
+      let data = {
+      	userId: studentId,
+        type: "SUBSCRIPTION",
+        amount: $scope.plan.amount,
+        description: "Course Payment",
+        remark: "",
+        subscriptionId: "",
+        senderId:"",
+        recieverId:"",
+        status:"COMPLETED",
+      }
+
+      Ewallet.ewalletTransaction(data)
+      .then(function(res){
+        console.log(res)
+        if(res.data.message == "Success"){
+          $location.path('/cursos/id/' + $scope.course._id + '/timeline');
+        }
+      })
+      .catch((err) => {
+        console.log("error: ", err)
+      });
     }
 }])
 

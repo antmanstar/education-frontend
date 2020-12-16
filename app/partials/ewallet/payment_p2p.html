@@ -38,32 +38,29 @@
             <div
               class="col-md-3 user-details-selected"
               id="user-details"
-              ng-if="users"
+              ng-if="selectedUser && !selectPreviousUser"
             >
-                <img ng-if="users.imageUrl == undefined" src='img/user/user.png' class="contact-profile">
-                <img ng-if="users.imageUrl != undefined" src={{users.imageUrl}} class="contact-profile">
-                <p>{{users.username}}</p>
-                <p>{{users.email}}</p>
+                <img ng-if="selectedUser.imageUrl == undefined" src='img/user/user.png' class="contact-profile">
+                <img ng-if="selectedUser.imageUrl != undefined" src={{selectedUser.imageUrl}} class="contact-profile">
+                <p style="margin-bottom: 0 !important; line-height: .8em;">{{selectedUser.username}}</p>
+                <p style="font-size: .8em;">{{selectedUser.email}}</p>
             </div>
           </div>
 
           <!-- USERS FROM PREVIOUS TRANSACTIONS -->
-          <!--div class="contacts-container">
-            <div ng-if="!users">
-              No user with that email
-            </div>
+          <div class="recent-contacts-container" ng-if="userTransactions.length > 0 && !repeatTransaction">
             <div
-              ng-class="{'user-details': user._id!=selectedUser._id, 'user-details-selected': user._id==selectedUser._id }"
+              ng-class="{'col-md-3 user-details': user._id!=selectedUser._id, 'col-md-3 user-details-selected': user._id==selectedUser._id }"
               id="user-details"
               ng-click="selectUser(user)"
-              ng-if="users"
+              ng-repeat="user in userTransactions"
             >
                 <img ng-if="user.imageUrl == undefined" src='img/user/user.png' class="contact-profile">
                 <img ng-if="user.imageUrl != undefined" src={{user.imageUrl}} class="contact-profile">
-                <p>{{users.username}}</p>
-                <p>{{users.email}}</p>
+                <p style="margin-bottom: 0 !important; line-height: .8em;">{{user.username}}</p>
+                <p style="font-size: .8em;">{{user.email}}</p>
             </div>
-          </div-->
+          </div>
 
           <div class="col-md-12">
             <div class="col-md-8 col-md-offset-2 col-xs-12" id="topup-form" style="text-align:center; margin-bottom: 2.5em; font-size:1.5em;">

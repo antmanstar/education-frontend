@@ -1,12 +1,18 @@
 <div class="container-fluid">
 
+  <style>
+    .user-collections .collection {
+      margin-left: 0px;
+    }
+  </style>
+
   <div class="row" style="margin-top: 20px; margin-bottom: 20px;">
 
     <div class="col-xs-4"></div>
 
     <div class="col-xs-4" style="text-align: center;">
 
-      <a href="/home/explore">
+      <a href="/home/timeline">
         <img src="img/universidade_icon.png" height="30px" />
       </a>
 
@@ -43,7 +49,7 @@
 
   <div class="row" style="margin-bottom: 25px;">
 
-    <div class="col-xs-12">
+    <div class="col-xs-12 col-sm-4">
 
       <div class="user-collections">
 
@@ -56,6 +62,16 @@
 
         </div>
 
+      </div>
+      <!-- end user-collections -->
+
+    </div>
+    <!-- end COL XS 12 -->
+
+    <div class="col-xs-12 col-sm-4">
+
+      <div class="user-collections">
+
         <div class="collection" ng-click="selectMode('teach')" ng-class="{'active-option': mode == 'teach'}">
 
           <div class="dot"><i class="fas fa-chalkboard-teacher"></i></div>
@@ -64,6 +80,16 @@
           <!--<div style="color: #909090;">4 items</div>-->
 
         </div>
+
+      </div>
+      <!-- end user-collections -->
+
+    </div>
+    <!-- end COL XS 12 -->
+
+    <div class="col-xs-12 col-sm-4">
+
+      <div class="user-collections">
 
         <div class="collection" ng-click="selectMode('video')" ng-class="{'active-option': mode == 'video'}">
 
@@ -85,9 +111,11 @@
 
   <div class="row animated fadeIn" ng-show="mode == 'teach'">
 
-    <div class="col-xs-12">
+    <div class="col-xs-12" style="margin-bottom: 30px; text-align: center;">
 
-      <div style="font-weight: bold; font-size: 1.4em; color: #2d4255;">{{'CREATE_EDUCATIONAL_COMMUNITY' | translate}}:</div>
+      <div style="font-weight: bold; font-size: 1.4em; color: #2d4255;">{{'CREATE_EDUCATIONAL_COMMUNITY' | translate}}</div>
+
+      <!--
 
       <div class="user-collections" style="margin-top: 30px;">
 
@@ -99,11 +127,11 @@
           <div style="color: #909090;">{{'EDUCATIONAL_TEACHING_AND_LEARNING' | translate}}</div>
 
         </div>
-        <!-- -->
 
       </div>
       <!-- end user-collections -->
 
+      <!--
       <div class="user-collections" style="margin-top: 30px;">
 
         <div style="height: unset;" ng-class="{'active-usercollection-ff': 'Amigos e Família' == universityType}" ng-click="selectUniversityType('Amigos e Família')" class="collection teaching-option option">
@@ -114,10 +142,12 @@
           <div style="color: #909090;">{{'START_A_STUDY_GROUP' | translate}}</div>
 
         </div>
-        <!-- -->
+        <!--
 
       </div>
       <!-- end user-collections -->
+
+      <!--
 
       <div class="user-collections" style="margin-top: 30px;">
 
@@ -129,10 +159,12 @@
           <div style="color: #909090;">{{'EMPOWER_STUDENTS' | translate}}</div>
 
         </div>
-        <!-- -->
+        <!--
 
       </div>
       <!-- end user-collections -->
+
+      <!--
 
       <div class="user-collections" style="margin-top: 30px;">
 
@@ -144,10 +176,12 @@
           <div style="color: #909090;">{{'INTERNALTRAINING' | translate}} </div>
 
         </div>
-        <!-- -->
+        <!--
 
       </div>
       <!-- end user-collections -->
+
+      <!--
 
       <div class="user-collections" style="margin-top: 30px;">
 
@@ -159,13 +193,76 @@
           <div style="color: #909090;">{{'EDUCATIONAL_PLATFORM_FOR_CHILDREN' | translate}}</div>
 
         </div>
-        <!-- -->
+        <!--
 
       </div>
       <!-- end user-collections -->
 
     </div>
     <!-- -->
+
+    <div class="col-xs-12 col-sm-4" style="margin-bottom: 45px;">
+
+      <div style="text-align: center; min-height: 215px; margin-top: 15px;">
+
+        <img src="https://cdn.dribbble.com/users/4377825/screenshots/13858274/media/7c72f93c1ae761a984487e7b67d38308.png?compress=1&resize=1000x750" width="250px" />
+
+      </div>
+      <!-- -->
+
+      <div style="text-align: center; font-size: 1.2em; font-weight: 700; margin-bottom: 30px;">Educational Infrastructure</div>
+
+      <div style="text-align: center; font-weight: 600; margin-bottom: 30px; color: #444;">Your online educational environment</div>
+
+      <div style="text-align: center; font-weight: 400; margin-bottom: 30px; color: #444; min-height: 100px;">Communication infrastructure, courses platform, payment processing, immersive virtual reality spaces.</div>
+
+      <div style="text-align: center;">
+        <button class="btn btn-success" ng-click="teaching()" style="font-size: 1.15em; width: 50%; font-weight: bold;">{{'PROCEED' | translate}}</button>
+      </div>
+
+    </div>
+
+    <div class="col-xs-12 col-sm-4" style="margin-bottom: 45px;">
+
+      <div style="text-align: center; min-height: 215px; margin-top: 15px;">
+
+        <img src="https://storage.googleapis.com/educationalcommunity-upload/university-bg/card.png" width="250px" />
+
+      </div>
+      <!-- -->
+
+      <div style="text-align: center; font-size: 1.2em; font-weight: 700; margin-bottom: 30px;">Financial Services</div>
+
+      <div style="text-align: center; font-weight: 600; margin-bottom: 30px; color: #444;">Financial Services to run your educational org</div>
+
+      <div style="text-align: center; font-weight: 400; margin-bottom: 30px; color: #444; min-height: 100px;">Credit lines, factoring, credit debit card, employee card issuing, employee payroll and payment Upfront.</div>
+
+      <div style="text-align: center;">
+        <button class="btn btn-success" ng-click="teaching()" style="font-size: 1.15em; width: 50%; font-weight: bold;">{{'PROCEED' | translate}}</button>
+      </div>
+
+    </div>
+
+    <div class="col-xs-12 col-sm-4" style="margin-bottom: 45px;">
+
+      <div style="text-align: center; min-height: 215px; margin-top: 15px;">
+
+        <img src="https://storage.googleapis.com/educationalcommunity/infrafinservices.png" width="250px" />
+
+      </div>
+      <!-- -->
+
+      <div style="text-align: center; font-size: 1.2em; font-weight: 700; margin-bottom: 30px;">Infrastructure and Financial Services</div>
+
+      <div style="text-align: center; font-weight: 600; margin-bottom: 30px; color: #444;">Technology + Financial services</div>
+
+      <div style="text-align: center; font-weight: 400; margin-bottom: 30px; color: #444; min-height: 100px;">Everything you need to run and educational organization.</div>
+
+      <div style="text-align: center;">
+        <button class="btn btn-success" ng-click="teaching()" style="font-size: 1.15em; width: 50%; font-weight: bold;">{{'PROCEED' | translate}}</button>
+      </div>
+
+    </div>
 
   </div>
   <!-- end row -->
@@ -237,12 +334,18 @@
       border: 3px solid #ee5748;
     }
 
+    .user-collections .collection {
+
+      width: 100%;
+
+    }
+
   </style>
 
   <div class="row" style="margin-top: 15px; margin-bottom: 15px;">
-    <div class="col-xs-12" ng-show="mode == 'teach'">
+    <!--<div class="col-xs-12" ng-show="mode == 'teach'">
       <button class="btn btn-success" ng-click="teaching()" style="font-size: 1.15em; font-weight: bold;">{{'PROCEED' | translate}}</button>
-    </div>
+    </div>-->
     <!-- -->
     <div class="col-xs-12" ng-show="mode == 'learn'">
       <button class="btn btn-success" ng-click="learning()" style="font-size: 1.15em; font-weight: bold;">{{'PROCEED' | translate}}</button>

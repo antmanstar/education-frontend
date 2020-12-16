@@ -1979,7 +1979,7 @@ angular.module('netbase')
         },
 
         // PEER TO PEER TRANSFER
-        transferP2PTransaction: function(data) {
+        ewalletTransaction: function(data) {
           var url = '/transaction';
           return $http({
               method: 'POST',

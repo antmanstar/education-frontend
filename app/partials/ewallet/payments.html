@@ -77,7 +77,7 @@
         <div
           class="container-border-gray pointer left-right"
           style="align-items: center; padding: 16px;"
-          ng-repeat="card in paymentMethods"
+          ng-repeat="card in paymentMethods track by $index"
         >
           <div style="display: flex;align-items: center;">
             <div style="margin-right: 16px;">
@@ -89,12 +89,12 @@
             </div>
           </div>
 
-          <div class="dropdown">
-            <i class="fa fa-ellipsis-v showMenu" onclick="myFunction()"></i>
-            <div id="myDropdown" class="dropdown-content">
-              <a href="#" ng-click="editpaymentMethod()">Edit</a>
-              <a href="#" ng-click="blockpaymentMethod()">Block</a>
-              <a href="#" ng-click="removepaymentMethod(card)" style="color: #FA735B;">Remove</a>
+          <div class="dropdown" id="{{$index}}">
+            <i class="fa fa-ellipsis-v showMenu" onclick="cards(this)"></i>
+            <div id="dropdown-{{$index}}" class="dropdown-content">
+              <a href="#" ng-click="editCardRequest(card)">Edit</a>
+              <a href="#" ng-click="openBlockPopup(card)">Block</a>
+              <a href="#" ng-click="openErasePopup(card)" style="color: #FA735B;">Remove</a>
             </div>
           </div>
         </div>
@@ -105,7 +105,7 @@
         <div
           class="container-border-gray pointer left-right"
           style="align-items: center; padding: 16px;"
-          ng-repeat="bank in bankPaymentMethods"
+          ng-repeat="bank in bankPaymentMethods track by $index"
         >
           <div style="display: flex;align-items: center;">
             <div style="margin-right: 16px;">
@@ -117,12 +117,12 @@
             </div>
           </div>
 
-          <div class="dropdown">
-            <i class="fa fa-ellipsis-v showMenu" onclick="myFunction()"></i>
-            <div id="myDropdown" class="dropdown-content">
-              <a href="#" ng-click="editpaymentMethod()">Edit</a>
-              <a href="#" ng-click="blockpaymentMethod()">Block</a>
-              <a href="#" ng-click="removepaymentMethod(card)" style="color: #FA735B;">Remove</a>
+          <div class="dropdown" id="{{$index}}">
+            <i class="fa fa-ellipsis-v showMenu" onclick="bankAccount(this)"></i>
+            <div id="dropdown-ba-{{$index}}" class="dropdown-content">
+              <a href="#" ng-click="editpaymentMethod(card)">Edit</a>
+              <a href="#" ng-click="openBlockPopup(card)">Block</a>
+              <a href="#" ng-click="openErasePopup(card)" style="color: #FA735B;">Remove</a>
             </div>
           </div>
         </div>
@@ -136,8 +136,29 @@
 </div>
 
 <script>
-  function myFunction() {
-    document.getElementById("myDropdown").classList.toggle("show");
+  function cards(elem) {
+    id = "dropdown-" + elem.parentNode.id;
+    document.getElementById(id).classList.toggle("show");
+  }
+
+  // Close the dropdown if the user clicks outside of it
+  window.onclick = function(event) {
+    if (!event.target.matches('.showMenu')) {
+      var dropdowns = document.getElementsByClassName("dropdown-content");
+      var i;
+      for (i = 0; i < dropdowns.length; i++) {
+        var openDropdown = dropdowns[i];
+        if (openDropdown.classList.contains('show')) {
+          openDropdown.classList.remove('show');
+        }
+      }
+    }
+  }
+</script>
+<script>
+  function bankAccount(elem) {
+    id = "dropdown-ba-"" + elem.parentNode.id;
+    document.getElementById(id).classList.toggle("show");
   }
 
   // Close the dropdown if the user clicks outside of it

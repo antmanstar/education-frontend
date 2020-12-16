@@ -1,4 +1,24 @@
 <div ng-include="'partials/headerhome.html'"></div>
+<style>
+  tr .spnTooltip {
+    z-index:10;
+    display:none;
+    padding:14px 20px;
+    margin-top:-30px;
+    margin-left:28px;
+    width:300px;
+    line-height:16px;
+  }
+  tr:hover .spnTooltip{
+      display:inline;
+      position:absolute;
+      color: #7e7b7b;
+      border:1px solid #17a2b8;
+      border-radius: 5px;
+      background-color: #f3f3f3;
+  }
+  .callout {z-index:20;position:absolute;top:30px;border:0;left:-12px;}
+</style>
 
 <div class="col-md-12 container-fluid container-full margin-top-2">
   <div class="col-md-3 universidade-blue-text-color">
@@ -47,11 +67,13 @@
               <th>{{'ID' | translate}}</th>
             </tr>
 
-            <tr class="transactions-data pointer" ng-repeat="transaction in transactions" ng-click="repeatTransaction(transaction)" ng-mouseover="Repeat transaction">
-              <td>{{transaction._id.getTimestamp()}}</td>
+            <tr class="transactions-data pointer" ng-repeat="transaction in transactions" ng-click="repeatTransaction(transaction)">
+              <td>{{transaction_id.createdAt.toString()}}</td>
               <td>{{transaction.type}}: {{transaction.description}}</td>
               <td ng-show="transaction.type=='ADD'" class="universidade-green-color">+${{transaction.amount}}</td>
-              <td ng-show="transaction.type!='ADD'" class="universidade-red-color">-${{transaction.amount}}</td>
+              <td ng-show="transaction.type!='ADD'" class="universidade-red-color">
+                -${{transaction.amount}} <span ng-if="transaction.type=='TRANSFER'" class="spnTooltip">{{'CLICK_TO_REPEAT_TRANSACTION' | translate}}</span>
+              </td>
               <td>{{transaction._id}}</td>
             </tr>
 
