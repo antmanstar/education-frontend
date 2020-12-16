@@ -130,49 +130,6 @@ angular.module('netbase')
         ngDialog.close();
     }
 
-    $scope.openErasePopup = function(cardId) {
-        ngDialog.open({
-            template: 'eraseCardPopup',
-            controller: 'EwalletCardsCtrl',
-            data: { cardId: cardId },
-            width: '50%',
-            height: '40%',
-            className: 'ngdialog-theme-default'
-        });
-    }
-
-    $scope.openBlockPopup = function(cardId) {
-        ngDialog.open({
-            template: 'blockCardPopup',
-            controller: 'EwalletCardsCtrl',
-            data: { cardId: cardId },
-            width: '50%',
-            height: '40%',
-            className: 'ngdialog-theme-default'
-        });
-    }
-
-    $scope.eraseCardRequest = function() {
-        let cardId = $scope.ngDialogData.cardId
-        $scope.eraseLoading = true;
-
-
-    }
-
-    $scope.blockCardRequest = function() {
-        let cardId = $scope.ngDialogData.cardId
-        $scope.blockLoading = true;
-
-
-    }
-
-    $scope.closeErasePopup = function() {
-        ngDialog.close();
-    }
-
-    $scope.closeBlockPopup = function() {
-        ngDialog.close();
-    }
 }])
 
 .controller('EwalletCardsRequestCtrl', ['$rootScope', '$scope', '$location', '$localStorage', 'ngDialog', 'Students', 'jwtHelper', 'StripeElements', 'Ewallet', function($rootScope, $scope, $location, $localStorage, ngDialog, Students, jwtHelper, StripeElements, Ewallet) {
@@ -646,6 +603,7 @@ angular.module('netbase')
     })
 
     // GET ALL USER'S TRANSACTIONS
+    $scope.userTransactions = []
     Ewallet.getAllTransactions(studentId).then(function(res) {
       $scope.fetchingTransactions = false
       console.log("user transactions: ", res.data.result)
@@ -662,12 +620,12 @@ angular.module('netbase')
           if($scope.prevTransactionEmails.length > 0) {
             angular.forEach($scope.prevTransactionEmails, function (value) {
                 Students.getStudentById(value).then(function(res) {
-                  $scope.user = res.data.data;
-
-                  console.log("user details: ", $scope.user)
+                  $scope.userTransactions.push(res.data.data);
                 })
             });
           }
+
+          console.log("user details: ", $scope.userTransactions)
         }
       }
     })
@@ -678,6 +636,7 @@ angular.module('netbase')
     $scope.newBalance = $scope.balance
 
     $scope.searchNotFound = false
+    $scope.selectPreviousUser = false
 
     // CHECK IF THERE IS SHARED DATA
     $scope.repeatTransaction = $localStorage.repeatTransaction;
@@ -710,6 +669,7 @@ angular.module('netbase')
 
     $scope.selectUser = function(user) {
       $scope.selectedUser = user
+      $scope.selectPreviousUser = true
       console.log("selected user: ", user)
     }
 
@@ -727,6 +687,7 @@ angular.module('netbase')
         console.log("search user res: ", res.success)
           if (res.success) {
               console.log("search result: ", res.data)
+              $scope.selectPreviousUser = false
               $scope.users = res.data;
               $scope.selectedUser = $scope.users
           } else {
@@ -766,14 +727,9 @@ angular.module('netbase')
       window.location.href = "/wallet/virtual_card/index"
     }
 
-
-    $scope.$on('$locationChangeStart', function (event, next, current) {
-       if (check(next+current)) {
-           $localStorage.repeatTransaction = null
-         if (!answer) {
-             event.preventDefault();
-         }
-       }
+    $scope.$on("$destroy", function(){
+        console.log("leaving p2p page")
+        $localStorage.repeatTransaction = null
     });
 
 }])
@@ -804,7 +760,7 @@ angular.module('netbase')
       }
 
       console.log("transfer data: ", data)
-      Ewallet.transferP2PTransaction(data).then(function(res){
+      Ewallet.ewalletTransaction(data).then(function(res){
         console.log(res)
         if(res.data.message == "Success"){
           $localStorage.repeatTransaction = null
@@ -823,6 +779,7 @@ angular.module('netbase')
   $scope.errorMessage = ''
   $scope.apiSuccess = false
   $scope.successMessage = ''
+  $scope.dropdownId = ""
 
   // GET USERS SAVED PAYMENT METHOD
   function loadpaymentMethods() {
@@ -845,29 +802,34 @@ angular.module('netbase')
 
   loadpaymentMethods()
 
-  $scope.openErasePopup = function(cardId) {
+  $scope.showDropDown = function(id) {
+    $scope.dropdownId = id
+  }
+
+  $scope.openErasePopup = function(card) {
+    console.log("erase card id: ", card)
     ngDialog.open({
         template: 'eraseCardPopup',
-        controller: 'EwalletCardsCtrl',
-        data: { cardId: cardId },
+        controller: 'EwalletPaymentMethodCtrl',
+        data: { card: card },
         width: '50%',
         height: '40%',
         className: 'ngdialog-theme-default'
     });
   }
 
-  $scope.openBlockPopup = function(cardId) {
+  $scope.openBlockPopup = function(card) {
     ngDialog.open({
         template: 'blockCardPopup',
-        controller: 'EwalletCardsCtrl',
-        data: { cardId: cardId },
+        controller: 'EwalletPaymentMethodCtrl',
+        data: { card: card },
         width: '50%',
         height: '40%',
         className: 'ngdialog-theme-default'
     });
   }
 
-  $scope.removepaymentMethod = function(card) {
+  $scope.eraseCardRequest = function(card) {
     console.log("card: ", card)
     let data = {
       customerId: $localStorage.customerId,
@@ -893,6 +855,27 @@ angular.module('netbase')
       $scope.hasError = true
       $scope.errorMessage = err.data.message
     });
+
+
+  }
+
+  $scope.blockCardRequest = function() {
+      let cardId = $scope.ngDialogData.cardId
+      $scope.blockLoading = true;
+  }
+
+  $scope.editCardRequest = function(card) {
+      $localStorage.editCard = card
+      window.location.href = "/wallet/payments/add"
+  }
+
+  $scope.closeErasePopup = function() {
+    console.log("close erase popup")
+      ngDialog.close();
+  }
+
+  $scope.closeBlockPopup = function() {
+      ngDialog.close();
   }
 
 }])
@@ -934,6 +917,14 @@ angular.module('netbase')
   $scope.cardNumber = ""
   $scope.expiry = ""
   $scope.cvv = ""
+
+
+  //
+  //  CHECK LOCALSTORAGE FOR CARD EDIT
+  //
+  let editCard = $localStorage.editCard
+  console.log("edit card: ", editCard)
+
 
   $scope.displayCreditCardForm = function() {
     $scope.paymentType = "credit card"

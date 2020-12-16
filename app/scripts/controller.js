@@ -3062,7 +3062,7 @@ angular.module('netbase')
 
 }])
 
-.controller('CoursesPaymentsCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'StripeElements', 'Payments', 'Courses', 'User', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, StripeElements, Payments, Courses, User) {
+.controller('CoursesPaymentsCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'StripeElements', 'Payments', 'Courses', 'User', 'jwtHelper', 'Ewallet', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, StripeElements, Payments, Courses, User, jwtHelper, Ewallet) {
     /* FLOWS: -> addCard-> order */
     $scope.plan = $scope.ngDialogData.plan;
     $scope.course = $scope.ngDialogData.course;
@@ -3071,7 +3071,7 @@ angular.module('netbase')
     $scope.flow = "order";
     $scope.page = "order";
 
-
+    let studentId = jwtHelper.decodeToken($localStorage.token)._id;
     let data = {
         customer: $scope.customer_id,
         amount: $scope.plan.amount,
@@ -3283,6 +3283,35 @@ angular.module('netbase')
         //});
         //END StripeElements
         //}
+    }
+
+
+    //
+    //
+    //
+    $scope.handleEwalletCoursePayment = function() {
+      let data = {
+      	userId: studentId,
+        type: "SUBSCRIPTION",
+        amount: $scope.plan.amount,
+        description: "Course Payment",
+        remark: "",
+        subscriptionId: "",
+        senderId:"",
+        recieverId:"",
+        status:"COMPLETED",
+      }
+
+      Ewallet.ewalletTransaction(data)
+      .then(function(res){
+        console.log(res)
+        if(res.data.message == "Success"){
+          $location.path('/cursos/id/' + $scope.course._id + '/timeline');
+        }
+      })
+      .catch((err) => {
+        console.log("error: ", err)
+      });
     }
 }])
 
@@ -5408,7 +5437,7 @@ angular.module('netbase')
         if (universityUrl != null && roomSID != null && accountSid != null) {
             redirectUrl = $route.params.url;
         } else
-            redirectUrl = "/home/landing";
+            redirectUrl = "/home/explore";
         $location.path(redirectUrl);
     }
     $localStorage.indexVisited = true;

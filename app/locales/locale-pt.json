@@ -136,7 +136,7 @@
     "WHO_USE_PLATFORM": "ELES USAM A PLATAFORMA",
     "TIAGO_DESCRIPTION": "Tiago Camilo é um judoca brasileiro, campeão mundial, vice-campeão olímpico e tricampeão pan-americano nas categorias médio, meio-médio e leve.",
     "BLOCKCHAIN_DESCRIPTION": "Projeto educativo focado no desenvolvimento e formação de um ecossistema inovador de empreendedores, novos modelos de negócios e iniciativas utilizando infraestruturas Blockchain e DLTs.",
-    "ESCOLA_DESCRIPTION": "Na MindKids você conhecerá e aplicará ensinamentos e técnicas voltadas a meditação, foco e maior aprendizado no dia a dia.",
+    "ESCOLA_DESCRIPTION": "A Escola da Inteligência é um programa educacional que objetiva desenvolver a educação socioemocional no ambiente escolar. Fundamentada na Teoria da Inteligência Multifocal, elaborada pelo Dr. Augusto Cury.",
     "START_TRIAL_TITLE_1": "Comece sua avaliação de 14 dias,",
     "START_TRIAL_TITLE_2": "gratuita.",
     "START_TRIAL_BUTTON": "Começe já",
@@ -577,7 +577,7 @@
 
     "FINISH": "Concluir",
     "FOLLOW_FAVORITE_UNIVERSITIES": "Siga as Universidades favoritas",
-    "CREATE_EDUCATIONAL_COMMUNITY": "O que você gostaria de se inscrever?",
+    "CREATE_EDUCATIONAL_COMMUNITY": "Crie uma comunidade educacional para",
     "PROFESSOR": "Professor",
     "EDUCATIONAL_TEACHING_AND_LEARNING": "Ambiente educacional dedicado ao ensino e aprendizado dos seus alunos",
     "FRIENDS_AND_FAMILY": "Amigos e Família",
@@ -786,7 +786,7 @@
     "COURSE_IN_PROGRESS": "Curso ainda em andamento ...",
     "COURSE_IN_PROGRESS_MESSAGE": "Por favor, volte mais tarde enquanto os módulos e conteúdos estão sendo adicionados.",
 
-    "TOP_UP": "Top Up",
+    "TOP_UP": "Recarga",
     "STEP_1_OF_3": "Step 1 of 3",
     "STEP_2_OF_3": "Step 2 of 3",
     "STEP_3_OF_3": "Step 3 of 3",
@@ -922,5 +922,6 @@
     "INVALID_MONTH_NUMBER": "O mês de expiração de seus cartões é inválido.",
     "PLEASE_FILL_UP_EXPIRY_MONTH": "Favor preencher o mês de expiração.",
     "PLEASE_FILL_UP_EXPIRY_YEAR": "Favor preencher o ano de validade.",
-    "INVALID_YEAR_NUMBER": "O ano de expiração de seus cartões é inválido."
+    "INVALID_YEAR_NUMBER": "O ano de expiração de seus cartões é inválido.",
+    "CLICK_TO_REPEAT_TRANSACTION": "Clique para repetir a transação"
 }
