@@ -2348,12 +2348,12 @@ angular.module('netbase')
     // END getUniversity
 
     $scope.titleCounter = function() {
-      console.log("counting title")
-      if($scope.title.length >= 25) {
-        $scope.inputLengthWarningShow = true;
-      }else {
-        $scope.inputLengthWarningShow = false;
-      }
+        console.log("counting title")
+        if ($scope.title.length >= 25) {
+            $scope.inputLengthWarningShow = true;
+        } else {
+            $scope.inputLengthWarningShow = false;
+        }
     }
 
     $scope.privilege = {
@@ -2635,17 +2635,17 @@ angular.module('netbase')
     }
 
     $scope.titleCounter = function() {
-      if($scope.title.length >= 50) {
-        $scope.inputLengthWarningShow = true;
-      }else {
-        $scope.inputLengthWarningShow = false;
-      }
+        if ($scope.title.length >= 50) {
+            $scope.inputLengthWarningShow = true;
+        } else {
+            $scope.inputLengthWarningShow = false;
+        }
     }
 
     $scope.updateSelected = function() {
-      if ($scope.categoryForum._id == "create_category") {
-        $location.path("/a/" + universityUrl + "/forum/category/create")
-      }
+        if ($scope.categoryForum._id == "create_category") {
+            $location.path("/a/" + universityUrl + "/forum/category/create")
+        }
     }
 
     //
@@ -3111,7 +3111,6 @@ angular.module('netbase')
                                             console.log("ERROR")
                                         } else {
                                             scope.chatCreate(res.data.token);
-                                            console.log('here chat created', res.data.token);
                                         }
                                     }).catch(err => {
                                         alert("ERROR" + err)
@@ -3133,7 +3132,7 @@ angular.module('netbase')
                         scope.messagingClient.removeAllListeners();
                         scope.messagingClient.on('channelAdded', scope.getCurrentCategoryChannel); // events
                         scope.messagingClient.on('channelRemoved', scope.getCurrentCategoryChannel);
-                        scope.messagingClient.on('tokenExpired', scope.updateToken); // recreate access token when expired
+                        scope.messagingClient.on('tokenAboutToExpire', scope.updateToken); // recreate access token when expired
                     })
                     .catch((err) => {
                         // alert("The channel does not exist for this <" + scope.curCategory.title + "> category");
@@ -3920,9 +3919,9 @@ angular.module('netbase')
         link: function(scope, element, attr) {
             let universityId = attr.uid;
             if (universityId) {
-              University.getUniversityById(universityId).success(function(res) {
-                  scope.university = res.data;
-              });
+                University.getUniversityById(universityId).success(function(res) {
+                    scope.university = res.data;
+                });
             }
         }
     }

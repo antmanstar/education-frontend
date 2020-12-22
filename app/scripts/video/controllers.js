@@ -112,24 +112,24 @@ angular.module('netbase')
         $scope.errorMessage = '';
 
         if ($localStorage.token != undefined || $localStorage.token != null) {
-          // check if user enter a text
-          if (text.length > 0) {
-            Forum.postAnswerByForumPostId($scope.forumPost._id, data).then(function(res) {
-                let status = res.data.status;
-                let data = res.data.data;
-                let success = res.data.success;
+            // check if user enter a text
+            if (text.length > 0) {
+                Forum.postAnswerByForumPostId($scope.forumPost._id, data).then(function(res) {
+                    let status = res.data.status;
+                    let data = res.data.data;
+                    let success = res.data.success;
 
-                if (success) {
-                    data.votesCount = 0;
-                    data.createdAt = Math.round((new Date()).getTime() / 1000);
-                    $scope.forumPost.answers.push(data);
-                    tinymce.activeEditor.setContent("");
-                }
-            });
-          } else {
-            $scope.hasError = true;
-            $scope.errorMessage = 'COMMENT_NO_TEXT';
-          }
+                    if (success) {
+                        data.votesCount = 0;
+                        data.createdAt = Math.round((new Date()).getTime() / 1000);
+                        $scope.forumPost.answers.push(data);
+                        tinymce.activeEditor.setContent("");
+                    }
+                });
+            } else {
+                $scope.hasError = true;
+                $scope.errorMessage = 'COMMENT_NO_TEXT';
+            }
         } else {
             ngDialog.open({ template: 'partials/modals/login.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
         }
@@ -316,14 +316,10 @@ angular.module('netbase')
 
         if (createPlaylist) {
             Playlist.create(payload).success(res => {
-                let success = res.success;
                 let data = res.data;
 
                 if (res.success) {
-                    console.log("university id: ")
-                    console.log(payload.universityId)
                     University.getUniversityById(payload.universityId).success(function(res) {
-                        console.log(res)
                         let university = res.data;
                         let playlistUrl = "/a/" + university.url + "/playlist/id/" + data._id;
                         $location.path(playlistUrl);

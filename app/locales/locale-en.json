@@ -240,7 +240,7 @@
     "CRIAR_UMA_CONTA": "Create account",
 
     "RESET_PASS": "Reset password",
-    "RESET_PASS_MESSAGE": "An email was sent with the second step of the procedure.",
+    "RESET_PASS_MESSAGE": "We sent the reset password link via the eamil. Please check the email.",
     "RESET_PASS_SUCCESS_TITLE": "Rest password successful!",
     "RESET_PASS_SUCCESS_SUBTITLE": "Your password has been successfully reset.",
     "CLICK_HERE": "Click here",
@@ -784,7 +784,7 @@
     "You are not a Administrator": "You are not an Administrator",
 
     "COURSE_IN_PROGRESS": "Course still in progress ...",
-    "COURSE_IN_PROGRESS_MESSAGE": "Please come back later while modules and contents are being added." ,
+    "COURSE_IN_PROGRESS_MESSAGE": "Please come back later while modules and contents are being added.",
 
     "TOP_UP": "Top Up",
     "STEP_1_OF_3": "Step 1 of 3",
@@ -835,7 +835,7 @@
     "EXPIRATION": "Expiration",
     "SECURITY": "Security",
     "ERASE_CARD": "Erase Card",
-    "BLOCK_CARD":"Block Card",
+    "BLOCK_CARD": "Block Card",
     "ENTER_AMOUNT": "Enter Amount",
     "CHOOSE_CONTACT": "Choose Contact",
     "REQUEST_CARD": "Request card",

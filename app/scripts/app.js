@@ -46,11 +46,11 @@ angular.module('netbase', [
     $translateProvider.preferredLanguage('en');
 
     if (url.indexOf('colle.ge') > 0) {
-      $translateProvider.preferredLanguage('en');
+        $translateProvider.preferredLanguage('en');
     } else if (url.indexOf('universida.de') > 0) {
-      $translateProvider.preferredLanguage('pt');
+        $translateProvider.preferredLanguage('pt');
     } else {
-      $translateProvider.preferredLanguage('en');
+        $translateProvider.preferredLanguage('en');
     }
 
     $translateProvider.useSanitizeValueStrategy('escape')
@@ -313,6 +313,10 @@ angular.module('netbase', [
         })
         .when('/login', {
             templateUrl: 'partials/account.html',
+            controller: 'AccountCtrl',
+        })
+        .when('/verify', {
+            templateUrl: 'partials/verification.html',
             controller: 'AccountCtrl',
         })
         .when('/p/:studentUsername', {
@@ -643,17 +647,17 @@ angular.module('netbase', [
     $localStorage.user_language = "EN";
 
     if (url.indexOf('colle.ge') > 0) {
-      amMoment.changeLocale('en');
-      $localStorage.company_logo = "img/college_logo.png";
-      $localStorage.user_language = "EN";
+        amMoment.changeLocale('en');
+        $localStorage.company_logo = "img/college_logo.png";
+        $localStorage.user_language = "EN";
     } else if (url.indexOf('universida.de') > 0) {
-      amMoment.changeLocale('pt-br');
-      $localStorage.company_logo = "img/universidade_logo.png"
-      $localStorage.user_language = "PT";
+        amMoment.changeLocale('pt-br');
+        $localStorage.company_logo = "img/universidade_logo.png"
+        $localStorage.user_language = "PT";
     } else {
-      amMoment.changeLocale('en');
-      $localStorage.company_logo = "img/college_logo.png"
-      $localStorage.user_language = "EN";
+        amMoment.changeLocale('en');
+        $localStorage.company_logo = "img/college_logo.png"
+        $localStorage.user_language = "EN";
     }
 
     $rootScope.logged = $localStorage.logged;
@@ -662,17 +666,17 @@ angular.module('netbase', [
         $localStorage.$reset();
 
         if (url.indexOf('colle.ge') > 0) {
-          amMoment.changeLocale('en');
-          $localStorage.company_logo = "img/college_logo.png";
-          $localStorage.user_language = "EN";
+            amMoment.changeLocale('en');
+            $localStorage.company_logo = "img/college_logo.png";
+            $localStorage.user_language = "EN";
         } else if (url.indexOf('universida.de') > 0) {
-          amMoment.changeLocale('pt-br');
-          $localStorage.company_logo = "img/universidade_logo.png"
-          $localStorage.user_language = "PT";
+            amMoment.changeLocale('pt-br');
+            $localStorage.company_logo = "img/universidade_logo.png"
+            $localStorage.user_language = "PT";
         } else {
-          amMoment.changeLocale('en');
-          $localStorage.company_logo = "img/college_logo.png"
-          $localStorage.user_language = "EN";
+            amMoment.changeLocale('en');
+            $localStorage.company_logo = "img/college_logo.png"
+            $localStorage.user_language = "EN";
         }
 
         $rootScope.logged = false;
