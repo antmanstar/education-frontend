@@ -25,6 +25,11 @@
         <div academiastatus university="{{university}}"></div>
 
       <div class="academia-content-forum-answer" style="padding-top: 30px;">
+        <div class="alert bg-primary-red" ng-if="errors.length > 0">
+            <ul>
+                <li ng-repeat="e in errors">{{e | translate}}</li>
+            </ul>
+        </div>
 
         <label>{{'CATEGORY_TITLE' | translate}}</label></br>
         <span ng-if="inputLengthWarningShow" style="color: #721c24;">{{'INPUT_LENGTH_ERROR' | translate}}</span>

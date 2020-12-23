@@ -5,21 +5,21 @@ angular.module('netbase')
 
 .controller('HomeLandingCtrl', ['$rootScope', '$scope', '$location', '$localStorage', 'jwtHelper', 'Students', '$route', 'University', 'ngDialog', '$window', function($rootScope, $scope, $location, $localStorage, jwtHelper, Students, $route, University, ngDialog, $window) {
 
-  if ($localStorage.token) {
-      window.location.href = "/home/timeline"
-  }
+    if ($localStorage.token) {
+        window.location.href = "/home/timeline"
+    }
 
-  $scope.downloadVRAndroid = function() {
-      $window.open('https://play.google.com/store/apps/details?id=com.AnduraStudio.SalaDeAula', '_blank');
-  }
+    $scope.downloadVRAndroid = function() {
+        $window.open('https://play.google.com/store/apps/details?id=com.AnduraStudio.SalaDeAula', '_blank');
+    }
 
-  $scope.login = function() {
-      ngDialog.open({ template: 'partials/modals/login.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
-  }
+    $scope.login = function() {
+        ngDialog.open({ template: 'partials/modals/login.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
+    }
 
-  $scope.signup = function() {
-      ngDialog.open({ template: 'partials/modals/signup.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
-  }
+    $scope.signup = function() {
+        ngDialog.open({ template: 'partials/modals/signup.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
+    }
 
 }])
 
@@ -32,8 +32,10 @@ angular.module('netbase')
     // check if the user if logged in or logged out
     if ($localStorage.token) {
         console.log("log in user")
+        $scope.loggedIn = true
     } else {
         console.log("log out user")
+        $scope.loggedIn = false
     }
 
     $scope.login = function() {
@@ -45,15 +47,22 @@ angular.module('netbase')
     }
 
     $scope.signup = function() {
-        ngDialog.open({ template: 'partials/modals/signup.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
+        if ($localStorage.token) {
+            window.location.href = "/onboarding/universities/create"
+        } else {
+            ngDialog.open({ template: 'partials/modals/signup.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
+        }
     }
 }])
 
-.controller('SobreIndexCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'University', 'Playlist', 'Forum', 'User', '$window', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, University, Playlist, Forum, User, $window) {
+.controller('SobreIndexCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'University', 'Playlist', 'Forum', 'User', '$window', '$anchorScroll', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, University, Playlist, Forum, User, $window, $anchorScroll) {
     let url = $route.current;
     let originalPath = url.$$route.originalPath;
     $scope.originalPath = originalPath;
     $scope.company_logo = $localStorage.company_logo;
+
+    // make sure that the page loads always on top
+    $anchorScroll();
 }])
 
 .controller('HomeCuratorshipForumPostCreate', ['$rootScope', '$scope', '$location', '$route', 'University', 'ngDialog', 'Forum', function($rootScope, $scope, $location, $route, University, ngDialog, Forum) {
@@ -273,7 +282,7 @@ angular.module('netbase')
     }
 }])
 
-.controller('HomePersonalClassroom', ['$rootScope', '$scope', '$location', '$route', 'University', 'Classroom', 'Students', 'ngDialog', 'jwtHelper', '$localStorage', '$window', function($rootScope, $scope, $location, $route, University, Classroom, Students, ngDialog, jwtHelper, $localStorage, $window) {
+.controller('HomePersonalClassroom', ['$rootScope', '$scope', '$location', '$route', 'University', 'Classroom', 'Students', 'ngDialog', 'jwtHelper', '$localStorage', '$window', '$filter', function($rootScope, $scope, $location, $route, University, Classroom, Students, ngDialog, jwtHelper, $localStorage, $window, $filter) {
     let studentId = jwtHelper.decodeToken($localStorage.token)._id;
     $scope.studentId = studentId;
     let universityUrl = studentId;
@@ -297,8 +306,8 @@ angular.module('netbase')
     var domain = arr[0] + "//" + arr[2];
 
     University.getUniversity(universityUrl).then(function(res) {
-        console.log('here university');
-        console.log(res);
+        // console.log('here university');
+        // console.log(res);
         $scope.university = res.data.data;
         $scope.getAllClassrooms();
     });
@@ -374,26 +383,32 @@ angular.module('netbase')
                     $rootScope.alertDialog.push(ngDialog.open({ template: 'partials/modals/classroom_alert_modal.html', controller: "AcademiaClassroomsAlertCtrl", className: 'ngdialog-theme-default classroom-alert-modal', data: { type: "ERROR", msg: "ERROR_EMPTY_CLASSROOM_NAME" } }));
                 } else {
                     let newClassroom = data.data;
-                    let url = '/classroom/university/' + $scope.university._id + '/all'
-                    Classroom.getAllClassroomsByUniversity(baseUrl + url).then((data) => {
-                        $scope.wholeClassroomList = data;
-                        $route.reload();
-                    });
+                    if (newClassroom.success == false) {
+                        ngDialog.close();
+                        if ($rootScope.alertDialog == null || $rootScope.alertDialog == undefined) $rootScope.alertDialog = [];
+                        $rootScope.alertDialog.push(ngDialog.open({ template: 'partials/modals/classroom_alert_modal.html', controller: "AcademiaClassroomsAlertCtrl", className: 'ngdialog-theme-default classroom-alert-modal', data: { type: "ERROR", msg: newClassroom.msg } }));
+                    } else {
+                        let url = '/classroom/university/' + $scope.university._id + '/all'
+                        Classroom.getAllClassroomsByUniversity(baseUrl + url).then((data) => {
+                            $scope.wholeClassroomList = data;
+                            $route.reload();
+                        });
 
-                    url = '/classroom/chat_token/';
-                    Classroom.getChatAccessToken(baseUrl + url).then((res) => {
-                        Twilio.Chat.Client.create(res.data.token).then(function(client) {
-                            $rootScope.messagingClient = client;
+                        url = '/classroom/chat_token/';
+                        Classroom.getChatAccessToken(baseUrl + url).then((res) => {
+                            Twilio.Chat.Client.create(res.data.token).then(function(client) {
+                                $rootScope.messagingClient = client;
 
-                            $rootScope.messagingClient.createChannel({ // create admin channel
-                                uniqueName: newClassroom.data.roomData.roomSID,
-                                friendlyName: newClassroom.data.roomData.uniqueName
-                            }).then((channel) => {
-                                $rootScope.currentChatChannel = channel;
+                                $rootScope.messagingClient.createChannel({ // create admin channel
+                                    uniqueName: newClassroom.data.roomData.roomSID,
+                                    friendlyName: newClassroom.data.roomData.uniqueName
+                                }).then((channel) => {
+                                    $rootScope.currentChatChannel = channel;
+                                });
                             });
                         });
-                    });
-                    ngDialog.close();
+                        ngDialog.close();
+                    }
                 }
             })
             .catch((err) => {
@@ -412,7 +427,7 @@ angular.module('netbase')
             template: 'partials/modals/classroom_alert_modal.html',
             controller: "AcademiaClassroomsAlertCtrl",
             className: 'ngdialog-theme-default classroom-alert-modal',
-            data: { type: "Universidade", msg: 'Copied link to clipboard' }
+            data: { type: $filter('translate')("PAGETITLE"), msg: $filter('translate')("COPIED_LINK_TO_CLIPBOARD") }
         }));
     }
 
@@ -423,7 +438,13 @@ angular.module('netbase')
 
     $scope.deleteClassroom = function(classroom) {
         $rootScope.deleteRoom = classroom;
-        ngDialog.open({ template: 'partials/modals/classroom_confirm_delete_modal.html', controller: "HomePersonalClassroom", className: 'ngdialog-theme-default classroom-alert-modal' });
+        ngDialog.open({
+            template: 'partials/modals/classroom_confirm_delete_modal.html',
+            controller: "HomePersonalClassroom",
+            className: 'ngdialog-theme-default classroom-alert-modal',
+            appendClassName: 'ngdialog-custom-alert',
+
+        });
     }
 
     $scope.confirmDelete = function() {
@@ -532,10 +553,10 @@ angular.module('netbase')
     }
 
     $scope.createCommunity = function() {
-      if (logged)
-        $location.path('/onboarding/universities/create');
-      else
-        ngDialog.open({ template: 'partials/modals/login.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
+        if (logged)
+            $location.path('/onboarding/universities/create');
+        else
+            ngDialog.open({ template: 'partials/modals/login.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
     }
 
     $scope.createVideocall = function() {
@@ -2929,14 +2950,14 @@ angular.module('netbase')
 }])
 
 .controller('CoursesByIdCtrl', ['$sce', 'User', '$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'Ewallet', 'jwtHelper', function($sce, User, $rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, Ewallet, jwtHelper) {
-  // GET USER'S EWALLET BALANCE
+    // GET USER'S EWALLET BALANCE
     let studentId = jwtHelper.decodeToken($localStorage.token)._id;
     console.log("studentId: ", studentId)
     Ewallet.getAccount(studentId).then(function(res) {
-      console.log("get account: ", res.data.result.walletBalance)
-      if(res.data.message == 'Success') {
-        $scope.balance = res.data.result.walletBalance
-      }
+        console.log("get account: ", res.data.result.walletBalance)
+        if (res.data.message == 'Success') {
+            $scope.balance = res.data.result.walletBalance
+        }
     })
 
 
@@ -3012,48 +3033,48 @@ angular.module('netbase')
 
     $scope.openPaymentDialog = function() {
 
-      if($scope.balance > $scope.course.price) {
+        //if($scope.balance > $scope.course.price) {
         console.log("balance: ", $scope.balance)
-        //
-        // IF THE EWALLET HAS ENOUGH BALANCE, SHOW PAYMENT MODAL
-        //
+            //
+            // IF THE EWALLET HAS ENOUGH BALANCE, SHOW PAYMENT MODAL
+            //
         if (logged) {
-          let plan = { amount: $scope.course.price, currency: $scope.course.currency, name: $scope.course.title };
+            let plan = { amount: $scope.course.price, currency: $scope.course.currency, name: $scope.course.title };
 
-          ngDialog.open({
-              template: 'partials/courses/modals/payments.html',
-              controller: 'CoursesPaymentsCtrl',
-              className: 'ngdialog-theme-default',
-              closeByDocument: false,
-              closeByEscape: false,
-              closeByNavigation: true,
-              data: {
-                  plan: plan,
-                  course: $scope.course,
-                  accountId: $scope.course.accountId,
-                  walletBalance: $scope.balance - $scope.course.price
-              }
-          });
+            ngDialog.open({
+                template: 'partials/courses/modals/payments.html',
+                controller: 'CoursesPaymentsCtrl',
+                className: 'ngdialog-theme-default',
+                closeByDocument: false,
+                closeByEscape: false,
+                closeByNavigation: true,
+                data: {
+                    plan: plan,
+                    course: $scope.course,
+                    accountId: $scope.course.accountId,
+                    walletBalance: $scope.balance - $scope.course.price
+                }
+            });
         } else {
             ngDialog.open({ template: 'partials/modals/login.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
         }
-      }else{
+        // }else{
+        //   //
+        //   // IF THE EWALLET HAS NO OR NOT HAVE ENOUGH BALANCE, REDIRECT TO EWALLET DASHBOARD
+        //   //
+        //   ngDialog.open({
+        //       template: 'alertNoBalancePopup',
+        //       controller: 'EwalletCardsCtrl',
+        //       width: '50%',
+        //       height: '40%',
+        //       className: 'ngdialog-theme-default'
+        //   });
         //
-        // IF THE EWALLET HAS NO OR NOT HAVE ENOUGH BALANCE, REDIRECT TO EWALLET DASHBOARD
-        //
-        ngDialog.open({
-            template: 'alertNoBalancePopup',
-            controller: 'EwalletCardsCtrl',
-            width: '50%',
-            height: '40%',
-            className: 'ngdialog-theme-default'
-        });
-
-      }
+        // }
     }
 
-    $scope.gotoDashboard = function(){
-      window.location.href = "/wallet/dashboard"
+    $scope.gotoDashboard = function() {
+        window.location.href = "/wallet/dashboard"
     }
 
     $scope.closeAlertPopup = function() {
@@ -3247,16 +3268,16 @@ angular.module('netbase')
         //console.log("customer id: ", $scope.customer_id)
 
         let data = {
-            customer: $scope.customer_id,
-            amount: $scope.plan.amount,
-            currency: $scope.plan.currency,
-            accountId: $scope.accountId,
-            universityId: $scope.course.university,
-        }
-        //console.log("data: ", data)
+                customer: $scope.customer_id,
+                amount: $scope.plan.amount,
+                currency: $scope.plan.currency,
+                accountId: $scope.accountId,
+                universityId: $scope.course.university,
+            }
+            //console.log("data: ", data)
 
         Payments.coursePayment(data).success(function(res) {
-          //console.log("payments res: ", res)
+            //console.log("payments res: ", res)
             if (res.success == false) {
                 $scope.loading = false;
                 $scope.errorMsg = res.error.message;
@@ -3269,7 +3290,7 @@ angular.module('netbase')
                 }
 
                 Courses.payment($scope.course._id, paymentData).success(function(paymentRes) {
-                  //console.log("course res: ", paymentRes)
+                    //console.log("course res: ", paymentRes)
                     $scope.loading = false;
                     $scope.successMsg = 'Payment Done Successfully';
                     $location.path('/cursos/id/' + $scope.course._id + '/timeline');
@@ -3290,28 +3311,28 @@ angular.module('netbase')
     //
     //
     $scope.handleEwalletCoursePayment = function() {
-      let data = {
-      	userId: studentId,
-        type: "SUBSCRIPTION",
-        amount: $scope.plan.amount,
-        description: "Course Payment",
-        remark: "",
-        subscriptionId: "",
-        senderId:"",
-        recieverId:"",
-        status:"COMPLETED",
-      }
-
-      Ewallet.ewalletTransaction(data)
-      .then(function(res){
-        console.log(res)
-        if(res.data.message == "Success"){
-          $location.path('/cursos/id/' + $scope.course._id + '/timeline');
+        let data = {
+            userId: studentId,
+            type: "SUBSCRIPTION",
+            amount: $scope.plan.amount,
+            description: "Course Payment",
+            remark: "",
+            subscriptionId: "",
+            senderId: "",
+            recieverId: "",
+            status: "COMPLETED",
         }
-      })
-      .catch((err) => {
-        console.log("error: ", err)
-      });
+
+        Ewallet.ewalletTransaction(data)
+            .then(function(res) {
+                console.log(res)
+                if (res.data.message == "Success") {
+                    $location.path('/cursos/id/' + $scope.course._id + '/timeline');
+                }
+            })
+            .catch((err) => {
+                console.log("error: ", err)
+            });
     }
 }])
 
@@ -3372,6 +3393,13 @@ angular.module('netbase')
     $scope.hasError = false;
     $scope.createcourseerrmessage = '';
 
+    let url = window.location.href;
+    if (url.indexOf('universida.de') > 0) {
+        $scope.currency = "brl"
+    } else {
+        $scope.currency = "usd"
+    }
+
     $scope.tinymceOptions = {
         file_picker_types: 'file image media',
         tinydrive_token_provider: function(success, failure) {
@@ -3394,6 +3422,7 @@ angular.module('netbase')
 
     $scope.criar = function() {
         let error = false;
+        $scope.hasError = false;
 
         //form validation
         if ($scope.title == undefined) {
@@ -3429,10 +3458,12 @@ angular.module('netbase')
         }
 
         if ($scope.free == false) {
-            if ($scope.preco.length > 0) {
+            if ($scope.preco > 0) {
                 formdata.price = $scope.preco;
             } else {
-                console.log("price zero")
+                $scope.hasError = true;
+                $scope.createcourseerrmessage = "PLEASE_ENTER_COURSE_PRICE"
+                return
             }
         }
 
@@ -3572,13 +3603,13 @@ angular.module('netbase')
         $scope.resetError = false;
         // Validate reset input
         if ($scope.resetpasswordEmail == undefined || $scope.resetpasswordEmail == '') {
-          $scope.resetError = true;
-          $scope.resetErrorMessage = 'RESET_EMAIL_EMPTY';
-          return
+            $scope.resetError = true;
+            $scope.resetErrorMessage = 'RESET_EMAIL_EMPTY';
+            return
         } else if (!re.test($scope.resetpasswordEmail)) {
-          $scope.resetError = true;
-          $scope.resetErrorMessage = 'RESET_EMAIL_INVALID';
-          return
+            $scope.resetError = true;
+            $scope.resetErrorMessage = 'RESET_EMAIL_INVALID';
+            return
         }
 
         let payload = { email: $scope.resetpasswordEmail, type: "student" }
@@ -3588,10 +3619,17 @@ angular.module('netbase')
                 $location.path('/reset/password?tokenOne=' + res.tokenOne + '&email=' + $scope.resetpasswordEmail);
                 $scope.resetPasswordSuccess = true;
             } else {
-              $scope.resetError = true;
-              $scope.resetErrorMessage = 'RESET_EMAIL_DONT_EXIST';
+                $scope.resetError = true;
+                $scope.resetErrorMessage = 'RESET_EMAIL_DONT_EXIST';
             }
         });
+    }
+
+    $scope.verify = () => {
+        $scope.sentLink = "we sent the link via your email.";
+        $scope.buttonTxt = "OK";
+        console.log("PARAMS", $routeParams);
+        $location.path('/onboarding/signup')
     }
 
     $scope.login = function() {
@@ -3605,6 +3643,8 @@ angular.module('netbase')
             Students.login(login).then(function(res) {
                 let success = res.data.success;
                 let token = res.data.token;
+                console.log("EE", res.data)
+                let verified = res.data.verified;
 
                 if (success) {
                     $localStorage.token = token;
@@ -3613,6 +3653,11 @@ angular.module('netbase')
 
                     $rootScope.$applyAsync();
                     ngDialog.close();
+
+                    // if (verified == false) redirectUrl = "/verify";
+                    // if (verified == false) {
+                    //     ngDialog.open({ template: 'partials/verification.html', className: 'ngdialog-theme-default', controller: 'AccountCtrl' });
+                    // }
 
                     if (redirectUrl.length > 0) {
                         $location.path(redirectUrl)
@@ -3662,11 +3707,11 @@ angular.module('netbase')
     $scope.create = function() {
         let url = window.location.href;
         if (language == undefined) {
-          if (url.indexOf('universida.de') > 0) {
-            language = "PT";
-          } else {
-            language = "EN";
-          }
+            if (url.indexOf('universida.de') > 0) {
+                language = "PT";
+            } else {
+                language = "EN";
+            }
         }
 
         $scope.loading = true
@@ -3685,24 +3730,27 @@ angular.module('netbase')
                 let token = res.data.token;
 
                 if (success) {
-                    $scope.loading = false
-                    $localStorage.token = token;
-                    $localStorage.logged = true;
-                    $rootScope.logged = true;
+                    // $scope.loading = false
+                    // $localStorage.token = token;
+                    // $localStorage.logged = true;
+                    // $rootScope.logged = true;
 
-                    $rootScope.$applyAsync();
-                    if ($location.path().search("landing") == -1) {
-                        $location.path('/onboarding/signup')
-                        ngDialog.close();
-                    } else {
-                        ngDialog.close();
-                    }
+                    // $rootScope.$applyAsync();
+                    ngDialog.close();
+                    alert("successfully created")
+                    ngDialog.open({ template: 'partials/modals/login.html', className: 'ngdialog-theme-default', controller: 'AccountCtrl' });
+                    // if ($location.path().search("landing") == -1) {
+                    //     $location.path('/onboarding/signup')
+                    //     ngDialog.close();
+                    // } else {
+                    //     ngDialog.close();
+                    // }
 
-                    if (redirectUrl.length > 0) {
-                        $location.path("/onboarding/signup")
-                    } else {
-                        $route.reload();
-                    }
+                    // if (redirectUrl.length > 0) {
+                    //     $location.path("/onboarding/signup")
+                    // } else {
+                    //     $route.reload();
+                    // }
                 } else {
                     $scope.loading = false
                     let statusCode = res.data.status;
@@ -4185,7 +4233,7 @@ angular.module('netbase')
 
         // Start Step 2
         Students.resetPasswordStepTwo(payload).success(function(res) {
-          console.log("reset pass step two response: ", res)
+            console.log("reset pass step two response: ", res)
             if (res.success) {
                 tokenTwo = res.tokenTwo;
             }
@@ -4195,26 +4243,26 @@ angular.module('netbase')
     $scope.stepThree = function() {
         $scope.validationError = false;
         // validate passwords
-        if (($scope.password == undefined || $scope.password == '') && ($scope.confirm_password == undefined || $scope.confirm_password == '')){
-          $scope.validationError = true;
-          $scope.validationMessage = "RESET_EMPTY_ALL_FIELDS";
-          return
+        if (($scope.password == undefined || $scope.password == '') && ($scope.confirm_password == undefined || $scope.confirm_password == '')) {
+            $scope.validationError = true;
+            $scope.validationMessage = "RESET_EMPTY_ALL_FIELDS";
+            return
         } else if ($scope.password == undefined || $scope.password == '') {
-          $scope.validationError = true;
-          $scope.validationMessage = "RESET_EMPTY_PASSWORD";
-          return
+            $scope.validationError = true;
+            $scope.validationMessage = "RESET_EMPTY_PASSWORD";
+            return
         } else if ($scope.confirm_password == undefined || $scope.confirm_password == '') {
-          $scope.validationError = true;
-          $scope.validationMessage = "RESET_EMPTY_CONFIRM_PASSWORD";
-          return
+            $scope.validationError = true;
+            $scope.validationMessage = "RESET_EMPTY_CONFIRM_PASSWORD";
+            return
         } else if ($scope.password.length < 6) {
-          $scope.validationError = true;
-          $scope.validationMessage = "RESET_PASSWORD_LENGHT_ERROR";
-          return
+            $scope.validationError = true;
+            $scope.validationMessage = "RESET_PASSWORD_LENGHT_ERROR";
+            return
         } else if ($scope.password != $scope.confirm_password) {
-          $scope.validationError = true;
-          $scope.validationMessage = "RESET_PASSWORD_NOT_MATCH";
-          return
+            $scope.validationError = true;
+            $scope.validationMessage = "RESET_PASSWORD_NOT_MATCH";
+            return
         }
 
         let payload = {
@@ -4225,7 +4273,7 @@ angular.module('netbase')
 
         // Start Step 2
         Students.resetPasswordStepThree(payload).success(function(res) {
-          console.log("res:  ", res)
+            console.log("res:  ", res)
             if (res.success) {
                 $scope.flowSuccess = true;
             } else {}

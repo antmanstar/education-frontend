@@ -28,7 +28,7 @@
       </ul>
 
       <div class="dashboard-content-title">
-        <h3>{{'SALES_ON_MONTH'}} {{month}}</h3>
+        <h3>{{'SALES_ON_MONTH' | translate}} {{month}}</h3>
       </div>
 
       <table style="width:100%">
@@ -41,9 +41,9 @@
         </tr>
 
         <tr ng-repeat="l in labels">
-          <td>{{l}}</td>
+          <td>{{l | translate}}</td>
           <td>{{tableData[$index][1].length}}</td>
-          <td><div style="display: inline-block;" ng-if="university.language == 'EN'">$</div><div style="display: inline-block;" ng-if="university.language == 'PT'">R$</div> {{ convertToDecimal(tableData[$index][0]) }}</td>
+          <td><div style="display: inline-block;" ng-if="university.language == 'EN'">$</div><div style="display: inline-block;" ng-if="university.language == 'PT'">$</div> {{ convertToDecimal(tableData[$index][0]) }}</td>
           <td style="text-align: right;"><button class="btn-two btn-two-blue btn-small">{{'VIEW' | translate}}</button></td>
         </tr>
 

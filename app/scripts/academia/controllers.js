@@ -741,6 +741,7 @@ angular.module('netbase')
                     video.onloadedmetadata = function(e) {
                         video.play();
                     };
+                    video.transform = scaleX(-1);  // test mirror
                 }).catch((err) => {
                     $rootScope.alertDialog.push(ngDialog.open({
                         template: 'partials/modals/classroom_alert_modal.html',
@@ -1478,7 +1479,8 @@ angular.module('netbase')
 
                         navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
                             $scope.disconnectClassroom();
-                            $scope.connectClassroom($scope.currentRoomToken, $scope.currentRoomName, [stream.getTracks()[0], screenTrack]);
+                            $scope.connectClassroom($scope.currentRoomToken, $scope.currentRoomName);
+                            //$scope.connectClassroom($scope.currentRoomToken, $scope.currentRoomName, [stream.getTracks()[0], screenTrack]);
                         });
                         break;
                     }
@@ -1590,7 +1592,7 @@ angular.module('netbase')
             template: 'partials/modals/classroom_alert_modal.html',
             controller: "AcademiaClassroomsAlertCtrl",
             className: 'ngdialog-theme-default classroom-alert-modal',
-            data: { type: "Universidade", msg: 'Copied link to clipboard' }
+            data: { type: $filter('translate')("PAGETITLE"), msg: $filter('translate')("COPIED_LINK_TO_CLIPBOARD") }
         }));
 
     }
@@ -2325,6 +2327,7 @@ angular.module('netbase')
 .controller('AcademiaForumCategoryCreateCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Forum', '$sce', '$localStorage', 'ngDialog', 'jwtHelper', 'Courses', function($rootScope, $scope, $location, $route, University, Forum, $sce, $localStorage, ngDialog, jwtHelper, Courses) {
     let universityUrl = $route.current.params.academiaName;
     let university;
+    $scope.errors = [];
     $scope.inputLengthWarningShow = false;
 
     $scope.tinymceOptions = {
@@ -2366,7 +2369,7 @@ angular.module('netbase')
         console.log($scope.title)
 
         if ($scope.title == "" || $scope.title == undefined) {
-            alert("category title is empty");
+            $scope.errors.push("CREATE_POST_CATEGORY_EMPTY");
             return;
         }
 
@@ -2991,7 +2994,7 @@ angular.module('netbase')
     }
 }])
 
-.directive('categorychat', ['University', 'Forum', '$localStorage', '$route', 'jwtHelper', 'ngDialog', '$location', 'Students', 'Courses', 'User', function(University, Forum, $localStorage, $route, jwtHelper, ngDialog, $location, Students, Courses, User) {
+.directive('categorychat', ['University', 'Forum', '$localStorage', '$route', 'jwtHelper', 'ngDialog', '$location', 'Students', 'Courses', 'User', '$filter', function(University, Forum, $localStorage, $route, jwtHelper, ngDialog, $location, Students, Courses, User, $filter) {
     return {
         restrict: 'EA',
         templateUrl: '../partials/academia/chat.html',
@@ -3014,6 +3017,15 @@ angular.module('netbase')
             scope.boxToggle = true;
 
             let categoryId = null;
+
+
+            //
+            //  THIS FUNCTION WILL REMOVE THE EDITOR WHEN USER NAVIGATES TO OTHER PAGE
+            //  SIMPLE HACK TO HIDE THE TOOLBAR
+            //
+            scope.$on("$destroy", function(){
+                tinyMCE.remove('#chatEditor');
+            });
 
             attr.$observe('category', function(value) {
                 categoryId = value;
@@ -3054,7 +3066,7 @@ angular.module('netbase')
                                 default_link_target: "_blank",
                                 extended_valid_elements: "a[href|target=_blank]",
                                 readonly: scope.curCategory === undefined ? true : false,
-                                placeholder: "Type here...",
+                                placeholder: $filter('translate')("TYPE_HERE"),
                                 plugins: [
                                     'autolink lists link image charmap print preview',
                                     'searchreplace visualblocks code fullscreen',
@@ -3531,6 +3543,7 @@ angular.module('netbase')
             scope.studentIsTeam = false;
             scope.showSubscribe = undefined;
             scope.hideButton = false;
+            scope.loading = false;
 
             scope.userSubscribed = false;
             scope.chatDisplay = true;
@@ -3554,14 +3567,16 @@ angular.module('netbase')
                 })
 
                 // Handle Subscribe Functionality
+
                 Students.getStudentById(studentId).then(function(res) {
                         let data = res.data.data;
-
+                        console.log("data: ", data)
                         // This variable will be used to check if a user / student
                         // has once been subscribed to a university or
                         // if the current university is included in user's universitiesSubscribed array
                         let unisub = false;
-                        scope.hideButton = true;
+
+                        if (data != undefined) scope.hideButton = true;
 
                         if (res.data.success == false) {
                             scope.userSubscribed = true;
@@ -3673,6 +3688,7 @@ angular.module('netbase')
             // };
 
             scope.subscribe = function() {
+              scope.loading = true;
                 if ($localStorage.token != undefined && $localStorage.token != null) {
                     University.subscribeOnUniversity(scope.university.url).then(function(res) {
 
@@ -3682,6 +3698,7 @@ angular.module('netbase')
                                 if (res.data.success) {
                                     scope.university = res.data.data
                                 }
+                                scope.loading = false;
                             })
                         }
                         // if (userSubscribed(scope.university.members)) {

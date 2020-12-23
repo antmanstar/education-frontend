@@ -46,6 +46,18 @@ angular.module('netbase')
 
 .controller('DashboardAcademiaCreateCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', function($rootScope, $scope, $location, $route, University) {
     $scope.step = 1;
+    $scope.loading = false
+
+    //
+    // DETERMINE THE LANGUAGE
+    //
+    let url = window.location.href;
+    if (url.indexOf('universida.de') > 0) {
+      $scope.language = "PT"
+    } else {
+      $scope.language = "EN"
+    }
+
 
     /* background image */
     $scope.backgroundImage = "https://universida.de/img/misc/noimageacademia.jpg";
@@ -71,11 +83,51 @@ angular.module('netbase')
 
     /* step 1 */
     $scope.move = function(value) {
-        $scope.step += Number(value);
+      $scope.error.exists = false;
 
-        if ($scope.step==3){
-          $scope.backgroundImageUpdate();
+      // Only allow alpanumeric characters, dash and underscore ^[a-zA-Z0-9]+(?:[\w -]*[a-zA-Z0-9]+)*$
+      let urlpattern = new RegExp(/^[a-zA-Z0-9_-]*$/)
+
+      //
+      // VALIDATION
+      //  only description field is optional
+      //
+
+      if ($scope.step==2 && value==1) {
+
+        console.log("perform validation")
+        if ($scope.name == undefined || $scope.name == '') {
+            $scope.error.text = "UNI_CREATE_NAME_EMPTY";
+            $scope.error.exists = true;
+            return
         }
+
+        if ($scope.url == undefined || $scope.url == '') {
+            $scope.error.text = "UNI_CREATE_URL_EMPTY";
+            $scope.error.exists = true;
+            return
+        }
+
+        if (!urlpattern.test($scope.url)) {
+          $scope.error.text = "UNI_CREATE_URL_INVALID";
+          $scope.error.exists = true;
+          return
+        }
+
+        if ($scope.language == undefined) {
+            $scope.error.text = "UNI_CREATE_SELECT_LANGUAGE";
+            $scope.error.exists = true;
+            return
+        }
+
+      }
+
+      $scope.step += Number(value);
+
+      if ($scope.step==3){
+        $scope.backgroundImageUpdate();
+      }
+
     }
 
     $scope.error = {
@@ -97,58 +149,39 @@ angular.module('netbase')
     }
 
     $scope.create = function() {
-        let validated = true;
+      $scope.loading = true
 
-        let data = {
-            name: $scope.name,
-            about: $scope.about,
-            url: $scope.url,
-            language: $scope.language
-        };
+      let data = {
+          name: $scope.name,
+          about: $scope.about,
+          url: $scope.url,
+          language: $scope.language
+      };
 
-        let backgroundImage = $("#file").attr("value");
+      console.log("data: ", data)
 
-        // Error while checking. If undefined, bugs
+      let backgroundImage = $("#file").attr("value");
+
+      // Error while checking. If undefined, bugs
+      if (backgroundImage != undefined) {
         if (backgroundImage.indexOf("https://") != -1) {
             data.backgroundImage = backgroundImage;
         }
+      }
 
-        if (data.name == undefined) {
-            validated = false;
-            $scope.error.text.push("Type a name for your College");
-            $scope.error.exists = true;
+      University.create(data).success(function(res) {
+        $scope.loading = false
+        if (res.success) {
+          $location.path('/a/' + res.data.url + '/forum');
+        } else {
+          console.log("create university error response: ", res)
+          if (res.err.code == 11000) {
+              $scope.error.text = "UNI_CREATE_URL_EXISTS";
+              $scope.error.exists = true;
+          }
         }
+      });
 
-        if (data.url == undefined) {
-            validated = false;
-            $scope.error.text.push("Type an url for your College");
-            $scope.error.exists = true;
-        }
-
-        if (data.about == undefined) {
-            validated = false;
-            $scope.error.text.push("Type a short description for your College");
-            $scope.error.exists = true;
-        }
-
-        if (data.language == undefined) {
-            validated = false;
-            $scope.error.text.push("Select a language for your College");
-            $scope.error.exists = true;
-        }
-
-        if (validated) {
-            University.create(data).success(function(res) {
-                if (res.success) {
-                    $location.path('/a/' + res.data.url + '/forum');
-                } else {
-                    if (res.err.errmsg.indexOf("url") != 1) {
-                        $scope.error.text.push("Type a different URL for your university. The one you choose already exists.");
-                        $scope.error.exists = true;
-                    }
-                }
-            });
-        }
     }
 }])
 
@@ -162,6 +195,7 @@ angular.module('netbase')
     University.getUniversitiesByOwnerId(User.getId()).success(function(res) {
         if (res.success) {
             $scope.universities = res.data;
+            console.log("universities: ", $scope.universities)
         }
     });
 }])
@@ -430,7 +464,7 @@ angular.module('netbase')
 
 .controller('DashboardAcademiaManageByIdSalesDatesCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Sales', function($rootScope, $scope, $location, $route, University, Sales) {
     /* chart */
-    $scope.labels = ["January", "February", "March", "April", "May", "June", "July", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+    $scope.labels = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
 
     $scope.chartData = [
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
@@ -719,6 +753,7 @@ angular.module('netbase')
             University.getUniversityById(universityId).success(function(res) {
                 if (res.success) {
                     scope.university = res.data;
+                    console.log("university: ", scope.university)
                 }
             });
         }

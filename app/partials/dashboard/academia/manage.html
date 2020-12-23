@@ -32,7 +32,7 @@
 
       <div class="section-cards dashboard-cards">
 
-        <div class="card" ng-repeat="university in universities">
+        <div class="card" ng-if="university.ownerId != university.name" ng-repeat="university in universities">
 
           <div class="picture" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
           <div class="picture" ng-if="university.backgroundImage == undefined"  style="background-image: url('/img/misc/noimageacademia.jpg') "></div>

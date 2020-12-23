@@ -715,7 +715,7 @@ angular.module('netbase')
 .factory('Students', ['$http', '$localStorage', function($http, $localStorage) {
     //var baseUrl = "https://api.universida.de/accounts/students";
     var baseUrl = "https://educationalcommunity-accounts.herokuapp.com/accounts/students";
-    //var baseUrl = "http://localhost:9009/accounts/students";
+    // var baseUrl = "http://localhost:9000/accounts/students";
 
     return {
         storeLocal: function(student) {
@@ -775,6 +775,24 @@ angular.module('netbase')
             });
         },
 
+        sendVerificationToken: (data) => {
+            let url = "/verify";
+            return $http({
+                method: 'PUT',
+                url: baseUrl + url,
+                data: data,
+                transformRequest: function(obj) {
+                    var str = [];
+                    for (var p in obj)
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    return str.join("&");
+                },
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            })
+        },
+
         resetPasswordStepThree: function(data) {
             let url = "/forgot/newpassword/token";
             return $http({
@@ -812,7 +830,7 @@ angular.module('netbase')
         },
 
         resetPasswordStepTwo: function(data) {
-          console.log("reset pass two data: ", data)
+            console.log("reset pass two data: ", data)
             let url = "/forgot/newpassword";
             return $http({
                 method: 'PUT',
@@ -868,7 +886,6 @@ angular.module('netbase')
 
         createAccount: function(data) {
             var url = '/create/';
-            //data.language = "PT";
 
             return $http({
                 method: 'POST',
@@ -1202,8 +1219,8 @@ angular.module('netbase')
         },
 
         coursePayment: function(data) {
-          console.log("course payment data: ", data)
-          console.log("token: ", $localStorage.token)
+            console.log("course payment data: ", data)
+            console.log("token: ", $localStorage.token)
             var url = '/course';
             return $http({
                 method: 'POST',
@@ -1864,14 +1881,14 @@ angular.module('netbase')
         //  EWALLET ACCOUNT
         //
         getAccount: function(accountId) {
-          var url = '/account/' + accountId;
-          return $http({
-              method: 'GET',
-              url: baseUrl + url,
-              headers: {
-                  'x-access-token': $localStorage.token
-              }
-          });
+            var url = '/account/' + accountId;
+            return $http({
+                method: 'GET',
+                url: baseUrl + url,
+                headers: {
+                    'x-access-token': $localStorage.token
+                }
+            });
         },
 
 
@@ -1879,87 +1896,87 @@ angular.module('netbase')
         // PAYMENT METHODS
         //
         getPaymentMethods: function() {
-          var url = '/cards/get';
-          return $http({
-              method: 'GET',
-              url: baseUrl + url,
-              headers: {
-                  'x-access-token': $localStorage.token
-              }
-          });
+            var url = '/cards/get';
+            return $http({
+                method: 'GET',
+                url: baseUrl + url,
+                headers: {
+                    'x-access-token': $localStorage.token
+                }
+            });
         },
 
         getCardPaymentMethods: function(customerId) {
-          var url = '/cards/get/list/' + customerId + '/card';
-          return $http({
-              method: 'GET',
-              url: baseUrl + url,
-              headers: {
-                  'x-access-token': $localStorage.token
-              }
-          });
+            var url = '/cards/get/list/' + customerId + '/card';
+            return $http({
+                method: 'GET',
+                url: baseUrl + url,
+                headers: {
+                    'x-access-token': $localStorage.token
+                }
+            });
         },
 
         getBankPaymentMethods: function(customerId) {
-          var url = '/cards/get/list/' + customerId + '/bank_account';
-          return $http({
-              method: 'GET',
-              url: baseUrl + url,
-              headers: {
-                  'x-access-token': $localStorage.token
-              }
-          });
+            var url = '/cards/get/list/' + customerId + '/bank_account';
+            return $http({
+                method: 'GET',
+                url: baseUrl + url,
+                headers: {
+                    'x-access-token': $localStorage.token
+                }
+            });
         },
 
-        addPaymentMethod: function(data){
-          var url = '/cards/add';
-          return $http({
-              method: 'POST',
-              url: baseUrl + url,
-              data: data,
-              headers: {
-                  'Content-Type': 'application/json',
-                  'x-access-token': $localStorage.token
-              }
-          });
+        addPaymentMethod: function(data) {
+            var url = '/cards/add';
+            return $http({
+                method: 'POST',
+                url: baseUrl + url,
+                data: data,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-access-token': $localStorage.token
+                }
+            });
         },
 
-        getCardToken: function(data){
-          var url = '/cards/cardtoken';
-          return $http({
-              method: 'GET',
-              url: baseUrl + url,
-              params: data,
-              headers: {
-                  'x-access-token': $localStorage.token
-              }
-          });
+        getCardToken: function(data) {
+            var url = '/cards/cardtoken';
+            return $http({
+                method: 'GET',
+                url: baseUrl + url,
+                params: data,
+                headers: {
+                    'x-access-token': $localStorage.token
+                }
+            });
         },
 
-        getBankAccountToken: function(data){
-          var url = '/cards/bktoken';
-          return $http({
-              method: 'GET',
-              url: baseUrl + url,
-              params: data,
-              headers: {
-                  'x-access-token': $localStorage.token
-              }
-          });
+        getBankAccountToken: function(data) {
+            var url = '/cards/bktoken';
+            return $http({
+                method: 'GET',
+                url: baseUrl + url,
+                params: data,
+                headers: {
+                    'x-access-token': $localStorage.token
+                }
+            });
         },
 
-        removepaymentMethod: function(data){
+        removepaymentMethod: function(data) {
 
-          var url = '/cards/remove/';
-          return $http({
-              method: 'POST',
-              url: baseUrl + url,
-              data: data,
-              headers: {
-                  'Content-Type': 'application/json',
-                  'x-access-token': $localStorage.token
-              }
-          });
+            var url = '/cards/remove/';
+            return $http({
+                method: 'POST',
+                url: baseUrl + url,
+                data: data,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-access-token': $localStorage.token
+                }
+            });
         },
 
         //
@@ -1967,43 +1984,43 @@ angular.module('netbase')
         //
 
         // GET ALL TRANSACTIONS
-        getAllTransactions:  function(accountId) {
-          var url = '/transaction/' + accountId;
-          return $http({
-              method: 'GET',
-              url: baseUrl + url,
-              headers: {
-                  'x-access-token': $localStorage.token
-              }
-          });
+        getAllTransactions: function(accountId) {
+            var url = '/transaction/' + accountId;
+            return $http({
+                method: 'GET',
+                url: baseUrl + url,
+                headers: {
+                    'x-access-token': $localStorage.token
+                }
+            });
         },
 
         // PEER TO PEER TRANSFER
         ewalletTransaction: function(data) {
-          var url = '/transaction';
-          return $http({
-              method: 'POST',
-              url: baseUrl + url,
-              data: data,
-              headers: {
-                  'Content-Type': 'application/json',
-                  'x-access-token': $localStorage.token
-              }
-          });
+            var url = '/transaction';
+            return $http({
+                method: 'POST',
+                url: baseUrl + url,
+                data: data,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-access-token': $localStorage.token
+                }
+            });
         },
 
         // TOP UP WALLET TRANSACTION
         topUpWalletTransaction: function(data) {
-          var url = '/createPayment';
-          return $http({
-              method: 'POST',
-              url: baseUrl + url,
-              data: data,
-              headers: {
-                  'Content-Type': 'application/json',
-                  'x-access-token': $localStorage.token
-              }
-          });
+            var url = '/createPayment';
+            return $http({
+                method: 'POST',
+                url: baseUrl + url,
+                data: data,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-access-token': $localStorage.token
+                }
+            });
         },
 
 
@@ -2011,16 +2028,16 @@ angular.module('netbase')
         // WITHDRAWAL
         //
         withdrawalRequest: function(data) {
-          var url = '/withdrawrequests/create';
-          return $http({
-              method: 'POST',
-              url: baseUrl + url,
-              data: data,
-              headers: {
-                  'Content-Type': 'application/json',
-                  'x-access-token': $localStorage.token
-              }
-          });
+            var url = '/withdrawrequests/create';
+            return $http({
+                method: 'POST',
+                url: baseUrl + url,
+                data: data,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-access-token': $localStorage.token
+                }
+            });
         },
 
 
@@ -2028,43 +2045,43 @@ angular.module('netbase')
         //  CREDIT CARD REQUEST
         //
         creditCardRequest: function(data) {
-          var url = '/creditcardrequests/create';
-          return $http({
-              method: 'POST',
-              url: baseUrl + url,
-              data: data,
-              headers: {
-                  'Content-Type': 'application/json',
-                  'x-access-token': $localStorage.token
-              }
-          });
+            var url = '/creditcardrequests/create';
+            return $http({
+                method: 'POST',
+                url: baseUrl + url,
+                data: data,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-access-token': $localStorage.token
+                }
+            });
         },
 
     }
 }])
 
-.factory("sharedContext", ['$filter',function($filter) {
-  var context = [];
-  var addData = function(key, value) {
-    var data = {
-      key: key,
-      value: value
-    };
-    context.push(data);
-  }
-  var getData = function(key) {
-    // var data = _.find(context, {
-    //   key: key
-    // });
+.factory("sharedContext", ['$filter', function($filter) {
+    var context = [];
+    var addData = function(key, value) {
+        var data = {
+            key: key,
+            value: value
+        };
+        context.push(data);
+    }
+    var getData = function(key) {
+        // var data = _.find(context, {
+        //   key: key
+        // });
 
-    //$filter('filter')(context, {'key': key})
-    console.log("context: ", context)
-    console.log($filter('filter')(context, {'key': key}))
-    return $filter('filter')(context, {'key': key});
-  }
+        //$filter('filter')(context, {'key': key})
+        console.log("context: ", context)
+        console.log($filter('filter')(context, { 'key': key }))
+        return $filter('filter')(context, { 'key': key });
+    }
 
-  return {
-    addData: addData,
-    getData: getData
-  }
+    return {
+        addData: addData,
+        getData: getData
+    }
 }]);

@@ -6,7 +6,7 @@
 
       <div class="logo" style="text-align: center; padding-top: 15px; padding-bottom: 15px;">
 
-        <a href="/"><img height="30px" src="{{company_logo}}" /></a>
+        <a href="/home/landing"><img height="30px" src="{{company_logo}}" /></a>
 
       </div>
 
@@ -35,7 +35,8 @@
       <div class="bigbox-action login">
         <div class="title">{{'BIG_BOX_LOGIN_TITLE' | translate}}</div>
         <p>{{'BIG_BOX_LOGIN_SUBTITLE' | translate}}</p>
-        <div class="button" ng-click="login()">{{'LOGIN' | translate}}</div>
+        <div class="button" ng-click="login()" ng-show="!loggedIn">{{'LOGIN' | translate}}</div>
+        <div class="button" ng-click="login()" ng-show="loggedIn">{{'BIG_BOX_SIGNUP_BUTTON' | translate}}</div>
       </div>
 
     </div>
@@ -53,71 +54,75 @@
   </div>
   <!-- -->
 
-  <div class="row" id="whatis">
+  <div class="col-md-8 col-md-offset-2 col-xs-12 row" style="display: grid;">
 
     <div class="col-xs-12" style="margin-bottom: 10px;">
       <div class="whatsis-title">{{'WHAT_IS_TITLE' | translate}}</div>
       <p class="whatsis-description">{{'WHAT_IS_DESCRIPTION' | translate}}</p>
     </div>
 
-    <div class="col-xs-12 col-sm-6 features">
+    <div style="display: flex; flex-wrap: wrap; padding: 10px;">
+      <div class="col-md-6 col-xs-12 features">
 
-      <div class="feature-title">
-        <img src="https://visualpharm.com/assets/811/Discussion%20Forum-595b40b65ba036ed117d396c.svg" /><b>{{'FEATURE_TITLE_1' | translate}}</b>
+        <div class="feature-title">
+          <img src="https://visualpharm.com/assets/811/Discussion%20Forum-595b40b65ba036ed117d396c.svg" /><b>{{'FEATURE_TITLE_1' | translate}}</b>
+        </div>
+
+        <div class="feature-description">{{'FEATURE_DESCRIPTION_1' | translate}}</div>
+
       </div>
 
-      <div class="feature-description">{{'FEATURE_DESCRIPTION_1' | translate}}</div>
+      <div class="col-md-6 col-xs-12 features">
 
+        <div class="feature-title">
+          <img src="https://visualpharm.com/assets/311/Graduation%20Cap-595b40b65ba036ed117d2d97.svg" /><b>{{'FEATURE_TITLE_2' | translate}}</b>
+        </div>
+
+        <div class="feature-description">{{'FEATURE_DESCRIPTION_2' | translate}}</div>
+
+      </div>
     </div>
+    <div style="display: flex; flex-wrap: wrap; padding: 10px;">
+      <div class="col-md-6 col-xs-12 features">
 
-    <div class="col-xs-12 col-sm-6 features">
+        <div class="feature-title">
+          <img src="https://image.flaticon.com/icons/svg/745/745205.svg" /><b>{{'FEATURE_TITLE_3' | translate}}</b>
+        </div>
 
-      <div class="feature-title">
-        <img src="https://visualpharm.com/assets/311/Graduation%20Cap-595b40b65ba036ed117d2d97.svg" /><b>{{'FEATURE_TITLE_2' | translate}}</b>
+        <div class="feature-description">{{'FEATURE_DESCRIPTION_3' | translate}}</div>
+
       </div>
 
-      <div class="feature-description">{{'FEATURE_DESCRIPTION_2' | translate}}</div>
+      <div class="col-md-6 col-xs-12 features">
 
+        <div class="feature-title">
+          <img src="/img/education/glasses.png" /><b>{{'FEATURE_TITLE_4' | translate}}</b>
+        </div>
+
+        <div class="feature-description">{{'FEATURE_DESCRIPTION_4' | translate}}</div>
+
+      </div>
     </div>
+    <div style="display: flex; flex-wrap: wrap; padding: 10px;">
+      <div class="col-md-6 col-xs-12 features">
 
-    <div class="col-xs-12 col-sm-6 features">
+        <div class="feature-title">
+          <img src="https://image.flaticon.com/icons/svg/3048/3048415.svg" /><b>{{'FEATURE_TITLE_5' | translate}}</b>
+        </div>
 
-      <div class="feature-title">
-        <img src="https://image.flaticon.com/icons/svg/745/745205.svg" /><b>{{'FEATURE_TITLE_3' | translate}}</b>
+        <div class="feature-description">{{'FEATURE_DESCRIPTION_5' | translate}}</div>
+
       </div>
 
-      <div class="feature-description">{{'FEATURE_DESCRIPTION_3' | translate}}</div>
+      <div class="col-md-6 col-xs-12 features">
 
-    </div>
+        <div class="feature-title">
+          <img src="https://image.flaticon.com/icons/svg/3039/3039381.svg" /><b>{{'FEATURE_TITLE_6' | translate}}</b>
+        </div>
 
-    <div class="col-xs-12 col-sm-6 features">
+        <div class="feature-description">{{'FEATURE_DESCRIPTION_6' | translate}}</div>
 
-      <div class="feature-title">
-        <img src="https://welove.holdings/img/virtualrealityicon.png" /><b>{{'FEATURE_TITLE_4' | translate}}</b>
       </div>
-
-      <div class="feature-description">{{'FEATURE_DESCRIPTION_4' | translate}}</div>
-
-    </div>
-
-    <div class="col-xs-12 col-sm-6 features">
-
-      <div class="feature-title">
-        <img src="https://image.flaticon.com/icons/svg/3048/3048415.svg" /><b>{{'FEATURE_TITLE_5' | translate}}</b>
-      </div>
-
-      <div class="feature-description">{{'FEATURE_DESCRIPTION_5' | translate}}</div>
-
-    </div>
-
-    <div class="col-xs-12 col-sm-6 features">
-
-      <div class="feature-title">
-        <img src="https://image.flaticon.com/icons/svg/3039/3039381.svg" /><b>{{'FEATURE_TITLE_6' | translate}}</b>
-      </div>
-
-      <div class="feature-description">{{'FEATURE_DESCRIPTION_6' | translate}}</div>
-
     </div>
 
   </div>

@@ -24,11 +24,11 @@
             <!-- academia-content-navigation -->
             <div class="alert bg-primary-red" ng-if="errors.length > 0">
                 <ul>
-                    <li ng-repeat="e in errors">{{e}}</li>
+                    <li ng-repeat="e in errors">{{e | translate}}</li>
                 </ul>
             </div>
-
-            <input class="academia-content-forum-post-create-title" placeholder="{{'WRITE_PLAYLIST_TITLE' | translate}}" ng-model="title"></input>
+            <span ng-if="inputLengthWarningShow" style="color: #721c24;">{{'INPUT_LENGTH_ERROR' | translate}}</span>
+            <input class="academia-content-forum-post-create-title" placeholder="{{'WRITE_PLAYLIST_TITLE' | translate}}" ng-model="title" ng-change="titleCounter()" maxlength="40"></input>
 
             <div class="academia-content-forum-answer">
 

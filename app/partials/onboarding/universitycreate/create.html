@@ -1,170 +1,214 @@
-<div class="container-fluid">
-
-    <div class="row" style="margin-top: 20px; margin-bottom: 30px;">
-        <div class="col-xs-4">
-            <a href="/home/landing">
-                <img src="{{company_logo}}" height="20px" />
-            </a>
-        </div>
-        <div class="col-xs-2" style="text-align: center;">
-        </div>
-        <div class="col-xs-6" style="text-align: right; line-height: 30px;">
-            <!--b style="font-size: 1.1em;">{{'TEACH' | translate}}</b-->
-        </div>
-    </div>
-
-    <div class="row" style="margin-bottom: 40px;">
-        <div class="col-xs-12">
-            <div style="cursor: pointer; margin-bottom: 20px;" ng-click="lastpageReturn()">
-                <i class="fa fa-arrow-left"></i><span style="margin-left: 10px;">Back</span>
-            </div>
-            <div style="width: 100%; text-align: left; margin-bottom: 30px;">
-                <div style="font-weight: bolder; font-size: 1.8em; color: #2d4255;">{{'CREATEYOUREDCOMM' | translate}}</div>
-            </div>
-            <div class="alert bg-primary-red" ng-show="error.exists">{{error.text | translate}}</div>
-            <div class="form">
-                <div class="form-group">
-                    <label>{{'YOUREDCOMMNAME' | translate}}</label>
-                    <input class="input-email" ng-model="name" placeholder="" type="text" />
-                </div>
-                <div class="form-group">
-                    <label>{{'URL' | translate}}</label>
-                    <div class="urlinput">
-                      <div class="url-domain-container" onClick="document.getElementById('url-domain-input').focus();">
-                        <div class="url-domain" id="url-domain-label">https://{{'DOMAIN_PLACEHOLDER' | translate}}/a/</div>
-                      </div>
-                      <input class="input-email" ng-model="url" placeholder="" style="border-left: 0 !important" type="text" id="url-domain-input"></input>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>{{'DESCRIPTION' | translate}}</label>
-                    <textarea placeholder="" ng-model="about" type="text" rows="4"></textarea>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row" style="margin-bottom: 25px;">
-        <div class="col-xs-12">
-        </div>
-    </div>
-
-    <div class="row animated fadeIn" ng-show="mode == 'teach'">
-        <div class="col-xs-12">
-            <div style="font-weight: bold; font-size: 1.4em; color: #2d4255;">{{'CREATE_EDUCATIONAL_COMMUNITY' | translate}}:</div>
-            <div class="user-collections" style="margin-top: 30px;">
-                <div style="height: unset;" ng-repeat="n in [['Professor','Ambiente educacional dedicado ao ensino e aprendizado dos seus alunos', '#52bfea'],['Amigos e Família','Inicie um grupo de estudos e troca de conhecimento', '#30b39f'],['Instituição de Ensino', 'Empodere os seus alunos com soluções educacional integradas', '#aa2c26'], ['Empresa', 'Treinamento interno e armazenamento do know-how operacional ', '#b460a2'], ['Crianças', 'Plataforma educacional dedicada a crianças de 3 até 8 anos', '#ee5748']]"
-                    class="collection teaching-option option">
-                    <div class="dot"></div>
-                    <div style="font-size: 1.2em; font-weight: bold;">{{n[0]}}</div>
-                    <div style="color: #909090;">{{n[1]}}</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- div class="row" style="margin-top: 15px; margin-bottom: 15px;">
-        <div class="col-xs-12">
-            <button ng-click="openSelectPlan()" class="btn btn-success" style="font-size: 1.15em; font-weight: bold;">Select Plan</button>
-        </div>
-    </div-->
-
-    <div ng-show="loading" class="loading-spinner">
-        <img src="/img/loader.gif" height="50px" />
-    </div>
-
-    <div class="row" style="margin-top: 15px; margin-bottom: 15px;">
-
-        <div class="col-xs-12">
-            <button ng-click="create()" class="btn btn-success" style="font-size: 1.15em; font-weight: bold;" ng-disabled="loading">
-              {{'DASH_CREATE_UNIVERSITY' | translate}}
-            </button>
-        </div>
-    </div>
-</div>
-
 <style>
-    .form input {
-        border: 1px solid black !important;
-        margin-bottom: 10px;
-    }
 
-    .form textarea {
-        width: 100%;
-        border: none;
-        resize: none;
-        border: 1px solid black;
-    }
-
-    .onboarding-knowledge {
-        padding-bottom: 10px;
-        border-bottom: 1px solid #cdcdcd;
-        margin-bottom: 10px;
-    }
-
-    .onboarding-knowledge .title {
-        font-size: 1.5em;
-        display: inline-block;
-        font-weight: bolder;
-        color: #2d4255;
-    }
-
-    .onboarding-knowledge .icon {
-        float: right;
-        font-size: 1.5em;
-        display: inline-block;
-        vertical-align: top;
-    }
-
-    .onboarding-knowledge-university-row {
-        background-color: white;
-    }
-
-    .onboarding-knowledge-university-row .name {
-        display: inline-block;
-        font-weight: bolder;
-        font-size: 1.2em;
-        padding-left: 10px;
-    }
-
-    .onboarding-knowledge-university-row .logo-bg {
-        display: inline-block;
-    }
-
-    .onboarding-knowledge-university-row .buttons {
-        text-align: right;
-        float: right;
-        vertical-align: top;
-        line-height: 60px;
-        font-size: 0.7em;
-    }
-
-    .footer-onboarding {
-        background-color: white;
-    }
-
-    .urlinput {
-      display: flex;
-    }
-
-    .url-domain-container {
-      display: table-cell;
-      vertical-align: middle;
-    }
-
-    .url-domain {
-      height: 45px;
-      line-height: 45px;
-      transition: border-bottom 0.6s;
-      border: 1px solid black !important;
-      border-right: 0 !important;
-      cursor: text;
-      color: gray;
-    }
-
-    .loading-spinner {
-      display: flex;
-      justify-content: center;
-    }
+  .blue-text {
+    color: #2b3c63 !important;
+  }
 
 </style>
+
+<script type="text/javascript">
+
+var socket = io.connect("https://totemic-chimera-237707.appspot.com");
+//var socket = io.connect("http://104.196.9.222:5555");
+//var socket = io.connect("http://localhost:8888");
+var siofu = new SocketIOFileUpload(socket);
+
+//let filesCount = 0;
+
+//let progressCloud = 0;
+var progressPercent = 0;
+
+document.getElementById("upload_btn").addEventListener("click", siofu.prompt, false);
+
+// Do something on upload progress:
+siofu.addEventListener("progress", function(event){
+  var percent = event.bytesLoaded / event.file.size * 100;
+  console.log("File is", percent.toFixed(2), "percent loaded");
+
+  $("#file_drop").html("Upload: " + percent.toFixed(2) + "%");
+
+  if (percent.toFixed(2) == 100) {
+    $("#file_drop").html("<b>Iniciando o processamento da imagem</b>");
+  }
+
+});
+
+socket.on("files", function(a){
+  console.log("files: ")
+  console.log(a)
+  filesCount = a;
+});
+
+// Do something when a file is uploaded:
+siofu.addEventListener("complete", function(event){
+    console.log(event.success);
+    console.log(event.file);
+    console.log(event)
+});
+
+socket.on("imagepath", function(a) {
+  $("#file").attr("value", a);
+  $("#university-background-image").attr("style", "background-image: url('" + a + "')");
+  console.log(a)
+})
+
+</script>
+
+<div class="container-fluid">
+
+  <div class="row" style="margin-top: 20px; margin-bottom: 30px;">
+      <div>
+          <a href="/home/landing">
+              <img src="{{company_logo}}" height="20px" />
+          </a>
+      </div>
+  </div>
+
+  <div class="row" style="margin-bottom: 2em;">
+
+    <div style="cursor: pointer; margin-bottom: 20px;" ng-click="lastpageReturn()">
+        <i class="fa fa-arrow-left"></i><span style="margin-left: 10px;">Back</span>
+    </div>
+    <div style="width: 100%; text-align: center; margin-bottom: 30px;">
+        <div style="font-weight: bolder; font-size: 1.8em; color: #2d4255;">{{'CREATEYOUREDCOMM' | translate}}</div>
+    </div>
+
+    <!-- step 1 -->
+    <div ng-show="step == 1">
+
+      <div style="text-align: left;">
+
+        <div class="alert bg-primary-red" ng-show="error.exists">{{error.text | translate}}</div>
+
+        <div class="form">
+
+          <style>
+            #university-background-image {
+              height: 300px;
+              border-radius: 5px;
+              background-size: cover;
+              background-position: 50% 50%;
+            }
+          </style>
+
+          <div class="form-group">
+            <label>{{"UNIVERSITY_PICTURE" | translate}}</label>
+            <input type="hidden" ng-model="backgroundImage" id="file">
+            <div id="university-background-image" style="background-image: url('https://universida.de/img/misc/noimageacademia.jpg')"></div>
+
+            <div class="row">
+
+              <div class="col-xs-12 col-sm-6" style="margin-top: 15px;">
+                <button id="upload_btn" class="btn bg-base">{{"SELECT_PICTURE" | translate}}</button>
+              </div>
+
+              <div class="col-xs-12 col-sm-6" style="margin-top: 15px;">
+                <button id="remove_btn" class="btn btn-red" ng-click="removeBtn()">{{"REMOVE_PICTURE" | translate}}</button>
+              </div>
+
+            </div>
+            <!-- end row -->
+
+          </div>
+          <!-- end form group -->
+
+          <div class="form-group">
+            <label>{{'UNIVERSITY_NAME' | translate}}</label>
+            <input ng-model="name" placeholder="{{'WRITE_UNI_NAME_HERE' | translate}}" type="text" />
+          </div>
+          <!-- end form group -->
+
+          <div class="form-group">
+            <label>{{'ABOUT' | translate}}</label>
+            <input ng-model="about" placeholder="{{'WRITE_UNI_DESCRIPTION' | translate}}" type="text" />
+          </div>
+          <!-- end form group -->
+
+          <div class="form-group">
+            <label>{{'LANGUAGE' | translate}}</label>
+            <select ng-model="language">
+              <option value="PT" selected>{{'PORTUGUESE' | translate}}</option>
+              <option value="EN">{{'ENGLISH' | translate}}</option>
+            </select>
+          </div>
+          <!-- end form group -->
+
+          <div class="form-group">
+            <label>{{'URL' | translate}}</label>
+            <input ng-model="url" placeholder="{{'UNIVERSITY_URL' | translate}}" type="Text" />
+          </div>
+          <!-- end form group -->
+
+        </div>
+        <!-- end form -->
+
+        <div class="row">
+
+          <div class="col-xs-12 col-sm-6" style="margin-top: 15px;">
+            <button ng-click="move(-1)" class="btn-two btn-two-yellow" ng-disabled="step==1">{{'BACK' | translate}}</button>
+          </div>
+
+          <div class="col-xs-12 col-sm-6" style="margin-top: 15px;">
+            <button ng-click="move(1)" class="btn btn-bluebase">{{'NEXT' | translate}}</button>
+          </div>
+
+        </div>
+        <!-- end row -->
+
+      </div>
+
+    </div>
+    <!-- step 1 -->
+
+    <div ng-show="step == 2">
+
+      <div class="alert bg-primary-red" ng-show="error.exists">{{error.text | translate}}</div>
+
+      <p class="headline-sub-two" style="padding-bottom: 20px; padding-top: 0px;">{{'PREVER' | translate}}</p>
+
+      <div class="form-group">
+        <p class="gray-text">{{'UNIVERSITY_PICTURE' | translate}}</p>
+        <div id="university-background-image" style="background-image: url('{{backgroundImage}}')"></div>
+      </div>
+      <!-- end form group -->
+
+      <div class="form-group">
+        <p class="gray-text" style="margin: 0px !important">{{'NOME' | translate}}</p>
+        <div style="font-size: 1.5em; padding-top: 0; padding-bottom: 0;">{{name}}</div>
+      </div>
+
+      <div class="form-group">
+        <p class="gray-text" style="margin: 0px !important">{{'ABOUT' | translate}}</p>
+        <div style="padding-top: 0; padding-bottom: 0;">{{about}}</div>
+      </div>
+
+
+      <div class="form-group">
+        <p class="gray-text" style="margin: 0px !important">{{'URL' | translate}}</p>
+        <div style="padding-top: 0; padding-bottom: 0;">https://{{'DOMAIN_PLACEHOLDER' | translate}}/a/{{url}}</div>
+      </div>
+
+      <div class="row">
+
+        <div ng-show="loading" class="loading-gif" style="text-align: center;">
+            <img src="/img/loader.gif" height="50px" />
+        </div>
+
+        <div class="col-xs-12 col-sm-6" style="margin-top: 15px;">
+          <button ng-click="move(-1)" class="btn-two btn-two-yellow">{{'BACK' | translate}}</button>
+        </div>
+
+        <div class="col-xs-12 col-sm-6" style="margin-top: 15px;">
+          <button ng-click="create()" class="btn btn-green" ng-disabled="loading">{{'CREATE' | translate}}</button>
+        </div>
+
+      </div>
+      <!-- end row -->
+
+    </div>
+    <!-- step 2 -->
+
+  </div>
+  <!-- end row -->
+
+</div>
