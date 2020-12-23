@@ -47,11 +47,11 @@ angular.module('netbase')
     }
 
     $scope.signup = function() {
-      if ($localStorage.token) {
-          window.location.href = "/onboarding/universities/create"
-      } else {
-        ngDialog.open({ template: 'partials/modals/signup.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
-      }
+        if ($localStorage.token) {
+            window.location.href = "/onboarding/universities/create"
+        } else {
+            ngDialog.open({ template: 'partials/modals/signup.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
+        }
     }
 }])
 
@@ -439,10 +439,10 @@ angular.module('netbase')
     $scope.deleteClassroom = function(classroom) {
         $rootScope.deleteRoom = classroom;
         ngDialog.open({
-          template: 'partials/modals/classroom_confirm_delete_modal.html',
-          controller: "HomePersonalClassroom",
-          className: 'ngdialog-theme-default classroom-alert-modal',
-          appendClassName: 'ngdialog-custom-alert',
+            template: 'partials/modals/classroom_confirm_delete_modal.html',
+            controller: "HomePersonalClassroom",
+            className: 'ngdialog-theme-default classroom-alert-modal',
+            appendClassName: 'ngdialog-custom-alert',
 
         });
     }
@@ -3033,48 +3033,48 @@ angular.module('netbase')
 
     $scope.openPaymentDialog = function() {
 
-      //if($scope.balance > $scope.course.price) {
+        //if($scope.balance > $scope.course.price) {
         console.log("balance: ", $scope.balance)
-        //
-        // IF THE EWALLET HAS ENOUGH BALANCE, SHOW PAYMENT MODAL
-        //
+            //
+            // IF THE EWALLET HAS ENOUGH BALANCE, SHOW PAYMENT MODAL
+            //
         if (logged) {
-          let plan = { amount: $scope.course.price, currency: $scope.course.currency, name: $scope.course.title };
+            let plan = { amount: $scope.course.price, currency: $scope.course.currency, name: $scope.course.title };
 
-          ngDialog.open({
-              template: 'partials/courses/modals/payments.html',
-              controller: 'CoursesPaymentsCtrl',
-              className: 'ngdialog-theme-default',
-              closeByDocument: false,
-              closeByEscape: false,
-              closeByNavigation: true,
-              data: {
-                  plan: plan,
-                  course: $scope.course,
-                  accountId: $scope.course.accountId,
-                  walletBalance: $scope.balance - $scope.course.price
-              }
-          });
+            ngDialog.open({
+                template: 'partials/courses/modals/payments.html',
+                controller: 'CoursesPaymentsCtrl',
+                className: 'ngdialog-theme-default',
+                closeByDocument: false,
+                closeByEscape: false,
+                closeByNavigation: true,
+                data: {
+                    plan: plan,
+                    course: $scope.course,
+                    accountId: $scope.course.accountId,
+                    walletBalance: $scope.balance - $scope.course.price
+                }
+            });
         } else {
             ngDialog.open({ template: 'partials/modals/login.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
         }
-      // }else{
-      //   //
-      //   // IF THE EWALLET HAS NO OR NOT HAVE ENOUGH BALANCE, REDIRECT TO EWALLET DASHBOARD
-      //   //
-      //   ngDialog.open({
-      //       template: 'alertNoBalancePopup',
-      //       controller: 'EwalletCardsCtrl',
-      //       width: '50%',
-      //       height: '40%',
-      //       className: 'ngdialog-theme-default'
-      //   });
-      //
-      // }
+        // }else{
+        //   //
+        //   // IF THE EWALLET HAS NO OR NOT HAVE ENOUGH BALANCE, REDIRECT TO EWALLET DASHBOARD
+        //   //
+        //   ngDialog.open({
+        //       template: 'alertNoBalancePopup',
+        //       controller: 'EwalletCardsCtrl',
+        //       width: '50%',
+        //       height: '40%',
+        //       className: 'ngdialog-theme-default'
+        //   });
+        //
+        // }
     }
 
-    $scope.gotoDashboard = function(){
-      window.location.href = "/wallet/dashboard"
+    $scope.gotoDashboard = function() {
+        window.location.href = "/wallet/dashboard"
     }
 
     $scope.closeAlertPopup = function() {
@@ -3395,9 +3395,9 @@ angular.module('netbase')
 
     let url = window.location.href;
     if (url.indexOf('universida.de') > 0) {
-      $scope.currency = "brl"
+        $scope.currency = "brl"
     } else {
-      $scope.currency = "usd"
+        $scope.currency = "usd"
     }
 
     $scope.tinymceOptions = {
@@ -3461,9 +3461,9 @@ angular.module('netbase')
             if ($scope.preco > 0) {
                 formdata.price = $scope.preco;
             } else {
-              $scope.hasError = true;
-              $scope.createcourseerrmessage = "PLEASE_ENTER_COURSE_PRICE"
-              return
+                $scope.hasError = true;
+                $scope.createcourseerrmessage = "PLEASE_ENTER_COURSE_PRICE"
+                return
             }
         }
 
@@ -3627,7 +3627,7 @@ angular.module('netbase')
 
     $scope.verify = () => {
         $scope.sentLink = "we sent the link via your email.";
-        $scope.buttonTxt = "Resend";
+        $scope.buttonTxt = "OK";
         console.log("PARAMS", $routeParams);
         $location.path('/onboarding/signup')
     }
@@ -3643,6 +3643,7 @@ angular.module('netbase')
             Students.login(login).then(function(res) {
                 let success = res.data.success;
                 let token = res.data.token;
+                console.log("EE", res.data)
                 let verified = res.data.verified;
 
                 if (success) {
@@ -3653,7 +3654,10 @@ angular.module('netbase')
                     $rootScope.$applyAsync();
                     ngDialog.close();
 
-                    if (verified == false) redirectUrl = "/verify";
+                    // if (verified == false) redirectUrl = "/verify";
+                    // if (verified == false) {
+                    //     ngDialog.open({ template: 'partials/verification.html', className: 'ngdialog-theme-default', controller: 'AccountCtrl' });
+                    // }
 
                     if (redirectUrl.length > 0) {
                         $location.path(redirectUrl)
