@@ -99,7 +99,7 @@
     "FEATURE_TITLE_2": "COURSES",
     "FEATURE_SUBTITLE_2": "Integrated subscriptions, courses, and digital products",
     "FEATURE_DESCRIPTION_2": "Keeps a chronological record of the activities carried out in the virtual classroom.",
-    "FEATURE_TITLE_3": "FORUM & CHAT",
+    "FEATURE_TITLE_3": "FORUM and CHAT",
     "FEATURE_SUBTITLE_3": "Connect students and teachers through a powerful chat and forum",
     "FEATURE_DESCRIPTION_3": "It is a place where conversations take place. Students and teachers can follow relevant discussions on favorite subjects.",
     "FEATURE_TITLE_4": "VIRTUAL REALITY",
@@ -328,7 +328,7 @@
     "LANGUAGE": "Language",
     "PORTUGUESE": "Portuguese",
     "ENGLISH": "English",
-    "UNIVERSITY_URL": "Your University URL i.e:colle.ge/a/<url>",
+    "UNIVERSITY_URL": "https://colle.ge/a/your_custom_url",
     "BACK": "Back",
     "PREVER": "Preview",
     "CREATE": "Create",
@@ -398,6 +398,7 @@
     "PLEASE_ENTER_COURSE_DESCRIPTION": "Please enter course description.",
     "PLEASE_SELECT_COURSE_KNOWLEDGE": "Please select course knowledge.",
     "PLEASE_SELECT_COURSE_PAYMENT": "Please select course payment.",
+    "PLEASE_ENTER_COURSE_PRICE": "Please enter course price.",
     "CANCEL": "Cancel",
     "CANCEL_UPPERCASE": "CANCEL",
     "DELETE": "Delete",
@@ -731,6 +732,7 @@
     "UNI_CREATE_URL_INVALID": "The Url field must contain only letters, numbers, hyphen and underscore.",
     "UNI_CREATE_URL_EXISTS": "Type a different URL for your university. The one you choose already exists.",
     "UNI_CREATE_FIELDS_EMPTY": "Write a name for your educational community., Write a URL for your educational community.",
+    "UNI_CREATE_SELECT_LANGUAGE": "Select a language for you educational community",
 
     "DOMAIN_PLACEHOLDER": "colle.ge",
 
@@ -755,6 +757,7 @@
     "CREATE_POST_CATEGORY_ERROR": "Select the post category.",
     "CREATE_POST_TITLE_ERROR": "Write a title for the post.",
     "CREATE_POST_TEXT_ERROR": "Write a text at the post.",
+    "CREATE_POST_CATEGORY_EMPTY": "Please write category title.",
 
     "CATEGORIES": "Categories",
 
@@ -784,7 +787,7 @@
     "You are not a Administrator": "You are not an Administrator",
 
     "COURSE_IN_PROGRESS": "Course still in progress ...",
-    "COURSE_IN_PROGRESS_MESSAGE": "Please come back later while modules and contents are being added.",
+    "COURSE_IN_PROGRESS_MESSAGE": "Please come back later while modules and contents are being added." ,
 
     "TOP_UP": "Top Up",
     "STEP_1_OF_3": "Step 1 of 3",
@@ -835,7 +838,7 @@
     "EXPIRATION": "Expiration",
     "SECURITY": "Security",
     "ERASE_CARD": "Erase Card",
-    "BLOCK_CARD": "Block Card",
+    "BLOCK_CARD":"Block Card",
     "ENTER_AMOUNT": "Enter Amount",
     "CHOOSE_CONTACT": "Choose Contact",
     "REQUEST_CARD": "Request card",
@@ -923,5 +926,30 @@
     "PLEASE_FILL_UP_EXPIRY_MONTH": "Please fill up the expiry month.",
     "PLEASE_FILL_UP_EXPIRY_YEAR": "Please fill up the expiry year.",
     "INVALID_YEAR_NUMBER": "Your cards expiration year is invalid.",
-    "CLICK_TO_REPEAT_TRANSACTION": "Click to repeat transaction"
+    "CLICK_TO_REPEAT_TRANSACTION": "Click to repeat transaction",
+    "VIEW_ALL_MEMBERS": "View all members",
+    "AVAILABLE": "Available",
+    "BUSY": "Busy",
+    "AWAY": "Away",
+    "LEAVE": "Leave",
+    "NOT_LOGGED_USER": "Not logged user",
+    "SEND": "Send",
+    "TYPE_HERE": "Type here...",
+    "COPIED_LINK_TO_CLIPBOARD": "Copied link to clipboard",
+
+    "EMPTY_PLAYLIST_TITLE": "Write a title for the playlist",
+    "EMPTY_PLAYLIST_TEXT": "Write a text in the playlist",
+
+    "JAN": "January",
+    "FEB": "February",
+    "MAR": "March",
+    "APR": "April",
+    "MAY": "May",
+    "JUN": "June",
+    "JUL": "July",
+    "AUG": "August",
+    "SEP": "September",
+    "OCT": "October",
+    "NOV": "November",
+    "DEC": "December"
 }

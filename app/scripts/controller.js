@@ -32,8 +32,10 @@ angular.module('netbase')
     // check if the user if logged in or logged out
     if ($localStorage.token) {
         console.log("log in user")
+        $scope.loggedIn = true
     } else {
         console.log("log out user")
+        $scope.loggedIn = false
     }
 
     $scope.login = function() {
@@ -45,15 +47,22 @@ angular.module('netbase')
     }
 
     $scope.signup = function() {
+      if ($localStorage.token) {
+          window.location.href = "/onboarding/universities/create"
+      } else {
         ngDialog.open({ template: 'partials/modals/signup.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
+      }
     }
 }])
 
-.controller('SobreIndexCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'University', 'Playlist', 'Forum', 'User', '$window', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, University, Playlist, Forum, User, $window) {
+.controller('SobreIndexCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'University', 'Playlist', 'Forum', 'User', '$window', '$anchorScroll', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, University, Playlist, Forum, User, $window, $anchorScroll) {
     let url = $route.current;
     let originalPath = url.$$route.originalPath;
     $scope.originalPath = originalPath;
     $scope.company_logo = $localStorage.company_logo;
+
+    // make sure that the page loads always on top
+    $anchorScroll();
 }])
 
 .controller('HomeCuratorshipForumPostCreate', ['$rootScope', '$scope', '$location', '$route', 'University', 'ngDialog', 'Forum', function($rootScope, $scope, $location, $route, University, ngDialog, Forum) {
@@ -273,7 +282,7 @@ angular.module('netbase')
     }
 }])
 
-.controller('HomePersonalClassroom', ['$rootScope', '$scope', '$location', '$route', 'University', 'Classroom', 'Students', 'ngDialog', 'jwtHelper', '$localStorage', '$window', function($rootScope, $scope, $location, $route, University, Classroom, Students, ngDialog, jwtHelper, $localStorage, $window) {
+.controller('HomePersonalClassroom', ['$rootScope', '$scope', '$location', '$route', 'University', 'Classroom', 'Students', 'ngDialog', 'jwtHelper', '$localStorage', '$window', '$filter', function($rootScope, $scope, $location, $route, University, Classroom, Students, ngDialog, jwtHelper, $localStorage, $window, $filter) {
     let studentId = jwtHelper.decodeToken($localStorage.token)._id;
     $scope.studentId = studentId;
     let universityUrl = studentId;
@@ -418,7 +427,7 @@ angular.module('netbase')
             template: 'partials/modals/classroom_alert_modal.html',
             controller: "AcademiaClassroomsAlertCtrl",
             className: 'ngdialog-theme-default classroom-alert-modal',
-            data: { type: "Universidade", msg: 'Copied link to clipboard' }
+            data: { type: $filter('translate')("PAGETITLE"), msg: $filter('translate')("COPIED_LINK_TO_CLIPBOARD") }
         }));
     }
 
@@ -429,7 +438,13 @@ angular.module('netbase')
 
     $scope.deleteClassroom = function(classroom) {
         $rootScope.deleteRoom = classroom;
-        ngDialog.open({ template: 'partials/modals/classroom_confirm_delete_modal.html', controller: "HomePersonalClassroom", className: 'ngdialog-theme-default classroom-alert-modal' });
+        ngDialog.open({
+          template: 'partials/modals/classroom_confirm_delete_modal.html',
+          controller: "HomePersonalClassroom",
+          className: 'ngdialog-theme-default classroom-alert-modal',
+          appendClassName: 'ngdialog-custom-alert',
+
+        });
     }
 
     $scope.confirmDelete = function() {
@@ -3018,48 +3033,48 @@ angular.module('netbase')
 
     $scope.openPaymentDialog = function() {
 
-        if ($scope.balance > $scope.course.price) {
-            console.log("balance: ", $scope.balance)
-                //
-                // IF THE EWALLET HAS ENOUGH BALANCE, SHOW PAYMENT MODAL
-                //
-            if (logged) {
-                let plan = { amount: $scope.course.price, currency: $scope.course.currency, name: $scope.course.title };
+      //if($scope.balance > $scope.course.price) {
+        console.log("balance: ", $scope.balance)
+        //
+        // IF THE EWALLET HAS ENOUGH BALANCE, SHOW PAYMENT MODAL
+        //
+        if (logged) {
+          let plan = { amount: $scope.course.price, currency: $scope.course.currency, name: $scope.course.title };
 
-                ngDialog.open({
-                    template: 'partials/courses/modals/payments.html',
-                    controller: 'CoursesPaymentsCtrl',
-                    className: 'ngdialog-theme-default',
-                    closeByDocument: false,
-                    closeByEscape: false,
-                    closeByNavigation: true,
-                    data: {
-                        plan: plan,
-                        course: $scope.course,
-                        accountId: $scope.course.accountId,
-                        walletBalance: $scope.balance - $scope.course.price
-                    }
-                });
-            } else {
-                ngDialog.open({ template: 'partials/modals/login.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
-            }
+          ngDialog.open({
+              template: 'partials/courses/modals/payments.html',
+              controller: 'CoursesPaymentsCtrl',
+              className: 'ngdialog-theme-default',
+              closeByDocument: false,
+              closeByEscape: false,
+              closeByNavigation: true,
+              data: {
+                  plan: plan,
+                  course: $scope.course,
+                  accountId: $scope.course.accountId,
+                  walletBalance: $scope.balance - $scope.course.price
+              }
+          });
         } else {
-            //
-            // IF THE EWALLET HAS NO OR NOT HAVE ENOUGH BALANCE, REDIRECT TO EWALLET DASHBOARD
-            //
-            ngDialog.open({
-                template: 'alertNoBalancePopup',
-                controller: 'EwalletCardsCtrl',
-                width: '50%',
-                height: '40%',
-                className: 'ngdialog-theme-default'
-            });
-
+            ngDialog.open({ template: 'partials/modals/login.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
         }
+      // }else{
+      //   //
+      //   // IF THE EWALLET HAS NO OR NOT HAVE ENOUGH BALANCE, REDIRECT TO EWALLET DASHBOARD
+      //   //
+      //   ngDialog.open({
+      //       template: 'alertNoBalancePopup',
+      //       controller: 'EwalletCardsCtrl',
+      //       width: '50%',
+      //       height: '40%',
+      //       className: 'ngdialog-theme-default'
+      //   });
+      //
+      // }
     }
 
-    $scope.gotoDashboard = function() {
-        window.location.href = "/wallet/dashboard"
+    $scope.gotoDashboard = function(){
+      window.location.href = "/wallet/dashboard"
     }
 
     $scope.closeAlertPopup = function() {
@@ -3378,6 +3393,13 @@ angular.module('netbase')
     $scope.hasError = false;
     $scope.createcourseerrmessage = '';
 
+    let url = window.location.href;
+    if (url.indexOf('universida.de') > 0) {
+      $scope.currency = "brl"
+    } else {
+      $scope.currency = "usd"
+    }
+
     $scope.tinymceOptions = {
         file_picker_types: 'file image media',
         tinydrive_token_provider: function(success, failure) {
@@ -3400,6 +3422,7 @@ angular.module('netbase')
 
     $scope.criar = function() {
         let error = false;
+        $scope.hasError = false;
 
         //form validation
         if ($scope.title == undefined) {
@@ -3435,10 +3458,12 @@ angular.module('netbase')
         }
 
         if ($scope.free == false) {
-            if ($scope.preco.length > 0) {
+            if ($scope.preco > 0) {
                 formdata.price = $scope.preco;
             } else {
-                console.log("price zero")
+              $scope.hasError = true;
+              $scope.createcourseerrmessage = "PLEASE_ENTER_COURSE_PRICE"
+              return
             }
         }
 
@@ -3526,11 +3551,10 @@ angular.module('netbase')
     }
 }])
 
-.controller('AccountCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$route', '$localStorage', 'Students', 'ngDialog', '$timeout', function($rootScope, $scope, $routeParams, $location, $route, $localStorage, Students, ngDialog, $timeout) {
+.controller('AccountCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', '$timeout', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, $timeout) {
     let university;
     $scope.loading = false
     let language = $localStorage.user_language;
-    $scope.buttonTxt = "Verify";
 
     if ($scope.ngDialogData != undefined) {
         if ($scope.ngDialogData.university != undefined) {

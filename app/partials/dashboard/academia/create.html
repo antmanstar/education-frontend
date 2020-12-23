@@ -10,6 +10,10 @@
     margin-bottom: 0px !important;
   }
 
+  .blue-text {
+    color: #2b3c63 !important;
+  }
+
 </style>
 
 <script type="text/javascript">
@@ -62,7 +66,7 @@ socket.on("imagepath", function(a) {
 
 <div class="container-fluid">
 
-  <div class="row">
+  <div class="row" style="margin-bottom: 2em;">
 
     <!-- dashboard menu -->
     <div ng-include="'partials/dashboardmenu.html'" ng-controller="DashboardMenuCtrl"></div>
@@ -122,7 +126,7 @@ socket.on("imagepath", function(a) {
 
         <!--<p style="padding-bottom: 20px; padding-top: 0px;">To create your College, fill all informations below.</p>-->
 
-        <div class="alert bg-primary-red" ng-show="error.exists">{{displayError(error.text)}}</div>
+        <div class="alert bg-primary-red" ng-show="error.exists">{{error.text | translate}}</div>
 
         <div class="form">
 
@@ -206,39 +210,46 @@ socket.on("imagepath", function(a) {
 
     <div ng-show="step == 3" class="col-xs-12 col-sm-9 col-md-9 col-lg-10 col-lg-10 dashboard-content">
 
-      <div class="headline-main" style="padding-bottom: 20px; padding-top: 20px; text-align: center;">Create your own college</div>
-      <p style="padding-bottom: 20px; padding-top: 0px;">{{'PREVER' | translate}}</p>
+      <div class="headline-main" style="padding-bottom: 20px; padding-top: 20px; text-align: center;">{{'CREATE_YOUR_UNIVERSITY' | translate}}</div>
+
+      <div class="alert bg-primary-red" ng-show="error.exists">{{error.text | translate}}</div>
+
+      <p class="headline-sub-two" style="padding-bottom: 20px; padding-top: 0px;">{{'PREVER' | translate}}</p>
 
       <div class="form-group">
-        <label>{{'UNIVERSITY_PICTURE' | translate}}</label>
+        <p class="gray-text">{{'UNIVERSITY_PICTURE' | translate}}</p>
         <div id="university-background-image" style="background-image: url('{{backgroundImage}}')"></div>
       </div>
       <!-- end form group -->
 
       <div class="form-group">
-        <label>{{'NOME' | translate}}</label>
-        <div class="headline-display" style="padding-top: 0; padding-bottom: 0;">{{name}}</div>
+        <p class="gray-text" style="margin: 0px !important">{{'NOME' | translate}}</p>
+        <div style="font-size: 1.5em; padding-top: 0; padding-bottom: 0;">{{name}}</div>
       </div>
 
       <div class="form-group">
-        <label>{{'ABOUT' | translate}}</label>
-        <div class="headline-sub-two" style="padding-top: 0; padding-bottom: 0;">{{about}}</div>
+        <p class="gray-text" style="margin: 0px !important">{{'ABOUT' | translate}}</p>
+        <div style="padding-top: 0; padding-bottom: 0;">{{about}}</div>
       </div>
 
 
       <div class="form-group">
-        <label>{{'URL' | translate}}</label>
-        <div class="headline-sub-two" style="padding-top: 0; padding-bottom: 0;">universida.de/a/{{url}}</div>
+        <p class="gray-text" style="margin: 0px !important">{{'URL' | translate}}</p>
+        <div style="padding-top: 0; padding-bottom: 0;">https://{{'DOMAIN_PLACEHOLDER' | translate}}/a/{{url}}</div>
       </div>
 
       <div class="row">
+
+        <div ng-show="loading" class="loading-gif" style="text-align: center;">
+            <img src="/img/loader.gif" height="50px" />
+        </div>
 
         <div class="col-xs-12 col-sm-6" style="margin-top: 15px;">
           <button ng-click="move(-1)" class="btn-two btn-two-yellow">{{'BACK' | translate}}</button>
         </div>
 
         <div class="col-xs-12 col-sm-6" style="margin-top: 15px;">
-          <button ng-click="create()" class="btn btn-green">{{'CREATE' | translate}}</button>
+          <button ng-click="create()" class="btn btn-green" ng-disabled="loading">{{'CREATE' | translate}}</button>
         </div>
 
       </div>

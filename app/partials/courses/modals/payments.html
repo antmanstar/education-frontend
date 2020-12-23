@@ -27,7 +27,7 @@
   <!-- end row -->
 
   <!-- disabled for new ewallet feature -->
-  <!--div class="row" ng-show="page == 'cardAdd'">
+  <div class="row" ng-show="page == 'cardAdd'">
 
     <div class="col-xs-12">
 
@@ -89,10 +89,11 @@
 
       <hr/>
 
+      <!--  ewallet
       <div style="display: flex; justify-content: flex-end;">
         <p class="gray-text">Your new ewallet balance will be ${{walletBalance}}</p>
-      </div>
-      <!--div class="form">
+      </div> -->
+      <div class="form">
 
         <div class="form-group">
 
@@ -121,14 +122,14 @@
 
     <div class="form" style="bottom: 0; left: 0; width: 100%; padding-left: 15px; padding-right: 15px;">
 
-      <!--button ng-disabled="!hasCard" ng-click="handleSubmit()" class="btn btn-green"><b ng-hide="loading">{{'CONFIRM' | translate}}</b><img style="width: 30px;" ng-show="loading" src="img/misc/loading.gif" /></button-->
-      <button
+      <button ng-disabled="!hasCard" ng-click="handleSubmit()" class="btn btn-green"><b ng-hide="loading">{{'CONFIRM' | translate}}</b><img style="width: 30px;" ng-show="loading" src="img/misc/loading.gif" /></button>
+      <!--button
         ng-disabled="loading"
         ng-click="handleEwalletCoursePayment()"
         class="btn btn-green"
       >
         <b ng-hide="loading">{{'CONFIRM' | translate}}</b><img style="width: 30px;" ng-show="loading" src="img/misc/loading.gif" />
-      </button>
+      </button-->
 
     </div>
     <!-- end form -->

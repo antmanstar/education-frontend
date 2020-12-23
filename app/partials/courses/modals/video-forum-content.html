@@ -16,7 +16,7 @@
 
             <div>
 
-              <div class="title" style="font-size: 2.0em; font-weight: bolder;">{{'CURSOS' | translate}}</div>
+              <div class="title" style="font-size: 2.0em; font-weight: bolder;">{{'COURSES' | translate}}</div>
 
             <div ng-include="'/partials/courses/suite/navbar.html'"></div>
 
@@ -30,7 +30,7 @@
             <div class="header-modal-courses">
                 <div class="title">
                   <img style="margin-bottom: 10px;" height="40px;" src="https://visualpharm.com/assets/811/Discussion%20Forum-595b40b65ba036ed117d396c.svg">
-                  <p style="display: inline-block; font-size: 2em;">{{'FORUM_POST' | translate}}</p>
+                  <p style="display: inline-block; font-size: 40px; margin: 0 !important;">{{'FORUM_POST' | translate}}</p>
                 </div>
             </div>
 
@@ -63,7 +63,7 @@
             <div class="header-modal-courses">
                 <div class="title">
                   <img style="margin-bottom: 10px;" height="40px;" src="https://visualpharm.com/assets/811/Discussion%20Forum-595b40b65ba036ed117d396c.svg">
-                  <p style="display: inline-block; font-size: 2em;">{{'FORUM_POST' | translate}}</p>
+                  <p style="display: inline-block; font-size: 40px; margin: 0 !important;">{{'FORUM_POST' | translate}}</p>
                 </div>
             </div>
 
@@ -98,11 +98,11 @@
             <div class="header-modal-courses">
                 <div class="title" ng-if="contentType == 'forumpost'">
                   <img style="margin-bottom: 10px;" height="40px;" src="https://visualpharm.com/assets/811/Discussion%20Forum-595b40b65ba036ed117d396c.svg">
-                  <p style="display: inline-block; font-size: 2em;">{{'FORUM_POST' | translate}}</p>
+                  <p style="display: inline-block; font-size: 40px; margin: 0 !important;">{{'FORUM_POST' | translate}}</p>
                 </div>
                 <div class="title" ng-if="contentType == 'video'">
                   <div class="title"> <img style="margin-bottom: 10px;" height="40px;" src="https://visualpharm.com/assets/770/Video%20File-595b40b85ba036ed117dad88.svg">
-                  <p style="display: inline-block; font-size: 2em;">{{'VIDEO' | translate}}</p>
+                  <p style="display: inline-block; font-size: 40px;" margin: 0 !important;>{{'VIDEO' | translate}}</p>
                 </div>
             </div>
 
@@ -158,7 +158,7 @@
 
         <div class="title">
           <img style="margin-bottom: 10px;" height="40px;" src="https://visualpharm.com/assets/770/Video%20File-595b40b85ba036ed117dad88.svg">
-          <p style="display: inline-block; font-size: 2em;">{{'PLAYLIST' | translate}}</p>
+          <p style="display: inline-block; font-size: 40px; margin: 0 !important;">{{'PLAYLIST' | translate}}</p>
         </div>
       </div>
       <p ng-if="universities.length>cusloading">{{'PLEASE_WAIT' | translate}}</p>
@@ -194,7 +194,7 @@
 
       <div class="header-modal-courses">
         <div class="title"> <img style="margin-bottom: 10px;" height="40px;" src="https://visualpharm.com/assets/770/Video%20File-595b40b85ba036ed117dad88.svg">
-        <p style="display: inline-block; font-size: 2em;">{{'VIDEO' | translate}}</p>
+        <p style="display: inline-block; font-size: 40px; margin: 0 !important;">{{'VIDEO' | translate}}</p>
       </div>
 
       <div class="btn-modal-courses" ng-if="videolist.length == 0">
@@ -249,7 +249,8 @@
   }
 
   .header-modal-courses .title {
-    display: inline-block;
+    display: flex;
+    align-items: center;
   }
 
   .header-modal-courses {

@@ -112,24 +112,24 @@ angular.module('netbase')
         $scope.errorMessage = '';
 
         if ($localStorage.token != undefined || $localStorage.token != null) {
-            // check if user enter a text
-            if (text.length > 0) {
-                Forum.postAnswerByForumPostId($scope.forumPost._id, data).then(function(res) {
-                    let status = res.data.status;
-                    let data = res.data.data;
-                    let success = res.data.success;
+          // check if user enter a text
+          if (text.length > 0) {
+            Forum.postAnswerByForumPostId($scope.forumPost._id, data).then(function(res) {
+                let status = res.data.status;
+                let data = res.data.data;
+                let success = res.data.success;
 
-                    if (success) {
-                        data.votesCount = 0;
-                        data.createdAt = Math.round((new Date()).getTime() / 1000);
-                        $scope.forumPost.answers.push(data);
-                        tinymce.activeEditor.setContent("");
-                    }
-                });
-            } else {
-                $scope.hasError = true;
-                $scope.errorMessage = 'COMMENT_NO_TEXT';
-            }
+                if (success) {
+                    data.votesCount = 0;
+                    data.createdAt = Math.round((new Date()).getTime() / 1000);
+                    $scope.forumPost.answers.push(data);
+                    tinymce.activeEditor.setContent("");
+                }
+            });
+          } else {
+            $scope.hasError = true;
+            $scope.errorMessage = 'COMMENT_NO_TEXT';
+          }
         } else {
             ngDialog.open({ template: 'partials/modals/login.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
         }
@@ -246,6 +246,7 @@ angular.module('netbase')
         } else {
             $scope.loading = false
             $scope.errorDisplay = true;
+            window.scrollTo(0,0)
         }
     }
 }])
@@ -253,6 +254,7 @@ angular.module('netbase')
 .controller('PlaylistCreateCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Courses', 'Playlist', 'ngDialog', function($rootScope, $scope, $location, $route, University, Courses, Playlist, ngDialog) {
     $scope.privilege = { value: 0 };
     $scope.premium = { value: 0 };
+    $scope.inputLengthWarningShow = false;
 
     let universityId;
 
@@ -283,13 +285,21 @@ angular.module('netbase')
         let universityStorage = University.retrieveStorage($scope.universityid);
         $scope.university = universityStorage[$scope.universityid];
 
-        console.log("university: ", $scope.university)
+        //console.log("university: ", $scope.university)
     } else {
         University.getUniversityById($scope.universityid).success(function(res) {
             $scope.university = res.data;
-            console.log("university: ", $scope.university)
+            //console.log("university: ", $scope.university)
             University.storeLocal($scope.university);
         });
+    }
+
+    $scope.titleCounter = function() {
+      if($scope.title.length >= 40) {
+        $scope.inputLengthWarningShow = true;
+      }else {
+        $scope.inputLengthWarningShow = false;
+      }
     }
 
     $scope.createPlaylist = () => {
@@ -306,20 +316,24 @@ angular.module('netbase')
 
         if ($scope.title == undefined || $scope.title.length == 0) {
             createPlaylist = false;
-            errors.push("Escreva um título para a playlist")
+            errors.push("EMPTY_PLAYLIST_TITLE")
         }
 
         if ($scope.text == undefined || $scope.text.length == 0) {
             createPlaylist = false;
-            errors.push("Escreva um texto na playlist")
+            errors.push("EMPTY_PLAYLIST_TEXT")
         }
 
         if (createPlaylist) {
             Playlist.create(payload).success(res => {
+                let success = res.success;
                 let data = res.data;
 
                 if (res.success) {
+                    //console.log("university id: ")
+                    //console.log(payload.universityId)
                     University.getUniversityById(payload.universityId).success(function(res) {
+                        console.log(res)
                         let university = res.data;
                         let playlistUrl = "/a/" + university.url + "/playlist/id/" + data._id;
                         $location.path(playlistUrl);

@@ -63,7 +63,7 @@
         <tr ng-repeat="l in labels">
           <td>{{l | translate}}</td>
           <td>{{tableData[$index][1].length}}</td>
-          <td><div style="display: inline-block;" ng-if="university.language == 'EN'">$</div><div style="display: inline-block;" ng-if="university.language == 'PT'">R$</div> {{ convertToDecimal(tableData[$index][0]) }}</td>
+          <td><div style="display: inline-block;" ng-if="university.language == 'EN'">$</div><div style="display: inline-block;" ng-if="university.language == 'PT'">$</div> {{ convertToDecimal(tableData[$index][0]) }}</td>
           <td style="text-align: right;"><button ng-click="statusByDate(2018 ,$index + 1)" class="btn-two btn-two-blue btn-small">{{'VIEW' | translate}}</button></td>
         </tr>
 

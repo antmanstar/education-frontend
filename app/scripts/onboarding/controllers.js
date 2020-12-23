@@ -6,96 +6,124 @@ angular.module('netbase')
 .controller('OnboardingUniversityCreateCtrl', ['$rootScope', '$scope', 'ngDialog', 'University', 'Knowledge', '$location', '$window', '$localStorage', function($rootScope, $scope, ngDialog, University, Knowledge, $location, $window, $localStorage) {
     $scope.mode = "";
     $scope.universityType = '';
-    $scope.loading = false;
     $scope.company_logo = $localStorage.company_logo;
+
+    $scope.lastpageReturn = function() {
+        $window.history.back();
+    }
+
+    $scope.step = 1;
+    $scope.loading = false
+
+    //
+    // DETERMINE THE LANGUAGE
+    //
+    let url = window.location.href;
+    if (url.indexOf('universida.de') > 0) {
+      $scope.language = "PT"
+    } else {
+      $scope.language = "EN"
+    }
+
+
+    /* background image */
+    $scope.backgroundImage = "https://universida.de/img/misc/noimageacademia.jpg";
+
+    $scope.backgroundImageUpdate = function() {
+        // Bug if undefined.
+        let backgroundImage = $("#file").attr("value");
+        if (backgroundImage != undefined) {
+          if (backgroundImage.indexOf("https") != -1) {
+            $scope.backgroundImage = backgroundImage;
+            console.log("backgroundImage: ", $scope.backgroundImage)
+          }
+        }
+    }
+
+    $scope.removeBtn = function() {
+      console.log("remove background")
+      $("#university-background-image").attr("style", "background-image: url('https://universida.de/img/misc/noimageacademia.jpg')");
+      $("#file").attr("value", 'https://universida.de/img/misc/noimageacademia.jpg');
+      $scope.backgroundImage = "https://universida.de/img/misc/noimageacademia.jpg";
+    }
+
+    /* step 1 */
+    $scope.move = function(value) {
+      $scope.error.exists = false;
+
+      // Only allow alpanumeric characters, dash and underscore ^[a-zA-Z0-9]+(?:[\w -]*[a-zA-Z0-9]+)*$
+      let urlpattern = new RegExp(/^[a-zA-Z0-9_-]*$/)
+
+      //
+      // VALIDATION
+      //  only description field is optional
+      //
+      if ($scope.step==1 && value==1) {
+        console.log("perform validation")
+        if ($scope.name == undefined || $scope.name == '') {
+            $scope.error.text = "UNI_CREATE_NAME_EMPTY";
+            $scope.error.exists = true;
+            return
+        }
+        if ($scope.url == undefined || $scope.url == '') {
+            $scope.error.text = "UNI_CREATE_URL_EMPTY";
+            $scope.error.exists = true;
+            return
+        }
+        if (!urlpattern.test($scope.url)) {
+          $scope.error.text = "UNI_CREATE_URL_INVALID";
+          $scope.error.exists = true;
+          return
+        }
+        if ($scope.language == undefined) {
+            $scope.error.text = "UNI_CREATE_SELECT_LANGUAGE";
+            $scope.error.exists = true;
+            return
+        }
+      }
+
+      $scope.step += Number(value);
+      if ($scope.step==2){
+        $scope.backgroundImageUpdate();
+      }
+    }
 
     $scope.error = {
         text: [],
         exists: false
     }
 
-    $scope.lastpageReturn = function() {
-        $window.history.back();
-    }
-
-    $scope.displayError = function(e) {
-        let txt = "";
-
-        for (var i = 0; i < e.length; i++) {
-            if (i + 1 == e.length) {
-                txt += e[i]
-            } else {
-                txt += e[i] + ", ";
-            }
-        }
-        return txt;
-    }
-
     $scope.create = function() {
-        $scope.loading = true;
-        let validated = true;
-        $scope.error.text = []
-        $scope.error.exists = false;
+      $scope.loading = true
 
-        // LANGUAGE MUST BE PT OR EN, LOWERCASE OR DIFFERENT WILL CAUSE A BUG
-        let data = {
-            name: $scope.name,
-            about: $scope.about,
-            url: $scope.url,
-            language: 'PT'
-        };
+      let data = {
+          name: $scope.name,
+          about: $scope.about,
+          url: $scope.url,
+          language: $scope.language
+      };
 
-        // Only allow alpanumeric characters, dash and underscore ^[a-zA-Z0-9]+(?:[\w -]*[a-zA-Z0-9]+)*$
-        let urlpattern = new RegExp(/^[a-zA-Z0-9_-]*$/)
+      console.log("data: ", data)
 
-        if ((data.name == undefined || data.name == "") && (data.url == undefined || data.url == "")) {
-          console.log("both empty")
-            validated = false;
-            $scope.error.text = "UNI_CREATE_FIELDS_EMPTY";
-            $scope.error.exists = true;
-            console.log("text: ", $scope.error.text)
-        }else if (data.name == undefined || data.name == "") {
-            validated = false;
-            $scope.error.text = "UNI_CREATE_NAME_EMPTY";
-            $scope.error.exists = true;
-            return;
-        }else if (data.url == undefined || data.url == "") {
-            validated = false;
-            $scope.error.text = "UNI_CREATE_URL_EMPTY";
-            $scope.error.exists = true;
-            return;
-        } else if (!urlpattern.test(data.url)) {
-          validated = false;
-          $scope.error.text = "UNI_CREATE_URL_INVALID";
-          $scope.error.exists = true;
+      let backgroundImage = $("#file").attr("value");
+      if (backgroundImage != undefined) {
+        if (backgroundImage.indexOf("https://") != -1) {
+            data.backgroundImage = backgroundImage;
         }
+      }
 
-        // removed because Description field is optional
-        // if (data.about == undefined) {
-        //     validated = false;
-        //     $scope.error.text.push("Escreva uma pequena descrição para explicar a sua comunidade educacional.");
-        //     $scope.error.exists = true;
-        // }
-
-        if (validated) {
-            University.create(data).success(function(res) {
-                $scope.loading = false;
-                if (res.success) {
-                    console.log(res.data);
-                    $location.path('/a/' + res.data.url + '/timeline')
-
-                } else {
-                    //console.log("university create: ", res.err)
-                    //if (res.err.errmsg.indexOf("url") != 1) {
-                    if (res.err.code == 11000) {
-                        $scope.error.text = "UNI_CREATE_URL_EXISTS";
-                        $scope.error.exists = true;
-                    }
-                }
-            });
+      University.create(data).success(function(res) {
+        $scope.loading = false
+        if (res.success) {
+          $location.path('/a/' + res.data.url + '/forum');
         } else {
-          $scope.loading = false;
+          console.log("create university error response: ", res)
+          if (res.err.code == 11000) {
+              $scope.error.text = "UNI_CREATE_URL_EXISTS";
+              $scope.error.exists = true;
+          }
         }
+      });
     }
 
     $scope.openSelectPlan = function() {

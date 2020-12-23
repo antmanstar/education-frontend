@@ -106,12 +106,20 @@
             <div style="height: 5px"></div>
         </div>
         <div class="split-line"></div>
-        <div class="members-list ng-cloak" ng-if="hideButton">
+        <div class="members-list ng-cloak" style="display: flex; justify-content: space-between;">
             <div style="display: inline-block;">
                 <i style="margin-right: 8px;" class="fas fa-user-friends"></i>{{ (university.members | filter : { 'unsubscribed' : 'false' }).length }}
             </div>
-            <button class="btn bg-primary-purple subscribe-btn ng-cloak" ng-if="!userSubscribed" ng-click="subscribe()">{{'SUBSCRIBE' | translate}}</button>
-            <button class="btn bg-primary-purple subscribe-btn ng-cloak" ng-if="userSubscribed && studentIsAdmin == false" ng-click="subscribe()">{{'UNSUBSCRIBE' | translate}}</button>
+            <div ng-if="hideButton">
+              <button class="btn bg-primary-purple subscribe-btn ng-cloak" ng-if="!userSubscribed" ng-click="subscribe()" ng-disabled="loading" style="min-width: 132px">
+                <p ng-hide="loading">{{'SUBSCRIBE' | translate}}</p>
+                <img style="width: 20px;" ng-show="loading" src="img/misc/loading.gif" />
+              </button>
+              <button class="btn bg-primary-purple subscribe-btn ng-cloak" ng-if="userSubscribed && studentIsAdmin == false" ng-click="subscribe()" ng-disabled="loading" style="min-width: 132px">
+                <p ng-hide="loading">{{'UNSUBSCRIBE' | translate}}</p>
+                <img style="width: 20px;" ng-show="loading" src="img/misc/loading.gif" />
+              </button>
+            </div>
         </div>
         <div class="split-line"></div>
         <div style="font-size: 1.1em;">

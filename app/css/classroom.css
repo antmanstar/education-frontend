@@ -711,6 +711,11 @@ video {
   flex-direction: row;
   justify-content: space-around;
   font-size: 14px;
+  margin-bottom: 1em;
+}
+
+#alert-button-container > * {
+  margin-bottom: 24px;
 }
 
 @media (max-width: 468px) {

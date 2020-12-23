@@ -100,7 +100,7 @@
     "FEATURE_TITLE_2": "CURSOS",
     "FEATURE_SUBTITLE_2": "Assinaturas integradas, cursos e produtos digitais",
     "FEATURE_DESCRIPTION_2": "Mantém um registro cronológico das atividades realizadas na sala de aula virtual.",
-    "FEATURE_TITLE_3": "FÓRUM & CHAT",
+    "FEATURE_TITLE_3": "FÓRUM e CHAT",
     "FEATURE_SUBTITLE_3": "Conectar estudantes e professores através de um poderoso chat e fórum",
     "FEATURE_DESCRIPTION_3": "É um lugar onde as conversas acontecem, alunos e professores podem acompanhar discussões relevantes sobre assuntos favoritos.",
     "FEATURE_TITLE_4": "REALIDADE VIRTUAL",
@@ -329,7 +329,7 @@
     "LANGUAGE": "Idioma",
     "PORTUGUESE": "Português",
     "ENGLISH": "Inglês",
-    "UNIVERSITY_URL": "URL da sua Universidade. Exemplo: universida.de/a/<url>",
+    "UNIVERSITY_URL": "https://universida.de/a/sua_url_personalizada",
     "BACK": "Voltar",
     "PREVER": "Preview",
     "CREATE": "Criar",
@@ -399,6 +399,7 @@
     "PLEASE_ENTER_COURSE_DESCRIPTION": "Por favor, digite a descrição do curso",
     "PLEASE_SELECT_COURSE_KNOWLEDGE": "Por favor, selecione o conhecimento do curso.",
     "PLEASE_SELECT_COURSE_PAYMENT": "Por favor, selecione o pagamento do curso.",
+    "PLEASE_ENTER_COURSE_PRICE": "Por favor, digite o preço do curso.",
     "CANCEL": "Cancelar",
     "CANCEL_UPPERCASE": "CANCELAR",
     "DELETE": "Excluir",
@@ -731,6 +732,7 @@
     "UNI_CREATE_URL_INVALID": "O campo Url deve conter apenas letras, números, hífen e sublinhado.",
     "UNI_CREATE_URL_EXISTS": "Digite um URL diferente para sua universidade. A que você escolher já existe.",
     "UNI_CREATE_FIELDS_EMPTY": "Escreva um nome para a sua comunidade educacional., Escreva uma URL para a sua comunidade educacional.",
+    "UNI_CREATE_SELECT_LANGUAGE": "Selecione um idioma para sua comunidade educacional",
 
     "DOMAIN_PLACEHOLDER": "universida.de",
 
@@ -755,6 +757,7 @@
     "CREATE_POST_CATEGORY_ERROR": "Selecione a categoria do post.",
     "CREATE_POST_TITLE_ERROR": "Escreva um título para a postagem",
     "CREATE_POST_TEXT_ERROR": "Escreva um texto na postagem",
+    "CREATE_POST_CATEGORY_EMPTY": "Por favor, escreva o título da categoria.",
 
     "CATEGORIES": "Categorias",
 
@@ -923,5 +926,30 @@
     "PLEASE_FILL_UP_EXPIRY_MONTH": "Favor preencher o mês de expiração.",
     "PLEASE_FILL_UP_EXPIRY_YEAR": "Favor preencher o ano de validade.",
     "INVALID_YEAR_NUMBER": "O ano de expiração de seus cartões é inválido.",
-    "CLICK_TO_REPEAT_TRANSACTION": "Clique para repetir a transação"
+    "CLICK_TO_REPEAT_TRANSACTION": "Clique para repetir a transação",
+    "VIEW_ALL_MEMBERS": "Ver todos os membros",
+    "AVAILABLE": "Disponível",
+    "BUSY": "Ocupado",
+    "AWAY": "Fora",
+    "LEAVE": "Sair",
+    "NOT_LOGGED_USER": "Usuário não logado",
+    "SEND": "Enviar",
+    "TYPE_HERE": "Escreva aqui...",
+    "COPIED_LINK_TO_CLIPBOARD": "Link copiado para prancheta",
+
+    "EMPTY_PLAYLIST_TITLE": "Escreva um título para a playlist",
+    "EMPTY_PLAYLIST_TEXT": "Escreva um texto na playlist",
+
+    "JAN": "Janeiro",
+    "FEB": "Fevereiro",
+    "MAR": "Março",
+    "APR": "Abril",
+    "MAY": "Maio",
+    "JUN": "Junho",
+    "JUL": "Julho",
+    "AUG": "Agosto",
+    "SEP": "Setembro",
+    "OCT": "Outubro",
+    "NOV": "Novembro",
+    "DEC": "Dezembro"
 }

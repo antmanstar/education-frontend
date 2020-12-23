@@ -28,19 +28,19 @@
                         </button>
                         <ul class="dropdown-menu slidedown">
                             <li ng-click="getChannelMembers(currentChannel.sid)">
-                                <a href="#"></span>&nbsp;View All Memebers</a>
+                                <a href="#"></span>&nbsp;{{'VIEW_ALL_MEMBERS' | translate}}</a>
                             </li>
-                            <li><a href="#">&nbsp;Available</a></li>
-                            <li><a href="#">&nbsp;Busy</a></li>
-                            <li><a href="#">&nbsp;Away</a></li>
+                            <li><a href="#">&nbsp;{{'AVAILABLE' | translate}}</a></li>
+                            <li><a href="#">&nbsp;{{'BUSY' | translate}}</a></li>
+                            <li><a href="#">&nbsp;{{'AWAY' | translate}}</a></li>
                             <li class="divider"></li>
-                            <li ng-click="leaveCurrentChannel()"><a href="#" style="color: red;">&nbsp;Leave</a></li>
+                            <li ng-click="leaveCurrentChannel()"><a href="#" style="color: red;">&nbsp;{{'LEAVE' | translate}}</a></li>
                         </ul>
                     </div>
                 </div>
                 <div class="panel-body-chat" id="scrollbar" ng-show="boxToggle">
                     <img id="gif" src="https://gifimage.net/wp-content/uploads/2017/08/loading-animated-gif-1.gif" class="loading-gif" width="50" height="50" ng-hide="loading == false" /></img>
-                    <div ng-hide="logged == true" style="text-align:center">Not logged user</div>
+                    <div ng-hide="logged == true" style="text-align:center">{{'NOT_LOGGED_USER' | translate}}</div>
                     <ul class="chat" id="chat-list" ng-hide="loading == true">
                         <li ng-repeat-start="message in messages" ng-if="message.author == currentMember._id" class="left clearfix li">
                             <span class="chat-img pull-left">
@@ -78,9 +78,9 @@
                         {{chattingNotification}}
                     </div> -->
                     <div class="chat-controller">
-                        <textarea class="textarea" ng-keypress='sendingInputKeyPress($event)'></textarea>
+                        <textarea id="chatEditor" class="textarea" ng-keypress='sendingInputKeyPress($event)'></textarea>
                         <!-- <button class="send-btn" ng-click='sendMSG()'><span class="glyphicon glyphicon-send"></span></button> -->
-                        <button class="send-btn" ng-click='sendMSG()'>Send</button>
+                        <button class="send-btn" ng-click='sendMSG()'>{{'SEND' | translate}}</button>
                     </div>
                 </div>
             </div>
