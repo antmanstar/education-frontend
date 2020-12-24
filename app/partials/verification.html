@@ -6,6 +6,22 @@
             align-items: center;
             flex-direction: column;
         }
+        
+        .send-btn {
+            border-radius: 2px;
+            text-transform: uppercase;
+            height: 44px;
+            color: #fff;
+            background-color: #2d4255;
+            font-weight: 500;
+            font-size: 0.8em;
+            letter-spacing: 0.4px;
+            padding-left: 15px;
+            padding-right: 15px;
+            width: 100%;
+            outline: none;
+            cursor: pointer;
+        }
     </style>
 
     <div class="row">
@@ -13,13 +29,13 @@
             <div class="wrapper">
                 <img src="/img/register/email.png" style="margin-top: 20px;" height="130px" width="130px" />
                 <div style="margin-top: 40px;">
-                    <span style="font-size: 30px; font-weight: 600;">Check your email </span>
+                    <span style="font-size: 30px; font-weight: 600;">Verify your email </span>
                 </div>
-                <div style="margin-top: 10px; width: 400px; font-size: 18px;">
-                    <sapn>We just have sent you a verification e-mail link , please check it</sapn>
+                <div style="margin-top: 10px; width: 400px; font-size: 18px; text-align: center;">
+                    <sapn>{{sentMessage}}</sapn>
                 </div>
                 <form style="text-align: center; margin-top: 40px; margin-bottom: 20px;">
-                    <button ng-click="verify()" class='btn btn-bluebase' style="width: 550px">O K</button>
+                    <button ng-click="sendVerificationLink()" class='send-btn' style="width: 550px">{{sendBtn}}</button>
                 </form>
                 <div><span style="font-size: 18px;">Did not get e-mail?<a style="margin-left: 5px;">Info</a></span></div>
             </div>

@@ -3551,7 +3551,7 @@ angular.module('netbase')
     }
 }])
 
-.controller('AccountCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', '$timeout', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, $timeout) {
+.controller('AccountCtrl', ['$rootScope', '$scope', '$location', '$route', '$routeParams', '$localStorage', 'amMoment', 'Students', 'ngDialog', '$timeout', function($rootScope, $scope, $location, $route, $routeParams, $localStorage, amMoment, Students, ngDialog, $timeout) {
     let university;
     $scope.loading = false
     let language = $localStorage.user_language;
@@ -3625,11 +3625,32 @@ angular.module('netbase')
         });
     }
 
-    $scope.verify = () => {
-        $scope.sentLink = "we sent the link via your email.";
-        $scope.buttonTxt = "OK";
-        console.log("PARAMS", $routeParams);
+    $scope.sentMessage = "Your account is not activated. Please verify your email.";
+    $scope.sendBtn = "Send";
+    $scope.sendVerificationLink = () => {
+        Students.sendVerificationToken().then(res => {
+            console.log("CRE", res)
+            if (res.data.success) {
+                $scope.sentMessage = "We just have sent you a verification e-mail link, please check it.";
+                $scope.sendBtn = "ReSend";
+            } else {
+                $scope.sentMessage = "We can not send you a verification e-mail link.";
+                $scope.sendBtn = "ReSend";
+            }
+        })
+    }
+
+    $scope.start = () => {
         $location.path('/onboarding/signup')
+    }
+
+    $scope.validate = () => {
+        let payload = { email: $routeParams.email, token: $routeParams.token }
+        console.log("payload", payload)
+        Students.verify(payload).then(res => {
+            if (res.data.success) $scope.verified = true
+            else $scope.verified = false
+        })
     }
 
     $scope.login = function() {
@@ -3643,8 +3664,9 @@ angular.module('netbase')
             Students.login(login).then(function(res) {
                 let success = res.data.success;
                 let token = res.data.token;
-                console.log("EE", res.data)
                 let verified = res.data.verified;
+
+                let url = window.location.href;
 
                 if (success) {
                     $localStorage.token = token;
@@ -3654,10 +3676,37 @@ angular.module('netbase')
                     $rootScope.$applyAsync();
                     ngDialog.close();
 
-                    // if (verified == false) redirectUrl = "/verify";
-                    // if (verified == false) {
-                    //     ngDialog.open({ template: 'partials/verification.html', className: 'ngdialog-theme-default', controller: 'AccountCtrl' });
-                    // }
+                    if (verified == false) {
+                        ngDialog.open({
+                            template: 'partials/verification.html',
+                            className: 'ngdialog-theme-default',
+                            controller: 'AccountCtrl',
+                            preCloseCallback: () => {
+                                $localStorage.$reset();
+
+                                if (url.indexOf('colle.ge') > 0) {
+                                    amMoment.changeLocale('en');
+                                    $localStorage.company_logo = "img/college_logo.png";
+                                    $localStorage.user_language = "EN";
+                                } else if (url.indexOf('universida.de') > 0) {
+                                    amMoment.changeLocale('pt-br');
+                                    $localStorage.company_logo = "img/universidade_logo.png"
+                                    $localStorage.user_language = "PT";
+                                } else {
+                                    amMoment.changeLocale('en');
+                                    $localStorage.company_logo = "img/college_logo.png"
+                                    $localStorage.user_language = "EN";
+                                }
+
+                                $rootScope.logged = false;
+                                $localStorage.logged = false;
+                                $localStorage.token = undefined;
+
+                                $location.path('/home/landing');
+                                $route.reload();
+                            }
+                        });
+                    }
 
                     if (redirectUrl.length > 0) {
                         $location.path(redirectUrl)

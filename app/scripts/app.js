@@ -315,10 +315,10 @@ angular.module('netbase', [
             templateUrl: 'partials/account.html',
             controller: 'AccountCtrl',
         })
-        // .when('/verify', {
-        //     templateUrl: 'partials/verification.html',
-        //     controller: 'AccountCtrl',
-        // })
+        .when('/verify', {
+            templateUrl: 'partials/verificationconfirm.html',
+            controller: 'AccountCtrl',
+        })
         .when('/p/:studentUsername', {
             templateUrl: 'partials/profile/profilebyusername.html',
             controller: 'ProfileByUsernameCtrl',
