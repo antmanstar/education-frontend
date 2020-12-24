@@ -951,5 +951,7 @@
     "SEP": "Setembro",
     "OCT": "Outubro",
     "NOV": "Novembro",
-    "DEC": "Dezembro"
+    "DEC": "Dezembro",
+
+    "PERMISSION_UPDATE_SUCCESS": "Permissão atualizada com sucesso"
 }

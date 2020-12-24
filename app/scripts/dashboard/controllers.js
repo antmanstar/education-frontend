@@ -367,13 +367,13 @@ angular.module('netbase')
 
     $scope.setMemberPrivilege = function() {
         let data = {
-            privilege: $scope.privilege + 1
+            privilege: $scope.privilege
         };
 
         University.setMemberPrivilege(universityId, studentId, data).success(function(res) {
             if (res.success) {
                 $scope.success = {
-                    text: "Permissão atualizada com sucesso",
+                    text: "PERMISSION_UPDATE_SUCCESS",
                     status: true
                 };
             }

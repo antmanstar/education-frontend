@@ -240,7 +240,7 @@
     "CRIAR_UMA_CONTA": "Create account",
 
     "RESET_PASS": "Reset password",
-    "RESET_PASS_MESSAGE": "We sent the reset password link via the eamil. Please check the email.",
+    "RESET_PASS_MESSAGE": "We sent the reset password link via the email. Please check the email.",
     "RESET_PASS_SUCCESS_TITLE": "Rest password successful!",
     "RESET_PASS_SUCCESS_SUBTITLE": "Your password has been successfully reset.",
     "CLICK_HERE": "Click here",
@@ -951,5 +951,7 @@
     "SEP": "September",
     "OCT": "October",
     "NOV": "November",
-    "DEC": "December"
+    "DEC": "December",
+
+    "PERMISSION_UPDATE_SUCCESS": "Permission successfully updated"
 }
