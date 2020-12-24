@@ -3612,7 +3612,19 @@ angular.module('netbase')
             return
         }
 
-        let payload = { email: $scope.resetpasswordEmail, type: "student" }
+        let url = window.location.href;
+        let lang = "PT";
+
+        if (url.indexOf('colle.ge') > 0) {
+            lang = "EN";
+        } else if (url.indexOf('universida.de') > 0) {
+            lang = "PT";
+        } else {
+            lang = "EN";
+        }
+
+        let payload = { email: $scope.resetpasswordEmail, lang: lang, type: "student" }
+        console.log("rest", payload)
         Students.resetPasswordStepOne(payload).success(function(res) {
 
             if (res.success) {
@@ -3628,8 +3640,20 @@ angular.module('netbase')
     $scope.sentMessage = "Your account is not activated. Please verify your email.";
     $scope.sendBtn = "Send";
     $scope.sendVerificationLink = () => {
-        Students.sendVerificationToken().then(res => {
-            console.log("CRE", res)
+        let url = window.location.href;
+        let lang = "PT";
+
+        if (url.indexOf('colle.ge') > 0) {
+            lang = "EN";
+        } else if (url.indexOf('universida.de') > 0) {
+            lang = "PT";
+        } else {
+            lang = "EN";
+        }
+
+        let payload = { lang: lang }
+        console.log("adfa", payload)
+        Students.sendVerificationToken(payload).then(res => {
             if (res.data.success) {
                 $scope.sentMessage = "We just have sent you a verification e-mail link, please check it.";
                 $scope.sendBtn = "ReSend";
@@ -3646,7 +3670,6 @@ angular.module('netbase')
 
     $scope.validate = () => {
         let payload = { email: $routeParams.email, token: $routeParams.token }
-        console.log("payload", payload)
         Students.verify(payload).then(res => {
             if (res.data.success) $scope.verified = true
             else $scope.verified = false
