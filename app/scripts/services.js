@@ -776,9 +776,27 @@ angular.module('netbase')
         },
 
         sendVerificationToken: (data) => {
-            let url = "/verify";
+            let url = "/validate/email/send";
             return $http({
-                method: 'PUT',
+                method: 'POST',
+                url: baseUrl + url,
+                data: data,
+                transformRequest: function(obj) {
+                    var str = [];
+                    for (var p in obj)
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    return str.join("&");
+                },
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            })
+        },
+
+        verify: (data) => {
+            let url = "/validate";
+            return $http({
+                method: 'POST',
                 url: baseUrl + url,
                 data: data,
                 transformRequest: function(obj) {
