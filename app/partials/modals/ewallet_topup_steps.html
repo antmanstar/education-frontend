@@ -15,7 +15,7 @@
       <p>{{'TOP_UP_TITLE' | translate}}</p>
       <div class="center" style="position: relative;">
         <b>{{'CURRENCY' | translate}}</b>
-        <input style="padding-left: 10px; display: inline-block;" ng-model="amount" type="number" ng-change="selectPrice(amount)"/>
+        <input style="padding-left: 10px; display: inline-block;" ng-model="amount" type="number" min="0" ng-change="selectPrice(amount)"/>
       </div>
       <div class="price-options-container">
         <div class="price-option" ng-click="selectPrice(10)">$10</div>
