@@ -63,6 +63,7 @@
                   <div class="profile-expanded">
                     <!--<div><a href="/dashboard">Dashboard</a></div>-->
                     <div><a href="/perfil">{{'HEADER_PROFILE_1' | translate}}</a></div>
+                    <div><a href="/wallet/dashboard">{{'ACCESSWALLET_2' | translate}}</a></div>
                     <!--
                     <div ng-click="changeLanguage('en')" ng-class="{'selected-language': selectedLanguage === 'en'}">{{'ENGLISH' | translate}} (en-us)</div>
                     <div ng-click="changeLanguage('pt')" ng-class="{'selected-language': selectedLanguage === 'pt'}">{{'PORTUGUESE' | translate}} (pt-br)</div>
@@ -105,7 +106,7 @@
         </div>
         <!-- search-bar-mobile -->
 
-        <div class="navbar-slider hide-mobile" ng-hide="originalPath.indexOf('/dashboard') != -1">
+        <div class="navbar-slider hide-mobile" ng-hide="originalPath.indexOf('/dashboard') != -1 && originalPath.indexOf('/wallet/dashboard') == -1">
 
           <div class="option unselectable" ng-if="logged" ng-class="{'active': originalPath == '/home/timeline' || originalPath == '/home/timeline/'}"><a href="/home/timeline">{{'HEADER_NAV_1' | translate}}</a></div>
           <!--<div class="option unselectable" ng-hide="whitelabel" ng-class="{'active': originalPath == '/home/explore' || originalPath == '/home/explore/'}"><a href="/home/explore">{{'HEADER_NAV_2' | translate}}</a></div>-->
