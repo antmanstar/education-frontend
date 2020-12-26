@@ -200,7 +200,8 @@
             <img class="profile-pic" ng-if="student.imageUrl == undefined" style="background-image: url('http://virtual-strategy.com/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png')"></img>
             <img id="gif" src="http://www.nasa.gov/multimedia/videogallery/ajax-loader.gif" class="loading-gif" width="20" height="20" /></img>
             <input type="hidden" id="file" ng-model="file">
-            <button class="btn bg-base upload_btn" id="upload_btn">{{'SELECT_PHOTO' | translate}}</button>
+            <button ng-if="student.imageUrl == undefined" class="btn bg-base upload_btn" id="upload_btn">{{'SELECT_PHOTO' | translate}}</button>
+            <button ng-if="student.imageUrl != undefined" class="btn bg-base upload_btn" id="upload_btn">{{'UPDATE_CHANGE_PHOTO' | translate}}</button>
         </div>
 
         <div class="col-xs-12 col-sm-7 col-md-7 col-lg-8 ">

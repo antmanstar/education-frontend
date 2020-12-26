@@ -953,5 +953,7 @@
     "NOV": "Novembro",
     "DEC": "Dezembro",
 
-    "PERMISSION_UPDATE_SUCCESS": "Permissão atualizada com sucesso"
+    "PERMISSION_UPDATE_SUCCESS": "Permissão atualizada com sucesso",
+
+    "UPDATE_CHANGE_PHOTO": "Alterar foto"
 }
