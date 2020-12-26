@@ -153,19 +153,21 @@
                       class="form-control"
                       style="height: 45px !important;"
                       type="number"
-                      placeholder="{{'EXPIRY' | translate}} (mm)"
+                      placeholder="{{'MONTH' | translate}}"
                       oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                       ng-change="validateExpiryMonth()"
                       ng-model="cardData.expiryMonth"
+                      min="0"
                       maxlength=2
                     >
                     <input
                       class="form-control"
                       style="height: 45px !important;"
                       type="number"
-                      placeholder="{{'EXPIRY' | translate}} (yy)"
+                      placeholder="{{'YEAR' | translate}}"
                       oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                       ng-model="cardData.expiryYear"
+                      min="20"
                       maxlength=2
                     >
                   </div>
