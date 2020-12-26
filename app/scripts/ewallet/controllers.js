@@ -829,11 +829,10 @@ angular.module('netbase')
     });
   }
 
-  $scope.eraseCardRequest = function(card) {
-    console.log("card: ", card)
+  $scope.eraseCardRequest = function() {
     let data = {
       customerId: $localStorage.customerId,
-      id: card.id
+      id: $scope.ngDialogData.card.id
     }
     console.log("request card remove: ", data)
     Ewallet.removepaymentMethod(data)
@@ -845,7 +844,7 @@ angular.module('netbase')
         $scope.processing = false
         $scope.apiSuccess = true
         $scope.successMessage = res.data.msg
-
+        $scope.closeErasePopup();
         loadpaymentMethods()
       }
     })

@@ -93,7 +93,7 @@
             <i class="fa fa-ellipsis-v showMenu" onclick="cards(this)"></i>
             <div id="dropdown-{{$index}}" class="dropdown-content">
               <a href="#" ng-click="editCardRequest(card)">Edit</a>
-              <a href="#" ng-click="openBlockPopup(card)">Block</a>
+              <!-- <a href="#" ng-click="openBlockPopup(card)">Block</a> -->
               <a href="#" ng-click="openErasePopup(card)" style="color: #FA735B;">Remove</a>
             </div>
           </div>
@@ -121,7 +121,7 @@
             <i class="fa fa-ellipsis-v showMenu" onclick="bankAccount(this)"></i>
             <div id="dropdown-ba-{{$index}}" class="dropdown-content">
               <a href="#" ng-click="editpaymentMethod(card)">Edit</a>
-              <a href="#" ng-click="openBlockPopup(card)">Block</a>
+              <!-- <a href="#" ng-click="openBlockPopup(card)">Block</a> -->
               <a href="#" ng-click="openErasePopup(card)" style="color: #FA735B;">Remove</a>
             </div>
           </div>
@@ -178,7 +178,7 @@
 
 <!--CONFIRMATION MODALS FOR ERASE AND BLOCK CARD-->
 <script type="text/ng-template" id="eraseCardPopup">
-  <div class="container-fluid text-center delete-container">
+  <div class="container-fluid text-center delete-container" style="margin:5px;">
     <h3>{{'ERASE_VIRTUAL_CARD_MESSAGE' | translate}}</h3>
     <div class="delete-buttons-div">
       <button class="btn btn-blue white-text" ng-disabled="eraseLoading" ng-click="eraseCardRequest()">{{'YES' | translate}} <img style="width: 15px;" ng-show="deleteLoading == true" src="img/misc/loading.gif"/></button>
