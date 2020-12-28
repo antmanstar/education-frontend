@@ -741,7 +741,7 @@ angular.module('netbase')
                     video.onloadedmetadata = function(e) {
                         video.play();
                     };
-                    video.transform = scaleX(-1);  // test mirror
+                    video.transform = scaleX(-1); // test mirror
                 }).catch((err) => {
                     $rootScope.alertDialog.push(ngDialog.open({
                         template: 'partials/modals/classroom_alert_modal.html',
@@ -807,7 +807,7 @@ angular.module('netbase')
     }
 }])
 
-.controller('AcademiaClassroomCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Classroom', 'Students', 'ngDialog', '$localStorage', '$window', function($rootScope, $scope, $location, $route, University, Classroom, Students, ngDialog, $localStorage, $window) {
+.controller('AcademiaClassroomCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Classroom', 'Students', 'ngDialog', '$localStorage', '$window', '$filter', function($rootScope, $scope, $location, $route, University, Classroom, Students, ngDialog, $localStorage, $window, $filter) {
     let universityUrl = $route.current.params.academiaName; // Current university
     let roomSID = $route.current.params.roomSID; // Current roomsid
     let accountSid = $route.current.params.accountSid; // Admin user id ( = null if unlogged user)
@@ -2351,12 +2351,12 @@ angular.module('netbase')
     // END getUniversity
 
     $scope.titleCounter = function() {
-      console.log("counting title")
-      if($scope.title.length >= 25) {
-        $scope.inputLengthWarningShow = true;
-      }else {
-        $scope.inputLengthWarningShow = false;
-      }
+        console.log("counting title")
+        if ($scope.title.length >= 25) {
+            $scope.inputLengthWarningShow = true;
+        } else {
+            $scope.inputLengthWarningShow = false;
+        }
     }
 
     $scope.privilege = {
@@ -2638,17 +2638,17 @@ angular.module('netbase')
     }
 
     $scope.titleCounter = function() {
-      if($scope.title.length >= 50) {
-        $scope.inputLengthWarningShow = true;
-      }else {
-        $scope.inputLengthWarningShow = false;
-      }
+        if ($scope.title.length >= 50) {
+            $scope.inputLengthWarningShow = true;
+        } else {
+            $scope.inputLengthWarningShow = false;
+        }
     }
 
     $scope.updateSelected = function() {
-      if ($scope.categoryForum._id == "create_category") {
-        $location.path("/a/" + universityUrl + "/forum/category/create")
-      }
+        if ($scope.categoryForum._id == "create_category") {
+            $location.path("/a/" + universityUrl + "/forum/category/create")
+        }
     }
 
     //
@@ -3023,7 +3023,7 @@ angular.module('netbase')
             //  THIS FUNCTION WILL REMOVE THE EDITOR WHEN USER NAVIGATES TO OTHER PAGE
             //  SIMPLE HACK TO HIDE THE TOOLBAR
             //
-            scope.$on("$destroy", function(){
+            scope.$on("$destroy", function() {
                 tinyMCE.remove('#chatEditor');
             });
 
@@ -3571,9 +3571,9 @@ angular.module('netbase')
                 Students.getStudentById(studentId).then(function(res) {
                         let data = res.data.data;
                         console.log("data: ", data)
-                        // This variable will be used to check if a user / student
-                        // has once been subscribed to a university or
-                        // if the current university is included in user's universitiesSubscribed array
+                            // This variable will be used to check if a user / student
+                            // has once been subscribed to a university or
+                            // if the current university is included in user's universitiesSubscribed array
                         let unisub = false;
 
                         if (data != undefined) scope.hideButton = true;
@@ -3688,7 +3688,7 @@ angular.module('netbase')
             // };
 
             scope.subscribe = function() {
-              scope.loading = true;
+                scope.loading = true;
                 if ($localStorage.token != undefined && $localStorage.token != null) {
                     University.subscribeOnUniversity(scope.university.url).then(function(res) {
 
@@ -3937,9 +3937,9 @@ angular.module('netbase')
         link: function(scope, element, attr) {
             let universityId = attr.uid;
             if (universityId) {
-              University.getUniversityById(universityId).success(function(res) {
-                  scope.university = res.data;
-              });
+                University.getUniversityById(universityId).success(function(res) {
+                    scope.university = res.data;
+                });
             }
         }
     }
