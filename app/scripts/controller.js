@@ -3637,7 +3637,7 @@ angular.module('netbase')
         });
     }
 
-    $scope.sentMessage = "Your account is not activated. Please verify your email.";
+    $scope.sentMessage = "Your account is created successfully. Please verify your email to activate your account.";
     $scope.sendBtn = "Send";
     $scope.sendVerificationLink = () => {
         let url = window.location.href;
@@ -3688,7 +3688,7 @@ angular.module('netbase')
                 let success = res.data.success;
                 let token = res.data.token;
                 let verified = res.data.verified;
-
+                $scope.sentMessage = "Your account is not activated. Please verify your email.";
                 let url = window.location.href;
 
                 if (success) {
@@ -3807,9 +3807,9 @@ angular.module('netbase')
                     // $localStorage.logged = true;
                     // $rootScope.logged = true;
 
+
                     // $rootScope.$applyAsync();
                     ngDialog.close();
-                    alert("successfully created")
                     ngDialog.open({ template: 'partials/modals/login.html', className: 'ngdialog-theme-default', controller: 'AccountCtrl' });
                     // if ($location.path().search("landing") == -1) {
                     //     $location.path('/onboarding/signup')
@@ -4291,6 +4291,16 @@ angular.module('netbase')
 
 /* reset */
 .controller('ResetPasswordCtrl', ['$rootScope', '$scope', '$location', 'Students', function($rootScope, $scope, $location, Students) {
+    let url = window.location.href;
+    $scope.domain = "college"
+
+    if (url.indexOf('universida.de') > 0) {
+        $scope.domain = "universidade"
+    } else {
+        $scope.domain = "college"
+    }
+    console.log("domain: ", $scope.domain)
+
     let tokenOne = $location.search().tokenOne;
     let email = $location.search().email;
     let tokenTwo;
