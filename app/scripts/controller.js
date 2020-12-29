@@ -3806,6 +3806,7 @@ angular.module('netbase')
                     $localStorage.logged = true;
                     $rootScope.logged = true;
                     $scope.sentMessage = "ACCOUNT_CREATED_VERIFY_EMAIL";
+                    $scope.sendBtn = "RESEND";
 
                     ngDialog.close();
                     ngDialog.open({
