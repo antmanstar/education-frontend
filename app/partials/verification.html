@@ -29,15 +29,15 @@
             <div class="wrapper">
                 <img src="/img/register/email.png" style="margin-top: 20px;" height="130px" width="130px" />
                 <div style="margin-top: 40px;">
-                    <span style="font-size: 30px; font-weight: 600;">Verify your email </span>
+                    <span style="font-size: 30px; font-weight: 600;">{{'VERIFY_YOUR_EMAIL' | translate}} </span>
                 </div>
                 <div style="margin-top: 10px; width: 400px; font-size: 18px; text-align: center;">
-                    <sapn>{{sentMessage}}</sapn>
+                    <sapn>{{sentMessage | translate}}</sapn>
                 </div>
                 <form style="text-align: center; margin-top: 40px; margin-bottom: 20px;">
-                    <button ng-click="sendVerificationLink()" class='send-btn' style="width: 550px">{{sendBtn}}</button>
+                    <button ng-click="sendVerificationLink()" class='send-btn' style="width: 550px">{{sendBtn | translate}}</button>
                 </form>
-                <div><span style="font-size: 18px;">Did not get e-mail?<a style="margin-left: 5px;">Info</a></span></div>
+                <div><span style="font-size: 18px;">{{'DID_NOT_GET_EMAIL?' | translate}}<a style="margin-left: 5px;">{{'INFO' | translate}}</a></span></div>
             </div>
         </div>
     </div>

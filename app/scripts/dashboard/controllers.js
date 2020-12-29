@@ -239,6 +239,9 @@ angular.module('netbase')
             if (res.success) {
                 $scope.university = res.data;
                 $scope.success = true;
+
+
+                University.storeLocal($scope.university);
             }
         });
     }
