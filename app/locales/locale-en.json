@@ -787,7 +787,7 @@
     "You are not a Administrator": "You are not an Administrator",
 
     "COURSE_IN_PROGRESS": "Course still in progress ...",
-    "COURSE_IN_PROGRESS_MESSAGE": "Please come back later while modules and contents are being added." ,
+    "COURSE_IN_PROGRESS_MESSAGE": "Please come back later while modules and contents are being added.",
 
     "TOP_UP": "Top Up",
     "STEP_1_OF_3": "Step 1 of 3",
@@ -838,7 +838,7 @@
     "EXPIRATION": "Expiration",
     "SECURITY": "Security",
     "ERASE_CARD": "Erase Card",
-    "BLOCK_CARD":"Block Card",
+    "BLOCK_CARD": "Block Card",
     "ENTER_AMOUNT": "Enter Amount",
     "CHOOSE_CONTACT": "Choose Contact",
     "REQUEST_CARD": "Request card",
@@ -960,7 +960,7 @@
     "ACCOUNT_VERIFIED_WELCOME": "Your account is verified successfully. Welcome to Our Platform.",
     "VERIFICATION_FAILED": "Your verification is failed. Sorry.",
     "VERIFY_YOUR_EMAIL": "Verify your email",
-    "ACCOUNT_CREATED_VERIFY_EMAIL": "Your account is created successfully. Please verify your email to activate your account.",
+    "ACCOUNT_CREATED_VERIFY_EMAIL": "Your account is created successfully. e just have sent you a verification e-mail link, please check it.",
     "VERIFICATION_EMAIL_LINK_SENT": "We just have sent you a verification e-mail link, please check it.",
     "CANNOT_SEND_EMAIL_VERIFICATION_LINK": "We can not send you a verification e-mail link.",
     "ACCOUNT_NOT_ACTIVATED_VERIFY_EMAIL": "Your account is not activated. Please verify your email.",
