@@ -955,5 +955,17 @@
 
     "PERMISSION_UPDATE_SUCCESS": "Permission successfully updated",
 
-    "UPDATE_CHANGE_PHOTO": "Change Photo"
+    "UPDATE_CHANGE_PHOTO": "Change Photo",
+
+    "ACCOUNT_VERIFIED_WELCOME": "Your account is verified successfully. Welcome to Our Platform.",
+    "VERIFICATION_FAILED": "Your verification is failed. Sorry.",
+    "VERIFY_YOUR_EMAIL": "Verify your email",
+    "ACCOUNT_CREATED_VERIFY_EMAIL": "Your account is created successfully. Please verify your email to activate your account.",
+    "VERIFICATION_EMAIL_LINK_SENT": "We just have sent you a verification e-mail link, please check it.",
+    "CANNOT_SEND_EMAIL_VERIFICATION_LINK": "We can not send you a verification e-mail link.",
+    "ACCOUNT_NOT_ACTIVATED_VERIFY_EMAIL": "Your account is not activated. Please verify your email.",
+    "RESEND": "Resend",
+    "SEND": "Send",
+    "DID_NOT_GET_EMAIL?": "Did not get e-mail?",
+    "INFO": "Info"
 }

@@ -13,10 +13,10 @@
             <div class="wrapper">
                 <img src="/img/register/emailSuccess.svg" style="margin-top: 20px;" height="130px" width="130px" />
                 <div style="margin-top: 30px; width: 400px; font-size: 18px; text-align: center;">
-                    <sapn>Your account is verified successfully. Welcome to Our Platform.</sapn>
+                    <sapn>{{'ACCOUNT_VERIFIED_WELCOME' | translate}}</sapn>
                 </div>
                 <form style="text-align: center; margin-top: 40px; margin-bottom: 20px;">
-                    <button ng-click="start()" class='btn btn-bluebase' style="width: 550px">Start</button>
+                    <button ng-click="start()" class='btn btn-bluebase' style="width: 550px">{{'START' | translate}}</button>
                 </form>
             </div>
         </div>
@@ -27,7 +27,7 @@
             <div class="wrapper">
                 <img src="/img/register/email.png" style="margin-top: 20px;" height="130px" width="130px" />
                 <div style="margin-top: 30px; width: 400px; font-size: 18px; text-align: center;">
-                    <sapn>Your verification is failed. Sorry.</sapn>
+                    <sapn>{{'VERIFICATION_FAILED' | translate}}</sapn>
                 </div>
                 <form style="text-align: center; margin-top: 40px; margin-bottom: 20px;">
                     <button ng-click="goBack()" class='btn btn-bluebase' style="width: 550px">OK</button>
