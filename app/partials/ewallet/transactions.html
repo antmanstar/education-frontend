@@ -68,7 +68,7 @@
             </tr>
 
             <tr class="transactions-data pointer" ng-repeat="transaction in transactions" ng-click="repeatTransaction(transaction)">
-              <td>{{transaction_id.createdAt.toString()}}</td>
+              <td>{{transaction.createdAt | date}}</td>
               <td>{{transaction.type}}: {{transaction.description}}</td>
               <td ng-show="transaction.type=='ADD'" class="universidade-green-color">+${{transaction.amount}}</td>
               <td ng-show="transaction.type!='ADD'" class="universidade-red-color">

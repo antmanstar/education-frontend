@@ -1962,11 +1962,12 @@ angular.module('netbase')
         getCardToken: function(data) {
             var url = '/cards/cardtoken';
             return $http({
-                method: 'GET',
+                method: 'POST',
                 url: baseUrl + url,
-                params: data,
+                data: data,
                 headers: {
-                    'x-access-token': $localStorage.token
+                    'x-access-token': $localStorage.token,
+                    'Content-Type':'application/json'
                 }
             });
         },
@@ -1974,11 +1975,12 @@ angular.module('netbase')
         getBankAccountToken: function(data) {
             var url = '/cards/bktoken';
             return $http({
-                method: 'GET',
+                method: 'POST',
                 url: baseUrl + url,
-                params: data,
+                data: data,
                 headers: {
-                    'x-access-token': $localStorage.token
+                    'x-access-token': $localStorage.token,
+                    'Content-Type':'application/json'
                 }
             });
         },
