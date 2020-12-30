@@ -233,7 +233,7 @@ angular.module('netbase')
     $scope.userId = $scope.ngDialogData.userId;
     $scope.customerId = $scope.ngDialogData.customerID;
     $scope.amount;
-    $scope.newBalance = $scope.balance
+    $scope.newBalance = $scope.balance || 0;
     $scope.topup_step = "step-1"
 
     $scope.processing = false
@@ -429,7 +429,7 @@ angular.module('netbase')
 
     $scope.amount;
     $scope.balance = $scope.ngDialogData.balance
-    $scope.newBalance = $scope.balance
+    $scope.newBalance = $scope.balance || 0;
     $scope.withdraw_step = "step-1"
 
     //validation variables
@@ -739,7 +739,7 @@ angular.module('netbase')
     $scope.amount = $scope.ngDialogData.amount;
     $scope.sender = $scope.ngDialogData.sender;
     $scope.receiver = $scope.ngDialogData.receiver;
-    $scope.newBalance = $scope.ngDialogData.newBalance;
+    $scope.newBalance = $scope.ngDialogData.newBalance || 0;
 
 
     $scope.reviewModalBack = function() {
