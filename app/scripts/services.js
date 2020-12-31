@@ -713,7 +713,6 @@ angular.module('netbase')
 }])
 
 .factory('Students', ['$http', '$localStorage', function($http, $localStorage) {
-    //var baseUrl = "https://api.universida.de/accounts/students";
     var baseUrl = "https://educationalcommunity-accounts.herokuapp.com/accounts/students";
     // var baseUrl = "http://localhost:9000/accounts/students";
 
@@ -1967,7 +1966,7 @@ angular.module('netbase')
                 data: data,
                 headers: {
                     'x-access-token': $localStorage.token,
-                    'Content-Type':'application/json'
+                    'Content-Type': 'application/json'
                 }
             });
         },
@@ -1980,7 +1979,7 @@ angular.module('netbase')
                 data: data,
                 headers: {
                     'x-access-token': $localStorage.token,
-                    'Content-Type':'application/json'
+                    'Content-Type': 'application/json'
                 }
             });
         },

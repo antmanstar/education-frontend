@@ -306,8 +306,9 @@ angular.module('netbase')
     var domain = arr[0] + "//" + arr[2];
 
     University.getUniversity(universityUrl).then(function(res) {
-        // console.log('here university');
-        // console.log(res);
+        console.log('here university');
+        console.log("UNIVERSITYID", universityUrl);
+        console.log(res);
         $scope.university = res.data.data;
         $scope.getAllClassrooms();
     });
@@ -3551,9 +3552,10 @@ angular.module('netbase')
     }
 }])
 
-.controller('AccountCtrl', ['$rootScope', '$scope', '$location', '$route', '$routeParams', '$localStorage', 'amMoment', 'Students', 'ngDialog', '$timeout', function($rootScope, $scope, $location, $route, $routeParams, $localStorage, amMoment, Students, ngDialog, $timeout) {
+.controller('AccountCtrl', ['$rootScope', '$scope', '$location', '$route', '$routeParams', '$localStorage', 'amMoment', 'Students', 'ngDialog', '$timeout', 'jwtHelper', function($rootScope, $scope, $location, $route, $routeParams, $localStorage, amMoment, Students, ngDialog, $timeout, jwtHelper) {
     let university;
     $scope.loading = false
+    $scope.verified = false;
     let language = $localStorage.user_language;
 
     if ($scope.ngDialogData != undefined) {
@@ -3675,6 +3677,12 @@ angular.module('netbase')
         })
     }
 
+    // $scope.$watch('verified', function(newValue, oldValue) { 
+    //     if (newValue == true) {
+    //         ngDialog.close();
+    //     }
+    // });
+
     $scope.login = function() {
         $scope.loading = true
         let login = {
@@ -3775,6 +3783,19 @@ angular.module('netbase')
         });
     };
 
+    function callAtTimeout() {
+        let id = jwtHelper.decodeToken($localStorage.token)._id;
+        Students.getStudentById(id).then(data => {
+            if (data.data.data.validated == false) {
+                $timeout(callAtTimeout, 3000);
+            } else {
+                ngDialog.close();
+                $location.path('/home/timeline');
+                $route.reload();
+            }
+        })
+    }
+
     $scope.create = function() {
         let url = window.location.href;
         if (language == undefined) {
@@ -3838,6 +3859,7 @@ angular.module('netbase')
                             $route.reload();
                         }
                     });
+                    $timeout(callAtTimeout, 3000);
                 } else {
                     $scope.loading = false
                     let statusCode = res.data.status;
