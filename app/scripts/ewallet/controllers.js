@@ -12,7 +12,7 @@ angular.module('netbase')
     Ewallet.getAccount(studentId).then(function(res) {
       console.log("get account: ", res)
       if(res.data.message == 'Success') {
-        $scope.balance = res.data.result.walletBalance
+        $scope.balance = (res.data.result && res.data.result.walletBalance) ? res.data.result.walletBalance : 0
       }
     })
 
@@ -444,13 +444,20 @@ angular.module('netbase')
     $scope.routingNumber = "";
     $scope.country = "";
     $scope.currency = "";
-
+    let numberRegex = /^[0-9]*$/
     $scope.updateCardholderName = function(cardholderName) {
       $scope.cardholderName = cardholderName
     }
 
+
     $scope.updateAccountNumber = function(accountNumber) {
-      $scope.accountNumber = accountNumber
+      if(numberRegex.test(accountNumber)){
+        $scope.accountNumber = accountNumber
+        $scope.errorMessage = ""
+      }else{
+        $scope.errorMessage = "ACCOUNT_NUMBER_ERROR"
+      }
+      
     }
 
     $scope.updateBankName = function(bankName) {
@@ -475,6 +482,12 @@ angular.module('netbase')
 
     $scope.selectPrice = function(amount) {
       console.log("set amount")
+      if($scope.balance - amount <0){
+        $scope.withdrawError = 'WITHDRAW_BALANCE_MORE_THAN_AVAILABLE'
+        return;
+      }else{
+        $scope.withdrawError = null
+      }
       $scope.amount = amount
       $scope.newBalance = $scope.balance - amount
     }

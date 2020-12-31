@@ -3677,12 +3677,6 @@ angular.module('netbase')
         })
     }
 
-    // $scope.$watch('verified', function(newValue, oldValue) { 
-    //     if (newValue == true) {
-    //         ngDialog.close();
-    //     }
-    // });
-
     $scope.login = function() {
         $scope.loading = true
         let login = {
@@ -5508,6 +5502,11 @@ angular.module('netbase')
 .controller('ProfileEditCtrl', ['$rootScope', '$scope', '$location', '$localStorage', '$timeout', 'Upload', 'jwtHelper', 'Students', 'University', 'Forum', function($rootScope, $scope, $location, $localStorage, $timeout, Upload, jwtHelper, Students, University, Forum) {
     let studentId;
 
+    $scope.hasError = false
+    $scope.errorMessage = ''
+    $scope.success = false
+    $scope.successMessage = ''
+
     if ($localStorage.token != undefined && $localStorage.token != null) {
         studentId = jwtHelper.decodeToken($localStorage.token)._id;
     } else {
@@ -5526,6 +5525,9 @@ angular.module('netbase')
             $scope.name = res.data.name;
             $scope.bio = res.data.bioShort;
 
+            if ($scope.student.imageUrl != undefined) $scope.imageButton = "UPDATE_CHANGE_PHOTO"
+            else $scope.imageButton = "SELECT_PHOTO"
+
             let universityUrl = $scope.student._id;
             University.getUniversity(universityUrl).then(function(res) {
                 let success = res.data.success;
@@ -5542,41 +5544,47 @@ angular.module('netbase')
                     console.log("error while loading university")
                 }
             });
+
         }
     });
 
     // save changed info to the db
     $scope.save = function() {
-        let imageUrl = $("#file").attr("value");
+      $scope.success = false
+      $scope.hasError = false
 
-        if ($scope.name == "") {
-            alert("Name is empty");
-            return;
-        }
+      let imageUrl = $("#file").attr("value");
+      if ($scope.name == "") {
+          $scope.hasError = true
+          $scope.errorMessage = 'NAME_FIELD_EMPTY'
+          return;
+      }
 
-        if ($scope.pwd !== $scope.rpwd) {
-            alert("Password not matched");
-            return;
-        }
+      if ($scope.pwd !== $scope.rpwd) {
+          $scope.hasError = true
+          $scope.errorMessage = 'PASSWORD_NOT_MATCH'
+          return;
+      }
 
-        let payload = {
-            name: $scope.name,
-            username: $scope.student.username,
-            bioLong: $scope.student.bioLong,
-            bioShort: $scope.bio,
-            password: $scope.pwd,
-            imageUrl: imageUrl
-        }
+      let payload = {
+          name: $scope.name,
+          username: $scope.student.username,
+          bioLong: $scope.student.bioLong,
+          bioShort: $scope.bio,
+          password: $scope.pwd,
+          imageUrl: imageUrl
+      }
 
-        if ($scope.pwd.length === 0) delete payload.password;
-        Students.update(studentId, payload).success(function(res) {
-            let success = res.success;
-            let data = res.data;
+      if ($scope.pwd.length === 0) delete payload.password;
+      Students.update(studentId, payload).success(function(res) {
+          let success = res.success;
+          let data = res.data;
 
-            if (success) {
-                alert("Profile successully updated");
-            }
-        });
+          if (success) {
+            $scope.success = true
+            $scope.successMessage = 'PROFILE_SUCCESSFULLY_UPDATED'
+          }
+      });
     }
 }])
 

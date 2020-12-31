@@ -960,12 +960,20 @@
     "ACCOUNT_VERIFIED_WELCOME": "Sua conta é verificada com sucesso. Bem-vindo à nossa plataforma.",
     "VERIFICATION_FAILED": "Sua verificação falhou. Desculpe.",
     "VERIFY_YOUR_EMAIL": "Verifique seu e-mail",
-    "ACCOUNT_CREATED_VERIFY_EMAIL": "Sua conta é criada com sucesso. Por favor, verifique seu e-mail para ativar sua conta.",
+    "ACCOUNT_CREATED_VERIFY_EMAIL": "Sua conta é criada com sucesso. Acabamos de lhe enviar um link de verificação por e-mail, por favor verifique.",
     "VERIFICATION_EMAIL_LINK_SENT": "Acabamos de lhe enviar um link de verificação por e-mail, por favor, verifique.",
     "CANNOT_SEND_EMAIL_VERIFICATION_LINK": "Não podemos enviar-lhe um link de verificação por e-mail.",
     "ACCOUNT_NOT_ACTIVATED_VERIFY_EMAIL": "Sua conta não está ativada. Por favor, verifique seu e-mail.",
     "RESEND": "Enviar novamente",
     "SEND": "Enviar",
     "DID_NOT_GET_EMAIL?": "Não recebeu e-mail?",
-    "INFO": "Info"
+    "INFO": "Info",
+
+    "PROFILE_SUCCESSFULLY_UPDATED": "Perfil bem sucedido atualizado",
+    "NAME_FIELD_EMPTY": "Favor preencher o campo do nome",
+    "PASSWORD_NOT_MATCH": "A senha não corresponde.",
+    
+    "WITHDRAW_BALANCE_MORE_THAN_AVAILABLE":"O valor da retirada é maior do que o saldo disponível",
+    "ACCOUNT_NUMBER_ERROR":"Erro de validação do número da conta",
+    "ADD_BANK":"Adicionar banco"
 }
