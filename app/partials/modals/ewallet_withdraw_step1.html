@@ -23,13 +23,15 @@
       </div>
 
       <span class="universidade-gray-color">{{'EWALLET_TOPUP_NEW_BALANCE' | translate}} {{newBalance | number: 2 }}</span>
+      <br>
+      <span class="universidade-red-color" ng-if="withdrawError">{{withdrawError | translate}}</span>
     </div>
 
     <button
       class="btn btn-blue bold br5"
       style="margin-bottom: 12px;"
       ng-click="openWithdrawStep2()"
-      ng-disabled="((amount==undefined) || (amount==''))"
+      ng-disabled="((amount==undefined) || (amount=='') || withdrawError)"
     >
       {{'NEXT' | translate}}
     </button>
@@ -52,6 +54,8 @@
       </div>
       <div class="form-group">
         <input type="text" placeholder="{{'ACCOUNT_NUMBER' | translate}}" ng-model="accountNumber" ng-change="updateAccountNumber(accountNumber)">
+        <br>
+      <span class="universidade-red-color" ng-if="errorMessage">{{errorMessage | translate}}</span>
       </div>
       <div class="form-group">
         <input type="text" placeholder="{{'BANK_NAME' | translate}}" ng-model="bankName" ng-change="updateBankName(bankName)">
@@ -75,6 +79,7 @@
       class="btn btn-blue bold br5"
       style="margin-bottom: 12px;"
       ng-click="openWithdrawStep3()"
+      ng-disabled="errorMessage"
     >
       {{'NEXT' | translate}}
     </button>

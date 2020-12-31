@@ -195,7 +195,8 @@
     <div class='col-md-12'>
       <div class="button-container-right" style="margin-top: 1em;">
         <button class="btn btn-secondary universidade-blue-text-color width25" style="margin-right: 12px;">{{'SAVE_FOR_LATER' | translate}}</button>
-        <button class="btn btn-blue width25 bold" ng-click="performAddPaymentMethodOperation()">{{'REQUEST_CARD' | translate}}</button>
+        <button class="btn btn-blue width25 bold" ng-if="showCreditCardForm" ng-click="performAddPaymentMethodOperation()">{{'REQUEST_CARD' | translate}}</button>
+        <button class="btn btn-blue width25 bold" ng-if="showBankAccountForm" ng-click="performAddPaymentMethodOperation()">{{'ADD_BANK' | translate}}</button>
       </div>
     </div>
   </div>

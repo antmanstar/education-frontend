@@ -193,14 +193,18 @@
         </div>
     </div>
 
+    <div class="alert bg-primary-red" ng-if="hasError">{{errorMessage | translate}}</div>
+    <div class="alert bg-primary-green" style="color: white;" ng-if="success">{{successMessage | translate}}</div>
+
     <div class="row">
         <div class="col-xs-12 col-sm-5 col-md-5 col-lg-4" style="text-align: center; display: flex; flex-direction: column; align-items: center;">
             <img class="profile-pic" ng-if="student.imageUrl != undefined" src="{{student.imageUrl}}"></img>
             <img class="profile-pic" ng-if="student.imageUrl == undefined" style="background-image: url('http://virtual-strategy.com/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png')"></img>
             <img id="gif" src="http://www.nasa.gov/multimedia/videogallery/ajax-loader.gif" class="loading-gif" width="20" height="20" /></img>
             <input type="hidden" id="file" ng-model="file">
-            <button ng-if="student.imageUrl == undefined" class="btn bg-base upload_btn" id="upload_btn">{{'SELECT_PHOTO' | translate}}</button>
-            <button ng-if="student.imageUrl != undefined" class="btn bg-base upload_btn" id="upload_btn">{{'UPDATE_CHANGE_PHOTO' | translate}}</button>
+            <button class="btn bg-base upload_btn" id="upload_btn">{{ imageButton | translate}}</button>
+            <!--button ng-if="student.imageUrl == undefined" class="btn bg-base upload_btn" id="upload_btn">{{'SELECT_PHOTO' | translate}}</button>
+            <button ng-if="student.imageUrl != undefined" class="btn bg-base upload_btn" id="upload_btn">{{'UPDATE_CHANGE_PHOTO' | translate}}</button-->
         </div>
 
         <div class="col-xs-12 col-sm-7 col-md-7 col-lg-8 ">
@@ -211,8 +215,8 @@
 
                 <br>
                 <div style="padding-bottom: 5px;"><b>{{'SENHA' | translate}}</b></div>
-                <input ng-model="pwd" placeholder="{{'TYPE_NEW_PASSWORD_HERE' | translate}}" type="password" class="profile-pwd">
-                <input ng-model="rpwd" placeholder="{{'RETYPE_NEW_PASSWORD' | translate}}" type="password" class="profile-pwd">
+                <input ng-model="pwd" placeholder="{{'TYPE_NEW_PASSWORD_HERE' | translate}}" type="password" class="profile-pwd" autocomplete="old-password">
+                <input ng-model="rpwd" placeholder="{{'RETYPE_NEW_PASSWORD' | translate}}" type="password" class="profile-pwd" autocomplete="new-password">
 
                 <br>
                 <div style="padding-bottom: 5px;"><b>{{'BIO' | translate}}</b></div>
