@@ -291,7 +291,7 @@ angular.module('netbase')
 .factory('University', ['$http', '$localStorage', function($http, $localStorage) {
     var baseUrl = "https://educationalcommunity-uni.herokuapp.com/university";
     //var baseUrl = "https://api.universida.de/university";
-    //var baseUrl = "http://localhost:9003/university";
+    //var baseUrl = "http://localhost:9007/university";
 
     return {
         storeLocal: function(university) {
@@ -714,7 +714,7 @@ angular.module('netbase')
 
 .factory('Students', ['$http', '$localStorage', function($http, $localStorage) {
     var baseUrl = "https://educationalcommunity-accounts.herokuapp.com/accounts/students";
-    // var baseUrl = "http://localhost:9000/accounts/students";
+    //var baseUrl = "http://localhost:9000/accounts/students";
 
     return {
         storeLocal: function(student) {

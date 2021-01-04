@@ -8,6 +8,14 @@
 
 <script type="text/javascript">
 
+  let url = window.location.href;
+  let IMAGE_FILE_ONLY = ""
+  if (url.indexOf('universida.de') > 0) {
+    IMAGE_FILE_ONLY = "Somente arquivo de imagem"
+  } else {
+    IMAGE_FILE_ONLY = "Image file only"
+  }
+
 var socket = io.connect("https://totemic-chimera-237707.appspot.com");
 //var socket = io.connect("http://104.196.9.222:5555");
 //var socket = io.connect("http://localhost:8888");
@@ -29,6 +37,18 @@ siofu.addEventListener("progress", function(event){
 
   if (percent.toFixed(2) == 100) {
     $("#file_drop").html("<b>Iniciando o processamento da imagem</b>");
+  }
+
+});
+
+siofu.addEventListener("start", function(event){
+  console.log(event.file.name)
+  let filename = event.file.name.split(".")
+  let ext = filename[1]
+  console.log("file extension: ", ext)
+  if(ext !== 'png' && ext !== 'jpg' && ext !== 'gif' && ext !== 'jpeg') {
+      alert(IMAGE_FILE_ONLY)
+      return false
   }
 
 });

@@ -18,11 +18,12 @@
         <option ng-repeat='channel in channels' ng-value='channel'>{{channel.friendlyName}}</option>
     </select-->
     <div id='chat_list' class="chat-main-list"> </div>
+    <p class="lab"></p>
     <div class='chatbox-status'>
         {{chattingNotification}}
     </div>
     <div class='chat-sending-input-container'>
-        <textarea ng-keypress='sendingInputKeyPress($event)' ng-model='sendingMessage' placeholder="Type ..."></textarea>
+        <textarea ng-keypress='sendingInputKeyPress($event)' ng-model='sendingMessage' ui-tinymce="tinymceOptions"></textarea>
         <button ng-click='sendMSG()'><i class="fa fa-paper-plane"></i></button>
     </div>
 </div>

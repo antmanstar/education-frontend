@@ -88,12 +88,73 @@ angular.module('netbase')
     });
 }])
 
-.controller('AcademiaClassroomChatCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Classroom', 'Students', 'ngDialog', 'jwtHelper', 'throttle', '$localStorage', '$window', function($rootScope, $scope, $location, $route, University, Classroom, Students, ngDialog, jwtHelper, throttle, $localStorage, $window) {
+.controller('AcademiaClassroomChatCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Classroom', 'Students', 'ngDialog', 'jwtHelper', 'throttle', '$localStorage', '$window', 'Courses', '$filter', '$compile', function($rootScope, $scope, $location, $route, University, Classroom, Students, ngDialog, jwtHelper, throttle, $localStorage, $window, Courses, $filter, $compile) {
     var GENERAL_CHANNEL_UNIQUE_NAME;
     var GENERAL_CHANNEL_NAME;
     var MAX_LOAD_MESSAGE_COUNT = 120;
     var accountSid = $route.current.params.accountSid;
     var roomSID = $route.current.params.roomSID;
+
+    $scope.tinymceOptions = {
+      menuitem: 'textarea',
+      wordcound: 'count',
+      menubar: false,
+      branding: false,
+      wordcounts: false,
+      resize: false,
+      statusbar: false,
+      toolbar_location: 'bottom',
+      forced_root_block: false,
+      height: 100,
+      width: '100%',
+      relative_urls: false,
+      link_assume_external_targets: true,
+      default_link_target: "_blank",
+      extended_valid_elements: "a[href|target=_blank]",
+      placeholder: $filter('translate')("TYPE_HERE"),
+      plugins: [
+          'autolink lists link image charmap print preview',
+          'searchreplace visualblocks code fullscreen',
+          'table paste code codesample emoticons'
+      ],
+      toolbar: 'bold italic underline strikethrough codesample link | bullist numlist outdent indent | emoticons',
+      tinydrive_token_provider: function(success, failure) {
+          Courses.fileUploadUrl().success(function(msg) {
+              success({ token: msg.token });
+          })
+      },
+      setup: function(editor) {
+          var fnc = editor.convertURL;
+          editor.convertURL = convertURL_;
+
+          function convertURL_(url, name, elm) {
+              fnc.apply(this, arguments);
+              var regex = new RegExp("(http:|https:)?\/\/");
+              if (!regex.test(url)) {
+                  return url = "http://" + url
+              }
+              return url;
+          }
+
+          editor.on('init', function(e) {
+              var fn = editor.windowManager.open;
+              editor.windowManager.open = function(t, r) {
+                  if (t.title == 'Insert link') {
+                      var oldsubmit = t.onSubmit;
+                      t.onSubmit = function(e) {
+                          if (!e.data.href.match(/(ftp|https?):\/\//i)) {
+                              e.data.href = "http://" + e.data.href;
+                          }
+                          return oldsubmit(e);
+                      }
+                      fn.apply(this, [t, r]);
+                  } else {
+                      return fn(t, r);
+                  }
+              }
+          });
+      }
+    };
 
     $scope.channels = [];
     $scope.generalChannel = null;
@@ -406,9 +467,14 @@ angular.module('netbase')
         sentTime = $scope.months[month] + ' ' + day + ' ' + hour + ':' + minute + ':' + second;
 
         let messageBody = message.body;
-
         let messageBodyTextDom = document.createElement('div');
-        messageBodyTextDom.innerText = messageBody;
+        messageBodyTextDom.innerHTML = messageBody;
+
+
+        // let messageBodyTextDom = document.createElement('div');
+        // messageBodyTextDom.setAttribute("ng-bind-html", "messageBody");
+        // $compile(messageBodyTextDom)($scope)
+        // $scope.messageBody = message.body;
 
         let avatar = document.createElement('img');
         let avatar_url = currentMember.img_url == undefined ? "http://virtual-strategy.com/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png" : currentMember.img_url
@@ -1652,6 +1718,7 @@ angular.module('netbase')
     $scope.classroomViewMode = false;
 
     $scope.isAdmin = $localStorage.studentIsAdmin
+    $scope.privilege = 0;
 
     //var baseUrl = "http://localhost:9001"; //Back-end server base url
     var baseUrl = "https://educationalcommunity-classroom.herokuapp.com";
@@ -1662,6 +1729,20 @@ angular.module('netbase')
     University.getUniversity(universityUrl).then(function(res) {
         $scope.university = res.data.data;
         $scope.getAllClassrooms();
+
+
+        let studentId;
+        let i;
+        if ($localStorage.token != undefined && $localStorage.token != null) {
+            studentId = jwtHelper.decodeToken($localStorage.token)._id;
+        }
+        for (i = 0; i < $scope.university.members.length; i++) {
+            var member = $scope.university.members[i];
+            if (studentId != undefined && member.accountId == studentId) {
+                $scope.privilege = member.privilege;
+                break;
+            }
+        }
     });
 
     /****************** Mobile / Web **************************/
@@ -1710,27 +1791,21 @@ angular.module('netbase')
 
     $scope.confirmCreateClassroom = function() {
 
+      // validate create classroom form
+      // if uniquesName is empty then notifiy user
+      if ($scope.addingClassroom.uniqueName == '' || $scope.addingClassroom.uniqueName == undefined) {
+        $scope.hasValidationError = true
+        $scope.validationErrorMessage = "PLEASE_ENTER_CLASS_NAME"
+        return
+      }
+
         let studentId;
 
         let token = $localStorage.token;
         let title = $scope.addingClassroom.uniqueName ? $scope.addingClassroom.uniqueName : '';
         let url = '/classroom/university/';
 
-        if ($localStorage.token != undefined && $localStorage.token != null) {
-            studentId = jwtHelper.decodeToken($localStorage.token)._id;
-        }
-        let i;
-        let privilege = 0;
-
-        for (i = 0; i < $scope.university.members.length; i++) {
-            let member = $scope.university.members[i];
-            if (studentId != undefined && member.accountId == studentId) {
-                privilege = member.privilege;
-                break;
-            }
-        }
-
-        Classroom.createNewClassroom(baseUrl + url, title, privilege, $scope.university._id).then((response) => {
+        Classroom.createNewClassroom(baseUrl + url, title, $scope.privilege, $scope.university._id).then((response) => {
 
             if (response.data.success) {
                 let url = '/classroom/university/' + $scope.university._id + '/all'
@@ -1776,7 +1851,7 @@ angular.module('netbase')
             template: 'partials/modals/classroom_alert_modal.html',
             controller: "AcademiaClassroomsAlertCtrl",
             className: 'ngdialog-theme-default classroom-alert-modal',
-            data: { type: "Universidade", msg: 'Copied link to clipboard' }
+            data: { type: "PAGETITLE", msg: 'COPIED_LINK_TO_CLIPBOARD' }
         }));
     }
 
@@ -1805,22 +1880,11 @@ angular.module('netbase')
         let token = $localStorage.token;
         let url = '/classroom/end/';
         var i;
-        var privilege = 0;
-        let studentId;
-        if ($localStorage.token != undefined && $localStorage.token != null) {
-            studentId = jwtHelper.decodeToken($localStorage.token)._id;
-        }
-        for (i = 0; i < $scope.university.members.length; i++) {
-            var member = $scope.university.members[i];
-            if (studentId != undefined && member.accountId == studentId) {
-                privilege = member.privilege;
-                break;
-            }
-        }
+
 
         //privilege = 99;
         var roomId = $rootScope.deleteRoom.roomSID;
-        Classroom.deleteClassroom(baseUrl + url, roomId, privilege).then((res) => {
+        Classroom.deleteClassroom(baseUrl + url, roomId, $scope.privilege).then((res) => {
             if (res.data.success) {
                 let url = '/classroom/university/' + $scope.university._id + '/all';
                 Classroom.getAllClassroomsByUniversity(baseUrl + url).then((data) => {
@@ -3016,6 +3080,10 @@ angular.module('netbase')
             scope.loading = true;
             scope.boxToggle = true;
 
+            if ($localStorage.boxToggleState != undefined) {
+              scope.boxToggle = $localStorage.boxToggleState;
+            }
+
             let categoryId = null;
 
 
@@ -3517,6 +3585,7 @@ angular.module('netbase')
 
             scope.toggleBox = () => {
                 scope.boxToggle = !scope.boxToggle;
+                $localStorage.boxToggleState = scope.boxToggle
             }
         }
     }
