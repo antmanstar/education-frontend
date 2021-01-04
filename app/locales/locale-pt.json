@@ -735,6 +735,7 @@
     "UNI_CREATE_SELECT_LANGUAGE": "Selecione um idioma para sua comunidade educacional",
 
     "DOMAIN_PLACEHOLDER": "universida.de",
+    "DOMAIN_PLACEHOLDER_CAPS": "UNIVERSIDA.DE",
 
     "TIMELINE_EMPTY_TITLE": "Expandindo Seu Alcance!",
     "TIMELINE_EMPTY_SUBTITLE": "Grande coleção de material educativo tanto para alunos quanto para professores. Seja o primeiro a engradar o posto.",
@@ -972,8 +973,45 @@
     "PROFILE_SUCCESSFULLY_UPDATED": "Perfil bem sucedido atualizado",
     "NAME_FIELD_EMPTY": "Favor preencher o campo do nome",
     "PASSWORD_NOT_MATCH": "A senha não corresponde.",
-    
+
     "WITHDRAW_BALANCE_MORE_THAN_AVAILABLE":"O valor da retirada é maior do que o saldo disponível",
     "ACCOUNT_NUMBER_ERROR":"Erro de validação do número da conta",
-    "ADD_BANK":"Adicionar banco"
+    "ADD_BANK":"Adicionar banco",
+
+    "PLEASE_ENTER_CLASS_NAME": "Por favor, digite o nome da classe.",
+
+    "EDUCATIONAL_INFRASTRACTURE": "Infra-estrutura educacional",
+    "FOR_THE_INTERNET": "para a Internet.",
+    "COMMUNICATION_INFRASTRACTURE_ETC": "Infra-estrutura de comunicação, plataforma de cursos, processamento de pagamentos, financiamento, emissão de cartões de débito e espaços imersivos de realidade virtual.",
+    "ALL_IN_ONE_PLACE": "Tudo em um só lugar.",
+    "START_NOW": "Comece agora",
+    "START_NOW!": "Comece Agora!",
+    "UNIFIED_EDUCATIONAL_PLATFORM": "Plataforma educacional unificada",
+    "FULLY_INTEGRATED_SUITE_FOR_ONLINE_EDUCATION": "Uma suíte totalmente integrada para educação online",
+    "WE_BRING_TOGETHER_EVERYTHING": "Reunimos tudo o que é necessário para construir a próxima geração de plataforma de educação online. Os produtos da Universidade fornecem infra-estrutura de energia para",
+    "ONLINE_AND_INPERSON_EDUCATORS": "educadores on-line e presenciais",
+    "SUBSCRIPTIONS_BUSINESSES": "negócios de assinaturas",
+    "SME_BUSINESSES": "pequenas e médias empresas educacionais",
+    "AND_EVERYTHING_IN_BETWEEN": "e tudo o que está entre eles.",
+    "WE_ALSO_HELP_COMPANIES": "Também ajudamos empresas",
+    "BEAT_CONTENT_PIRACY": "vencer a pirataria de conteúdo",
+    "CREATE_VIRTUAL_REALITY_SPACES": "criar espaços de realidade virtual",
+    "ISSUES_VIRTUAL_AND_PHYSICAL_CARDS": "emitir cartões virtuais e físicos",
+    "GET_FINANCING": "obter financiamento",
+    "AND_MUCH_MORE": "e muito mais.",
+    "BUNDLE_UP_TO_6_MODULES": "Agrupe até 6 Módulos e desbloqueie",
+    "BENEFITS_OF_ONLINE_EDUCATION": "benefícios da educação online",
+    "CHAT": "Chat",
+    "VIDEOCALL": "Videocall",
+    "IMMERSIVE_EDUCATION": "Educação imersiva",
+    "DOWNLOAD_NOW!": "Baixar agora!",
+    "LEARN_WITH_MASTERS": "Aprenda com os Mestres",
+    "TIAGO_CAMILO_IS_ONLINE": "A Comunidade Educacional Tiago Camilo está online",
+    "GET_50_USD_CREDIT_LINE": "Obtenha uma linha de crédito de $50.000",
+    "FOR_YOUR_EDUCATIONAL_BUSINESS": "para seu negócio educacional",
+    "APPLY_NOW": "Inscreva-se agora",
+    "EDUCATIONAL_COMMUNITIES_LLC": "Comunidades Educativas LLC",
+    "LANGUAGE": "Português",
+    "DOWNLOAD": "Baixar",
+    "VIRTUAL_REALITY_FOR_ANDROID": "Realidade Virtual para Android"
 }

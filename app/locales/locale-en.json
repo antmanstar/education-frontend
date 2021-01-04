@@ -735,6 +735,7 @@
     "UNI_CREATE_SELECT_LANGUAGE": "Select a language for you educational community",
 
     "DOMAIN_PLACEHOLDER": "colle.ge",
+    "DOMAIN_PLACEHOLDER_CAPS": "COLLE.GE",
 
     "TIMELINE_EMPTY_TITLE": "Expanding Your Reach!",
     "TIMELINE_EMPTY_SUBTITLE": "Big Collection of educational stuff for both students and teachers. Be the first to crate the post.",
@@ -973,8 +974,45 @@
     "PROFILE_SUCCESSFULLY_UPDATED": "Profile successully updated",
     "NAME_FIELD_EMPTY": "Please fill up name field",
     "PASSWORD_NOT_MATCH": "Password not match.",
-    
+
     "WITHDRAW_BALANCE_MORE_THAN_AVAILABLE":"Withdraw amount is greater than available balance",
     "ACCOUNT_NUMBER_ERROR":"Account number validation error",
-    "ADD_BANK":"Add bank"
+    "ADD_BANK":"Add bank",
+
+    "PLEASE_ENTER_CLASS_NAME": "Please enter class name.",
+
+    "EDUCATIONAL_INFRASTRACTURE": "Educational infrastructure",
+    "FOR_THE_INTERNET": "for the internet.",
+    "COMMUNICATION_INFRASTRACTURE_ETC": "Communication infrastructure, courses platform, payment processing, funding, debit card issuing and immersive virtual reality spaces.",
+    "ALL_IN_ONE_PLACE": "All in one place.",
+    "START_NOW": "Start now",
+    "START_NOW!": "Start Now!",
+    "UNIFIED_EDUCATIONAL_PLATFORM": "Unified educational platform",
+    "FULLY_INTEGRATED_SUITE_FOR_ONLINE_EDUCATION": "A fully integrated suite for online education",
+    "WE_BRING_TOGETHER_EVERYTHING": "We bring together everything that’s required to build next-gen online education platform. College’s products power infrastructure for",
+    "ONLINE_AND_INPERSON_EDUCATORS": "online and in-person educators",
+    "SUBSCRIPTIONS_BUSINESSES": "subscriptions businesses",
+    "SME_BUSINESSES": "small and medium educational business",
+    "AND_EVERYTHING_IN_BETWEEN": "and everything in between.",
+    "WE_ALSO_HELP_COMPANIES": "We also help companies",
+    "BEAT_CONTENT_PIRACY": "beat content piracy",
+    "CREATE_VIRTUAL_REALITY_SPACES": "create virtual reality spaces",
+    "ISSUES_VIRTUAL_AND_PHYSICAL_CARDS": "issue virtual and physical cards",
+    "GET_FINANCING": "get financing",
+    "AND_MUCH_MORE": "and much more.",
+    "BUNDLE_UP_TO_6_MODULES": "Bundle up to 6 Modules and unlock",
+    "BENEFITS_OF_ONLINE_EDUCATION": "benefits of online education",
+    "CHAT": "Chat",
+    "VIDEOCALL": "Videocall",
+    "IMMERSIVE_EDUCATION": "Immersive education",
+    "DOWNLOAD_NOW!": "Download now!",
+    "LEARN_WITH_MASTERS": "Learn with Masters",
+    "TIAGO_CAMILO_IS_ONLINE": "Tiago Camilo Educational Community is Online",
+    "GET_50_USD_CREDIT_LINE": "Get $50.000 credit line",
+    "FOR_YOUR_EDUCATIONAL_BUSINESS": "for your educational business",
+    "APPLY_NOW": "Apply now",
+    "EDUCATIONAL_COMMUNITIES_LLC": "Educational Communities LLC",
+    "LANGUAGE": "English",
+    "DOWNLOAD": "Download",
+    "VIRTUAL_REALITY_FOR_ANDROID": "Virtual Reality for Android"
 }

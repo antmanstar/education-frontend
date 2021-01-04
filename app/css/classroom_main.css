@@ -261,7 +261,7 @@
 }
 
 .chat-sending-input-container button {
-    height: 50px;
+    /* height: 50px; */
     font-size: 35px;
     /* border-radius: 3px; */
     background-color: #35c6ff;

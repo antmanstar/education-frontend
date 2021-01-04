@@ -194,6 +194,7 @@
 .message-body {
     border-radius: 5px;
     padding: 5px;
+    word-break: break-word;
 }
 
 .message-body.left {

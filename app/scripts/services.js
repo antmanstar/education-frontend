@@ -291,7 +291,7 @@ angular.module('netbase')
 .factory('University', ['$http', '$localStorage', function($http, $localStorage) {
     var baseUrl = "https://educationalcommunity-uni.herokuapp.com/university";
     //var baseUrl = "https://api.universida.de/university";
-    //var baseUrl = "http://localhost:9003/university";
+    //var baseUrl = "http://localhost:9007/university";
 
     return {
         storeLocal: function(university) {
@@ -713,9 +713,8 @@ angular.module('netbase')
 }])
 
 .factory('Students', ['$http', '$localStorage', function($http, $localStorage) {
-    //var baseUrl = "https://api.universida.de/accounts/students";
     var baseUrl = "https://educationalcommunity-accounts.herokuapp.com/accounts/students";
-    // var baseUrl = "http://localhost:9000/accounts/students";
+    //var baseUrl = "http://localhost:9000/accounts/students";
 
     return {
         storeLocal: function(student) {
@@ -1962,11 +1961,12 @@ angular.module('netbase')
         getCardToken: function(data) {
             var url = '/cards/cardtoken';
             return $http({
-                method: 'GET',
+                method: 'POST',
                 url: baseUrl + url,
-                params: data,
+                data: data,
                 headers: {
-                    'x-access-token': $localStorage.token
+                    'x-access-token': $localStorage.token,
+                    'Content-Type': 'application/json'
                 }
             });
         },
@@ -1974,11 +1974,12 @@ angular.module('netbase')
         getBankAccountToken: function(data) {
             var url = '/cards/bktoken';
             return $http({
-                method: 'GET',
+                method: 'POST',
                 url: baseUrl + url,
-                params: data,
+                data: data,
                 headers: {
-                    'x-access-token': $localStorage.token
+                    'x-access-token': $localStorage.token,
+                    'Content-Type': 'application/json'
                 }
             });
         },

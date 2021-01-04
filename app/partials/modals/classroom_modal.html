@@ -71,7 +71,9 @@
         <div class="col-xs-12">
             <div class="headerline-title">{{'HOME_CALL_START_VIDEOCON' | translate}}</div>
             <div class="headerline-sub-title">{{'HOME_CALL_VIDEOCON_SUBTITLE' | translate}}</div>
+
             <div class="roomname-label">{{'ROOM_NAME' | translate}}</div>
+            <span ng-if="hasValidationError" style="color: #ee5748; font-size: 15px;">{{validationErrorMessage | translate}}</span>
             <input class="roomname-input" ng-model='addingClassroom.uniqueName' placeholder="{{'CLASS_NAME' | translate}}" type="text" maxlength="50"/>
             <div class="roomtype-wrapper">
                 <img src="../../img/classroom/lock.png" height="20px">
