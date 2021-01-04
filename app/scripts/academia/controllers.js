@@ -3189,7 +3189,7 @@ angular.module('netbase')
 
             // the webhook for the chat removed
             scope.chatRemoved = () => {
-                alert("idle channel deleted by the system")
+                // alert("idle channel deleted by the system")
             }
 
             // ui settings for the chat box

@@ -713,6 +713,7 @@ angular.module('netbase')
 }])
 
 .factory('Students', ['$http', '$localStorage', function($http, $localStorage) {
+    //var baseUrl = "https://api.universida.de/accounts/students";
     var baseUrl = "https://educationalcommunity-accounts.herokuapp.com/accounts/students";
     // var baseUrl = "http://localhost:9000/accounts/students";
 
@@ -1961,12 +1962,11 @@ angular.module('netbase')
         getCardToken: function(data) {
             var url = '/cards/cardtoken';
             return $http({
-                method: 'POST',
+                method: 'GET',
                 url: baseUrl + url,
-                data: data,
+                params: data,
                 headers: {
-                    'x-access-token': $localStorage.token,
-                    'Content-Type': 'application/json'
+                    'x-access-token': $localStorage.token
                 }
             });
         },
@@ -1974,12 +1974,11 @@ angular.module('netbase')
         getBankAccountToken: function(data) {
             var url = '/cards/bktoken';
             return $http({
-                method: 'POST',
+                method: 'GET',
                 url: baseUrl + url,
-                data: data,
+                params: data,
                 headers: {
-                    'x-access-token': $localStorage.token,
-                    'Content-Type': 'application/json'
+                    'x-access-token': $localStorage.token
                 }
             });
         },
