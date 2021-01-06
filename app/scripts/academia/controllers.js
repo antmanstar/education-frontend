@@ -3079,6 +3079,7 @@ angular.module('netbase')
             scope.currentMember = null;
             scope.loading = true;
             scope.boxToggle = true;
+            scope.showChatbox = false
 
             if ($localStorage.boxToggleState != undefined) {
                 scope.boxToggle = $localStorage.boxToggleState;
@@ -3104,6 +3105,7 @@ angular.module('netbase')
                 Forum.getCategoriesByUniversityId(scope.university._id).success(function(resCategory) {
                     if (resCategory.success) {
                         scope.categories = resCategory.data;
+                        if (scope.categories.length > 0) scope.showChatbox = true
 
                         if (resCategory.data.length != 0) {
                             scope.curCategory = scope.categories[0];
@@ -3343,7 +3345,6 @@ angular.module('netbase')
 
             // get members of the channel
             scope.getChannelMembers = channelId => {
-                console.log(scope.members)
                 ngDialog.open({ template: 'partials/modals/members.html', data: { members: scope.members }, className: 'ngdialog-theme-default' });
             }
 

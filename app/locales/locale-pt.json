@@ -1013,5 +1013,9 @@
     "EDUCATIONAL_COMMUNITIES_LLC": "Comunidades Educativas LLC",
     "LANGUAGE": "Português",
     "DOWNLOAD": "Baixar",
-    "VIRTUAL_REALITY_FOR_ANDROID": "Realidade Virtual para Android"
+    "VIRTUAL_REALITY_FOR_ANDROID": "Realidade Virtual para Android",
+
+    "You have no microphones": "Você não tem microfones",
+    "You have no cameras": "Você não tem câmeras",
+    "You have no cameras and microphones": "Você não tem câmeras e microfones"
 }
