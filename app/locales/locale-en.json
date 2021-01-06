@@ -294,7 +294,7 @@
     "DASH_CREATE_UNIVERSITY": "Create University",
     "DASH_UNIVERSITY_MANAGEMENT": "University Management",
     "DASH_ORDERS": "Orders",
-    "DASH_ORDER": "Pedido",
+    "DASH_ORDER": "Order",
     "DASH_ALL_ORDERS": "All Orders",
     "DASH_PAYMENTS": "Payments",
     "DASH_WALLET": "Wallet",
@@ -1014,5 +1014,9 @@
     "EDUCATIONAL_COMMUNITIES_LLC": "Educational Communities LLC",
     "LANGUAGE": "English",
     "DOWNLOAD": "Download",
-    "VIRTUAL_REALITY_FOR_ANDROID": "Virtual Reality for Android"
+    "VIRTUAL_REALITY_FOR_ANDROID": "Virtual Reality for Android",
+
+    "You have no microphones": "You have no microphones",
+    "You have no cameras": "You have no cameras",
+    "You have no cameras and microphones": "You have no cameras and microphones"
 }

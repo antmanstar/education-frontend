@@ -112,7 +112,7 @@
           <!--<div class="option unselectable" ng-hide="whitelabel" ng-class="{'active': originalPath == '/home/explore' || originalPath == '/home/explore/'}"><a href="/home/explore">{{'HEADER_NAV_2' | translate}}</a></div>-->
           <div class="option unselectable" ng-class="{'active': originalPath == '/home/universidades' || originalPath == '/home/universidades/' || originalPath.indexOf('/a/') != -1 }"><a href="/home/universidades">{{'HEADER_NAV_3' | translate}}</a></div><!--
           <div class="option unselectable" ng-class="{'active': originalPath == '/cursos' || originalPath.indexOf('/cursos') >= 0}"><a href="/home/cursos">Cursos</a></div>-->
-          <div class="option unselectable" ng-class="{'active': originalPath == '/home/calls' || originalPath.indexOf('/videorooms') >= 0}"><a href="/home/calls">{{'HEADER_NAV_4' | translate}}</a></div>
+          <div class="option unselectable" ng-if="logged" ng-class="{'active': originalPath == '/home/calls' || originalPath.indexOf('/videorooms') >= 0}"><a href="/home/calls">{{'HEADER_NAV_4' | translate}}</a></div>
           <!--<div class="option unselectable" ng-class="{'active': originalPath.indexOf('/home/conhecimento') != -1 }"><a href="/home/conhecimento">Conhecimento</a></div>-->
 
         </div>

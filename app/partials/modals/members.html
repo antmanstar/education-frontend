@@ -1,0 +1,51 @@
+<div class="container-fluid account-loginregister-content">
+    <style>
+        .wrapper {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+        }
+        
+        .list-item {
+            display: flex;
+            align-items: center;
+            flex-direction: row;
+            margin: 5px;
+        }
+        
+        .title-members {
+            font-size: 30px;
+            color: #555555;
+        }
+        
+        .split-line {
+            height: 1px;
+            background-color: #555555;
+        }
+        
+        .member-avatar {
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+            border-radius: 25px;
+        }
+        
+        .avatar-name {
+            font-size: 20px;
+        }
+    </style>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="wrapper">
+                <div class="title-members">All Members</div>
+                <div class="split-line"></div>
+                <div class="list-item" ng-repeat="member in ngDialogData.members">
+                    <img class="member-avatar" ng-if="member.imgUrl == undefined" src="img/user/user.png" />
+                    <img class="member-avatar" ng-if="member.imgUrl.length > 0" src="{{member.imgUrl}}" />
+                    <div class="avatar-name">{{member.name}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
