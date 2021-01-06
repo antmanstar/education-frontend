@@ -96,64 +96,64 @@ angular.module('netbase')
     var roomSID = $route.current.params.roomSID;
 
     $scope.tinymceOptions = {
-      menuitem: 'textarea',
-      wordcound: 'count',
-      menubar: false,
-      branding: false,
-      wordcounts: false,
-      resize: false,
-      statusbar: false,
-      toolbar_location: 'bottom',
-      forced_root_block: false,
-      height: 100,
-      width: '100%',
-      relative_urls: false,
-      link_assume_external_targets: true,
-      default_link_target: "_blank",
-      extended_valid_elements: "a[href|target=_blank]",
-      placeholder: $filter('translate')("TYPE_HERE"),
-      plugins: [
-          'autolink lists link image charmap print preview',
-          'searchreplace visualblocks code fullscreen',
-          'table paste code codesample emoticons'
-      ],
-      toolbar: 'bold italic underline strikethrough codesample link | bullist numlist outdent indent | emoticons',
-      tinydrive_token_provider: function(success, failure) {
-          Courses.fileUploadUrl().success(function(msg) {
-              success({ token: msg.token });
-          })
-      },
-      setup: function(editor) {
-          var fnc = editor.convertURL;
-          editor.convertURL = convertURL_;
+        menuitem: 'textarea',
+        wordcound: 'count',
+        menubar: false,
+        branding: false,
+        wordcounts: false,
+        resize: false,
+        statusbar: false,
+        toolbar_location: 'bottom',
+        forced_root_block: false,
+        height: 100,
+        width: '100%',
+        relative_urls: false,
+        link_assume_external_targets: true,
+        default_link_target: "_blank",
+        extended_valid_elements: "a[href|target=_blank]",
+        placeholder: $filter('translate')("TYPE_HERE"),
+        plugins: [
+            'autolink lists link image charmap print preview',
+            'searchreplace visualblocks code fullscreen',
+            'table paste code codesample emoticons'
+        ],
+        toolbar: 'bold italic underline strikethrough codesample link | bullist numlist outdent indent | emoticons',
+        tinydrive_token_provider: function(success, failure) {
+            Courses.fileUploadUrl().success(function(msg) {
+                success({ token: msg.token });
+            })
+        },
+        setup: function(editor) {
+            var fnc = editor.convertURL;
+            editor.convertURL = convertURL_;
 
-          function convertURL_(url, name, elm) {
-              fnc.apply(this, arguments);
-              var regex = new RegExp("(http:|https:)?\/\/");
-              if (!regex.test(url)) {
-                  return url = "http://" + url
-              }
-              return url;
-          }
+            function convertURL_(url, name, elm) {
+                fnc.apply(this, arguments);
+                var regex = new RegExp("(http:|https:)?\/\/");
+                if (!regex.test(url)) {
+                    return url = "http://" + url
+                }
+                return url;
+            }
 
-          editor.on('init', function(e) {
-              var fn = editor.windowManager.open;
-              editor.windowManager.open = function(t, r) {
-                  if (t.title == 'Insert link') {
-                      var oldsubmit = t.onSubmit;
-                      t.onSubmit = function(e) {
-                          if (!e.data.href.match(/(ftp|https?):\/\//i)) {
-                              e.data.href = "http://" + e.data.href;
-                          }
-                          return oldsubmit(e);
-                      }
-                      fn.apply(this, [t, r]);
-                  } else {
-                      return fn(t, r);
-                  }
-              }
-          });
-      }
+            editor.on('init', function(e) {
+                var fn = editor.windowManager.open;
+                editor.windowManager.open = function(t, r) {
+                    if (t.title == 'Insert link') {
+                        var oldsubmit = t.onSubmit;
+                        t.onSubmit = function(e) {
+                            if (!e.data.href.match(/(ftp|https?):\/\//i)) {
+                                e.data.href = "http://" + e.data.href;
+                            }
+                            return oldsubmit(e);
+                        }
+                        fn.apply(this, [t, r]);
+                    } else {
+                        return fn(t, r);
+                    }
+                }
+            });
+        }
     };
 
     $scope.channels = [];
@@ -1791,13 +1791,13 @@ angular.module('netbase')
 
     $scope.confirmCreateClassroom = function() {
 
-      // validate create classroom form
-      // if uniquesName is empty then notifiy user
-      if ($scope.addingClassroom.uniqueName == '' || $scope.addingClassroom.uniqueName == undefined) {
-        $scope.hasValidationError = true
-        $scope.validationErrorMessage = "PLEASE_ENTER_CLASS_NAME"
-        return
-      }
+        // validate create classroom form
+        // if uniquesName is empty then notifiy user
+        if ($scope.addingClassroom.uniqueName == '' || $scope.addingClassroom.uniqueName == undefined) {
+            $scope.hasValidationError = true
+            $scope.validationErrorMessage = "PLEASE_ENTER_CLASS_NAME"
+            return
+        }
 
         let studentId;
 
@@ -3081,11 +3081,10 @@ angular.module('netbase')
             scope.boxToggle = true;
 
             if ($localStorage.boxToggleState != undefined) {
-              scope.boxToggle = $localStorage.boxToggleState;
+                scope.boxToggle = $localStorage.boxToggleState;
             }
 
             let categoryId = null;
-
 
             //
             //  THIS FUNCTION WILL REMOVE THE EDITOR WHEN USER NAVIGATES TO OTHER PAGE
@@ -3257,7 +3256,7 @@ angular.module('netbase')
 
             // the webhook for the chat removed
             scope.chatRemoved = () => {
-                alert("idle channel deleted by the system")
+                // alert("idle channel deleted by the system")
             }
 
             // ui settings for the chat box
@@ -3344,7 +3343,8 @@ angular.module('netbase')
 
             // get members of the channel
             scope.getChannelMembers = channelId => {
-                let channel = scope.messagingClient.getChannelBySid(channelId);
+                console.log(scope.members)
+                ngDialog.open({ template: 'partials/modals/members.html', data: { members: scope.members }, className: 'ngdialog-theme-default' });
             }
 
             // join into the specifiied channel
