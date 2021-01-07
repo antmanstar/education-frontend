@@ -3688,7 +3688,7 @@ angular.module('netbase')
                         )
                     }
                 })
-            } else $scope.verified = false
+            } else $scope.verified = false;
         })
     }
 
@@ -3721,33 +3721,28 @@ angular.module('netbase')
                             className: 'ngdialog-theme-default',
                             controller: 'AccountCtrl',
                             preCloseCallback: () => {
-                                if ($scope.verified === false) {
-                                    $localStorage.$reset();
+                                $localStorage.$reset();
 
-                                    if (url.indexOf('colle.ge') > 0) {
-                                        amMoment.changeLocale('en');
-                                        $localStorage.company_logo = "img/college_logo.png";
-                                        $localStorage.user_language = "EN";
-                                    } else if (url.indexOf('universida.de') > 0) {
-                                        amMoment.changeLocale('pt-br');
-                                        $localStorage.company_logo = "img/universidade_logo.png"
-                                        $localStorage.user_language = "PT";
-                                    } else {
-                                        amMoment.changeLocale('en');
-                                        $localStorage.company_logo = "img/college_logo.png"
-                                        $localStorage.user_language = "EN";
-                                    }
-
-                                    $rootScope.logged = false;
-                                    $localStorage.logged = false;
-                                    $localStorage.token = undefined;
-
-                                    $location.path('/home/landing');
-                                    $route.reload();
+                                if (url.indexOf('colle.ge') > 0) {
+                                    amMoment.changeLocale('en');
+                                    $localStorage.company_logo = "img/college_logo.png";
+                                    $localStorage.user_language = "EN";
+                                } else if (url.indexOf('universida.de') > 0) {
+                                    amMoment.changeLocale('pt-br');
+                                    $localStorage.company_logo = "img/universidade_logo.png"
+                                    $localStorage.user_language = "PT";
                                 } else {
-                                    $location.path('/home/timeline');
-                                    $route.reload();
+                                    amMoment.changeLocale('en');
+                                    $localStorage.company_logo = "img/college_logo.png"
+                                    $localStorage.user_language = "EN";
                                 }
+
+                                $rootScope.logged = false;
+                                $localStorage.logged = false;
+                                $localStorage.token = undefined;
+
+                                $location.path('/home/landing');
+                                $route.reload();
                             }
                         });
                     }
@@ -3803,7 +3798,6 @@ angular.module('netbase')
             if (data.data.data.validated == false) {
                 $timeout(callAtTimeout, 3000);
             } else {
-                $scope.verified = true;
                 ngDialog.close();
             }
         })
@@ -3848,28 +3842,36 @@ angular.module('netbase')
                         className: 'ngdialog-theme-default',
                         controller: 'AccountCtrl',
                         preCloseCallback: () => {
-                            $localStorage.$reset();
+                            let id = jwtHelper.decodeToken($localStorage.token)._id;
+                            Students.getStudentById(id).then(data => {
+                                if (data.data.data.validated == false) {
+                                    $localStorage.$reset();
 
-                            if (url.indexOf('colle.ge') > 0) {
-                                amMoment.changeLocale('en');
-                                $localStorage.company_logo = "img/college_logo.png";
-                                $localStorage.user_language = "EN";
-                            } else if (url.indexOf('universida.de') > 0) {
-                                amMoment.changeLocale('pt-br');
-                                $localStorage.company_logo = "img/universidade_logo.png"
-                                $localStorage.user_language = "PT";
-                            } else {
-                                amMoment.changeLocale('en');
-                                $localStorage.company_logo = "img/college_logo.png"
-                                $localStorage.user_language = "EN";
-                            }
+                                    if (url.indexOf('colle.ge') > 0) {
+                                        amMoment.changeLocale('en');
+                                        $localStorage.company_logo = "img/college_logo.png";
+                                        $localStorage.user_language = "EN";
+                                    } else if (url.indexOf('universida.de') > 0) {
+                                        amMoment.changeLocale('pt-br');
+                                        $localStorage.company_logo = "img/universidade_logo.png"
+                                        $localStorage.user_language = "PT";
+                                    } else {
+                                        amMoment.changeLocale('en');
+                                        $localStorage.company_logo = "img/college_logo.png"
+                                        $localStorage.user_language = "EN";
+                                    }
 
-                            $rootScope.logged = false;
-                            $localStorage.logged = false;
-                            $localStorage.token = undefined;
+                                    $rootScope.logged = false;
+                                    $localStorage.logged = false;
+                                    $localStorage.token = undefined;
 
-                            $location.path('/home/landing');
-                            $route.reload();
+                                    $location.path('/home/landing');
+                                    $route.reload();
+                                } else {
+                                    $location.path('/home/timeline');
+                                    $route.reload();
+                                }
+                            })
                         }
                     });
                     $timeout(callAtTimeout, 3000);
