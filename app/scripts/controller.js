@@ -3552,7 +3552,7 @@ angular.module('netbase')
     }
 }])
 
-.controller('AccountCtrl', ['$rootScope', '$scope', '$location', '$route', '$routeParams', '$localStorage', 'amMoment', 'Students', 'ngDialog', '$timeout', 'jwtHelper', function($rootScope, $scope, $location, $route, $routeParams, $localStorage, amMoment, Students, ngDialog, $timeout, jwtHelper) {
+.controller('AccountCtrl', ['$rootScope', '$scope', '$location', '$route', '$routeParams', '$localStorage', 'amMoment', 'Students', 'Ewallet', 'ngDialog', '$timeout', 'jwtHelper', function($rootScope, $scope, $location, $route, $routeParams, $localStorage, amMoment, Students, Ewallet, ngDialog, $timeout, jwtHelper) {
     let university;
     $scope.loading = false
     $scope.verified = false;
@@ -3672,8 +3672,23 @@ angular.module('netbase')
     $scope.validate = () => {
         let payload = { email: $routeParams.email, token: $routeParams.token }
         Students.verify(payload).then(res => {
-            if (res.data.success) $scope.verified = true
-            else $scope.verified = false
+            if (res.data.success) {
+                $scope.verified = true;
+                Students.searchUserByEmail($routeParams.email).then(data => {
+                    if (data.data.success) {
+                        let user = data.data.data;
+                        let epayload = {
+                            userId: user._id,
+                            customerId: user.stripeId
+                        }
+                        Ewallet.createAccount(epayload).then(
+                            ea => {
+                                console.log(ea)
+                            }
+                        )
+                    }
+                })
+            } else $scope.verified = false
         })
     }
 
@@ -3706,28 +3721,33 @@ angular.module('netbase')
                             className: 'ngdialog-theme-default',
                             controller: 'AccountCtrl',
                             preCloseCallback: () => {
-                                $localStorage.$reset();
+                                if ($scope.verified === false) {
+                                    $localStorage.$reset();
 
-                                if (url.indexOf('colle.ge') > 0) {
-                                    amMoment.changeLocale('en');
-                                    $localStorage.company_logo = "img/college_logo.png";
-                                    $localStorage.user_language = "EN";
-                                } else if (url.indexOf('universida.de') > 0) {
-                                    amMoment.changeLocale('pt-br');
-                                    $localStorage.company_logo = "img/universidade_logo.png"
-                                    $localStorage.user_language = "PT";
+                                    if (url.indexOf('colle.ge') > 0) {
+                                        amMoment.changeLocale('en');
+                                        $localStorage.company_logo = "img/college_logo.png";
+                                        $localStorage.user_language = "EN";
+                                    } else if (url.indexOf('universida.de') > 0) {
+                                        amMoment.changeLocale('pt-br');
+                                        $localStorage.company_logo = "img/universidade_logo.png"
+                                        $localStorage.user_language = "PT";
+                                    } else {
+                                        amMoment.changeLocale('en');
+                                        $localStorage.company_logo = "img/college_logo.png"
+                                        $localStorage.user_language = "EN";
+                                    }
+
+                                    $rootScope.logged = false;
+                                    $localStorage.logged = false;
+                                    $localStorage.token = undefined;
+
+                                    $location.path('/home/landing');
+                                    $route.reload();
                                 } else {
-                                    amMoment.changeLocale('en');
-                                    $localStorage.company_logo = "img/college_logo.png"
-                                    $localStorage.user_language = "EN";
+                                    $location.path('/home/timeline');
+                                    $route.reload();
                                 }
-
-                                $rootScope.logged = false;
-                                $localStorage.logged = false;
-                                $localStorage.token = undefined;
-
-                                $location.path('/home/landing');
-                                $route.reload();
                             }
                         });
                     }
@@ -3783,9 +3803,8 @@ angular.module('netbase')
             if (data.data.data.validated == false) {
                 $timeout(callAtTimeout, 3000);
             } else {
+                $scope.verified = true;
                 ngDialog.close();
-                $location.path('/home/timeline');
-                $route.reload();
             }
         })
     }
@@ -5551,41 +5570,41 @@ angular.module('netbase')
 
     // save changed info to the db
     $scope.save = function() {
-      $scope.success = false
-      $scope.hasError = false
+        $scope.success = false
+        $scope.hasError = false
 
-      let imageUrl = $("#file").attr("value");
-      if ($scope.name == "") {
-          $scope.hasError = true
-          $scope.errorMessage = 'NAME_FIELD_EMPTY'
-          return;
-      }
+        let imageUrl = $("#file").attr("value");
+        if ($scope.name == "") {
+            $scope.hasError = true
+            $scope.errorMessage = 'NAME_FIELD_EMPTY'
+            return;
+        }
 
-      if ($scope.pwd !== $scope.rpwd) {
-          $scope.hasError = true
-          $scope.errorMessage = 'PASSWORD_NOT_MATCH'
-          return;
-      }
+        if ($scope.pwd !== $scope.rpwd) {
+            $scope.hasError = true
+            $scope.errorMessage = 'PASSWORD_NOT_MATCH'
+            return;
+        }
 
-      let payload = {
-          name: $scope.name,
-          username: $scope.student.username,
-          bioLong: $scope.student.bioLong,
-          bioShort: $scope.bio,
-          password: $scope.pwd,
-          imageUrl: imageUrl
-      }
+        let payload = {
+            name: $scope.name,
+            username: $scope.student.username,
+            bioLong: $scope.student.bioLong,
+            bioShort: $scope.bio,
+            password: $scope.pwd,
+            imageUrl: imageUrl
+        }
 
-      if ($scope.pwd.length === 0) delete payload.password;
-      Students.update(studentId, payload).success(function(res) {
-          let success = res.success;
-          let data = res.data;
+        if ($scope.pwd.length === 0) delete payload.password;
+        Students.update(studentId, payload).success(function(res) {
+            let success = res.success;
+            let data = res.data;
 
-          if (success) {
-            $scope.success = true
-            $scope.successMessage = 'PROFILE_SUCCESSFULLY_UPDATED'
-          }
-      });
+            if (success) {
+                $scope.success = true
+                $scope.successMessage = 'PROFILE_SUCCESSFULLY_UPDATED'
+            }
+        });
     }
 }])
 
