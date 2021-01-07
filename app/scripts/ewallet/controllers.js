@@ -12,7 +12,11 @@ angular.module('netbase')
     Ewallet.getAccount(studentId).then(function(res) {
       console.log("get account: ", res)
       if(res.data.message == 'Success') {
-        $scope.balance = (res.data.result && res.data.result.walletBalance) ? res.data.result.walletBalance : 0
+        console.log(res.data);
+        if(!res.data.result){
+          alert("Your account is not verified");
+          $location.path("/home/timeline")
+        }
       }
     })
 
