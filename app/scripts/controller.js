@@ -4657,6 +4657,7 @@ angular.module('netbase')
 .controller('HeaderCtrl', ['$rootScope', '$scope', '$location', '$localStorage', 'jwtHelper', 'Search', 'Students', '$route', 'ngDialog', '$timeout', '$translate', function($rootScope, $scope, $location, $localStorage, jwtHelper, Search, Students, $route, ngDialog, $timeout, $translate) {
     /* header variables */
     let logged = $rootScope.logged;
+    let token = $localStorage.token
     $scope.whitelabel = false;
     $scope.searchBarDisplay = false;
     $scope.company_logo = $localStorage.company_logo
@@ -4756,8 +4757,8 @@ angular.module('netbase')
     $scope.userImage = "img/user/user.png";
     $scope.user = {};
 
-    if (logged) {
-        let studentId = jwtHelper.decodeToken($localStorage.token)._id;
+    if (logged && token != undefined) {
+        let studentId = jwtHelper.decodeToken(token)._id;
 
         Students.getStudentById(studentId).then(function(res) {
             let data = res.data.data;

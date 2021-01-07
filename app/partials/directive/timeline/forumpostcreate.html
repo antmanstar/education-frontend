@@ -56,34 +56,54 @@
 
                 <!-- social__item linkedin -->
                 <div class="social__item">
-                    <a class="social__icon--linkedin" href="#" socialshare socialshare-provider="linkedin" socialshare-text="{{forumPost.text}}" socialshare-hashtags="{{forumPost.title}}, Universidades" socialshare-url="https://universida.de/a/{{university.url}}/forum/post/id/{{activity.modelId}}"><i class="icon--linkedin"></i></a>
+                    <a
+                      class="social__icon--linkedin"
+                      href="#"
+                      socialshare socialshare-provider="linkedin"
+                      socialshare-text="{{forumPost.text}}"
+                      socialshare-hashtags="{{forumPost.title}}, {{domainName}}"
+                      socialshare-url="https://{{siteurl}}/a/{{university.url}}/forum/post/id/{{activity.modelId}}"
+                    >
+                      <i class="icon--linkedin"></i>
+                    </a>
                 </div>
                 <!-- /social__item linkedin -->
 
                 <!-- social__item twitter -->
                 <div class="social__item">
-                    <a class="social__icon--twitter" href="#" socialshare socialshare-provider="twitter" socialshare-text="{{forumPost.text}}" socialshare-hashtags="{{forumPost.title}}, Universidades" socialshare-url="https://universida.de/a/{{university.url}}/forum/post/id/{{activity.modelId}}"><i class="icon--twitter"></i></a>
+                    <a
+                      class="social__icon--twitter"
+                      href="#"
+                      socialshare socialshare-provider="twitter"
+                      socialshare-text="{{forumPost.title}}"
+                      socialshare-hashtags="{{forumPost.title}}, {{domainName}}"
+                      socialshare-url="https://{{siteurl}}/a/{{university.url}}/forum/post/id/{{activity.modelId}}"
+                    >
+                      <i class="icon--twitter"></i>
+                    </a>
                 </div>
                 <!-- /social__item twiter -->
 
-                <!-- social__item google+ -->
+                <!-- social__item google+ HIDE GOOGLE+ BECAUSE IT IS NO LONGER AVAILABLE>
                 <div class="social__item">
                     <a class="social__icon--googleplus" href="#" socialshare socialshare-provider="google" socialshare-text="{{forumPost.text}}" socialshare-hashtags="{{forumPost.title}}, Universidades" socialshare-url="https://universida.de/a/{{university.url}}/forum/post/id/{{activity.modelId}}"><i class="icon--googleplus"></i></a>
                 </div>
-                <!-- /social__item google+ -->
+                < /social__item google+ -->
 
-                <!-- social__item facebook -->
+                <!-- social__item facebook >
                 <div class="social__item">
-                    <a class="social__icon--facebook" href="#" socialshare socialshare-provider="facebook" socialshare-text="Hello world" socialshare-hashtags="{{forumPost.title}}, Universidades" socialshare-url="https://universida.de/a/{{university.url}}/forum/post/id/{{activity.modelId}}"><i class="icon--facebook"></i></a>
-                    <!--a class="social__icon--facebook" href="#" socialshare
-                      socialshare-provider="facebook"
+                    <a
+                      class="social__icon--facebook"
+                      href="#"
+                      socialshare socialshare-provider="facebook"
                       socialshare-text="{{forumPost.text}}"
                       socialshare-hashtags="{{forumPost.title}}, Universidades"
-                      socialshare-url="https://universida.de">
+                      socialshare-url="https://universida.de/a/{{university.url}}/forum/post/id/{{activity.modelId}}"
+                    >
                       <i class="icon--facebook"></i>
-                    </a-->
+                    </a>
                 </div>
-                <!-- /social__item facebook -->
+                < /social__item facebook -->
 
             </div>
             <!-- /social__item facebook -->

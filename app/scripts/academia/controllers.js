@@ -657,6 +657,7 @@ angular.module('netbase')
         ngDialog.close();
     }
 
+
     $scope.scanDevices = function() {
         return new Promise((resolve, reject) => {
             navigator.mediaDevices.enumerateDevices().then(devices => {
@@ -782,7 +783,19 @@ angular.module('netbase')
         }
 
         if (navigator.getUserMedia) {
-            navigator.getUserMedia($rootScope.constraints,
+            navigator.getUserMedia(
+                // $rootScope.constraints,
+                {
+                    audio: {
+                        sampleRate: 48000,
+                        channelCount: 2,
+                        volume: 1.0,
+                        echoCancellation: true,
+                        noiseSuppression: true,
+                        autoGainControl: true
+                    },
+                    video: true
+                },
                 function(stream) {
                     var video = document.getElementById('selecting_video');
                     video.srcObject = stream;
@@ -800,7 +813,20 @@ angular.module('netbase')
                 }
             );
         } else {
-            navigator.mediaDevices.getUserMedia($rootScope.constraints)
+            navigator.mediaDevices.getUserMedia(
+                    // $rootScope.constraints
+                    {
+                        audio: {
+                            sampleRate: 48000,
+                            channelCount: 2,
+                            volume: 1.0,
+                            echoCancellation: true,
+                            noiseSuppression: true,
+                            autoGainControl: true
+                        },
+                        video: true
+                    }
+                )
                 .then((stream) => {
                     var video = document.getElementById('selecting_video');
                     video.srcObject = stream;
@@ -1153,7 +1179,6 @@ angular.module('netbase')
         let redirectUrl = '/a/university/' + universityUrl + '/roomid/' + roomSID + '/accountid/' + accountSid + '/roomname/' + roomName + '/';
 
         if ($rootScope.ifSelectedDevice == null || $rootScope.ifSelectedDevice == undefined) {
-
             ngDialog.open({
                 template: 'partials/modals/classroom_select_device_modal.html',
                 controller: 'AcademiaClassroomSelectDeviceCtrl',
