@@ -13,7 +13,7 @@
             <div class="headline-container" style="text-align: left">{{'EXPLOREEDCOMMUNITY' | translate}}</div>
         </div>
         <div class="col-xs-12 col-sm-6 col-md-6" style="margin-bottom: 15px; padding-left: 20px; padding-right: 20px;" ng-if="k.universities.length > 0" ng-repeat="k in knowledges | orderBy: '-universities.length'">
-            <div class="headline-container">{{k.title}}</div>
+            <div class="headline-container">{{k.title | translate}}</div>
             <div class="section-cards" style="padding-bottom: 0px !important;">
                 <homeuniversitynewcard uid={{university.universityId}} ng-repeat="university in k.universities">
                 </homeuniversitynewcard>

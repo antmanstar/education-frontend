@@ -16,6 +16,7 @@
         .title-members {
             font-size: 30px;
             color: #555555;
+            padding-left: 10px;
         }
         
         .split-line {
@@ -36,15 +37,13 @@
     </style>
 
     <div class="row">
-        <div class="col-xs-12">
-            <div class="wrapper">
-                <div class="title-members">All Members</div>
-                <div class="split-line"></div>
-                <div class="list-item" ng-repeat="member in ngDialogData.members">
-                    <img class="member-avatar" ng-if="member.imgUrl == undefined" src="img/user/user.png" />
-                    <img class="member-avatar" ng-if="member.imgUrl.length > 0" src="{{member.imgUrl}}" />
-                    <div class="avatar-name">{{member.name}}</div>
-                </div>
+        <div class="wrapper">
+            <div class="title-members">All Members</div>
+            <div class="split-line"></div>
+            <div class="list-item" ng-repeat="member in ngDialogData.members">
+                <img class="member-avatar" ng-if="member.imgUrl == undefined" src="img/user/user.png" />
+                <img class="member-avatar" ng-if="member.imgUrl.length > 0" src="{{member.imgUrl}}" />
+                <div class="avatar-name">{{member.name}}</div>
             </div>
         </div>
     </div>

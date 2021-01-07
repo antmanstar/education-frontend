@@ -13,7 +13,7 @@ angular.module('netbase')
     }
 }])
 
-.controller('HomeTimelineCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Timeline', '$localStorage', 'jwtHelper', 'TimelineNew', function($rootScope, $scope, $location, $route, University, Timeline, $localStorage, jwtHelper, TimelineNew) {
+.controller('HomeTimelineCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Timeline', '$localStorage', 'jwtHelper', 'TimelineNew', 'ngDialog',function($rootScope, $scope, $location, $route, University, Timeline, $localStorage, jwtHelper, TimelineNew, ngDialog) {
     $scope.page = 1;
     $scope.pages = 1;
     $scope.loading = true;
@@ -83,6 +83,15 @@ angular.module('netbase')
 
             scope.hasError = false;
             scope.errorMessage = '';
+
+            let url = window.location.href;
+            if (url.indexOf('universida.de') > 0) {
+                scope.siteurl = "universida.de"
+                scope.domainName = "Universidades"
+            } else {
+              scope.siteurl = "colle.ge"
+              scope.domainName = "College"
+            }
 
             TimelineNew.getTimelineRePostCount(contentId).success(function(res) {
                 scope.rePostCount = res.data.count - 1;
