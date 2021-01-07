@@ -1908,6 +1908,19 @@ angular.module('netbase')
             });
         },
 
+        createAccount: function(data) {
+            var url = '/account/';
+            return $http({
+                method: 'POST',
+                url: baseUrl + url,
+                data: data,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-access-token': $localStorage.token
+                }
+            });
+        },
+
 
         //
         // PAYMENT METHODS
