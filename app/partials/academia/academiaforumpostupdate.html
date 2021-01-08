@@ -25,10 +25,10 @@
                     <b>{{'CONTENT_EXCLUSIVE_TO_PREMIUM' | translate}}</b>
 
                     <div class="form-group">
-                        <select>
-              <option value="0" ng-selected="premium.value == 0">{{'NO' | translate}}</option>
-              <option value="1" ng-selected="premium.value == 1">{{'YES' | translate}}</option>
-            </select>
+                        <select ng-model="premium.value">
+                          <option value="0" ng-selected="premium.value == 0">{{'NO' | translate}}</option>
+                          <option value="1" ng-selected="premium.value == 1">{{'YES' | translate}}</option>
+                        </select>
                     </div>
 
                 </div>

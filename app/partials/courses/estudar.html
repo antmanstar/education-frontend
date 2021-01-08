@@ -5,7 +5,7 @@
       <div class="row">
         <div class="col-sm-12 content-part">
 
-          <div ng-show="showInitiarCursoButton && !courseFinished">
+          <div ng-show="showInitiarCursoButton && !courseFinished" style="text-align: center;">
 
             <div style="font-size: 2em; font-weight: bolder; " ng-hide="course.module.length == 0">{{'COURSE_START' | translate}}</div>
             <div style="font-size: 2em; font-weight: bolder; " ng-show="course.module.length == 0">{{'COURSE_IN_PROGRESS' | translate}}</div>
@@ -25,7 +25,7 @@
           </div>
           <!-- -->
 
-          <div ng-show="courseFinished" class="alert alert-success" style="color: #3c763d !important; margin-top: 2rem; height: 24rem;">
+          <div ng-show="courseFinished" class="alert alert-success" style="color: #3c763d !important; margin-top: 2rem; height: 24rem; text-align: center;">
 
             <label style="font-size: 4em;">{{'COURSE_CONGRATULATIONS' | translate}}</label>
             <p>{{'COURSE_FINISHED_THE_COURSE' | translate}}</p>
@@ -164,7 +164,7 @@
   .content-part {
 
     min-height: 400px;
-    text-align: center;
+    /* text-align: center; */
   }
 
   .content-body {
