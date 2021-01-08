@@ -639,7 +639,7 @@ angular.module('netbase')
         $localStorage.showInitiarCursoButton = true;
         $localStorage.showControlButton = false
         $localStorage.viewRequest = "estudar"
-        $window.open('/cursos/id/' + id + '/estudar', "popup", "width=1500,height=700,left=100,top=150");
+        $window.open('/cursos/id/' + id + '/estudar', '_blank');
     }
 }])
 
@@ -1022,6 +1022,8 @@ angular.module('netbase')
     $scope.studying = false;
     let displayinvite = false;
 
+    $scope.isEstudarModulosSorted = false;
+
     if (!$rootScope.logged) {
         $rootScope.accountSuggestion = $timeout(function() {
             if (!displayinvite) {
@@ -1206,14 +1208,43 @@ angular.module('netbase')
             }
         }
 
+        // in the first run of this function we try to sort the
+        // estudarModulos array
+        if (!$scope.isEstudarModulosSorted) {
+          console.log("start sorting")
+          let sortedContents = []
+
+          for(let x = 0; x < $scope.course.module.length; x++){
+            let modId = $scope.course.module[x].moduleId._id
+            for(let y = 0; y < $localStorage.estudarModulos.length; y++){
+              if (modId == $localStorage.estudarModulos[y].module_id) {
+                sortedContents.push($localStorage.estudarModulos[y])
+              }
+            }
+          }
+          console.log("sortedContents: ", sortedContents)
+          $scope.isEstudarModulosSorted = true
+          $localStorage.estudarModulos = sortedContents
+          console.log("sorted $localStorage.estudarModulos: ", $localStorage.estudarModulos)
+        }
+
+        // loop thru the estudarModulos array
         for (let idx = 0; idx < $localStorage.estudarModulos.length; idx++) {
+
+            // check the direction of the navigation
             if (direction == "next") {
+
+                // if the content matched the current estudarModulos index
                 if ($localStorage.estudarModulos[idx]._id == cid && $localStorage.estudarModulos[idx].module_id == module_id) {
+
+                    // if the current estudarModulos index equals the lastModuleId
                     if ($localStorage.lastModuleId == $localStorage.estudarModulos[idx].module_id) {
+                        // if its the last item in the estudarmodulos array
                         if (idx == $localStorage.estudarModulos.length - 1) {
                             $scope.hasNext = false
                             $scope.courseFinished = true
                         } else {
+                          // if its not the last item in the estudarModulos array
                             if ($localStorage.estudarModulos[idx + 1].module_id != $localStorage.lastModuleId) {
                                 $scope.hasNext = false
                                 $scope.courseFinished = true
@@ -1224,12 +1255,14 @@ angular.module('netbase')
                             }
                         }
                     } else {
+                      // if its not the last module, move to the next item in estudarModulos
                         console.log($localStorage.estudarModulos)
                         $scope.nextContent = $localStorage.estudarModulos[idx + 1]
                         getContent($scope.nextContent)
                         break
                     }
                 }
+                // if the current content does not match the content in estudarModulos[idx] then continue to next loop
             }
 
             if (direction == "prev") {
@@ -1288,13 +1321,14 @@ angular.module('netbase')
         $scope.trustedContent = $sce.trustAsHtml($scope.contentData.text)
         Forum.getForumPostById(post_id, $scope.contentData.universityId).success(function(res) {
             let status = res.status;
+            let timeWatched = 0;
             if (status == 90010) {} else {
                 $scope.video = res.data;
                 if ($scope.video != null && $scope.video != undefined) {
                     if ($scope.video.file.indexOf(".mp4") == -1 && $scope.video.file.indexOf(".wmv") == -1) {
                         const video = document.querySelector('video');
                         viewers = $scope.contentData.viewers;
-                        let timeWatched = 0;
+
 
                         if (logged) {
                             let accountId = User.getId();
@@ -5572,41 +5606,42 @@ angular.module('netbase')
 
     // save changed info to the db
     $scope.save = function() {
-        $scope.success = false
-        $scope.hasError = false
+      $scope.success = false
+      $scope.hasError = false
 
-        let imageUrl = $("#file").attr("value");
-        if ($scope.name == "") {
-            $scope.hasError = true
-            $scope.errorMessage = 'NAME_FIELD_EMPTY'
-            return;
-        }
+      let imageUrl = $("#file").attr("value");
+      if ($scope.name == "") {
+          $scope.hasError = true
+          $scope.errorMessage = 'NAME_FIELD_EMPTY'
+          return;
+      }
 
-        if ($scope.pwd !== $scope.rpwd) {
-            $scope.hasError = true
-            $scope.errorMessage = 'PASSWORD_NOT_MATCH'
-            return;
-        }
+      if ($scope.pwd !== $scope.rpwd) {
+          $scope.hasError = true
+          $scope.errorMessage = 'PASSWORD_NOT_MATCH'
+          return;
+      }
 
-        let payload = {
-            name: $scope.name,
-            username: $scope.student.username,
-            bioLong: $scope.student.bioLong,
-            bioShort: $scope.bio,
-            password: $scope.pwd,
-            imageUrl: imageUrl
-        }
+      let payload = {
+          name: $scope.name,
+          username: $scope.student.username,
+          bioLong: $scope.student.bioLong,
+          bioShort: $scope.bio,
+          password: $scope.pwd,
+          imageUrl: imageUrl
+      }
 
-        if ($scope.pwd.length === 0) delete payload.password;
-        Students.update(studentId, payload).success(function(res) {
-            let success = res.success;
-            let data = res.data;
+      if ($scope.pwd.length === 0) delete payload.password;
+      Students.update(studentId, payload).success(function(res) {
+          let success = res.success;
+          let data = res.data;
 
-            if (success) {
-                $scope.success = true
-                $scope.successMessage = 'PROFILE_SUCCESSFULLY_UPDATED'
-            }
-        });
+          if (success) {
+            $scope.success = true
+            $scope.successMessage = 'PROFILE_SUCCESSFULLY_UPDATED'
+            $scope.imageButton = "UPDATE_CHANGE_PHOTO"
+          }
+      });
     }
 }])
 
