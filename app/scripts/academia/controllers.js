@@ -374,8 +374,22 @@ angular.module('netbase')
         $rootScope.currentChatChannel.on('memberLeft', $scope.notifyMemberLeft);
     }
 
+    $scope.transformHrefsInAnswer = function(value) {
+        var retval = value;
+        if(retval != null) {
+            //var urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+            //var urlRegex = /^([^:]+):\/\/([-\w._]+)(\/[-\w._]\?(.+)?)?$/ig
+            var urlRegex = /(?:(?:https?|ftp):\/\/|\b(?:[a-z\d]+\.))(?:(?:[^\s()<>]+|\((?:[^\s()<>]+|(?:\([^\s()<>]+\)))?\))+(?:\((?:[^\s()<>]+|(?:\(?:[^\s()<>]+\)))?\)|[^\s`!()\[\]{};:'".,<>???�ȡɡơ�]))?/
+            retval = value.replace(urlRegex, function (url) {
+                return '<a href="' + url + '" target="_blank">' + url + '</a>';
+            });
+        }
+        return retval;
+    };
+
     $scope.sendMSG = function() { // Send message
-        $rootScope.currentChatChannel.sendMessage($scope.sendingMessage);
+        let message = $scope.transformHrefsInAnswer($scope.sendingMessage);
+        $rootScope.currentChatChannel.sendMessage(message);
         $scope.sendingMessage = '';
     }
 
@@ -2673,10 +2687,10 @@ angular.module('netbase')
     }
 
     if (type == "video") {
-        $scope.title = "Adicionar vídeo do YouTube";
+        $scope.title = "Adicionar v?deo do YouTube";
         $scope.form.iconClass = "fab fa-youtube";
         $scope.form.placeholder = "YouTube Link";
-        $scope.form.button = "Adicionar vídeo";
+        $scope.form.button = "Adicionar v?deo";
 
         $scope.add = function() {
             let iframe = "<iframe src='" + $scope.ytiFrame + "' frameborder='0' allowfullscreen></iframe>"

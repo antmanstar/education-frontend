@@ -398,7 +398,7 @@
     "PLEASE_ENTER_COURSE_DESCRIPTION": "Please enter course description.",
     "PLEASE_SELECT_COURSE_KNOWLEDGE": "Please select course knowledge.",
     "PLEASE_SELECT_COURSE_PAYMENT": "Please select course payment.",
-    "PLEASE_ENTER_COURSE_PRICE": "Please enter course price / Negative numbers not accepted",
+    "PLEASE_ENTER_COURSE_PRICE": "Please enter a valid price / Negative numbers not accepted",
     "CANCEL": "Cancel",
     "CANCEL_UPPERCASE": "CANCEL",
     "DELETE": "Delete",

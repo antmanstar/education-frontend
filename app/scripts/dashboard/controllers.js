@@ -206,10 +206,13 @@ angular.module('netbase')
 
     $scope.premiumMembers = 0;
 
+    /* background image */
+    $scope.backgroundImage = "https://universida.de/img/misc/noimageacademia.jpg";
+
     University.getUniversityById(universityId).success(function(res) {
         if (res.success) {
             $scope.university = res.data;
-
+            if ($scope.university.backgroundImage) $scope.backgroundImage = $scope.university.backgroundImage
             for (let idx = 0; idx < $scope.university.members.length; idx++) {
                 let member = $scope.university.members[idx];
 
@@ -219,6 +222,25 @@ angular.module('netbase')
             }
         }
     });
+
+    $scope.backgroundImageUpdate = function() {
+        // Bug if undefined.
+
+        let backgroundImage = $("#file").attr("value");
+
+        if (backgroundImage.indexOf("https") != -1) {
+          $scope.backgroundImage = backgroundImage;
+          console.log("backgroundImage: ", $scope.backgroundImage)
+        }
+
+    }
+
+    $scope.removeBtn = function() {
+      console.log("remove background")
+      $("#university-background-image").attr("style", "background-image: url('https://universida.de/img/misc/noimageacademia.jpg')");
+      $("#file").attr("value", 'https://universida.de/img/misc/noimageacademia.jpg');
+      $scope.backgroundImage = "https://universida.de/img/misc/noimageacademia.jpg";
+    }
 
     $scope.update = function() {
         let data = {};
@@ -233,6 +255,15 @@ angular.module('netbase')
 
         if ($scope.url != undefined) {
             data.url = $scope.url;
+        }
+
+        let backgroundImage = $("#file").attr("value");
+
+        // Error while checking. If undefined, bugs
+        if (backgroundImage != undefined) {
+          if (backgroundImage.indexOf("https://") != -1) {
+              data.backgroundImage = backgroundImage;
+          }
         }
 
         University.update(universityId, data).success(function(res) {
