@@ -1211,21 +1211,21 @@ angular.module('netbase')
         // in the first run of this function we try to sort the
         // estudarModulos array
         if (!$scope.isEstudarModulosSorted) {
-          console.log("start sorting")
-          let sortedContents = []
+            console.log("start sorting")
+            let sortedContents = []
 
-          for(let x = 0; x < $scope.course.module.length; x++){
-            let modId = $scope.course.module[x].moduleId._id
-            for(let y = 0; y < $localStorage.estudarModulos.length; y++){
-              if (modId == $localStorage.estudarModulos[y].module_id) {
-                sortedContents.push($localStorage.estudarModulos[y])
-              }
+            for (let x = 0; x < $scope.course.module.length; x++) {
+                let modId = $scope.course.module[x].moduleId._id
+                for (let y = 0; y < $localStorage.estudarModulos.length; y++) {
+                    if (modId == $localStorage.estudarModulos[y].module_id) {
+                        sortedContents.push($localStorage.estudarModulos[y])
+                    }
+                }
             }
-          }
-          console.log("sortedContents: ", sortedContents)
-          $scope.isEstudarModulosSorted = true
-          $localStorage.estudarModulos = sortedContents
-          console.log("sorted $localStorage.estudarModulos: ", $localStorage.estudarModulos)
+            console.log("sortedContents: ", sortedContents)
+            $scope.isEstudarModulosSorted = true
+            $localStorage.estudarModulos = sortedContents
+            console.log("sorted $localStorage.estudarModulos: ", $localStorage.estudarModulos)
         }
 
         // loop thru the estudarModulos array
@@ -1244,7 +1244,7 @@ angular.module('netbase')
                             $scope.hasNext = false
                             $scope.courseFinished = true
                         } else {
-                          // if its not the last item in the estudarModulos array
+                            // if its not the last item in the estudarModulos array
                             if ($localStorage.estudarModulos[idx + 1].module_id != $localStorage.lastModuleId) {
                                 $scope.hasNext = false
                                 $scope.courseFinished = true
@@ -1255,7 +1255,7 @@ angular.module('netbase')
                             }
                         }
                     } else {
-                      // if its not the last module, move to the next item in estudarModulos
+                        // if its not the last module, move to the next item in estudarModulos
                         console.log($localStorage.estudarModulos)
                         $scope.nextContent = $localStorage.estudarModulos[idx + 1]
                         getContent($scope.nextContent)
@@ -2567,6 +2567,9 @@ angular.module('netbase')
         }
     });
 
+    // Course Price validation
+    let pricePattern = new RegExp(/^(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$/)
+
     $scope.updateCourse = function() {
 
         //form validation
@@ -2601,7 +2604,24 @@ angular.module('netbase')
         }
 
         if ($scope.free == false) {
-            formdata.price = $scope.preco;
+            // validate price input
+            if (!pricePattern.test($scope.preco)) {
+              $scope.hasError = true;
+              $scope.createcourseerrmessage = "PLEASE_ENTER_COURSE_PRICE"
+              return
+            } else {
+              console.log("price is valid")
+              $scope.preco = $scope.preco.replace(/,/g, '.')
+
+              if ($scope.preco > 0) {
+                  formdata.price = $scope.preco;
+              } else {
+                console.log("error: ", typeof($scope.preco))
+                  $scope.hasError = true;
+                  $scope.createcourseerrmessage = "PLEASE_ENTER_COURSE_PRICE"
+                  return
+              }
+            }
         }
 
         Courses.updateCourse($scope.courseData._id, formdata).success(function(res) {
@@ -2660,22 +2680,24 @@ angular.module('netbase')
         $scope.tinymceModel = res.data.text
         $scope.title = res.data.title;
         $scope.idd = res.data.moduleId;
-        $scope.tinymceOptions = {
-            file_picker_types: 'file image media',
-            tinydrive_token_provider: function(success, failure) {
-                Courses.fileUploadUrl().success(function(msg) {
-                    success({ token: msg.token });
-                })
-            },
-            tinydrive_google_drive_key: "carbisa-document-upload@carbisa.iam.gserviceaccount.com",
-            tinydrive_google_drive_client_id: '102507978919142111240',
-            plugins: 'print preview powerpaste casechange importcss tinydrive searchreplace autolink autosave save directionality advcode visualblocks visualchars fullscreen image link media mediaembed  codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists checklist wordcount tinymcespellchecker a11ychecker textpattern noneditable help formatpainter pageembed charmap mentions quickbars linkchecker emoticons advtable',
-            toolbar: 'insertfile|undo redo | bold italic | alignleft aligncenter alignright | code|styleselect|outdent indent|link image'
-        };
     }).error(function(msg) {
         alert("Error")
         $location.path("/home/cursos")
     })
+
+    $scope.tinymceOptions = {
+        file_picker_types: 'file image media',
+        tinydrive_token_provider: function(success, failure) {
+            Courses.fileUploadUrl().success(function(msg) {
+                success({ token: msg.token });
+            })
+        },
+        height: 600,
+        tinydrive_google_drive_key: "carbisa-document-upload@carbisa.iam.gserviceaccount.com",
+        tinydrive_google_drive_client_id: '102507978919142111240',
+        plugins: 'print preview powerpaste casechange importcss tinydrive searchreplace autolink autosave save directionality advcode visualblocks visualchars fullscreen image link media mediaembed  codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists checklist wordcount tinymcespellchecker a11ychecker textpattern noneditable help formatpainter pageembed charmap mentions quickbars linkchecker emoticons advtable',
+        toolbar: 'insertfile|undo redo | bold italic | alignleft aligncenter alignright | code|styleselect|outdent indent|link image'
+    };
 
     $scope.saveContent = function() {
         Courses.savePage({ text: $scope.tinymceModel, contentType: 'page', title: $scope.title }, id).
@@ -2726,7 +2748,7 @@ angular.module('netbase')
                 })
                 // failure('Could not create a jwt token')
         },
-        height: 400,
+        height: 600,
         tinydrive_google_drive_key: "carbisa-document-upload@carbisa.iam.gserviceaccount.com",
         tinydrive_google_drive_client_id: '102507978919142111240',
         plugins: 'print preview powerpaste casechange importcss tinydrive searchreplace autolink autosave save directionality advcode visualblocks visualchars fullscreen image link media mediaembed  codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists checklist wordcount tinymcespellchecker a11ychecker textpattern noneditable help formatpainter pageembed charmap mentions quickbars linkchecker emoticons advtable',
@@ -3455,6 +3477,9 @@ angular.module('netbase')
         }
     });
 
+    // Course Price validation
+    let pricePattern = new RegExp(/^(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$/)
+
     $scope.criar = function() {
         let error = false;
         $scope.hasError = false;
@@ -3493,12 +3518,23 @@ angular.module('netbase')
         }
 
         if ($scope.free == false) {
-            if ($scope.preco > 0) {
-                formdata.price = $scope.preco;
+            // validate price input
+            if (!pricePattern.test($scope.preco)) {
+              $scope.hasError = true;
+              $scope.createcourseerrmessage = "PLEASE_ENTER_COURSE_PRICE"
+              return
             } else {
-                $scope.hasError = true;
-                $scope.createcourseerrmessage = "PLEASE_ENTER_COURSE_PRICE"
-                return
+              console.log("price is valid")
+              $scope.preco = $scope.preco.replace(/,/g, '.')
+
+              if ($scope.preco > 0) {
+                  formdata.price = $scope.preco;
+              } else {
+                console.log("error: ", typeof($scope.preco))
+                  $scope.hasError = true;
+                  $scope.createcourseerrmessage = "PLEASE_ENTER_COURSE_PRICE"
+                  return
+              }
             }
         }
 
@@ -5555,6 +5591,23 @@ angular.module('netbase')
     }
 }])
 
+.controller('ImageEditCtrl', ['$rootScope', '$scope', '$location', '$localStorage', '$timeout', 'Upload', 'jwtHelper', 'Students', 'University', 'Forum', function($rootScope, $scope, $location, $localStorage, $timeout, Upload, jwtHelper, Students, University, Forum) {
+    $scope.myImage = '';
+    $scope.myCroppedImage = '';
+
+    var handleFileSelect = function(evt) {
+        var file = evt.currentTarget.files[0];
+        var reader = new FileReader();
+        reader.onload = function(evt) {
+            $scope.$apply(function($scope) {
+                $scope.myImage = evt.target.result;
+            });
+        };
+        reader.readAsDataURL(file);
+    };
+    angular.element(document.querySelector('#fileInput')).on('change', handleFileSelect);
+}])
+
 .controller('ProfileEditCtrl', ['$rootScope', '$scope', '$location', '$localStorage', '$timeout', 'Upload', 'jwtHelper', 'Students', 'University', 'Forum', function($rootScope, $scope, $location, $localStorage, $timeout, Upload, jwtHelper, Students, University, Forum) {
     let studentId;
 
@@ -5606,42 +5659,42 @@ angular.module('netbase')
 
     // save changed info to the db
     $scope.save = function() {
-      $scope.success = false
-      $scope.hasError = false
+        $scope.success = false
+        $scope.hasError = false
 
-      let imageUrl = $("#file").attr("value");
-      if ($scope.name == "") {
-          $scope.hasError = true
-          $scope.errorMessage = 'NAME_FIELD_EMPTY'
-          return;
-      }
+        let imageUrl = $("#file").attr("value");
+        if ($scope.name == "") {
+            $scope.hasError = true
+            $scope.errorMessage = 'NAME_FIELD_EMPTY'
+            return;
+        }
 
-      if ($scope.pwd !== $scope.rpwd) {
-          $scope.hasError = true
-          $scope.errorMessage = 'PASSWORD_NOT_MATCH'
-          return;
-      }
+        if ($scope.pwd !== $scope.rpwd) {
+            $scope.hasError = true
+            $scope.errorMessage = 'PASSWORD_NOT_MATCH'
+            return;
+        }
 
-      let payload = {
-          name: $scope.name,
-          username: $scope.student.username,
-          bioLong: $scope.student.bioLong,
-          bioShort: $scope.bio,
-          password: $scope.pwd,
-          imageUrl: imageUrl
-      }
+        let payload = {
+            name: $scope.name,
+            username: $scope.student.username,
+            bioLong: $scope.student.bioLong,
+            bioShort: $scope.bio,
+            password: $scope.pwd,
+            imageUrl: imageUrl
+        }
 
-      if ($scope.pwd.length === 0) delete payload.password;
-      Students.update(studentId, payload).success(function(res) {
-          let success = res.success;
-          let data = res.data;
+        if ($scope.pwd.length === 0) delete payload.password;
+        Students.update(studentId, payload).success(function(res) {
+            let success = res.success;
+            let data = res.data;
 
-          if (success) {
-            $scope.success = true
-            $scope.successMessage = 'PROFILE_SUCCESSFULLY_UPDATED'
-            $scope.imageButton = "UPDATE_CHANGE_PHOTO"
-          }
-      });
+            if (success) {
+                $scope.success = true
+                $scope.successMessage = 'PROFILE_SUCCESSFULLY_UPDATED'
+                $scope.imageButton = "UPDATE_CHANGE_PHOTO"
+            }
+        });
     }
 }])
 

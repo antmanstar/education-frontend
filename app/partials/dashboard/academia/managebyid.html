@@ -1,3 +1,38 @@
+<script type="text/javascript">
+
+var socket = io.connect("https://totemic-chimera-237707.appspot.com");
+//var socket = io.connect("http://104.196.9.222:5555");
+//var socket = io.connect("http://localhost:8888");
+var siofu = new SocketIOFileUpload(socket);
+
+//let filesCount = 0;
+
+//let progressCloud = 0;
+var progressPercent = 0;
+
+document.getElementById("upload_btn").addEventListener("click", siofu.prompt, false);
+
+socket.on("files", function(a){
+  console.log("files: ")
+  console.log(a)
+  filesCount = a;
+});
+
+// Do something when a file is uploaded:
+siofu.addEventListener("complete", function(event){
+    console.log(event.success);
+    console.log(event.file);
+    console.log(event)
+});
+
+socket.on("imagepath", function(a) {
+  $("#file").attr("value", a);
+  $("#university-background-image").attr("style", "background-image: url('" + a + "')");
+  console.log(a)
+})
+
+</script>
+
 <div ng-include="'partials/headerhome.html'"></div>
 
 <style>
@@ -88,6 +123,31 @@
           <div class="alert bg-primary-green" ng-show="success">{{'UPDATE_SUCCESS' | translate}}</div>
 
           <div class="form">
+            <style>
+              #university-background-image {
+                height: 300px;
+                border-radius: 5px;
+                background-size: cover;
+                background-position: 50% 50%;
+              }
+            </style>
+
+            <label>{{"UNIVERSITY_PICTURE" | translate}}</label>
+            <input type="hidden" ng-model="backgroundImage" id="file">
+            <div id="university-background-image" style="background-image: url('{{backgroundImage}}')"></div>
+
+            <div class="row">
+
+              <div class="col-xs-12 col-sm-6" style="margin-top: 15px;">
+                <button id="upload_btn" class="btn bg-base">{{"SELECT_PICTURE" | translate}}</button>
+              </div>
+
+              <div class="col-xs-12 col-sm-6" style="margin-top: 15px;">
+                <button id="remove_btn" class="btn btn-red" ng-click="removeBtn()">{{"REMOVE_PICTURE" | translate}}</button>
+              </div>
+
+            </div>
+            <!-- end row -->
 
             <div class="form-group">
               <label>{{'YOUR_UNIVERSITY_NAME' | translate}}</label>

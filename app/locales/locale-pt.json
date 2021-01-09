@@ -399,7 +399,7 @@
     "PLEASE_ENTER_COURSE_DESCRIPTION": "Por favor, digite a descrição do curso",
     "PLEASE_SELECT_COURSE_KNOWLEDGE": "Por favor, selecione o conhecimento do curso.",
     "PLEASE_SELECT_COURSE_PAYMENT": "Por favor, selecione o pagamento do curso.",
-    "PLEASE_ENTER_COURSE_PRICE": "Favor inserir o preço do curso / Números negativos não aceitos.",
+    "PLEASE_ENTER_COURSE_PRICE": "Favor inserir um preço válido / Números negativos não aceitos",
     "CANCEL": "Cancelar",
     "CANCEL_UPPERCASE": "CANCELAR",
     "DELETE": "Excluir",
