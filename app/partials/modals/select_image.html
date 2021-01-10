@@ -1,26 +1,115 @@
 <div class="container-fluid modal-accounts">
     <style>
-
+        .cropArea {
+            background: #E4E4E4;
+            overflow: hidden;
+            width: 330px;
+            height: 250px;
+        }
+        
+        .header {
+            border-bottom: 1px solid #e5e5e5;
+        }
+        
+        .body {
+            display: flex
+        }
+        
+        #fileInput {
+            opacity: 0;
+            position: absolute;
+            z-index: -1;
+        }
+        
+        .btn {
+            width: auto
+        }
     </style>
+
+    <script type="text/javascript">
+        var socket = io.connect("https://totemic-chimera-237707.appspot.com");
+
+        var siofu = new SocketIOFileUpload(socket);
+        var filesCount = 0;
+        var progressCloud = 0;
+        var progressPercent = 0;
+
+        $("#ok_btn").click(evt => {
+            if (document.getElementById("fileInput").value != "") {
+                const img = document.getElementById('croppedImg')
+
+                fetch(img.src)
+                    .then(res => res.blob())
+                    .then(blob => {
+                        const file = new File([blob], 'dot.png', blob)
+                        siofu.submitFiles([file])
+                    })
+            }
+        })
+
+        // Do something on upload progress:
+        siofu.addEventListener("progress", function(event) {
+            var percent = event.bytesLoaded / event.file.size * 100;
+            console.log("File is", percent.toFixed(2), "percent loaded");
+            $("#file_drop").html("Upload: " + percent.toFixed(2) + "%");
+
+            $("#gif").show();
+            if (percent.toFixed(2) == 100) {
+                $("#file_drop").html("<b>Iniciando o processamento da imagem</b>");
+            }
+        });
+
+        socket.on("progressProgressing", function(a) {
+            let progressPercent = a;
+            $("#file_drop").html("<b>Processando o vídeo:</b> " + progressPercent.toFixed(2) + "%");
+        });
+
+        socket.on("status", function(a) {
+            if (a == 1) {}
+            if (a == 2) {
+                $("#file_drop").html("<b>Upload completo!</b>");
+            }
+        });
+
+        socket.on("files", function(a) {
+            filesCount = a;
+        });
+
+        // Do something when a file is uploaded:
+        siofu.addEventListener("complete", function(event) {
+            console.log("Upload Finished")
+            $("#gif").hide();
+        });
+
+        socket.on("imagepath", function(a) {
+            $("#file").attr("value", a);
+            $(".profile-pic").attr("src", a);
+        })
+    </script>
 
     <div class="row">
         <div class="col-xs-12">
-            <div class="modal-header">
+            <div class="header">
                 <h3 class="modal-title">Select An Image</h3>
             </div>
-            <div class="modal-body">
-                <div>Select an image file: <input type="file" id="fileInput" /></div>
-                <div class="cropArea">
-                    <img-crop image="myImage" area-type="rectangle" area-init-size="{ w:cropper.cropWidth,h:cropper.cropHeight}" cropject="cropper" result-image="myCroppedImage"></img-crop>
+            <div class="body">
+                <div>
+                    <div>
+                        <label class="btn bg-base upload_btn" for="fileInput">Select a photo</label>
+                        <input type="file" id="fileInput" />
+                    </div>
+                    <div class="cropArea">
+                        <img-crop image="myImage" area-type="rectangle" area-init-size="{ w:cropper.cropWidth,h:cropper.cropHeight}" cropject="cropper" result-image="myCroppedImage"></img-crop>
+                    </div>
                 </div>
-                </td>
-                <td>
+                <div style="margin-top: 15px; margin-left: 15px;">
                     <div>Cropped Image:</div>
-                    <div><img ng-src="{{myCroppedImage}}" /></div>
+                    <div style="margin-top: 15px;"><img ng-src="{{myCroppedImage}}" id="croppedImg" /></div>
+                </div>
 
             </div>
-            <div class="modal-footer">
-                <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+            <div class="modal-footer" style="margin-top: 15px;">
+                <button class="btn btn-primary" id="ok_btn" type="button" ng-click="ok()">OK</button>
                 <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
             </div>
         </div>

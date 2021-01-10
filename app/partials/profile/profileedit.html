@@ -1,68 +1,5 @@
 <div ng-include="'partials/headerhome.html'"></div>
 
-<script type="text/javascript">
-    var socket = io.connect("https://totemic-chimera-237707.appspot.com");
-
-    var siofu = new SocketIOFileUpload(socket);
-    var filesCount = 0;
-    var progressCloud = 0;
-    var progressPercent = 0;
-
-    $("#upload_btn").click(() => {
-        siofu = new SocketIOFileUpload(socket);
-    });
-    document.getElementById("upload_btn").addEventListener("click", siofu.prompt, false);
-
-    // Do something on upload progress:
-    siofu.addEventListener("progress", function(event) {
-        var percent = event.bytesLoaded / event.file.size * 100;
-        console.log("File is", percent.toFixed(2), "percent loaded");
-        $("#file_drop").html("Upload: " + percent.toFixed(2) + "%");
-
-        $("#gif").show();
-        if (percent.toFixed(2) == 100) {
-            $("#file_drop").html("<b>Iniciando o processamento da imagem</b>");
-        }
-    });
-
-    socket.on("progressProgressing", function(a) {
-        let progressPercent = a;
-        $("#file_drop").html("<b>Processando o vídeo:</b> " + progressPercent.toFixed(2) + "%");
-    });
-
-    socket.on("status", function(a) {
-        if (a == 1) {}
-        if (a == 2) {
-            $("#file_drop").html("<b>Upload completo!</b>");
-        }
-    });
-
-    socket.on("files", function(a) {
-        filesCount = a;
-    });
-
-    // Do something when a file is uploaded:
-    siofu.addEventListener("complete", function(event) {
-        console.log("Upload Finished")
-        $("#gif").hide();
-    });
-
-    // Avatar image validation
-    siofu.addEventListener("choose", event => {
-        var fileExtension = ['jpeg', 'jpg', 'png', 'gif', 'bmp'];
-
-        if ($.inArray(event.files[0].name.split('.').pop().toLowerCase(), fileExtension) == -1) {
-            alert("Please upload right image file");
-            return false;
-        }
-    })
-
-    socket.on("imagepath", function(a) {
-        $("#file").attr("value", a);
-        $(".profile-pic").attr("src", a);
-    })
-</script>
-
 <style>
     .profile-pic {
         width: 210px;
@@ -202,9 +139,7 @@
             <img class="profile-pic" ng-if="student.imageUrl == undefined" style="background-image: url('http://virtual-strategy.com/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png')"></img>
             <img id="gif" src="http://www.nasa.gov/multimedia/videogallery/ajax-loader.gif" class="loading-gif" width="20" height="20" /></img>
             <input type="hidden" id="file" ng-model="file">
-            <button class="btn bg-base upload_btn" id="upload_btn">{{ imageButton | translate}}</button>
-            <!--button ng-if="student.imageUrl == undefined" class="btn bg-base upload_btn" id="upload_btn">{{'SELECT_PHOTO' | translate}}</button>
-            <button ng-if="student.imageUrl != undefined" class="btn bg-base upload_btn" id="upload_btn">{{'UPDATE_CHANGE_PHOTO' | translate}}</button-->
+            <button class="btn bg-base upload_btn" ng-click="browser()">{{ imageButton | translate}}</button>
         </div>
 
         <div class="col-xs-12 col-sm-7 col-md-7 col-lg-8 ">
