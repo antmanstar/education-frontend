@@ -2606,21 +2606,21 @@ angular.module('netbase')
         if ($scope.free == false) {
             // validate price input
             if (!pricePattern.test($scope.preco)) {
-              $scope.hasError = true;
-              $scope.createcourseerrmessage = "PLEASE_ENTER_COURSE_PRICE"
-              return
+                $scope.hasError = true;
+                $scope.createcourseerrmessage = "PLEASE_ENTER_COURSE_PRICE"
+                return
             } else {
-              console.log("price is valid")
-              $scope.preco = $scope.preco.replace(/,/g, '.')
+                console.log("price is valid")
+                $scope.preco = $scope.preco.replace(/,/g, '.')
 
-              if ($scope.preco > 0) {
-                  formdata.price = $scope.preco;
-              } else {
-                console.log("error: ", typeof($scope.preco))
-                  $scope.hasError = true;
-                  $scope.createcourseerrmessage = "PLEASE_ENTER_COURSE_PRICE"
-                  return
-              }
+                if ($scope.preco > 0) {
+                    formdata.price = $scope.preco;
+                } else {
+                    console.log("error: ", typeof($scope.preco))
+                    $scope.hasError = true;
+                    $scope.createcourseerrmessage = "PLEASE_ENTER_COURSE_PRICE"
+                    return
+                }
             }
         }
 
@@ -3520,21 +3520,21 @@ angular.module('netbase')
         if ($scope.free == false) {
             // validate price input
             if (!pricePattern.test($scope.preco)) {
-              $scope.hasError = true;
-              $scope.createcourseerrmessage = "PLEASE_ENTER_COURSE_PRICE"
-              return
+                $scope.hasError = true;
+                $scope.createcourseerrmessage = "PLEASE_ENTER_COURSE_PRICE"
+                return
             } else {
-              console.log("price is valid")
-              $scope.preco = $scope.preco.replace(/,/g, '.')
+                console.log("price is valid")
+                $scope.preco = $scope.preco.replace(/,/g, '.')
 
-              if ($scope.preco > 0) {
-                  formdata.price = $scope.preco;
-              } else {
-                console.log("error: ", typeof($scope.preco))
-                  $scope.hasError = true;
-                  $scope.createcourseerrmessage = "PLEASE_ENTER_COURSE_PRICE"
-                  return
-              }
+                if ($scope.preco > 0) {
+                    formdata.price = $scope.preco;
+                } else {
+                    console.log("error: ", typeof($scope.preco))
+                    $scope.hasError = true;
+                    $scope.createcourseerrmessage = "PLEASE_ENTER_COURSE_PRICE"
+                    return
+                }
             }
         }
 
@@ -5545,7 +5545,7 @@ angular.module('netbase')
     }
 }])
 
-.controller('ProfileCtrl', ['$rootScope', '$scope', '$location', '$localStorage', 'jwtHelper', 'Students', 'University', 'Forum', function($rootScope, $scope, $location, $localStorage, jwtHelper, Students, University, Forum) {
+.controller('ProfileCtrl', ['$rootScope', '$scope', 'ngDialog', '$location', '$localStorage', 'jwtHelper', 'Students', 'University', 'Forum', function($rootScope, $scope, ngDialog, $location, $localStorage, jwtHelper, Students, University, Forum) {
     /* premium */
     let studentId;
 
@@ -5591,30 +5591,52 @@ angular.module('netbase')
     }
 }])
 
-.controller('ImageEditCtrl', ['$rootScope', '$scope', '$location', '$localStorage', '$timeout', 'Upload', 'jwtHelper', 'Students', 'University', 'Forum', function($rootScope, $scope, $location, $localStorage, $timeout, Upload, jwtHelper, Students, University, Forum) {
-    $scope.myImage = '';
-    $scope.myCroppedImage = '';
 
-    var handleFileSelect = function(evt) {
-        var file = evt.currentTarget.files[0];
-        var reader = new FileReader();
-        reader.onload = function(evt) {
-            $scope.$apply(function($scope) {
-                $scope.myImage = evt.target.result;
-            });
-        };
-        reader.readAsDataURL(file);
-    };
-    angular.element(document.querySelector('#fileInput')).on('change', handleFileSelect);
-}])
-
-.controller('ProfileEditCtrl', ['$rootScope', '$scope', '$location', '$localStorage', '$timeout', 'Upload', 'jwtHelper', 'Students', 'University', 'Forum', function($rootScope, $scope, $location, $localStorage, $timeout, Upload, jwtHelper, Students, University, Forum) {
+.controller('ProfileEditCtrl', ['$rootScope', '$scope', 'ngDialog', '$location', '$route', '$localStorage', '$timeout', 'Upload', 'jwtHelper', 'Students', 'University', 'Forum', function($rootScope, $scope, ngDialog, $location, $route, $localStorage, $timeout, Upload, jwtHelper, Students, University, Forum) {
     let studentId;
 
     $scope.hasError = false
     $scope.errorMessage = ''
     $scope.success = false
     $scope.successMessage = ''
+
+    $scope.myCroppedImage = '';
+    $scope.myImage = '';
+
+    $scope.rectangleWidth = 100;
+    $scope.rectangleHeight = 100;
+
+    $scope.cropper = {
+        cropWidth: $scope.rectangleWidth,
+        cropHeight: $scope.rectangleHeight
+    };
+
+    var handleFileSelect = function(evt) {
+        var fileExtension = ['jpeg', 'jpg', 'png', 'gif', 'bmp'];
+
+        var img_file = evt.currentTarget.files[0];
+        if ($.inArray(img_file.name.split('.').pop().toLowerCase(), fileExtension) == -1) {
+            alert("Please upload right image file");
+            return false;
+        }
+
+        var reader = new FileReader();
+        reader.onload = function(evt) {
+            $scope.$apply(function($scope) {
+                $scope.myImage = evt.target.result;
+            });
+        };
+        reader.readAsDataURL(img_file);
+    };
+    $timeout(function() { angular.element(document.querySelector('#fileInput')).on('change', handleFileSelect); }, 1000, false);
+
+    $scope.ok = function() {
+        ngDialog.close();
+    };
+
+    $scope.cancel = function() {
+        ngDialog.close();
+    };
 
     if ($localStorage.token != undefined && $localStorage.token != null) {
         studentId = jwtHelper.decodeToken($localStorage.token)._id;
@@ -5653,9 +5675,13 @@ angular.module('netbase')
                     console.log("error while loading university")
                 }
             });
-
         }
     });
+
+    // brower cropping dialog
+    $scope.browser = () => {
+        ngDialog.open({ template: 'partials/modals/select_image.html', controller: 'ProfileEditCtrl', className: 'ngdialog-theme-default ngdialog-theme-smp' });
+    }
 
     // save changed info to the db
     $scope.save = function() {
@@ -5693,6 +5719,9 @@ angular.module('netbase')
                 $scope.success = true
                 $scope.successMessage = 'PROFILE_SUCCESSFULLY_UPDATED'
                 $scope.imageButton = "UPDATE_CHANGE_PHOTO"
+                $timeout(function() {
+                    $route.reload();
+                }, 2000, false);
             }
         });
     }
