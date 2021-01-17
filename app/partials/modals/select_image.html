@@ -3,8 +3,8 @@
         .cropArea {
             background: #E4E4E4;
             overflow: hidden;
-            width: 330px;
-            height: 250px;
+            width: 300px;
+            height: 400px;
         }
         
         .header {
@@ -90,19 +90,19 @@
     <div class="row">
         <div class="col-xs-12">
             <div class="header">
-                <h3 class="modal-title">Select An Image</h3>
+                <h3 class="modal-title" style="font-size: 20px;">Upload Profile Picture</h3>
             </div>
             <div class="body">
                 <div>
                     <div>
-                        <label class="btn bg-base upload_btn" for="fileInput">Select a photo</label>
+                        <label class="btn bg-base upload_btn" for="fileInput">Select a Photo</label>
                         <input type="file" id="fileInput" />
                     </div>
                     <div class="cropArea">
                         <img-crop image="myImage" area-type="rectangle" area-init-size="{ w:cropper.cropWidth,h:cropper.cropHeight}" cropject="cropper" result-image="myCroppedImage"></img-crop>
                     </div>
                 </div>
-                <div style="margin-top: 15px; margin-left: 15px;">
+                <div style="margin-top: 15px; margin-left: 15px; display: none;">
                     <div>Cropped Image:</div>
                     <div style="margin-top: 15px;"><img ng-src="{{myCroppedImage}}" id="croppedImg" /></div>
                 </div>

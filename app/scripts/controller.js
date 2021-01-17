@@ -2742,8 +2742,6 @@ angular.module('netbase')
         file_picker_types: 'file image media',
         tinydrive_token_provider: function(success, failure) {
             Courses.fileUploadUrl().success(function(msg) {
-
-
                     success({ token: msg.token });
                 })
                 // failure('Could not create a jwt token')
@@ -3625,7 +3623,6 @@ angular.module('netbase')
 .controller('AccountCtrl', ['$rootScope', '$scope', '$location', '$route', '$routeParams', '$localStorage', 'amMoment', 'Students', 'Ewallet', 'ngDialog', '$timeout', 'jwtHelper', function($rootScope, $scope, $location, $route, $routeParams, $localStorage, amMoment, Students, Ewallet, ngDialog, $timeout, jwtHelper) {
     let university;
     $scope.loading = false
-    $scope.verified = false;
     let language = $localStorage.user_language;
 
     if ($scope.ngDialogData != undefined) {
@@ -5680,7 +5677,12 @@ angular.module('netbase')
 
     // brower cropping dialog
     $scope.browser = () => {
-        ngDialog.open({ template: 'partials/modals/select_image.html', controller: 'ProfileEditCtrl', className: 'ngdialog-theme-default ngdialog-theme-smp' });
+        ngDialog.open({
+            template: 'partials/modals/select_image.html',
+            controller: 'ProfileEditCtrl',
+            className: 'ngdialog-theme-default ngdialog-theme-smp',
+            width: 360,
+        });
     }
 
     // save changed info to the db
@@ -5769,7 +5771,7 @@ angular.module('netbase')
         $scope.courses = res.data;
     });
 
-    /* */
+    /* Knowledge */
     Knowledge.getAllPaginated().success(function(res) {
         let success = res.success;
         let data = res.data;
