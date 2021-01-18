@@ -17,8 +17,8 @@
     <button class="btn btn-coral" style="font-size: 1em;" ng-click="estudar()"><b>{{'STUDY' | translate}}</b></button>
 
     <div class="course-dash-menu">
-      <div class="course-dash-menu-option" ng-class="{'active': originalPath.indexOf('/timeline') > 0 }"><a style="color: unset;" href='/cursos/id/{{courseId}}/timeline'>{{'TIMELINE' | translate}} <i class="fas fa-stream" style="padding-left: 5px;"></i></a></div>
-      <div class="course-dash-menu-option" ng-class="{'active': originalPath.indexOf('/modulos') > 0 }"><a style="color: unset;" href='/cursos/id/{{courseId}}/modulos'>{{'MODULES' | translate}} <i class="fas fa-square" style="padding-left: 5px;"></i></a></div>
+      <div class="course-dash-menu-option" ng-class="{'active': originalPath.indexOf('/timeline') > 0 }"><a style="color: unset;" href="/{{'CURSOS' | translate}}/id/{{courseId}}/timeline">{{'TIMELINE' | translate}} <i class="fas fa-stream" style="padding-left: 5px;"></i></a></div>
+      <div class="course-dash-menu-option" ng-class="{'active': originalPath.indexOf('/modulos') > 0 }"><a style="color: unset;" href="/{{'CURSOS' | translate}}/id/{{courseId}}/modulos">{{'MODULES' | translate}} <i class="fas fa-square" style="padding-left: 5px;"></i></a></div>
       <!--<div class="course-dash-menu-option" ng-class="{'active': originalPath.indexOf('/chat') > 0 }"><a style="color: unset;" href='/cursos/id/{{courseId}}/chat'>Chat <i style="padding-left: 5px;" class="fas fa-comment"></i></a></div>
       <div class="course-dash-menu-option" ng-class="{'active': originalPath.indexOf('/games') > 0 }"><a style="color: unset;" href='/cursos/id/{{courseId}}/games'>Games <i style="padding-left: 5px;" class="fas fa-gamepad"></i></a></div>
       <div class="course-dash-menu-option" ng-class="{'active': originalPath.indexOf('/driver') > 0 }"><a style="color: unset;" href='/cursos/id/{{courseId}}/driver'>Driver <i class="fas fa-folder" style="padding-left: 5px;"></i></a></div>-->

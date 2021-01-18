@@ -46,8 +46,8 @@
         <!-- <div class="option"><a href="/home/noticias"><img src="/img/icon/office/opinion.png" height="20px" width="35px" style="padding-right: 13px;" />Opinião</a></div>-->
 
         <div class="header" style="padding-top: 30px;">UNIVERSIDADES</div>
-        <div ng-if="user.universitiesSubscribed.length == 0" class="option"><a href="/home/universidades"><img src="https://png.icons8.com/office/100/000000/plus-math.png" height="20px" width="35px" style="padding-right: 13px;" />Increver</a></div>
-        <div ng-if="user == undefined" class="option"><a href="/home/universidades"><img src="https://png.icons8.com/office/100/000000/plus-math.png" height="20px" width="35px" style="padding-right: 13px;" />Increver</a></div>
+        <div ng-if="user.universitiesSubscribed.length == 0" class="option"><a href="/home/{{'UNIVERSIDADES' | translate}}"><img src="https://png.icons8.com/office/100/000000/plus-math.png" height="20px" width="35px" style="padding-right: 13px;" />Increver</a></div>
+        <div ng-if="user == undefined" class="option"><a href="/home/{{'UNIVERSIDADES' | translate}}"><img src="https://png.icons8.com/office/100/000000/plus-math.png" height="20px" width="35px" style="padding-right: 13px;" />Increver</a></div>
         <timelinemenuuniversity uid="{{u.universityId}}" ng-if="u.unsubscribed == false" ng-repeat="u in user.universitiesSubscribed"></timelinemenuuniversity>
 
         <!--

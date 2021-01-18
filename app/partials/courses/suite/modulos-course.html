@@ -277,7 +277,7 @@ span i {
 
               <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <div style="height: 10px;"></div>
-                <a href="/cursos/a/{{universityid}}/suite/owner"><i class="fas fa-arrow-left"></i> {{'BACK_TO_COURSE' | translate}}</a>
+                <a href="/{{'CURSOS' | translate}}/a/{{universityid}}/suite/owner"><i class="fas fa-arrow-left"></i> {{'BACK_TO_COURSE' | translate}}</a>
                 <div class="title" style="font-size: 2.0em; font-weight: bolder;">{{course.title}}</div>
 
       <!-- NAVIGATION -->
@@ -318,7 +318,7 @@ span i {
                           <div class="col-xs-12 col-sm-6" ng-repeat="module in course.module" ng-if="module.moduleId.active == true">
 
                   <div class="course-card" style="cursor: pointer;">
-                    <a style="color: unset;" href="/cursos/a/{{universityid}}/suite/modulos/id/{{module.moduleId._id}}">
+                    <a style="color: unset;" href="/{{'CURSOS' | translate}}/a/{{universityid}}/suite/modulos/id/{{module.moduleId._id}}">
 
                       <div class="title">
 

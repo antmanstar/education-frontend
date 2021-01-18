@@ -325,7 +325,7 @@
     "UNIVERSITY_NAME": "University Name",
     "WRITE_UNI_NAME_HERE": "Write the name of your University here",
     "WRITE_UNI_DESCRIPTION": "Write a description to your University",
-    "LANGUAGE": "Language",
+    "LANGUAGE_SELECT": "Language",
     "PORTUGUESE": "Portuguese",
     "ENGLISH": "English",
     "UNIVERSITY_URL": "https://colle.ge/a/your_custom_url",
@@ -1021,5 +1021,14 @@
     "You have no cameras and microphones": "You have no cameras and microphones",
 
     "Judo": "Judo",
-    "Meditation": "Meditation"
+    "Meditation": "Meditation",
+
+    "SOBRE": "about",
+    "CURSOS": "courses",
+    "ENSINAR": "teach",
+    "PRECO": "price",
+    "PERFIL": "profile",
+    "EDITAR": "edit",
+    "INICIAR": "start",
+    "UNIVERSIDADES": "universities"
 }

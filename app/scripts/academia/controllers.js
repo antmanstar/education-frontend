@@ -3150,7 +3150,7 @@ angular.module('netbase')
                 Forum.getCategoriesByUniversityId(scope.university._id).success(function(resCategory) {
                     if (resCategory.success) {
                         scope.categories = resCategory.data;
-                        if (scope.categories.length > 0) scope.showChatbox = true
+                        if (scope.categories.length > 0 && $localStorage.token) scope.showChatbox = true
 
                         if (resCategory.data.length != 0) {
                             scope.curCategory = scope.categories[0];
@@ -3160,6 +3160,7 @@ angular.module('netbase')
                                     scope.curCategory = scope.categories[i];
                                 }
                             }
+
 
                             tinymce.init({
                                 selector: 'textarea',

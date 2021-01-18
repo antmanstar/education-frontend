@@ -66,7 +66,7 @@
                   <!--<span><i class="fas fa-user-circle" style="padding-right: 2px;"></i></span> {{user.name}} <span><i class="fas fa-angle-down" style="padding-left: 3px;"></i></span>-->
                   <div class="profile-expanded">
                     <!--<div><a href="/dashboard">Dashboard</a></div>-->
-                    <div><a href="/perfil">{{'HEADER_PROFILE_1' | translate}}</a></div>
+                    <div><a href="/{{'PERFIL' | translate}}">{{'HEADER_PROFILE_1' | translate}}</a></div>
                     <!--
                     <div ng-click="changeLanguage('en')" ng-class="{'selected-language': selectedLanguage === 'en'}">{{'ENGLISH' | translate}} (en-us)</div>
                     <div ng-click="changeLanguage('pt')" ng-class="{'selected-language': selectedLanguage === 'pt'}">{{'PORTUGUESE' | translate}} (pt-br)</div>
@@ -115,7 +115,7 @@
         <div class="menu">
           <div class="option unselectable" ng-if="logged" ng-class="{'active': originalPath == '/home/timeline' || originalPath == '/home/timeline/'}"><a href="/home/timeline"><img src="/img/icon/timeline.png" height="33px" width="33px" style="margin-right: 15px;" />{{'TIMELINE' | translate}}</a></div>
           <div class="option unselectable" ng-class="{'active': originalPath == '/home' || originalPath == '/home/'}"><a href="/home"><img src="/img/icon/office/home.png" height="33px" width="33px" style="margin-right: 15px;" />{{'HEADER_HOME' | translate}}</a></div>
-          <div class="option unselectable" ng-class="{'active': originalPath == '/home/universidades' || originalPath == '/home/universidades/'}"><a href="/home/universidades"><img src="/img/icon/office/university.png" height="33px" width="33px" style="margin-right: 15px;" />{{'UNIVERSITIES' | translate}}</a></div>
+          <div class="option unselectable" ng-class="{'active': originalPath == '/home/{{'UNIVERSIDADES' | translate}}' || originalPath == '/home/{{'UNIVERSIDADES' | translate}}/'}"><a href="/home/{{'UNIVERSIDADES' | translate}}"><img src="/img/icon/office/university.png" height="33px" width="33px" style="margin-right: 15px;" />{{'UNIVERSITIES' | translate}}</a></div>
           <!--<div class="option unselectable" ng-class="{'active': originalPath == '/home/noticias' || originalPath == '/home/noticias/'}"><a href="/home/noticias"><img src="/img/icon/office/opinion.png" height="23px" width="33px" style="padding-right: 10px;" />Opinião</a></div>-->
           <!--<div class="option unselectable" ng-class="{'active': originalPath.indexOf('/home/conhecimento') != -1 }"><a href="/home/conhecimento">Conhecimento</a></div>-->
           <!--div class="option unselectable" ng-class="{'active': originalPath == '/cursos' || originalPath == '/cursos/'}"><a href="/home">Cursos</a></div>-->
@@ -138,7 +138,7 @@
         <div class="profile" ng-show="logged">
           <div class="header"><span><i class="fas fa-user-circle"></i></span> {{user.name}}</div>
           <div class="menu">
-            <div class="option unselectable" ng-show="logged"><a href="/perfil">{{'HEADER_PROFILE_1' | translate}}</a></div>
+            <div class="option unselectable" ng-show="logged"><a href="/{{'PERFIL' | translate}}">{{'HEADER_PROFILE_1' | translate}}</a></div>
             <div class="option" ng-click="logout()">{{'HEADER_PROFILE_2' | translate}}</div>
           </div>
           <!-- end menu -->
