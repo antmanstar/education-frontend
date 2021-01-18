@@ -376,11 +376,11 @@ angular.module('netbase')
 
     $scope.transformHrefsInAnswer = function(value) {
         var retval = value;
-        if(retval != null) {
+        if (retval != null) {
             //var urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
             //var urlRegex = /^([^:]+):\/\/([-\w._]+)(\/[-\w._]\?(.+)?)?$/ig
-            var urlRegex = /(?:(?:https?|ftp):\/\/|\b(?:[a-z\d]+\.))(?:(?:[^\s()<>]+|\((?:[^\s()<>]+|(?:\([^\s()<>]+\)))?\))+(?:\((?:[^\s()<>]+|(?:\(?:[^\s()<>]+\)))?\)|[^\s`!()\[\]{};:'".,<>???�ȡɡơ�]))?/
-            retval = value.replace(urlRegex, function (url) {
+            var urlRegex = /(?:(?:https?|ftp):\/\/|\b(?:[a-z\d]+\.))(?:(?:[^\s()<>]+|\((?:[^\s()<>]+|(?:\([^\s()<>]+\)))?\))+(?:\((?:[^\s()<>]+|(?:\(?:[^\s()<>]+\)))?\)|[^\s`!()\[\]{};:'".,<>???�ȡɡơ�]))?/
+            retval = value.replace(urlRegex, function(url) {
                 return '<a href="' + url + '" target="_blank">' + url + '</a>';
             });
         }
@@ -1688,7 +1688,8 @@ angular.module('netbase')
         let roomSID = $route.current.params.roomSID;
         let accountSid = $route.current.params.accountSid;
         let roomName = $route.current.params.roomName;
-        let text = domain + "/a/university/" + universityUrl + "/roomid/" + roomSID + "/accountid/" + accountSid + "/roomname/" + roomName + "/";
+        let chatID = $route.current.params.chatID;
+        let text = domain + "/a/university/" + universityUrl + "/roomid/" + roomSID + "/accountid/" + accountSid + "/roomname/" + roomName + "/chid/" + chatID + "/";
 
         Clipboard.copy(text); // Clipboard func is defined app/js/clipboard_func.js file
         if ($rootScope.alertDialog == null || $rootScope.alertDialog == undefined) $rootScope.alertDialog = [];
@@ -1756,7 +1757,7 @@ angular.module('netbase')
     $scope.confirmDelete = false;
     $scope.classroomViewMode = false;
 
-    $scope.isAdmin = $localStorage.studentIsAdmin
+    $scope.isAdmin = $localStorage.studentIsAdmin;
     $scope.privilege = 0;
 
     //var baseUrl = "http://localhost:9001"; //Back-end server base url
@@ -1768,7 +1769,6 @@ angular.module('netbase')
     University.getUniversity(universityUrl).then(function(res) {
         $scope.university = res.data.data;
         $scope.getAllClassrooms();
-
 
         let studentId;
         let i;
@@ -1829,7 +1829,6 @@ angular.module('netbase')
     };
 
     $scope.confirmCreateClassroom = function() {
-
         // validate create classroom form
         // if uniquesName is empty then notifiy user
         if ($scope.addingClassroom.uniqueName == '' || $scope.addingClassroom.uniqueName == undefined) {
@@ -1839,13 +1838,11 @@ angular.module('netbase')
         }
 
         let studentId;
-
         let token = $localStorage.token;
         let title = $scope.addingClassroom.uniqueName ? $scope.addingClassroom.uniqueName : '';
         let url = '/classroom/university/';
 
         Classroom.createNewClassroom(baseUrl + url, title, $scope.privilege, $scope.university._id).then((response) => {
-
             if (response.data.success) {
                 let url = '/classroom/university/' + $scope.university._id + '/all'
                 Classroom.getAllClassroomsByUniversity(baseUrl + url).then((data) => {
@@ -1863,6 +1860,13 @@ angular.module('netbase')
                             friendlyName: response.data.data.roomData.uniqueName
                         }).then((channel) => {
                             $rootScope.currentChatChannel = channel;
+                            var obj = $scope.wholeClassroomList.data.data;
+                            obj.forEach(item => {
+                                Object.keys(item).forEach(key => {
+                                    console.log("key:" + key + "value:" + item[key]);
+                                });
+                            });
+                            console.log("ClassroomList", $scope.wholeClassroomList)
                         });
                     });
                 });
@@ -1881,7 +1885,8 @@ angular.module('netbase')
     }
 
     $scope.copyLink = function(classroom) {
-        let text = domain + "/a/university/" + universityUrl + "/roomid/" + classroom.roomSID + "/accountid/" + classroom.accountSid + "/roomname/" + classroom.uniqueName + "/";
+        console.log("Channel", $rootScope.currentChatChannel)
+        let text = domain + "/a/university/" + universityUrl + "/roomid/" + classroom.roomSID + "/accountid/" + classroom.accountSid + "/roomname/" + classroom.uniqueName + "/chid/" + $rootScope.currentChatChannel + "/";
 
         Clipboard.copy(text);
         if ($rootScope.alertDialog == null || $rootScope.alertDialog == undefined) $rootScope.alertDialog = [];
@@ -1901,7 +1906,8 @@ angular.module('netbase')
             "/accountid/" +
             classroom.accountSid +
             "/roomname/" +
-            classroom.uniqueName + "/"
+            classroom.uniqueName + "/chid/" +
+            $rootScope.currentChatChannel + "/"
         );
     }
 
@@ -2687,10 +2693,10 @@ angular.module('netbase')
     }
 
     if (type == "video") {
-        $scope.title = "Adicionar v?deo do YouTube";
+        $scope.title = "Adicionar video do YouTube";
         $scope.form.iconClass = "fab fa-youtube";
         $scope.form.placeholder = "YouTube Link";
-        $scope.form.button = "Adicionar v?deo";
+        $scope.form.button = "Adicionar video";
 
         $scope.add = function() {
             let iframe = "<iframe src='" + $scope.ytiFrame + "' frameborder='0' allowfullscreen></iframe>"
@@ -3144,7 +3150,7 @@ angular.module('netbase')
                 Forum.getCategoriesByUniversityId(scope.university._id).success(function(resCategory) {
                     if (resCategory.success) {
                         scope.categories = resCategory.data;
-                        if (scope.categories.length > 0) scope.showChatbox = true
+                        if (scope.categories.length > 0 && $localStorage.token) scope.showChatbox = true
 
                         if (resCategory.data.length != 0) {
                             scope.curCategory = scope.categories[0];

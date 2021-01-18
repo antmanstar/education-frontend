@@ -326,7 +326,7 @@
     "UNIVERSITY_NAME": "Nome da Univesidade",
     "WRITE_UNI_NAME_HERE": "Escreva aqui o nome da sua Universidade",
     "WRITE_UNI_DESCRIPTION": "Escreva uma descrição sore a sua Universidade",
-    "LANGUAGE": "Idioma",
+    "LANGUAGE_SELECT": "Idioma",
     "PORTUGUESE": "Português",
     "ENGLISH": "Inglês",
     "UNIVERSITY_URL": "https://universida.de/a/sua_url_personalizada",
@@ -1020,5 +1020,14 @@
     "You have no cameras and microphones": "Você não tem câmeras e microfones",
 
     "Judo": "Judô",
-    "Meditation": "Meditação"
+    "Meditation": "Meditação",
+
+    "SOBRE": "sobre",
+    "CURSOS": "cursos",
+    "ENSINAR": "ensinar",
+    "PRECO": "preco",
+    "PERFIL": "perfil",
+    "EDITAR": "editar",
+    "INICIAR": "iniciar",
+    "UNIVERSIDADES": "universidades"
 }

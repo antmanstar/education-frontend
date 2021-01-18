@@ -72,6 +72,38 @@ angular.module('netbase', [
         }
     };
 
+    let sobre = "";
+    let cursos = "";
+    let ensinar = "";
+    let preco = "";
+    let perfil = "";
+    let editar = "";
+    let iniciar = "";
+    let universidades = "";
+
+    let url = window.location.href;
+    //let url = "https://universida.de/home/explore"
+
+    if (url.indexOf('universida.de') > 0) {
+        sobre = "sobre";
+        cursos = "cursos";
+        ensinar = "ensinar";
+        preco = "preco";
+        perfil = "perfil";
+        editar = "editar";
+        iniciar = "iniciar";
+        universidades = "universidades";
+    } else {
+        sobre = "about";
+        cursos = "courses";
+        ensinar = "teach";
+        preco = "price";
+        perfil = "profile";
+        editar = "edit";
+        iniciar = "start";
+        universidades = "universities";
+    }
+
     $routeProvider.
     when('/onboarding/universities', {
             templateUrl: 'partials/onboarding/universities.html',
@@ -91,6 +123,10 @@ angular.module('netbase', [
             controller: 'PlaylistCreateCtrl',
         })
         .when('/sobre', {
+            templateUrl: 'partials/sobre/index.html',
+            controller: 'SobreIndexCtrl',
+        })
+        .when('/about', {
             templateUrl: 'partials/sobre/index.html',
             controller: 'SobreIndexCtrl',
         })
@@ -186,6 +222,94 @@ angular.module('netbase', [
             templateUrl: 'partials/courses/suite/createQuiz.html',
             controller: 'CoursesCreateQuizCtrl',
         })
+        .when('/courses/id/:id', {
+            templateUrl: 'partials/courses/byid.html',
+            controller: 'CoursesByIdCtrl',
+        })
+        .when('/courses/suite/updateQuiz/:id', {
+            templateUrl: 'partials/courses/suite/updateQuiz.html',
+            controller: 'CoursesUpdateQuizCtrl',
+        })
+        .when('/courses/id/:id/estudar', {
+            templateUrl: 'partials/courses/estudar.html',
+            controller: 'CoursesEstudarCtrl',
+        })
+        .when('/courses/id/view/document/:id/:videoid/:post_id', {
+            templateUrl: 'partials/courses/estudar/document.html',
+            controller: 'CoursesEstudarTypeDocumentCtrl',
+        })
+        .when('/courses/id/test/quiz/:id/:videoid/:post_id', {
+            templateUrl: 'partials/courses/estudar/quiz.html',
+            controller: 'CoursesEstudarTypeQuizCtrl',
+        })
+        .when('/courses/id/:id/timeline', {
+            templateUrl: 'partials/courses/dashboard/index.html',
+            controller: 'CoursesByIdDashboardCtrl',
+        })
+        .when('/courses/id/:id/modulos', {
+            templateUrl: 'partials/courses/dashboard/modulo.html',
+            controller: 'CoursesByIdDashboardModuloCtrl',
+        })
+        .when('/courses/suite/criar', {
+            templateUrl: 'partials/courses/suite/criar.html',
+            controller: 'CoursesCriarCtrl',
+        })
+        .when('/courses/suite/', {
+            templateUrl: 'partials/courses/suite/index.html',
+            controller: 'CoursesSuiteIndexCtrl',
+        })
+        .when('/courses/a/:universityid/suite/modulos', {
+            templateUrl: 'partials/courses/suite/modulos.html',
+            controller: 'CoursesModulosCtrl',
+        })
+        .when('/courses/a/:universityid/suite/owner/view/:id', {
+            templateUrl: 'partials/courses/suite/modulos-course.html',
+            controller: 'CoursesModulosSingleCtrl',
+        })
+        .when('/courses/a/:universityid/suite/createPage/:id', {
+            templateUrl: 'partials/courses/suite/createPage.html',
+            controller: 'CoursesCreatePageCtrl',
+        })
+        .when('/courses/suite/editPage/:id', {
+            templateUrl: 'partials/courses/suite/createPage.html',
+            controller: 'CoursesEditPageCtrl',
+        })
+        .when('/courses/suite/createQuiz/:id', {
+            templateUrl: 'partials/courses/suite/createQuiz.html',
+            controller: 'CoursesCreateQuizCtrl',
+        })
+        .when('/courses/suite/createForumpost/:id', {
+            templateUrl: 'partials/courses/modals/video-forum-content.html',
+            controller: 'CoursesVideoForumContentCtrl',
+        })
+        .when('/courses/suite/editForumpost/:id', {
+            templateUrl: 'partials/courses/modals/video-forum-content.html',
+            controller: 'editVideoForumContentCtrl',
+        })
+        .when('/courses/a/:universityid/suite/content', {
+            templateUrl: 'partials/courses/suite/content.html',
+            controller: 'CoursesContentModulosCtrl',
+        })
+        .when('/courses/a/:universityid/suite/modulos/id/:id', {
+            templateUrl: 'partials/courses/suite/modulosbyid.html',
+            controller: 'CoursesModulosByIdCtrl',
+        })
+        .when('/courses/a/:universityid/suite/owner', {
+            templateUrl: 'partials/courses/suite/owner.html',
+            controller: 'CoursesOwnerCtrl',
+        })
+        .when('/courses/suite/createContent', {
+            templateUrl: 'partials/courses/suite/createPage.html',
+            controller: 'CoursesCreateContentCtrl',
+        })
+        .when('/courses/suite/createPage', {
+            templateUrl: 'partials/courses/suite/createPage.html',
+            controller: 'CoursesCreatePageCtrl',
+        })
+        .when('/courses/suite/createQuiz', {
+            templateUrl: 'partials/courses/suite/createQuiz.html',
+            controller: 'CoursesCreateQuizCtrl',
+        })
         .when('/v/id/:videoId', {
             templateUrl: 'partials/video/videowatch.html',
             controller: 'VideoWatchCtrl',
@@ -231,6 +355,10 @@ angular.module('netbase', [
             controller: 'AcademiaForumCtrl',
         })
         .when('/a/:academiaName/cursos', {
+            templateUrl: 'partials/academia/courses/academiacourses.html',
+            controller: 'AcademiaCoursesCtrl',
+        })
+        .when('/a/:academiaName/courses', {
             templateUrl: 'partials/academia/courses/academiacourses.html',
             controller: 'AcademiaCoursesCtrl',
         })
@@ -304,11 +432,27 @@ angular.module('netbase', [
             templateUrl: 'partials/teach/pricing.html',
             controller: 'TeachSalesPricingCtrl',
         })
+        .when('/teach', {
+            templateUrl: 'partials/teach/home.html',
+            controller: 'TeachSalesCtrl',
+        })
+        .when('/teach/price', {
+            templateUrl: 'partials/teach/pricing.html',
+            controller: 'TeachSalesPricingCtrl',
+        })
         .when('/perfil', {
             templateUrl: 'partials/profile/profile.html',
             controller: 'ProfileCtrl',
         })
         .when('/perfil/editar', {
+            templateUrl: 'partials/profile/profileedit.html',
+            controller: 'ProfileEditCtrl',
+        })
+        .when('/profile', {
+            templateUrl: 'partials/profile/profile.html',
+            controller: 'ProfileCtrl',
+        })
+        .when('/profile/edit', {
             templateUrl: 'partials/profile/profileedit.html',
             controller: 'ProfileEditCtrl',
         })
@@ -462,6 +606,10 @@ angular.module('netbase', [
             templateUrl: 'partials/home/iniciar.html',
             controller: 'IniciarCtrl',
         })
+        .when('/start', {
+            templateUrl: 'partials/home/iniciar.html',
+            controller: 'IniciarCtrl',
+        })
         .when('/home/create', {
             templateUrl: 'partials/home/homecreate.html',
             controller: 'HomeCreateCtrl',
@@ -537,6 +685,15 @@ angular.module('netbase', [
             controller: 'HomeUniversidadesCtrl',
         })
         .when('/home/universidades/user', {
+            templateUrl: 'partials/home/homeuseruniversidades.html',
+            controller: 'HomeUserUniversidadesCtrl',
+            resolve: auth
+        })
+        .when('/home/universities/', {
+            templateUrl: 'partials/home/homeuniversidades.html',
+            controller: 'HomeUniversidadesCtrl',
+        })
+        .when('/home/universities/user', {
             templateUrl: 'partials/home/homeuseruniversidades.html',
             controller: 'HomeUserUniversidadesCtrl',
             resolve: auth

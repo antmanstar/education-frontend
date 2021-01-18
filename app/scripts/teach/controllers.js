@@ -6,7 +6,14 @@ angular.module('netbase')
 
 .controller('TeachSalesCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Payments', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Payments) {
     $scope.testarPlataforma = function() {
-        $location.url("/iniciar")
+
+        let url = window.location.href;
+
+        if (url.indexOf('universida.de') > 0) {
+          $location.url("/iniciar")
+        } else {
+          $location.url("/start")
+        }
     }
     $scope.company_logo = $localStorage.company_logo;
 }]);

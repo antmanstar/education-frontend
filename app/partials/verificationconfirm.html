@@ -8,7 +8,7 @@
         }
     </style>
 
-    <div class="row" ng-if="verified==true">
+    <div class="row" ng-show="verified==true">
         <div class="col-xs-12">
             <div class="wrapper">
                 <img src="/img/register/emailSuccess.svg" style="margin-top: 20px;" height="130px" width="130px" />
@@ -22,7 +22,7 @@
         </div>
     </div>
 
-    <div class="row" ng-if="verified==false">
+    <div class="row" ng-show="verified==false">
         <div class="col-xs-12">
             <div class="wrapper">
                 <img src="/img/register/email.png" style="margin-top: 20px;" height="130px" width="130px" />
