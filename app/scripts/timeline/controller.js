@@ -235,6 +235,17 @@ angular.module('netbase')
                     }
                 });
             };
+
+            scope.textFilter = function(text) {
+              //console.log("textFilter: ", text)
+              if (text) {
+                if (text.indexOf("iframe") != -1) {
+                    return $sce.trustAsHtml(text)
+                } else {
+                    return $filter('limitHtml')(text, 350, '...')
+                }
+              }
+            }
         }
     }
 }])
@@ -330,6 +341,14 @@ angular.module('netbase')
                     scope.post.votesCount = scope.post.votesCount + 1;
                 });
             };
+
+            $scope.textFilter = function(text) {
+                if (text.indexOf("iframe") != -1) {
+                    return $sce.trustAsHtml(text)
+                } else {
+                    return $filter('limitHtml')(text, 350, '...')
+                }
+            }
         }
     }
 }])

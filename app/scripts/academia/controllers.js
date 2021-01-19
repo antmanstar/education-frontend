@@ -2438,6 +2438,7 @@ angular.module('netbase')
     let university;
     $scope.errors = [];
     $scope.inputLengthWarningShow = false;
+    $scope.loading = false
 
     $scope.tinymceOptions = {
         file_picker_types: 'file image media',
@@ -2473,6 +2474,7 @@ angular.module('netbase')
     };
 
     $scope.createCategory = function() {
+        $scope.loading = true
         let date = new Date().getTime().toString();
 
         console.log($scope.title)
@@ -2491,6 +2493,7 @@ angular.module('netbase')
         }
 
         Forum.createCategory(university._id, data).success(function(res) {
+            $scope.loading = false
             if (res.success) {
                 $location.path("/a/" + university.url + "/forum/category/id/" + res.data._id)
             }
@@ -2725,6 +2728,7 @@ angular.module('netbase')
     let universityUrl = $route.current.params.academiaName;
     let university;
     $scope.inputLengthWarningShow = false;
+    $scope.loading = false
 
     $scope.tinymceOptions = {
         file_picker_types: 'file image media',
@@ -2803,6 +2807,8 @@ angular.module('netbase')
     /* create forum post by id */
     $scope.premium = { value: "0" };
     $scope.createForumPost = function() {
+        $scope.loading = true
+
         var data = {
             text: tinymce.activeEditor.getContent(),
             title: $scope.title,
@@ -2836,7 +2842,7 @@ angular.module('netbase')
                 let status = res.data.status;
                 let data = res.data.data;
                 let success = res.data.success;
-
+                $scope.loading = false
                 if (success) {
                     var timelineData = {
                         entryType: "forumpost",
@@ -2856,6 +2862,7 @@ angular.module('netbase')
                 }
             });
         } else {
+            $scope.loading = false
             $scope.errors = errors;
         }
     };
@@ -2865,6 +2872,7 @@ angular.module('netbase')
     let universityUrl = $route.current.params.academiaName;
     let postId = $route.current.params.postId;
     let university;
+    $scope.loading = false
 
     $scope.tinymceOptions = {
         file_picker_types: 'file image media',
@@ -2903,6 +2911,7 @@ angular.module('netbase')
 
     /* create forum post by id */
     $scope.updateForumPost = function() {
+        $scope.loading = true
         var data = {
             text: $scope.text,
             title: $scope.title,
@@ -2914,7 +2923,7 @@ angular.module('netbase')
             let status = res.data.status;
             let data = res.data.data;
             let success = res.data.success;
-
+            $scope.loading = false
             if (success) {
                 $location.path('/a/' + university.url + '/forum/post/id/' + data._id)
                 window.scrollTo(0, 0);

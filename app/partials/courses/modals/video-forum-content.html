@@ -144,7 +144,10 @@
             </div>
             <!-- VIDEO TYPE -->
 
-              <button class="btn btn-success" style="margin: 4rem 0;" ng-click="save()">{{'CREATE' | translate}}</button>
+            <div ng-show="loading" class="loading-gif" style="text-align: center; margin-top: 12px;">
+                <img src="/img/loader.gif" height="50px" />
+            </div>
+            <button class="btn btn-success" style="margin: 4rem 0;" ng-click="save()" ng-disabled="loading">{{'CREATE' | translate}}</button>
         </div>
 
     </div>

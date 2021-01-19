@@ -672,6 +672,7 @@ angular.module('netbase')
     $scope.page = $route.current.params.id;
     ngDialog.close();
     let universityId;
+    $scope.loading = false
 
     let domainUrl = window.location.href;
     let courseUrl = "courses"
@@ -812,6 +813,7 @@ angular.module('netbase')
     }
 
     $scope.save = function() {
+        $scope.loading = true
         let mid = $route.current.params.id;
 
         if (!$scope.title) {
@@ -841,6 +843,7 @@ angular.module('netbase')
         }
 
         Courses.createContentModule(formdata).success(function(res) {
+            $scope.loading = false
             if (res.success) {
                 $location.path("/"+courseUrl+"/a/" + ownedUniversityId + "/suite/content")
             } else {
@@ -894,6 +897,7 @@ angular.module('netbase')
 
 .controller('editVideoForumContentCtrl', ['Videos', '$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'University', 'Playlist', 'Forum', 'User', '$cookies', function(Videos, $rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, University, Playlist, Forum, User, $cookies) {
     let id = $route.current.params.id
+    $scope.loading = false
 
     // Get university id from the cookies
     let universityId = $cookies.get("ownedUniversityId");
@@ -933,6 +937,7 @@ angular.module('netbase')
     })
 
     $scope.save = function() {
+        $scope.loading = true
         let mid = $scope.content.modelId;
 
         if (!$scope.title) {
@@ -947,6 +952,7 @@ angular.module('netbase')
         }
 
         Courses.updateQuiz(id, formdata).success(function(res) {
+            $scope.loading = false
             if (res.success) {
                 $location.path('/'+courseUrl+'/a/' + $scope.universityid + '/suite/content')
             } else {
@@ -2119,16 +2125,19 @@ angular.module('netbase')
                 if (res.success) {
                     let mods = res.data;
                     $scope.modulesByAccount = mods;
-                    // if ($scope.module.content.length > 0) {
-                    //   for (let i=0; i < $scope.module.content.length; i++){
-                    //     let content = $scope.module.content[i]
-                    //     mods.filter( function(item){ return item._id==content.modelId})
-                    //
-                    //     if(i == $scope.module.content.length - 1) {
-                    //       $scope.modulesByAccount = mods
-                    //     }
-                    //   }
-                    // }
+                    if ($scope.module.content.length > 0) {
+                      let filtered = mods
+                      for (let i=0; i < $scope.module.content.length; i++){
+                        let content = $scope.module.content[i]
+                        filtered = filtered.filter( function(item){
+                          return item._id!=content.modelId
+                        })
+
+                        if(i == $scope.module.content.length - 1) {
+                          $scope.modulesByAccount = filtered
+                        }
+                      }
+                    }
                 }
             });
         }
@@ -2614,6 +2623,7 @@ angular.module('netbase')
     $scope.courseData = $scope.ngDialogData.courseData;
     $scope.title = $scope.courseData.title;
     $scope.selectedKnowledge = $scope.courseData.knowledgeId;
+    $scope.loading = false
 
     $scope.hasError = false;
     $scope.createcourseerrmessage = ""
@@ -2651,23 +2661,27 @@ angular.module('netbase')
     let pricePattern = new RegExp(/^(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$/)
 
     $scope.updateCourse = function() {
-
+        $scope.loading = true
         //form validation
         if ($scope.title == '') {
             $scope.hasError = true;
             $scope.createcourseerrmessage = "PLEASE_ENTER_COURSE_TITLE"
+            $scope.loading = false
             return
         } else if ($scope.selectedKnowledge == '') {
             $scope.hasError = true;
             $scope.createcourseerrmessage = "PLEASE_SELECT_COURSE_KNOWLEDGE"
+            $scope.loading = false
             return
         } else if ($scope.free == undefined) {
             $scope.hasError = true;
             $scope.createcourseerrmessage = "PLEASE_SELECT_COURSE_PAYMENT"
+            $scope.loading = false
             return
         } else if ($scope.description == '') {
             $scope.hasError = true;
             $scope.createcourseerrmessage = "PLEASE_ENTER_COURSE_DESCRIPTION"
+            $scope.loading = false
             return
         }
 
@@ -2688,10 +2702,12 @@ angular.module('netbase')
             if (!pricePattern.test($scope.preco)) {
                 $scope.hasError = true;
                 $scope.createcourseerrmessage = "PLEASE_ENTER_COURSE_PRICE"
+                $scope.loading = false
                 return
             } else {
-                console.log("price is valid")
-                $scope.preco = $scope.preco.replace(/,/g, '.')
+
+                if (typeof($scope.preco) == "string")
+                  $scope.preco = $scope.preco.replace(/,/g, '.')
 
                 if ($scope.preco > 0) {
                     formdata.price = $scope.preco;
@@ -2699,12 +2715,14 @@ angular.module('netbase')
                     console.log("error: ", typeof($scope.preco))
                     $scope.hasError = true;
                     $scope.createcourseerrmessage = "PLEASE_ENTER_COURSE_PRICE"
+                    $scope.loading = false
                     return
                 }
             }
         }
 
         Courses.updateCourse($scope.courseData._id, formdata).success(function(res) {
+            $scope.loading = false
             if (res.success == true) {
                 ngDialog.close();
                 $route.reload();
@@ -2719,6 +2737,8 @@ angular.module('netbase')
     $scope.duration = $scope.moduleData.duration;
     $scope.goal = $scope.moduleData.goal;
     $scope.description = $scope.moduleData.description;
+    $scope.loading = false
+
 
     $scope.tinymceOptions = {
         file_picker_types: 'file image media',
@@ -2735,6 +2755,7 @@ angular.module('netbase')
     };
 
     $scope.updateModule = function() {
+        $scope.loading = true
         let formData = {
             title: $scope.title,
             description: $scope.description,
@@ -2743,6 +2764,7 @@ angular.module('netbase')
         }
 
         Courses.updateModule($scope.moduleData._id, formData).success(function(res) {
+            $scope.loading = false
             if (res.success == true) {
                 ngDialog.close();
                 $route.reload();
@@ -2753,6 +2775,7 @@ angular.module('netbase')
 
 .controller('CoursesEditPageCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses) {
     let id = $route.current.params.id;
+    $scope.loading = false
 
     let domainUrl = window.location.href;
     let courseUrl = "courses"
@@ -2786,10 +2809,13 @@ angular.module('netbase')
     };
 
     $scope.saveContent = function() {
+        $scope.loading = true
         Courses.savePage({ text: $scope.tinymceModel, contentType: 'page', title: $scope.title }, id).
         success(function(res) {
+            $scope.loading = false
             $location.path("/"+ courseUrl +"/a/" + id + "/suite/content")
         }).error(function(er) {
+            $scope.loading = false
             alert(er)
         })
     };
@@ -2799,6 +2825,7 @@ angular.module('netbase')
     ngDialog.close();
     $scope.activeSection = "createPage";
     $scope.tinymceModel = 'Initial content';
+    $scope.loading = false
 
     // Get university id from the cookies
     let universityId = $cookies.get("ownedUniversityId");
@@ -2814,6 +2841,7 @@ angular.module('netbase')
     $scope.university = universities[$scope.universityid]
 
     $scope.saveContent = function() {
+        $scope.loading = true
         Courses.createPage({
             text: $scope.tinymceModel,
             contentType: 'page',
@@ -2822,10 +2850,12 @@ angular.module('netbase')
             universityId: $scope.universityid
         }).
         success(function(res) {
+            $scope.loading = false
             console.log("create page response: ", JSON.stringify(res))
             $location.path("/"+ courseUrl +"/a/" + $scope.universityid + "/suite/content")
                 //$location.path("/cursos/suite/modulos/id/"+$route.current.params.id)
         }).error(function(er) {
+            $scope.loading = false
             alert(er)
         })
     };
@@ -3167,7 +3197,7 @@ angular.module('netbase')
             let userId = User.getId();
             let userRegistered = false;
             let members = $scope.course.members;
-
+            console.log("members: ", members)
             for (let idx = 0; idx < members.length; idx++) {
                 let member = members[idx];
 
@@ -3448,7 +3478,7 @@ angular.module('netbase')
                 accountId: $scope.accountId,
                 universityId: $scope.course.university,
             }
-            //console.log("data: ", data)
+            console.log("data: ", data)
 
         Payments.coursePayment(data).success(function(res) {
             //console.log("payments res: ", res)
@@ -3522,6 +3552,7 @@ angular.module('netbase')
 .controller('CoursesModulosCriarCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses) {
     $scope.page = false;
     $scope.activeSection = "modulos";
+    $scope.loading = false
 
     $scope.tinymceOptions = {
         file_picker_types: 'file image media',
@@ -3538,6 +3569,7 @@ angular.module('netbase')
     };
 
     $scope.criar = function() {
+        $scope.loading = true
         let error = false;
 
         let formdata = {
@@ -3551,7 +3583,7 @@ angular.module('netbase')
 
         Courses.createModule(formdata).success(function(res) {
             let courseModule = res.data;
-
+            $scope.loading = false
             if (res.success) {
                 ngDialog.close();
                 $route.reload()
@@ -3563,6 +3595,7 @@ angular.module('netbase')
 .controller('CoursesCriarCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'Knowledge', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, Knowledge) {
     $scope.universityId = $scope.ngDialogData.universityId;
     $scope.page = false;
+    $scope.loading = false
 
     $scope.hasError = false;
     $scope.createcourseerrmessage = '';
@@ -3598,6 +3631,7 @@ angular.module('netbase')
     let pricePattern = new RegExp(/^(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$/)
 
     $scope.criar = function() {
+        $scope.loading = true
         let error = false;
         $scope.hasError = false;
 
@@ -3605,18 +3639,22 @@ angular.module('netbase')
         if ($scope.title == undefined) {
             $scope.hasError = true;
             $scope.createcourseerrmessage = "PLEASE_ENTER_COURSE_TITLE"
+            $scope.loading = false
             return
         } else if ($scope.selectedKnowledge == undefined) {
             $scope.hasError = true;
             $scope.createcourseerrmessage = "PLEASE_SELECT_COURSE_KNOWLEDGE"
+            $scope.loading = false
             return
         } else if ($scope.free == undefined) {
             $scope.hasError = true;
             $scope.createcourseerrmessage = "PLEASE_SELECT_COURSE_PAYMENT"
+            $scope.loading = false
             return
         } else if ($scope.description == undefined) {
             $scope.hasError = true;
             $scope.createcourseerrmessage = "PLEASE_ENTER_COURSE_DESCRIPTION"
+            $scope.loading = false
             return
         }
 
@@ -3627,6 +3665,7 @@ angular.module('netbase')
             knowledgeId: $scope.selectedKnowledge,
             university: $scope.universityId
         };
+
 
         if ($scope.free == undefined) {
             $scope.hasError = true;
@@ -3639,6 +3678,7 @@ angular.module('netbase')
             if (!pricePattern.test($scope.preco)) {
                 $scope.hasError = true;
                 $scope.createcourseerrmessage = "PLEASE_ENTER_COURSE_PRICE"
+                $scope.loading = false
                 return
             } else {
                 console.log("price is valid")
@@ -3650,12 +3690,14 @@ angular.module('netbase')
                     console.log("error: ", typeof($scope.preco))
                     $scope.hasError = true;
                     $scope.createcourseerrmessage = "PLEASE_ENTER_COURSE_PRICE"
+                    $scope.loading = false
                     return
                 }
             }
         }
 
         Courses.create(formdata).success(function(res) {
+            $scope.loading = false
             if (res.success) {
                 ngDialog.close();
                 $route.reload();
