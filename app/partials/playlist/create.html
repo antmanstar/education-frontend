@@ -77,10 +77,12 @@
             <!-- academia-content-forum-answer -->
 
 
-
-
-            <button ng-click="createPlaylist()" class="btn btn-green">{{'SAVE' | translate}}</button>
-
+            <div ng-show="loading" class="loading-gif" style="text-align: center;">
+                <img src="/img/loader.gif" height="50px" />
+            </div>
+            <div style="margin-top: 15px;">
+              <button ng-click="createPlaylist()" class="btn btn-green" ng-disabled="loading">{{'SAVE' | translate}}</button>
+            </div>
 
 
     </div>

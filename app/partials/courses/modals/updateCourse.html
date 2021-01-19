@@ -116,10 +116,11 @@
                   {{createcourseerrmessage | translate}}
                 </div>
 
+                <div ng-show="loading" class="loading-gif" style="text-align: center;">
+                    <img src="/img/loader.gif" height="50px" />
+                </div>
                 <div class="col-xs-12 col-sm-12">
-
-                    <button class="btn btn-green" ng-click="updateCourse()">{{"UPDATE_COURSE" | translate}}</button>
-
+                    <button class="btn btn-green" ng-click="updateCourse()" ng-disabled="loading">{{"UPDATE_COURSE" | translate}}</button>
                 </div>
                 <!-- -->
 

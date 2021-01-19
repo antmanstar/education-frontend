@@ -56,10 +56,12 @@
 
     <div class="row">
 
+        <div ng-show="loading" class="loading-gif" style="text-align: center;">
+            <img src="/img/loader.gif" height="50px" />
+        </div>
+
         <div class="col-xs-12 col-sm-12">
-
-            <button class="btn btn-green" ng-click="updateModule()">{{'UPDATE_MODULE' | translate}}</button>
-
+            <button class="btn btn-green" ng-click="updateModule()" ng-disabled="loading">{{'UPDATE_MODULE' | translate}}</button>
         </div>
         <!-- -->
 

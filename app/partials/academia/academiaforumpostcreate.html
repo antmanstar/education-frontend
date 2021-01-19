@@ -79,9 +79,11 @@
 
         </div>
         -->
-
+                <div ng-show="loading" class="loading-gif" style="text-align: center;">
+                    <img src="/img/loader.gif" height="50px" />
+                </div>
                 <div class="academia-content-forum-answer-action" style="margin-top: 15px;">
-                    <button class="btn btn-green" ng-click="createForumPost()">{{'CREATE_POST' | translate}}</button>
+                    <button class="btn btn-green" ng-click="createForumPost()" ng-disabled="loading">{{'CREATE_POST' | translate}}</button>
                 </div>
                 <!-- academia-content-forum-answer -->
 

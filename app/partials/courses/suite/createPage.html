@@ -48,8 +48,12 @@
 
                     </div>
 
-                    <button ng-click="saveContent()" type="button" class="btn btn-mini btn-green">{{'CREATE_A_PAGE' | translate}}</button>
-
+                    <div ng-show="loading" class="loading-gif" style="text-align: center;">
+                        <img src="/img/loader.gif" height="50px" />
+                    </div>
+                    <div style="margin-top: 15px;">
+                      <button ng-click="saveContent()" type="button" class="btn btn-mini btn-green" ng-disabled="loading">{{'CREATE_A_PAGE' | translate}}</button>
+                    </div>
                 </form>
             </div>
         </div>

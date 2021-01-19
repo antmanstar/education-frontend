@@ -738,7 +738,7 @@
     "DOMAIN_PLACEHOLDER_CAPS": "UNIVERSIDA.DE",
 
     "TIMELINE_EMPTY_TITLE": "Expandindo Seu Alcance!",
-    "TIMELINE_EMPTY_SUBTITLE": "Grande coleção de material educativo tanto para alunos quanto para professores. Seja o primeiro a engradar o posto.",
+    "TIMELINE_EMPTY_SUBTITLE": "Grande coleção de material educativo tanto para alunos quanto para professores. Seja o primeiro a criar o posto.",
 
     "FEED_EMPTY_TITLE": "Ainda sem postagem!",
     "FEED_EMPTY_SUBTITLE": "Fique Ativo e Avance com a Aprendizagem",
@@ -1029,5 +1029,37 @@
     "PERFIL": "perfil",
     "EDITAR": "editar",
     "INICIAR": "iniciar",
-    "UNIVERSIDADES": "universidades"
+    "UNIVERSIDADES": "universidades",
+
+    "EDUCATIONAL_INFRASTRACTURE_FOR_THE_INTERNEET": "Infra-estrutura educacional para a Internet",
+    "EVERYTHING_IN_ONE_PLACE": "Tudo o que você precisa para ensinar on-line em um só lugar!",
+    "VIDEOCONFERENCING_AND_MUCH_MORE": "Videconferência, transmissão ao vivo, compartilhamento ilimitado da mídia, linha do tempo, bate-papo comunitário e muito mais...",
+    "CREATE_ONLINE_SCHOOL_IN_FEW_EASY_STEPS": "Crie sua própria escola online em algumas etapas fáceis!",
+    "GIVE_US_14_DAYS": "Experimente por 14 dias. Sem compromisso.",
+    "PLANS_AND_PRICING": "PLANOS E PREÇOS",
+    "LETS_START_EDUCATING": "Vamos começar a educar...",
+    "LETS_START_EDUCATING_1": "Faça a diferença criando sua própria comunidade educacional e compartilhando seus conhecimentos da maneira mais organizada e profissional possível. ",
+    "LETS_START_EDUCATING_2": "Já é hora de atualizarmos nossos métodos para transmitir conhecimento e melhorar as técnicas de ensino. ",
+    "LETS_START_EDUCATING_3": "É por isso que criamos a plataforma educacional mais avançada do mercado - uma plataforma que atende às mais recentes necessidades da indústria educacional. ",
+    "LETS_START_EDUCATING_4": "Nosso conjunto único de ferramentas permite que qualquer pessoa crie uma escola on-line e faça crescer sua comunidade de seguidores. ",
+    "HERE_IS_WHAT_YOU_GET": "Aqui está o que você recebe com cada plano de faculdade:",
+    "VIDEOCONFERENCING": "Videoconferência",
+    "VIDEOCONFERENCING_SUB_1": "Videochamadas em grupo para e-learning.",
+    "VIDEOCONFERENCING_SUB_1": "Amplie as salas de aula tradicionais através da comunicação por vídeo para tornar suas aulas mais acessíveis. ",
+    "VIDEOCONFERENCING_REPLACE": "Substitui Zoom, Microsoft Teams, Skype",
+    "TIMELINE_SUB_1": "Publique conteúdo envolvente e exiba todas as atividades on-line de sua comunidade em uma visão cronológica.",
+    "TIMELINE_SUB_2": "Crie uma fonte de notícias para sua escola e aumente a base de seguidores. ",
+    "TIMELINE_REPLACE": "Pense em Instagram, Facebook e Twitter, mas projetado para educadores.",
+    "CHAT_AND_FORUM": "Chat e Fórum",
+    "CHAT_AND_FORUM_SUB_1": "Envolva e conecte seus alunos e professores através do sistema de mensagens de sua escola com um bate-papo em grupo e um fórum, ou alcance seus alunos através de mensagens diretas.",
+    "CHAT_AND_FORUM_REPLACE": "Substitui Slack , Whatsapp, Messenger",
+    "COURSES_SUB_1": "Faça o upload de cursos ilimitados em vídeo, crie listas de reprodução ou vá ao vivo e compartilhe seus conhecimentos. ",
+    "COURSES_REPLACE": "Substitui Canvas, Thincfic, Moodle.",
+    "EWALLET": "E-Wallet",
+    "EWALLET_SUB_1": "Receber pagamentos e gerenciar contas de estudantes. Cobrar automaticamente taxas de assinatura ou pagamentos únicos ou pagar a seus funcionários.",
+    "EWALLET_REPLACE": "Substitui Paypal, Zelle, Square.",
+    "MEDIA_SHARING": "Compartilhamento da mídia",
+    "MEDIA_SHARING_SUB_1": "Crie a biblioteca de sua escola e compartilhe os recursos de aprendizado com os membros de sua comunidade.  Incorporar e compartilhar conteúdo de plataformas externas.",
+    "MEDIA_SHARING_REPLACE": "Substitui Youtube, Vimeo, bibliotecas on-line e bases de dados."
+
 }

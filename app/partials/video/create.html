@@ -95,10 +95,6 @@
                 <p ng-repeat="m in errorMessages">{{m | translate}}<p>
             </div>
 
-            <div ng-show="loading" style="width: 100%; text-align: center; padding-top: 30px; padding-bottom: 30px;">
-                <img src="/img/loader.gif" height="50px" />
-            </div>
-
             <input class="academia-content-forum-post-create-title" placeholder="{{'WRITE_VIDEO_TITLE' | translate}}" ng-model="title"></input>
 
             <div>
@@ -163,10 +159,14 @@
                 <!-- end academia-content-forum-post-create-premium -->
 
             </div>
+            <div ng-show="loading" class="loading-gif" style="text-align: center;">
+                <img src="/img/loader.gif" height="50px" />
+            </div>
             <!-- academia-content-forum-answer -->
             <!--button id="btn_show" ng-click="videoUploadAttension()" class="btn btn-green trn">{{'CREATE' | translate}}</button-->
-            <button ng-click="createVideo()" class="btn btn-green">{{'CREATE' | translate}}</button>
-
+            <div style="margin-top: 15px;">
+              <button ng-click="createVideo()" class="btn btn-green" ng-disabled="loading">{{'CREATE' | translate}}</button>
+            </div>
 
         </div>
         <!-- end row -->

@@ -255,6 +255,7 @@ angular.module('netbase')
     $scope.privilege = { value: 0 };
     $scope.premium = { value: 0 };
     $scope.inputLengthWarningShow = false;
+    $scope.loading = false
 
     let universityId;
 
@@ -303,6 +304,7 @@ angular.module('netbase')
     }
 
     $scope.createPlaylist = () => {
+        $scope.loading = true
         let payload = {
             title: $scope.title,
             description: $scope.text,
@@ -328,7 +330,7 @@ angular.module('netbase')
             Playlist.create(payload).success(res => {
                 let success = res.success;
                 let data = res.data;
-
+                $scope.loading = false
                 if (res.success) {
                     //console.log("university id: ")
                     //console.log(payload.universityId)

@@ -122,9 +122,13 @@
                   {{createcourseerrmessage | translate}}
                 </div>
 
-                <div class="col-xs-12 col-sm-12">
+                <div ng-show="loading" class="loading-gif" style="text-align: center;">
+                    <img src="/img/loader.gif" height="50px" />
+                </div>
 
-                    <button class="btn btn-green" ng-click="criar()">{{'CREATE_COURSE' | translate}}</button>
+                <div class="col-xs-12 col-sm-12" style="margin-top: 15px;">
+
+                    <button class="btn btn-green" ng-click="criar()" ng-disabled="loading">{{'CREATE_COURSE' | translate}}</button>
 
                 </div>
                 <!-- -->
