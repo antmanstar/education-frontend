@@ -252,6 +252,10 @@ span i {
   margin-left: 2px;
 } */
 
+.tox.tox-tinymce-aux {
+  z-index: 14000;
+}
+
 </style>
 
 <div class="container-fluid container-full">
@@ -320,9 +324,9 @@ span i {
                   <div class="course-card" style="cursor: pointer;">
                     <a style="color: unset;" href="/{{'CURSOS' | translate}}/a/{{universityid}}/suite/modulos/id/{{module.moduleId._id}}">
 
-                      <div class="title">
+                      <div>
 
-                        <div class="text-capitalize" style="display: inline-block; vertical-align: top; color: #2f4457; font-weight: bold;">{{module.moduleId.title}}</div>
+                        <div class="text-capitalize" style="font-size: 1.2em; display: inline-block; vertical-align: top; color: #2f4457; font-weight: bold;">{{module.moduleId.title}}</div>
 
                       </div>
 

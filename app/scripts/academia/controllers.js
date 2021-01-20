@@ -666,9 +666,11 @@ angular.module('netbase')
     $scope.videoToggle = 'fas fa-video';
     $scope.videoDisabled = 'color-white';
     $scope.audioDisabled = 'color-white';
+    $scope.disableJoin = false;
 
     $scope.cancel = function() {
         ngDialog.close();
+        $window.close();
     }
 
 
@@ -776,9 +778,8 @@ angular.module('netbase')
             $rootScope.constraints.audio = {
                 deviceId: $scope.currentAudioInputDevice
             };
-        } else {
-            $rootScope.constraints.audio = false;
         }
+
 
         if ($scope.currentVideoInputDevice == 'auto search') {
             $rootScope.constraints.video = true;
@@ -786,11 +787,9 @@ angular.module('netbase')
             $rootScope.constraints.video = {
                 deviceId: $scope.currentVideoInputDevice
             };
-        } else {
-            $rootScope.constraints.video = false;
         }
 
-        if ($rootScope.constraints.audio == false && $rootScope.constraints.video == false) {
+        if ($scope.videoToggle != 'fas fa-video') {
             let video = document.getElementById('selecting_video');
             video.srcObject = null;
             return;
@@ -816,6 +815,7 @@ angular.module('netbase')
                     video.onloadedmetadata = function(e) {
                         video.play();
                     };
+                    video.transform = scaleX(-1); // test mirror
                 },
                 function(err) {
                     $rootScope.alertDialog.push(ngDialog.open({
@@ -861,6 +861,19 @@ angular.module('netbase')
 
     $scope.initSetting = function() {
         $scope.scanDevices().then(() => {
+            if ($scope.videoInputDevices.length == 0 && $scope.audioInputDevices.length == 0) {
+              console.log("allowUser: ", $scope.allowUser)
+                if ($rootScope.alertDialog == null || $rootScope.alertDialog == undefined) $rootScope.alertDialog = [];
+                $scope.disableJoin = true;
+                $rootScope.alertDialog.push(ngDialog.open({
+                    template: 'partials/modals/classroom_alert_modal.html',
+                    controller: "AcademiaClassroomsAlertCtrl",
+                    className: 'ngdialog-theme-default classroom-alert-modal',
+                    data: { type: "ERROR", msg: 'You have no cameras and microphones' }
+                }));
+                return;
+            }
+
             $scope.selectDevice();
             $scope.displayInitial();
         });
@@ -898,17 +911,6 @@ angular.module('netbase')
 
     $scope.confirmSelect = function() {
         $rootScope.ifSelectedDevice = true;
-        if ($rootScope.constraints.audio == false && $rootScope.constraints.video == false) {
-            if ($rootScope.alertDialog == null || $rootScope.alertDialog == undefined) $rootScope.alertDialog = [];
-
-            $rootScope.alertDialog.push(ngDialog.open({
-                template: 'partials/modals/classroom_alert_modal.html',
-                controller: "AcademiaClassroomsAlertCtrl",
-                className: 'ngdialog-theme-default classroom-alert-modal',
-                data: { type: "ERROR", msg: 'You have no cameras and microphones' }
-            }));
-            return;
-        }
         ngDialog.close();
     }
 }])
@@ -948,7 +950,6 @@ angular.module('netbase')
     var video = Twilio.Video; // Twilio video
 
     var baseUrl = "https://educationalcommunity-classroom.herokuapp.com";
-    //var baseUrl = 'http://c395e03d.ngrok.io';
     var arr = $window.location.href.split("/");
     var domain = arr[0] + "//" + arr[2];
 
@@ -1165,12 +1166,14 @@ angular.module('netbase')
 
         let url = '/classroom/' + roomSID + '/join/';
         Classroom.joinClassroom(baseUrl + url).then((res) => { // Join and get access token
-
-                url = '/classroom/classroom/' + roomName + '/token/'
-                Classroom.getAccessToken(baseUrl + url).then((response) => {
-                    $scope.connectClassroom(response.data.token, roomName);
-                });
-
+                if (res.data.success === true) {
+                    url = '/classroom/classroom/' + roomName + '/token/'
+                    Classroom.getAccessToken(baseUrl + url).then((response) => {
+                        $scope.connectClassroom(response.data.token, roomName);
+                    });
+                } else {
+                    $location.path("/joinerror")
+                }
             })
             .catch((err) => {
                 alert('Join Error.');
@@ -1179,7 +1182,6 @@ angular.module('netbase')
 
     $scope.initClassroom = function() {
         let token = $localStorage.token;
-
         if (token == null || token == undefined) {
             let redirectUrl = '/a/university/' + universityUrl + '/roomid/' + roomSID + '/accountid/' + accountSid + '/roomname/' + roomName + '/';
             ngDialog.open({
@@ -1201,7 +1203,6 @@ angular.module('netbase')
             });
             return;
         }
-        $scope.joinClassroom();
     }
 
     let joiningInterval = setInterval(() => {
@@ -1298,6 +1299,27 @@ angular.module('netbase')
             room.on('participantDisconnected', $scope.participantDisconnected);
             room.once('disconnected', error => room.participants.forEach($scope.participantDisconnected));
         });
+    }
+
+
+    // checks the status of the devices (mic and cam)
+    // as preferred by the user from the classroom_select_device_modal
+    $scope.setDeviceStatus = function() {
+      if (!$rootScope.constraints.video) {
+        $scope.currentLocalparticipant.videoTracks.forEach(function(videoTrack) {
+            videoTrack.track.disable();
+        });
+        $scope.videoToggle = 'fas fa-video-slash';
+        $scope.videoStatus = "Start Video";
+      }
+
+      if (!$rootScope.constraints.audio) {
+        $scope.currentLocalparticipant.audioTracks.forEach(function(audioTrack) {
+            audioTrack.track.disable();
+        });
+        $scope.voiceToggle = 'fas fa-microphone-alt-slash';
+        $scope.voiceStatus = "Unmute";
+      }
     }
 
     $scope.isSafari = function() {
@@ -1552,6 +1574,7 @@ angular.module('netbase')
                 100);
             $scope.selectedOne = !$scope.selectedOne;
         });
+        $scope.setDeviceStatus()
     }
 
     $scope.sharingScreen = function(stream) {
@@ -1742,6 +1765,10 @@ angular.module('netbase')
     }
 }])
 
+.controller('AcademiaClassroomsJoinErrorCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Classroom', 'Students', 'ngDialog', 'jwtHelper', '$localStorage', '$window', function($rootScope, $scope, $location, $route, University, Classroom, Students, ngDialog, jwtHelper, $localStorage, $window) {
+
+}])
+
 .controller('AcademiaClassroomsCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Classroom', 'Students', 'ngDialog', 'jwtHelper', '$localStorage', '$window', function($rootScope, $scope, $location, $route, University, Classroom, Students, ngDialog, jwtHelper, $localStorage, $window) {
     /* SHOWING CLASSROOM LIST PAGE */
     let universityUrl = $route.current.params.academiaName;
@@ -1859,12 +1886,6 @@ angular.module('netbase')
                             friendlyName: response.data.data.roomData.uniqueName
                         }).then((channel) => {
                             $rootScope.currentChatChannel = channel;
-                            var obj = $scope.wholeClassroomList.data.data;
-                            obj.forEach(item => {
-                                Object.keys(item).forEach(key => {
-                                    console.log("key:" + key + "value:" + item[key]);
-                                });
-                            });
                             console.log("ClassroomList", $scope.wholeClassroomList)
                         });
                     });
@@ -1877,7 +1898,7 @@ angular.module('netbase')
                     template: 'partials/modals/classroom_alert_modal.html',
                     controller: "AcademiaClassroomsAlertCtrl",
                     className: 'ngdialog-theme-default classroom-alert-modal',
-                    data: { type: "ERROR", msg: "Insufficient Privilege" }
+                    data: { type: "ERROR", msg: response.data.msg }
                 }));
             }
         });
@@ -2865,7 +2886,7 @@ angular.module('netbase')
     };
 }])
 
-.controller('AcademiaForumPostUpdateCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'ngDialog', 'Forum', function($rootScope, $scope, $location, $route, University, ngDialog, Forum) {
+.controller('AcademiaForumPostUpdateCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'ngDialog', 'Forum', 'Courses', function($rootScope, $scope, $location, $route, University, ngDialog, Forum, Courses) {
     let universityUrl = $route.current.params.academiaName;
     let postId = $route.current.params.postId;
     let university;

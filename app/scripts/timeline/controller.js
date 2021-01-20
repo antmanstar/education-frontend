@@ -109,7 +109,7 @@ angular.module('netbase')
 
                     if (status != 90010) {
                         scope.forumPost = data;
-                        scope.forumPost.text = $sce.trustAsHtml(scope.forumPost.text);
+                        scope.forumPost.text = scope.textFilter(scope.forumPost.text);
                         scope.loaded = true;
                     } else {
                         // Premium content
@@ -139,7 +139,7 @@ angular.module('netbase')
                             scope.forumPost = data;
                             scope.votesCount = data.votesCount;
 
-                            scope.forumPost.text = $sce.trustAsHtml(scope.forumPost.text);
+                            scope.forumPost.text = scope.textFilter(scope.forumPost.text);
                             scope.loaded = true;
                         } else {
                             // Premium content
@@ -237,14 +237,11 @@ angular.module('netbase')
             };
 
             scope.textFilter = function(text) {
-              //console.log("textFilter: ", text)
-              if (text) {
                 if (text.indexOf("iframe") != -1) {
                     return $sce.trustAsHtml(text)
                 } else {
                     return $filter('limitHtml')(text, 350, '...')
                 }
-              }
             }
         }
     }
