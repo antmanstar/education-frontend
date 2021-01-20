@@ -366,6 +366,10 @@ angular.module('netbase', [
             templateUrl: 'partials/academia/classrooms/academiaclassrooms.html',
             controller: 'AcademiaClassroomsCtrl',
         })
+        .when('/joinerror', {
+            templateUrl: 'partials/academia/classrooms/join_err.html',
+            controller: 'AcademiaClassroomsJoinErrorCtrl',
+        })
         .when("/a/university/:academiaName/roomid/:roomSID/accountid/:accountSid/roomname/:roomName", {
             templateUrl: 'partials/academia/classrooms/academiaclassroom.html',
             controller: 'AcademiaClassroomCtrl',

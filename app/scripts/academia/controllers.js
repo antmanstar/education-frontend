@@ -669,6 +669,7 @@ angular.module('netbase')
 
     $scope.cancel = function() {
         ngDialog.close();
+        $window.close();
     }
 
 
@@ -948,7 +949,6 @@ angular.module('netbase')
     var video = Twilio.Video; // Twilio video
 
     var baseUrl = "https://educationalcommunity-classroom.herokuapp.com";
-    //var baseUrl = 'http://c395e03d.ngrok.io';
     var arr = $window.location.href.split("/");
     var domain = arr[0] + "//" + arr[2];
 
@@ -1165,12 +1165,14 @@ angular.module('netbase')
 
         let url = '/classroom/' + roomSID + '/join/';
         Classroom.joinClassroom(baseUrl + url).then((res) => { // Join and get access token
-
-                url = '/classroom/classroom/' + roomName + '/token/'
-                Classroom.getAccessToken(baseUrl + url).then((response) => {
-                    $scope.connectClassroom(response.data.token, roomName);
-                });
-
+                if (res.data.success === true) {
+                    url = '/classroom/classroom/' + roomName + '/token/'
+                    Classroom.getAccessToken(baseUrl + url).then((response) => {
+                        $scope.connectClassroom(response.data.token, roomName);
+                    });
+                } else {
+                    $location.path("/joinerror")
+                }
             })
             .catch((err) => {
                 alert('Join Error.');
@@ -1179,7 +1181,6 @@ angular.module('netbase')
 
     $scope.initClassroom = function() {
         let token = $localStorage.token;
-
         if (token == null || token == undefined) {
             let redirectUrl = '/a/university/' + universityUrl + '/roomid/' + roomSID + '/accountid/' + accountSid + '/roomname/' + roomName + '/';
             ngDialog.open({
@@ -1201,7 +1202,6 @@ angular.module('netbase')
             });
             return;
         }
-        $scope.joinClassroom();
     }
 
     let joiningInterval = setInterval(() => {
@@ -1742,6 +1742,10 @@ angular.module('netbase')
     }
 }])
 
+.controller('AcademiaClassroomsJoinErrorCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Classroom', 'Students', 'ngDialog', 'jwtHelper', '$localStorage', '$window', function($rootScope, $scope, $location, $route, University, Classroom, Students, ngDialog, jwtHelper, $localStorage, $window) {
+
+}])
+
 .controller('AcademiaClassroomsCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Classroom', 'Students', 'ngDialog', 'jwtHelper', '$localStorage', '$window', function($rootScope, $scope, $location, $route, University, Classroom, Students, ngDialog, jwtHelper, $localStorage, $window) {
     /* SHOWING CLASSROOM LIST PAGE */
     let universityUrl = $route.current.params.academiaName;
@@ -1859,12 +1863,6 @@ angular.module('netbase')
                             friendlyName: response.data.data.roomData.uniqueName
                         }).then((channel) => {
                             $rootScope.currentChatChannel = channel;
-                            var obj = $scope.wholeClassroomList.data.data;
-                            obj.forEach(item => {
-                                Object.keys(item).forEach(key => {
-                                    console.log("key:" + key + "value:" + item[key]);
-                                });
-                            });
                             console.log("ClassroomList", $scope.wholeClassroomList)
                         });
                     });
@@ -1877,7 +1875,7 @@ angular.module('netbase')
                     template: 'partials/modals/classroom_alert_modal.html',
                     controller: "AcademiaClassroomsAlertCtrl",
                     className: 'ngdialog-theme-default classroom-alert-modal',
-                    data: { type: "ERROR", msg: "Insufficient Privilege" }
+                    data: { type: "ERROR", msg: response.data.msg }
                 }));
             }
         });
@@ -1904,7 +1902,7 @@ angular.module('netbase')
             "/accountid/" +
             classroom.accountSid +
             "/roomname/" +
-            classroom.uniqueName + "/"
+            classroom.uniqueName + "/",
         );
     }
 
