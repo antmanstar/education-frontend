@@ -1688,8 +1688,7 @@ angular.module('netbase')
         let roomSID = $route.current.params.roomSID;
         let accountSid = $route.current.params.accountSid;
         let roomName = $route.current.params.roomName;
-        let chatID = $route.current.params.chatID;
-        let text = domain + "/a/university/" + universityUrl + "/roomid/" + roomSID + "/accountid/" + accountSid + "/roomname/" + roomName + "/chid/" + chatID + "/";
+        let text = domain + "/a/university/" + universityUrl + "/roomid/" + roomSID + "/accountid/" + accountSid + "/roomname/" + roomName + "/";
 
         Clipboard.copy(text); // Clipboard func is defined app/js/clipboard_func.js file
         if ($rootScope.alertDialog == null || $rootScope.alertDialog == undefined) $rootScope.alertDialog = [];
@@ -1885,8 +1884,7 @@ angular.module('netbase')
     }
 
     $scope.copyLink = function(classroom) {
-        console.log("Channel", $rootScope.currentChatChannel)
-        let text = domain + "/a/university/" + universityUrl + "/roomid/" + classroom.roomSID + "/accountid/" + classroom.accountSid + "/roomname/" + classroom.uniqueName + "/chid/" + $rootScope.currentChatChannel + "/";
+        let text = domain + "/a/university/" + universityUrl + "/roomid/" + classroom.roomSID + "/accountid/" + classroom.accountSid + "/roomname/" + classroom.uniqueName + "/";
 
         Clipboard.copy(text);
         if ($rootScope.alertDialog == null || $rootScope.alertDialog == undefined) $rootScope.alertDialog = [];
@@ -1906,8 +1904,7 @@ angular.module('netbase')
             "/accountid/" +
             classroom.accountSid +
             "/roomname/" +
-            classroom.uniqueName + "/chid/" +
-            $rootScope.currentChatChannel + "/"
+            classroom.uniqueName + "/"
         );
     }
 
