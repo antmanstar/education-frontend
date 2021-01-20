@@ -666,6 +666,7 @@ angular.module('netbase')
     $scope.videoToggle = 'fas fa-video';
     $scope.videoDisabled = 'color-white';
     $scope.audioDisabled = 'color-white';
+    $scope.disableJoin = false;
 
     $scope.cancel = function() {
         ngDialog.close();
@@ -777,9 +778,8 @@ angular.module('netbase')
             $rootScope.constraints.audio = {
                 deviceId: $scope.currentAudioInputDevice
             };
-        } else {
-            $rootScope.constraints.audio = false;
         }
+
 
         if ($scope.currentVideoInputDevice == 'auto search') {
             $rootScope.constraints.video = true;
@@ -787,11 +787,9 @@ angular.module('netbase')
             $rootScope.constraints.video = {
                 deviceId: $scope.currentVideoInputDevice
             };
-        } else {
-            $rootScope.constraints.video = false;
         }
 
-        if ($rootScope.constraints.audio == false && $rootScope.constraints.video == false) {
+        if ($scope.videoToggle != 'fas fa-video') {
             let video = document.getElementById('selecting_video');
             video.srcObject = null;
             return;
@@ -817,6 +815,7 @@ angular.module('netbase')
                     video.onloadedmetadata = function(e) {
                         video.play();
                     };
+                    video.transform = scaleX(-1); // test mirror
                 },
                 function(err) {
                     $rootScope.alertDialog.push(ngDialog.open({
@@ -862,6 +861,19 @@ angular.module('netbase')
 
     $scope.initSetting = function() {
         $scope.scanDevices().then(() => {
+            if ($scope.videoInputDevices.length == 0 && $scope.audioInputDevices.length == 0) {
+              console.log("allowUser: ", $scope.allowUser)
+                if ($rootScope.alertDialog == null || $rootScope.alertDialog == undefined) $rootScope.alertDialog = [];
+                $scope.disableJoin = true;
+                $rootScope.alertDialog.push(ngDialog.open({
+                    template: 'partials/modals/classroom_alert_modal.html',
+                    controller: "AcademiaClassroomsAlertCtrl",
+                    className: 'ngdialog-theme-default classroom-alert-modal',
+                    data: { type: "ERROR", msg: 'You have no cameras and microphones' }
+                }));
+                return;
+            }
+
             $scope.selectDevice();
             $scope.displayInitial();
         });
@@ -899,17 +911,6 @@ angular.module('netbase')
 
     $scope.confirmSelect = function() {
         $rootScope.ifSelectedDevice = true;
-        if ($rootScope.constraints.audio == false && $rootScope.constraints.video == false) {
-            if ($rootScope.alertDialog == null || $rootScope.alertDialog == undefined) $rootScope.alertDialog = [];
-
-            $rootScope.alertDialog.push(ngDialog.open({
-                template: 'partials/modals/classroom_alert_modal.html',
-                controller: "AcademiaClassroomsAlertCtrl",
-                className: 'ngdialog-theme-default classroom-alert-modal',
-                data: { type: "ERROR", msg: 'You have no cameras and microphones' }
-            }));
-            return;
-        }
         ngDialog.close();
     }
 }])
@@ -1300,6 +1301,27 @@ angular.module('netbase')
         });
     }
 
+
+    // checks the status of the devices (mic and cam)
+    // as preferred by the user from the classroom_select_device_modal
+    $scope.setDeviceStatus = function() {
+      if (!$rootScope.constraints.video) {
+        $scope.currentLocalparticipant.videoTracks.forEach(function(videoTrack) {
+            videoTrack.track.disable();
+        });
+        $scope.videoToggle = 'fas fa-video-slash';
+        $scope.videoStatus = "Start Video";
+      }
+
+      if (!$rootScope.constraints.audio) {
+        $scope.currentLocalparticipant.audioTracks.forEach(function(audioTrack) {
+            audioTrack.track.disable();
+        });
+        $scope.voiceToggle = 'fas fa-microphone-alt-slash';
+        $scope.voiceStatus = "Unmute";
+      }
+    }
+
     $scope.isSafari = function() {
         var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
         return isSafari;
@@ -1552,6 +1574,7 @@ angular.module('netbase')
                 100);
             $scope.selectedOne = !$scope.selectedOne;
         });
+        $scope.setDeviceStatus()
     }
 
     $scope.sharingScreen = function(stream) {
@@ -1902,7 +1925,7 @@ angular.module('netbase')
             "/accountid/" +
             classroom.accountSid +
             "/roomname/" +
-            classroom.uniqueName + "/",
+            classroom.uniqueName + "/"
         );
     }
 
@@ -2863,7 +2886,7 @@ angular.module('netbase')
     };
 }])
 
-.controller('AcademiaForumPostUpdateCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'ngDialog', 'Forum', function($rootScope, $scope, $location, $route, University, ngDialog, Forum) {
+.controller('AcademiaForumPostUpdateCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'ngDialog', 'Forum', 'Courses', function($rootScope, $scope, $location, $route, University, ngDialog, Forum, Courses) {
     let universityUrl = $route.current.params.academiaName;
     let postId = $route.current.params.postId;
     let university;

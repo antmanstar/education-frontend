@@ -30,7 +30,7 @@
         </div>
     </div>
     <div class='join-button-group'>
-        <button ng-click='confirmSelect()' style="width: 100%;">{{'JOIN' | translate}}</button>
+        <button ng-click='confirmSelect()' style="width: 100%;" ng-disabled="disableJoin">{{'JOIN' | translate}}</button>
         <button ng-click='cancel()' style="width: 100%;">{{'CANCEL' | translate}}</button>
     </div>
 </div>

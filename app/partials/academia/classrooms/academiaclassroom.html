@@ -14,12 +14,12 @@
             <div class='classroom-students-title'>{{'ADMINISTRATOR' | translate}}</div>
             <div ng-repeat="admin in administrator" class='classroom-administrator-container'>
                 <img ng-class="adminActive" ng-if="admin.imageUrl != undefined" src="{{admin.imageUrl}}" alt="HN" title="User Avatar" class="ava1">
-                <img ng-class="adminActive" ng-if="admin.imageUrl == undefined" style="background-image: url('img/user/user.png'); background-size: cover; height: 70px; width: 70px; display: inline-block; border-radius: 50%;" class="ava1">                {{admin.username}}
+                <img ng-class="adminActive" ng-if="admin.imageUrl == undefined" style="background-image: url('img/user/user.png'); background-size: cover; height: 70px; width: 70px; display: inline-block; border-radius: 50%;" class="ava1">{{admin.name}}
             </div>
             <div class='classroom-students-title top-margin-20'>{{'PARTICIPANTS' | translate}}</div>
             <div ng-model='showingParticipants' data-ng-repeat="part in showingParticipants" class='classroom-administrator-container'>
                 <img ng-class="adminActive" ng-if="part.imageUrl != undefined" src="{{part.imageUrl}}" alt="HN" title="User Avatar" class="ava1">
-                <img ng-class="adminActive" ng-if="part.imageUrl == undefined" style="background-image: url('img/user/user.png'); background-size: cover; height: 70px; width: 70px; display: inline-block; border-radius: 50%;" class="ava1">                {{part.username}}
+                <img ng-class="adminActive" ng-if="part.imageUrl == undefined" style="background-image: url('img/user/user.png'); background-size: cover; height: 70px; width: 70px; display: inline-block; border-radius: 50%;" class="ava1">{{part.name}}
             </div>
         </div>
         <!--div ng-if="participantsStatus==false" ng-class='mobileToggleParticipantsList' class="classroom-participants-container-none col-xs-7 col-sm-3 col-md-2 col-lg-2"> </div-->

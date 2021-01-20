@@ -1,4 +1,15 @@
 <div ng-controller="HeaderCtrl">
+  <style>
+    .fab {
+      display: none;
+    }
+
+    @media only screen and (max-width: 769px) {
+      .fab {
+         display: inline;
+       }
+    }
+  </style>
   <update-title title="{{'PAGETITLE' | translate}}"></update-title>
   <!--
   <div class="row" style="height: 40px; line-height: 40px; padding-left: 15px; padding-right: 15px; padding-bottom: 2px; padding-top: 6px;">
@@ -29,7 +40,12 @@
 
         <div class="container-fluid">
         <div class="row navbar-top-first" style="height: 40px; line-height: 40px; padding-bottom: 2px; padding-top: 6px;">
-          <div id="logomaster" class="col-xs-3 col-sm-4" style="padding: 3px; height: 100%; padding-left: 15px;"><img height="100%" src="img/universidade_icon.png" /><span style="margin-left: 8px; font-size: 1.15em;"><i class="fas fa-angle-down" style="vertical-align: top; padding-top: 6px;"></i></span></div>
+          <div id="logomaster" class="col-xs-3 col-sm-4" style="padding: 3px; height: 100%; padding-left: 15px;">
+            <img height="100%" src="img/universidade_icon.png" />
+            <span class="fab" style="margin-left: 8px; font-size: 1.15em;">
+              <i class="fas fa-angle-down" style="vertical-align: top; padding-top: 6px;"></i>
+            </span>
+          </div>
 
           <div class="col-xs-6 col-sm-4" style="text-align: center; height: 100%; padding: 2px;" ng-show="!whitelabel">
             <a href="/home/landing" ng-if="!logged"><img height="100%" src="{{company_logo}}" /></a>
