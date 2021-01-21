@@ -1702,6 +1702,7 @@ angular.module('netbase')
         },
 
         updateModuleById: function(id, data) {
+          console.log("data: ", data)
             var url = '/module/id/' + id;
             return $http({
                 method: 'PUT',
@@ -1711,6 +1712,7 @@ angular.module('netbase')
                     var str = [];
                     for (var p in obj)
                         str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    console.log("transformRequest: ", str.join("&"))
                     return str.join("&");
                 },
                 headers: {

@@ -1342,7 +1342,7 @@ angular.module('netbase')
             if (mem.indexOf(User.getId()) >= 0)
                 $scope.access = true;
             if ($scope.access == false)
-                $location.path('/' + courseUrl + '/id/' + res.data._id);
+                $location.path('/' + courseUrl + '/id/' + $scope.courseId);
         }, function error(response) {
             $location.path('/home/' + courseUrl);
         })
@@ -5782,10 +5782,12 @@ angular.module('netbase')
     };
 
     var handleFileSelect = function(evt) {
+        console.log("handle file select")
         var fileExtension = ['jpeg', 'jpg', 'png', 'gif', 'bmp'];
 
         var img_file = evt.currentTarget.files[0];
         if ($.inArray(img_file.name.split('.').pop().toLowerCase(), fileExtension) == -1) {
+            angular.element(document.querySelector('#fileInput')).val(null);
             alert("Please upload right image file");
             return false;
         }
@@ -5867,6 +5869,12 @@ angular.module('netbase')
         if ($scope.name == "") {
             $scope.hasError = true
             $scope.errorMessage = 'NAME_FIELD_EMPTY'
+            return;
+        }
+
+        if ($scope.pwd.length > 0 && $scope.pwd.length < 6) {
+            $scope.hasError = true
+            $scope.errorMessage = 'PASSWORDLESSTHANSIX'
             return;
         }
 
