@@ -124,17 +124,17 @@ angular.module('netbase')
             })
         },
         setup: function(editor) {
-            var fnc = editor.convertURL;
-            editor.convertURL = convertURL_;
+            //var fnc = editor.convertURL;
+            //editor.convertURL = convertURL_;
 
-            function convertURL_(url, name, elm) {
-                fnc.apply(this, arguments);
-                var regex = new RegExp("(http:|https:)?\/\/");
-                if (!regex.test(url)) {
-                    return url = "http://" + url
-                }
-                return url;
-            }
+            // function convertURL_(url, name, elm) {
+            //     fnc.apply(this, arguments);
+            //     var regex = new RegExp("(http:|https:)?\/\/");
+            //     if (!regex.test(url)) {
+            //         return url = "http://" + url
+            //     }
+            //     return url;
+            // }
 
             editor.on('init', function(e) {
                 var fn = editor.windowManager.open;
@@ -381,14 +381,29 @@ angular.module('netbase')
             //var urlRegex = /^([^:]+):\/\/([-\w._]+)(\/[-\w._]\?(.+)?)?$/ig
             var urlRegex = /(?:(?:https?|ftp):\/\/|\b(?:[a-z\d]+\.))(?:(?:[^\s()<>]+|\((?:[^\s()<>]+|(?:\([^\s()<>]+\)))?\))+(?:\((?:[^\s()<>]+|(?:\(?:[^\s()<>]+\)))?\)|[^\s`!()\[\]{};:'".,<>???�ȡɡơ�]))?/
             retval = value.replace(urlRegex, function(url) {
-                return '<a href="' + url + '" target="_blank">' + url + '</a>';
+                if(url.indexOf('https://') === -1)
+                  return '<a href="https://' + url + '" target="_blank">' + url + '</a>';
+                else if(url.indexOf('http://') === -1)
+                  return '<a href="http://' + url + '" target="_blank">' + url + '</a>';
+                else
+                  return '<a href="' + url + '" target="_blank">' + url + '</a>';
             });
         }
         return retval;
     };
 
+    $scope.fixHtmlTags = function(text) {
+      text = text.replaceAll("&lt;", "<")
+      text = text.replaceAll("&gt;", ">")
+      text = text.replaceAll("&amp;", "&")
+      text = text.replaceAll("&quot;", '"')
+      text = text.replaceAll("&apos;", "'")
+      return text
+    }
+
     $scope.sendMSG = function() { // Send message
-        let message = $scope.transformHrefsInAnswer($scope.sendingMessage);
+        let fixmessage = $scope.fixHtmlTags($scope.sendingMessage)
+        let message = $scope.transformHrefsInAnswer(fixmessage);
         $rootScope.currentChatChannel.sendMessage(message);
         $scope.sendingMessage = '';
     }
@@ -948,6 +963,7 @@ angular.module('netbase')
     $scope.recorder = null;
 
     var video = Twilio.Video; // Twilio video
+    var room = null;
 
     var baseUrl = "https://educationalcommunity-classroom.herokuapp.com";
     var arr = $window.location.href.split("/");
@@ -1241,6 +1257,8 @@ angular.module('netbase')
         video.connect(token, room_t).then(room => { // Video room connect
             const localParticipant = room.localParticipant;
 
+            console.log("remote : ", room.participants.remoteParticipant)
+
             $scope.currentLocalparticipant = room.localParticipant;
             $scope.currentLocalparticipant.audioTracks.forEach(function(audioTrack) {
                 $scope.currentLoaclAudioTrack = audioTrack;
@@ -1352,6 +1370,7 @@ angular.module('netbase')
     }
 
     $scope.participantConnected = function(participant) { // Participant connected event handler
+      console.log("participant connected")
         var mainVideoDom = document.getElementById('twilio');
         var subTitleDom = document.createElement('div');
         subTitleDom.setAttribute('id', participant.identity);
@@ -1389,6 +1408,7 @@ angular.module('netbase')
     }
 
     $scope.participantDisconnected = function(participant) { // Participant disconnected event handler
+      console.log("participant disconnected")
         var i;
         for (i = 0; i < $scope.participants.length; i++) {
             if ($scope.participants[i] == null) continue;

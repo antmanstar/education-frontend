@@ -1702,6 +1702,7 @@ angular.module('netbase')
         },
 
         updateModuleById: function(id, data) {
+          console.log("data: ", data)
             var url = '/module/id/' + id;
             return $http({
                 method: 'PUT',
@@ -1711,6 +1712,7 @@ angular.module('netbase')
                     var str = [];
                     for (var p in obj)
                         str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    console.log("transformRequest: ", str.join("&"))
                     return str.join("&");
                 },
                 headers: {
@@ -1886,6 +1888,32 @@ angular.module('netbase')
         };
         return wrapper;
     };
+}])
+
+.factory('Cipher', ['$localStorage', function($localStorage) {
+    return {
+        cipher: salt => {
+            const textToChars = text => text.split('').map(c => c.charCodeAt(0));
+            const byteHex = n => ("0" + Number(n).toString(16)).substr(-2);
+            const applySaltToChar = code => textToChars(salt).reduce((a, b) => a ^ b, code);
+
+            return text => text.split('')
+                .map(textToChars)
+                .map(applySaltToChar)
+                .map(byteHex)
+                .join('');
+        },
+
+        decipher: salt => {
+            const textToChars = text => text.split('').map(c => c.charCodeAt(0));
+            const applySaltToChar = code => textToChars(salt).reduce((a, b) => a ^ b, code);
+            return encoded => encoded.match(/.{1,2}/g)
+                .map(hex => parseInt(hex, 16))
+                .map(applySaltToChar)
+                .map(charCode => String.fromCharCode(charCode))
+                .join('');
+        }
+    }
 }])
 
 .factory('Ewallet', ['$http', '$localStorage', function($http, $localStorage) {
