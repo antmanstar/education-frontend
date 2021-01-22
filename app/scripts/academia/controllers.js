@@ -685,6 +685,19 @@ angular.module('netbase')
     $scope.videoDisabled = 'color-white';
     $scope.audioDisabled = 'color-white';
     $scope.disableJoin = false;
+    $scope.proceed = false;
+
+    window.onkeyup = function (event) {
+      console.log("event.keycode: ", event.keyCode)
+      if (event.keyCode == 27) {
+        $scope.cancel()
+      }
+    }
+
+    $scope.$on('ngDialog.closing', function () {
+        console.log("close dialog")
+        if(!$scope.proceed) $window.close();
+    });
 
     $scope.cancel = function() {
         ngDialog.close();
@@ -715,6 +728,9 @@ angular.module('netbase')
                     }
                 }
                 resolve();
+            })
+            .catch(function(err) {
+              console.log(err.name + ": " + err.message);
             });
         });
     }
@@ -836,11 +852,12 @@ angular.module('netbase')
                     video.transform = scaleX(-1); // test mirror
                 },
                 function(err) {
+                    if ($rootScope.alertDialog == null || $rootScope.alertDialog == undefined) $rootScope.alertDialog = [];
                     $rootScope.alertDialog.push(ngDialog.open({
                         template: 'partials/modals/classroom_alert_modal.html',
                         controller: "AcademiaClassroomsAlertCtrl",
                         className: 'ngdialog-theme-default classroom-alert-modal',
-                        data: { type: "ERROR", msg: "The following error occurred: " + err.name }
+                        data: { type: "ERROR", msg: "MEDIA_DEVICES_NOT_ALLOWED_BY_USER" }
                     }));
                 }
             );
@@ -867,6 +884,7 @@ angular.module('netbase')
                     };
                     video.transform = scaleX(-1); // test mirror
                 }).catch((err) => {
+                    if ($rootScope.alertDialog == null || $rootScope.alertDialog == undefined) $rootScope.alertDialog = [];
                     $rootScope.alertDialog.push(ngDialog.open({
                         template: 'partials/modals/classroom_alert_modal.html',
                         controller: "AcademiaClassroomsAlertCtrl",
@@ -878,6 +896,7 @@ angular.module('netbase')
     }
 
     $scope.initSetting = function() {
+      console.log("init setting")
         $scope.scanDevices().then(() => {
             if ($scope.videoInputDevices.length == 0 && $scope.audioInputDevices.length == 0) {
                 console.log("allowUser: ", $scope.allowUser)
@@ -928,6 +947,7 @@ angular.module('netbase')
     }
 
     $scope.confirmSelect = function() {
+        $scope.proceed = true;
         $rootScope.ifSelectedDevice = true;
         ngDialog.close();
     }
@@ -1179,7 +1199,8 @@ angular.module('netbase')
                 template: 'partials/modals/classroom_select_device_modal.html',
                 controller: 'AcademiaClassroomSelectDeviceCtrl',
                 className: 'ngdialog-theme-default classroom-select-device-modal',
-                data: { redirectUrl: redirectUrl }
+                data: { redirectUrl: redirectUrl },
+                preCloseCallback: function(value){ console.log("should close the window! : ", value)}
             });
             return;
         }
@@ -1220,6 +1241,7 @@ angular.module('netbase')
         }
         let redirectUrl = '/a/university/' + universityUrl + '/roomid/' + roomSID + '/accountid/' + accountSid + '/roomname/' + roomName + '/';
 
+        console.log("ifSelectedDevice: ", $rootScope.ifSelectedDevice)
         if ($rootScope.ifSelectedDevice == null || $rootScope.ifSelectedDevice == undefined) {
             ngDialog.open({
                 template: 'partials/modals/classroom_select_device_modal.html',
@@ -1326,6 +1348,132 @@ angular.module('netbase')
 
             room.on('participantDisconnected', $scope.participantDisconnected);
             room.once('disconnected', error => room.participants.forEach($scope.participantDisconnected));
+            room.on('trackSubscribed', track => {
+              track.on('enabled', () => $scope.handleCamToggle(track));
+              track.on('disabled', () => $scope.handleCamToggle(track));
+            });
+        });
+    }
+
+    $scope.handleCamToggle = function(track){
+      if(track.kind=="video") {
+        if(track.isEnabled){
+          console.log("cam is turned on")
+          //$scope.camOn(track)
+        } else {
+          console.log("cam is turned off")
+          //$scope.camOff(track)
+        }
+      }
+      if(track.kind=="audio") {
+        if(track.isEnabled){
+          console.log("mic is turned on")
+        } else {
+          console.log("mic is turned off")
+        }
+      }
+    }
+
+    $scope.camOff = function(track) { // Track unsubscribed event handler
+      console.log("cam off: ", track)
+
+        track.detach().forEach(element => {
+
+            let i, j;
+            let videos = document.getElementsByTagName('video');
+            let audios = document.getElementsByTagName('audio');
+            let titles = document.getElementsByClassName('sub-video-title');
+            let compareEle = null;
+            for (i = 0; i < videos.length; i++) {
+                if (element == videos[i]) {
+                    break;
+                }
+            }
+
+            if (i == videos.length) {
+                for (i = 0; i < audios.length; i++) {
+                    if (element == audios[i]) {
+                        break;
+                    }
+                }
+                if (i == audios.length) {
+                    return;
+                } else {
+                    compareEle = audios[i];
+                }
+            } else {
+                compareEle = videos[i];
+            }
+
+            for (i = 0; i < titles.length; i++) {
+                for (j = 0; j < titles[i].childElementCount; j++) {
+                    if (compareEle == titles[i].children[j]) break;
+                }
+                if (j < titles[i].childElementCount) break;
+            }
+
+            if (i == titles.length) return;
+            console.log("titles[i]: ", titles[i])
+            let videoElem = titles[i].getElementsByTagName("video");
+            console.log("videoElem: ", videoElem)
+            videoElem[0].setAttribute('style', 'display:none;');
+            setTimeout(() => {
+                $scope.videoSizeSet();
+            }, 100);
+        });
+    }
+
+    $scope.camOn = function(track) { // Track unsubscribed event handler
+      console.log("cam on: ", track)
+
+        track.detach().forEach(element => {
+            console.log("element: ", element)
+            let i, j;
+            let videos = document.getElementsByTagName('video');
+            let audios = document.getElementsByTagName('audio');
+            let titles = document.getElementsByClassName('sub-video-title');
+            let compareEle = null;
+            for (i = 0; i < videos.length; i++) {
+                if (element == videos[i]) {
+                    break;
+                }
+            }
+
+            if (i == videos.length) {
+                for (i = 0; i < audios.length; i++) {
+                    if (element == audios[i]) {
+                        break;
+                    }
+                }
+                if (i == audios.length) {
+                    return;
+                } else {
+                    compareEle = audios[i];
+                }
+            } else {
+                compareEle = videos[i];
+            }
+
+            for (i = 0; i < titles.length; i++) {
+                for (j = 0; j < titles[i].childElementCount; j++) {
+                    if (compareEle == titles[i].children[j]) break;
+                }
+                if (j < titles[i].childElementCount) break;
+            }
+
+            if (i == titles.length) return;
+            console.log("titles[i]: ", titles[i])
+            //titles[i].setAttribute('class', 'sub-video-title');
+            let videoElem = titles[i].getElementsByTagName("video");
+            console.log("videoElem: ", videoElem)
+            if (videoElem.style.removeProperty) {
+                videoElem.style.removeProperty('display');
+            } else {
+                videoElem.style.removeAttribute('display');
+            }
+            setTimeout(() => {
+                $scope.videoSizeSet();
+            }, 100);
         });
     }
 
@@ -1333,21 +1481,21 @@ angular.module('netbase')
     // checks the status of the devices (mic and cam)
     // as preferred by the user from the classroom_select_device_modal
     $scope.setDeviceStatus = function() {
-        if (!$rootScope.constraints.video) {
-            $scope.currentLocalparticipant.videoTracks.forEach(function(videoTrack) {
-                videoTrack.track.disable();
-            });
-            $scope.videoToggle = 'fas fa-video-slash';
-            $scope.videoStatus = "Start Video";
-        }
+      if (!$rootScope.constraints.video) {
+        $scope.currentLocalparticipant.videoTracks.forEach(function(videoTrack) {
+            videoTrack.track.disable();
+        });
+        $scope.videoToggle = 'fas fa-video-slash';
+        $scope.videoStatus = "Start Video";
+      }
 
-        if (!$rootScope.constraints.audio) {
-            $scope.currentLocalparticipant.audioTracks.forEach(function(audioTrack) {
-                audioTrack.track.disable();
-            });
-            $scope.voiceToggle = 'fas fa-microphone-alt-slash';
-            $scope.voiceStatus = "Unmute";
-        }
+      if (!$rootScope.constraints.audio) {
+        $scope.currentLocalparticipant.audioTracks.forEach(function(audioTrack) {
+            audioTrack.track.disable();
+        });
+        $scope.voiceToggle = 'fas fa-microphone-alt-slash';
+        $scope.voiceStatus = "Unmute";
+      }
     }
 
     $scope.isSafari = function() {
@@ -1380,7 +1528,7 @@ angular.module('netbase')
     }
 
     $scope.participantConnected = function(participant) { // Participant connected event handler
-        console.log("participant connected")
+      console.log("participant connected")
         var mainVideoDom = document.getElementById('twilio');
         var subTitleDom = document.createElement('div');
         subTitleDom.setAttribute('id', participant.identity);
@@ -1418,7 +1566,7 @@ angular.module('netbase')
     }
 
     $scope.participantDisconnected = function(participant) { // Participant disconnected event handler
-        console.log("participant disconnected")
+      console.log("participant disconnected")
         var i;
         for (i = 0; i < $scope.participants.length; i++) {
             if ($scope.participants[i] == null) continue;
@@ -1435,6 +1583,7 @@ angular.module('netbase')
     }
 
     $scope.trackUnsubscribed = function(track) { // Track unsubscribed event handler
+      console.log("participant leaving")
         track.detach().forEach(element => {
 
             let i, j;
@@ -1502,6 +1651,7 @@ angular.module('netbase')
         $scope.participants = [];
         $scope.showingParticipants = [];
         $scope.shareScreenCaption = 'Share Screen';
+        $scope.participantDisconnected()
         $scope.disconnectClassroom();
         $scope.adminActive = '';
 
@@ -1638,7 +1788,7 @@ angular.module('netbase')
                         navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
                             $scope.disconnectClassroom();
                             $scope.connectClassroom($scope.currentRoomToken, $scope.currentRoomName);
-                            //$scope.connectClassroom($scope.currentRoomToken, $scope.currentRoomName, [stream.getTracks()[0], screenTrack]);
+                            $scope.connectClassroom($scope.currentRoomToken, $scope.currentRoomName, [stream.getTracks()[0], screenTrack]);
                         });
                         break;
                     }

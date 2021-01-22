@@ -3142,20 +3142,23 @@ angular.module('netbase')
 }])
 
 .controller('CoursesByIdCtrl', ['$sce', 'User', '$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'Ewallet', 'jwtHelper', function($sce, User, $rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, Ewallet, jwtHelper) {
-    // GET USER'S EWALLET BALANCE
-    let studentId = jwtHelper.decodeToken($localStorage.token)._id;
-    console.log("studentId: ", studentId)
-    Ewallet.getAccount(studentId).then(function(res) {
-        console.log("get account: ", res.data.result.walletBalance)
-        if (res.data.message == 'Success') {
-            $scope.balance = res.data.result.walletBalance
-        }
-    })
+
+    if($localStorage.token) {
+      // GET USER'S EWALLET BALANCE
+      let studentId = jwtHelper.decodeToken($localStorage.token)._id;
+      console.log("studentId: ", studentId)
+      Ewallet.getAccount(studentId).then(function(res) {
+          console.log("get account: ", res.data.result.walletBalance)
+          if (res.data.message == 'Success') {
+              $scope.balance = res.data.result.walletBalance
+          }
+      })
+    }
 
     let domainUrl = window.location.href;
     let courseUrl = "courses"
     if (domainUrl.indexOf('universida.de') > 0) {
-        courseUrl = "cursos"
+      courseUrl = "cursos"
     }
 
 
@@ -3168,18 +3171,21 @@ angular.module('netbase')
     Courses.getById(id).success(function(res) {
         if (res.success) {
             $scope.course = res.data;
-            let mem = res.data.members;
 
-            // Check if the student / user id is in the members array
-            // if its in the array, it means user has access to the course
-            let userid = User.getId();
+            if($localStorage.token) {
+              let mem = res.data.members;
 
-            for (let i = 0; i < mem.length; i++) {
-                if (mem[i].member == userid) {
-                    $scope.useraccess = true;
-                    //$sce.trustAsHtml($scope.course)
-                    return
+              // Check if the student / user id is in the members array
+              // if its in the array, it means user has access to the course
+              let userid = User.getId();
+
+              for(let i = 0; i < mem.length; i++) {
+                if(mem[i].member == userid) {
+                  $scope.useraccess = true;
+                  //$sce.trustAsHtml($scope.course)
+                  return
                 }
+              }
             }
         }
     });
@@ -5928,7 +5934,7 @@ angular.module('netbase')
 .controller('IndexCtrl', ['$rootScope', '$scope', '$location', '$localStorage', '$route', function($rootScope, $scope, $location, $localStorage, $route) {
     // If isn't the first visit, retts to home
     if ($localStorage.logged) {
-        $location.path("/home/landing");
+        $location.path("/home/timeline");
     } else {
         let universityUrl = $route.current.params.academiaName;
         let roomSID = $route.current.params.roomSID;
