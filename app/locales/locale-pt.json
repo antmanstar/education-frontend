@@ -1060,6 +1060,7 @@
     "EWALLET_REPLACE": "Substitui Paypal, Zelle, Square.",
     "MEDIA_SHARING": "Compartilhamento da mídia",
     "MEDIA_SHARING_SUB_1": "Crie a biblioteca de sua escola e compartilhe os recursos de aprendizado com os membros de sua comunidade.  Incorporar e compartilhar conteúdo de plataformas externas.",
-    "MEDIA_SHARING_REPLACE": "Substitui Youtube, Vimeo, bibliotecas on-line e bases de dados."
+    "MEDIA_SHARING_REPLACE": "Substitui Youtube, Vimeo, bibliotecas on-line e bases de dados.",
 
+    "MEDIA_DEVICES_NOT_ALLOWED_BY_USER": "Não é possível entrar na classe sem permitir os dispositivos de mídia."
 }

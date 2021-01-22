@@ -1702,7 +1702,7 @@ angular.module('netbase')
         },
 
         updateModuleById: function(id, data) {
-          console.log("data: ", data)
+            console.log("data: ", data)
             var url = '/module/id/' + id;
             return $http({
                 method: 'PUT',

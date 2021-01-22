@@ -1061,5 +1061,7 @@
     "EWALLET_REPLACE": "Replaces Paypal, Zelle, Square.",
     "MEDIA_SHARING": "Media Sharing",
     "MEDIA_SHARING_SUB_1": "Create your school’s library and share learning resources with the members of your community.  Embed and share content  from external platforms.",
-    "MEDIA_SHARING_REPLACE": "Replaces Youtube, Vimeo, online libraries and data bases."
+    "MEDIA_SHARING_REPLACE": "Replaces Youtube, Vimeo, online libraries and data bases.",
+
+    "MEDIA_DEVICES_NOT_ALLOWED_BY_USER": "Cannot join class without allowing the media devices."
 }

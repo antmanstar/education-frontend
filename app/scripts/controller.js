@@ -282,7 +282,10 @@ angular.module('netbase')
     }
 }])
 
-.controller('HomePersonalClassroom', ['$rootScope', '$scope', '$location', '$route', 'University', 'Classroom', 'Students', 'ngDialog', 'jwtHelper', '$localStorage', '$window', '$filter', function($rootScope, $scope, $location, $route, University, Classroom, Students, ngDialog, jwtHelper, $localStorage, $window, $filter) {
+.controller('HomePersonalClassroom', ['$rootScope', '$scope', '$location', '$route', 'University', 'Classroom', 'Students', 'ngDialog', 'jwtHelper', '$localStorage', '$window', '$filter', 'Cipher', function($rootScope, $scope, $location, $route, University, Classroom, Students, ngDialog, jwtHelper, $localStorage, $window, $filter, Cipher) {
+    const myCipher = Cipher.cipher('mySecretSalt')
+    const myDecipher = Cipher.decipher('mySecretSalt')
+
     let studentId = jwtHelper.decodeToken($localStorage.token)._id;
     $scope.studentId = studentId;
     let universityUrl = studentId;
@@ -420,7 +423,7 @@ angular.module('netbase')
     }
 
     $scope.copyLink = function(classroom) {
-        let text = domain + "/a/university/" + universityUrl + "/roomid/" + classroom.roomSID + "/accountid/" + classroom.accountSid + "/roomname/" + classroom.uniqueName + "/";
+        let text = domain + "/a/university/" + myCipher(universityUrl) + "/roomid/" + myCipher(classroom.roomSID) + "/accountid/" + myCipher(classroom.accountSid) + "/roomname/" + myCipher(classroom.uniqueName) + "/";
         Clipboard.copy(text);
         if ($rootScope.alertDialog == null || $rootScope.alertDialog == undefined) $rootScope.alertDialog = [];
 
@@ -433,7 +436,7 @@ angular.module('netbase')
     }
 
     $scope.joinClassroom = function(classroom) {
-        let text = domain + "/a/university/" + universityUrl + "/roomid/" + classroom.roomSID + "/accountid/" + classroom.accountSid + "/roomname/" + classroom.uniqueName + "/";
+        let text = domain + "/a/university/" + myCipher(universityUrl) + "/roomid/" + myCipher(classroom.roomSID) + "/accountid/" + myCipher(classroom.accountSid) + "/roomname/" + myCipher(classroom.uniqueName) + "/";
         window.open(text);
     }
 
@@ -625,7 +628,7 @@ angular.module('netbase')
 
     let urldom = window.location.href;
     if (urldom.indexOf('universida.de') > 0) {
-      course = "cursos"
+        course = "cursos"
     }
 
     $scope.originalPath = originalPath;
@@ -645,7 +648,7 @@ angular.module('netbase')
         $localStorage.showInitiarCursoButton = true;
         $localStorage.showControlButton = false
         $localStorage.viewRequest = "estudar"
-        $window.open('/'+ course +'/id/' + id + '/estudar', '_blank');
+        $window.open('/' + course + '/id/' + id + '/estudar', '_blank');
     }
 }])
 
@@ -677,7 +680,7 @@ angular.module('netbase')
     let domainUrl = window.location.href;
     let courseUrl = "courses"
     if (domainUrl.indexOf('universida.de') > 0) {
-      courseUrl = "cursos"
+        courseUrl = "cursos"
     }
 
     let ownedUniversityId = $cookies.get("ownedUniversityId");
@@ -845,7 +848,7 @@ angular.module('netbase')
         Courses.createContentModule(formdata).success(function(res) {
             $scope.loading = false
             if (res.success) {
-                $location.path("/"+courseUrl+"/a/" + ownedUniversityId + "/suite/content")
+                $location.path("/" + courseUrl + "/a/" + ownedUniversityId + "/suite/content")
             } else {
                 alert("error")
             }
@@ -906,7 +909,7 @@ angular.module('netbase')
     let domainUrl = window.location.href;
     let courseUrl = "courses"
     if (domainUrl.indexOf('universida.de') > 0) {
-      courseUrl = "cursos"
+        courseUrl = "cursos"
     }
 
     $scope.tinymceOptions = {
@@ -954,7 +957,7 @@ angular.module('netbase')
         Courses.updateQuiz(id, formdata).success(function(res) {
             $scope.loading = false
             if (res.success) {
-                $location.path('/'+courseUrl+'/a/' + $scope.universityid + '/suite/content')
+                $location.path('/' + courseUrl + '/a/' + $scope.universityid + '/suite/content')
             } else {
                 alert("error")
             }
@@ -1051,7 +1054,7 @@ angular.module('netbase')
     let domainUrl = window.location.href;
     let courseUrl = "courses"
     if (domainUrl.indexOf('universida.de') > 0) {
-      courseUrl = "cursos"
+        courseUrl = "cursos"
     }
 
     if (!$rootScope.logged) {
@@ -1078,7 +1081,7 @@ angular.module('netbase')
 
             $scope.access = true;
             if ($scope.access == false) {
-              $location.path('/' + courseUrl +'/id/' + res.data._id);
+                $location.path('/' + courseUrl + '/id/' + res.data._id);
             }
 
             // Get the last module
@@ -1086,7 +1089,7 @@ angular.module('netbase')
             let lastModule = $scope.course.module[len - 1].moduleId._id
             $localStorage.lastModuleId = lastModule
         }, function error(response) {
-          $location.path('/home/' + courseUrl);
+            $location.path('/home/' + courseUrl);
         })
 
         // auto check if student finished the course
@@ -1331,7 +1334,7 @@ angular.module('netbase')
     let domainUrl = window.location.href;
     let courseUrl = "courses"
     if (domainUrl.indexOf('universida.de') > 0) {
-      courseUrl = "cursos"
+        courseUrl = "cursos"
     }
 
     Courses.getById(id).success(function(msg) {
@@ -1399,7 +1402,7 @@ angular.module('netbase')
     let domainUrl = window.location.href;
     let courseUrl = "courses"
     if (domainUrl.indexOf('universida.de') > 0) {
-      courseUrl = "cursos"
+        courseUrl = "cursos"
     }
 
     Courses.getById(id).success(function(msg) {
@@ -1454,7 +1457,7 @@ angular.module('netbase')
     let domainUrl = window.location.href;
     let courseUrl = "courses"
     if (domainUrl.indexOf('universida.de') > 0) {
-      courseUrl = "cursos"
+        courseUrl = "cursos"
     }
 
     Courses.getById(id).success(function(msg) {
@@ -1466,7 +1469,7 @@ angular.module('netbase')
         if ($scope.access == false)
             $location.path('/' + courseUrl + '/id/' + res.data._id);
     }, function error(response) {
-      $location.path('/home/' + courseUrl);
+        $location.path('/home/' + courseUrl);
     })
 
     let cookieCheck = $cookies.getObject("course_" + id + "_" + userId);
@@ -1636,7 +1639,7 @@ angular.module('netbase')
     let domainUrl = window.location.href;
     let courseUrl = "courses"
     if (domainUrl.indexOf('universida.de') > 0) {
-      courseUrl = "cursos"
+        courseUrl = "cursos"
     }
 
     let userId = User.getId();
@@ -1648,9 +1651,9 @@ angular.module('netbase')
         if (mem.indexOf(userId) >= 0)
             $scope.access = true;
         if ($scope.access == false)
-            $location.path('/'+ courseUrl +'/id/' + res.data._id);
+            $location.path('/' + courseUrl + '/id/' + res.data._id);
     }, function error(response) {
-      $location.path('/home/'+ courseUrl);
+        $location.path('/home/' + courseUrl);
     })
 
     let videoId = $scope.cid;
@@ -1733,7 +1736,7 @@ angular.module('netbase')
                 $localStorage.showInitiarCursoButton = false;
                 $cookies.putObject($scope.cookieId, courseCookie);
                 $cookies.putObject(quizResCookie, res);
-                $window.location.href = "/"+ courseUrl +"/id/" + id + "/estudar";
+                $window.location.href = "/" + courseUrl + "/id/" + id + "/estudar";
             }).error(function(msg) {
                 alert("try again")
             })
@@ -1828,7 +1831,7 @@ angular.module('netbase')
     let domainUrl = window.location.href;
     let courseUrl = "courses"
     if (domainUrl.indexOf('universida.de') > 0) {
-      courseUrl = "cursos"
+        courseUrl = "cursos"
     }
 
     Courses.getById(id).success(function(msg) {
@@ -1838,9 +1841,9 @@ angular.module('netbase')
         if (mem.indexOf(userId) >= 0)
             $scope.access = true;
         if ($scope.access == false)
-            $location.path('/'+ courseUrl +'/id/' + res.data._id);
+            $location.path('/' + courseUrl + '/id/' + res.data._id);
     }, function error(response) {
-      $location.path('/home/'+ courseUrl);
+        $location.path('/home/' + courseUrl);
     })
 
     let cookieCheck = $cookies.getObject($scope.cookieId)
@@ -1859,7 +1862,7 @@ angular.module('netbase')
     let domainUrl = window.location.href;
     let courseUrl = "courses"
     if (domainUrl.indexOf('universida.de') > 0) {
-      courseUrl = "cursos"
+        courseUrl = "cursos"
     }
 
     Courses.getById(id).success(function(msg) {
@@ -1872,9 +1875,9 @@ angular.module('netbase')
         if (userExists)
             $scope.access = true;
         if ($scope.access == false)
-            $location.path('/'+ courseUrl +'/id/' + msg.data._id);
+            $location.path('/' + courseUrl + '/id/' + msg.data._id);
     }, function error(response) {
-      $location.path('/home/'+ courseUrl);
+        $location.path('/home/' + courseUrl);
     })
 }])
 
@@ -1887,13 +1890,13 @@ angular.module('netbase')
     let domainUrl = window.location.href;
     let courseUrl = "courses"
     if (domainUrl.indexOf('universida.de') > 0) {
-      courseUrl = "cursos"
+        courseUrl = "cursos"
     }
 
     let type = $cookies.get("type");
     let cid = $cookies.get("content_id");
     let post_id = $cookies.get("post_id");
-    var url = "/"+ courseUrl +"/id/";
+    var url = "/" + courseUrl + "/id/";
 
     if (type == "videos")
         url = url + "watch/videos/"
@@ -1914,10 +1917,10 @@ angular.module('netbase')
         if (userExists)
             $scope.access = true;
         if ($scope.access == false)
-            $location.path('/'+ courseUrl +'/id/' + msg.data._id);
+            $location.path('/' + courseUrl + '/id/' + msg.data._id);
 
     }, function error(response) {
-      $location.path('/home/'+ courseUrl);
+        $location.path('/home/' + courseUrl);
     })
 }])
 
@@ -1928,7 +1931,7 @@ angular.module('netbase')
     let domainUrl = window.location.href;
     let courseUrl = "courses"
     if (domainUrl.indexOf('universida.de') > 0) {
-      courseUrl = "cursos"
+        courseUrl = "cursos"
     }
 
     let id = $route.current.params.id;
@@ -1968,7 +1971,7 @@ angular.module('netbase')
         $scope.course = msg.data;
         $scope.get();
     }, function error(response) {
-      $location.path('/home/' + courseUrl);
+        $location.path('/home/' + courseUrl);
     })
 
     $scope.get = function() {
@@ -2126,17 +2129,17 @@ angular.module('netbase')
                     let mods = res.data;
                     $scope.modulesByAccount = mods;
                     if ($scope.module.content.length > 0) {
-                      let filtered = mods
-                      for (let i=0; i < $scope.module.content.length; i++){
-                        let content = $scope.module.content[i]
-                        filtered = filtered.filter( function(item){
-                          return item._id!=content.modelId
-                        })
+                        let filtered = mods
+                        for (let i = 0; i < $scope.module.content.length; i++) {
+                            let content = $scope.module.content[i]
+                            filtered = filtered.filter(function(item) {
+                                return item._id != content.modelId
+                            })
 
-                        if(i == $scope.module.content.length - 1) {
-                          $scope.modulesByAccount = filtered
+                            if (i == $scope.module.content.length - 1) {
+                                $scope.modulesByAccount = filtered
+                            }
                         }
-                      }
                     }
                 }
             });
@@ -2439,7 +2442,7 @@ angular.module('netbase')
     let domainUrl = window.location.href;
     let courseUrl = "courses"
     if (domainUrl.indexOf('universida.de') > 0) {
-      courseUrl = "cursos"
+        courseUrl = "cursos"
     }
 
 
@@ -2464,23 +2467,23 @@ angular.module('netbase')
     $scope.updateContent = function(contentData) {
         console.log('content data', contentData);
         if (contentData.contentType == 'page') {
-            $location.path("/"+ courseUrl +"/suite/editPage/" + contentData._id)
+            $location.path("/" + courseUrl + "/suite/editPage/" + contentData._id)
         }
         if (contentData.contentType == 'quiz') {
             console.log('quiz');
 
             localStorage.setItem('updateQuizData', JSON.stringify(contentData));
-            $location.path('/'+ courseUrl +'/suite/updateQuiz/' + contentData._id);
+            $location.path('/' + courseUrl + '/suite/updateQuiz/' + contentData._id);
         }
         if (contentData.contentType == 'forumpost') {
             console.log('forumpost');
 
             //localStorage.setItem('updateQuizData', JSON.stringify(contentData));
-            $location.path('/'+ courseUrl +'/suite/editForumpost/' + contentData._id);
+            $location.path('/' + courseUrl + '/suite/editForumpost/' + contentData._id);
         }
         if (contentData.contentType == 'video') {
             //localStorage.setItem('updateQuizData', JSON.stringify(contentData));
-            $location.path('/'+ courseUrl +'/suite/editForumpost/' + contentData._id);
+            $location.path('/' + courseUrl + '/suite/editForumpost/' + contentData._id);
         }
     }
 
@@ -2662,7 +2665,7 @@ angular.module('netbase')
 
     $scope.updateCourse = function() {
         $scope.loading = true
-        //form validation
+            //form validation
         if ($scope.title == '') {
             $scope.hasError = true;
             $scope.createcourseerrmessage = "PLEASE_ENTER_COURSE_TITLE"
@@ -2707,7 +2710,7 @@ angular.module('netbase')
             } else {
 
                 if (typeof($scope.preco) == "string")
-                  $scope.preco = $scope.preco.replace(/,/g, '.')
+                    $scope.preco = $scope.preco.replace(/,/g, '.')
 
                 if ($scope.preco > 0) {
                     formdata.price = $scope.preco;
@@ -2780,7 +2783,7 @@ angular.module('netbase')
     let domainUrl = window.location.href;
     let courseUrl = "courses"
     if (domainUrl.indexOf('universida.de') > 0) {
-      courseUrl = "cursos"
+        courseUrl = "cursos"
     }
 
     $scope.activeSection = "createPage";
@@ -2791,7 +2794,7 @@ angular.module('netbase')
         $scope.idd = res.data.moduleId;
     }).error(function(msg) {
         alert("Error")
-        $location.path('/home/'+ courseUrl);
+        $location.path('/home/' + courseUrl);
     })
 
     $scope.tinymceOptions = {
@@ -2813,7 +2816,7 @@ angular.module('netbase')
         Courses.savePage({ text: $scope.tinymceModel, contentType: 'page', title: $scope.title }, id).
         success(function(res) {
             $scope.loading = false
-            $location.path("/"+ courseUrl +"/a/" + id + "/suite/content")
+            $location.path("/" + courseUrl + "/a/" + id + "/suite/content")
         }).error(function(er) {
             $scope.loading = false
             alert(er)
@@ -2834,7 +2837,7 @@ angular.module('netbase')
     let domainUrl = window.location.href;
     let courseUrl = "courses"
     if (domainUrl.indexOf('universida.de') > 0) {
-      courseUrl = "cursos"
+        courseUrl = "cursos"
     }
 
     let universities = University.retrieveStorage()
@@ -2852,7 +2855,7 @@ angular.module('netbase')
         success(function(res) {
             $scope.loading = false
             console.log("create page response: ", JSON.stringify(res))
-            $location.path("/"+ courseUrl +"/a/" + $scope.universityid + "/suite/content")
+            $location.path("/" + courseUrl + "/a/" + $scope.universityid + "/suite/content")
                 //$location.path("/cursos/suite/modulos/id/"+$route.current.params.id)
         }).error(function(er) {
             $scope.loading = false
@@ -2886,7 +2889,7 @@ angular.module('netbase')
     let domainUrl = window.location.href;
     let courseUrl = "courses"
     if (domainUrl.indexOf('universida.de') > 0) {
-      courseUrl = "cursos"
+        courseUrl = "cursos"
     }
 
     // Get university id from the cookies
@@ -3017,7 +3020,7 @@ angular.module('netbase')
     let domainUrl = window.location.href;
     let courseUrl = "courses"
     if (domainUrl.indexOf('universida.de') > 0) {
-      courseUrl = "cursos"
+        courseUrl = "cursos"
     }
 
     // Get university id from the cookies
@@ -3139,15 +3142,18 @@ angular.module('netbase')
 }])
 
 .controller('CoursesByIdCtrl', ['$sce', 'User', '$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'Ewallet', 'jwtHelper', function($sce, User, $rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, Ewallet, jwtHelper) {
-    // GET USER'S EWALLET BALANCE
-    let studentId = jwtHelper.decodeToken($localStorage.token)._id;
-    console.log("studentId: ", studentId)
-    Ewallet.getAccount(studentId).then(function(res) {
-        console.log("get account: ", res.data.result.walletBalance)
-        if (res.data.message == 'Success') {
-            $scope.balance = res.data.result.walletBalance
-        }
-    })
+
+    if($localStorage.token) {
+      // GET USER'S EWALLET BALANCE
+      let studentId = jwtHelper.decodeToken($localStorage.token)._id;
+      console.log("studentId: ", studentId)
+      Ewallet.getAccount(studentId).then(function(res) {
+          console.log("get account: ", res.data.result.walletBalance)
+          if (res.data.message == 'Success') {
+              $scope.balance = res.data.result.walletBalance
+          }
+      })
+    }
 
     let domainUrl = window.location.href;
     let courseUrl = "courses"
@@ -3165,17 +3171,20 @@ angular.module('netbase')
     Courses.getById(id).success(function(res) {
         if (res.success) {
             $scope.course = res.data;
-            let mem = res.data.members;
 
-            // Check if the student / user id is in the members array
-            // if its in the array, it means user has access to the course
-            let userid = User.getId();
+            if($localStorage.token) {
+              let mem = res.data.members;
 
-            for(let i = 0; i < mem.length; i++) {
-              if(mem[i].member == userid) {
-                $scope.useraccess = true;
-                //$sce.trustAsHtml($scope.course)
-                return
+              // Check if the student / user id is in the members array
+              // if its in the array, it means user has access to the course
+              let userid = User.getId();
+
+              for(let i = 0; i < mem.length; i++) {
+                if(mem[i].member == userid) {
+                  $scope.useraccess = true;
+                  //$sce.trustAsHtml($scope.course)
+                  return
+                }
               }
             }
         }
@@ -3293,7 +3302,7 @@ angular.module('netbase')
     let domainUrl = window.location.href;
     let courseUrl = "courses"
     if (domainUrl.indexOf('universida.de') > 0) {
-      courseUrl = "cursos"
+        courseUrl = "cursos"
     }
 
     let studentId = jwtHelper.decodeToken($localStorage.token)._id;
@@ -3472,13 +3481,13 @@ angular.module('netbase')
         //console.log("customer id: ", $scope.customer_id)
 
         let data = {
-                customer: $scope.customer_id,
-                amount: $scope.plan.amount,
-                currency: $scope.plan.currency,
-                accountId: $scope.accountId,
-                universityId: $scope.course.university,
-            }
-            console.log("data: ", data)
+            customer: $scope.customer_id,
+            amount: $scope.plan.amount,
+            currency: $scope.plan.currency,
+            accountId: $scope.accountId,
+            universityId: $scope.course.university,
+        }
+        console.log("data: ", data)
 
         Payments.coursePayment(data).success(function(res) {
             //console.log("payments res: ", res)
@@ -4783,13 +4792,13 @@ angular.module('netbase')
 
     // Function that will redirect the user to the pricing page
     $scope.gotopricing = function() {
-      let url = window.location.href;
+        let url = window.location.href;
 
-      if (url.indexOf('universida.de') > 0) {
-        $location.path('/ensinar/preco');
-      } else {
-        $location.path('/teach/price');
-      }
+        if (url.indexOf('universida.de') > 0) {
+            $location.path('/ensinar/preco');
+        } else {
+            $location.path('/teach/price');
+        }
     }
 
     // Function that selects plan type ("basic", "pro", "team")
@@ -5754,9 +5763,9 @@ angular.module('netbase')
         let url = window.location.href;
 
         if (url.indexOf('universida.de') > 0) {
-          $location.path("/perfil/editar")
+            $location.path("/perfil/editar")
         } else {
-          $location.path('/profile/edit');
+            $location.path('/profile/edit');
         }
     }
 }])
@@ -5925,7 +5934,7 @@ angular.module('netbase')
 .controller('IndexCtrl', ['$rootScope', '$scope', '$location', '$localStorage', '$route', function($rootScope, $scope, $location, $localStorage, $route) {
     // If isn't the first visit, retts to home
     if ($localStorage.logged) {
-        $location.path("/home/landing");
+        $location.path("/home/timeline");
     } else {
         let universityUrl = $route.current.params.academiaName;
         let roomSID = $route.current.params.roomSID;
@@ -6240,7 +6249,7 @@ angular.module('netbase')
             let domainUrl = window.location.href;
             let courseUrl = "courses"
             if (domainUrl.indexOf('universida.de') > 0) {
-              courseUrl = "cursos"
+                courseUrl = "cursos"
             }
 
             let mContents = module.moduleId.content;
@@ -6357,7 +6366,7 @@ angular.module('netbase')
                     $localStorage.showInitiarCursoButton = false;
                     $cookies.putObject(cId, courseCookie);
 
-                    $window.location.href = "/"+ courseUrl +"/id/" + course + "/estudar";
+                    $window.location.href = "/" + courseUrl + "/id/" + course + "/estudar";
                 })
             }
         }
@@ -6377,7 +6386,7 @@ angular.module('netbase')
             let domainUrl = window.location.href;
             let courseUrl = "courses"
             if (domainUrl.indexOf('universida.de') > 0) {
-              courseUrl = "cursos"
+                courseUrl = "cursos"
             }
 
             for (let i = 0; i < modulecontent.length; i++) {
@@ -6421,7 +6430,7 @@ angular.module('netbase')
                     }
                     $localStorage.showInitiarCursoButton = false;
                     $cookies.putObject(cId, courseCookie);
-                    $window.location.href = '/'+courseUrl+'/id/' + course + '/estudar';
+                    $window.location.href = '/' + courseUrl + '/id/' + course + '/estudar';
                 })
             }
         }

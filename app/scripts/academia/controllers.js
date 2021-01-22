@@ -88,12 +88,15 @@ angular.module('netbase')
     });
 }])
 
-.controller('AcademiaClassroomChatCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Classroom', 'Students', 'ngDialog', 'jwtHelper', 'throttle', '$localStorage', '$window', 'Courses', '$filter', '$compile', function($rootScope, $scope, $location, $route, University, Classroom, Students, ngDialog, jwtHelper, throttle, $localStorage, $window, Courses, $filter, $compile) {
+.controller('AcademiaClassroomChatCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Classroom', 'Students', 'ngDialog', 'jwtHelper', 'throttle', '$localStorage', '$window', 'Courses', '$filter', '$compile', 'Cipher', function($rootScope, $scope, $location, $route, University, Classroom, Students, ngDialog, jwtHelper, throttle, $localStorage, $window, Courses, $filter, $compile, Cipher) {
+    const myCipher = Cipher.cipher('mySecretSalt')
+    const myDecipher = Cipher.decipher('mySecretSalt')
+
     var GENERAL_CHANNEL_UNIQUE_NAME;
     var GENERAL_CHANNEL_NAME;
     var MAX_LOAD_MESSAGE_COUNT = 120;
-    var accountSid = $route.current.params.accountSid;
-    var roomSID = $route.current.params.roomSID;
+    var accountSid = myDecipher($route.current.params.accountSid);
+    var roomSID = myDecipher($route.current.params.roomSID);
 
     $scope.tinymceOptions = {
         menuitem: 'textarea',
@@ -381,24 +384,24 @@ angular.module('netbase')
             //var urlRegex = /^([^:]+):\/\/([-\w._]+)(\/[-\w._]\?(.+)?)?$/ig
             var urlRegex = /(?:(?:https?|ftp):\/\/|\b(?:[a-z\d]+\.))(?:(?:[^\s()<>]+|\((?:[^\s()<>]+|(?:\([^\s()<>]+\)))?\))+(?:\((?:[^\s()<>]+|(?:\(?:[^\s()<>]+\)))?\)|[^\s`!()\[\]{};:'".,<>???�ȡɡơ�]))?/
             retval = value.replace(urlRegex, function(url) {
-                if(url.indexOf('https://') === -1)
-                  return '<a href="https://' + url + '" target="_blank">' + url + '</a>';
-                else if(url.indexOf('http://') === -1)
-                  return '<a href="http://' + url + '" target="_blank">' + url + '</a>';
+                if (url.indexOf('https://') === -1)
+                    return '<a href="https://' + url + '" target="_blank">' + url + '</a>';
+                else if (url.indexOf('http://') === -1)
+                    return '<a href="http://' + url + '" target="_blank">' + url + '</a>';
                 else
-                  return '<a href="' + url + '" target="_blank">' + url + '</a>';
+                    return '<a href="' + url + '" target="_blank">' + url + '</a>';
             });
         }
         return retval;
     };
 
     $scope.fixHtmlTags = function(text) {
-      text = text.replaceAll("&lt;", "<")
-      text = text.replaceAll("&gt;", ">")
-      text = text.replaceAll("&amp;", "&")
-      text = text.replaceAll("&quot;", '"')
-      text = text.replaceAll("&apos;", "'")
-      return text
+        text = text.replaceAll("&lt;", "<")
+        text = text.replaceAll("&gt;", ">")
+        text = text.replaceAll("&amp;", "&")
+        text = text.replaceAll("&quot;", '"')
+        text = text.replaceAll("&apos;", "'")
+        return text
     }
 
     $scope.sendMSG = function() { // Send message
@@ -682,6 +685,19 @@ angular.module('netbase')
     $scope.videoDisabled = 'color-white';
     $scope.audioDisabled = 'color-white';
     $scope.disableJoin = false;
+    $scope.proceed = false;
+
+    window.onkeyup = function (event) {
+      console.log("event.keycode: ", event.keyCode)
+      if (event.keyCode == 27) {
+        $scope.cancel()
+      }
+    }
+
+    $scope.$on('ngDialog.closing', function () {
+        console.log("close dialog")
+        if(!$scope.proceed) $window.close();
+    });
 
     $scope.cancel = function() {
         ngDialog.close();
@@ -712,6 +728,9 @@ angular.module('netbase')
                     }
                 }
                 resolve();
+            })
+            .catch(function(err) {
+              console.log(err.name + ": " + err.message);
             });
         });
     }
@@ -833,11 +852,12 @@ angular.module('netbase')
                     video.transform = scaleX(-1); // test mirror
                 },
                 function(err) {
+                    if ($rootScope.alertDialog == null || $rootScope.alertDialog == undefined) $rootScope.alertDialog = [];
                     $rootScope.alertDialog.push(ngDialog.open({
                         template: 'partials/modals/classroom_alert_modal.html',
                         controller: "AcademiaClassroomsAlertCtrl",
                         className: 'ngdialog-theme-default classroom-alert-modal',
-                        data: { type: "ERROR", msg: "The following error occurred: " + err.name }
+                        data: { type: "ERROR", msg: "MEDIA_DEVICES_NOT_ALLOWED_BY_USER" }
                     }));
                 }
             );
@@ -864,6 +884,7 @@ angular.module('netbase')
                     };
                     video.transform = scaleX(-1); // test mirror
                 }).catch((err) => {
+                    if ($rootScope.alertDialog == null || $rootScope.alertDialog == undefined) $rootScope.alertDialog = [];
                     $rootScope.alertDialog.push(ngDialog.open({
                         template: 'partials/modals/classroom_alert_modal.html',
                         controller: "AcademiaClassroomsAlertCtrl",
@@ -875,9 +896,10 @@ angular.module('netbase')
     }
 
     $scope.initSetting = function() {
+      console.log("init setting")
         $scope.scanDevices().then(() => {
             if ($scope.videoInputDevices.length == 0 && $scope.audioInputDevices.length == 0) {
-              console.log("allowUser: ", $scope.allowUser)
+                console.log("allowUser: ", $scope.allowUser)
                 if ($rootScope.alertDialog == null || $rootScope.alertDialog == undefined) $rootScope.alertDialog = [];
                 $scope.disableJoin = true;
                 $rootScope.alertDialog.push(ngDialog.open({
@@ -925,16 +947,20 @@ angular.module('netbase')
     }
 
     $scope.confirmSelect = function() {
+        $scope.proceed = true;
         $rootScope.ifSelectedDevice = true;
         ngDialog.close();
     }
 }])
 
-.controller('AcademiaClassroomCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Classroom', 'Students', 'ngDialog', '$localStorage', '$window', '$filter', function($rootScope, $scope, $location, $route, University, Classroom, Students, ngDialog, $localStorage, $window, $filter) {
-    let universityUrl = $route.current.params.academiaName; // Current university
-    let roomSID = $route.current.params.roomSID; // Current roomsid
-    let accountSid = $route.current.params.accountSid; // Admin user id ( = null if unlogged user)
-    let roomName = $route.current.params.roomName; // Current room name
+.controller('AcademiaClassroomCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Classroom', 'Students', 'ngDialog', '$localStorage', '$window', '$filter', 'Cipher', function($rootScope, $scope, $location, $route, University, Classroom, Students, ngDialog, $localStorage, $window, $filter, Cipher) {
+    const myCipher = Cipher.cipher('mySecretSalt')
+    const myDecipher = Cipher.decipher('mySecretSalt')
+
+    let universityUrl = myDecipher($route.current.params.academiaName); // Current university
+    let roomSID = myDecipher($route.current.params.roomSID); // Current roomsid
+    let accountSid = myDecipher($route.current.params.accountSid); // Admin user id ( = null if unlogged user)
+    let roomName = myDecipher($route.current.params.roomName); // Current room name
     $scope.administrator = []; // Array of administrators
     $scope.participants = []; // Array of participants
     $scope.selectedOne = false; // Flag varible showing if one participant's video selected by user
@@ -971,6 +997,10 @@ angular.module('netbase')
 
     angular.element($window).bind('resize', function() {
         $scope.videoSizeSet();
+    });
+
+    University.getUniversity(universityUrl).then(function(res) {
+        $scope.university = res.data.data;
     });
 
     $scope.videoSizeSet = function() { // Participants' video layout
@@ -1169,7 +1199,8 @@ angular.module('netbase')
                 template: 'partials/modals/classroom_select_device_modal.html',
                 controller: 'AcademiaClassroomSelectDeviceCtrl',
                 className: 'ngdialog-theme-default classroom-select-device-modal',
-                data: { redirectUrl: redirectUrl }
+                data: { redirectUrl: redirectUrl },
+                preCloseCallback: function(value){ console.log("should close the window! : ", value)}
             });
             return;
         }
@@ -1183,9 +1214,9 @@ angular.module('netbase')
         let url = '/classroom/' + roomSID + '/join/';
         Classroom.joinClassroom(baseUrl + url).then((res) => { // Join and get access token
                 if (res.data.success === true) {
-                    url = '/classroom/classroom/' + roomName + '/token/'
+                    url = '/classroom/classroom/' + roomName + "/" + $scope.university._id + '/token/'
                     Classroom.getAccessToken(baseUrl + url).then((response) => {
-                        $scope.connectClassroom(response.data.token, roomName);
+                        $scope.connectClassroom(response.data.token, roomName + accountSid + $scope.university._id);
                     });
                 } else {
                     $location.path("/joinerror")
@@ -1210,6 +1241,7 @@ angular.module('netbase')
         }
         let redirectUrl = '/a/university/' + universityUrl + '/roomid/' + roomSID + '/accountid/' + accountSid + '/roomname/' + roomName + '/';
 
+        console.log("ifSelectedDevice: ", $rootScope.ifSelectedDevice)
         if ($rootScope.ifSelectedDevice == null || $rootScope.ifSelectedDevice == undefined) {
             ngDialog.open({
                 template: 'partials/modals/classroom_select_device_modal.html',
@@ -1316,6 +1348,132 @@ angular.module('netbase')
 
             room.on('participantDisconnected', $scope.participantDisconnected);
             room.once('disconnected', error => room.participants.forEach($scope.participantDisconnected));
+            room.on('trackSubscribed', track => {
+              track.on('enabled', () => $scope.handleCamToggle(track));
+              track.on('disabled', () => $scope.handleCamToggle(track));
+            });
+        });
+    }
+
+    $scope.handleCamToggle = function(track){
+      if(track.kind=="video") {
+        if(track.isEnabled){
+          console.log("cam is turned on")
+          //$scope.camOn(track)
+        } else {
+          console.log("cam is turned off")
+          //$scope.camOff(track)
+        }
+      }
+      if(track.kind=="audio") {
+        if(track.isEnabled){
+          console.log("mic is turned on")
+        } else {
+          console.log("mic is turned off")
+        }
+      }
+    }
+
+    $scope.camOff = function(track) { // Track unsubscribed event handler
+      console.log("cam off: ", track)
+
+        track.detach().forEach(element => {
+
+            let i, j;
+            let videos = document.getElementsByTagName('video');
+            let audios = document.getElementsByTagName('audio');
+            let titles = document.getElementsByClassName('sub-video-title');
+            let compareEle = null;
+            for (i = 0; i < videos.length; i++) {
+                if (element == videos[i]) {
+                    break;
+                }
+            }
+
+            if (i == videos.length) {
+                for (i = 0; i < audios.length; i++) {
+                    if (element == audios[i]) {
+                        break;
+                    }
+                }
+                if (i == audios.length) {
+                    return;
+                } else {
+                    compareEle = audios[i];
+                }
+            } else {
+                compareEle = videos[i];
+            }
+
+            for (i = 0; i < titles.length; i++) {
+                for (j = 0; j < titles[i].childElementCount; j++) {
+                    if (compareEle == titles[i].children[j]) break;
+                }
+                if (j < titles[i].childElementCount) break;
+            }
+
+            if (i == titles.length) return;
+            console.log("titles[i]: ", titles[i])
+            let videoElem = titles[i].getElementsByTagName("video");
+            console.log("videoElem: ", videoElem)
+            videoElem[0].setAttribute('style', 'display:none;');
+            setTimeout(() => {
+                $scope.videoSizeSet();
+            }, 100);
+        });
+    }
+
+    $scope.camOn = function(track) { // Track unsubscribed event handler
+      console.log("cam on: ", track)
+
+        track.detach().forEach(element => {
+            console.log("element: ", element)
+            let i, j;
+            let videos = document.getElementsByTagName('video');
+            let audios = document.getElementsByTagName('audio');
+            let titles = document.getElementsByClassName('sub-video-title');
+            let compareEle = null;
+            for (i = 0; i < videos.length; i++) {
+                if (element == videos[i]) {
+                    break;
+                }
+            }
+
+            if (i == videos.length) {
+                for (i = 0; i < audios.length; i++) {
+                    if (element == audios[i]) {
+                        break;
+                    }
+                }
+                if (i == audios.length) {
+                    return;
+                } else {
+                    compareEle = audios[i];
+                }
+            } else {
+                compareEle = videos[i];
+            }
+
+            for (i = 0; i < titles.length; i++) {
+                for (j = 0; j < titles[i].childElementCount; j++) {
+                    if (compareEle == titles[i].children[j]) break;
+                }
+                if (j < titles[i].childElementCount) break;
+            }
+
+            if (i == titles.length) return;
+            console.log("titles[i]: ", titles[i])
+            //titles[i].setAttribute('class', 'sub-video-title');
+            let videoElem = titles[i].getElementsByTagName("video");
+            console.log("videoElem: ", videoElem)
+            if (videoElem.style.removeProperty) {
+                videoElem.style.removeProperty('display');
+            } else {
+                videoElem.style.removeAttribute('display');
+            }
+            setTimeout(() => {
+                $scope.videoSizeSet();
+            }, 100);
         });
     }
 
@@ -1425,6 +1583,7 @@ angular.module('netbase')
     }
 
     $scope.trackUnsubscribed = function(track) { // Track unsubscribed event handler
+      console.log("participant leaving")
         track.detach().forEach(element => {
 
             let i, j;
@@ -1492,6 +1651,7 @@ angular.module('netbase')
         $scope.participants = [];
         $scope.showingParticipants = [];
         $scope.shareScreenCaption = 'Share Screen';
+        $scope.participantDisconnected()
         $scope.disconnectClassroom();
         $scope.adminActive = '';
 
@@ -1628,7 +1788,7 @@ angular.module('netbase')
                         navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
                             $scope.disconnectClassroom();
                             $scope.connectClassroom($scope.currentRoomToken, $scope.currentRoomName);
-                            //$scope.connectClassroom($scope.currentRoomToken, $scope.currentRoomName, [stream.getTracks()[0], screenTrack]);
+                            $scope.connectClassroom($scope.currentRoomToken, $scope.currentRoomName, [stream.getTracks()[0], screenTrack]);
                         });
                         break;
                     }
@@ -1789,7 +1949,7 @@ angular.module('netbase')
 
 }])
 
-.controller('AcademiaClassroomsCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Classroom', 'Students', 'ngDialog', 'jwtHelper', '$localStorage', '$window', function($rootScope, $scope, $location, $route, University, Classroom, Students, ngDialog, jwtHelper, $localStorage, $window) {
+.controller('AcademiaClassroomsCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Classroom', 'Students', 'ngDialog', 'jwtHelper', '$localStorage', '$window', 'Cipher', function($rootScope, $scope, $location, $route, University, Classroom, Students, ngDialog, jwtHelper, $localStorage, $window, Cipher) {
     /* SHOWING CLASSROOM LIST PAGE */
     let universityUrl = $route.current.params.academiaName;
     $scope.administrator = [];
@@ -1811,6 +1971,9 @@ angular.module('netbase')
 
     var arr = $window.location.href.split("/");
     var domain = arr[0] + "//" + arr[2];
+
+    const myCipher = Cipher.cipher('mySecretSalt')
+    const myDecipher = Cipher.decipher('mySecretSalt')
 
     University.getUniversity(universityUrl).then(function(res) {
         $scope.university = res.data.data;
@@ -1906,7 +2069,6 @@ angular.module('netbase')
                             friendlyName: response.data.data.roomData.uniqueName
                         }).then((channel) => {
                             $rootScope.currentChatChannel = channel;
-                            console.log("ClassroomList", $scope.wholeClassroomList)
                         });
                     });
                 });
@@ -1925,7 +2087,7 @@ angular.module('netbase')
     }
 
     $scope.copyLink = function(classroom) {
-        let text = domain + "/a/university/" + universityUrl + "/roomid/" + classroom.roomSID + "/accountid/" + classroom.accountSid + "/roomname/" + classroom.uniqueName + "/";
+        let text = domain + "/a/university/" + myCipher(universityUrl) + "/roomid/" + myCipher(classroom.roomSID) + "/accountid/" + myCipher(classroom.accountSid) + "/roomname/" + myCipher(classroom.uniqueName) + "/";
 
         Clipboard.copy(text);
         if ($rootScope.alertDialog == null || $rootScope.alertDialog == undefined) $rootScope.alertDialog = [];
@@ -1940,12 +2102,12 @@ angular.module('netbase')
 
     $scope.joinClassroom = function(classroom) {
         window.open(domain + "/a/university/" +
-            universityUrl + "/roomid/" +
-            classroom.roomSID +
+            myCipher(universityUrl) + "/roomid/" +
+            myCipher(classroom.roomSID) +
             "/accountid/" +
-            classroom.accountSid +
+            myCipher(classroom.accountSid) +
             "/roomname/" +
-            classroom.uniqueName + "/"
+            myCipher(classroom.uniqueName) + "/"
         );
     }
 
