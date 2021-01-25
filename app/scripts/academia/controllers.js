@@ -687,16 +687,16 @@ angular.module('netbase')
     $scope.disableJoin = false;
     $scope.proceed = false;
 
-    window.onkeyup = function (event) {
-      console.log("event.keycode: ", event.keyCode)
-      if (event.keyCode == 27) {
-        $scope.cancel()
-      }
+    window.onkeyup = function(event) {
+        console.log("event.keycode: ", event.keyCode)
+        if (event.keyCode == 27) {
+            $scope.cancel()
+        }
     }
 
-    $scope.$on('ngDialog.closing', function () {
+    $scope.$on('ngDialog.closing', function() {
         console.log("close dialog")
-        if(!$scope.proceed) $window.close();
+        if (!$scope.proceed) $window.close();
     });
 
     $scope.cancel = function() {
@@ -708,30 +708,30 @@ angular.module('netbase')
     $scope.scanDevices = function() {
         return new Promise((resolve, reject) => {
             navigator.mediaDevices.enumerateDevices().then(devices => {
-                let i;
-                for (i = 0; i < devices.length; i++) {
-                    if (devices[i].kind == 'audioinput') {
-                        $scope.$apply(() => {
-                            $scope.audioInputDevices.push({
-                                deviceId: devices[i].deviceId,
-                                label: devices[i].label
+                    let i;
+                    for (i = 0; i < devices.length; i++) {
+                        if (devices[i].kind == 'audioinput') {
+                            $scope.$apply(() => {
+                                $scope.audioInputDevices.push({
+                                    deviceId: devices[i].deviceId,
+                                    label: devices[i].label
+                                });
                             });
-                        });
-                    }
-                    if (devices[i].kind == 'videoinput') {
-                        $scope.$apply(() => {
-                            $scope.videoInputDevices.push({
-                                deviceId: devices[i].deviceId,
-                                label: devices[i].label
+                        }
+                        if (devices[i].kind == 'videoinput') {
+                            $scope.$apply(() => {
+                                $scope.videoInputDevices.push({
+                                    deviceId: devices[i].deviceId,
+                                    label: devices[i].label
+                                });
                             });
-                        });
+                        }
                     }
-                }
-                resolve();
-            })
-            .catch(function(err) {
-              console.log(err.name + ": " + err.message);
-            });
+                    resolve();
+                })
+                .catch(function(err) {
+                    console.log(err.name + ": " + err.message);
+                });
         });
     }
 
@@ -896,7 +896,7 @@ angular.module('netbase')
     }
 
     $scope.initSetting = function() {
-      console.log("init setting")
+        console.log("init setting")
         $scope.scanDevices().then(() => {
             if ($scope.videoInputDevices.length == 0 && $scope.audioInputDevices.length == 0) {
                 console.log("allowUser: ", $scope.allowUser)
@@ -1200,7 +1200,7 @@ angular.module('netbase')
                 controller: 'AcademiaClassroomSelectDeviceCtrl',
                 className: 'ngdialog-theme-default classroom-select-device-modal',
                 data: { redirectUrl: redirectUrl },
-                preCloseCallback: function(value){ console.log("should close the window! : ", value)}
+                preCloseCallback: function(value) { console.log("should close the window! : ", value) }
             });
             return;
         }
@@ -1214,7 +1214,7 @@ angular.module('netbase')
         let url = '/classroom/' + roomSID + '/join/';
         Classroom.joinClassroom(baseUrl + url).then((res) => { // Join and get access token
                 if (res.data.success === true) {
-                    url = '/classroom/classroom/' + roomName + "/" + $scope.university._id + '/token/'
+                    url = '/classroom/classroom/' + roomName + '/token/'
                     Classroom.getAccessToken(baseUrl + url).then((response) => {
                         $scope.connectClassroom(response.data.token, roomName + accountSid + $scope.university._id);
                     });
@@ -1230,7 +1230,7 @@ angular.module('netbase')
     $scope.initClassroom = function() {
         let token = $localStorage.token;
         if (token == null || token == undefined) {
-            let redirectUrl = '/a/university/' + universityUrl + '/roomid/' + roomSID + '/accountid/' + accountSid + '/roomname/' + roomName + '/';
+            let redirectUrl = '/a/university/' + myCipher(universityUrl) + '/roomid/' + myCipher(roomSID) + '/accountid/' + myCipher(accountSid) + '/roomname/' + myCipher(roomName) + '/';
             ngDialog.open({
                 template: 'partials/modals/login.html',
                 controller: 'AccountCtrl',
@@ -1239,7 +1239,7 @@ angular.module('netbase')
             });
             return;
         }
-        let redirectUrl = '/a/university/' + universityUrl + '/roomid/' + roomSID + '/accountid/' + accountSid + '/roomname/' + roomName + '/';
+        let redirectUrl = '/a/university/' + myCipher(universityUrl) + '/roomid/' + myCipher(roomSID) + '/accountid/' + myCipher(accountSid) + '/roomname/' + myCipher(roomName) + '/';
 
         console.log("ifSelectedDevice: ", $rootScope.ifSelectedDevice)
         if ($rootScope.ifSelectedDevice == null || $rootScope.ifSelectedDevice == undefined) {
@@ -1349,33 +1349,33 @@ angular.module('netbase')
             room.on('participantDisconnected', $scope.participantDisconnected);
             room.once('disconnected', error => room.participants.forEach($scope.participantDisconnected));
             room.on('trackSubscribed', track => {
-              track.on('enabled', () => $scope.handleCamToggle(track));
-              track.on('disabled', () => $scope.handleCamToggle(track));
+                track.on('enabled', () => $scope.handleCamToggle(track));
+                track.on('disabled', () => $scope.handleCamToggle(track));
             });
         });
     }
 
-    $scope.handleCamToggle = function(track){
-      if(track.kind=="video") {
-        if(track.isEnabled){
-          console.log("cam is turned on")
-          //$scope.camOn(track)
-        } else {
-          console.log("cam is turned off")
-          //$scope.camOff(track)
+    $scope.handleCamToggle = function(track) {
+        if (track.kind == "video") {
+            if (track.isEnabled) {
+                console.log("cam is turned on")
+                    //$scope.camOn(track)
+            } else {
+                console.log("cam is turned off")
+                    //$scope.camOff(track)
+            }
         }
-      }
-      if(track.kind=="audio") {
-        if(track.isEnabled){
-          console.log("mic is turned on")
-        } else {
-          console.log("mic is turned off")
+        if (track.kind == "audio") {
+            if (track.isEnabled) {
+                console.log("mic is turned on")
+            } else {
+                console.log("mic is turned off")
+            }
         }
-      }
     }
 
     $scope.camOff = function(track) { // Track unsubscribed event handler
-      console.log("cam off: ", track)
+        console.log("cam off: ", track)
 
         track.detach().forEach(element => {
 
@@ -1424,7 +1424,7 @@ angular.module('netbase')
     }
 
     $scope.camOn = function(track) { // Track unsubscribed event handler
-      console.log("cam on: ", track)
+        console.log("cam on: ", track)
 
         track.detach().forEach(element => {
             console.log("element: ", element)
@@ -1463,7 +1463,7 @@ angular.module('netbase')
 
             if (i == titles.length) return;
             console.log("titles[i]: ", titles[i])
-            //titles[i].setAttribute('class', 'sub-video-title');
+                //titles[i].setAttribute('class', 'sub-video-title');
             let videoElem = titles[i].getElementsByTagName("video");
             console.log("videoElem: ", videoElem)
             if (videoElem.style.removeProperty) {
@@ -1481,21 +1481,21 @@ angular.module('netbase')
     // checks the status of the devices (mic and cam)
     // as preferred by the user from the classroom_select_device_modal
     $scope.setDeviceStatus = function() {
-      if (!$rootScope.constraints.video) {
-        $scope.currentLocalparticipant.videoTracks.forEach(function(videoTrack) {
-            videoTrack.track.disable();
-        });
-        $scope.videoToggle = 'fas fa-video-slash';
-        $scope.videoStatus = "Start Video";
-      }
+        if (!$rootScope.constraints.video) {
+            $scope.currentLocalparticipant.videoTracks.forEach(function(videoTrack) {
+                videoTrack.track.disable();
+            });
+            $scope.videoToggle = 'fas fa-video-slash';
+            $scope.videoStatus = "Start Video";
+        }
 
-      if (!$rootScope.constraints.audio) {
-        $scope.currentLocalparticipant.audioTracks.forEach(function(audioTrack) {
-            audioTrack.track.disable();
-        });
-        $scope.voiceToggle = 'fas fa-microphone-alt-slash';
-        $scope.voiceStatus = "Unmute";
-      }
+        if (!$rootScope.constraints.audio) {
+            $scope.currentLocalparticipant.audioTracks.forEach(function(audioTrack) {
+                audioTrack.track.disable();
+            });
+            $scope.voiceToggle = 'fas fa-microphone-alt-slash';
+            $scope.voiceStatus = "Unmute";
+        }
     }
 
     $scope.isSafari = function() {
@@ -1528,7 +1528,7 @@ angular.module('netbase')
     }
 
     $scope.participantConnected = function(participant) { // Participant connected event handler
-      console.log("participant connected")
+        console.log("participant connected")
         var mainVideoDom = document.getElementById('twilio');
         var subTitleDom = document.createElement('div');
         subTitleDom.setAttribute('id', participant.identity);
@@ -1566,7 +1566,7 @@ angular.module('netbase')
     }
 
     $scope.participantDisconnected = function(participant) { // Participant disconnected event handler
-      console.log("participant disconnected")
+        console.log("participant disconnected")
         var i;
         for (i = 0; i < $scope.participants.length; i++) {
             if ($scope.participants[i] == null) continue;
@@ -1583,7 +1583,7 @@ angular.module('netbase')
     }
 
     $scope.trackUnsubscribed = function(track) { // Track unsubscribed event handler
-      console.log("participant leaving")
+        console.log("participant leaving")
         track.detach().forEach(element => {
 
             let i, j;
@@ -2126,8 +2126,6 @@ angular.module('netbase')
         let url = '/classroom/end/';
         var i;
 
-
-        //privilege = 99;
         var roomId = $rootScope.deleteRoom.roomSID;
         Classroom.deleteClassroom(baseUrl + url, roomId, $scope.privilege).then((res) => {
             if (res.data.success) {
