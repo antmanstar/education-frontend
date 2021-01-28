@@ -128,12 +128,13 @@
 
         <div academiarightcolumn university="{{university}}"></div>
 
-        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 academia-content">
-
+        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9 academia-content">
+            <!---FP-448
             <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
             <div class="row academia-coverimage" ng-if="university.backgroundImage == undefined" style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
 
             <div style="height: 15px"></div>
+            -->
 
             <div academiastatus university="{{university}}"></div>
 
@@ -143,12 +144,12 @@
 
                 <div class="title" style="font-size: 2.0em; font-weight: bolder;">{{universityName}} {{'COURSES' | translate}}</div>
 
-      <div ng-include="'/partials/courses/suite/navbar.html'"></div>
+                <div ng-include="'/partials/courses/suite/navbar.html'"></div>
 
-      <!-- -->
+                <!-- -->
 
-    </div>
-    <!-- end col-xs-12 -->
+              </div>
+              <!-- end col-xs-12 -->
 
     <style>
       #board1 {

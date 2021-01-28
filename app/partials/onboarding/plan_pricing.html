@@ -222,9 +222,7 @@
           <div><b style="font-size: 2.4em; color: #335c9c;">$ 10.00</b></div>
           <div style="font-size: 0.85em;">{{'PRICE_PER_USER_MONTHLY' | translate}}</div>
           <div style="height: 15px"></div>
-          <a href="/{{'INICIAR' | translate}}">
-            <button class="btn bg-base" style="max-width: 250px">{{'PRICING_START' | translate}}</button>
-          </a>
+          <button class="btn bg-base" style="max-width: 250px" ng-click="openPaymentDialog('Essential', 10)">{{'PRICING_START' | translate}}</button>
         </div>
       </div>
 
@@ -291,9 +289,9 @@
           <div><b style="font-size: 2.4em; color: #335c9c;">$ 35.00</b></div>
           <div style="font-size: 0.85em;">{{'PRICE_PER_USER_MONTHLY' | translate}}</div>
           <div style="height: 15px"></div>
-          <a href="/{{'INICIAR' | translate}}">
-            <button class="btn bg-base" style="max-width: 250px">{{'PRICING_START' | translate}}</button>
-          </a>
+
+          <button class="btn bg-base" style="max-width: 250px" ng-click="openPaymentDialog('Advanced', 35)">{{'PRICING_START' | translate}}</button>
+
         </div>
       </div>
       <!-- end pricing -->
@@ -361,9 +359,9 @@
           <div><b style="font-size: 2.4em; color: #335c9c;">$ 55.00</b></div>
           <div style="font-size: 0.85em;">{{'PRICE_PER_USER_MONTHLY' | translate}}</div>
           <div style="height: 15px"></div>
-          <a href="/{{'INICIAR' | translate}}">
-            <button class="btn bg-base" style="max-width: 250px">{{'PRICING_START' | translate}}</button>
-          </a>
+
+          <button class="btn bg-base" style="max-width: 250px" ng-click="openPaymentDialog('Corporation', 55)">{{'PRICING_START' | translate}}</button>
+
         </div>
       </div>
       <!-- end pricing -->

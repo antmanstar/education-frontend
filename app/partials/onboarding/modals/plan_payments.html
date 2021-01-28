@@ -1,0 +1,45 @@
+<div class="container-fluid modal-accounts">
+
+  <div class="row">
+
+    <div class="col-xs-12">
+
+      <div class="headline-sub-one">{{'REVIEW_PLAN' | translate}}</div>
+      <div class="alert bg-primary-red" ng-show="errorMsg != undefined">{{errorMsg}}</div>
+      <div style="padding-top: 15px;">
+
+        <div>
+          <label style="padding-bottom: 15px;">{{'YOU_HAVE_SELECTED' | translate}}</label>
+        </div>
+
+        <div>
+          {{plan}} Plan
+          <div style="float: right;">
+            <div style="display: inline-block">$ {{planAmount(amount)}}</div>
+          </div>
+        </div>
+
+      </div>
+
+      <hr/>
+
+      <form ng-model="form" style="margin: 4em 0;">
+        <div class="form-group">
+          <label>{{'PAY_USING_CREDIT_DEBIT' | translate}}</label>
+          <stripe-element instance="card"></stripe-element>
+        </div>
+      </form>
+
+    </div>
+
+
+    <div class="form" style="bottom: 0; left: 0; width: 100%; padding-left: 15px; padding-right: 15px;">
+      <button ng-click="handleSubmit()" class="btn btn-green">
+        <b ng-hide="loading">{{'CONFIRM' | translate}}</b>
+        <img style="width: 30px;" ng-show="loading" src="img/misc/loading.gif" />
+      </button>
+    </div>
+
+  </div>
+
+</div>

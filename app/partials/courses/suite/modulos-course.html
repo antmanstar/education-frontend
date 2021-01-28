@@ -264,12 +264,14 @@ span i {
 
         <div academiarightcolumn university="{{university}}"></div>
 
-        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 academia-content">
+        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9 academia-content">
 
+            <!--fp-448
             <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
             <div class="row academia-coverimage" ng-if="university.backgroundImage == undefined" style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
 
             <div style="height: 15px"></div>
+            -->
 
             <div academiastatus university="{{university}}"></div>
 
@@ -319,7 +321,7 @@ span i {
                   <b>{{'NO_MODULE_ADDED' | translate}}</b>
                 </div>
 
-                          <div class="col-xs-12 col-sm-6" ng-repeat="module in course.module" ng-if="module.moduleId.active == true">
+                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4" ng-repeat="module in course.module" ng-if="module.moduleId.active == true">
 
                   <div class="course-card" style="cursor: pointer;">
                     <a style="color: unset;" href="/{{'CURSOS' | translate}}/a/{{universityid}}/suite/modulos/id/{{module.moduleId._id}}">

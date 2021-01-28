@@ -664,12 +664,12 @@
     }
     .video-setting-screen-controller {
         position: absolute;
-        bottom: 50px;
+        bottom: 136px;
         left: 90px;
     }
     .voice-setting-screen-controller {
         position: absolute;
-        bottom: 50px;
+        bottom: 136px;
         right: 90px;
     }
     .join-button-group {

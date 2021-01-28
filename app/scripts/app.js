@@ -118,6 +118,10 @@ angular.module('netbase', [
             templateUrl: 'partials/onboarding/signupstep1.html',
             controller: 'OnboardingSignUpScreenCtrl',
         })
+        .when('/onboarding/select_plan', {
+            templateUrl: 'partials/onboarding/plan_pricing.html',
+            controller: 'OnboardingSelectPlanCtrl',
+        })
         .when('/p/create', {
             templateUrl: 'partials/playlist/create.html',
             controller: 'PlaylistCreateCtrl',

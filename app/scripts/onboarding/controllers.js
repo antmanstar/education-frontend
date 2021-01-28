@@ -234,6 +234,163 @@ angular.module('netbase')
     }
 }])
 
+.controller('OnboardingSelectPlanCtrl', ['$rootScope', '$scope', 'ngDialog', 'Students', 'Ewallet', '$location', '$localStorage', '$window', function($rootScope, $scope, ngDialog, Students, Ewallet, $location, $localStorage, $window) {
+    $scope.company_logo = $localStorage.company_logo;
+
+    $scope.lastpageReturn = function() {
+      console.log("last page return")
+        $window.history.back();
+    }
+
+    $scope.openPaymentDialog = function(plan, amount) {
+      ngDialog.open({
+          template: 'partials/onboarding/modals/plan_payments.html',
+          controller: 'OnboardingPaymentCtrl',
+          className: 'ngdialog-theme-default',
+          closeByDocument: false,
+          closeByEscape: false,
+          closeByNavigation: true,
+          data: {
+              plan: plan,
+              amount: amount,
+              //walletBalance: $scope.balance - $scope.amount
+          }
+      });
+    }
+}])
+
+.controller('OnboardingPaymentCtrl', ['$rootScope', '$scope', 'ngDialog', 'Students', 'Ewallet', '$location', '$localStorage', '$window', 'StripeElements', 'User', 'jwtHelper', function($rootScope, $scope, ngDialog, Students, Ewallet, $location, $localStorage, $window, StripeElements, User, jwtHelper) {
+  /* FLOWS: -> addCard-> order */
+  $scope.plan = $scope.ngDialogData.plan;
+  $scope.amount = $scope.ngDialogData.amount;
+  $scope.walletBalance = $scope.ngDialogData.walletBalance;
+  $scope.flow = "order";
+  $scope.page = "order";
+
+  let studentId = jwtHelper.decodeToken($localStorage.token)._id;
+  let data = {
+      customer: $scope.customer_id,
+      amount: $scope.amount,
+      accountId: studentId,
+      plan: $scope.plan,
+  }
+  console.log("payment data: ", data)
+
+  // if the student does not have entered a credit card / debit card
+  // disable the Confirm button and display a notification
+  // that the student needs to add card first before the course can
+  // be accessed
+  $scope.hasCard = false;
+  $scope.savedCard = null;
+  $scope.customer_id = null;
+
+  $scope.loading = false;
+
+  /* plan amount */
+  $scope.planAmount = function(amount) {
+      console.log('amount: ', amount)
+      amount = amount.toFixed(2);
+      return amount;
+  }
+
+
+  /* STRIPE */
+  var elements = StripeElements.elements()
+  let style = {
+      base: {
+          lineHeight: '45px'
+      }
+  };
+
+  var card = elements.create('card', { style: style });
+  $scope.card = card;
+  card.on('change', handleChange)
+  $scope.form = {};
+
+  function handleChange(e) {
+      $scope.cardErrors = e.error ? e.error.message : ''
+
+      if (e.error != undefined) {
+          $scope.loading = false;
+          $scope.validationError = e.error.message;
+      } else {
+          $scope.loading = false;
+          $scope.validationError = undefined;
+      }
+
+  }
+
+  // In
+  $scope.handleSubmit = function() {
+      console.log("handleSUbmit")
+      $scope.loading = true;
+
+      //
+      //  CREATE STRIPE TOKEN USING CREDIT CARD DETAILS
+      //
+
+      if ($scope.validationError==undefined) {
+        console.log("creating token card: ", card)
+          $scope.loading = true;
+          StripeElements.createToken(card).then(function(result) {
+            console.log('create token: ', result)
+              if (result.token) {
+                $scope.oneTimeToken = result.token
+
+                let data = {
+                    amount: $scope.amount,
+                    accountId: studentId,
+                    plan: $scope.plan,
+                }
+                console.log("perform plan payment with token: ", $scope.oneTimeToken)
+                console.log("data: ", data)
+
+                // PERFORM PLAN PAYMENT FUNCTION
+
+                $scope.loading = false;
+                $scope.$apply();
+              } else {
+                  $scope.validationError = result.error.message;
+                  $scope.loading = false;
+                  $scope.$apply();
+              }
+              $scope.loading = false;
+          });
+      } else {
+        console.log("validation error")
+      }
+
+    }
+
+  //
+  //
+  //
+  $scope.handleEwalletCoursePayment = function() {
+      let data = {
+          userId: studentId,
+          type: "SUBSCRIPTION",
+          amount: $scope.amount,
+          description: "Plan Payment",
+          remark: "",
+          subscriptionId: "",
+          senderId: "",
+          recieverId: "",
+          status: "COMPLETED",
+      }
+
+      Ewallet.ewalletTransaction(data)
+          .then(function(res) {
+              console.log(res)
+              if (res.data.message == "Success") {
+                  $location.path('/' + courseUrl + '/id/' + $scope.course._id + '/timeline');
+              }
+          })
+          .catch((err) => {
+              console.log("error: ", err)
+          });
+  }
+}])
+
 .controller('OnboardingScreenCtrl', ['$rootScope', '$scope', 'ngDialog', 'University', 'Knowledge', function($rootScope, $scope, ngDialog, University, Knowledge) {
     $scope.universities = [];
     $scope.page = 2;
