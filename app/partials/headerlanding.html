@@ -1,6 +1,6 @@
 <div ng-controller="HeaderCtrl">
-  <update-title title="{{'PAGETITLE' | translate}}"></update-title>
-  <!--
+    <update-title title="{{'PAGETITLE' | translate}}"></update-title>
+    <!--
   <div class="row" style="height: 40px; line-height: 40px; padding-left: 15px; padding-right: 15px; padding-bottom: 2px; padding-top: 6px;">
     <div class="col col-xs-3" style="padding: 3px;"><img height="100%" src="img/universidade_icon.png" /><span style="margin-left: 8px; font-size: 1.15em;"><i class="fas fa-angle-down" style="vertical-align: top; padding-top: 6px;"></i></span></div>
     <div class="col col-xs-6" style="text-align: center; padding: 3px;"><img height="80%" src="img/universidade_logo.png" /></div>
@@ -8,181 +8,184 @@
   </div>
 -->
 
-  <style>
-    img {
-      vertical-align: top;
-    }
-    .navbar-mobile .menu .option {
-      line-height: 33px !important;
-      text-transform: unset;
-    }
+    <style>
+        img {
+            vertical-align: top;
+        }
+        
+        .navbar-mobile .menu .option {
+            line-height: 33px !important;
+            text-transform: unset;
+        }
+    </style>
 
-    .fab {
-      display: none;
-    }
+    <nav>
 
-    .login-btn {
-      width: 120px;
-      height: 40px;
-      background-color: #EAEAEA;
-      text-align: center;
-      border-radius: 4px;
-    }
+        <div class="navbar-top">
 
-    .register-btn {
-      width: 120px;
-      height: 40px;
-      background-color: #52BFEA;
-      color: #ffffff !important;
-      text-align: center;
-      border-radius: 4px;
-    }
+            <!--
+        <div class="brand">
+          <img id="logo" ng-hide="university.whitelabel" src="img/logo/universidade.png" />
+          <img id="logo" ng-show="university.whitelabel" src="{{university.logo}}" />
+          <img id="logoIcon" src="img/icon.png" />
+          <span><i class="fas fa-angle-down"></i></span>
+        </div>
+        -->
 
-    .padright {
-      margin-right: 16px;
-    }
+            <div class="container-fluid">
+                <div class="row navbar-top-first" style="height: 40px; line-height: 40px; padding-bottom: 2px; padding-top: 6px;">
+                    <div id="logomaster" class="col-xs-3 col-sm-4" style="padding: 3px; height: 100%; padding-left: 15px;"><img height="100%" src="img/universidade_icon.png" /><span style="margin-left: 8px; font-size: 1.15em;"><i class="fas fa-angle-down" style="vertical-align: top; padding-top: 6px;"></i></span></div>
 
-    @media only screen and (max-width: 990px) {
-      .login-btn {
-        width: 80px !important;
-      }
+                    <div class="col-xs-6 col-sm-4" style="text-align: center; height: 100%; padding: 2px;" ng-show="!whitelabel">
+                        <a href="/home/landing"><img height="100%" src="{{company_logo}}" /></a>
+                    </div>
+                    <div class="col-xs-6 col-sm-4" style="text-align: center; height: 100%;" ng-show="whitelabel">
+                        <a href="/a/{{university.url}}/timeline"><img height="100%" src="{{university.logoWhitelabel}}" /></a>
+                    </div>
 
-      .register-btn {
-        width: 80px !important;
-      }
+                    <!--<div class="col-xs-3 col-sm-4" id="mobile-credentials" ng-show="logged" ng-click="searchbar()" style="text-align: right; height: 100%; padding-right: 10px; line-height: 32px;"><div ng-click="searchBarToggle()" style="font-size: 1.4em; padding-bottom: 3px;"><i class="fas fa-search"></i></div></div>-->
+                    <div class="col-xs-3 col-sm-4" id="mobile-credentials" ng-hide="logged" ng-click="login()" style="padding: 3px; text-align: right; height: 100%; padding-right: 10px;"><img height="100%" src="https://visualpharm.com/assets/880/Customer-595b40b65ba036ed117d413a.svg" /></div>
+                    <div class="col-xs-3 col-sm-4" id="desktop-credentials" style="height: 40px;">
 
-      .padright {
-        margin-right: 12px;
-      }
-    }
+                        <div class="menu-right">
+                            <div class="options" style="padding-right: 0px;">
 
-    @media only screen and (max-width: 848px) {
+                                <!--
+                <div id="languageMenu" ng-hide="logged" class="language">
+                  <span style="padding-top: 10px; padding-right: 5px;">{{'LANGUAGE' | translate}} <i class="fas fa-angle-down" style="margin-top: 10px; display: inline-block; vertical-align: top;"></i></span>
+                  <div class="language-expanded">
+                    <div ng-click="changeLanguage('en')" ng-class="{'selected-language': selectedLanguage === 'en'}">{{'ENGLISH' | translate}} (en-us)</div>
+                    <div ng-click="changeLanguage('pt')" ng-class="{'selected-language': selectedLanguage === 'pt'}">{{'PORTUGUESE' | translate}} (pt-br)</div>
+                  </div>
+                </div>
+                -->
 
-      .padright {
-        margin-right: 10px;
-      }
-    }
+                                <div ng-hide="logged" style="cursor: pointer;" ng-click="login()">{{'HEADER_MENU_1' | translate}}</div>
 
-    @media only screen and (max-width: 832px) {
+                                <div ng-hide="logged" style="cursor: pointer;" ng-click="signup()">{{'HEADER_MENU_2' | translate}}</div>
 
-      .padright {
-        margin-right: 0 !important;
-      }
-    }
+                                <div id="profileMenu" ng-show="logged" class="profile">
+                                    <span style="padding-top: 10px; padding-right: 5px;"><i class="fas fa-angle-down" style="margin-top: 15px; display: inline-block; vertical-align: top;"></i></span>
+                                    <div class="picture" ng-if="user.imageUrl == undefined" style="background-image: url('img/user/user.png'); background-size: cover; height: 35px; width: 35px; display: inline-block; border-radius: 50%;"></div>
+                                    <div class="picture" ng-if="user.imageUrl != undefined" style="background-image: url('{{user.imageUrl}}'); background-size: cover; height: 35px; width: 35px; display: inline-block; border-radius: 50%;"></div>
+                                    <!--<span><i class="fas fa-user-circle" style="padding-right: 2px;"></i></span> {{user.name}} <span><i class="fas fa-angle-down" style="padding-left: 3px;"></i></span>-->
+                                    <div class="profile-expanded">
+                                        <!--<div><a href="/dashboard">Dashboard</a></div>-->
+                                        <div><a href="/{{'PERFIL' | translate}}">{{'HEADER_PROFILE_1' | translate}}</a></div>
+                                        <!--
+                    <div ng-click="changeLanguage('en')" ng-class="{'selected-language': selectedLanguage === 'en'}">{{'ENGLISH' | translate}} (en-us)</div>
+                    <div ng-click="changeLanguage('pt')" ng-class="{'selected-language': selectedLanguage === 'pt'}">{{'PORTUGUESE' | translate}} (pt-br)</div>
+                    -->
+                                        <div ng-click="logout()"><a>{{'HEADER_PROFILE_2' | translate}}</a></div>
+                                    </div>
+                                </div>
 
-    @media only screen and (max-width: 769px) {
-      .fab {
-         display: inline;
-       }
+                            </div>
+                        </div>
 
-       .padright {
-         margin-right: 8px;
-       }
-    }
-  </style>
+                    </div>
+                    <!-- end col-xs-4 -->
 
-  <nav style="top: 0; left: 0;">
+                </div>
+                <!-- end row -->
 
-    <div class="navbar-top">
+                <style>
+                    .search-bar-mobile {
+                        padding-bottom: 5px;
+                        padding-top: 5px;
+                    }
+                    
+                    @media only screen and (max-width: 768px) {
+                        .hide-mobile {
+                            display: none;
+                        }
+                    }
+                </style>
 
-        <div class="container-fluid">
-        <div class="row navbar-top-first" style="height: 40px; line-height: 40px; padding-bottom: 2px; padding-top: 6px;">
-          <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3 col-xl-3" style="padding: 3px; height: 100%; padding-left: 15px;" ng-click="logoUrl()">
-            <img height="100%" src="img/universidade_icon.png" />
-            <img height="100%" src="{{company_logo}}" />
-          </div>
+                <div class="search-bar-mobile animated fadeIn" style="width: 100%;" ng-show="searchBarDisplay">
 
-          <div class="col-xs-8 col-sm-9 col-md-9 col-lg-9 col-xl-9" id="mobile-credentials" style="padding: 3px; text-align: right; height: 100%; padding-right: 10px;">
-            <i class="fa fa-bars" aria-hidden="true" style="font-size:24px;"></i>
-          </div>
+                    <input style="width: calc(100% - 59px);" type="text"></input>
+                    <!--
+          -->
+                    <div style="display: inline-block; width: 55px; text-align: right; height: 26px;"><button style="border: none;">Go!</button></div>
 
-          <div class="col-xs-8 col-sm-9 col-md-9" id="desktop-credentials" style="height: 40px;">
-            <div class="menu-right">
-              <div class="options" style="padding-right: 0px; font-size: 14px">
-                <div class="padright" style="cursor: pointer;" ng-click="features()">{{'LANDING_HEADER_FEATURES' | translate}}</div>
-                <div class="padright" style="cursor: pointer;" ng-click="pricing()">{{'LANDING_HEADER_PRICING' | translate}}</div>
-                <div class="padright" style="cursor: pointer;" ng-click="download()">{{'LANDING_HEADER_DOWNLOAD' | translate}}</div>
-                <div class="padright" style="cursor: pointer;" ng-click="aboutus()">{{'LANDING_HEADER_ABOUT_US' | translate}}</div>
-                <div class="login-btn padright" style="cursor: pointer;" ng-click="login()">{{'HEADER_MENU_1' | translate}}</div>
-                <div class="register-btn" style="cursor: pointer;" ng-click="signup()">{{'HEADER_MENU_2' | translate}}</div>
-              </div>
+                </div>
+                <!-- search-bar-mobile -->
+
+                <!-- fadeInDown -->
+                <div class="navbar-mobile animated fast" ng-class="{fadeIn: navbarMobileOpen == false}">
+
+                    <div class="menu">
+                        <div class="option unselectable" ng-if="logged" ng-class="{'active': originalPath == '/home/timeline' || originalPath == '/home/timeline/'}">
+                            <a href="/home/timeline"><img src="/img/icon/timeline.png" height="33px" width="33px" style="margin-right: 15px;" />{{'TIMELINE' | translate}}</a>
+                        </div>
+                        <div class="option unselectable" ng-class="{'active': originalPath == '/home' || originalPath == '/home/'}">
+                            <a href="/home"><img src="/img/icon/office/home.png" height="33px" width="33px" style="margin-right: 15px;" />{{'HEADER_HOME' | translate}}</a>
+                        </div>
+                        <div class="option unselectable" ng-class="{'active': originalPath == '/home/{{'UNIVERSIDADES' | translate}}' || originalPath == '/home/{{'UNIVERSIDADES' | translate}}/'}">
+                            <a href="/home/{{'UNIVERSIDADES' | translate}}"><img src="/img/icon/office/university.png" height="33px" width="33px" style="margin-right: 15px;" />{{'UNIVERSITIES' | translate}}</a>
+                        </div>
+                        <!--<div class="option unselectable" ng-class="{'active': originalPath == '/home/noticias' || originalPath == '/home/noticias/'}"><a href="/home/noticias"><img src="/img/icon/office/opinion.png" height="23px" width="33px" style="padding-right: 10px;" />Opinião</a></div>-->
+                        <!--<div class="option unselectable" ng-class="{'active': originalPath.indexOf('/home/conhecimento') != -1 }"><a href="/home/conhecimento">Conhecimento</a></div>-->
+                        <!--div class="option unselectable" ng-class="{'active': originalPath == '/cursos' || originalPath == '/cursos/'}"><a href="/home">Cursos</a></div>-->
+                        <!--<div class="option unselectable" ng-class="{'active': originalPath == '/home/colleges' || originalPath == '/home/colleges/'}"><a href="/home/colleges">Colleges</a></div>-->
+                        <!--<div class="option unselectable" ng-class="{'active': originalPath == '/home/smp' || originalPath == '/home/smp/'}"><a href="/home/smp">Marketplace</a></div>-->
+                    </div>
+                    <!-- end menu -->
+
+                    <div class="menu" ng-hide="logged">
+                        <div class="header" style="border-top: 2px solid #2d4255; margin-left: 25px; margin-right: 25px; padding-bottom: 15px;"></div>
+                        <!--
+          <div class="option unselectable" ng-click="changeLanguage('en')" ng-class="{'selected-language': selectedLanguage === 'en'}">{{'ENGLISH' | translate}} (en-us)</div>
+          <div class="option unselectable" ng-click="changeLanguage('pt')" ng-class="{'selected-language': selectedLanguage === 'pt'}">{{'PORTUGUESE' | translate}} (pt-br)</div>
+          -->
+                        <div class="option unselectable" style="cursor: pointer;" ng-hide="logged" ng-click="login()">{{'HEADER_MENU_1' | translate}}</div>
+                        <div class="option unselectable" style="cursor: pointer;" ng-hide="logged" ng-click="signup()">{{'CRIAR_CONTA' | translate}}</div>
+                    </div>
+                    <!-- end menu -->
+
+                    <div class="profile" ng-show="logged">
+                        <div class="header"><span><i class="fas fa-user-circle"></i></span> {{user.name}}</div>
+                        <div class="menu">
+                            <div class="option unselectable" ng-show="logged"><a href="/{{'PERFIL' | translate}}">{{'HEADER_PROFILE_1' | translate}}</a></div>
+                            <div class="option" ng-click="logout()">{{'HEADER_PROFILE_2' | translate}}</div>
+                        </div>
+                        <!-- end menu -->
+                    </div>
+                    <!-- end profile -->
+
+                    <div class="menu">
+
+                        <div class="header" style="border-top: 2px solid #2d4255; margin-left: 25px; margin-right: 25px; padding-bottom: 15px;"></div>
+
+                        <div class="option unselectable">
+                            <a href="https://univer.site"><img src="https://cdn.webshopapp.com/shops/94414/files/54002808/france-flag-icon-free-download.jpg" height="33px" width="33px" style="margin-right: 15px; border-radius: 50%;" />French</a>
+                        </div>
+                        <div class="option unselectable">
+                            <a href="https://universida.de"><img src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Flag_of_Portugal.svg" height="33px" width="33px" style="margin-right: 15px; border-radius: 50%;" />Portuguese</a>
+                        </div>
+                        <div class="option unselectable">
+                            <a href="https://universid.ad"><img src="https://cdn.webshopapp.com/shops/94414/files/52431402/flag-of-spain.jpg" height="33px" width="33px" style="margin-right: 15px; border-radius: 50%;" />Spanish</a>
+                        </div>
+                        <div class="option unselectable">
+                            <a href="#"><img src="https://cdn.countryflags.com/thumbs/finland/flag-800.png" height="33px" width="33px" style="margin-right: 15px; border-radius: 50%;" />Finnish</a>
+                        </div>
+                        <div class="option unselectable">
+                            <a href="#"><img src="https://cdn.webshopapp.com/shops/94414/files/52440074/flag-of-ukraine.jpg" height="33px" width="33px" style="margin-right: 15px; border-radius: 50%;" />Ukrainian</a>
+                        </div>
+
+                    </div>
+                    <!-- end menu -->
+
+                </div>
+                <!-- navbar mobile -->
+
             </div>
-          </div>
+
         </div>
-        <!-- end row -->
+        <!-- end container fluid -->
 
-        <style>
-
-          .search-bar-mobile {
-            padding-bottom: 5px;
-            padding-top: 5px;
-          }
-
-          @media only screen and (max-width: 768px) {
-
-            .hide-mobile {
-              display: none;
-            }
-
-          }
-
-        </style>
-
-      <!-- fadeInDown -->
-      <div class="navbar-mobile animated fast" ng-class="{fadeIn: landingnavbarMobileOpen == false}">
-
-        <div class="menu">
-          <div class="option unselectable" ng-if="logged" ng-class="{'active': originalPath == '/home/timeline' || originalPath == '/home/timeline/'}">
-            <a href="/home/timeline">
-              <img src="/img/icon/timeline.png" height="33px" width="33px" style="margin-right: 15px;" />
-              {{'TIMELINE' | translate}}
-            </a>
-          </div>
-          <div class="option unselectable" ng-class="{'active': originalPath == '/home' || originalPath == '/home/'}">
-            <a href="/home">
-              <img src="/img/icon/office/home.png" height="33px" width="33px" style="margin-right: 15px;" />
-              {{'HEADER_HOME' | translate}}
-            </a>
-          </div>
-          <div class="option unselectable" ng-class="{'active': originalPath == '/home/{{'UNIVERSIDADES' | translate}}' || originalPath == '/home/{{'UNIVERSIDADES' | translate}}/'}">
-            <a href="/home/{{'UNIVERSIDADES' | translate}}">
-              <img src="/img/icon/office/university.png" height="33px" width="33px" style="margin-right: 15px;" />
-              {{'UNIVERSITIES' | translate}}
-            </a>
-          </div>
-        </div>
-        <!-- end menu -->
-
-        <div class="menu">
-          <div class="header" style="border-top: 2px solid #2d4255; margin-left: 25px; margin-right: 25px; padding-bottom: 15px;"></div>
-          <div class="option unselectable" style="cursor: pointer;" ng-click="features()">{{'LANDING_HEADER_FEATURES' | translate}}</div>
-          <div class="option unselectable" style="cursor: pointer;" ng-click="pricing()">{{'LANDING_HEADER_PRICING' | translate}}</div>
-          <div class="option unselectable" style="cursor: pointer;" ng-click="download()">{{'LANDING_HEADER_DOWNLOAD' | translate}}</div>
-          <div class="option unselectable" style="cursor: pointer;" ng-click="aboutus()">{{'LANDING_HEADER_ABOUT_US' | translate}}</div>
-          <div class="option unselectable" style="cursor: pointer;" ng-hide="logged" ng-click="login()">{{'HEADER_MENU_1' | translate}}</div>
-          <div class="option unselectable" style="cursor: pointer;" ng-hide="logged" ng-click="signup()">{{'CRIAR_CONTA' | translate}}</div>
-        </div>
-        <!-- end menu -->
-
-        <!--div class="menu">
-          <div class="header" style="border-top: 2px solid #2d4255; margin-left: 25px; margin-right: 25px; padding-bottom: 15px;"></div>
-          <div class="option unselectable"><a href="https://univer.site"><img src="https://cdn.webshopapp.com/shops/94414/files/54002808/france-flag-icon-free-download.jpg" height="33px" width="33px" style="margin-right: 15px; border-radius: 50%;" />French</a></div>
-          <div class="option unselectable"><a href="https://universida.de"><img src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Flag_of_Portugal.svg" height="33px" width="33px" style="margin-right: 15px; border-radius: 50%;" />Portuguese</a></div>
-          <div class="option unselectable"><a href="https://universid.ad"><img src="https://cdn.webshopapp.com/shops/94414/files/52431402/flag-of-spain.jpg" height="33px" width="33px" style="margin-right: 15px; border-radius: 50%;" />Spanish</a></div>
-          <div class="option unselectable"><a href="#"><img src="https://cdn.countryflags.com/thumbs/finland/flag-800.png" height="33px" width="33px" style="margin-right: 15px; border-radius: 50%;" />Finnish</a></div>
-          <div class="option unselectable"><a href="#"><img src="https://cdn.webshopapp.com/shops/94414/files/52440074/flag-of-ukraine.jpg" height="33px" width="33px" style="margin-right: 15px; border-radius: 50%;" />Ukrainian</a></div>
-        </div>
-        <!-- end menu -->
-
-      </div>
-      <!-- navbar mobile -->
-
-    </div>
-
-    </div>
-    <!-- end container fluid -->
-
-  </nav>
-  <!-- end nav -->
+    </nav>
+    <!-- end nav -->
 
 </div>
