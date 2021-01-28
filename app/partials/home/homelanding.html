@@ -4,728 +4,721 @@
     .section-cards {
         scrollbar-width: none;
     }
-
+    
     .section-cards::-webkit-scrollbar {
         display: none;
     }
-
+    
     .section-cards {
         -ms-overflow-style: none;
         overflow: -moz-scrollbars-none;
         margin-bottom: 10px;
     }
-
+    
     .headline-container {
         padding-top: 5px;
         font-size: 1.7em;
         padding-bottom: 10px;
     }
-
-    .red-text {
-      color: #AA2C26;
-      font-size: 21px;
-      font-weight: bold;
+    
+    @media screen and (max-width: 768px) {
+        body {
+            font-size: 18px !important;
+        }
+        .headline-sub-container {
+            padding-left: 15px;
+            padding-right: 15px;
+            padding-bottom: 10px;
+            line-height: 1.3em;
+        }
+        .headline-container {
+            padding-top: 10px;
+            padding-left: 15px;
+            padding-right: 15px;
+            padding-bottom: 5px;
+            font-size: 1.4em;
+            line-height: 1.2em;
+        }
+        .academia-footer {
+            font-size: 14px;
+        }
+        .navbar-slider {
+            display: none;
+        }
+        .navbar-top-first {
+            margin-bottom: 2px;
+        }
+        .container-home {
+            padding-top: 43px !important;
+        }
+        .section-content-col {
+            padding-left: 0px;
+            padding-right: 0px;
+        }
+        #newuser-title {
+            padding-top: 5px !important;
+            font-size: 1.3em !important;
+        }
     }
-
-    .landing-red {
-      color: #AA2C26;
-    }
-
-    .landing-blue {
-      color: #52BFEA;
-    }
-
-    .landing-blue-green {
-      color: #30B39F;
-    }
-
-    .landing-dark-blue {
-      color: #2D4255;
-    }
-
-    .landing-yellow {
-      color: #FAB60F;
-    }
-
-    .landing-purple {
-      color: #B460A2;
-    }
-
-    .landing-black {
-      color: #161616;
-    }
-
+    /* first block */
+    
     .first-block {
-      margin-top: 80px;
-      text-align: center;
+        margin-top: 40px;
+        margin-bottom: 165px;
     }
-
+    
     .first-block .title-wrap {
-      font-size: 52px;
-      margin-bottom: 15px;
-      line-height: 1.1em;
-      font-weight: bold;
+        font-size: 4.5em;
+        margin-bottom: 15px;
+        line-height: 1.1em;
+        font-weight: bold;
     }
-
-    .second-block {
-      margin-top: 40px;
-      text-align: center;
-    }
-
-    .second-block .title-wrap {
-      font-size: 52px;
-      margin-bottom: 36px;
-      line-height: 1.1em;
-      font-weight: bold;
-    }
-
-    .first-schools-block {
-      margin-top: 40px;
-      margin-bottom: 0;
-      text-align: center;
-    }
-
-    .first-schools-block .title-wrap {
-      font-size: 52px;
-      margin-bottom: 15px;
-      line-height: 1.1em;
-      font-weight: bold;
-    }
-
-    .first-schools-block-text-div {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-evenly;
-      text-align: initial;
-      height: 400px;
-    }
-
-    .choose-plan-block {
-      text-align: center;
-      background-color: #D8D8D8;
-      height: 451px;
-      padding: 0 36px;
-    }
-
-    .choose-plan-block .title-wrap {
-      font-size: 52px;
-      margin-bottom: 15px;
-      line-height: 1.1em;
-      font-weight: bold;
-    }
-
-    .start-educating-block {
-      margin-top: 72px;
-      text-align: center;
-      padding: 48px 0;
-      height: 312px;
-    }
-
-    .start-educating-block .title-wrap {
-      font-size: 52px;
-      margin-bottom: 15px;
-      line-height: 1.1em;
-      font-weight: bold;
-    }
-
-    .mobilize-block {
-      height: 620px;
-    }
-
-    .mobilize-block-text-div {
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .mobilize-block-img-div {
-      height: 100%;
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-    }
-
-    .mobilize-block-img-android {
-      display: flex;
-      align-items: flex-end;
-    }
-
-    .subtitles {
-      font-size: 32px;
-      color: #161616;
-      font-weight: bold;
-    }
-
-    .platform-ss-img {
-      height: 320px;
-      width: 540px;
-    }
-
-    .phone-img {
-      height: 521px;
-      width: 255px;
-    }
-
-    .download-block-first-img {
-      margin-right: 24px;
-    }
-
-    @media only screen and (max-width: 1135px) {
-      .phone-img {
-        height: 420px;
-        width: 200px;
-      }
-
-      .platform-ss-img {
-        height: 256px;
-        width: 432px;
-      }
-
-      .mobilize-block-img-div {
-        height: 580px;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        margin-top: 48px;
-      }
-    }
-
-    @media only screen and (max-width: 994px) {
-      .mobilize-block {
-        height: auto !important;
-      }
-
-      .mobilize-block-img-div {
-        height: 640px;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        margin-top: 48px;
-      }
-    }
-
+    
     @media only screen and (max-width: 768px) {
-
-      .first-block .title-wrap {
-        font-size: 32px;
-        margin-bottom: 15px;
-        line-height: 1.1em;
-        font-weight: bold;
-      }
-
-      .second-block .title-wrap {
-        font-size: 32px;
-        margin-bottom: 15px;
-        line-height: 1.1em;
-        font-weight: bold;
-      }
-
-      .choose-plan-block {
-        height: auto;
-        text-align: center;
-        background-color: #FAFAFA;
-        padding: 36px 0;
-      }
-
-      .choose-plan-block .title-wrap {
-        font-size: 32px;
-        margin-bottom: 15px;
-        line-height: 1.1em;
-        font-weight: bold;
-      }
-
-      .start-educating-block {
-        margin-top: 0;
-        text-align: center;
-        padding: 48px 0;
-        height: auto;
-      }
-
-      .start-educating .title-wrap {
-        font-size: 2.2em;
-        margin-bottom: 15px;
-        line-height: 1.1em;
-        font-weight: bold;
-      }
-
-      .first-schools-block {
-        margin-bottom: 40px;
-      }
-
-      .first-schools-block .title-wrap {
-        font-size: 32px;
-      }
-
-      .first-schools-block-text-div {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-evenly;
-        text-align: initial;
-        height: auto;
-      }
-
-      .mobilize-block {
-        height: auto !important;
-      }
-
-      .mobilize-block-img-div {
-        height: 400px;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-      }
-
-      .download-block {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-evenly;
-        margin-bottom: 24px;
-      }
-
-      .subtitles {
-        font-size: 21px;
-      }
-
-      .phone-img {
-        height: 330px;
-        width: 165px;
-      }
-
-      .platform-ss-img {
-        height: 207px;
-        width: 350px;
-      }
-
-      .feature {
-        margin-bottom: 16px;
-      }
-
-      .get-started-button {
-        font-size: 17px;
-        font-weight: 600;
-        width: 100% !important;
-        height: 50px;
-        color: #FFFFFF !important;
-        border-radius: 2px;
-        background-color: #52BFEA !important;
-        border: none !important;
-        text-transform: uppercase;
-      }
-
+        .first-block .title-wrap {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            line-height: 1.1em;
+        }
     }
-
+    
     .first-block .description {
-      font-size: 1.2em;
-      margin-bottom: 45px;
-      color: #353535;
+        font-size: 1.2em;
+        margin-bottom: 45px;
+        color: #353535;
     }
-
+    
     .first-block .description .start {
-      font-size: 1.2em;
-      color: #000;
+        font-size: 1.2em;
+        color: #000;
     }
-
+    
+    @media only screen and (max-width: 768px) {
+        .first-block .description {
+            margin-bottom: 45px;
+            font-family: 'Roboto';
+            font-size: 0.9em;
+            font-weight: 300;
+        }
+    }
+    
+    .video-wrap {
+        position: absolute;
+        display: block;
+        width: 100%;
+        object-fit: cover;
+    }
+    
+    .four-block .logos-wrap {
+        display: flex;
+    }
+    
     .sub-title {
-      padding-bottom: 45px;
-      line-height: 2.32em;
-      font-size: 1.1em;
-      font-weight: 400;
-      color: #292929;
-      font-family: 'Roboto';
+        padding-bottom: 45px;
+        line-height: 2.32em;
+        font-size: 1.1em;
+        font-weight: 400;
+        color: #292929;
+        font-family: 'Roboto';
     }
-
+    
+    .four-block .sub-title {
+        color: #2d4255;
+        font-size: 1.6em;
+        font-weight: 400;
+        margin-top: 17px;
+    }
+    
     .first-rect-wrap {
-    margin-top: 53px;
+        margin-top: 53px;
     }
-
+    
+    .four-block .logos-wrap {
+        display: flex;
+    }
+    
     .second-rect-wrap {
-      margin-top: 32px;
+        margin-top: 32px;
     }
+    
     .rect-wrap {
         display: flex;
         width: 364px;
         margin-left: calc(50% - 182px);
     }
-
+    
     .start-btn {
-      font-size: 17px;
-      font-weight: 600;
-      width: 100% !important;
-      height: 50px;
-      color: #FFFFFF;
-      border-radius: 2px;
-      background-color: #52BFEA;
-      border: none;
-      text-transform: uppercase;
+        font-size: 17px;
+        font-weight: 600;
+        width: 166px;
+        height: 40px;
+        color: #ffffff;
+        border-radius: 2px;
+        background-color: #30b39f;
+        border: none;
     }
-
+    
     .contact-btn {
-      /* margin-left: 20px; */
-      font-size: 17px;
-      font-weight: 600;
-      width: 100% !important;
-      height: 50px;
-      color: #161616;
-      border: 1px solid #EAEAEA;
-      background-color: #EAEAEA;
-      border-radius: 2px;
-      text-transform: uppercase;
+        margin-left: 20px;
+        font-size: 17px;
+        font-weight: 600;
+        width: 166px;
+        height: 40px;
+        color: #30b39f;
+        border: 1px solid #30b39f;
+        background-color: #ffffff;
+        border-radius: 2px;
     }
-
-    .start-free-trial-btn {
-      font-size: 17px;
-      font-weight: 600;
-      width: 100% !important;
-      height: 50px;
-      color: #2D4255;
-      border-radius: 2px;
-      background-color: #FFFFFF;
-      border: none;
-      text-transform: uppercase;
+    
+    @media only screen and (max-width: 768px) {
+        .four-block .sub-title {
+            font-size: 1em;
+            padding-bottom: 0px;
+        }
+        .sub-title {
+            line-height: 1.8em;
+            font-size: 1em;
+        }
+        .second-block {
+            padding-left: 30px;
+            padding-right: 30px;
+        }
+        .third-block {
+            padding-left: 30px;
+            padding-right: 30px;
+        }
+        .start-btn {
+            font-size: 17px;
+            font-weight: 600;
+            width: 126px;
+            height: 40px;
+            color: #ffffff;
+            border-radius: 2px;
+            background-color: #30b39f;
+            border: none;
+        }
+        .contact-btn {
+            margin-left: 10px;
+            font-size: 17px;
+            font-weight: 600;
+            width: 126px;
+            height: 40px;
+            color: #30b39f;
+            border: 1px solid #30b39f;
+            background-color: #ffffff;
+            border-radius: 2px;
+        }
     }
-
-    .join-as-student-btn {
-      font-size: 17px;
-      font-weight: 600;
-      width: 100% !important;
-      height: 50px;
-      color: #FFFFFF;
-      border-radius: 2px;
-      border: 1px solid #FFFFFF;
-      background-color: #2D4255;
-      text-transform: uppercase;
+    
+    .download-button {
+        font-size: 17px;
+        font-weight: 600;
+        width: 100%;
+        height: 40px;
+        color: #ffffff;
+        border-radius: 2px;
+        background-color: #30b39f;
+        border: none;
     }
-
-    .get-started-button {
-      font-size: 17px;
-      font-weight: 600;
-      width: 100% !important;
-      height: 50px;
-      color: #FFFFFF;
-      border-radius: 2px;
-      border: 1px solid #979797;
-      background-color: #979797;
-      text-transform: uppercase;
+    
+    @media only screen and (max-width: 768px) {
+        .download-button {
+            width: 100% !important;
+        }
     }
-
-    .feature {
-      border: 1px solid #EAEAEA;
-      border-radius: 8px;
-      min-height: 350px;
-      padding: 12px;
-    }
-
-    .feature-icon {
-      height: 65px;
-      width: 65px;
-    }
-
-    .feature-title {
-      font-weight: bold;
-      margin-top: 24px;
-    }
-
-    .feature-text {
-      font-size: 16px;
-    }
-
-
 </style>
 
-<div class="col-xl-10 col-xl-offset-1 col-lg-12 col-md-12 animated fadeIn" style="padding-bottom: 30px; font-size: 16px;">
+<div class="container-fluid container-home animated fadeIn" style="padding-bottom: 30px;">
 
     <div ng-show="actionMenuDisplay" style="border-top-left-radius: 15px; border-top-right-radius: 15px; -webkit-box-shadow: 0px -2px 4px -1px rgba(0,0,0,0.15); position: fixed; background-color: #fff; bottom: 55px; left: 0px; right: 0px; height: 250px; z-index: 999999999;"></div>
 
-
-    <!-- FIRST BLOCK -->
-    <div class="row no-gutters first-block">
-
-        <div class="col-sm-12 col-md-12">
-          <div class="col-sm-12 col-md-12">
-            <div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2 title-wrap animated fadeIn">
-              <b style="color: #52BFEA;">{{'PAGETITLE' | translate}}</b>
-              {{'EDUCATIONAL_INFRASTRACTURE_FOR_THE_INTERNEET' | translate}}
-            </div>
-          </div>
-
-          <div class="col-sm-12 col-md-12 description animated fadeIn slow delay-2s">
-            <div class="col-md-6 col-md-offset-3 animated fadeIn">
-              <p class="red-text">{{'EVERYTHING_IN_ONE_PLACE' | translate}}</p>
-              <p>{{'VIDEOCONFERENCING_AND_MUCH_MORE' | translate}}</p>
-            </div>
-          </div>
-
-          <div class="col-sm-12 col-md-12 description animated fadeIn slow delay-2s">
-            <div class="col-md-6 col-md-offset-3 animated fadeIn">
-              <div class="col-md-6 col-xs-12 ">
-                <button class="start-btn" ng-click="signup()">{{'BUTTON_TRY_COLLEGE_FOR_BUSINESS' | translate}}</button>
-                <p style="color: #969696; font-size: 14px;">{{'GIVE_US_14_DAYS' | translate}}</p>
-              </div>
-
-              <div class="col-md-6 col-xs-12">
-                <button class="contact-btn" ng-click="login()">{{'BUTTON_JOIN_FOR_FREE' | translate}}</button>
-                <p style="color: #969696; font-size: 14px;">{{'100_PERCENT_FREE_FOR_STUDENT' | translate}}</p>
-              </div>
-            </div>
-          </div>
-
-        </div>
-    </div>
-    <!-- end first block-->
-
     <style>
-
-      .card-article-large .picture {
-          height: 429px !important;
-          border-radius: 5px;
-      }
-
+        .platform-users-mobile {}
+        
+        .start-btn {
+            width: 100% !important;
+        }
+        
+        @media screen and (max-width: 768px) {
+            .big-title {
+                line-height: 1.3em;
+            }
+            .start-btn {
+                width: 126px !important;
+            }
+            .platform-users-mobile {
+                margin-top: 50px;
+            }
+            .first-block {
+                margin-top: 40px;
+                margin-bottom: 30px;
+            }
+        }
     </style>
 
-    <!-- FEATURES BLOCK -->
-    <div class="row no-gutters first-block">
+    <!-- FIRST BLOCK -->
+    <div class="row first-block">
 
-        <div class="col-sm-12 col-md-12">
-          <div class="col-sm-12 col-md-12">
-            <div class="col-md-8 col-md-offset-2 title-wrap animated fadeIn">
-              <b class="landing-dark-blue">{{'EXCITING_FEATURES_OF' | translate}}</b>
-              <b class="landing-yellow">{{'PAGETITLE' | translate}}</b>
-            </div>
-          </div>
+        <div class="col-sm-7 col-md-7">
 
-          <div class="col-sm-12 col-md-12 description animated fadeIn slow delay-2s">
-            <div class="col-md-6 col-md-offset-3 animated fadeIn">
-              <p class="red-text">{{'EVERYTHING_IN_ONE' | translate}}</p>
+            <div class="title-wrap animated fadeIn"><b style="color: #395467;">{{'EDUCATIONAL_INFRASTRACTURE' | translate}}</b> {{'FOR_THE_INTERNET' | translate}}</div>
+            <div class="description animated fadeIn slow delay-2s">{{'COMMUNICATION_INFRASTRACTURE_ETC' | translate}}</br>
+                </br>
+                <div class="start">{{'ALL_IN_ONE_PLACE' | translate}} <b>{{'START_NOW' | translate}}</b>.</div>
             </div>
-          </div>
 
-          <div class="col-sm-12 col-md-12 description animated fadeIn slow delay-2s" style="text-align: initial;">
-            <div class="col-md-4 col-xs-12">
-              <div class="feature">
-                <img src="https://image.flaticon.com/icons/svg/3039/3039381.svg" class="feature-icon" />
-                <p class="feature-title">{{'VIDEOCONFERENCING' | translate}}</p>
-                <p class="feature-text">{{'VIDEOCONFERENCING_SUB_1' | translate}}</p>
-                <span class="feature-text">{{'VIDEOCONFERENCING_SUB_2' | translate}}</span>
-                <span class="landing-red feature-text">{{'VIDEOCONFERENCING_REPLACE' | translate}}</span>
-              </div>
-            </div>
-            <div class="col-md-4 col-xs-12">
-              <div class="feature">
-                <img class="feature-icon" src="https://storage.googleapis.com/educationalcommunity/timelineicon.png" />
-                <p class="feature-title">{{'TIMELINE' | translate}}</p>
-                <p class="feature-text">{{'TIMELINE_SUB_1' | translate}}</p>
-                <span class="feature-text">{{'TIMELINE_SUB_2' | translate}}</span>
-                <span class="landing-red feature-text">{{'TIMELINE_REPLACE' | translate}}</span>
-              </div>
-            </div>
-            <div class="col-md-4 col-xs-12">
-              <div class="feature">
-                <img src="https://image.flaticon.com/icons/svg/745/745205.svg" class="feature-icon" />
-                <p class="feature-title">{{'CHAT_AND_FORUM' | translate}}</p>
-                <p class="feature-text">{{'CHAT_AND_FORUM_SUB_1' | translate}}</p>
-                <span class="landing-red feature-text">{{'CHAT_AND_FORUM_REPLACE' | translate}}</span>
-              </div>
-            </div>
-          </div>
+            <div class="row slow delay-4s" style="padding-left: 0px; padding-right: 0px;">
 
-          <div class="col-sm-12 col-md-12 description animated fadeIn slow delay-2s" style="text-align: initial;">
-            <div class="col-md-4 col-xs-12">
-              <div class="feature">
-                <img src="https://visualpharm.com/assets/311/Graduation%20Cap-595b40b65ba036ed117d2d97.svg" class="feature-icon" />
-                <p class="feature-title">{{'COURSES' | translate}}</p>
-                <span class="feature-text">{{'COURSES_SUB_1' | translate}}</span>
-                <span class="landing-red feature-text">{{'COURSES_REPLACE' | translate}}</span>
-              </div>
+                <div class="col-xs-6" style="text-align: right;"><button class="start-btn" ng-click="signup()">{{'START_NOW!' | translate}}</button></div>
+                <div class="col-xs-6" style="text-align: left;"><button class="contact-btn" ng-click="login()">{{'LOGIN' | translate}}</button></div>
+
             </div>
-            <div class="col-md-4 col-xs-12">
-              <div class="feature">
-                <img src="/img/ewallet.png" />
-                <p class="feature-title">{{'EWALLET' | translate}}</p>
-                <span class="feature-text">{{'EWALLET_SUB_1' | translate}}</span>
-                <span class="landing-red feature-text">{{'EWALLET_REPLACE' | translate}}</span>
-              </div>
-            </div>
-            <div class="col-md-4 col-xs-12">
-              <div class="feature">
-                <img src="https://image.flaticon.com/icons/svg/3048/3048415.svg" class="feature-icon"  />
-                <p class="feature-title">{{'MEDIA_SHARING' | translate}}</p>
-                <span class="feature-text">{{'MEDIA_SHARING_SUB_1' | translate}}</span>
-                <span class="landing-red feature-text">{{'MEDIA_SHARING_REPLACE' | translate}}</span>
-              </div>
-            </div>
-          </div>
+
         </div>
-    </div>
-    <!-- end features block-->
+        <!-- col-sm-6 -->
 
-
-    <!-- SECOND BLOCK -->
-    <div class="row no-gutters second-block">
-
-        <div>
-          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 description animated fadeIn slow delay-2s" style="text-align: initial; margin-bottom: 3.2em;">
-            <div class="col-md-6 col-xs-12" style="padding: 0;">
-              <div class="title-wrap">
-                <b class="landing-blue-green">{{'LEARN_NEW_WAYS' | translate}}</b>
-                <b class="landing-dark-blue">{{'TO_EDUCATE' | translate}}</b>
-              </div>
-              <div class="col-md-11" style="padding: 0;">
-                <p class="red-text">{{'WHAT_DOES_THIS_MEAN' | translate}}</p>
-                <p class="feature-text">{{'WHAT_DOES_THIS_MEAN_TEXT_1' | translate}}</p>
-                <p class="feature-text">{{'WHAT_DOES_THIS_MEAN_TEXT_2' | translate}}</p>
-              </div>
-            </div>
-            <div class="col-md-6 col-xs-12">
-              <div>
-                <img src="/img/landing/platform-screenshot.png" class="platform-ss-img">
-              </div>
-            </div>
-          </div>
-
-          <div class="col-x-12 col-sm-12 col-md-12 col-lg-12 mobilize-block description animated fadeIn slow delay-2s" style="text-align: initial;">
-            <div class="col-md-6 col-xs-12 mobilize-block-text-div" style="padding: 0;">
-              <div class="title-wrap">
-                <b class="landing-purple">{{'MOBILIZE' | translate}}</b>
-                <b class="landing-dark-blue">{{'YOUR_LEARNING_EXPERIENCE' | translate}}</b>
-              </div>
-
-              <div class="col-md-12 col-xs-12" style="padding: 0;">
-                <div class="col-md-7 col-xs-12" style="padding: 0; margin: 16px 0;">
-                  <ul style="list-style-image: url(img/landing/bullet-circle.png); line-height: 2.4em; font-size: 16px; padding-inline-start: 16px;">
-                    <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod</li>
-                    <li>ut labore et dolore magna aliqua. Ut enim ad minim veniam</li>
-                  </ul>
-                </div>
-
-                <div class="col-md-12 col-sm-12" style="padding: 0;">
-                  <p class="red-text">{{'COLLEGE_IS_AVAILABLE_ON_BOTH' | translate}}</p>
-                </div>
-                <div class="col-md-12 col-sm-12 download-block" style="padding: 0;">
-                  <img src="/img/landing/google-play.png" class="download-block-first-img" style="width: 160px;">
-                  <img src="/img/landing/app-store.png" style="width: 160px;">
-                </div>
-              </div>
-
-            </div>
-            <div class="col-md-6 col-sm-12 col-xs-12 mobilize-block-img-div" style="padding: 0;">
-              <div class="col-md-6 col-sm-12 col-xs-12" style="text-align:center;">
-                <img src="/img/landing/ios-phone.png" class="phone-img">
-              </div>
-              <div class="col-md-6 col-sm-12 col-xs-12 mobilize-block-img-android" style="text-align:center;">
-                <img src="/img/landing/android-smartphone.png" class="phone-img">
-              </div>
-            </div>
-          </div>
-        </div>
-    </div>
-    <!-- end SECOND block-->
-
-
-    <!-- FIRST SCHOOLS BLOCK -->
-    <div class="row no-gutters first-schools-block">
-      <div class="col-xs-12 col-lg-12 col-sm-12 col-md-12">
-        <div class="col-sm-12 col-md-6 platform-users-mobile">
+        <div class="col-sm-5 col-md-5 platform-users-mobile">
 
             <div class="section-cards" style="padding-bottom: unset; margin-top: 5px; padding-left: 15px; padding-top: 4px;">
                 <homeuniversitynewcard uid="5fcf223a26ce980017e8602b"></homeuniversitynewcard>
                 <homeuniversitynewcard uid="5fcf23ab26ce980017e8608f"></homeuniversitynewcard>
             </div>
 
-        </div>
-
-        <div class="col-sm-12 col-md-6 first-schools-block-text-div">
-          <div class="title-wrap">
-            <b class="landing-dark-blue">{{'OUR_FIRST' | translate}}</b>
-            <b class="landing-red">{{'SCHOOLS' | translate}}</b>
-          </div>
-
-          <p class="subtitles">{{'TIAGO_CAMILO_IS_ONLINE' | translate}}</p>
-          <p class="subtitles">{{'MINDKIDS_SCHOOL' | translate}}</p>
-        </div>
-      </div>
-    </div>
-    <!-- end first-schools block-->
-
-
-    <!-- CHOOSE YOUR PLAN BLOCK -->
-    <div class="row choose-plan-block" style="display:flex; align-items: center; text-align: initial;">
-      <div class="col-sm-12 col-md-12">
-        <div class="col-sm-12 col-md-6">
-          <div class="title-wrap">
-            <b class="landing-black">{{'CHOOSE_YOUR_PLAN_AND_EXPAND_YOUR_COMM' | translate}}</b>
-          </div>
-
-          <p class="landing-red" style="font-size: 14px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna</p>
-        </div>
-
-        <div class="col-sm-12 col-md-6">
-          <div class="col-sm-12 col-md-12 landing-red" style="text-align: center; padding: 0;">
-            <div class="col-xs-6 col-sm-6 col-md-5 col-md-offset-1" style="padding: 0;">
-              <ul style="list-style-image: url(img/landing/bullet-img.png); line-height: 2.4em;">
-                <li>Feature 1</li>
-                <li>Feature 2</li>
-                <li>Feature 3</li>
-                <li>Feature 4</li>
-              </ul>
+            <div class="section-cards" ng-show="universitiesKnowledgeDisplay == 'category'" style="padding-bottom: unset; margin-top: 5px; padding-left: 15px; padding-top: 4px;">
+                <homeuniversitynewcard ng-repeat="uni in universities" uid="{{uni.universityId}}"></homeuniversitynewcard>
             </div>
-            <div class="col-xs-6 col-sm-6 col-md-5 col-md-offset-1">
-              <ul style="list-style-image: url(img/landing/bullet-img.png); line-height: 2.4em;">
-                <li>Feature 5</li>
-                <li>Feature 6</li>
-                <li>Feature 7</li>
-                <li>Feature 8</li>
-              </ul>
-            </div>
-            <div class="coyl-sm-12 col-md-10 col-md-offset-1">
-              <p>$55.00</p>
-              <p style="text-decoration: line-through; color: #8A8A8A;">$55.00 (20% off)</p>
-              <button class="get-started-button">{{'GET_STARTED' | translate}}</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- end choose your plan block-->
 
-    <!-- START EDUCATING BLOCK -->
-    <div class="row no-gutters start-educating-block" style="background-color: #2D4255;">
-      <div class="title-wrap" style="margin-bottom: 36px;">
-        <b style="color: #ffffff;">{{'START_EDUCATING_TODAY' | translate}}</b>
-      </div>
-      <div class="col-sm-12 col-md-12 description animated fadeIn slow delay-2s">
-        <div class="col-md-6 col-md-offset-3 animated fadeIn">
-          <div class="col-md-6 col-xs-12 ">
-            <button class="start-free-trial-btn" ng-click="signup()" style="margin-bottom: 12px;">{{'BUTTON_START_A_FREE_TRIAL' | translate}}</button>
-            <p style="color: #ffffff; font-size: 14px;">{{'BUTTON_START_A_FREE_TRIAL_TEXT' | translate}}</p>
-          </div>
-
-          <div class="col-md-6 col-xs-12">
-            <button class="join-as-student-btn" ng-click="login()">{{'JOIN_AS_STUDENT' | translate}}</button>
-          </div>
         </div>
-      </div>
+        <!-- col-sm-6 -->
+
     </div>
-    <!-- end start educating block-->
+    <!-- end first block-->
 
     <style>
-
-      .third-block {
-        margin-bottom: 150px;
-      }
-
-
-
-      /* @media only screen and (max-width: 768px) {
-
-        .feature-icon {
-          height: 45px;
-          width: 45px;
+    .card-article-large .picture {
+            height: 429px !important;
+            border-radius: 5px;
         }
-
-      } */
-
+        
+        .second-block {
+            margin-bottom: 75px;
+        }
+        
+        .second-block .color-title {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #34c0b2;
+        }
+        
+        .second-block .big-title {
+            color: #2d4255;
+            font-size: 2.5em;
+            font-weight: 700;
+        }
+        
+        .four-block .logos-wrap {
+            display: flex;
+        }
+        
+        .four-block .logos-wrap .img-logo {
+            width: 60px;
+            height: 60px;
+            margin-left: calc(50% - 71px);
+        }
+        
+        .four-block .logos-wrap .img-kit {
+            width: 71px;
+            height: 60px;
+            margin-left: 10px;
+        }
+        
+        .four-block {
+            margin-top: 69px;
+            text-align: center;
+        }
+        
+        .four-block .sub-title {
+            color: #2d4255;
+            font-weight: 400;
+            margin-top: 17px;
+        }
+        
+        .rect-wrap {
+            display: flex;
+            width: 364px;
+            margin-left: calc(50% - 182px);
+        }
+        
+        .first-rect-wrap {
+            margin-top: 53px;
+        }
+        
+        .second-rect-wrap {
+            margin-top: 32px;
+        }
+        
+        .rect-wrap {
+            display: flex;
+            width: 364px;
+            margin-left: calc(50% - 182px);
+        }
+        
+        .five-block {
+            margin-top: 30px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .five-block .description-wrap {
+            position: absolute;
+            bottom: 40px;
+            right: 0;
+            left: 0;
+        }
+        
+        .five-block .description-wrap .title {
+            color: #ffffff;
+            font-size: 2em;
+            font-weight: 900;
+        }
+        
+        .five-block .description-wrap .description-title {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 18px;
+            font-weight: 400;
+        }
+        
+        @media only screen and (max-width: 768px) {
+            .five-block .description-wrap .title {
+                color: #ffffff;
+                font-size: 1.6em;
+                font-weight: 900;
+            }
+            .five-block .description-wrap .description-title {
+                color: rgba(255, 255, 255, 0.9);
+                font-size: 0.8em;
+                font-weight: 400;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .first-block {
+                padding: 10px;
+                text-align: center;
+            }
+        }
+        
+        @media screen and (max-width: 768px) {
+            .second-block .big-title {
+                color: #2d4255;
+                font-size: 2em;
+                font-weight: 700;
+            }
+            nav .navbar-top {
+                box-shadow: unset !important;
+                webkit-box-shadow: !important;
+            }
+            .card-article-large .picture {
+                height: 150px !important;
+                border-radius: 5px;
+            }
+        }
+        
+        @media (min-width: 992px) .p-lg-5 {
+            padding: 3rem!important;
+        }
+    }
     </style>
+
+    <!-- FIRST BLOCK -->
+    <div class="row p-lg-5 p-md-3 second-block">
+
+        <div class="col-sm-12">
+            <div class="color-title">{{'UNIFIED_EDUCATIONAL_PLATFORM' | translate}}</div>
+            <div class="big-title">{{'FULLY_INTEGRATED_SUITE_FOR_ONLINE_EDUCATION' | translate}}</div>
+        </div>
+
+    </div>
+    <!-- end first block-->
+
+    <style>
+        .third-block {
+            margin-bottom: 150px;
+        }
+        
+        .feature-icon {
+            height: 65px;
+            width: 65px;
+        }
+        
+        @media only screen and (max-width: 768px) {
+            .feature-icon {
+                height: 45px;
+                width: 45px;
+            }
+        }
+    </style>
+
+    <div class="row p-lg-5 p-md-3 third-block">
+
+        <div class="col-md-6 col-12">
+
+            <div class="sub-title">{{'WE_BRING_TOGETHER_EVERYTHING' | translate}} <b>{{'ONLINE_AND_INPERSON_EDUCATORS' | translate}}</b>, <b>{{'SUBSCRIPTIONS_BUSINESSES' | translate}}</b>, <b>{{'SME_BUSINESSES' | translate}}</b>, {{'AND_EVERYTHING_IN_BETWEEN' | translate}}</div>
+
+        </div>
+        <!-- -->
+
+        <div class="col-md-6 col-12">
+
+            <div class="sub-title">{{'WE_ALSO_HELP_COMPANIES' | translate}} <b>{{'BEAT_CONTENT_PIRACY' | translate}}</b>, <b>{{'CREATE_VIRTUAL_REALITY_SPACES' | translate}}</b>, <b>{{'ISSUES_VIRTUAL_AND_PHYSICAL_CARDS' | translate}}</b>, <b>{{'GET_FINANCING' | translate}}</b>,
+                {{'AND_MUCH_MORE' | translate}}</div>
+
+        </div>
+        <!-- -->
+
+    </div>
+    <!-- -->
+
+    <!-- FIRST BLOCK -->
+    <div class="row four-block">
+
+        <div class="col-md-6 col-12">
+
+            <div class="square">
+
+                <div class="logos-wrap">
+                    <img class="img-logo" style='width: unset;' src="https://storage.googleapis.com/educationalcommunity-upload/university-bg/kitcollege.png">
+                </div>
+
+                <div class="sub-title">{{'BUNDLE_UP_TO_6_MODULES' | translate}}<br>{{'BENEFITS_OF_ONLINE_EDUCATION' | translate}}</div>
+
+                <div style="height: 40px;"></div>
+
+                <div class="row" style="padding-left: 15px; padding-right: 15px;">
+                    <div class="col-xs-4" style="text-align: center;"><img class="feature-icon" src="https://storage.googleapis.com/educationalcommunity/timelineicon.png" />
+                        <div style="padding-top: 10px; font-size: 0.9em;">{{'TIMELINE' | translate}}</div>
+                    </div>
+                    <div class="col-xs-4" style="text-align: center;"><img src="https://image.flaticon.com/icons/svg/745/745205.svg" class="feature-icon" />
+                        <div style="padding-top: 10px; font-size: 0.9em;">{{'CHAT' | translate}}</div>
+                    </div>
+                    <div class="col-xs-4" style="text-align: center;"><img src="https://image.flaticon.com/icons/svg/3039/3039381.svg" class="feature-icon" />
+                        <div style="padding-top: 10px; font-size: 0.9em;">{{'PLAYLIST' | translate}}</div>
+                    </div>
+                </div>
+
+                <div style="height: 40px;"></div>
+
+                <div class="row" style="padding-left: 15px; padding-right: 15px;">
+                    <div class="col-xs-4" style="text-align: center;"><img src="https://visualpharm.com/assets/311/Graduation%20Cap-595b40b65ba036ed117d2d97.svg" class="feature-icon" />
+                        <div style="padding-top: 10px; font-size: 0.9em;">{{'COURSES' | translate}}</div>
+                    </div>
+                    <div class="col-xs-4" style="text-align: center;"><img src="https://image.flaticon.com/icons/svg/3048/3048415.svg" class="feature-icon" />
+                        <div style="padding-top: 10px; font-size: 0.9em;">{{'VIDEOCALL' | translate}}</div>
+                    </div>
+                    <div class="col-xs-4" style="text-align: center;"><img src="https://visualpharm.com/assets/811/Discussion%20Forum-595b40b65ba036ed117d396c.svg" class="feature-icon" />
+                        <div style="padding-top: 10px; font-size: 0.9em;">{{'FORUM' | translate}}</div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- end square -->
+
+        </div>
+        <!-- end col-md-6 -->
+
+        <style>
+            #videoDiv {
+                width: 100%;
+                height: 360px;
+                position: relative;
+            }
+            
+            #video1 {
+                margin: auto;
+                display: block;
+                left: -196px;
+                position: absolute;
+                top: 0px;
+            }
+            
+            #videoMessage {
+                position: absolute;
+                top: 0;
+                left: 0;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+                height: 100%;
+            }
+            
+            #videoMessage {
+                padding: 0.4em;
+                margin: 0
+            }
+            
+            #videoMessage {
+                color: white;
+                z-index: 99
+            }
+            
+            #videoMessage h1 {
+                font-size: 2em;
+                color: #ffffff;
+                text-align: center;
+            }
+            
+            #videoMessage h2 {
+                font-size: 1.5em;
+                color: #ffffff;
+                text-align: center;
+            }
+            
+            #videoMessage h3 {
+                font-size: 1.2em;
+                color: #ffffff;
+                text-align: center;
+            }
+            
+            .vr-box-title {
+                font-size: 2em;
+            }
+            
+            .videoClick {
+                text-align: center
+            }
+            
+            .videoClick a {
+                color: white;
+                background-color: rgba(241, 241, 241, 0.25);
+                font-size: 1.7em;
+                cursor: pointer;
+                cursor: hand
+            }
+            
+            .vr-box {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                -moz-transform: translateX(-50%) translateY(-50%);
+                -webkit-transform: translateX(-50%) translateY(-50%);
+                transform: translateX(-50%) translateY(-50%);
+            }
+            
+            .vr-box-title {
+                font-weight: bold;
+            }
+        </style>
+
+        <div class="col-md-6 col-12">
+
+            <div class="square">
+
+                <div id="videoDiv vr-box">
+                    <video id="video1" preload="" autoplay="" muted="" playsinline="" loop="">
+              <source src="https://storage.googleapis.com/educationalcommunity/pt/video/vrroom.mp4" type="video/mp4">
+              </video>
+                    <div id="videoMessage" class="styling">
+                        <div class="vr-box-title">{{'IMMERSIVE_EDUCATION' | translate}}<br>
+                            <div><button class="download-button" ng-click="downloadVRAndroid()" style="background-color: #fff; color: #000;">{{'DOWNLOAD_NOW!' | translate}}</button></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- end square -->
+
+        </div>
+
+    </div>
+    <!-- end first block-->
+
+    <!-- -->
+
+    <style>
+        .first-rect-wrap {
+            margin-top: 53px;
+        }
+        
+        .rect-wrap {
+            display: flex;
+            width: 364px;
+            margin-left: calc(50% - 182px);
+        }
+        
+        .square {
+            padding: 40px;
+            position: relative;
+            width: unset;
+            margin: 1.66%;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            overflow: hidden;
+            background-color: #fbfbfd;
+            min-height: 650px;
+        }
+    </style>
+
+    <div class="row four-block five-block">
+
+        <div class="col-md-6 col-12">
+
+            <a href="/a/tiagocamilo/timeline">
+                <div class="square" style="background-image: url('https://jpimg.com.br/uploads/2017/04/1996240315-tiago-camilo-e-um-dos-atletas-mais-experientes-da-equipe-de-judo-1.jpeg');">
+                    <div class="description-wrap">
+                        <div class="title">{{'LEARN_WITH_MASTERS' | translate}}</div>
+                        <div class="description-title">{{'TIAGO_CAMILO_IS_ONLINE' | translate}}</div>
+                    </div>
+                </div>
+            </a>
+
+        </div>
+        <!-- -->
+
+        <style>
+            .card-home {
+                height: 200px;
+            }
+            
+            @media only screen and (max-width: 780px) {
+                .card-home {
+                    height: 120px;
+                }
+            }
+        </style>
+
+        <div class="col-md-6 col-12">
+
+            <div class="square">
+
+                <div class="logos-wrap">
+                    <img class="img-logo" style='width: unset;' src="https://storage.googleapis.com/educationalcommunity-upload/university-bg/cardtitle.png">
+                </div>
+
+                <div class="sub-title">{{'GET_50_USD_CREDIT_LINE' | translate}}<br>{{'FOR_YOUR_EDUCATIONAL_BUSINESS' | translate}}</div>
+
+                <div style="height: 25px;"></div>
+
+                <div>
+                    <img class="card-home" src="https://storage.googleapis.com/educationalcommunity-upload/university-bg/card.png" />
+                </div>
+
+                <div style="height: 45px;"></div>
+
+                <div><button class="start-btn" style="background-color: #ee5a4b; color: #fff;" ng-click="login()">{{'APPLY_NOW' | translate}}</button></div>
+
+            </div>
+            <!-- end square -->
+
+        </div>
+        <!-- -->
+
+    </div>
+
+    <!-- -->
 
     <!-- Welcome -->
     <div class="row">
@@ -745,111 +738,380 @@
                 margin-right: 10px;
                 color: #ccc;
             }
-
+            
             .knowledge-home-title:hover {
                 color: #000;
                 cursor: pointer;
             }
-
+            
             .knowledge-active {
                 font-weight: bold;
                 color: #000;
             }
-
+            
             .hide-desktop {
-              display: none;
+                display: none;
             }
-
+            
             .footer-mobile-col {
-              min-height: 170px
+                min-height: 170px
             }
-
-            /* @media only screen and (max-width: 768px) {
-              .show-mobile {
-                display: block;
-              }
-            } */
-
+            
+            @media only screen and (max-width: 768px) {
+                .show-mobile {
+                    display: block;
+                }
+            }
         </style>
 
-      <!-- footer mobile -->
-      <div class="col-xs-12 show-mobile hide-desktop" style="margin-top: 30px; border-top: 1px solid #2d425524; padding-top: 35px; padding-bottom: 20px; line-height: 25px; font-size: 0.95em;">
+        <!-- footer mobile -->
+        <div class="col-xs-12 show-mobile hide-desktop" style="margin-top: 30px; border-top: 1px solid #2d425524; padding-top: 35px; padding-bottom: 20px; line-height: 25px; font-size: 0.95em;">
 
-          <div class="col-xs-12 col-sm-4" style="padding-bottom: 30px;">
-            <div><img height="28px" style="padding-right: 5px;" src="img/universidade_icon.png" /><img height="19px" style="margin-top: 4px; margin-left: 4px;" src="{{company_logo}}" /></div>
-            </br></br>
-            <div style="font-size: 0.8em"><b>{{'EDUCATIONAL_COMMUNITIES_LLC' | translate}}</b></div>
-            <div style="font-size: 0.8em">© {{'DOMAIN_PLACEHOLDER_CAPS' | translate}}</div>
-            </br></br>
-            <div style="font-size: 0.8em"><i class="fas fa-language"></i>&nbsp<b>:</b> {{'LANGUAGE' | translate}}</div>
-            </br></br>
-          </div>
+            <div class="col-xs-12 col-sm-4" style="padding-bottom: 30px;">
+                <div><img height="28px" style="padding-right: 5px;" src="img/universidade_icon.png" /><img height="19px" style="margin-top: 4px; margin-left: 4px;" src="{{company_logo}}" /></div>
+                </br>
+                </br>
+                <div style="font-size: 0.8em"><b>{{'EDUCATIONAL_COMMUNITIES_LLC' | translate}}</b></div>
+                <div style="font-size: 0.8em">© {{'DOMAIN_PLACEHOLDER_CAPS' | translate}}</div>
+                </br>
+                </br>
+                <div style="font-size: 0.8em"><i class="fas fa-language"></i>&nbsp<b>:</b> {{'LANGUAGE' | translate}}</div>
+                </br>
+                </br>
+            </div>
 
+            <div class="col-xs-6 footer-mobile-col" style="text-align: left;">
+
+                <div style="color: #2d4255; font-weight: bolder; font-size: 1em; margin-bottom: 30px;">{{'DOWNLOAD' | translate}}</div>
+                <div style="margin-right: 25px; margin-bottom: 20px; font-size: 0.9em;"><a style="color: #000;" ng-click="downloadVRAndroid()">{{'VIRTUAL_REALITY_FOR_ANDROID' | translate}}</a></div>
+
+            </div>
+
+            <div class="col-xs-6 footer-mobile-col" style="text-align: left;">
+                <div style="color: #2d4255; font-weight: bolder; font-size: 1em; margin-bottom: 30px;">{{'FOOTER_TITLE_2' | translate}}</div>
+                <div style="display: inline-block; margin-right: 25px; font-size: 0.9em;"><a style="color: #000;" href="/{{'SOBRE' | translate}}">{{'FOOTER_T2_SUBTITLE_1' | translate}}</a></div>
+            </div>
+
+            <!--
           <div class="col-xs-6 footer-mobile-col" style="text-align: left;">
-
-            <div style="color: #2d4255; font-weight: bolder; font-size: 1em; margin-bottom: 30px;">{{'DOWNLOAD' | translate}}</div>
-            <div style="margin-right: 25px; margin-bottom: 20px; font-size: 0.9em;"><a style="color: #000;" ng-click="downloadVRAndroid()">{{'VIRTUAL_REALITY_FOR_ANDROID' | translate}}</a></div>
-
-          </div>
-
-          <div class="col-xs-6 footer-mobile-col" style="text-align: left;">
-            <div style="color: #2d4255; font-weight: bolder; font-size: 1em; margin-bottom: 30px;">{{'FOOTER_TITLE_2' | translate}}</div>
-            <div style="display: inline-block; margin-right: 25px; font-size: 0.9em;"><a style="color: #000;" href="/{{'SOBRE' | translate}}">{{'FOOTER_T2_SUBTITLE_1' | translate}}</a></div>
-          </div>
-
-          <!--
-
-          <div class="col-xs-6 footer-mobile-col" style="text-align: left;">
-
             <div style="color: #2d4255; font-weight: bolder; font-size: 1em; margin-bottom: 30px;">{{'FOOTER_TITLE_1' | translate}}</div>
             <div style="margin-right: 25px; margin-bottom: 20px; font-size: 0.9em;"><a style="color: #000;" href="/ensinar">{{'FOOTER_T1_SUBTITLE_1' | translate}}</a></div>
-
           </div>
-
           <div class="col-xs-6 footer-mobile-col" style="text-align: left;">
-
             <div style="color: #2d4255; font-weight: bolder; font-size: 1em; margin-bottom: 30px;">{{'FOOTER_TITLE_1' | translate}}</div>
             <div style="margin-right: 25px; margin-bottom: 20px; font-size: 0.9em;"><a style="color: #000;" href="/ensinar">{{'FOOTER_T1_SUBTITLE_1' | translate}}</a></div>
-
           </div>
-
           -->
 
         </div>
-      <!-- end footer desktop -->
+        <!-- end footer desktop -->
 
-      <div class="col-xs-12 hide-mobile" style="margin-top: 30px; border-top: 1px solid #2d425524; padding-top: 35px; padding-bottom: 20px; line-height: 25px; font-size: 0.95em;">
-          <div class="col-xs-4">
-              <div><img height="28px" style="padding-right: 5px;" src="img/universidade_icon.png" /><img height="19px" style="margin-top: 4px; margin-left: 4px;" src="{{company_logo}}" /></div>
+        <div class="col-xs-12 hide-mobile" style="margin-top: 30px; border-top: 1px solid #2d425524; padding-top: 35px; padding-bottom: 20px; line-height: 25px; font-size: 0.95em;">
+
+            <div class="col-xs-12 col-sm-8">
+                <div><img height="28px" style="padding-right: 5px;" src="img/universidade_icon.png" /><img height="19px" style="margin-top: 4px; margin-left: 4px;" src="{{company_logo}}" /></div>
+                </br>
+                </br>
+                <div style="font-size: 0.8em">© {{'DOMAIN_PLACEHOLDER_CAPS' | translate}}</div>
+                </br>
+                </br>
+                <div style="font-size: 0.8em"><i class="fas fa-language"></i>&nbsp<b>:</b> {{'LANGUAGE' | translate}}</div>
+                </br>
+                </br>
+            </div>
+
+
+            <div class="col-xs-6 col-sm-2" style="text-align: left;">
+                <div style="color: #2d4255; font-weight: bolder; font-size: 1em; margin-bottom: 30px;">{{'DOWNLOAD' | translate}}</div>
+                <div style="margin-right: 25px; margin-bottom: 20px; font-size: 0.9em;"><a style="color: #000;" ng-click="downloadVRAndroid()">{{'VIRTUAL_REALITY_FOR_ANDROID' | translate}}</a></div>
+            </div>
+
+            <div class="col-xs-6 col-sm-2" style="text-align: left;">
+                <div style="color: #2d4255; font-weight: bolder; font-size: 1em; margin-bottom: 30px;">{{'FOOTER_TITLE_2' | translate}}</div>
+                <div style="display: inline-block; margin-right: 25px; font-size: 0.9em;"><a style="color: #000;" href="/{{'SOBRE' | translate}}">{{'FOOTER_T2_SUBTITLE_1' | translate}}</a></div>
+            </div>
+
+            <!--
+          <div class="col-xs-6 col-sm-2" style="text-align: left;">
+            <div style="color: #2d4255; font-weight: bolder; font-size: 1em; margin-bottom: 30px;">{{'FOOTER_TITLE_2' | translate}}</div>
+            <div style="display: inline-block; margin-right: 25px; font-size: 0.9em;"><a style="color: #000;" href="/sobre">{{'FOOTER_T2_SUBTITLE_1' | translate}}</a></div>
           </div>
-          <div class="col-xs-2" style="text-align: left;">
-              <div style="color: #2d4255; font-weight: bolder; font-size: 1em; margin-bottom: 30px;">{{'FOOTER_TITLE_1' | translate}}</div>
-              <div style="margin-right: 25px; margin-bottom: 20px; font-size: 0.9em;"><a style="color: #000;" href="/{{'ENSINAR' | translate}}">{{'FOOTER_T1_SUBTITLE_1' | translate}}</b>
+          <div class="col-xs-6 col-sm-2" style="text-align: left;">
+            <div style="color: #2d4255; font-weight: bolder; font-size: 1em; margin-bottom: 30px;">{{'FOOTER_TITLE_3' | translate}}</div>
+            <div style="margin-bottom: 20px; margin-right: 25px; font-size: 0.9em;"><a style="color: #000;" href="/a/universidade/forum/category/id/5efadbb98c383600174f3b6d">{{'FOOTER_T3_SUBTITLE_1' | translate}}</a></div>
+            <div style="margin-bottom: 20px; margin-right: 25px; font-size: 0.9em;"><a style="color: #000;" href="/a/universidade/forum/category/id/5efadb8f8c383600174f3b6c">{{'FOOTER_T3_SUBTITLE_2' | translate}}</a></div>
+            <div style="margin-bottom: 20px; margin-right: 25px; font-size: 0.9em;"><a style="color: #000;" ng-click="downloadVRAndroid()">{{'FOOTER_T3_SUBTITLE_3' | translate}}</a></div>
+          </div>
+          <div class="col-xs-6 col-sm-2" style="text-align: left;">
+            <div style="color: #2d4255; font-weight: bolder; font-size: 1em; margin-bottom: 30px;">{{'FOOTER_TITLE_4' | translate}}</div>
+            <div style="margin-bottom: 20px; margin-right: 25px; font-size: 0.9em;"><a style="color: #000;" href="/sobre">{{'FOOTER_T4_SUBTITLE_1' | translate}}</a></div>
+            <div style="margin-bottom: 20px; margin-right: 25px; font-size: 0.9em;"><a style="color: #000;" href="/a/universidade/forum/category/id/5efadb8f8c383600174f3b6c">{{'FOOTER_T3_SUBTITLE_2' | translate}}</a></div>
+          </div>-->
+
         </div>
-        <!--- div style="margin-right: 25px; margin-bottom: 20px; font-size: 0.9em;"><a style="color: #000;"
-            href="#">{{'FOOTER_T1_SUBTITLE_2' | translate}}</b></div>
-        <div style="margin-right: 25px; margin-bottom: 20px; font-size: 0.9em;"><a style="color: #000;" href="#">{{'FOOTER_T1_SUBTITLE_3' | translate}}</b></div>
-        <div style="margin-right: 25px; margin-bottom: 20px; font-size: 0.9em;"><a style="color: #000;" href="#">{{'FOOTER_T1_SUBTITLE_4' | translate}}</b></div>
-        <div style="margin-right: 25px; margin-bottom: 20px; font-size: 0.9em;"><a style="color: #000;" href="#">{{'FOOTER_T1_SUBTITLE_5' | translate}}</b></div--->
-      </div>
-
-      <div class="col-xs-2" style="text-align: left;">
-        <div style="color: #2d4255; font-weight: bolder; font-size: 1em; margin-bottom: 30px;">{{'FOOTER_TITLE_2' | translate}}</div>
-        <div style="display: inline-block; margin-right: 25px; font-size: 0.9em;"><a style="color: #000;"
-            href="/{{'SOBRE' | translate}}">{{'FOOTER_T2_SUBTITLE_1' | translate}}</a></div>
-          </div>
-          <div class="col-xs-2" style="text-align: left;">
-              <div style="color: #2d4255; font-weight: bolder; font-size: 1em; margin-bottom: 30px;">{{'FOOTER_TITLE_3' | translate}}</div>
-              <div style="margin-bottom: 20px; margin-right: 25px; font-size: 0.9em;"><a style="color: #000;" href="/a/universidade/forum/category/id/5efadbb98c383600174f3b6d">{{'FOOTER_T3_SUBTITLE_1' | translate}}</a></div>
-              <div style="margin-bottom: 20px; margin-right: 25px; font-size: 0.9em;"><a style="color: #000;" href="/a/universidade/forum/category/id/5efadb8f8c383600174f3b6c">{{'FOOTER_T3_SUBTITLE_2' | translate}}</a></div>
-              <div style="margin-bottom: 20px; margin-right: 25px; font-size: 0.9em;"><a style="color: #000;" ng-click="downloadVRAndroid()">{{'FOOTER_T3_SUBTITLE_3' | translate}}</a></div>
-          </div>
-          <div class="col-xs-2" style="text-align: left;">
-              <div style="color: #2d4255; font-weight: bolder; font-size: 1em; margin-bottom: 30px;">{{'FOOTER_TITLE_4' | translate}}</div>
-              <div style="display: inline-block; margin-right: 25px; font-size: 0.9em;"><a style="color: #000;" href="/{{'SOBRE' | translate}}">{{'FOOTER_T4_SUBTITLE_1' | translate}}</a></div>
-          </div>
-      </div>
         <!-- end footer desktop -->
 
     </div>
     <!-- container-fluid container-full -->
+
+    <style>
+        .home-big-box {
+            /*min-height: 250px;*/
+            text-align: center;
+            border-radius: 5px;
+            padding-left: 30px;
+            padding-right: 30px;
+            padding-top: 50px;
+            padding-bottom: 50px;
+        }
+        
+        .home-big-box .title {
+            font-size: 1.3em;
+            font-weight: bolder;
+        }
+        
+        .home-big-box .button-row {
+            padding-top: 25px;
+        }
+        
+        .home-big-box .button {
+            border-radius: 10px;
+            border: none;
+            font-size: 0.8em;
+            padding-left: 15px;
+            padding-right: 15px;
+            font-weight: bold;
+            padding-top: 15px;
+            padding-bottom: 15px;
+        }
+        
+        .home-big-box .button.test {
+            background-color: #fff;
+            margin-right: 5px;
+        }
+        
+        .home-big-box .button {
+            border-radius: 10px;
+            background-color: #fff;
+            border: none;
+            font-size: 0.8em;
+            padding-left: 15px;
+            padding-right: 15px;
+            font-weight: bold;
+            padding-top: 15px;
+            padding-bottom: 15px;
+            margin-bottom: 10px;
+        }
+    </style>
+
+    <style>
+    .swiper-container {
+            padding: 3px;
+            padding-bottom: 40px;
+        }
+        
+        .swiper-slide {
+            text-align: left;
+        }
+        
+        .knowledge-card {
+            border-radius: 5px;
+            width: 45%;
+            box-shadow: 0px 0px 3px 0px rgba(97, 97, 97, 0.15);
+            width: calc(100% / 4);
+        }
+        
+        .knowledge-card .knowledge-card-image {
+            height: 70px;
+            background-size: cover;
+            border-top-right-radius: 5px;
+            border-top-left-radius: 5px;
+        }
+        
+        .knowledge-card .title {
+            height: 45px;
+            padding: 10px;
+            font-weight: bold;
+        }
+        
+        .section-cards {
+            padding-bottom: 10px;
+        }
+        
+        .section-cards::-webkit-scrollbar {
+            width: 0px;
+            /* Remove scrollbar space */
+            background: transparent;
+            /* Optional: just make scrollbar invisible */
+        }
+        /* Optional: show position indicator in red */
+        
+        .section-cards::-webkit-scrollbar-thumb {
+            background: transparent;
+        }
+        
+        @media only screen and (min-width: 780px) {
+            .swiper-slide {
+                width: 50% !important;
+            }
+        }
+        
+        .bar-sections {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            width: 100%;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            font-size: 0.95em;
+        }
+        
+        .bar-sections .bar-section {
+            display: flex;
+            flex-direction: column;
+            flex-basis: 100%;
+            flex: 1;
+            text-align: center;
+            font-size: 1em;
+            font-weight: bold;
+            font-size: 0.95em;
+        }
+        
+        .bar-sections.standard {
+            box-shadow: 0px 2px 4px 0px rgba(97, 97, 97, 0.15);
+            padding: 10px;
+        }
+        
+        .bar-sections .bar-section.active {
+            color: #000;
+        }
+        
+        .bar-sections .bar-section.active {
+            border-radius: 10px;
+            font-weight: bold;
+        }
+        
+        .bar-sections .bar-section {
+            color: #2d4255b8;
+        }
+        
+        .bar-sections.orange .bar-section.active {
+            background-color: #ef62543b;
+            border-radius: 10px;
+            color: #ee5748;
+            font-weight: bold;
+        }
+    }
+    </style>
+
+    <style>
+        .course-box {
+            box-shadow: 0px 0px 17px 0px rgba(130, 130, 130, 0.23);
+            display: inline-block;
+            border-radius: 5px;
+            width: 100%;
+            padding: 15px;
+            cursor: pointer;
+            margin-bottom: 15px;
+            overflow: auto;
+            height: 250px;
+        }
+        
+        .course-box .title {
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+        
+        @media screen and (max-width: 860px) {
+            .course-box {
+                height: 190px;
+            }
+            .square {
+                min-height: 450px;
+            }
+        }
+    </style>
+
+    <style>
+        .button-highlighter {
+            box-shadow: 0px 8px 15px rgba(48, 179, 159, 0.51);
+            transition: all 0.3s ease 0s;
+            cursor: pointer;
+        }
+        
+        .course-card {
+            box-shadow: 0px 0px 3px 0px rgba(171, 171, 171, 0.5);
+            border-radius: 4px;
+            padding-top: 20px;
+            padding-bottom: 20px;
+            padding-left: 20px;
+            padding-right: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .course-card .topic {
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+        
+        .course-card .topic .text {
+            display: inline-block;
+            width: calc(100% - 39px);
+        }
+        
+        .course-card .topic .title {
+            font-size: 1.3em;
+            display: inline-block;
+            font-weight: 500;
+        }
+        
+        .course-card .topic .title {
+            font-size: 1.2em;
+            color: #3c3c3c;
+        }
+        
+        .course-card .topic .subtitle {
+            color: #8c8c8c;
+        }
+        
+        .course-card .topic .line {
+            width: 35px;
+            font-size: 0.5em;
+            padding-top: 7px;
+            vertical-align: top;
+            text-align: center;
+            display: inline-block;
+            color: #d8d8d8;
+        }
+        
+        .instrutora {
+            margin-right: 15px;
+            display: inline-block;
+        }
+        
+        .instrutora .author {
+            font-size: 1.25em;
+        }
+        
+        .instrutora .author .name {
+            font-weight: 600;
+        }
+        
+        .instrutora .author .title {
+            font-weight: 400;
+            font-size: 0.8em;
+        }
+        
+        .instrutora .text {}
+        
+        .instrutora .picture {
+            margin-bottom: 10px;
+        }
+        
+        @media only screen and (max-width: 768px) {
+            .course-card {
+                padding-right: 10px;
+                padding-left: 10px;
+            }
+        }
+    </style>
