@@ -1,7 +1,12 @@
 angular.module('netbase')
 
-.controller('TeachSalesPricingCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Payments', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Payments) {
+.controller('TeachSalesPricingCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Payments', '$window', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Payments, $window) {
     $scope.company_logo = $localStorage.company_logo;
+
+    $scope.lastpageReturn = function() {
+      console.log("last page return")
+        $window.history.back();
+    }
 }])
 
 .controller('TeachSalesCtrl', ['$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Payments', function($rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Payments) {

@@ -4926,13 +4926,6 @@ angular.module('netbase')
     $scope.searchBarDisplay = false;
     $scope.company_logo = $localStorage.company_logo
 
-
-    // if (dom.indexOf('universida.de') > 0) {
-    //   $scope.company_logo = "img/universidade_logo.png"
-    // } else {
-    //   $scope.company_logo = "img/college_logo.png"
-    // }
-
     /* get selected language from the localstorage*/
     $scope.selectedLanguage = $localStorage.setLanguage
 
@@ -5001,6 +4994,36 @@ angular.module('netbase')
     $scope.signup = function() {
         $timeout.cancel($rootScope.accountSuggestion);
         ngDialog.open({ template: 'partials/modals/signup.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
+    }
+
+    let domUrl = window.location.href;
+
+    $scope.logoUrl = function() {
+      window.location.href = '/home/landing'
+    }
+
+    $scope.features = function() {
+      window.location.href = '#'
+    }
+
+    $scope.pricing = function() {
+      if (domUrl.indexOf('universida.de') > 0) {
+        window.location.href = '/ensinar/preco'
+      } else {
+        window.location.href = '/teach/pricing'
+      }
+    }
+
+    $scope.download = function() {
+      window.location.href = '#'
+    }
+
+    $scope.aboutus = function() {
+      if (domUrl.indexOf('universida.de') > 0) {
+        window.location.href = '/sobre'
+      } else {
+        window.location.href = '/about'
+      }
     }
 
     $scope.homeCheck = function() {
@@ -5082,6 +5105,7 @@ angular.module('netbase')
     let menuRight = $("nav .navbar-top .menu-right");
     let searchButton = $("#searchButtonMobile");
     let searchTextInput = $(".navbar-top .menu-right .form-group input");
+    let hamburger = $("#mobile-credentials");
 
     /* bool */
     let navbarMobileOpen = false;
@@ -5090,6 +5114,37 @@ angular.module('netbase')
 
     /* open/close menu mobile */
     brand.click(function() {
+        let width = $(window).width();
+        console.log("click")
+        if (width <= 768) {
+            if (navbarMobileOpen) {
+                $scope.navbarMobileOpen = false;
+                navbarMobile.css("display", "none");
+                brandArrow.attr("class", "fas fa-angle-down");
+                navbarMobileOpen = false;
+            } else {
+                $scope.navbarMobileOpen = true;
+                navbarMobile.css("display", "block");
+                brandArrow.attr("class", "fas fa-angle-up");
+                navbarMobileOpen = true;
+            }
+        } else {
+            if (logged) {
+                window.location.href = '/home/timeline'
+            } else {
+                window.location.href = '/home'
+            }
+        }
+    });
+    /* end open/close menu mobile */
+
+
+    /* bool */
+    let landingnavbarMobileOpen = false;
+    $scope.landingnavbarMobileOpen = landingnavbarMobileOpen;
+
+    /* open/close menu mobile */
+    hamburger.click(function() {
         let width = $(window).width();
         console.log("click")
         if (width <= 768) {

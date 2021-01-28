@@ -686,6 +686,8 @@ angular.module('netbase')
     $scope.audioDisabled = 'color-white';
     $scope.disableJoin = false;
     $scope.proceed = false;
+    $localStorage.userProceed = false;
+    $scope.uniname = $scope.ngDialogData.universityName;
 
     window.onkeyup = function(event) {
         console.log("event.keycode: ", event.keyCode)
@@ -694,14 +696,28 @@ angular.module('netbase')
         }
     }
 
+    $scope.closeWindow = function() {
+      // Check if window is closeable
+      if(window.opener != null || window.history.length == 1){
+        console.log("we can close the window")
+        $window.close();
+      } else {
+        console.log("we cannot close the window")
+        let url = "/a/" + $scope.uniname + "/classroom"
+        window.location.href = url
+      }
+    }
+
     $scope.$on('ngDialog.closing', function() {
         console.log("close dialog")
-        if (!$scope.proceed) $window.close();
+        if (!$scope.proceed) {
+          $scope.closeWindow()
+        }
     });
 
     $scope.cancel = function() {
         ngDialog.close();
-        $window.close();
+        $scope.closeWindow()
     }
 
 
@@ -948,12 +964,13 @@ angular.module('netbase')
 
     $scope.confirmSelect = function() {
         $scope.proceed = true;
+        $localStorage.userProceed = true;
         $rootScope.ifSelectedDevice = true;
         ngDialog.close();
     }
 }])
 
-.controller('AcademiaClassroomCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Classroom', 'Students', 'ngDialog', '$localStorage', '$window', '$filter', 'Cipher', function($rootScope, $scope, $location, $route, University, Classroom, Students, ngDialog, $localStorage, $window, $filter, Cipher) {
+.controller('AcademiaClassroomCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Classroom', 'Students', 'ngDialog', '$localStorage', '$window', '$filter', 'Cipher', '$http', function($rootScope, $scope, $location, $route, University, Classroom, Students, ngDialog, $localStorage, $window, $filter, Cipher, $http) {
     const myCipher = Cipher.cipher('mySecretSalt')
     const myDecipher = Cipher.decipher('mySecretSalt')
 
@@ -1004,6 +1021,7 @@ angular.module('netbase')
     });
 
     $scope.videoSizeSet = function() { // Participants' video layout
+      console.log("videoSizeSet")
         var i;
         var videoContainer = document.getElementById('twilio');
         var videoDom = document.getElementsByTagName('video');
@@ -1194,6 +1212,7 @@ angular.module('netbase')
     }
 
     $scope.joinClassroom = function() {
+      console.log("joinclassroom")
         if ($rootScope.constraints.audio == false && $rootScope.constraints.video == false) {
             ngDialog.open({
                 template: 'partials/modals/classroom_select_device_modal.html',
@@ -1228,6 +1247,7 @@ angular.module('netbase')
     }
 
     $scope.initClassroom = function() {
+      console.log("initclassroom")
         let token = $localStorage.token;
         if (token == null || token == undefined) {
             let redirectUrl = '/a/university/' + myCipher(universityUrl) + '/roomid/' + myCipher(roomSID) + '/accountid/' + myCipher(accountSid) + '/roomname/' + myCipher(roomName) + '/';
@@ -1247,16 +1267,17 @@ angular.module('netbase')
                 template: 'partials/modals/classroom_select_device_modal.html',
                 controller: 'AcademiaClassroomSelectDeviceCtrl',
                 className: 'ngdialog-theme-default classroom-select-device-modal',
-                data: { redirectUrl: redirectUrl }
+                data: { redirectUrl: redirectUrl, universityName: myDecipher($route.current.params.academiaName) }
             });
             return;
         }
     }
 
     let joiningInterval = setInterval(() => {
-        if ($rootScope.ifSelectedDevice == null || $rootScope.ifSelectedDevice == undefined) {
+        if ($rootScope.ifSelectedDevice == null || $rootScope.ifSelectedDevice == undefined || !$localStorage.userProceed) {
             return;
         }
+        console.log("joiningInterval")
         $scope.joinClassroom();
         joiningInterval.ifSelectedDevice
         clearInterval(joiningInterval);
@@ -1284,6 +1305,7 @@ angular.module('netbase')
     }
 
     $scope.connectingClassroom = function(token, room_t) {
+      console.log("connectingClassroom")
         $scope.videoSizeSet();
 
         video.connect(token, room_t).then(room => { // Video room connect
@@ -1504,6 +1526,7 @@ angular.module('netbase')
     }
 
     $scope.connectClassroom = function(token, roomName, screenTrack = null) {
+      console.log("connectclassroom")
         $scope.currentShareScreen = screenTrack;
         $scope.currentRoomToken = token;
         $scope.currentRoomName = roomName;
@@ -1657,7 +1680,13 @@ angular.module('netbase')
 
         $rootScope.localMessager = null;
         $rootScope.currentChatChannel.leave();
-        $window.close();
+
+        if(window.opener != null || window.history.length == 1){
+          $window.close();
+        } else {
+          let url = "/a/" + myDecipher($route.current.params.academiaName) + "/classroom"
+          window.location.href = url
+        }
     }
 
     $scope.recordVideo = function() { // Works only chrome browser, not using Twilio api, instead of it, using MediaRecorder
@@ -1788,7 +1817,7 @@ angular.module('netbase')
                         navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
                             $scope.disconnectClassroom();
                             $scope.connectClassroom($scope.currentRoomToken, $scope.currentRoomName);
-                            $scope.connectClassroom($scope.currentRoomToken, $scope.currentRoomName, [stream.getTracks()[0], screenTrack]);
+                            //$scope.connectClassroom($scope.currentRoomToken, $scope.currentRoomName, [stream.getTracks()[0], screenTrack]);
                         });
                         break;
                     }
@@ -1797,6 +1826,7 @@ angular.module('netbase')
     }
 
     $scope.shareScreen = function() { // Share screen event handler(toggle share screen)
+      if ($localStorage.userProceed) {
         if ($scope.localConnected == false) {
             return;
         }
@@ -1828,9 +1858,11 @@ angular.module('netbase')
             $scope.shareScreenCaption = 'Share Screen';
             $scope.connectClassroom($scope.currentRoomToken, $scope.currentRoomName);
         }
+      }
     }
 
     $scope.toggleParticipantsBox = function() { // Participant menu button event handler
+      if ($localStorage.userProceed) {
         $scope.participantsStatus = !$scope.participantsStatus;
         if ($scope.participantsStatus) {
             $scope.mobileToggleParticipantsList = 'drag-in-left-right';
@@ -1840,9 +1872,11 @@ angular.module('netbase')
         } else {
             $scope.mobileToggleParticipantsList = 'drag-out-right-left';
         }
+      }
     }
 
     $scope.toggleChatBox = function() { // Chatbox showing button event handler
+      if ($localStorage.userProceed) {
         $scope.chatStatus = !$scope.chatStatus;
         if ($scope.chatStatus) {
             $scope.chatboxContainer = "drag-in-right-left";
@@ -1852,9 +1886,11 @@ angular.module('netbase')
         } else {
             $scope.chatboxContainer = "drag-out-left-right";
         }
+      }
     }
 
     $scope.toggleVoice = function() { // Voice toggle event handler
+      if ($localStorage.userProceed) {
         if ($scope.voiceStatus == "Mute") {
             $scope.currentLocalparticipant.audioTracks.forEach(function(audioTrack) {
                 audioTrack.track.disable();
@@ -1868,9 +1904,11 @@ angular.module('netbase')
             $scope.voiceToggle = 'fas fa-microphone-alt';
             $scope.voiceStatus = "Mute";
         }
+      }
     }
 
     $scope.toggleVideo = function() { // Video toggle button event handler
+      if ($localStorage.userProceed) {
         if ($scope.videoStatus == "Stop Video") {
             $scope.currentLocalparticipant.videoTracks.forEach(function(videoTrack) {
                 videoTrack.track.disable();
@@ -1884,9 +1922,11 @@ angular.module('netbase')
             $scope.videoToggle = 'fas fa-video';
             $scope.videoStatus = "Stop Video";
         }
+      }
     }
 
     $scope.copyLink = function() { // Copy link button event handler
+      if ($localStorage.userProceed) {
         let universityUrl = $route.current.params.academiaName;
         let roomSID = $route.current.params.roomSID;
         let accountSid = $route.current.params.accountSid;
@@ -1902,7 +1942,7 @@ angular.module('netbase')
             className: 'ngdialog-theme-default classroom-alert-modal',
             data: { type: $filter('translate')("PAGETITLE"), msg: $filter('translate')("COPIED_LINK_TO_CLIPBOARD") }
         }));
-
+      }
     }
 
     $scope.toggleAllControllers = function() {
@@ -1914,6 +1954,7 @@ angular.module('netbase')
     }
 
     $scope.toggleFullScreen = function() {
+      if ($localStorage.userProceed) {
         $scope.isFullScreen = !$scope.isFullScreen;
 
         if ($scope.isFullScreen) {
@@ -1929,6 +1970,7 @@ angular.module('netbase')
                 $window.dispatchEvent(new Event("resize"));
             },
             100);
+      }
     }
     $scope.confirm = function() {
         ngDialog.close();
@@ -3368,7 +3410,6 @@ angular.module('netbase')
                                 }
                             }
 
-
                             tinymce.init({
                                 selector: 'textarea',
                                 menuitem: 'textarea',
@@ -3539,6 +3580,7 @@ angular.module('netbase')
                 });
             }
 
+
             // join in to the admin channel (means join in to the current category channel)
             scope.joinAdminChannel = () => {
                 return scope.setupChannel();
@@ -3563,9 +3605,9 @@ angular.module('netbase')
                                 })
                             })
                         } else {
-                            var r = confirm("You did not join this channel yet. Will join now?");
-                            if (r == true) {
-                                scope.initChannel(scope.currentChannel).then((channel) => {
+                            // var r = confirm("You did not join this channel yet. Will join now?");
+                            // if (r == true) {
+                            scope.initChannel(scope.currentChannel).then((channel) => {
                                     scope.currentChannel = channel;
                                     scope.joinChannel(channel).then((_channel) => {
                                         scope.currentChannel = _channel;
@@ -3573,10 +3615,10 @@ angular.module('netbase')
                                         resolve();
                                     })
                                 })
-                            } else {
-                                scope.loading = false;
-                                scope.$apply();
-                            }
+                                // } else {
+                                //     scope.loading = false;
+                                //     scope.$apply();
+                                // }
                         }
                     }
                 });

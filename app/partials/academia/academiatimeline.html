@@ -2,7 +2,9 @@
 
 <update-title title="{{university.name}} | {{'PAGETITLE' | translate}}"></update-title>
 <update-meta property="og:title" content="{{university.name}} | {{'PAGETITLE' | translate}}"></update-meta>
-<update-meta property="og:url" content="https://universida.de/a/{{university.url}}/timeline"></update-meta>
+<update-meta property="og:url" content="https://{{'DOMAIN_PLACEHOLDER' | translate}}/a/{{university.url}}/timeline"></update-meta>
+<update-meta property="og:description" content="{{'META_DESCRIPTION' | translate}}">
+<update-meta property="og:site_name" content="{{'META_SITENAME' | translate}}">
 
 <update-meta ng-if="university.backgroundImage != undefined" property="og:image" content="{{university.backgroundImage}}"></update-meta>
 <update-meta ng-if="university.backgroundImage == undefined" property="og:image" content="https://universida.de/img/misc/noimageacademia.jpg"></update-meta>

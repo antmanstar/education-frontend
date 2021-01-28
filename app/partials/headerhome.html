@@ -11,6 +11,13 @@
     }
   </style>
   <update-title title="{{'PAGETITLE' | translate}}"></update-title>
+  <update-meta property="og:url" content="https://{{'DOMAIN_PLACEHOLDER' | translate}}"></update-meta>
+  <update-meta property="og:description" content="{{'META_DESCRIPTION' | translate}}">
+  <update-meta property="og:site_name" content="{{'META_SITENAME' | translate}}">
+  <update-meta itemprop="description" content="{{'META_DESCRIPTION' | translate}}">
+
+  <update-meta ng-if="university.backgroundImage != undefined" property="og:image" content="{{university.backgroundImage}}"></update-meta>
+  <update-meta ng-if="university.backgroundImage == undefined" property="og:image" content="https://universida.de/img/misc/noimageacademia.jpg"></update-meta>
   <!--
   <div class="row" style="height: 40px; line-height: 40px; padding-left: 15px; padding-right: 15px; padding-bottom: 2px; padding-top: 6px;">
     <div class="col col-xs-3" style="padding: 3px;"><img height="100%" src="img/universidade_icon.png" /><span style="margin-left: 8px; font-size: 1.15em;"><i class="fas fa-angle-down" style="vertical-align: top; padding-top: 6px;"></i></span></div>
