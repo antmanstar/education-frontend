@@ -953,7 +953,7 @@ angular.module('netbase')
     }
 }])
 
-.controller('AcademiaClassroomCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Classroom', 'Students', 'ngDialog', '$localStorage', '$window', '$filter', 'Cipher', function($rootScope, $scope, $location, $route, University, Classroom, Students, ngDialog, $localStorage, $window, $filter, Cipher) {
+.controller('AcademiaClassroomCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Classroom', 'Students', 'ngDialog', '$localStorage', '$window', '$filter', 'Cipher', '$http', function($rootScope, $scope, $location, $route, University, Classroom, Students, ngDialog, $localStorage, $window, $filter, Cipher, $http) {
     const myCipher = Cipher.cipher('mySecretSalt')
     const myDecipher = Cipher.decipher('mySecretSalt')
 
@@ -1229,6 +1229,7 @@ angular.module('netbase')
 
     $scope.initClassroom = function() {
         let token = $localStorage.token;
+
         if (token == null || token == undefined) {
             let redirectUrl = '/a/university/' + myCipher(universityUrl) + '/roomid/' + myCipher(roomSID) + '/accountid/' + myCipher(accountSid) + '/roomname/' + myCipher(roomName) + '/';
             ngDialog.open({
@@ -3368,7 +3369,6 @@ angular.module('netbase')
                                 }
                             }
 
-
                             tinymce.init({
                                 selector: 'textarea',
                                 menuitem: 'textarea',
@@ -3539,6 +3539,7 @@ angular.module('netbase')
                 });
             }
 
+
             // join in to the admin channel (means join in to the current category channel)
             scope.joinAdminChannel = () => {
                 return scope.setupChannel();
@@ -3563,9 +3564,9 @@ angular.module('netbase')
                                 })
                             })
                         } else {
-                            var r = confirm("You did not join this channel yet. Will join now?");
-                            if (r == true) {
-                                scope.initChannel(scope.currentChannel).then((channel) => {
+                            // var r = confirm("You did not join this channel yet. Will join now?");
+                            // if (r == true) {
+                            scope.initChannel(scope.currentChannel).then((channel) => {
                                     scope.currentChannel = channel;
                                     scope.joinChannel(channel).then((_channel) => {
                                         scope.currentChannel = _channel;
@@ -3573,10 +3574,10 @@ angular.module('netbase')
                                         resolve();
                                     })
                                 })
-                            } else {
-                                scope.loading = false;
-                                scope.$apply();
-                            }
+                                // } else {
+                                //     scope.loading = false;
+                                //     scope.$apply();
+                                // }
                         }
                     }
                 });
