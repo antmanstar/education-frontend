@@ -362,7 +362,7 @@
 
 .classroom-modal .ngdialog-content {
     width: 480px !important;
-    height: 420px !important;
+    height: fit-content !important;
     margin-top: 100px !important;
 }
 

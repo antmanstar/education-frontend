@@ -737,6 +737,7 @@
     "UNI_CREATE_FIELDS_EMPTY": "Write a name for your educational community., Write a URL for your educational community.",
     "UNI_CREATE_SELECT_LANGUAGE": "Select a language for you educational community",
 
+    "DOMAIN_NAME": "Colle.ge",
     "DOMAIN_PLACEHOLDER": "colle.ge",
     "DOMAIN_PLACEHOLDER_CAPS": "COLLE.GE",
     "META_DESCRIPTION": "College, the best platform to learn, teach, debate and share knowledge.",
@@ -1098,5 +1099,10 @@
 
     "REVIEW_PLAN": "Review Plan",
     "YOU_HAVE_SELECTED": "You have selected",
-    "PAY_USING_CREDIT_DEBIT": "Pay using you Credit or Debit card"
+    "PAY_USING_CREDIT_DEBIT": "Pay using you Credit or Debit card",
+
+    "MARK_ATTENDANCE": "Mark Attendance",
+    "MARK_ATTENDANCE_TEXT": "small description of how attendance will work",
+    "SELECT_TEACHER": "Select Teacher",
+    "TYPE_TEACHER_NAME": "Type teacher name"
 }

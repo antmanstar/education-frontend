@@ -36,6 +36,7 @@
         width: 100%;
         border: 2px solid #999999;
         border-radius: 5px;
+        background-color: white;
         font-size: 15px;
         padding-left: 10px;
         padding-right: 10px;
@@ -46,7 +47,7 @@
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-        margin-top: 10px;
+        margin-top: 16px;
     }
 
     .roomtype-description {
@@ -84,7 +85,34 @@
                 <img src="../../img/classroom/Switch On.png" height="25px" ng-click="addingClassroom.roomType=0" ng-hide="addingClassroom.roomType==0">
                 <img src="../../img/classroom/Switch Off.png" height="25px" ng-click="addingClassroom.roomType=1" ng-hide="addingClassroom.roomType==1">
             </div>
-            <button ng-click="confirmCreateClassroom()" class="confirm-btn" ng-style="{'background-color' : (addingClassroom.uniqueName == '') ? '#eeeeee' : '#5dbcd2', 'color' : (addingClassroom.uniqueName == '') ? 'black' : 'white'}">{{'CREATE_CLASS' | translate}}</button>
+            <!-- for attendance/grading feature
+            <div class="roomtype-wrapper">
+              <i class="fa fa-window-close-o" style="height:20px;" aria-hidden="true"></i>
+                <div class="roomtype-description">
+                    <span style="font-size: 15px;">{{'MARK_ATTENDANCE' | translate}}</span>
+                    <span style="color:#999999; font-size: 15px; line-height: normal;">{{'MARK_ATTENDANCE_TEXT' | translate}}</span>
+                </div>
+                <img src="../../img/classroom/Switch On.png" height="25px" ng-click="addingClassroom.markAttendance=0" ng-hide="addingClassroom.markAttendance==0">
+                <img src="../../img/classroom/Switch Off.png" height="25px" ng-click="addingClassroom.markAttendance=1" ng-hide="addingClassroom.markAttendance==1">
+            </div>
+
+            <div class="roomtype-wrapper">
+                <div style="width: 100%;">
+                    <p style="font-size: 15px;">{{'SELECT_TEACHER' | translate}}</p>
+                    <select class="roomname-input" ng-model="addingClassroom.teacher">
+                      <option ng-value="">{{'TYPE_TEACHER_NAME' | translate}}</option>
+                      <option ng-repeat="user in members" ng-value="user._id">{{user.name}}</option>
+                    </select>
+                </div>
+            </div>
+            -->
+            <button
+              ng-click="confirmCreateClassroom()"
+              class="confirm-btn"
+              ng-style="{'background-color' : (addingClassroom.uniqueName == '') ? '#eeeeee' : '#5dbcd2', 'color' : (addingClassroom.uniqueName == '') ? 'black' : 'white'}"
+            >
+              {{'CREATE_CLASS' | translate}}
+            </button>
         </div>
     </div>
     <!-- end row -->

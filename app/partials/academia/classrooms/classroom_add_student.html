@@ -1,0 +1,29 @@
+<div ng-include="'partials/headerhome.html'"></div>
+
+<div class="container-fluid container-full">
+
+    <div class="row">
+
+        <div academiarightcolumn university="{{university}}"></div>
+
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 academia-content">
+
+            <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
+            <div class="row academia-coverimage" ng-if="university.backgroundImage == undefined" style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
+
+            <div style="height: 15px"></div>
+
+            <div academiastatus university="{{university}}"></div>
+
+            <!--Provides a list of student that is subscribed in the university and be able to select for teacher to add in the class-->
+            <div class="classroom-list-container">
+              <p ng-repeat="user in members">{{user.name}}</p>
+
+            </div>
+
+        </div>
+    </div>
+    <categorychat university={{university}} />
+    <footermobile></footermobile>
+</div>
+<!-- container-full -->
