@@ -370,6 +370,10 @@ angular.module('netbase', [
             templateUrl: 'partials/academia/classrooms/academiaclassrooms.html',
             controller: 'AcademiaClassroomsCtrl',
         })
+        .when('/a/:academiaName/:classname/add_user', {
+            templateUrl: 'partials/academia/classrooms/classroom_add_student.html',
+            controller: 'AcademiaAddStudentToClassCtrl',
+        })
         .when('/joinerror', {
             templateUrl: 'partials/academia/classrooms/join_err.html',
             controller: 'AcademiaClassroomsJoinErrorCtrl',
@@ -632,6 +636,10 @@ angular.module('netbase', [
         })
         .when('/home/landing', {
             templateUrl: 'partials/home/homelanding.html',
+            controller: 'HomeLandingCtrl'
+        })
+        .when('/for_checking/home/landing', {
+            templateUrl: 'partials/home/homelanding-new.html',
             controller: 'HomeLandingCtrl'
         })
         .when('/home/curadoria', {

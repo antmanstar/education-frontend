@@ -5010,7 +5010,7 @@ angular.module('netbase')
       if (domUrl.indexOf('universida.de') > 0) {
         window.location.href = '/ensinar/preco'
       } else {
-        window.location.href = '/teach/pricing'
+        window.location.href = '/teach/price'
       }
     }
 

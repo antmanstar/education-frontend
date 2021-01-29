@@ -384,12 +384,13 @@ angular.module('netbase')
             //var urlRegex = /^([^:]+):\/\/([-\w._]+)(\/[-\w._]\?(.+)?)?$/ig
             var urlRegex = /(?:(?:https?|ftp):\/\/|\b(?:[a-z\d]+\.))(?:(?:[^\s()<>]+|\((?:[^\s()<>]+|(?:\([^\s()<>]+\)))?\))+(?:\((?:[^\s()<>]+|(?:\(?:[^\s()<>]+\)))?\)|[^\s`!()\[\]{};:'".,<>???�ȡɡơ�]))?/
             retval = value.replace(urlRegex, function(url) {
-                if (url.indexOf('https://') === -1)
+
+                if ((url.indexOf('https://') === -1) && (url.indexOf('http://') === -1)){
                     return '<a href="https://' + url + '" target="_blank">' + url + '</a>';
-                else if (url.indexOf('http://') === -1)
-                    return '<a href="http://' + url + '" target="_blank">' + url + '</a>';
-                else
-                    return '<a href="' + url + '" target="_blank">' + url + '</a>';
+                } else {
+                  return '<a href="' + url + '" target="_blank">' + url + '</a>';
+                }
+
             });
         }
         return retval;
@@ -2008,6 +2009,8 @@ angular.module('netbase')
     $scope.isAdmin = $localStorage.studentIsAdmin;
     $scope.privilege = 0;
 
+    $scope.members = []
+
     //var baseUrl = "http://localhost:9001"; //Back-end server base url
     var baseUrl = "https://educationalcommunity-classroom.herokuapp.com";
 
@@ -2026,12 +2029,18 @@ angular.module('netbase')
         if ($localStorage.token != undefined && $localStorage.token != null) {
             studentId = jwtHelper.decodeToken($localStorage.token)._id;
         }
+
         for (i = 0; i < $scope.university.members.length; i++) {
             var member = $scope.university.members[i];
             if (studentId != undefined && member.accountId == studentId) {
                 $scope.privilege = member.privilege;
-                break;
+                //break;
             }
+            Students.getStudentById(member.accountId).success(function(res) {
+                if (res.success) {
+                    $scope.members.push(res.data);
+                }
+            });
         }
     });
 
@@ -2059,6 +2068,8 @@ angular.module('netbase')
         uniqueName: '',
         active: '',
         roomType: 0,
+        markAttendance: 0,
+        teacher: '',
         publicRoom: {
             type: 0,
             payPerView: 0
@@ -2194,6 +2205,34 @@ angular.module('netbase')
         $scope.deleteRoom = null;
         ngDialog.close();
     }
+}])
+
+.controller('AcademiaAddStudentToClassCtrl', ['$rootScope', '$scope', '$location', '$localStorage', '$route', 'jwtHelper', 'University', 'Students', function($rootScope, $scope, $location, $localStorage, $route, jwtHelper, University, Students) {
+    let universityUrl = $route.current.params.academiaName;
+    $scope.members = []
+
+    University.getUniversity(universityUrl).then(function(res) {
+        $scope.university = res.data.data;
+
+        let studentId;
+        let i;
+        if ($localStorage.token != undefined && $localStorage.token != null) {
+            studentId = jwtHelper.decodeToken($localStorage.token)._id;
+        }
+
+        for (i = 0; i < $scope.university.members.length; i++) {
+            var member = $scope.university.members[i];
+            if (studentId != undefined && member.accountId == studentId) {
+                $scope.privilege = member.privilege;
+                //break;
+            }
+            Students.getStudentById(member.accountId).success(function(res) {
+                if (res.success) {
+                    $scope.members.push(res.data);
+                }
+            });
+        }
+    });
 }])
 
 .controller('AcademiaCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', function($rootScope, $scope, $location, $route, University) {
