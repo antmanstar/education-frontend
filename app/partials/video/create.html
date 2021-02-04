@@ -4,19 +4,19 @@
     // Initialize instances:
 
     let url = window.location.href;
-    
+
     let UPLOAD_VIDEO_IN_PROGRESS = "";
     let STARTING_VIDEO_PROCESSING = "";
     let VIDEO_SAVED_MESSAGE = "";
 
     if (url.indexOf('universida.de') > 0) {
-      UPLOAD_VIDEO_IN_PROGRESS = "Carregar vídeo em andamento...";
-      STARTING_VIDEO_PROCESSING = "<b>Iniciando o processamento do vídeo</b>"
-      VIDEO_SAVED_MESSAGE = "<b>O vídeo foi salvo no servidor! Estamos processando o vídeo na melhor qualidade possível.</b>"
+        UPLOAD_VIDEO_IN_PROGRESS = "Carregar vídeo em andamento...";
+        STARTING_VIDEO_PROCESSING = "<b>Iniciando o processamento do vídeo</b>"
+        VIDEO_SAVED_MESSAGE = "<b>O vídeo foi salvo no servidor! Estamos processando o vídeo na melhor qualidade possível.</b>"
     } else {
-      UPLOAD_VIDEO_IN_PROGRESS = "Upload video in progress...";
-      STARTING_VIDEO_PROCESSING = "<b>Starting video processing</b>"
-      VIDEO_SAVED_MESSAGE = "<b>The video was saved on the server! We are processing the video in the best possible quality.</b>"
+        UPLOAD_VIDEO_IN_PROGRESS = "Upload video in progress...";
+        STARTING_VIDEO_PROCESSING = "<b>Starting video processing</b>"
+        VIDEO_SAVED_MESSAGE = "<b>The video was saved on the server! We are processing the video in the best possible quality.</b>"
     }
 
     var socket = io.connect("https://educationalcommunity-videouplo.herokuapp.com/");
@@ -79,7 +79,7 @@
 
         <div academiarightcolumn university="{{university}}"></div>
 
-        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 academia-content">
+        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9 academia-content">
             <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
             <div class="row academia-coverimage" ng-if="university.backgroundImage == undefined" style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
 
@@ -92,7 +92,8 @@
 
 
             <div class="alert bg-primary-red" ng-show="errorDisplay">
-                <p ng-repeat="m in errorMessages">{{m | translate}}<p>
+                <p ng-repeat="m in errorMessages">{{m | translate}}
+                    <p>
             </div>
 
             <input class="academia-content-forum-post-create-title" placeholder="{{'WRITE_VIDEO_TITLE' | translate}}" ng-model="title"></input>
@@ -165,7 +166,7 @@
             <!-- academia-content-forum-answer -->
             <!--button id="btn_show" ng-click="videoUploadAttension()" class="btn btn-green trn">{{'CREATE' | translate}}</button-->
             <div style="margin-top: 15px;">
-              <button ng-click="createVideo()" class="btn btn-green" ng-disabled="loading">{{'CREATE' | translate}}</button>
+                <button ng-click="createVideo()" class="btn btn-green" ng-disabled="loading">{{'CREATE' | translate}}</button>
             </div>
 
         </div>

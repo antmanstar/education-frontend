@@ -3143,22 +3143,22 @@ angular.module('netbase')
 
 .controller('CoursesByIdCtrl', ['$sce', 'User', '$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'Ewallet', 'jwtHelper', function($sce, User, $rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, Ewallet, jwtHelper) {
 
-    if($localStorage.token) {
-      // GET USER'S EWALLET BALANCE
-      let studentId = jwtHelper.decodeToken($localStorage.token)._id;
-      console.log("studentId: ", studentId)
-      Ewallet.getAccount(studentId).then(function(res) {
-          console.log("get account: ", res.data.result.walletBalance)
-          if (res.data.message == 'Success') {
-              $scope.balance = res.data.result.walletBalance
-          }
-      })
+    if ($localStorage.token) {
+        // GET USER'S EWALLET BALANCE
+        let studentId = jwtHelper.decodeToken($localStorage.token)._id;
+        console.log("studentId: ", studentId)
+        Ewallet.getAccount(studentId).then(function(res) {
+            console.log("get account: ", res.data.result.walletBalance)
+            if (res.data.message == 'Success') {
+                $scope.balance = res.data.result.walletBalance
+            }
+        })
     }
 
     let domainUrl = window.location.href;
     let courseUrl = "courses"
     if (domainUrl.indexOf('universida.de') > 0) {
-      courseUrl = "cursos"
+        courseUrl = "cursos"
     }
 
 
@@ -3172,20 +3172,20 @@ angular.module('netbase')
         if (res.success) {
             $scope.course = res.data;
 
-            if($localStorage.token) {
-              let mem = res.data.members;
+            if ($localStorage.token) {
+                let mem = res.data.members;
 
-              // Check if the student / user id is in the members array
-              // if its in the array, it means user has access to the course
-              let userid = User.getId();
+                // Check if the student / user id is in the members array
+                // if its in the array, it means user has access to the course
+                let userid = User.getId();
 
-              for(let i = 0; i < mem.length; i++) {
-                if(mem[i].member == userid) {
-                  $scope.useraccess = true;
-                  //$sce.trustAsHtml($scope.course)
-                  return
+                for (let i = 0; i < mem.length; i++) {
+                    if (mem[i].member == userid) {
+                        $scope.useraccess = true;
+                        //$sce.trustAsHtml($scope.course)
+                        return
+                    }
                 }
-              }
             }
         }
     });
@@ -4918,13 +4918,15 @@ angular.module('netbase')
 }])
 
 /* end messenger */
-.controller('HeaderCtrl', ['$rootScope', '$scope', '$location', '$localStorage', 'jwtHelper', 'Search', 'Students', '$route', 'ngDialog', '$timeout', '$translate', function($rootScope, $scope, $location, $localStorage, jwtHelper, Search, Students, $route, ngDialog, $timeout, $translate) {
+.controller('HeaderCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$localStorage', 'jwtHelper', 'Search', 'Students', '$route', 'ngDialog', '$timeout', '$translate', 'University', function($rootScope, $scope, $routeParams, $location, $localStorage, jwtHelper, Search, Students, $route, ngDialog, $timeout, $translate, University) {
     /* header variables */
     let logged = $rootScope.logged;
     let token = $localStorage.token
+    let universityUrl = $routeParams.academiaName;
     $scope.whitelabel = false;
     $scope.searchBarDisplay = false;
-    $scope.company_logo = $localStorage.company_logo
+    $scope.company_logo = $localStorage.company_logo;
+    $scope.uni_logo = undefined;
 
     /* get selected language from the localstorage*/
     $scope.selectedLanguage = $localStorage.setLanguage
@@ -4938,44 +4940,60 @@ angular.module('netbase')
         $scope.selectedLanguage = langKey
     };
 
-    // start - WHITELABEL IMPLEMENTATION
-
-    // #1 = If ?wl=1, then
-    if ($location.search().wl == 1) {
-        console.log("IS WHITELABELLLLLLL REQUEST!!!!!!!!!!!!!!!!!!!");
-        var universityUrl = $routeParams.academiaName;
-        console.log("university url: ")
-        console.log(universityUrl)
-
-        // #2.1 = Load University
-
-        if (University.isStoredLocal(universityUrl)) {
-            // #2 =  replace “Universidade”/”College”/”Universidad” logo for University custom logo
-            // #3 = Remove Universidades and Explorar from Tab
-            let universityStorage = University.retrieveStorage(universityUrl);
-            $scope.university = universityStorage[universityUrl];
-            if ($scope.university.whitelabel == true) {
-                $scope.whitelabel = true;
-            }
-            console.log("universit111111111111111y: ")
-            console.log($scope.university);
-        } else {
-            // #2 =  replace “Universidade”/”College”/”Universidad” logo for University custom logo
-            // #3 = Remove Universidades and Explorar from Tab
-
-            University.getUniversity(universityUrl).then(function(res) {
-                console.log("universit22222222222222y: ")
-                console.log(res.data.data)
+    // white label
+    if (University.isStoredLocal(universityUrl)) {
+        let universityStorage = University.retrieveStorage(universityUrl);
+        $scope.university = universityStorage[universityUrl];
+        $scope.whitelabel = $scope.university.whitelabel;
+        $scope.uni_logo = $scope.university.logo;
+    } else {
+        University.getUniversity(universityUrl).then(function(res) {
+            if (res.data.data) {
                 $scope.university = res.data.data;
-                if ($scope.university.whitelabel == true) {
-                    $scope.whitelabel = true;
-                }
+                $scope.whitelabel = res.data.data.whitelabel;
+                $scope.uni_logo = res.data.data.logo;
                 University.storeLocal($scope.university);
-            });
-        }
+            }
+        });
     }
 
-    // end - WHITELABEL IMPLEMENTATION
+    // // start - WHITELABEL IMPLEMENTATION
+
+    // // #1 = If ?wl=1, then
+    // if ($location.search().wl == 1) {
+    //     console.log("IS WHITELABELLLLLLL REQUEST!!!!!!!!!!!!!!!!!!!");
+    //     var universityUrl = $routeParams.academiaName;
+    //     console.log("university url: ")
+    //     console.log(universityUrl)
+
+    //     // #2.1 = Load University
+
+    //     if (University.isStoredLocal(universityUrl)) {
+    //         // #2 =  replace “Universidade”/”College”/”Universidad” logo for University custom logo
+    //         // #3 = Remove Universidades and Explorar from Tab
+    //         let universityStorage = University.retrieveStorage(universityUrl);
+    //         $scope.university = universityStorage[universityUrl];
+    //         if ($scope.university.whitelabel == true) {
+    //             $scope.whitelabel = true;
+    //         }
+    //         console.log("universit111111111111111y: ")
+    //         console.log($scope.university);
+    //     } else {
+    //         // #2 =  replace “Universidade”/”College”/”Universidad” logo for University custom logo
+    //         // #3 = Remove Universidades and Explorar from Tab
+
+    //         University.getUniversity(universityUrl).then(function(res) {
+    //             console.log("universit22222222222222y: ")
+    //             console.log(res.data.data)
+    //             $scope.university = res.data.data;
+    //             if ($scope.university.whitelabel == true) {
+    //                 $scope.whitelabel = true;
+    //             }
+    //             University.storeLocal($scope.university);
+    //         });
+    //     }
+    // } 
+    // // end - WHITELABEL IMPLEMENTATION
 
     /* functions */
     $scope.searchBarToggle = function() {
@@ -4999,31 +5017,31 @@ angular.module('netbase')
     let domUrl = window.location.href;
 
     $scope.logoUrl = function() {
-      window.location.href = '/home/landing'
+        window.location.href = '/home/landing'
     }
 
     $scope.features = function() {
-      window.location.href = '#'
+        window.location.href = '#'
     }
 
     $scope.pricing = function() {
-      if (domUrl.indexOf('universida.de') > 0) {
-        window.location.href = '/ensinar/preco'
-      } else {
-        window.location.href = '/teach/price'
-      }
+        if (domUrl.indexOf('universida.de') > 0) {
+            window.location.href = '/ensinar/preco'
+        } else {
+            window.location.href = '/teach/price'
+        }
     }
 
     $scope.download = function() {
-      window.location.href = '#'
+        window.location.href = '#'
     }
 
     $scope.aboutus = function() {
-      if (domUrl.indexOf('universida.de') > 0) {
-        window.location.href = '/sobre'
-      } else {
-        window.location.href = '/about'
-      }
+        if (domUrl.indexOf('universida.de') > 0) {
+            window.location.href = '/sobre'
+        } else {
+            window.location.href = '/about'
+        }
     }
 
     $scope.homeCheck = function() {
@@ -5885,6 +5903,7 @@ angular.module('netbase')
 
     // get student info by id
     Students.getStudentById(studentId).success(function(res) {
+        console.log($localStorage.token)
         let success = res.success;
 
         if (success) {

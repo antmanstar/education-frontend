@@ -4,19 +4,19 @@
 <div class="container-fluid container-full">
 
     <div class="row">
-      <div academiarightcolumn university="{{university}}"></div>
+        <div academiarightcolumn university="{{university}}"></div>
 
-      <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 academia-content">
-          <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
-          <div class="row academia-coverimage" ng-if="university.backgroundImage == undefined" style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
+        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9 academia-content">
+            <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
+            <div class="row academia-coverimage" ng-if="university.backgroundImage == undefined" style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
 
-          <div style="height: 15px"></div>
+            <div style="height: 15px"></div>
 
-          <div academiastatus university="{{university}}"></div>
+            <div academiastatus university="{{university}}"></div>
 
 
 
-          <div class="academia-content-navigation">
+            <div class="academia-content-navigation">
 
                 <div class="academia-content-navigation-option">{{'CREATE_PLAYLIST' | translate}}</div>
 
@@ -81,14 +81,14 @@
                 <img src="/img/loader.gif" height="50px" />
             </div>
             <div style="margin-top: 15px;">
-              <button ng-click="createPlaylist()" class="btn btn-green" ng-disabled="loading">{{'SAVE' | translate}}</button>
+                <button ng-click="createPlaylist()" class="btn btn-green" ng-disabled="loading">{{'SAVE' | translate}}</button>
             </div>
 
 
+        </div>
+        <!-- end row -->
+
+        <categorychat university={{university}} />
+        <footermobile></footermobile>
+
     </div>
-    <!-- end row -->
-
-    <categorychat university={{university}} />
-    <footermobile></footermobile>
-
-</div>

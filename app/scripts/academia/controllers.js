@@ -385,10 +385,10 @@ angular.module('netbase')
             var urlRegex = /(?:(?:https?|ftp):\/\/|\b(?:[a-z\d]+\.))(?:(?:[^\s()<>]+|\((?:[^\s()<>]+|(?:\([^\s()<>]+\)))?\))+(?:\((?:[^\s()<>]+|(?:\(?:[^\s()<>]+\)))?\)|[^\s`!()\[\]{};:'".,<>???�ȡɡơ�]))?/
             retval = value.replace(urlRegex, function(url) {
 
-                if ((url.indexOf('https://') === -1) && (url.indexOf('http://') === -1)){
+                if ((url.indexOf('https://') === -1) && (url.indexOf('http://') === -1)) {
                     return '<a href="https://' + url + '" target="_blank">' + url + '</a>';
                 } else {
-                  return '<a href="' + url + '" target="_blank">' + url + '</a>';
+                    return '<a href="' + url + '" target="_blank">' + url + '</a>';
                 }
 
             });
@@ -698,21 +698,21 @@ angular.module('netbase')
     }
 
     $scope.closeWindow = function() {
-      // Check if window is closeable
-      if(window.opener != null || window.history.length == 1){
-        console.log("we can close the window")
-        $window.close();
-      } else {
-        console.log("we cannot close the window")
-        let url = "/a/" + $scope.uniname + "/classroom"
-        window.location.href = url
-      }
+        // Check if window is closeable
+        if (window.opener != null || window.history.length == 1) {
+            console.log("we can close the window")
+            $window.close();
+        } else {
+            console.log("we cannot close the window")
+            let url = "/a/" + $scope.uniname + "/classroom"
+            window.location.href = url
+        }
     }
 
     $scope.$on('ngDialog.closing', function() {
         console.log("close dialog")
         if (!$scope.proceed) {
-          $scope.closeWindow()
+            $scope.closeWindow()
         }
     });
 
@@ -1022,7 +1022,7 @@ angular.module('netbase')
     });
 
     $scope.videoSizeSet = function() { // Participants' video layout
-      console.log("videoSizeSet")
+        console.log("videoSizeSet")
         var i;
         var videoContainer = document.getElementById('twilio');
         var videoDom = document.getElementsByTagName('video');
@@ -1213,7 +1213,7 @@ angular.module('netbase')
     }
 
     $scope.joinClassroom = function() {
-      console.log("joinclassroom")
+        console.log("joinclassroom")
         if ($rootScope.constraints.audio == false && $rootScope.constraints.video == false) {
             ngDialog.open({
                 template: 'partials/modals/classroom_select_device_modal.html',
@@ -1233,6 +1233,7 @@ angular.module('netbase')
 
         let url = '/classroom/' + roomSID + '/join/';
         Classroom.joinClassroom(baseUrl + url).then((res) => { // Join and get access token
+                console.log("RES", res)
                 if (res.data.success === true) {
                     url = '/classroom/classroom/' + roomName + '/token/'
                     Classroom.getAccessToken(baseUrl + url).then((response) => {
@@ -1248,7 +1249,7 @@ angular.module('netbase')
     }
 
     $scope.initClassroom = function() {
-      console.log("initclassroom")
+        console.log("initclassroom")
         let token = $localStorage.token;
         if (token == null || token == undefined) {
             let redirectUrl = '/a/university/' + myCipher(universityUrl) + '/roomid/' + myCipher(roomSID) + '/accountid/' + myCipher(accountSid) + '/roomname/' + myCipher(roomName) + '/';
@@ -1306,7 +1307,7 @@ angular.module('netbase')
     }
 
     $scope.connectingClassroom = function(token, room_t) {
-      console.log("connectingClassroom")
+        console.log("connectingClassroom")
         $scope.videoSizeSet();
 
         video.connect(token, room_t).then(room => { // Video room connect
@@ -1527,7 +1528,7 @@ angular.module('netbase')
     }
 
     $scope.connectClassroom = function(token, roomName, screenTrack = null) {
-      console.log("connectclassroom")
+        console.log("connectclassroom")
         $scope.currentShareScreen = screenTrack;
         $scope.currentRoomToken = token;
         $scope.currentRoomName = roomName;
@@ -1682,11 +1683,11 @@ angular.module('netbase')
         $rootScope.localMessager = null;
         $rootScope.currentChatChannel.leave();
 
-        if(window.opener != null || window.history.length == 1){
-          $window.close();
+        if (window.opener != null || window.history.length == 1) {
+            $window.close();
         } else {
-          let url = "/a/" + myDecipher($route.current.params.academiaName) + "/classroom"
-          window.location.href = url
+            let url = "/a/" + myDecipher($route.current.params.academiaName) + "/classroom"
+            window.location.href = url
         }
     }
 
@@ -1827,123 +1828,123 @@ angular.module('netbase')
     }
 
     $scope.shareScreen = function() { // Share screen event handler(toggle share screen)
-      if ($localStorage.userProceed) {
-        if ($scope.localConnected == false) {
-            return;
-        }
+        if ($localStorage.userProceed) {
+            if ($scope.localConnected == false) {
+                return;
+            }
 
-        if ($scope.shareScreenCaption == 'Share Screen') {
-            $scope.shareScreenCaption = 'Stop Sharing';
-            if ($scope.isMobile()) {
-                navigator.mediaDevices.getUserMedia({
-                    audio: false,
-                    video: true
-                }).then((stream) => {
-                    $scope.sharingScreen(stream);
-                });
+            if ($scope.shareScreenCaption == 'Share Screen') {
+                $scope.shareScreenCaption = 'Stop Sharing';
+                if ($scope.isMobile()) {
+                    navigator.mediaDevices.getUserMedia({
+                        audio: false,
+                        video: true
+                    }).then((stream) => {
+                        $scope.sharingScreen(stream);
+                    });
+                } else {
+                    navigator.mediaDevices.getDisplayMedia({
+                        audio: false,
+                        video: { mediaSource: 'screen' }
+                    }).then((stream) => {
+                        $scope.sharingScreen(stream);
+                    });
+                }
             } else {
-                navigator.mediaDevices.getDisplayMedia({
-                    audio: false,
-                    video: { mediaSource: 'screen' }
-                }).then((stream) => {
-                    $scope.sharingScreen(stream);
-                });
+                $scope.disconnectClassroom();
+                if ($scope.currentShareScreen != null) {
+                    $scope.currentShareScreen.forEach((track) => {
+                        track.stop();
+                    });
+                }
+                $scope.shareScreenCaption = 'Share Screen';
+                $scope.connectClassroom($scope.currentRoomToken, $scope.currentRoomName);
             }
-        } else {
-            $scope.disconnectClassroom();
-            if ($scope.currentShareScreen != null) {
-                $scope.currentShareScreen.forEach((track) => {
-                    track.stop();
-                });
-            }
-            $scope.shareScreenCaption = 'Share Screen';
-            $scope.connectClassroom($scope.currentRoomToken, $scope.currentRoomName);
         }
-      }
     }
 
     $scope.toggleParticipantsBox = function() { // Participant menu button event handler
-      if ($localStorage.userProceed) {
-        $scope.participantsStatus = !$scope.participantsStatus;
-        if ($scope.participantsStatus) {
-            $scope.mobileToggleParticipantsList = 'drag-in-left-right';
-            if ($scope.isMobile() == true && $scope.chatStatus == true) {
-                $scope.toggleChatBox();
+        if ($localStorage.userProceed) {
+            $scope.participantsStatus = !$scope.participantsStatus;
+            if ($scope.participantsStatus) {
+                $scope.mobileToggleParticipantsList = 'drag-in-left-right';
+                if ($scope.isMobile() == true && $scope.chatStatus == true) {
+                    $scope.toggleChatBox();
+                }
+            } else {
+                $scope.mobileToggleParticipantsList = 'drag-out-right-left';
             }
-        } else {
-            $scope.mobileToggleParticipantsList = 'drag-out-right-left';
         }
-      }
     }
 
     $scope.toggleChatBox = function() { // Chatbox showing button event handler
-      if ($localStorage.userProceed) {
-        $scope.chatStatus = !$scope.chatStatus;
-        if ($scope.chatStatus) {
-            $scope.chatboxContainer = "drag-in-right-left";
-            if ($scope.isMobile() == true && $scope.participantsStatus == true) {
-                $scope.toggleParticipantsBox();
+        if ($localStorage.userProceed) {
+            $scope.chatStatus = !$scope.chatStatus;
+            if ($scope.chatStatus) {
+                $scope.chatboxContainer = "drag-in-right-left";
+                if ($scope.isMobile() == true && $scope.participantsStatus == true) {
+                    $scope.toggleParticipantsBox();
+                }
+            } else {
+                $scope.chatboxContainer = "drag-out-left-right";
             }
-        } else {
-            $scope.chatboxContainer = "drag-out-left-right";
         }
-      }
     }
 
     $scope.toggleVoice = function() { // Voice toggle event handler
-      if ($localStorage.userProceed) {
-        if ($scope.voiceStatus == "Mute") {
-            $scope.currentLocalparticipant.audioTracks.forEach(function(audioTrack) {
-                audioTrack.track.disable();
-            });
-            $scope.voiceToggle = 'fas fa-microphone-alt-slash';
-            $scope.voiceStatus = "Unmute";
-        } else {
-            $scope.currentLocalparticipant.audioTracks.forEach(function(audioTrack) {
-                audioTrack.track.enable();
-            });
-            $scope.voiceToggle = 'fas fa-microphone-alt';
-            $scope.voiceStatus = "Mute";
+        if ($localStorage.userProceed) {
+            if ($scope.voiceStatus == "Mute") {
+                $scope.currentLocalparticipant.audioTracks.forEach(function(audioTrack) {
+                    audioTrack.track.disable();
+                });
+                $scope.voiceToggle = 'fas fa-microphone-alt-slash';
+                $scope.voiceStatus = "Unmute";
+            } else {
+                $scope.currentLocalparticipant.audioTracks.forEach(function(audioTrack) {
+                    audioTrack.track.enable();
+                });
+                $scope.voiceToggle = 'fas fa-microphone-alt';
+                $scope.voiceStatus = "Mute";
+            }
         }
-      }
     }
 
     $scope.toggleVideo = function() { // Video toggle button event handler
-      if ($localStorage.userProceed) {
-        if ($scope.videoStatus == "Stop Video") {
-            $scope.currentLocalparticipant.videoTracks.forEach(function(videoTrack) {
-                videoTrack.track.disable();
-            });
-            $scope.videoToggle = 'fas fa-video-slash';
-            $scope.videoStatus = "Start Video";
-        } else {
-            $scope.currentLocalparticipant.videoTracks.forEach(function(videoTrack) {
-                videoTrack.track.enable();
-            });
-            $scope.videoToggle = 'fas fa-video';
-            $scope.videoStatus = "Stop Video";
+        if ($localStorage.userProceed) {
+            if ($scope.videoStatus == "Stop Video") {
+                $scope.currentLocalparticipant.videoTracks.forEach(function(videoTrack) {
+                    videoTrack.track.disable();
+                });
+                $scope.videoToggle = 'fas fa-video-slash';
+                $scope.videoStatus = "Start Video";
+            } else {
+                $scope.currentLocalparticipant.videoTracks.forEach(function(videoTrack) {
+                    videoTrack.track.enable();
+                });
+                $scope.videoToggle = 'fas fa-video';
+                $scope.videoStatus = "Stop Video";
+            }
         }
-      }
     }
 
     $scope.copyLink = function() { // Copy link button event handler
-      if ($localStorage.userProceed) {
-        let universityUrl = $route.current.params.academiaName;
-        let roomSID = $route.current.params.roomSID;
-        let accountSid = $route.current.params.accountSid;
-        let roomName = $route.current.params.roomName;
-        let text = domain + "/a/university/" + universityUrl + "/roomid/" + roomSID + "/accountid/" + accountSid + "/roomname/" + roomName + "/";
+        if ($localStorage.userProceed) {
+            let universityUrl = $route.current.params.academiaName;
+            let roomSID = $route.current.params.roomSID;
+            let accountSid = $route.current.params.accountSid;
+            let roomName = $route.current.params.roomName;
+            let text = domain + "/a/university/" + universityUrl + "/roomid/" + roomSID + "/accountid/" + accountSid + "/roomname/" + roomName + "/";
 
-        Clipboard.copy(text); // Clipboard func is defined app/js/clipboard_func.js file
-        if ($rootScope.alertDialog == null || $rootScope.alertDialog == undefined) $rootScope.alertDialog = [];
+            Clipboard.copy(text); // Clipboard func is defined app/js/clipboard_func.js file
+            if ($rootScope.alertDialog == null || $rootScope.alertDialog == undefined) $rootScope.alertDialog = [];
 
-        $rootScope.alertDialog.push(ngDialog.open({
-            template: 'partials/modals/classroom_alert_modal.html',
-            controller: "AcademiaClassroomsAlertCtrl",
-            className: 'ngdialog-theme-default classroom-alert-modal',
-            data: { type: $filter('translate')("PAGETITLE"), msg: $filter('translate')("COPIED_LINK_TO_CLIPBOARD") }
-        }));
-      }
+            $rootScope.alertDialog.push(ngDialog.open({
+                template: 'partials/modals/classroom_alert_modal.html',
+                controller: "AcademiaClassroomsAlertCtrl",
+                className: 'ngdialog-theme-default classroom-alert-modal',
+                data: { type: $filter('translate')("PAGETITLE"), msg: $filter('translate')("COPIED_LINK_TO_CLIPBOARD") }
+            }));
+        }
     }
 
     $scope.toggleAllControllers = function() {
@@ -1955,23 +1956,23 @@ angular.module('netbase')
     }
 
     $scope.toggleFullScreen = function() {
-      if ($localStorage.userProceed) {
-        $scope.isFullScreen = !$scope.isFullScreen;
+        if ($localStorage.userProceed) {
+            $scope.isFullScreen = !$scope.isFullScreen;
 
-        if ($scope.isFullScreen) {
-            $scope.fullScreenToggle = "fa fa-compress";
-            $scope.fullScreenIconPos = ' fixed';
-            $scope.fullScreenStatus = 'bottom-controllers-fullscreen-show';
-        } else {
-            $scope.fullScreenToggle = "fa fa-expand";
-            $scope.fullScreenIconPos = ' absolute';
-            $scope.fullScreenStatus = '';
+            if ($scope.isFullScreen) {
+                $scope.fullScreenToggle = "fa fa-compress";
+                $scope.fullScreenIconPos = ' fixed';
+                $scope.fullScreenStatus = 'bottom-controllers-fullscreen-show';
+            } else {
+                $scope.fullScreenToggle = "fa fa-expand";
+                $scope.fullScreenIconPos = ' absolute';
+                $scope.fullScreenStatus = '';
+            }
+            setTimeout(() => {
+                    $window.dispatchEvent(new Event("resize"));
+                },
+                100);
         }
-        setTimeout(() => {
-                $window.dispatchEvent(new Event("resize"));
-            },
-            100);
-      }
     }
     $scope.confirm = function() {
         ngDialog.close();
