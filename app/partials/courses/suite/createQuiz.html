@@ -6,7 +6,7 @@
 
         <div academiarightcolumn university="{{university}}"></div>
 
-        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 academia-content">
+        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9 academia-content">
 
             <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
             <div class="row academia-coverimage" ng-if="university.backgroundImage == undefined" style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
@@ -17,11 +17,11 @@
 
             <div>
 
-              <div class="title" style="font-size: 2.0em; font-weight: bolder;">{{'CURSOS' | translate}}</div>
+                <div class="title" style="font-size: 2.0em; font-weight: bolder;">{{'CURSOS' | translate}}</div>
 
-              <div ng-include="'/partials/courses/suite/navbar.html'"></div>
+                <div ng-include="'/partials/courses/suite/navbar.html'"></div>
 
-              <!-- -->
+                <!-- -->
 
             </div>
             <!-- end col-xs-12 -->
@@ -34,125 +34,125 @@
                         <h3 class="quiz-heading">{{'ADD_QUIZ' | translate}}</h3>
                         <br>
 
-                    <!-- create quiz section start -->
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <form name="createQuizForm" novalidate ng-submit="createQuizForm.$valid">
-                                <input class="form-control input-lg" name="quizTitleName" type="text" placeholder="{{'ENTER_QUIZ_TITLE' | translate}}" required ng-model="quizTitle"><br>
-                                <span class="text-danger" ng-show="createQuizForm.quizTitleName.$error.required && createQuizForm.$submitted">{{'QUIZ_TITLE_REQUIRED'}}.</span>
+                        <!-- create quiz section start -->
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <form name="createQuizForm" novalidate ng-submit="createQuizForm.$valid">
+                                    <input class="form-control input-lg" name="quizTitleName" type="text" placeholder="{{'ENTER_QUIZ_TITLE' | translate}}" required ng-model="quizTitle"><br>
+                                    <span class="text-danger" ng-show="createQuizForm.quizTitleName.$error.required && createQuizForm.$submitted">{{'QUIZ_TITLE_REQUIRED'}}.</span>
 
-                                <div class="panel panel-default">
-                                    <!-- <div class="panel-heading"  style="background-color: #fff;">
+                                    <div class="panel panel-default">
+                                        <!-- <div class="panel-heading"  style="background-color: #fff;">
                       <trix-toolbar id="my_toolbar"></trix-toolbar>
                     </div>
                     <div class="panel-body">
                       <trix-editor placeholder="Escreva aqui a descrição" angular-trix toolbar="my_toolbar"name="quizDescriptionName" aria-required="true" ng-model="quizDescription" trix-change="trixChange(e, editor);" trix-initialize="trixInitialize(e, editor);"></trix-editor>
                       <span class="text-danger" ng-show="(quizDescription == undefined || quizDescription == '') && createQuizForm.$submitted">Quiz description is required.</span>
                     </div> -->
-                                    <textarea ui-tinymce="tinymceOptions" ng-model="quizDescription"></textarea>
-                                </div>
+                                        <textarea ui-tinymce="tinymceOptions" ng-model="quizDescription"></textarea>
+                                    </div>
 
-                                <div class="text-center">
-                                    <button type="submit" class="btn btn-small btn-green" ng-disabled="createQuizLoading" ng-click="createQuiz()">{{'CREATE_QUIZ' | translate}} <img style="width: 15px;" ng-show="createQuizLoading == true" src="img/misc/loading.gif"/></button>
-                                </div>
-                            </form>
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-small btn-green" ng-disabled="createQuizLoading" ng-click="createQuiz()">{{'CREATE_QUIZ' | translate}} <img style="width: 15px;" ng-show="createQuizLoading == true" src="img/misc/loading.gif"/></button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
+                    <!-- create quiz section end -->
                 </div>
-                <!-- create quiz section end -->
             </div>
-        </div>
 
-        <div class="row">
-            <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-12">
 
-                <!-- show this section after creating the quiz -->
-                <div class="panel panel-default" ng-show="addQuestions == true">
-                    <h3 class="quiz-heading text-capitalize text-center text-success">{{'ADD_QUESTION_TO' | translate}} "{{quizTitle}}" Quiz</h3>
+                    <!-- show this section after creating the quiz -->
+                    <div class="panel panel-default" ng-show="addQuestions == true">
+                        <h3 class="quiz-heading text-capitalize text-center text-success">{{'ADD_QUESTION_TO' | translate}} "{{quizTitle}}" Quiz</h3>
 
-                    <div class="text-center" style="padding-top: 20px;">
-                        <button ng-show="quesArr.length == 0" class="btn btn-small btn-bluebase" ng-click="addNewQues()">{{'ADD_QUESTION' | translate}}</button>
-                    </div>
-                    <div class="panel-body">
-                        <form name="quizForm" class="form-horizontal" novalidate ng-submit="quizForm.$valid">
-                            <div ng-repeat="ques in quesArr track by $index">
-                                <h3>Ques. {{$index+1}}</h3>
-                                <ul class="list-inline">
-                                    <li>{{'SELECT_QUESTION_TYPE' | translate}}:</li>
-                                    <li>
-                                        <select class="form-control" style="width: 100%;" required name="quesType{{$index}}" ng-model="ques.title_type" ng-change="selectType(ques.title_type, $index)">
+                        <div class="text-center" style="padding-top: 20px;">
+                            <button ng-show="quesArr.length == 0" class="btn btn-small btn-bluebase" ng-click="addNewQues()">{{'ADD_QUESTION' | translate}}</button>
+                        </div>
+                        <div class="panel-body">
+                            <form name="quizForm" class="form-horizontal" novalidate ng-submit="quizForm.$valid">
+                                <div ng-repeat="ques in quesArr track by $index">
+                                    <h3>Ques. {{$index+1}}</h3>
+                                    <ul class="list-inline">
+                                        <li>{{'SELECT_QUESTION_TYPE' | translate}}:</li>
+                                        <li>
+                                            <select class="form-control" style="width: 100%;" required name="quesType{{$index}}" ng-model="ques.title_type" ng-change="selectType(ques.title_type, $index)">
                       <option value="mcq">{{'MCQ' | translate}}</option>
                       <option value="descriptive">{{'DESCRIPTIVE' | translate}}</option>
                     </select>
+                                        </li>
+                                    </ul>
+                                    <!-- <span class="text-danger" ng-show="quizForm.quesType{{$index}}.$error.required && quizForm.$submitted">select one.</span> -->
+                                    <br>
+                                    <input type="text" ng-show="ques.title_type != ''" class="form-control input-lg" name="quesTitle{{$index}}" placeholder="{{'ENTER_QUESTION_HERE' | translate}}" required ng-model="ques.title">
+                                    <span class="text-danger" ng-show="quizForm.quesTitle{{$index}}.$error.required && quizForm.$submitted">{{'QUESTION_REQUIRED' | translate}}.</span>
+
+                                    <!-- show options if type is mcq -->
+                                    <div class="form-group" ng-show="ques.title_type == 'mcq'">
+                                        <div class="col-sm-6 options">
+                                            <input type="text" class="form-control" name="op1{{$index}}" placeholder="{{'OPTION_1' | translate}}" required ng-model="ques.ques_options[0].title">
+                                            <span class="text-danger" ng-show="quizForm.op1{{$index}}.$error.required && quizForm.$submitted">{{'OPTION_REQUIRED' | translate}}.</span>
+                                        </div>
+                                        <div class="col-sm-6 options">
+                                            <input type="text" class="form-control" name="op2{{$index}}" placeholder="{{'OPTION_2' | translate}}" required ng-model="ques.ques_options[1].title">
+                                            <span class="text-danger" ng-show="quizForm.op2{{$index}}.$error.required && quizForm.$submitted">{{'OPTION_REQUIRED' | translate}}.</span>
+                                        </div>
+                                        <div class="col-sm-6 options">
+                                            <input type="text" class="form-control" name="op3{{$index}}" placeholder="{{'OPTION_3' | translate}}" required ng-model="ques.ques_options[2].title">
+                                            <span class="text-danger" ng-show="quizForm.op3{{$index}}.$error.required && quizForm.$submitted">{{'OPTION_REQUIRED' | translate}}.</span>
+                                        </div>
+                                        <div class="col-sm-6 options">
+                                            <input type="text" class="form-control" name="op4{{$index}}" placeholder="{{'OPTION_4' | translate}}" required ng-model="ques.ques_options[3].title">
+                                            <span class="text-danger" ng-show="quizForm.op4{{$index}}.$error.required && quizForm.$submitted">{{'OPTION_REQUIRED' | translate}}.</span>
+                                        </div>
+                                    </div>
+
+                                    <br>
+
+                                    <!-- show radio options if ques type is mcq -->
+                                    <div class="row" ng-show="ques.title_type == 'mcq'">
+                                        <div class="col-md-2">
+                                            <h5>{{'SELECT_ANSWER' | translate}}:</h5>
+                                        </div>
+
+                                        <div class="col-md-2 radio">
+                                            <label><input type="radio" name="optionsRadios{{$index}}" ng-required="!ques.answer" ng-model="ques.answer" value="1"> {{'OPTION_1' | translate}}</label>
+                                        </div>
+
+                                        <div class="col-md-2 radio">
+                                            <label><input type="radio" name="optionsRadios{{$index}}" ng-required="!ques.answer" ng-model="ques.answer" value="2"> {{'OPTION_2' | translate}}</label>
+                                        </div>
+
+                                        <div class="col-md-2 radio">
+                                            <label><input type="radio" name="optionsRadios{{$index}}" ng-required="!ques.answer" ng-model="ques.answer" value="3"> {{'OPTION_3' | translate}}</label>
+                                        </div>
+
+                                        <div class="col-md-2 radio">
+                                            <label><input type="radio" name="optionsRadios{{$index}}" ng-required="!ques.answer" ng-model="ques.answer" value="4"> {{'OPTION_4' | translate}}</label>
+                                        </div>
+                                        <div class="col-md-12 text-center">
+                                            <span class="text-danger" ng-show="quizForm.optionsRadios{{$index}}.$error.required && quizForm.$submitted">{{'SELECT_CORRECT_ANSWER' | translate}}</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- show if ques type is descriptive -->
+                                    <div ng-show="ques.title_type == 'descriptive'">
+                                        <input class="form-control" type="text" name="descrAns{{$index}}" required ng-model="ques.answer" placeholder="{{'ENTER_CORRECT_ANSWER' | translate}}">
+                                        <span class="text-danger" ng-show="quizForm.descrAns{{$index}}.$error.required && quizForm.$submitted">{{'TYPE_AN_ANSWER' | translate}}</span>
+                                    </div>
+                                    <br><br>
+                                </div>
+
+                                <ul class="list-inline" ng-show="quesArr.length > 0 && ques.title_type != ''">
+                                    <li class="pull-left">
+                                        <button type="submit" class="btn btn-small btn-green" ng-disabled="addQuesLoading" ng-click="saveQuiz()">{{'SAVE' | translate}} <img style="width: 15px;" ng-show="addQuesLoading == true" src="img/misc/loading.gif"/></button>
                                     </li>
-                                </ul>
-                                <!-- <span class="text-danger" ng-show="quizForm.quesType{{$index}}.$error.required && quizForm.$submitted">select one.</span> -->
-                                <br>
-                                <input type="text" ng-show="ques.title_type != ''" class="form-control input-lg" name="quesTitle{{$index}}" placeholder="{{'ENTER_QUESTION_HERE' | translate}}" required ng-model="ques.title">
-                                <span class="text-danger" ng-show="quizForm.quesTitle{{$index}}.$error.required && quizForm.$submitted">{{'QUESTION_REQUIRED' | translate}}.</span>
-
-                                <!-- show options if type is mcq -->
-                                <div class="form-group" ng-show="ques.title_type == 'mcq'">
-                                    <div class="col-sm-6 options">
-                                        <input type="text" class="form-control" name="op1{{$index}}" placeholder="{{'OPTION_1' | translate}}" required ng-model="ques.ques_options[0].title">
-                                        <span class="text-danger" ng-show="quizForm.op1{{$index}}.$error.required && quizForm.$submitted">{{'OPTION_REQUIRED' | translate}}.</span>
-                                    </div>
-                                    <div class="col-sm-6 options">
-                                        <input type="text" class="form-control" name="op2{{$index}}" placeholder="{{'OPTION_2' | translate}}" required ng-model="ques.ques_options[1].title">
-                                        <span class="text-danger" ng-show="quizForm.op2{{$index}}.$error.required && quizForm.$submitted">{{'OPTION_REQUIRED' | translate}}.</span>
-                                    </div>
-                                    <div class="col-sm-6 options">
-                                        <input type="text" class="form-control" name="op3{{$index}}" placeholder="{{'OPTION_3' | translate}}" required ng-model="ques.ques_options[2].title">
-                                        <span class="text-danger" ng-show="quizForm.op3{{$index}}.$error.required && quizForm.$submitted">{{'OPTION_REQUIRED' | translate}}.</span>
-                                    </div>
-                                    <div class="col-sm-6 options">
-                                        <input type="text" class="form-control" name="op4{{$index}}" placeholder="{{'OPTION_4' | translate}}" required ng-model="ques.ques_options[3].title">
-                                        <span class="text-danger" ng-show="quizForm.op4{{$index}}.$error.required && quizForm.$submitted">{{'OPTION_REQUIRED' | translate}}.</span>
-                                    </div>
-                                </div>
-
-                                <br>
-
-                                <!-- show radio options if ques type is mcq -->
-                                <div class="row" ng-show="ques.title_type == 'mcq'">
-                                    <div class="col-md-2">
-                                        <h5>{{'SELECT_ANSWER' | translate}}:</h5>
-                                    </div>
-
-                                    <div class="col-md-2 radio">
-                                        <label><input type="radio" name="optionsRadios{{$index}}" ng-required="!ques.answer" ng-model="ques.answer" value="1"> {{'OPTION_1' | translate}}</label>
-                                    </div>
-
-                                    <div class="col-md-2 radio">
-                                        <label><input type="radio" name="optionsRadios{{$index}}" ng-required="!ques.answer" ng-model="ques.answer" value="2"> {{'OPTION_2' | translate}}</label>
-                                    </div>
-
-                                    <div class="col-md-2 radio">
-                                        <label><input type="radio" name="optionsRadios{{$index}}" ng-required="!ques.answer" ng-model="ques.answer" value="3"> {{'OPTION_3' | translate}}</label>
-                                    </div>
-
-                                    <div class="col-md-2 radio">
-                                        <label><input type="radio" name="optionsRadios{{$index}}" ng-required="!ques.answer" ng-model="ques.answer" value="4"> {{'OPTION_4' | translate}}</label>
-                                    </div>
-                                    <div class="col-md-12 text-center">
-                                        <span class="text-danger" ng-show="quizForm.optionsRadios{{$index}}.$error.required && quizForm.$submitted">{{'SELECT_CORRECT_ANSWER' | translate}}</span>
-                                    </div>
-                                </div>
-
-                                <!-- show if ques type is descriptive -->
-                                <div ng-show="ques.title_type == 'descriptive'">
-                                    <input class="form-control" type="text" name="descrAns{{$index}}" required ng-model="ques.answer" placeholder="{{'ENTER_CORRECT_ANSWER' | translate}}">
-                                    <span class="text-danger" ng-show="quizForm.descrAns{{$index}}.$error.required && quizForm.$submitted">{{'TYPE_AN_ANSWER' | translate}}</span>
-                                </div>
-                                <br><br>
-                            </div>
-
-                            <ul class="list-inline" ng-show="quesArr.length > 0 && ques.title_type != ''">
-                                <li class="pull-left">
-                                    <button type="submit" class="btn btn-small btn-green" ng-disabled="addQuesLoading" ng-click="saveQuiz()">{{'SAVE' | translate}} <img style="width: 15px;" ng-show="addQuesLoading == true" src="img/misc/loading.gif"/></button>
-                                </li>
-                                <li class="pull-right">
-                                    <button class="btn btn-small btn-bluebase" ng-click="addNewQues()">{{'ADD_NEW_QUESTION' | translate}}</button>
+                                    <li class="pull-right">
+                                        <button class="btn btn-small btn-bluebase" ng-click="addNewQues()">{{'ADD_NEW_QUESTION' | translate}}</button>
 
                                     </li>
                                 </ul>
@@ -172,15 +172,15 @@
         border-bottom: 1px solid #eee;
         padding: 10px;
     }
-
+    
     .form-group {
         padding: 20px;
     }
-
+    
     .options {
         margin-bottom: 10px;
     }
-
+    
     .quiz-heading {
         font-weight: bold;
     }

@@ -12,11 +12,12 @@
         width: 100% !important;
         height: unset !important;
     }
+    
     @media only screen and (max-width: 1200px) {
-      body {
-        padding-left: 0%;
-        padding-right: 0%;
-      }
+        body {
+            padding-left: 0%;
+            padding-right: 0%;
+        }
     }
 </style>
 
@@ -26,7 +27,7 @@
 
         <div academiarightcolumn university="{{university}}"></div>
 
-        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-6 academia-content" style="padding-top: 0px;">
+        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9 academia-content" style="padding-top: 0px;">
 
             <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
             <div class="row academia-coverimage" ng-if="university.backgroundImage == undefined" style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
@@ -37,16 +38,16 @@
 
             <div class="academia-content-forum">
 
-              <div class="classroom-list-header">
-                  <div>
-                      <div style="font-size: 2.0em; font-weight: bolder;">{{'FEED' | translate}}</div>
-                      <div class='classroom-arrange-iconview'>
-                          <!-- <img src="/img/icon/listview.svg" class="list-view-style" /> -->
-                          <!-- <img src="/img/icon/gridview.svg" class="grid-view-style" /> -->
-                      </div>
-                  </div>
-                  <div class="classroom-btn-view" ng-show="showButton">
-                      <a href="/a/{{university.url}}/forum/post/create" class="btn btn-green" style="height: unset;">
+                <div class="classroom-list-header">
+                    <div>
+                        <div style="font-size: 2.0em; font-weight: bolder;">{{'FEED' | translate}}</div>
+                        <div class='classroom-arrange-iconview'>
+                            <!-- <img src="/img/icon/listview.svg" class="list-view-style" /> -->
+                            <!-- <img src="/img/icon/gridview.svg" class="grid-view-style" /> -->
+                        </div>
+                    </div>
+                    <div class="classroom-btn-view" ng-show="showButton">
+                        <a href="/a/{{university.url}}/forum/post/create" class="btn btn-green" style="height: unset;">
                           {{'CREATE_POST' | translate}}
                       </a>
                     </div>

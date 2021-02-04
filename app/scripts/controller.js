@@ -4918,13 +4918,15 @@ angular.module('netbase')
 }])
 
 /* end messenger */
-.controller('HeaderCtrl', ['$rootScope', '$scope', '$location', '$localStorage', 'jwtHelper', 'Search', 'Students', '$route', 'ngDialog', '$timeout', '$translate', function($rootScope, $scope, $location, $localStorage, jwtHelper, Search, Students, $route, ngDialog, $timeout, $translate) {
+.controller('HeaderCtrl', ['$rootScope', '$scope', '$routeParams', '$location', '$localStorage', 'jwtHelper', 'Search', 'Students', '$route', 'ngDialog', '$timeout', '$translate', 'University', function($rootScope, $scope, $routeParams, $location, $localStorage, jwtHelper, Search, Students, $route, ngDialog, $timeout, $translate, University) {
     /* header variables */
     let logged = $rootScope.logged;
     let token = $localStorage.token
+    let universityUrl = $routeParams.academiaName;
     $scope.whitelabel = false;
     $scope.searchBarDisplay = false;
-    $scope.company_logo = $localStorage.company_logo
+    $scope.company_logo = $localStorage.company_logo;
+    $scope.uni_logo = undefined;
 
     /* get selected language from the localstorage*/
     $scope.selectedLanguage = $localStorage.setLanguage
@@ -4938,44 +4940,60 @@ angular.module('netbase')
         $scope.selectedLanguage = langKey
     };
 
-    // start - WHITELABEL IMPLEMENTATION
-
-    // #1 = If ?wl=1, then
-    if ($location.search().wl == 1) {
-        console.log("IS WHITELABELLLLLLL REQUEST!!!!!!!!!!!!!!!!!!!");
-        var universityUrl = $routeParams.academiaName;
-        console.log("university url: ")
-        console.log(universityUrl)
-
-        // #2.1 = Load University
-
-        if (University.isStoredLocal(universityUrl)) {
-            // #2 =  replace “Universidade”/”College”/”Universidad” logo for University custom logo
-            // #3 = Remove Universidades and Explorar from Tab
-            let universityStorage = University.retrieveStorage(universityUrl);
-            $scope.university = universityStorage[universityUrl];
-            if ($scope.university.whitelabel == true) {
-                $scope.whitelabel = true;
-            }
-            console.log("universit111111111111111y: ")
-            console.log($scope.university);
-        } else {
-            // #2 =  replace “Universidade”/”College”/”Universidad” logo for University custom logo
-            // #3 = Remove Universidades and Explorar from Tab
-
-            University.getUniversity(universityUrl).then(function(res) {
-                console.log("universit22222222222222y: ")
-                console.log(res.data.data)
+    // white label
+    if (University.isStoredLocal(universityUrl)) {
+        let universityStorage = University.retrieveStorage(universityUrl);
+        $scope.university = universityStorage[universityUrl];
+        $scope.whitelabel = $scope.university.whitelabel;
+        $scope.uni_logo = $scope.university.logo;
+    } else {
+        University.getUniversity(universityUrl).then(function(res) {
+            if (res.data.data) {
                 $scope.university = res.data.data;
-                if ($scope.university.whitelabel == true) {
-                    $scope.whitelabel = true;
-                }
+                $scope.whitelabel = res.data.data.whitelabel;
+                $scope.uni_logo = res.data.data.logo;
                 University.storeLocal($scope.university);
-            });
-        }
+            }
+        });
     }
 
-    // end - WHITELABEL IMPLEMENTATION
+    // // start - WHITELABEL IMPLEMENTATION
+
+    // // #1 = If ?wl=1, then
+    // if ($location.search().wl == 1) {
+    //     console.log("IS WHITELABELLLLLLL REQUEST!!!!!!!!!!!!!!!!!!!");
+    //     var universityUrl = $routeParams.academiaName;
+    //     console.log("university url: ")
+    //     console.log(universityUrl)
+
+    //     // #2.1 = Load University
+
+    //     if (University.isStoredLocal(universityUrl)) {
+    //         // #2 =  replace “Universidade”/”College”/”Universidad” logo for University custom logo
+    //         // #3 = Remove Universidades and Explorar from Tab
+    //         let universityStorage = University.retrieveStorage(universityUrl);
+    //         $scope.university = universityStorage[universityUrl];
+    //         if ($scope.university.whitelabel == true) {
+    //             $scope.whitelabel = true;
+    //         }
+    //         console.log("universit111111111111111y: ")
+    //         console.log($scope.university);
+    //     } else {
+    //         // #2 =  replace “Universidade”/”College”/”Universidad” logo for University custom logo
+    //         // #3 = Remove Universidades and Explorar from Tab
+
+    //         University.getUniversity(universityUrl).then(function(res) {
+    //             console.log("universit22222222222222y: ")
+    //             console.log(res.data.data)
+    //             $scope.university = res.data.data;
+    //             if ($scope.university.whitelabel == true) {
+    //                 $scope.whitelabel = true;
+    //             }
+    //             University.storeLocal($scope.university);
+    //         });
+    //     }
+    // } 
+    // // end - WHITELABEL IMPLEMENTATION
 
     /* functions */
     $scope.searchBarToggle = function() {

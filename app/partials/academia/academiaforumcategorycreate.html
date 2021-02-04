@@ -5,71 +5,72 @@
         width: 100% !important;
         height: unset !important;
     }
+    
     @media only screen and (max-width: 1200px) {
-      body {
-        padding-left: 0%;
-        padding-right: 0%;
-      }
+        body {
+            padding-left: 0%;
+            padding-right: 0%;
+        }
     }
 </style>
 
 <div class="container-fluid container-full">
-  <div class="row">
-    <div academiarightcolumn university="{{university}}"></div>
+    <div class="row">
+        <div academiarightcolumn university="{{university}}"></div>
 
-    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 academia-content">
-        <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
-        <div class="row academia-coverimage" ng-if="university.backgroundImage == undefined" style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
+        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9 academia-content">
+            <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
+            <div class="row academia-coverimage" ng-if="university.backgroundImage == undefined" style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
 
-        <div style="height: 15px"></div>
-        <div academiastatus university="{{university}}"></div>
+            <div style="height: 15px"></div>
+            <div academiastatus university="{{university}}"></div>
 
-      <div class="academia-content-forum-answer" style="padding-top: 30px;">
-        <div class="alert bg-primary-red" ng-if="errors.length > 0">
-            <ul>
-                <li ng-repeat="e in errors">{{e | translate}}</li>
-            </ul>
-        </div>
+            <div class="academia-content-forum-answer" style="padding-top: 30px;">
+                <div class="alert bg-primary-red" ng-if="errors.length > 0">
+                    <ul>
+                        <li ng-repeat="e in errors">{{e | translate}}</li>
+                    </ul>
+                </div>
 
-        <label>{{'CATEGORY_TITLE' | translate}}</label></br>
-        <span ng-if="inputLengthWarningShow" style="color: #721c24;">{{'INPUT_LENGTH_ERROR' | translate}}</span>
-        <input class="academia-content-forum-post-create-title" ng-change="titleCounter()" maxlength="25" placeholder="{{'WRITE_CATEGORY_TITLE' | translate}}" ng-model="title"></input>
+                <label>{{'CATEGORY_TITLE' | translate}}</label></br>
+                <span ng-if="inputLengthWarningShow" style="color: #721c24;">{{'INPUT_LENGTH_ERROR' | translate}}</span>
+                <input class="academia-content-forum-post-create-title" ng-change="titleCounter()" maxlength="25" placeholder="{{'WRITE_CATEGORY_TITLE' | translate}}" ng-model="title"></input>
 
-        <label>{{'CATEGORY_DESCRIPTION' | translate}}</label></br>
-        <textarea ui-tinymce="tinymceOptions" ng-model="description"></textarea>
+                <label>{{'CATEGORY_DESCRIPTION' | translate}}</label></br>
+                <textarea ui-tinymce="tinymceOptions" ng-model="description"></textarea>
 
-        <div class="academia-content-forum-post-create-premium">
+                <div class="academia-content-forum-post-create-premium">
 
-          <b>{{'SELECT_ACCESS_MEMBER' | translate}}</b>
+                    <b>{{'SELECT_ACCESS_MEMBER' | translate}}</b>
 
-          <div class="form-group">
-            <select ng-model="privilege.value">
+                    <div class="form-group">
+                        <select ng-model="privilege.value">
               <option value="0" ng-selected="true">{{'STUDENT' | translate}}</option>
               <option value="10">{{'PREMIUM' | translate}}</option>
               <option value="50">{{'TEAM' | translate}}</option>
               <option value="99">{{'ADMINISTRATOR' | translate}}</option>
             </select>
-          </div>
+                    </div>
+
+                </div>
+
+                <div ng-show="loading" class="loading-gif" style="text-align: center;">
+                    <img src="/img/loader.gif" height="50px" />
+                </div>
+                <div class="academia-content-forum-answer-action" style="margin-top: 15px;">
+                    <button class="btn btn-bluebase" ng-click="createCategory()" ng-disabled="loading">{{'CREATE_CATEGORY' | translate}}</button>
+                </div>
+                <!-- academia-content-forum-answer -->
+
+            </div>
+            <!-- academia-content-forum-answer -->
 
         </div>
-
-        <div ng-show="loading" class="loading-gif" style="text-align: center;">
-            <img src="/img/loader.gif" height="50px" />
-        </div>
-        <div class="academia-content-forum-answer-action" style="margin-top: 15px;">
-          <button class="btn btn-bluebase" ng-click="createCategory()" ng-disabled="loading">{{'CREATE_CATEGORY' | translate}}</button>
-        </div>
-        <!-- academia-content-forum-answer -->
-
-      </div>
-      <!-- academia-content-forum-answer -->
+        <!-- end col-xs-12 -->
 
     </div>
-    <!-- end col-xs-12 -->
-
-  </div>
-  <!-- end row -->
-  <categorychat university={{university}} />
-  <footermobile></footermobile>
+    <!-- end row -->
+    <categorychat university={{university}} />
+    <footermobile></footermobile>
 
 </div>

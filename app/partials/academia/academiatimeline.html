@@ -4,70 +4,70 @@
 <update-meta property="og:title" content="{{university.name}} | {{'PAGETITLE' | translate}}"></update-meta>
 <update-meta property="og:url" content="https://{{'DOMAIN_PLACEHOLDER' | translate}}/a/{{university.url}}/timeline"></update-meta>
 <update-meta property="og:description" content="{{'META_DESCRIPTION' | translate}}">
-<update-meta property="og:site_name" content="{{'META_SITENAME' | translate}}">
+    <update-meta property="og:site_name" content="{{'META_SITENAME' | translate}}">
 
-<update-meta ng-if="university.backgroundImage != undefined" property="og:image" content="{{university.backgroundImage}}"></update-meta>
-<update-meta ng-if="university.backgroundImage == undefined" property="og:image" content="https://universida.de/img/misc/noimageacademia.jpg"></update-meta>
+        <update-meta ng-if="university.backgroundImage != undefined" property="og:image" content="{{university.backgroundImage}}"></update-meta>
+        <update-meta ng-if="university.backgroundImage == undefined" property="og:image" content="https://universida.de/img/misc/noimageacademia.jpg"></update-meta>
 
-<style>
-    figure img {
-        width: 100% !important;
-        height: unset !important;
-    }
-
-    @media only screen and (max-width: 1200px) {
-        body {
-            padding-left: 0%;
-            padding-right: 0%;
-        }
-    }
-</style>
-
-<div class="container-fluid container-full animated fadeIn">
-
-    <div class="row">
-
-        <div academiarightcolumn university="{{university}}"></div>
-
-        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 academia-content" style="padding-top: 0px;">
-
-            <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
-            <div class="row academia-coverimage" ng-if="university.backgroundImage == undefined" style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
-
-            <div style="height: 15px"></div>
-
-            <div academiastatus university="{{university}}"></div>
-
-            <style>
-                .onboarding-row {
-                    padding: 10px;
-                    padding-bottom: 15px;
-                    padding-top: 15px;
-                    background-color: #52bfea;
-                    margin-bottom: 20px;
-                    border-radius: 5px;
+        <style>
+            figure img {
+                width: 100% !important;
+                height: unset !important;
+            }
+            
+            @media only screen and (max-width: 1200px) {
+                body {
+                    padding-left: 0%;
+                    padding-right: 0%;
                 }
+            }
+        </style>
 
-                .onboarding-row .card-wrapper {
-                    min-height: 90px;
-                    color: #163642;
-                    font-weight: bold;
-                }
+        <div class="container-fluid container-full animated fadeIn">
 
-                .onboarding-row .card-inside {
-                    background-color: #fff;
-                    min-height: 90px;
-                    border-radius: 7px;
-                    padding: 10px;
-                    cursor: pointer;
-                }
+            <div class="row">
 
-                .onboarding-row .card-inside:hover {
-                    border: 3px solid #ee5748;
-                }
-            </style>
+                <div academiarightcolumn university="{{university}}"></div>
 
-            <!-- ONBOARDING
+                <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9 academia-content" style="padding-top: 0px;">
+
+                    <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
+                    <div class="row academia-coverimage" ng-if="university.backgroundImage == undefined" style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
+
+                    <div style="height: 15px"></div>
+
+                    <div academiastatus university="{{university}}"></div>
+
+                    <style>
+                        .onboarding-row {
+                            padding: 10px;
+                            padding-bottom: 15px;
+                            padding-top: 15px;
+                            background-color: #52bfea;
+                            margin-bottom: 20px;
+                            border-radius: 5px;
+                        }
+                        
+                        .onboarding-row .card-wrapper {
+                            min-height: 90px;
+                            color: #163642;
+                            font-weight: bold;
+                        }
+                        
+                        .onboarding-row .card-inside {
+                            background-color: #fff;
+                            min-height: 90px;
+                            border-radius: 7px;
+                            padding: 10px;
+                            cursor: pointer;
+                        }
+                        
+                        .onboarding-row .card-inside:hover {
+                            border: 3px solid #ee5748;
+                        }
+                    </style>
+
+                    <!-- ONBOARDING
       <div class="row onboarding-row">
         <div class="col-xs-12" style="font-weight: bold; margin-bottom: 10px; padding-left: 5px; color: #fff; font-size: 1.1em;">Get started with your Educational Platform</div>
         <div class="col-xs-3 card-wrapper">
@@ -93,41 +93,41 @@
       </div>
       -->
 
-            <div class="academia-content-forum">
+                    <div class="academia-content-forum">
 
-                <div ng-hide="loaded" style="text-align: center;">
-                    <img src="/img/loader.gif" height="50px" />
-                </div>
+                        <div ng-hide="loaded" style="text-align: center;">
+                            <img src="/img/loader.gif" height="50px" />
+                        </div>
 
-                <div ng-show="forumPosts.length == 0 && loaded" style="display: flex; flex-direction: column; align-items: center; margin-top: 30px;">
-                    <img src="/img/academy/empty_timeline.png" width="300px" style="align-self: center">
-                    <span style="font-size: 30px; font-weight: 600; text-align: center; width: 300px; margin-top: 10px;">{{'TIMELINE_EMPTY_TITLE' | translate}}</span>
-                    <span style="text-align: center; width:300px; margin-top: 10px;">{{'TIMELINE_EMPTY_SUBTITLE' | translate}}</span>
-                </div>
+                        <div ng-show="forumPosts.length == 0 && loaded" style="display: flex; flex-direction: column; align-items: center; margin-top: 30px;">
+                            <img src="/img/academy/empty_timeline.png" width="300px" style="align-self: center">
+                            <span style="font-size: 30px; font-weight: 600; text-align: center; width: 300px; margin-top: 10px;">{{'TIMELINE_EMPTY_TITLE' | translate}}</span>
+                            <span style="text-align: center; width:300px; margin-top: 10px;">{{'TIMELINE_EMPTY_SUBTITLE' | translate}}</span>
+                        </div>
 
-                <div ng-show="forumPosts.length > 0">
-                    <timelinepost p="{{post}}" u="{{university}}" ng-repeat="post in forumPosts"></timelinepost>
+                        <div ng-show="forumPosts.length > 0">
+                            <timelinepost p="{{post}}" u="{{university}}" ng-repeat="post in forumPosts"></timelinepost>
+                        </div>
+                        <!-- forumPosts.length > 0 -->
+
+                    </div>
+                    <!-- academia-content-forum-->
+
+                    <div>
+                        <ul class="pagination" ng-if="pages > 1">
+                            <li class="page-item" ng-if="page != 1"><a class="page-link" href="/a/{{university.url}}/forum?page={{page - 1}}">{{'RETURN' | translate}}</a></li>
+                            <li class="page-item" ng-repeat="p in range(1, pages)"><a class="page-link" ng-style="p == page && {'font-weight':'bold'}" href="/a/{{university.url}}/forum?page={{p}}">{{p}}</a></li>
+                            <li class="page-item"><a class="page-link" href="/a/{{university.url}}/forum?page={{page + 1}}">{{'NEXT' | translate}}</a></li>
+                        </ul>
+                    </div>
+
                 </div>
-                <!-- forumPosts.length > 0 -->
+                <!-- end col-xs-12 -->
 
             </div>
-            <!-- academia-content-forum-->
-
-            <div>
-                <ul class="pagination" ng-if="pages > 1">
-                    <li class="page-item" ng-if="page != 1"><a class="page-link" href="/a/{{university.url}}/forum?page={{page - 1}}">{{'RETURN' | translate}}</a></li>
-                    <li class="page-item" ng-repeat="p in range(1, pages)"><a class="page-link" ng-style="p == page && {'font-weight':'bold'}" href="/a/{{university.url}}/forum?page={{p}}">{{p}}</a></li>
-                    <li class="page-item"><a class="page-link" href="/a/{{university.url}}/forum?page={{page + 1}}">{{'NEXT' | translate}}</a></li>
-                </ul>
-            </div>
+            <!-- end row -->
+            <categorychat university={{university}} />
+            <footermobile></footermobile>
 
         </div>
-        <!-- end col-xs-12 -->
-
-    </div>
-    <!-- end row -->
-    <categorychat university={{university}} />
-    <footermobile></footermobile>
-
-</div>
-<!-- container-full -->
+        <!-- container-full -->
