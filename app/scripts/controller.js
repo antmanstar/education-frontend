@@ -3143,22 +3143,22 @@ angular.module('netbase')
 
 .controller('CoursesByIdCtrl', ['$sce', 'User', '$rootScope', '$scope', '$location', '$route', '$localStorage', 'Students', 'ngDialog', 'Courses', 'Ewallet', 'jwtHelper', function($sce, User, $rootScope, $scope, $location, $route, $localStorage, Students, ngDialog, Courses, Ewallet, jwtHelper) {
 
-    if($localStorage.token) {
-      // GET USER'S EWALLET BALANCE
-      let studentId = jwtHelper.decodeToken($localStorage.token)._id;
-      console.log("studentId: ", studentId)
-      Ewallet.getAccount(studentId).then(function(res) {
-          console.log("get account: ", res.data.result.walletBalance)
-          if (res.data.message == 'Success') {
-              $scope.balance = res.data.result.walletBalance
-          }
-      })
+    if ($localStorage.token) {
+        // GET USER'S EWALLET BALANCE
+        let studentId = jwtHelper.decodeToken($localStorage.token)._id;
+        console.log("studentId: ", studentId)
+        Ewallet.getAccount(studentId).then(function(res) {
+            console.log("get account: ", res.data.result.walletBalance)
+            if (res.data.message == 'Success') {
+                $scope.balance = res.data.result.walletBalance
+            }
+        })
     }
 
     let domainUrl = window.location.href;
     let courseUrl = "courses"
     if (domainUrl.indexOf('universida.de') > 0) {
-      courseUrl = "cursos"
+        courseUrl = "cursos"
     }
 
 
@@ -3172,20 +3172,20 @@ angular.module('netbase')
         if (res.success) {
             $scope.course = res.data;
 
-            if($localStorage.token) {
-              let mem = res.data.members;
+            if ($localStorage.token) {
+                let mem = res.data.members;
 
-              // Check if the student / user id is in the members array
-              // if its in the array, it means user has access to the course
-              let userid = User.getId();
+                // Check if the student / user id is in the members array
+                // if its in the array, it means user has access to the course
+                let userid = User.getId();
 
-              for(let i = 0; i < mem.length; i++) {
-                if(mem[i].member == userid) {
-                  $scope.useraccess = true;
-                  //$sce.trustAsHtml($scope.course)
-                  return
+                for (let i = 0; i < mem.length; i++) {
+                    if (mem[i].member == userid) {
+                        $scope.useraccess = true;
+                        //$sce.trustAsHtml($scope.course)
+                        return
+                    }
                 }
-              }
             }
         }
     });
@@ -4999,31 +4999,31 @@ angular.module('netbase')
     let domUrl = window.location.href;
 
     $scope.logoUrl = function() {
-      window.location.href = '/home/landing'
+        window.location.href = '/home/landing'
     }
 
     $scope.features = function() {
-      window.location.href = '#'
+        window.location.href = '#'
     }
 
     $scope.pricing = function() {
-      if (domUrl.indexOf('universida.de') > 0) {
-        window.location.href = '/ensinar/preco'
-      } else {
-        window.location.href = '/teach/price'
-      }
+        if (domUrl.indexOf('universida.de') > 0) {
+            window.location.href = '/ensinar/preco'
+        } else {
+            window.location.href = '/teach/price'
+        }
     }
 
     $scope.download = function() {
-      window.location.href = '#'
+        window.location.href = '#'
     }
 
     $scope.aboutus = function() {
-      if (domUrl.indexOf('universida.de') > 0) {
-        window.location.href = '/sobre'
-      } else {
-        window.location.href = '/about'
-      }
+        if (domUrl.indexOf('universida.de') > 0) {
+            window.location.href = '/sobre'
+        } else {
+            window.location.href = '/about'
+        }
     }
 
     $scope.homeCheck = function() {
@@ -5885,6 +5885,7 @@ angular.module('netbase')
 
     // get student info by id
     Students.getStudentById(studentId).success(function(res) {
+        console.log($localStorage.token)
         let success = res.success;
 
         if (success) {
