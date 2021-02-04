@@ -54,12 +54,12 @@
             </span>
                                 </div>
 
-                                <div class="col-xs-6 col-sm-4" style="text-align: center; height: 100%; padding: 2px;" ng-show="!whitelabel">
+                                <div class="col-xs-6 col-sm-4" style="text-align: center; height: 100%;" ng-show="!whitelabel">
                                     <a href="/home/landing" ng-if="!logged"><img height="100%" src="{{company_logo}}" /></a>
                                     <a href="/home/timeline" ng-if="logged"><img height="100%" src="{{company_logo}}" /></a>
                                 </div>
-                                <div class="col-xs-6 col-sm-4" style="text-align: center; height: 100%; margin-bottom: 40px;" ng-show="whitelabel">
-                                    <a href="/a/{{university.url}}/"><img width="150" height="30" src="{{uni_logo}}" /></a>
+                                <div class="col-xs-6 col-sm-4" style="text-align: center; height: 100%;" ng-show="whitelabel">
+                                    <a href="/a/{{university.url}}/"><img height="30" src="{{uni_logo}}" /></a>
                                 </div>
 
                                 <!--<div class="col-xs-3 col-sm-4" id="mobile-credentials" ng-show="logged" ng-click="searchbar()" style="text-align: right; height: 100%; padding-right: 10px; line-height: 32px;"><div ng-click="searchBarToggle()" style="font-size: 1.4em; padding-bottom: 3px;"><i class="fas fa-search"></i></div></div>-->
@@ -143,7 +143,6 @@
                                 <!--<div class="option unselectable" ng-class="{'active': originalPath.indexOf('/home/conhecimento') != -1 }"><a href="/home/conhecimento">Conhecimento</a></div>-->
 
                             </div>
-                            <div class="navbar-slider" ng-show="whitelabel" style="background-color: #cacaca; height:1px; width: 100%;"> </div>
 
                             <!--
         <div class="menu-right">
