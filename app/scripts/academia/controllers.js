@@ -1818,8 +1818,8 @@ angular.module('netbase')
 
                         navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
                             $scope.disconnectClassroom();
-                            $scope.connectClassroom($scope.currentRoomToken, $scope.currentRoomName);
-                            //$scope.connectClassroom($scope.currentRoomToken, $scope.currentRoomName, [stream.getTracks()[0], screenTrack]);
+                            // $scope.connectClassroom($scope.currentRoomToken, $scope.currentRoomName);
+                            $scope.connectClassroom($scope.currentRoomToken, $scope.currentRoomName, [stream.getTracks()[0], screenTrack]);
                         });
                         break;
                     }
