@@ -866,7 +866,7 @@ angular.module('netbase')
                     video.onloadedmetadata = function(e) {
                         video.play();
                     };
-                    video.transform = scaleX(-1); // test mirror
+                    // video.transform = scaleX(-1); // test mirror
                 },
                 function(err) {
                     if ($rootScope.alertDialog == null || $rootScope.alertDialog == undefined) $rootScope.alertDialog = [];
@@ -899,7 +899,7 @@ angular.module('netbase')
                     video.onloadedmetadata = function(e) {
                         video.play();
                     };
-                    video.transform = scaleX(-1); // test mirror
+                    // video.transform = scaleX(-1); // test mirror
                 }).catch((err) => {
                     if ($rootScope.alertDialog == null || $rootScope.alertDialog == undefined) $rootScope.alertDialog = [];
                     $rootScope.alertDialog.push(ngDialog.open({
