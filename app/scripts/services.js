@@ -72,6 +72,25 @@ angular.module('netbase')
     }
 }])
 
+.factory('Email', ['$http', '$localStorage', function($http, $localStorage) {
+    var baseUrl = "https://educationalcommunity-timeline.herokuapp.com";
+
+    return {
+      contactUs: function(data) {
+          let url = "/contactus";
+
+          return $http({
+              method: 'POST',
+              data: data,
+              url: url,
+              headers: {
+                  'Content-Type': 'application/json'
+              }
+          });
+      },
+    }
+}])
+
 .factory('PokerHands', ['$http', '$localStorage', function($http, $localStorage) {
     var baseUrl = "https://educationalcommunity-uni.herokuapp.com";
     //var baseUrl = "http://localhost:9003";

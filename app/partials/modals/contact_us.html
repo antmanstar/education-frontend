@@ -1,0 +1,40 @@
+<div class="container-fluid modal-accounts">
+    <style>
+        .input-email {
+            text-transform: lowercase;
+        }
+
+        .input-email::-webkit-input-placeholder {
+            text-transform: capitalize;
+        }
+
+        .loading-gif {
+            width: 100%;
+            text-align: center;
+            padding-top: 30px;
+            padding-bottom: 30px;
+        }
+
+    </style>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="headline-sub-one">Contact Us</div>
+            <div class="alert bg-primary-red" ng-if="contactError">{{contactMessage | translate}}</div>
+            <div class="form">
+                <div class="form-group">
+                    <i class="fas fa-envelope"></i>
+                    <input class="input-email" ng-model="contact.email" placeholder="{{'EMAIL' | translate}}" type="text" />
+                </div>
+                <div class="form-group">
+                  <p>Tell us your requirements:</p>
+                  <textarea style="width:100%;" id="requirements" cols="80" rows="10" ng-model="contact.requirements" ></textarea>
+                </div>
+                <div ng-show="loading" class="loading-gif">
+                    <img src="/img/loader.gif" height="50px" />
+                </div>
+                <button ng-click="contactUs()" class="btn btn-bluebase" ng-disabled="loading">{{'CONTACT_US' | translate}}</button>
+            </div>
+        </div>
+    </div>
+</div>

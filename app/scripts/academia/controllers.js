@@ -1313,7 +1313,7 @@ angular.module('netbase')
         video.connect(token, room_t).then(room => { // Video room connect
             const localParticipant = room.localParticipant;
 
-            console.log("remote : ", room.participants.remoteParticipant)
+            console.log("remote room: ", room)
 
             $scope.currentLocalparticipant = room.localParticipant;
             $scope.currentLocalparticipant.audioTracks.forEach(function(audioTrack) {
@@ -1535,6 +1535,7 @@ angular.module('netbase')
 
         var room_t;
         if (screenTrack != null) {
+            console.log("SCREEN")
             room_t = {
                 name: roomName,
                 tracks: [screenTrack[0], screenTrack[1]]
@@ -1542,7 +1543,9 @@ angular.module('netbase')
             $scope.connectingClassroom(token, room_t);
         } else {
 
+            console.log("CONS", $rootScope.constraints)
             video.createLocalTracks($rootScope.constraints).then((localTracks) => {
+                console.log("LOCAL", localTracks)
                 room_t = {
                     name: roomName,
                     tracks: localTracks
@@ -1585,6 +1588,7 @@ angular.module('netbase')
         $scope.attachVideo(track, ele);
         main.appendChild(ele);
 
+        console.log("trackSubscribed", track)
         setTimeout(() => {
             $window.dispatchEvent(new Event("resize"));
         }, 100);
@@ -1608,7 +1612,7 @@ angular.module('netbase')
     }
 
     $scope.trackUnsubscribed = function(track) { // Track unsubscribed event handler
-        console.log("participant leaving")
+        console.log("trackUnsubscribed", track)
         track.detach().forEach(element => {
 
             let i, j;
@@ -1692,67 +1696,7 @@ angular.module('netbase')
     }
 
     $scope.recordVideo = function() { // Works only chrome browser, not using Twilio api, instead of it, using MediaRecorder
-        if ($scope.recordStatus == false) {
-            $scope.videoRecordStream = [];
-            $scope.recorder = [];
-            $scope.audioRecordStream = new MediaStream();
-            let videos = document.getElementsByTagName('video');
-            let audios = document.getElementsByTagName('audio');
-            let i;
 
-            for (i = 0; i < audios.length; i++) {
-                $scope.audioRecordStream.addTrack(audios[i].captureStream().getAudioTracks()[0]);
-            }
-
-            for (i = 0; i < videos.length; i++) {
-                let videoS = new MediaStream();
-                videoS.addTrack(videos[i].captureStream().getVideoTracks()[0]);
-                $scope.videoRecordStream.push(videoS);
-
-                var outputStream = new MediaStream();
-                [$scope.audioRecordStream, videoS].forEach((s) => {
-                    s.getTracks().forEach((t) => {
-                        outputStream.addTrack(t);
-                    })
-                });
-
-                let recorder = new MediaRecorder(outputStream);
-                recorder.start();
-                $scope.recorder.push(recorder);
-            }
-
-            $scope.recordStatus = true;
-            $scope.recordToggle = 'fas fa-record-vinyl recording';
-            $scope.recordToggleCaption = 'stop recording';
-        } else {
-            let i;
-            $scope.tempScene = [];
-            let promise = new Promise((resolve, reject) => {
-                for (i = 0; i < $scope.recorder.length; i++) {
-
-                    $scope.recorder[i].ondataavailable = e => {
-                        $scope.tempScene.push(e.data);
-                    };
-                    $scope.recorder[i].stop();
-                }
-
-                setTimeout(() => {
-                    resolve();
-                }, 500);
-            });
-
-            promise.then(() => {
-                var a = document.createElement('a');
-                a.download = ['video_', (new Date() + '').slice(4, 28), '.webm'].join('');
-                a.href = URL.createObjectURL($scope.tempScene[0]);
-                a.textContent = a.download;
-                a.click();
-            })
-
-            $scope.recordStatus = false;
-            $scope.recordToggle = 'fas fa-record-vinyl';
-            $scope.recordToggleCaption = 'record';
-        }
     }
 
     $scope.attachVideo = function(track, videoContainer) { // Attach participant's video to dom
@@ -1790,6 +1734,7 @@ angular.module('netbase')
 
     $scope.sharingScreen = function(stream) {
         const screenTrack = stream.getTracks()[0];
+        console.log("TRAck", screenTrack)
 
         screenTrack.onended = function(e) {
             if (!$scope.localConnected) return;
@@ -2781,7 +2726,7 @@ angular.module('netbase')
     }
 }])
 
-.controller('AcademiaForumPostCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Forum', 'Courses', '$sce', '$localStorage', 'ngDialog', 'jwtHelper', '$timeout', function($rootScope, $scope, $location, $route, University, Forum, Courses, $sce, $localStorage, ngDialog, jwtHelper, $timeout) {
+.controller('AcademiaForumPostCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Forum', 'Courses', 'Students', '$sce', '$localStorage', 'ngDialog', 'jwtHelper', '$timeout', function($rootScope, $scope, $location, $route, University, Forum, Courses, Students, $sce, $localStorage, ngDialog, jwtHelper, $timeout) {
     let displayinvite = false;
     let universityUrl = $route.current.params.academiaName;
     let postId = $route.current.params.postId;
@@ -2826,8 +2771,13 @@ angular.module('netbase')
 
             if (status != 90010) {
                 $scope.forumPost = data;
+                console.log("forum post: ", $scope.forumPost)
                 $scope.votesCount = data.votesCount;
                 $scope.forumPost.text = $sce.trustAsHtml($scope.forumPost.text);
+
+                Students.getStudentById($scope.forumPost.accountId).then(function(res) {
+                    $scope.author = res.data.data;
+                });
             } else {
                 // Premium content
                 $scope.getPremium = true;
@@ -3213,6 +3163,22 @@ angular.module('netbase')
 }])
 
 /* end academia */
+
+.directive('authorname', ['University', '$localStorage', '$route', 'jwtHelper', 'Students', function(University, $localStorage, $route, jwtHelper, Students) {
+    return {
+        restrict: 'EA',
+        templateUrl: '../partials/directive/authorname.html',
+        replace: false,
+        scope: true,
+        link: function(scope, element, attr) {
+            let studentId = attr.sid;
+            console.log("studentId: ", studentId)
+            Students.getStudentById(studentId).then(function(res) {
+                scope.student = res.data.data;
+            });
+        }
+    }
+}])
 
 .directive('studentinfo', ['University', '$localStorage', '$route', 'jwtHelper', 'Students', function(University, $localStorage, $route, jwtHelper, Students) {
     return {

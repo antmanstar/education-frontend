@@ -32,7 +32,7 @@
             <a href="/a/{{university.url}}/forum/post/id/{{post._id}}">{{post.title}}</a>
 
         </div>
-
+        <div class="academia-content-forum-post-info-stats">{{'POSTED_BY' | translate}} <authorname sid={{post.accountId}}/></div>
         <div class="academia-content-forum-post-info-stats">{{'POST_AGO_1' | translate}} <span am-time-ago="post.createdAt | amFromUnix"></span></div>
 
         <div class="academia-content-forum-post-info-actions">

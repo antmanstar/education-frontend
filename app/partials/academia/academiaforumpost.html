@@ -21,12 +21,18 @@
         width: 100% !important;
         height: unset !important;
     }
-    
+
     @media only screen and (max-width: 1200px) {
         body {
             padding-left: 0%;
             padding-right: 0%;
         }
+    }
+
+    @media screen and (max-width: 768px) {
+      .container-full {
+        padding-top: 0 !important;
+      }
     }
 </style>
 
@@ -36,7 +42,7 @@
 
         <div academiarightcolumn university="{{university}}"></div>
 
-        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9 academia-content" style="padding-top: 0px;">
+        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9 academia-content">
             <div class="row academia-coverimage" ng-if="university.backgroundImage != undefined" style="background-image: url('{{university.backgroundImage}}') "></div>
             <div class="row academia-coverimage" ng-if="university.backgroundImage == undefined" style="background-image: url('/img/misc/noimageacademia.jpg') "></div>
 
@@ -78,7 +84,9 @@
                             {{forumPost.title}}
                         </div>
                         <!-- academia-content-forum-post-info -->
-
+                        <div class="academia-content-forum-post-info-stats">
+                            <span>{{'POSTED_BY' | translate}}</span> {{author.name}}
+                        </div>
                         <div class="academia-content-forum-post-info-stats">
                             {{'POST_AGO_1' | translate}} <span am-time-ago="forumPost.createdAt | amFromUnix"></span>
                         </div>
