@@ -963,7 +963,7 @@ angular.module('netbase')
     }
 }])
 
-.controller('AcademiaClassroomCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Classroom', 'Students', 'ngDialog', '$localStorage', '$window', '$filter', 'Cipher', '$http', function($rootScope, $scope, $location, $route, University, Classroom, Students, ngDialog, $localStorage, $window, $filter, Cipher, $http) {
+.controller('AcademiaClassroomCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'Classroom', 'Students', 'ngDialog', '$localStorage', '$window', '$filter', 'Cipher', '$http', 'jwtHelper', '$localStorage', function($rootScope, $scope, $location, $route, University, Classroom, Students, ngDialog, $localStorage, $window, $filter, Cipher, $http, jwtHelper, $localStorage) {
     const myCipher = Cipher.cipher('mySecretSalt')
     const myDecipher = Cipher.decipher('mySecretSalt')
 
@@ -1610,16 +1610,9 @@ angular.module('netbase')
 
 
     $scope.trackSubscribed = function(main, ele, track) { // Track subscribed event handler
-        console.log("trackinfo", track)
-
-        const dataTrackPublished = {};
-
-        dataTrackPublished.promise = new Promise((resolve, reject) => {
-            dataTrackPublished.resolve = resolve;
-            dataTrackPublished.reject = reject;
-        });
-
-        dataTrackPublished.promise.then(() => dataTrack.send("screen,123"));
+        if ($scope.currentShareScreen !== null)
+            dataTrack.send("screen," + jwtHelper.decodeToken($localStorage.token)._id);
+        else dataTrack.send("camera," + jwtHelper.decodeToken($localStorage.token)._id);
 
         if (track.kind === 'data') {
             track.on('message', data => {
