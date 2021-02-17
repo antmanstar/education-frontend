@@ -691,7 +691,6 @@ angular.module('netbase')
     $scope.uniname = $scope.ngDialogData.universityName;
 
     window.onkeyup = function(event) {
-        console.log("event.keycode: ", event.keyCode)
         if (event.keyCode == 27) {
             $scope.cancel()
         }
@@ -710,7 +709,6 @@ angular.module('netbase')
     }
 
     $scope.$on('ngDialog.closing', function() {
-        console.log("close dialog")
         if (!$scope.proceed) {
             $scope.closeWindow()
         }
@@ -847,9 +845,7 @@ angular.module('netbase')
         }
 
         if (navigator.getUserMedia) {
-            navigator.getUserMedia(
-                // $rootScope.constraints,
-                {
+            navigator.getUserMedia({
                     audio: {
                         sampleRate: 48000,
                         channelCount: 2,
@@ -879,20 +875,17 @@ angular.module('netbase')
                 }
             );
         } else {
-            navigator.mediaDevices.getUserMedia(
-                    // $rootScope.constraints
-                    {
-                        audio: {
-                            sampleRate: 48000,
-                            channelCount: 2,
-                            volume: 1.0,
-                            echoCancellation: true,
-                            noiseSuppression: true,
-                            autoGainControl: true
-                        },
-                        video: true
-                    }
-                )
+            navigator.mediaDevices.getUserMedia({
+                    audio: {
+                        sampleRate: 48000,
+                        channelCount: 2,
+                        volume: 1.0,
+                        echoCancellation: true,
+                        noiseSuppression: true,
+                        autoGainControl: true
+                    },
+                    video: true
+                })
                 .then((stream) => {
                     var video = document.getElementById('selecting_video');
                     video.srcObject = stream;
@@ -913,7 +906,6 @@ angular.module('netbase')
     }
 
     $scope.initSetting = function() {
-        console.log("init setting")
         $scope.scanDevices().then(() => {
             if ($scope.videoInputDevices.length == 0 && $scope.audioInputDevices.length == 0) {
                 console.log("allowUser: ", $scope.allowUser)
@@ -1007,6 +999,7 @@ angular.module('netbase')
     $scope.recorder = null;
 
     var video = Twilio.Video; // Twilio video
+    const dataTrack = new Twilio.Video.LocalDataTrack();
     var room = null;
 
     var baseUrl = "https://educationalcommunity-classroom.herokuapp.com";
@@ -1022,7 +1015,6 @@ angular.module('netbase')
     });
 
     $scope.videoSizeSet = function() { // Participants' video layout
-        console.log("videoSizeSet")
         var i;
         var videoContainer = document.getElementById('twilio');
         var videoDom = document.getElementsByTagName('video');
@@ -1213,7 +1205,6 @@ angular.module('netbase')
     }
 
     $scope.joinClassroom = function() {
-        console.log("joinclassroom")
         if ($rootScope.constraints.audio == false && $rootScope.constraints.video == false) {
             ngDialog.open({
                 template: 'partials/modals/classroom_select_device_modal.html',
@@ -1233,7 +1224,6 @@ angular.module('netbase')
 
         let url = '/classroom/' + roomSID + '/join/';
         Classroom.joinClassroom(baseUrl + url).then((res) => { // Join and get access token
-                console.log("RES", res)
                 if (res.data.success === true) {
                     url = '/classroom/classroom/' + roomName + '/token/'
                     Classroom.getAccessToken(baseUrl + url).then((response) => {
@@ -1249,7 +1239,6 @@ angular.module('netbase')
     }
 
     $scope.initClassroom = function() {
-        console.log("initclassroom")
         let token = $localStorage.token;
         if (token == null || token == undefined) {
             let redirectUrl = '/a/university/' + myCipher(universityUrl) + '/roomid/' + myCipher(roomSID) + '/accountid/' + myCipher(accountSid) + '/roomname/' + myCipher(roomName) + '/';
@@ -1263,7 +1252,6 @@ angular.module('netbase')
         }
         let redirectUrl = '/a/university/' + myCipher(universityUrl) + '/roomid/' + myCipher(roomSID) + '/accountid/' + myCipher(accountSid) + '/roomname/' + myCipher(roomName) + '/';
 
-        console.log("ifSelectedDevice: ", $rootScope.ifSelectedDevice)
         if ($rootScope.ifSelectedDevice == null || $rootScope.ifSelectedDevice == undefined) {
             ngDialog.open({
                 template: 'partials/modals/classroom_select_device_modal.html',
@@ -1279,7 +1267,6 @@ angular.module('netbase')
         if ($rootScope.ifSelectedDevice == null || $rootScope.ifSelectedDevice == undefined || !$localStorage.userProceed) {
             return;
         }
-        console.log("joiningInterval")
         $scope.joinClassroom();
         joiningInterval.ifSelectedDevice
         clearInterval(joiningInterval);
@@ -1313,8 +1300,6 @@ angular.module('netbase')
         video.connect(token, room_t).then(room => { // Video room connect
             const localParticipant = room.localParticipant;
 
-            console.log("remote room: ", room)
-
             $scope.currentLocalparticipant = room.localParticipant;
             $scope.currentLocalparticipant.audioTracks.forEach(function(audioTrack) {
                 $scope.currentLoaclAudioTrack = audioTrack;
@@ -1343,6 +1328,31 @@ angular.module('netbase')
 
             mainVideoDom.appendChild(videoTitle);
 
+            const dataTrackPublished = {};
+
+            dataTrackPublished.promise = new Promise((resolve, reject) => {
+                dataTrackPublished.resolve = resolve;
+                dataTrackPublished.reject = reject;
+            });
+
+            localParticipant.on('trackPublished', publication => {
+                if (publication.track === dataTrack) {
+                    if ($scope.currentShareScreen !== null)
+                        console.log("current share screen", $scope.currentShareScreen);
+                    else console.log("camera screen");
+
+                    dataTrackPublished.resolve();
+                }
+            });
+
+            localParticipant.on('trackPublicationFailed', (error, track) => {
+                if (track === dataTrack) {
+                    dataTrackPublished.reject(error);
+                }
+            });
+
+            dataTrackPublished.promise.then(() => dataTrack.send("screen sharing is started"));
+
             Students.getStudentById(localParticipant.identity).then((res) => { // Check the user if admin and push the data into admin array
                 $scope.localParticipantUserName = res.data.data.name;
 
@@ -1369,7 +1379,6 @@ angular.module('netbase')
 
             room.participants.forEach($scope.participantConnected);
             room.on('participantConnected', $scope.participantConnected);
-
             room.on('participantDisconnected', $scope.participantDisconnected);
             room.once('disconnected', error => room.participants.forEach($scope.participantDisconnected));
             room.on('trackSubscribed', track => {
@@ -1535,20 +1544,16 @@ angular.module('netbase')
 
         var room_t;
         if (screenTrack != null) {
-            console.log("SCREEN")
             room_t = {
                 name: roomName,
-                tracks: [screenTrack[0], screenTrack[1]]
+                tracks: [screenTrack[0], screenTrack[1], dataTrack]
             }
             $scope.connectingClassroom(token, room_t);
         } else {
-
-            console.log("CONS", $rootScope.constraints)
             video.createLocalTracks($rootScope.constraints).then((localTracks) => {
-                console.log("LOCAL", localTracks)
                 room_t = {
                     name: roomName,
-                    tracks: localTracks
+                    tracks: [...localTracks, dataTrack]
                 }
                 $scope.connectingClassroom(token, room_t);
             })
@@ -1585,10 +1590,18 @@ angular.module('netbase')
     }
 
     $scope.trackSubscribed = function(main, ele, track) { // Track subscribed event handler
-        $scope.attachVideo(track, ele);
+        console.log("trackinfo", track)
+        if (track.kind === 'data') {
+            track.on('message', data => {
+                console.log(data);
+            });
+        }
+
+        if (track.kind === 'video') {
+            $scope.attachVideo(track, ele);
+        }
         main.appendChild(ele);
 
-        console.log("trackSubscribed", track)
         setTimeout(() => {
             $window.dispatchEvent(new Event("resize"));
         }, 100);
@@ -1734,7 +1747,10 @@ angular.module('netbase')
 
     $scope.sharingScreen = function(stream) {
         const screenTrack = stream.getTracks()[0];
-        console.log("TRAck", screenTrack)
+
+        const constraints = screenTrack.getConstraints();
+        constraints.facingMode = "screen";
+        screenTrack.applyConstraints(constraints);
 
         screenTrack.onended = function(e) {
             if (!$scope.localConnected) return;
