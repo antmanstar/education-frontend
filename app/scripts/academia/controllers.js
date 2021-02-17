@@ -1594,7 +1594,7 @@ angular.module('netbase')
         if (track.kind === 'data') {
             track.on('message', data => {
                 var dArry = data.split(data, ",")
-                let s_element = document.getElementsById('id', dArry[1]);
+                let s_element = document.getElementById('id', dArry[1]);
                 if (dArry[0] === "screen") {
                     $scope.selectedOne = true;
                     let elements = document.getElementsByClassName('sub-video-title');
