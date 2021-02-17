@@ -1620,6 +1620,7 @@ angular.module('netbase')
                 if (dArry[0] === "screen") {
                     $scope.selectedOne = true;
                     let elements = document.getElementsByClassName('sub-video-title');
+                    var i;
                     for (i = 0; i < elements.length; i++) {
                         if (elements[i] !== s_element)
                             elements[i].style.display = 'none';
@@ -1629,6 +1630,7 @@ angular.module('netbase')
                 } else {
                     $scope.selectedOne = false;
                     let elements = document.getElementsByClassName('sub-video-title');
+                    var i;
                     for (i = 0; i < elements.length; i++) {
                         elements[i].style.display = 'initial';
                     }
