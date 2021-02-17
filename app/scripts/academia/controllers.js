@@ -1337,9 +1337,10 @@ angular.module('netbase')
 
             localParticipant.on('trackPublished', publication => {
                 if (publication.track === dataTrack) {
+                    console.log(console.log(localParticipant))
                     if ($scope.currentShareScreen !== null)
-                        console.log("current share screen", $scope.currentShareScreen);
-                    else console.log("camera screen");
+                        dataTrackPublished.promise.then(() => dataTrack.send("screen," + localParticipant.identity));
+                    else dataTrackPublished.promise.then(() => dataTrack.send("camera," + localParticipant.identity));
 
                     dataTrackPublished.resolve();
                 }
@@ -1350,8 +1351,6 @@ angular.module('netbase')
                     dataTrackPublished.reject(error);
                 }
             });
-
-            dataTrackPublished.promise.then(() => dataTrack.send("screen sharing is started"));
 
             Students.getStudentById(localParticipant.identity).then((res) => { // Check the user if admin and push the data into admin array
                 $scope.localParticipantUserName = res.data.data.name;
@@ -1594,7 +1593,21 @@ angular.module('netbase')
 
         if (track.kind === 'data') {
             track.on('message', data => {
-                console.log(data);
+                var dArry = data.split(data, ",")
+                let s_element = document.getElementsById('id', dArry[1]);
+                if (dArry[0] === "screen") {
+                    $scope.selectedOne = true;
+                    let elements = document.getElementsByClassName('sub-video-title');
+                    for (i = 0; i < elements.length; i++) {
+                        if (elements[i] !== s_element)
+                            elements[i].style.display = 'none';
+                        $scope.isFullScreen = true;
+                    }
+                } else {
+                    scope.selectedOne = false;
+                    s_element.style.display = "initial";
+                    $scope.isFullScreen = false;
+                }
             });
         } else {
             $scope.attachVideo(track, ele);
@@ -1725,7 +1738,6 @@ angular.module('netbase')
                 }
 
             } else {
-
                 let elements = document.getElementsByClassName('sub-video-title');
                 for (i = 0; i < elements.length; i++) {
                     let flag = false;
