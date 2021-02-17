@@ -1326,10 +1326,6 @@ angular.module('netbase')
                 $scope.attachVideo(publication.track, videoTitle);
             });
 
-            localParticipant.dataTracks.forEach(publication => {
-                $scope.attachVideo(publication.track, videoTitle);
-            });
-
             mainVideoDom.appendChild(videoTitle);
 
             const dataTrackPublished = {};
@@ -1596,18 +1592,14 @@ angular.module('netbase')
     $scope.trackSubscribed = function(main, ele, track) { // Track subscribed event handler
         console.log("trackinfo", track)
 
-        if (track.kind === 'video') {
-            $scope.attachVideo(track, ele);
-        }
-
         if (track.kind === 'data') {
             track.on('message', data => {
                 console.log(data);
             });
+        } else {
+            $scope.attachVideo(track, ele);
+            main.appendChild(ele);
         }
-
-        $scope.attachVideo(track, ele);
-        main.appendChild(ele);
 
         setTimeout(() => {
             $window.dispatchEvent(new Event("resize"));
@@ -1638,7 +1630,6 @@ angular.module('netbase')
             let i, j;
             let videos = document.getElementsByTagName('video');
             let audios = document.getElementsByTagName('audio');
-            let datas = document.getElementsByTagName('data');
 
             let titles = document.getElementsByClassName('sub-video-title');
             let compareEle = null;
