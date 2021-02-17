@@ -1618,7 +1618,6 @@ angular.module('netbase')
         if (track.kind === 'data') {
             track.on('message', data => {
                 var dArry = data.split(",")
-                let s_element = document.getElementById('id', dArry[1]);
                 console.log(dArry)
                 if (dArry[0] === "screen") {
                     $scope.selectedOne = true;
@@ -1630,9 +1629,10 @@ angular.module('netbase')
                     }
 
                     $scope.isFullScreen = true;
-                    $scope.$apply();
-                    $scope.toggleFullScreen();
-                    // openFullscreen(s_element);
+                    $scope.fullScreenToggle = "fa fa-compress";
+                    $scope.fullScreenIconPos = ' fixed';
+                    $scope.fullScreenStatus = 'bottom-controllers-fullscreen-show';
+
                 } else {
                     $scope.selectedOne = false;
                     let elements = document.getElementsByClassName('sub-video-title');
@@ -1641,15 +1641,19 @@ angular.module('netbase')
                         elements[i].style.display = 'initial';
                     }
                     $scope.isFullScreen = false;
-                    $scope.$apply();
-                    $scope.toggleFullScreen();
-                    // closeFullscreen();
+                    $scope.fullScreenToggle = "fa fa-expand";
+                    $scope.fullScreenIconPos = ' absolute';
+                    $scope.fullScreenStatus = '';
                 }
             });
         } else {
             $scope.attachVideo(track, ele);
             main.appendChild(ele);
         }
+        setTimeout(() => {
+                $window.dispatchEvent(new Event("resize"));
+            },
+            100);
     }
 
     $scope.participantDisconnected = function(participant) { // Participant disconnected event handler
