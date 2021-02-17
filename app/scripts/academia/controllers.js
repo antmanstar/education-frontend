@@ -1095,20 +1095,23 @@ angular.module('netbase')
                     }
                 }
 
-                showingTitle.style.width = "99.9%";
-                showingTitle.style.height = "99%";
-                if ($scope.isFullScreen) {
-                    showingTitle.style.position = 'absolute';
-                } else {
-                    showingTitle.style.position = 'relative';
-                }
+                if (showingTitle) {
+                    showingTitle.style.width = "99.9%";
+                    showingTitle.style.height = "99%";
 
-                for (k = 0; k < showingTitle.childElementCount; k++) {
-                    if (showingTitle.children[k].tagName == 'VIDEO') {
+                    if ($scope.isFullScreen) {
+                        showingTitle.style.position = 'absolute';
+                    } else {
+                        showingTitle.style.position = 'relative';
+                    }
 
-                        showingTitle.children[k].style.width = "100%";
-                        showingTitle.children[k].style.height = "100%";
+                    for (k = 0; k < showingTitle.childElementCount; k++) {
+                        if (showingTitle.children[k].tagName == 'VIDEO') {
 
+                            showingTitle.children[k].style.width = "100%";
+                            showingTitle.children[k].style.height = "100%";
+
+                        }
                     }
                 }
 
@@ -1620,46 +1623,49 @@ angular.module('netbase')
                 var dArry = data.split(",")
                 console.log(dArry)
                 if (dArry[0] === "screen") {
-                    $scope.selectedOne = true;
+                    $scope.$apply(() => {
+                        $scope.selectedOne = true;
+                        $scope.isFullScreen = true;
+                        $scope.fullScreenToggle = "fa fa-compress";
+                        $scope.fullScreenIconPos = ' fixed';
+                        $scope.fullScreenStatus = 'bottom-controllers-fullscreen-show';
+                    })
+
                     let elements = document.getElementsByClassName('sub-video-title');
                     var i;
                     for (i = 0; i < elements.length; i++) {
                         if (elements[i].id !== dArry[1])
                             elements[i].style.display = 'none';
                     }
-                    $scope.$apply(() => {
-                        $scope.isFullScreen = true;
-                        $scope.fullScreenToggle = "fa fa-compress";
-                        $scope.fullScreenIconPos = 'fixed';
-                        $scope.fullScreenStatus = 'bottom-controllers-fullscreen-show';
-                        console.log("BBBB")
-                    });
-
                 } else {
-                    $scope.selectedOne = false;
+                    $scope.$apply(() => {
+                        $scope.selectedOne = false;
+                        $scope.isFullScreen = false;
+                        $scope.fullScreenToggle = "fa fa-expand";
+                        $scope.fullScreenIconPos = ' absolute';
+                        $scope.fullScreenStatus = '';
+                    });
                     let elements = document.getElementsByClassName('sub-video-title');
                     var i;
                     for (i = 0; i < elements.length; i++) {
                         elements[i].style.display = 'initial';
                     }
-                    $scope.$apply(() => {
-                        $scope.isFullScreen = false;
-                        $scope.fullScreenToggle = "fa fa-expand";
-                        $scope.fullScreenIconPos = 'absolute';
-                        $scope.fullScreenStatus = '';
-                        console.log("CCCC")
-                    });
                 }
+
+                setTimeout(() => {
+                        $window.dispatchEvent(new Event("resize"));
+                    },
+                    100);
             });
         } else {
             $scope.attachVideo(track, ele);
             main.appendChild(ele);
+
+            setTimeout(() => {
+                    $window.dispatchEvent(new Event("resize"));
+                },
+                100);
         }
-        setTimeout(() => {
-                console.log("AAAA")
-                $scope.videoSizeSet();
-            },
-            100);
     }
 
     $scope.participantDisconnected = function(participant) { // Participant disconnected event handler
