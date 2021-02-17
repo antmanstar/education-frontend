@@ -1337,7 +1337,6 @@ angular.module('netbase')
 
             localParticipant.on('trackPublished', publication => {
                 if (publication.track === dataTrack) {
-                    console.log(console.log(localParticipant))
                     if ($scope.currentShareScreen !== null)
                         dataTrackPublished.promise.then(() => dataTrack.send("screen," + localParticipant.identity));
                     else dataTrackPublished.promise.then(() => dataTrack.send("camera," + localParticipant.identity));
@@ -1604,7 +1603,7 @@ angular.module('netbase')
                         $scope.isFullScreen = true;
                     }
                 } else {
-                    scope.selectedOne = false;
+                    $scope.selectedOne = false;
                     s_element.style.display = "initial";
                     $scope.isFullScreen = false;
                 }
