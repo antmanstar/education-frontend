@@ -1336,6 +1336,7 @@ angular.module('netbase')
             });
 
             localParticipant.on('trackPublished', publication => {
+                console.log(localParticipant)
                 if (publication.track === dataTrack) {
                     if ($scope.currentShareScreen !== null)
                         dataTrackPublished.promise.then(() => dataTrack.send("screen," + localParticipant.identity));
@@ -1594,19 +1595,20 @@ angular.module('netbase')
             track.on('message', data => {
                 var dArry = data.split(data, ",")
                 let s_element = document.getElementById('id', dArry[1]);
-                if (dArry[0] === "screen") {
-                    $scope.selectedOne = true;
-                    let elements = document.getElementsByClassName('sub-video-title');
-                    for (i = 0; i < elements.length; i++) {
-                        if (elements[i] !== s_element)
-                            elements[i].style.display = 'none';
-                        $scope.isFullScreen = true;
-                    }
-                } else {
-                    $scope.selectedOne = false;
-                    s_element.style.display = "initial";
-                    $scope.isFullScreen = false;
-                }
+                console.log(data, dArry)
+                    // if (dArry[0] === "screen") {
+                    //     $scope.selectedOne = true;
+                    //     let elements = document.getElementsByClassName('sub-video-title');
+                    //     for (i = 0; i < elements.length; i++) {
+                    //         if (elements[i] !== s_element)
+                    //             elements[i].style.display = 'none';
+                    //         $scope.isFullScreen = true;
+                    //     }
+                    // } else {
+                    //     $scope.selectedOne = false;
+                    //     s_element.style.display = "initial";
+                    //     $scope.isFullScreen = false;
+                    // }
             });
         } else {
             $scope.attachVideo(track, ele);
@@ -1761,10 +1763,6 @@ angular.module('netbase')
     $scope.sharingScreen = function(stream) {
         const screenTrack = stream.getTracks()[0];
 
-        const constraints = screenTrack.getConstraints();
-        constraints.facingMode = "screen";
-        screenTrack.applyConstraints(constraints);
-
         screenTrack.onended = function(e) {
             if (!$scope.localConnected) return;
             $scope.disconnectClassroom();
@@ -1792,7 +1790,6 @@ angular.module('netbase')
 
                         navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
                             $scope.disconnectClassroom();
-                            // $scope.connectClassroom($scope.currentRoomToken, $scope.currentRoomName);
                             $scope.connectClassroom($scope.currentRoomToken, $scope.currentRoomName, [stream.getTracks()[0], screenTrack]);
                         });
                         break;
