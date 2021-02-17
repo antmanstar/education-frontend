@@ -1610,10 +1610,10 @@ angular.module('netbase')
 
 
     $scope.trackSubscribed = function(main, ele, track) { // Track subscribed event handler
-        let uid = jwtHelper.decodeToken($localStorage.token)._id;
-        if ($scope.currentShareScreen !== null)
-            dataTrack.send("screen," + uid);
-        else dataTrack.send("camera," + uid);
+        // let uid = jwtHelper.decodeToken($localStorage.token)._id;
+        // if ($scope.currentShareScreen !== null)
+        //     dataTrack.send("screen," + uid);
+        // else dataTrack.send("camera," + uid);
 
         if (track.kind === 'data') {
             track.on('message', data => {
@@ -1627,11 +1627,13 @@ angular.module('netbase')
                         if (elements[i].id !== dArry[1])
                             elements[i].style.display = 'none';
                     }
-
-                    $scope.isFullScreen = true;
-                    $scope.fullScreenToggle = "fa fa-compress";
-                    $scope.fullScreenIconPos = ' fixed';
-                    $scope.fullScreenStatus = 'bottom-controllers-fullscreen-show';
+                    $scope.$apply(() => {
+                        $scope.isFullScreen = true;
+                        $scope.fullScreenToggle = "fa fa-compress";
+                        $scope.fullScreenIconPos = 'fixed';
+                        $scope.fullScreenStatus = 'bottom-controllers-fullscreen-show';
+                        console.log("BBBB")
+                    });
 
                 } else {
                     $scope.selectedOne = false;
@@ -1640,10 +1642,13 @@ angular.module('netbase')
                     for (i = 0; i < elements.length; i++) {
                         elements[i].style.display = 'initial';
                     }
-                    $scope.isFullScreen = false;
-                    $scope.fullScreenToggle = "fa fa-expand";
-                    $scope.fullScreenIconPos = ' absolute';
-                    $scope.fullScreenStatus = '';
+                    $scope.$apply(() => {
+                        $scope.isFullScreen = false;
+                        $scope.fullScreenToggle = "fa fa-expand";
+                        $scope.fullScreenIconPos = 'absolute';
+                        $scope.fullScreenStatus = '';
+                        console.log("CCCC")
+                    });
                 }
             });
         } else {
@@ -1651,7 +1656,8 @@ angular.module('netbase')
             main.appendChild(ele);
         }
         setTimeout(() => {
-                $window.dispatchEvent(new Event("resize"));
+                console.log("AAAA")
+                $scope.videoSizeSet();
             },
             100);
     }
