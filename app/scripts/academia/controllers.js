@@ -1588,27 +1588,52 @@ angular.module('netbase')
         });
     }
 
+    function openFullscreen(elem) {
+        if (elem.requestFullscreen) {
+            elem.requestFullscreen();
+        } else if (elem.webkitRequestFullscreen) { /* Safari */
+            elem.webkitRequestFullscreen();
+        } else if (elem.msRequestFullscreen) { /* IE11 */
+            elem.msRequestFullscreen();
+        }
+    }
+
+    function closeFullscreen() {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) { /* Safari */
+            document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) { /* IE11 */
+            document.msExitFullscreen();
+        }
+    }
+
+
     $scope.trackSubscribed = function(main, ele, track) { // Track subscribed event handler
         console.log("trackinfo", track)
 
         if (track.kind === 'data') {
             track.on('message', data => {
-                var dArry = data.split(data, ",")
+                var dArry = data.split(",")
                 let s_element = document.getElementById('id', dArry[1]);
-                console.log(data, dArry)
-                    // if (dArry[0] === "screen") {
-                    //     $scope.selectedOne = true;
-                    //     let elements = document.getElementsByClassName('sub-video-title');
-                    //     for (i = 0; i < elements.length; i++) {
-                    //         if (elements[i] !== s_element)
-                    //             elements[i].style.display = 'none';
-                    //         $scope.isFullScreen = true;
-                    //     }
-                    // } else {
-                    //     $scope.selectedOne = false;
-                    //     s_element.style.display = "initial";
-                    //     $scope.isFullScreen = false;
-                    // }
+                console.log(data)
+                if (dArry[0] === "screen") {
+                    $scope.selectedOne = true;
+                    let elements = document.getElementsByClassName('sub-video-title');
+                    for (i = 0; i < elements.length; i++) {
+                        if (elements[i] !== s_element)
+                            elements[i].style.display = 'none';
+                        $scope.isFullScreen = true;
+                    }
+                    openFullscreen(document.body);
+                } else {
+                    $scope.selectedOne = false;
+                    let elements = document.getElementsByClassName('sub-video-title');
+                    for (i = 0; i < elements.length; i++) {
+                        elements[i].style.display = 'initial';
+                    }
+                    $scope.isFullScreen = false;
+                }
             });
         } else {
             $scope.attachVideo(track, ele);
