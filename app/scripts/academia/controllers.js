@@ -1625,67 +1625,69 @@ angular.module('netbase')
 
     $scope.trackUnsubscribed = function(track) { // Track unsubscribed event handler
         console.log("trackUnsubscribed", track)
-        track.detach().forEach(element => {
+        if (track.kind !== 'data') {
+            track.detach().forEach(element => {
 
-            let i, j;
-            let videos = document.getElementsByTagName('video');
-            let audios = document.getElementsByTagName('audio');
+                let i, j;
+                let videos = document.getElementsByTagName('video');
+                let audios = document.getElementsByTagName('audio');
 
-            let titles = document.getElementsByClassName('sub-video-title');
-            let compareEle = null;
-            for (i = 0; i < videos.length; i++) {
-                if (element == videos[i]) {
-                    break;
-                }
-            }
-
-            if (i == videos.length) {
-                for (i = 0; i < audios.length; i++) {
-                    if (element == audios[i]) {
+                let titles = document.getElementsByClassName('sub-video-title');
+                let compareEle = null;
+                for (i = 0; i < videos.length; i++) {
+                    if (element == videos[i]) {
                         break;
                     }
                 }
-                if (i == audios.length) {
-                    return;
+
+                if (i == videos.length) {
+                    for (i = 0; i < audios.length; i++) {
+                        if (element == audios[i]) {
+                            break;
+                        }
+                    }
+                    if (i == audios.length) {
+                        return;
+                    } else {
+                        compareEle = audios[i];
+                    }
                 } else {
-                    compareEle = audios[i];
+                    compareEle = videos[i];
                 }
-            } else {
-                compareEle = videos[i];
-            }
 
-            for (i = 0; i < titles.length; i++) {
-                for (j = 0; j < titles[i].childElementCount; j++) {
-                    if (compareEle == titles[i].children[j]) break;
+                for (i = 0; i < titles.length; i++) {
+                    for (j = 0; j < titles[i].childElementCount; j++) {
+                        if (compareEle == titles[i].children[j]) break;
+                    }
+                    if (j < titles[i].childElementCount) break;
                 }
-                if (j < titles[i].childElementCount) break;
-            }
 
-            if (i == titles.length) return;
+                if (i == titles.length) return;
 
-            for (j = 0; j < $scope.participants.length; j++) {
-                if ($scope.participants[j] == null) continue;
-                if (titles[i].getAttribute('id') == $scope.participants[j]._id) {
-                    $scope.$apply(() => {
-                        if ($scope.participants[j]._id == $scope.administrator[0]._id) $scope.adminActive = "";
-                        $scope.participants.splice(j, 1);
-                    });
+                for (j = 0; j < $scope.participants.length; j++) {
+                    if ($scope.participants[j] == null) continue;
+                    if (titles[i].getAttribute('id') == $scope.participants[j]._id) {
+                        $scope.$apply(() => {
+                            if ($scope.participants[j]._id == $scope.administrator[0]._id) $scope.adminActive = "";
+                            $scope.participants.splice(j, 1);
+                        });
+                    }
                 }
-            }
-            for (j = 0; j < $scope.showingParticipants.length; j++) {
-                if ($scope.showingParticipants[j] == null) continue;
-                if (titles[i].getAttribute('id') == $scope.showingParticipants[j]._id) {
-                    $scope.$apply(() => {
-                        if ($scope.showingParticipants[j]._id == $scope.administrator[0]._id) $scope.adminActive = "";
-                        $scope.showingParticipants.splice(j, 1);
-                    });
+                for (j = 0; j < $scope.showingParticipants.length; j++) {
+                    if ($scope.showingParticipants[j] == null) continue;
+                    if (titles[i].getAttribute('id') == $scope.showingParticipants[j]._id) {
+                        $scope.$apply(() => {
+                            if ($scope.showingParticipants[j]._id == $scope.administrator[0]._id) $scope.adminActive = "";
+                            $scope.showingParticipants.splice(j, 1);
+                        });
+                    }
                 }
-            }
-            titles[i].remove();
-            setTimeout(() => {
-                $scope.videoSizeSet();
-            }, 100);
-        });
+                titles[i].remove();
+                setTimeout(() => {
+                    $scope.videoSizeSet();
+                }, 100);
+            });
+        }
     }
 
     $scope.returnBack = function() {
