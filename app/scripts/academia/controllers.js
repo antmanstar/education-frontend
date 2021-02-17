@@ -1616,17 +1616,18 @@ angular.module('netbase')
             track.on('message', data => {
                 var dArry = data.split(",")
                 let s_element = document.getElementById('id', dArry[1]);
-                console.log(data)
+                console.log(s_element)
                 if (dArry[0] === "screen") {
                     $scope.selectedOne = true;
                     let elements = document.getElementsByClassName('sub-video-title');
                     var i;
                     for (i = 0; i < elements.length; i++) {
-                        if (elements[i] !== s_element)
+                        if (elements[i].id !== dArry[1])
                             elements[i].style.display = 'none';
-                        $scope.isFullScreen = true;
                     }
-                    openFullscreen(document.body);
+
+                    $scope.isFullScreen = true;
+                    // openFullscreen(s_element);
                 } else {
                     $scope.selectedOne = false;
                     let elements = document.getElementsByClassName('sub-video-title');
@@ -1635,6 +1636,7 @@ angular.module('netbase')
                         elements[i].style.display = 'initial';
                     }
                     $scope.isFullScreen = false;
+                    // closeFullscreen();
                 }
             });
         } else {
