@@ -2363,7 +2363,7 @@ angular.module('netbase')
     }
 
     $scope.textFilter = function(text) {
-        if (text.indexOf("iframe") != -1) {
+        if (text.indexOf("iframe") != -1 || text.indexOf("video") != -1) {
             return $sce.trustAsHtml(text)
         } else {
             return $filter('limitHtml')(text, 350, '...')
