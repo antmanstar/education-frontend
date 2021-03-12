@@ -2375,7 +2375,8 @@ angular.module('netbase')
     let universityUrl = $route.current.params.academiaName;
     let playlistId = $route.current.params.playlistId;
     $scope.showButton = $localStorage.studentIsAdmin
-        //set playlist id to localStorage
+
+    //set playlist id to localStorage
     $localStorage.createVideoPlaylistId = playlistId
 
     if (University.isStoredLocal(universityUrl)) {
