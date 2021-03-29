@@ -2437,6 +2437,8 @@ angular.module('netbase')
             ngDialog.open({ template: 'partials/modals/login.html', controller: 'AccountCtrl', className: 'ngdialog-theme-default' });
         }
     }
+
+
 }])
 
 .controller('AcademiaForumCtrl', ['$rootScope', '$scope', '$location', '$route', 'University', 'User', 'Students', '$timeout', 'ngDialog', 'jwtHelper', '$localStorage', '$cookies', function($rootScope, $scope, $location, $route, University, User, Students, $timeout, ngDialog, jwtHelper, $localStorage, $cookies) {
@@ -3569,7 +3571,7 @@ angular.module('netbase')
                                             console.log('here chat created', res.data.token);
                                         }
                                     }).catch(err => {
-                                        alert("ERROR" + err)
+                                        // alert("ERROR" + err)
                                     });
                                 });
                             } else {
@@ -3626,7 +3628,7 @@ angular.module('netbase')
                         scope.messagingClient.updateToken(res.data.token);
                     }
                 }).catch(err => {
-                    alert("ERROR" + err)
+                    // alert("ERROR" + err)
                 });
             }
 
@@ -3737,7 +3739,7 @@ angular.module('netbase')
                             scope.loadAndSortMessages();
                             return channel;
                         }
-                        alert("Couldn't join channel " + channel.friendlyName + ' because -> ' + err);
+                        // alert("Couldn't join channel " + channel.friendlyName + ' because -> ' + err);
                     });
             }
 
