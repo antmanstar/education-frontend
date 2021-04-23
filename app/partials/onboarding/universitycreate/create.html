@@ -1,150 +1,146 @@
 <style>
-
-  .blue-text {
-    color: #2b3c63 !important;
-  }
-
+    .blue-text {
+        color: #2b3c63 !important;
+    }
 </style>
 
 <script type="text/javascript">
+    let url = window.location.href;
+    let IMAGE_FILE_ONLY = ""
+    if (url.indexOf('universida.de') > 0) {
+        IMAGE_FILE_ONLY = "Somente arquivo de imagem"
+    } else {
+        IMAGE_FILE_ONLY = "Image file only"
+    }
 
-  let url = window.location.href;
-  let IMAGE_FILE_ONLY = ""
-  if (url.indexOf('universida.de') > 0) {
-    IMAGE_FILE_ONLY = "Somente arquivo de imagem"
-  } else {
-    IMAGE_FILE_ONLY = "Image file only"
-  }
+    var socket = io.connect("https://totemic-chimera-237707.appspot.com");
+    //var socket = io.connect("http://104.196.9.222:5555");
+    //var socket = io.connect("http://localhost:8888");
+    var siofu = new SocketIOFileUpload(socket);
 
-var socket = io.connect("https://totemic-chimera-237707.appspot.com");
-//var socket = io.connect("http://104.196.9.222:5555");
-//var socket = io.connect("http://localhost:8888");
-var siofu = new SocketIOFileUpload(socket);
+    //let filesCount = 0;
 
-//let filesCount = 0;
+    //let progressCloud = 0;
+    var progressPercent = 0;
 
-//let progressCloud = 0;
-var progressPercent = 0;
+    document.getElementById("upload_btn").addEventListener("click", siofu.prompt, false);
 
-document.getElementById("upload_btn").addEventListener("click", siofu.prompt, false);
+    // Do something on upload progress:
+    siofu.addEventListener("progress", function(event) {
+        var percent = event.bytesLoaded / event.file.size * 100;
+        console.log("File is", percent.toFixed(2), "percent loaded");
 
-// Do something on upload progress:
-siofu.addEventListener("progress", function(event){
-  var percent = event.bytesLoaded / event.file.size * 100;
-  console.log("File is", percent.toFixed(2), "percent loaded");
+        $("#file_drop").html("Upload: " + percent.toFixed(2) + "%");
 
-  $("#file_drop").html("Upload: " + percent.toFixed(2) + "%");
+        if (percent.toFixed(2) == 100) {
+            $("#file_drop").html("<b>Iniciando o processamento da imagem</b>");
+        }
 
-  if (percent.toFixed(2) == 100) {
-    $("#file_drop").html("<b>Iniciando o processamento da imagem</b>");
-  }
+    });
 
-});
+    siofu.addEventListener("start", function(event) {
+        console.log(event.file.name)
+        let filename = event.file.name.split(".")
+        let ext = filename[1]
+        console.log("file extension: ", ext)
+        if (ext !== 'png' && ext !== 'jpg' && ext !== 'gif' && ext !== 'jpeg') {
+            alert(IMAGE_FILE_ONLY)
+            return false
+        }
 
-siofu.addEventListener("start", function(event){
-  console.log(event.file.name)
-  let filename = event.file.name.split(".")
-  let ext = filename[1]
-  console.log("file extension: ", ext)
-  if(ext !== 'png' && ext !== 'jpg' && ext !== 'gif' && ext !== 'jpeg') {
-      alert(IMAGE_FILE_ONLY)
-      return false
-  }
+    });
 
-});
+    socket.on("files", function(a) {
+        console.log("files: ")
+        console.log(a)
+        filesCount = a;
+    });
 
-socket.on("files", function(a){
-  console.log("files: ")
-  console.log(a)
-  filesCount = a;
-});
+    // Do something when a file is uploaded:
+    siofu.addEventListener("complete", function(event) {
+        console.log(event.success);
+        console.log(event.file);
+        console.log(event)
+    });
 
-// Do something when a file is uploaded:
-siofu.addEventListener("complete", function(event){
-    console.log(event.success);
-    console.log(event.file);
-    console.log(event)
-});
-
-socket.on("imagepath", function(a) {
-  $("#file").attr("value", a);
-  $("#university-background-image").attr("style", "background-image: url('" + a + "')");
-  console.log(a)
-})
-
+    socket.on("imagepath", function(a) {
+        $("#file").attr("value", a);
+        $("#university-background-image").attr("style", "background-image: url('" + a + "')");
+        console.log(a)
+    })
 </script>
 
 <div class="container-fluid">
 
-  <div class="row" style="margin-top: 20px; margin-bottom: 30px;">
-      <div>
-          <a href="/home/landing">
-              <img src="{{company_logo}}" height="20px" />
-          </a>
-      </div>
-  </div>
-
-  <div class="row" style="margin-bottom: 2em;">
-
-    <div style="cursor: pointer; margin-bottom: 20px;" ng-click="lastpageReturn()">
-        <i class="fa fa-arrow-left"></i><span style="margin-left: 10px;">Back</span>
-    </div>
-    <div style="width: 100%; text-align: center; margin-bottom: 30px;">
-        <div style="font-weight: bolder; font-size: 1.8em; color: #2d4255;">{{'CREATEYOUREDCOMM' | translate}}</div>
+    <div class="row" style="margin-top: 20px; margin-bottom: 30px;">
+        <div>
+            <a href="/home/landing">
+                <img src="{{company_logo}}" height="150%" />
+            </a>
+        </div>
     </div>
 
-    <!-- step 1 -->
-    <div ng-show="step == 1">
+    <div class="row" style="margin-bottom: 2em;">
 
-      <div style="text-align: left;">
+        <div style="cursor: pointer; margin-bottom: 20px;" ng-click="lastpageReturn()">
+            <i class="fa fa-arrow-left"></i><span style="margin-left: 10px;">Back</span>
+        </div>
+        <div style="width: 100%; text-align: center; margin-bottom: 30px;">
+            <div style="font-weight: bolder; font-size: 1.8em; color: #2d4255;">{{'CREATEYOUREDCOMM' | translate}}</div>
+        </div>
 
-        <div class="alert bg-primary-red" ng-show="error.exists">{{error.text | translate}}</div>
+        <!-- step 1 -->
+        <div ng-show="step == 1">
 
-        <div class="form">
+            <div style="text-align: left;">
 
-          <style>
-            #university-background-image {
-              height: 300px;
-              border-radius: 5px;
-              background-size: cover;
-              background-position: 50% 50%;
-            }
-          </style>
+                <div class="alert bg-primary-red" ng-show="error.exists">{{error.text | translate}}</div>
 
-          <div class="form-group">
-            <label>{{"UNIVERSITY_PICTURE" | translate}}</label>
-            <input type="hidden" ng-model="backgroundImage" id="file">
-            <div id="university-background-image" style="background-image: url('https://universida.de/img/misc/noimageacademia.jpg')"></div>
+                <div class="form">
 
-            <div class="row">
+                    <style>
+                        #university-background-image {
+                            height: 300px;
+                            border-radius: 5px;
+                            background-size: cover;
+                            background-position: 50% 50%;
+                        }
+                    </style>
 
-              <div class="col-xs-12 col-sm-6" style="margin-top: 15px;">
-                <button id="upload_btn" class="btn bg-base">{{"SELECT_PICTURE" | translate}}</button>
-              </div>
+                    <div class="form-group">
+                        <label>{{"UNIVERSITY_PICTURE" | translate}}</label>
+                        <input type="hidden" ng-model="backgroundImage" id="file">
+                        <div id="university-background-image" style="background-image: url('https://universida.de/img/misc/noimageacademia.jpg')"></div>
 
-              <div class="col-xs-12 col-sm-6" style="margin-top: 15px;">
-                <button id="remove_btn" class="btn btn-red" ng-click="removeBtn()">{{"REMOVE_PICTURE" | translate}}</button>
-              </div>
+                        <div class="row">
 
-            </div>
-            <!-- end row -->
+                            <div class="col-xs-12 col-sm-6" style="margin-top: 15px;">
+                                <button id="upload_btn" class="btn bg-base">{{"SELECT_PICTURE" | translate}}</button>
+                            </div>
 
-          </div>
-          <!-- end form group -->
+                            <div class="col-xs-12 col-sm-6" style="margin-top: 15px;">
+                                <button id="remove_btn" class="btn btn-red" ng-click="removeBtn()">{{"REMOVE_PICTURE" | translate}}</button>
+                            </div>
 
-          <div class="form-group">
-            <label>{{'UNIVERSITY_NAME' | translate}}</label>
-            <input ng-model="name" placeholder="{{'WRITE_UNI_NAME_HERE' | translate}}" type="text" />
-          </div>
-          <!-- end form group -->
+                        </div>
+                        <!-- end row -->
 
-          <div class="form-group">
-            <label>{{'ABOUT' | translate}}</label>
-            <input ng-model="about" placeholder="{{'WRITE_UNI_DESCRIPTION' | translate}}" type="text" />
-          </div>
-          <!-- end form group -->
+                    </div>
+                    <!-- end form group -->
 
-          <!--- REMOVE LANGUAGE OPTION
+                    <div class="form-group">
+                        <label>{{'UNIVERSITY_NAME' | translate}}</label>
+                        <input ng-model="name" placeholder="{{'WRITE_UNI_NAME_HERE' | translate}}" type="text" />
+                    </div>
+                    <!-- end form group -->
+
+                    <div class="form-group">
+                        <label>{{'ABOUT' | translate}}</label>
+                        <input ng-model="about" placeholder="{{'WRITE_UNI_DESCRIPTION' | translate}}" type="text" />
+                    </div>
+                    <!-- end form group -->
+
+                    <!--- REMOVE LANGUAGE OPTION
           <div class="form-group">
             <label>{{'LANGUAGE' | translate}}</label>
             <select ng-model="language">
@@ -154,23 +150,23 @@ socket.on("imagepath", function(a) {
           </div>
           <!-- end form group -->
 
-          <div class="form-group">
-            <label>{{'URL' | translate}}</label>
-            <input ng-model="url" placeholder="{{'UNIVERSITY_URL' | translate}}" type="Text" />
+                    <div class="form-group">
+                        <label>{{'URL' | translate}}</label>
+                        <input ng-model="url" placeholder="{{'UNIVERSITY_URL' | translate}}" type="Text" />
+                    </div>
+                    <!-- end form group -->
+
+                </div>
+                <!-- end form -->
+
+                <div class="row">
+
+                    <div class="col-xs-12 col-sm-6" style="margin-top: 15px;">
+                        <button ng-click="lastpageReturn()" class="btn-two btn-two-yellow" ">{{'BACK' | translate}}</button>
           </div>
-          <!-- end form group -->
 
-        </div>
-        <!-- end form -->
-
-        <div class="row">
-
-          <div class="col-xs-12 col-sm-6" style="margin-top: 15px;">
-            <button ng-click="lastpageReturn()" class="btn-two btn-two-yellow"">{{'BACK' | translate}}</button>
-          </div>
-
-          <div class="col-xs-12 col-sm-6" style="margin-top: 15px;">
-            <button ng-click="move(1)" class="btn btn-bluebase">{{'NEXT' | translate}}</button>
+          <div class="col-xs-12 col-sm-6 " style="margin-top: 15px; ">
+            <button ng-click="move(1) " class="btn btn-bluebase ">{{'NEXT' | translate}}</button>
           </div>
 
         </div>
@@ -181,46 +177,46 @@ socket.on("imagepath", function(a) {
     </div>
     <!-- step 1 -->
 
-    <div ng-show="step == 2">
+    <div ng-show="step==2 ">
 
-      <div class="alert bg-primary-red" ng-show="error.exists">{{error.text | translate}}</div>
+      <div class="alert bg-primary-red " ng-show="error.exists ">{{error.text | translate}}</div>
 
-      <p class="headline-sub-two" style="padding-bottom: 20px; padding-top: 0px;">{{'PREVER' | translate}}</p>
+      <p class="headline-sub-two " style="padding-bottom: 20px; padding-top: 0px; ">{{'PREVER' | translate}}</p>
 
-      <div class="form-group">
-        <p class="gray-text">{{'UNIVERSITY_PICTURE' | translate}}</p>
-        <div id="university-background-image" style="background-image: url('{{backgroundImage}}')"></div>
+      <div class="form-group ">
+        <p class="gray-text ">{{'UNIVERSITY_PICTURE' | translate}}</p>
+        <div id="university-background-image " style="background-image: url( '{{backgroundImage}}') "></div>
       </div>
       <!-- end form group -->
 
-      <div class="form-group">
-        <p class="gray-text" style="margin: 0px !important">{{'NOME' | translate}}</p>
-        <div style="font-size: 1.5em; padding-top: 0; padding-bottom: 0;">{{name}}</div>
+      <div class="form-group ">
+        <p class="gray-text " style="margin: 0px !important ">{{'NOME' | translate}}</p>
+        <div style="font-size: 1.5em; padding-top: 0; padding-bottom: 0; ">{{name}}</div>
       </div>
 
-      <div class="form-group">
-        <p class="gray-text" style="margin: 0px !important">{{'ABOUT' | translate}}</p>
-        <div style="padding-top: 0; padding-bottom: 0;">{{about}}</div>
+      <div class="form-group ">
+        <p class="gray-text " style="margin: 0px !important ">{{'ABOUT' | translate}}</p>
+        <div style="padding-top: 0; padding-bottom: 0; ">{{about}}</div>
       </div>
 
 
-      <div class="form-group">
-        <p class="gray-text" style="margin: 0px !important">{{'URL' | translate}}</p>
-        <div style="padding-top: 0; padding-bottom: 0;">https://{{'DOMAIN_PLACEHOLDER' | translate}}/a/{{url}}</div>
+      <div class="form-group ">
+        <p class="gray-text " style="margin: 0px !important ">{{'URL' | translate}}</p>
+        <div style="padding-top: 0; padding-bottom: 0; ">https://{{'DOMAIN_PLACEHOLDER' | translate}}/a/{{url}}</div>
       </div>
 
-      <div class="row">
+      <div class="row ">
 
-        <div ng-show="loading" class="loading-gif" style="text-align: center;">
-            <img src="/img/loader.gif" height="50px" />
+        <div ng-show="loading " class="loading-gif " style="text-align: center; ">
+            <img src="/img/loader.gif " height="50px " />
         </div>
 
-        <div class="col-xs-12 col-sm-6" style="margin-top: 15px;">
-          <button ng-click="move(-1)" class="btn-two btn-two-yellow">{{'BACK' | translate}}</button>
+        <div class="col-xs-12 col-sm-6 " style="margin-top: 15px; ">
+          <button ng-click="move(-1) " class="btn-two btn-two-yellow ">{{'BACK' | translate}}</button>
         </div>
 
-        <div class="col-xs-12 col-sm-6" style="margin-top: 15px;">
-          <button ng-click="create()" class="btn btn-green" ng-disabled="loading">{{'CREATE' | translate}}</button>
+        <div class="col-xs-12 col-sm-6 " style="margin-top: 15px; ">
+          <button ng-click="create() " class="btn btn-green " ng-disabled="loading ">{{'CREATE' | translate}}</button>
         </div>
 
       </div>
