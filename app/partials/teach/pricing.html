@@ -1,673 +1,669 @@
 <div ng-controller="HeaderCtrl">
 
-  <style>
+    <style>
+        @media only screen and (min-width: 720px) {
+            body {
+                padding-top: 65px;
+            }
+            nav .navbar-top .menu-right .options>div {
+                font-size: 1.3em;
+                padding-top: 2px;
+            }
+        }
+        
+        nav .navbar-top .brand img {
+            max-width: 335px;
+        }
+        
+        nav .navbar-top .menu-right {
+            float: right;
+            padding-top: 13px;
+            width: unset;
+        }
+        
+        @media only screen and (max-width: 768px) {
+            nav .navbar-top .menu-right .options>div {
+                font-size: 1em;
+                padding-top: 5px;
+            }
+            .navbar-top {
+                height: 50px;
+            }
+            nav .navbar-top .menu-right {
+                width: unset;
+            }
+        }
+    </style>
 
-    @media only screen and (min-width: 720px) {
+    <nav>
 
-      body {
-        padding-top: 65px;
-      }
+        <div class="navbar-top" style="padding-left: 10px; text-align: center;">
 
-      nav .navbar-top .menu-right .options > div {
-        font-size: 1.3em;
-        padding-top: 2px;
-      }
+            <a href="/home/landing">
+                <div class="brand">
+                    <img height="50px" style="padding-right: 5px;" src="img/universidade_icon.gif" />
+                    <img height="32px" style="margin-top: 4px; margin-left: 4px;" src="{{company_logo}}" />
+                </div>
+            </a>
 
-    }
-
-    nav .navbar-top .brand img {
-      max-width: 335px;
-    }
-
-    nav .navbar-top .menu-right {
-      float: right;
-      padding-top: 13px;
-      width: unset;
-    }
-
-    @media only screen and (max-width: 768px) {
-
-      nav .navbar-top .menu-right .options > div {
-        font-size: 1em;
-        padding-top: 5px;
-      }
-
-      .navbar-top {
-        height: 50px;
-      }
-
-      nav .navbar-top .menu-right {
-        width: unset;
-      }
-
-    }
-
-  </style>
-
-  <nav>
-
-    <div class="navbar-top" style="padding-left: 10px; text-align: center;">
-
-        <a href="/home/landing"><div class="brand">
-          <img height="50px" style="padding-right: 5px;" src="img/universidade_icon.png" />
-          <img height="32px" style="margin-top: 4px; margin-left: 4px;" src="{{company_logo}}" />
-        </div></a>
-
-      </div>
-      <!-- end navbar-top -->
-
-      <!-- fadeInDown -->
-      <div class="navbar-mobile animated faster" ng-class="{slideInDown: navbarMobileOpen == false}">
-
-        <div class="menu">
-          <div class="option unselectable" ng-if="logged" ng-class="{'active': originalPath == '/home/timeline' || originalPath == '/home/timeline/'}"><a href="/home/timeline"><img src="/img/icon/timeline.png" height="23px" width="33px" style="padding-right: 10px;" />{{'HEADER_NAV_1' | translate}}</a></div>
-          <div class="option unselectable" ng-class="{'active': originalPath == '/home' || originalPath == '/home/'}"><a href="/home"><img src="/img/icon/office/home.png" height="23px" width="33px" style="padding-right: 10px;" />{{'HEADER_HOME' | translate}}</a></div>
-          <div class="option unselectable" ng-class="{'active': originalPath == '/home/{{'UNIVERSIDADES' | translate}}' || originalPath == '/home/{{'UNIVERSIDADES' | translate}}/'}"><a href="/home/{{'UNIVERSIDADES' | translate}}"><img src="/img/icon/office/university.png" height="23px" width="33px" style="padding-right: 10px;" />{{'HEADER_NAV_3' | translate}}</a></div>
-          <div class="option unselectable" ng-class="{'active': originalPath == '/home/noticias' || originalPath == '/home/noticias/'}"><a href="/home/noticias"><img src="/img/icon/office/opinion.png" height="23px" width="33px" style="padding-right: 10px;" />{{'HEADER_OPINION' | translate}}</a></div>
-          <!--<div class="option unselectable" ng-class="{'active': originalPath.indexOf('/home/conhecimento') != -1 }"><a href="/home/conhecimento">Conhecimento</a></div>-->
-          <!--div class="option unselectable" ng-class="{'active': originalPath == '/cursos' || originalPath == '/cursos/'}"><a href="/home">Cursos</a></div>-->
-          <!--<div class="option unselectable" ng-class="{'active': originalPath == '/home/colleges' || originalPath == '/home/colleges/'}"><a href="/home/colleges">Colleges</a></div>-->
-          <!--<div class="option unselectable" ng-class="{'active': originalPath == '/home/smp' || originalPath == '/home/smp/'}"><a href="/home/smp">Marketplace</a></div>-->
         </div>
-        <!-- end menu -->
+        <!-- end navbar-top -->
 
-      </div>
-      <!-- navbar mobile-->
+        <!-- fadeInDown -->
+        <div class="navbar-mobile animated faster" ng-class="{slideInDown: navbarMobileOpen == false}">
 
-  </nav>
-  <!-- end nav -->
+            <div class="menu">
+                <div class="option unselectable" ng-if="logged" ng-class="{'active': originalPath == '/home/timeline' || originalPath == '/home/timeline/'}">
+                    <a href="/home/timeline"><img src="/img/icon/timeline.png" height="23px" width="33px" style="padding-right: 10px;" />{{'HEADER_NAV_1' | translate}}</a>
+                </div>
+                <div class="option unselectable" ng-class="{'active': originalPath == '/home' || originalPath == '/home/'}">
+                    <a href="/home"><img src="/img/icon/office/home.png" height="23px" width="33px" style="padding-right: 10px;" />{{'HEADER_HOME' | translate}}</a>
+                </div>
+                <div class="option unselectable" ng-class="{'active': originalPath == '/home/{{'UNIVERSIDADES' | translate}}' || originalPath == '/home/{{'UNIVERSIDADES' | translate}}/'}">
+                    <a href="/home/{{'UNIVERSIDADES' | translate}}"><img src="/img/icon/office/university.png" height="23px" width="33px" style="padding-right: 10px;" />{{'HEADER_NAV_3' | translate}}</a>
+                </div>
+                <div class="option unselectable" ng-class="{'active': originalPath == '/home/noticias' || originalPath == '/home/noticias/'}">
+                    <a href="/home/noticias"><img src="/img/icon/office/opinion.png" height="23px" width="33px" style="padding-right: 10px;" />{{'HEADER_OPINION' | translate}}</a>
+                </div>
+                <!--<div class="option unselectable" ng-class="{'active': originalPath.indexOf('/home/conhecimento') != -1 }"><a href="/home/conhecimento">Conhecimento</a></div>-->
+                <!--div class="option unselectable" ng-class="{'active': originalPath == '/cursos' || originalPath == '/cursos/'}"><a href="/home">Cursos</a></div>-->
+                <!--<div class="option unselectable" ng-class="{'active': originalPath == '/home/colleges' || originalPath == '/home/colleges/'}"><a href="/home/colleges">Colleges</a></div>-->
+                <!--<div class="option unselectable" ng-class="{'active': originalPath == '/home/smp' || originalPath == '/home/smp/'}"><a href="/home/smp">Marketplace</a></div>-->
+            </div>
+            <!-- end menu -->
+
+        </div>
+        <!-- navbar mobile-->
+
+    </nav>
+    <!-- end nav -->
 
 </div>
 
 <!-- end header -->
 
 <style>
-
-  .main-section {
-    padding-left: 50px;
-    padding-top: 40px;
-  }
-
-  .main-section-title {
-    font-size: 4em; line-height: 1em; padding-bottom: 30px; font-weight: 600;
-  }
-
-  .main-section-subtitle {
-    font-size: 1.5em; font-weight: 300;
-  }
-
-  @media screen and (max-width: 768px) {
-
-    nav .navbar-top {
-      box-shadow: unset;
-      text-align: center;
-    }
-
     .main-section {
-      padding-left: 20px;
-      padding-right: 20px;
-      padding-top: 0px;
+        padding-left: 50px;
+        padding-top: 40px;
     }
-
+    
     .main-section-title {
-      font-size: 2.5em; line-height: 1em; padding-bottom: 30px; font-weight: 600;
+        font-size: 4em;
+        line-height: 1em;
+        padding-bottom: 30px;
+        font-weight: 600;
     }
-
+    
     .main-section-subtitle {
-      font-size: 1.2em;
+        font-size: 1.5em;
+        font-weight: 300;
     }
-
-  }
-
+    
+    @media screen and (max-width: 768px) {
+        nav .navbar-top {
+            box-shadow: unset;
+            text-align: center;
+        }
+        .main-section {
+            padding-left: 20px;
+            padding-right: 20px;
+            padding-top: 0px;
+        }
+        .main-section-title {
+            font-size: 2.5em;
+            line-height: 1em;
+            padding-bottom: 30px;
+            font-weight: 600;
+        }
+        .main-section-subtitle {
+            font-size: 1.2em;
+        }
+    }
 </style>
 
 <div class="container-fluid container-full animated fadeIn faster">
 
-  <div class="row" style="padding-top: 115px; position: relative;">
+    <div class="row" style="padding-top: 115px; position: relative;">
 
-    <div class="col-xs-12 col-sm-12" style="text-align: center; position: relative;">
-      <div style="font-size: 3em; font-weight: bolder;">{{'PRICING_PAGE_HEADLINE' | translate}}</div>
-    </div>
-
-  </div>
-  <!-- -->
-
-  <div class="row" style="padding-top: 35px; position: relative;">
-
-    <div class="col-xs-12 col-sm-4" style="text-align: left; position: relative; padding-top: 35px; min-height: 940px;">
-
-      <div style="width: 100%; background-color: #fff; box-shadow: 0 2px 24px rgba(12,13,14,0.1); padding: 35px; border-radius: 5px;">
-        <p><b style="color: #2e4254; font-size: 2em;">{{'BASIC' | translate}}</b></p>
-        <div style="height: 20px"></div>
-        <p style="font-weight: 600; font-size: 1.2em;">{{'BASIC_TEXT' | translate}}</p>
-        <div style="height: 15px"></div>
-        <p style="font-weight: 600; font-size: 1.2em;">{{'247_SUPPORT' | translate}}</p>
-        <div style="height: 15px"></div>
-        <p style="font-weight: 600; font-size: 1.2em;">
-          <img src="https://image.flaticon.com/icons/svg/3126/3126649.svg" height="30px" style="padding-right: 5px;" />
-          {{'BASIC_USERS_NUMBER' | translate}}
-        </p>
-        <div style="height: 15px"></div>
-        <p style="font-weight: 600; font-size: 1.2em;">{{'BASIC_NUMBER_OF_FEATURES' | translate}}</p>
-        <div style="height: 15px"></div>
-
-        <p style="font-weight: 600; font-size: 1.2em;">{{'BASIC_ADMIN_USERS' | translate}}</p>
-        <div style="height: 15px"></div>
-
-        <p><b style="color: #2e4254; font-size: 1.3em;">{{'BASIC_FEATURES' | translate}}</b></p>
-        <div style="height: 5px"></div>
-        <div style="font-weight: 600; font-size: 1.15em; margin-bottom: 15px;">
-          <div style="width: 45px; text-align: center; display: inline-block;">
-            <img height="25px" src="https://visualpharm.com/assets/811/Discussion%20Forum-595b40b65ba036ed117d396c.svg" style="padding-right: 10px;"></img>
-          </div>
-          <div style="display: inline-block;">{{'FEATURE_TITLE_1' | translate}}</div>
+        <div class="col-xs-12 col-sm-12" style="text-align: center; position: relative;">
+            <div style="font-size: 3em; font-weight: bolder;">{{'PRICING_PAGE_HEADLINE' | translate}}</div>
         </div>
-
-        <div style="font-weight: 600; font-size: 1.15em; margin-bottom: 15px;">
-          <div style="width: 45px; text-align: center; display: inline-block;">
-            <img height="25px" src="https://visualpharm.com/assets/311/Graduation%20Cap-595b40b65ba036ed117d2d97.svg" style="padding-right: 10px;"></img>
-          </div>
-          <div style="display: inline-block;">{{'FEATURE_TITLE_2' | translate}}</div>
-        </div>
-
-        <div style="font-weight: 600; font-size: 1.15em; margin-bottom: 15px;">
-          <div style="width: 45px; text-align: center; display: inline-block;">
-            <img height="25px" src="https://image.flaticon.com/icons/svg/745/745205.svg" style="padding-right: 10px;"></img>
-          </div>
-          <div style="display: inline-block;">{{'FEATURE_TITLE_3' | translate}}</div>
-        </div>
-
-        <div style="font-weight: 600; font-size: 1.15em; margin-bottom: 15px;">
-          <div style="width: 45px; text-align: center; display: inline-block;">
-            <img height="25px" src="/img/ewallet.png" style="padding-right: 10px;"></img>
-          </div>
-          <div style="display: inline-block;">{{'FEATURE_TITLE_ONELINE_PAYMENTS' | translate}}</div>
-        </div>
-
-        <div style="font-weight: 600; font-size: 1.15em; margin-bottom: 15px; opacity: 0.25;">
-          <div style="width: 45px; text-align: center; display: inline-block;">
-            <img height="25px" src="https://image.flaticon.com/icons/svg/3048/3048415.svg" style="padding-right: 10px;"></img>
-          </div>
-          <div style="display: inline-block;">{{'FEATURE_TITLE_5' | translate}}</div>
-        </div>
-
-        <div style="font-weight: 600; font-size: 1.15em; margin-bottom: 15px; opacity: 0.25;">
-          <div style="width: 45px; text-align: center; display: inline-block;">
-            <img height="25px" src="https://image.flaticon.com/icons/svg/3039/3039381.svg" style="padding-right: 10px;"></img>
-          </div>
-          <div style="display: inline-block;">{{'FEATURE_HOSTING' | translate}}</div>
-        </div>
-
-        <div style="height: 20px"></div>
-        <div><b style="font-size: 2.4em; color: #335c9c;">{{'BASIC_PRICE' | translate}}.00</b></div>
-        <div style="font-size: 0.85em;">{{'BILLED_MONTHLY' | translate}}</div>
-        <div style="height: 15px"></div>
-        <a href="/{{'INICIAR' | translate}}"><button class="btn bg-base" style="max-width: 250px">{{'FREE_14_DAYS_TRIAL' | translate}}</button></a>
-      </div>
-      <!-- end pricing -->
-
-    </div>
-    <!-- end col-xs-12 -->
-
-    <div class="col-xs-12 col-sm-4" style="text-align: left; position: relative; padding-top: 35px; min-height: 940px;">
-
-      <div style="width: 100%; background-color: #fff; box-shadow: 0 2px 24px rgba(12,13,14,0.1); padding: 35px; border-radius: 5px;">
-        <p><b style="color: #2e4254; font-size: 2em;">{{'ALL_IN_ONE' | translate}}</b></p>
-        <div style="height: 20px"></div>
-        <p style="font-weight: 600; font-size: 1.2em;">{{'ALL_IN_ONE_TEXT' | translate}}</p>
-        <div style="height: 15px"></div>
-        <p style="font-weight: 600; font-size: 1.2em;">{{'247_SUPPORT' | translate}}</p>
-        <div style="height: 15px"></div>
-        <p style="font-weight: 600; font-size: 1.2em;">
-          <img src="https://image.flaticon.com/icons/svg/3126/3126649.svg" height="30px" style="padding-right: 5px;" />
-          {{'ALL_IN_ONE_USERS_NUMBER' | translate}}
-        </p>
-        <div style="height: 15px"></div>
-        <p style="font-weight: 600; font-size: 1.2em;">{{'ALL_IN_ONE_NUMBER_OF_FEATURES' | translate}}</p>
-        <div style="height: 15px"></div>
-
-        <p style="font-weight: 600; font-size: 1.2em;">{{'ALL_IN_ONE_ADMIN_USERS' | translate}}</p>
-        <div style="height: 15px"></div>
-
-        <p><b style="color: #2e4254; font-size: 1.3em;">{{'ALL_IN_ONE_FEATURES' | translate}}</b></p>
-        <div style="height: 5px"></div>
-
-
-        <div style="font-weight: 600; font-size: 1.15em; margin-bottom: 15px;">
-          <div style="width: 45px; text-align: center; display: inline-block;">
-            <img height="25px" src="https://visualpharm.com/assets/811/Discussion%20Forum-595b40b65ba036ed117d396c.svg" style="padding-right: 10px;"></img>
-          </div>
-          <div style="display: inline-block;">{{'FEATURE_TITLE_1' | translate}}</div>
-        </div>
-
-        <div style="font-weight: 600; font-size: 1.15em; margin-bottom: 15px;">
-          <div style="width: 45px; text-align: center; display: inline-block;">
-            <img height="25px" src="https://visualpharm.com/assets/311/Graduation%20Cap-595b40b65ba036ed117d2d97.svg" style="padding-right: 10px;"></img>
-          </div>
-          <div style="display: inline-block;">{{'FEATURE_TITLE_2' | translate}}</div>
-        </div>
-
-        <div style="font-weight: 600; font-size: 1.15em; margin-bottom: 15px;">
-          <div style="width: 45px; text-align: center; display: inline-block;">
-            <img height="25px" src="https://image.flaticon.com/icons/svg/745/745205.svg" style="padding-right: 10px;"></img>
-          </div>
-          <div style="display: inline-block;">{{'FEATURE_TITLE_3' | translate}}</div>
-        </div>
-
-        <div style="font-weight: 600; font-size: 1.15em; margin-bottom: 15px;">
-          <div style="width: 45px; text-align: center; display: inline-block;">
-            <img height="25px" src="/img/ewallet.png" style="padding-right: 10px;"></img>
-          </div>
-          <div style="display: inline-block;">{{'FEATURE_TITLE_ONELINE_PAYMENTS' | translate}}</div>
-        </div>
-
-        <div style="font-weight: 600; font-size: 1.15em; margin-bottom: 15px;">
-          <div style="width: 45px; text-align: center; display: inline-block;">
-            <img height="25px" src="https://image.flaticon.com/icons/svg/3048/3048415.svg" style="padding-right: 10px;"></img>
-          </div>
-          <div style="display: inline-block;">{{'FEATURE_TITLE_5' | translate}}</div>
-        </div>
-
-        <div style="font-weight: 600; font-size: 1.15em; margin-bottom: 15px;">
-          <div style="width: 45px; text-align: center; display: inline-block;">
-            <img height="25px" src="https://image.flaticon.com/icons/svg/3039/3039381.svg" style="padding-right: 10px;"></img>
-          </div>
-          <div style="display: inline-block;">{{'FEATURE_HOSTING' | translate}}</div>
-        </div>
-
-        <div style="height: 20px"></div>
-        <div><b style="font-size: 2.4em; color: #335c9c;">{{'ALL_IN_ONE_PRICE' | translate}}.00</b></div>
-        <div style="font-size: 0.85em;">{{'BILLED_MONTHLY' | translate}}</div>
-        <div style="height: 15px"></div>
-        <a href="/{{'INICIAR' | translate}}"><button class="btn bg-base" style="max-width: 250px">{{'FREE_14_DAYS_TRIAL' | translate}}</button></a>
-      </div>
-      <!-- end pricing -->
-
-    </div>
-    <!-- end col-xs-12 -->
-
-    <div class="col-xs-12 col-sm-4" style="text-align: left; position: relative; padding-top: 35px; min-height: 964px;">
-
-      <div style="width: 100%; background-color: #fff; box-shadow: 0 2px 24px rgba(12,13,14,0.1); padding: 35px; border-radius: 5px;">
-        <p><b style="color: #2e4254; font-size: 2em;">{{'CUSTOM_APP' | translate}}</b></p>
-        <div style="height: 20px"></div>
-        <p style="font-weight: 600; font-size: 1.2em;">{{'CUSTOM_APP_TEXT' | translate}}</p>
-        <div style="height: 15px"></div>
-        <p style="font-weight: 600; font-size: 1.2em;">{{'247_SUPPORT' | translate}}</p>
-        <div style="height: 15px"></div>
-        <p style="font-weight: 600; font-size: 1.2em;">
-          <img src="https://image.flaticon.com/icons/svg/3126/3126649.svg" height="30px" style="padding-right: 5px;" />
-          {{'CUSTOM_APP_USERS_NUMBER' | translate}}
-        </p>
-        <div style="height: 15px"></div>
-        <p style="font-weight: 600; font-size: 1.2em;">{{'CUSTOM_APP_NUMBER_OF_FEATURES' | translate}}</p>
-        <div style="height: 15px"></div>
-
-        <p style="font-weight: 600; font-size: 1.2em;">{{'CUSTOM_APP_ADMIN_USERS' | translate}}</p>
-        <div style="height: 15px"></div>
-
-        <p><b style="color: #2e4254; font-size: 1.3em;">{{'CUSTOM_APP_FEATURES' | translate}}</b></p>
-        <div style="height: 5px"></div>
-
-        <div style="font-weight: 600; font-size: 1.15em; margin-bottom: 15px;">
-          <div style="width: 45px; text-align: center; display: inline-block;">
-            <img height="25px" src="https://visualpharm.com/assets/811/Discussion%20Forum-595b40b65ba036ed117d396c.svg" style="padding-right: 10px;"></img>
-          </div>
-          <div style="display: inline-block;">{{'FEATURE_TITLE_1' | translate}}</div>
-        </div>
-
-        <div style="font-weight: 600; font-size: 1.15em; margin-bottom: 15px;">
-          <div style="width: 45px; text-align: center; display: inline-block;">
-            <img height="25px" src="https://visualpharm.com/assets/311/Graduation%20Cap-595b40b65ba036ed117d2d97.svg" style="padding-right: 10px;"></img>
-          </div>
-          <div style="display: inline-block;">{{'FEATURE_TITLE_2' | translate}}</div>
-        </div>
-
-        <div style="font-weight: 600; font-size: 1.15em; margin-bottom: 15px;">
-          <div style="width: 45px; text-align: center; display: inline-block;">
-            <img height="25px" src="https://image.flaticon.com/icons/svg/745/745205.svg" style="padding-right: 10px;"></img>
-          </div>
-          <div style="display: inline-block;">{{'FEATURE_TITLE_3' | translate}}</div>
-        </div>
-
-        <div style="font-weight: 600; font-size: 1.15em; margin-bottom: 15px;">
-          <div style="width: 45px; text-align: center; display: inline-block;">
-            <img height="25px" src="/img/ewallet.png" style="padding-right: 10px;"></img>
-          </div>
-          <div style="display: inline-block;">{{'FEATURE_TITLE_ONELINE_PAYMENTS' | translate}}</div>
-        </div>
-
-        <div style="font-weight: 600; font-size: 1.15em; margin-bottom: 15px;">
-          <div style="width: 45px; text-align: center; display: inline-block;">
-            <img height="25px" src="https://image.flaticon.com/icons/svg/3048/3048415.svg" style="padding-right: 10px;"></img>
-          </div>
-          <div style="display: inline-block;">{{'FEATURE_TITLE_5' | translate}}</div>
-        </div>
-
-        <div style="font-weight: 600; font-size: 1.15em; margin-bottom: 15px;">
-          <div style="width: 45px; text-align: center; display: inline-block;">
-            <img height="25px" src="https://image.flaticon.com/icons/svg/3039/3039381.svg" style="padding-right: 10px;"></img>
-          </div>
-          <div style="display: inline-block;">{{'FEATURE_HOSTING' | translate}}</div>
-        </div>
-
-        <div style="height: 20px"></div>
-        <div><span style="font-size: 1.4em; font-weight: bold; color: #30B39F;">{{'CONTACT_US' | translate}} at sales@colle.ge</span></div>
-        <div style="font-size: 0.85em;">{{'ONE_TIME_FEE' | translate}}</div>
-        <div style="height: 15px"></div>
-        <a href="/{{'INICIAR' | translate}}"><button class="btn bg-base" style="max-width: 250px">{{'FREE_14_DAYS_TRIAL' | translate}}</button></a>
-      </div>
-      <!-- end pricing -->
-
-    </div>
-    <!-- end col-xs-12 -->
-
-  </div>
-  <!-- end row -->
-
-  <div class="row whatis" style="margin-top: 135px; margin-bottom: 50px;">
-
-    <div class="col-xs-12" style="margin-bottom: 10px;">
-      <div class="whatsis-title" style="font-size: 2em;">{{'WHAT_IS_TITLE' | translate}}</div>
-      <p class="whatsis-description" >{{'WHAT_IS_DESCRIPTION' | translate}}</p>
-    </div>
-
-  </div>
-  <!-- id="whatis" -->
-  <div class="row whatis" style="margin-bottom: 80px;">
-
-    <div class="col-xs-12 col-sm-6 features">
-
-      <div class="feature-title">
-        <img style="height: 60px !important;" src="https://visualpharm.com/assets/811/Discussion%20Forum-595b40b65ba036ed117d396c.svg" /><b>{{'FEATURE_TITLE_1' | translate}}</b>
-      </div>
-
-      <div class="feature-description">{{'FEATURE_DESCRIPTION_1' | translate}}</div>
-
-    </div>
-
-    <div class="col-xs-12 col-sm-6 features">
-
-      <div class="feature-title">
-        <img style="height: 60px !important;" src="https://visualpharm.com/assets/311/Graduation%20Cap-595b40b65ba036ed117d2d97.svg" /><b>{{'FEATURE_TITLE_2' | translate}}</b>
-      </div>
-
-      <div class="feature-description">{{'FEATURE_DESCRIPTION_2' | translate}}</div>
-
-    </div>
-
-  </div>
-  <!-- -->
-
-  <div class="row whatis" style="margin-bottom: 80px;">
-
-    <div class="col-xs-12 col-sm-6 features">
-
-      <div class="feature-title">
-        <img style="height: 60px !important;" src="https://image.flaticon.com/icons/svg/745/745205.svg" /><b>{{'FEATURE_TITLE_3' | translate}}</b>
-      </div>
-
-      <div class="feature-description">{{'FEATURE_DESCRIPTION_3' | translate}}</div>
-
-    </div>
-
-    <div class="col-xs-12 col-sm-6 features">
-
-      <div class="feature-title">
-        <img style="height: 60px !important;" src="/img/vr/room_board.png" /><b>{{'FEATURE_TITLE_4' | translate}}</b>
-      </div>
-
-      <div class="feature-description">{{'FEATURE_DESCRIPTION_4' | translate}} </div>
-
-    </div>
-
-  </div>
-  <!-- -->
-
-  <div class="row whatis" style="margin-bottom: 80px;">
-
-    <div class="col-xs-12 col-sm-6 features">
-
-      <div class="feature-title">
-        <img style="height: 60px !important;" src="https://image.flaticon.com/icons/svg/3048/3048415.svg" /><b>{{'FEATURE_TITLE_5' | translate}}</b>
-      </div>
-
-      <div class="feature-description">{{'FEATURE_DESCRIPTION_5' | translate}}</div>
-
-    </div>
-
-    <div class="col-xs-12 col-sm-6 features">
-
-      <div class="feature-title">
-        <img style="height: 60px !important;" src="https://image.flaticon.com/icons/svg/3039/3039381.svg" /><b>{{'FEATURE_TITLE_6' | translate}}</b>
-      </div>
-
-      <div class="feature-description">{{'FEATURE_DESCRIPTION_6' | translate}}</div>
-
-    </div>
-
-  </div>
-  <!-- END ROW -->
-
-  <style>
-    .btn-coral {
-      background-color: #ee5748;
-      box-shadow: 0px 8px 15px rgba(238, 87, 72, 0.51);
-      transition: all 0.3s ease 0s;
-      cursor: pointer;
-    }
-  </style>
-
-  <div class="row" style="margin-bottom: 80px;">
-
-    <div class="col-xs-12 col-sm-6" style="padding-top: 50px;">
-
-      <div class="header-section-two" style="text-align: left; padding-top: 30px; padding-bottom: 30px;">
-
-        <div style="font-size: 1.2em; font-weight: bold;">{{'WHITELABEL_PLATFORM' | translate}}</div>
-        <div class="header-support-section-two" style="font-size: 2.3em; line-height: 1.3em; font-weight: bold;">{{'WHITELABEL_SUB' | translate}}</div>
-        <div style="height: 30px;"></div>
-        <div class="header-support-section-two" style="font-size: 1.2em; font-weight: bold;">{{'WHITELABEL_PRICE' | translate}}</div>
-        <div style="height: 10px;"></div>
-        <div class="header-support-section-two" style="font-size: 1.2em;">{{'WHITELABEL_TEXT' | translate}}</div>
-        <div style="height: 125px;"></div>
-        <button class="btn btn-coral" style="font-size: 1em;"><b>{{'WHITELABEL_CREATE' | translate}}</b></button>
-
-      </div>
-
-      <div style="height: 20px"></div>
 
     </div>
     <!-- -->
 
-    <div class="col-xs-12 col-sm-6" style="padding-top: 50px; text-align: center;">
+    <div class="row" style="padding-top: 35px; position: relative;">
 
-      <img height="600px" src="https://slack-imgs.com/?c=1&o1=ro&url=https%3A%2F%2Flh5.googleusercontent.com%2FfwZHtDJDNwqpCO9t7qQ40BQftaZNjohuNBjrAzZYCxjGNFQccJexly6VUJDvWUcbpWvnAMYKOMxxoV_G48hgyV47PuKB2JeHDqtSjjBW6HDHjJ8IqFtmyqDlDANmTebfsdLI9_UP" />
+        <div class="col-xs-12 col-sm-4" style="text-align: left; position: relative; padding-top: 35px; min-height: 940px;">
+
+            <div style="width: 100%; background-color: #fff; box-shadow: 0 2px 24px rgba(12,13,14,0.1); padding: 35px; border-radius: 5px;">
+                <p><b style="color: #2e4254; font-size: 2em;">{{'BASIC' | translate}}</b></p>
+                <div style="height: 20px"></div>
+                <p style="font-weight: 600; font-size: 1.2em;">{{'BASIC_TEXT' | translate}}</p>
+                <div style="height: 15px"></div>
+                <p style="font-weight: 600; font-size: 1.2em;">{{'247_SUPPORT' | translate}}</p>
+                <div style="height: 15px"></div>
+                <p style="font-weight: 600; font-size: 1.2em;">
+                    <img src="https://image.flaticon.com/icons/svg/3126/3126649.svg" height="30px" style="padding-right: 5px;" /> {{'BASIC_USERS_NUMBER' | translate}}
+                </p>
+                <div style="height: 15px"></div>
+                <p style="font-weight: 600; font-size: 1.2em;">{{'BASIC_NUMBER_OF_FEATURES' | translate}}</p>
+                <div style="height: 15px"></div>
+
+                <p style="font-weight: 600; font-size: 1.2em;">{{'BASIC_ADMIN_USERS' | translate}}</p>
+                <div style="height: 15px"></div>
+
+                <p><b style="color: #2e4254; font-size: 1.3em;">{{'BASIC_FEATURES' | translate}}</b></p>
+                <div style="height: 5px"></div>
+                <div style="font-weight: 600; font-size: 1.15em; margin-bottom: 15px;">
+                    <div style="width: 45px; text-align: center; display: inline-block;">
+                        <img height="25px" src="https://visualpharm.com/assets/811/Discussion%20Forum-595b40b65ba036ed117d396c.svg" style="padding-right: 10px;"></img>
+                    </div>
+                    <div style="display: inline-block;">{{'FEATURE_TITLE_1' | translate}}</div>
+                </div>
+
+                <div style="font-weight: 600; font-size: 1.15em; margin-bottom: 15px;">
+                    <div style="width: 45px; text-align: center; display: inline-block;">
+                        <img height="25px" src="https://visualpharm.com/assets/311/Graduation%20Cap-595b40b65ba036ed117d2d97.svg" style="padding-right: 10px;"></img>
+                    </div>
+                    <div style="display: inline-block;">{{'FEATURE_TITLE_2' | translate}}</div>
+                </div>
+
+                <div style="font-weight: 600; font-size: 1.15em; margin-bottom: 15px;">
+                    <div style="width: 45px; text-align: center; display: inline-block;">
+                        <img height="25px" src="https://image.flaticon.com/icons/svg/745/745205.svg" style="padding-right: 10px;"></img>
+                    </div>
+                    <div style="display: inline-block;">{{'FEATURE_TITLE_3' | translate}}</div>
+                </div>
+
+                <div style="font-weight: 600; font-size: 1.15em; margin-bottom: 15px;">
+                    <div style="width: 45px; text-align: center; display: inline-block;">
+                        <img height="25px" src="/img/ewallet.png" style="padding-right: 10px;"></img>
+                    </div>
+                    <div style="display: inline-block;">{{'FEATURE_TITLE_ONELINE_PAYMENTS' | translate}}</div>
+                </div>
+
+                <div style="font-weight: 600; font-size: 1.15em; margin-bottom: 15px; opacity: 0.25;">
+                    <div style="width: 45px; text-align: center; display: inline-block;">
+                        <img height="25px" src="https://image.flaticon.com/icons/svg/3048/3048415.svg" style="padding-right: 10px;"></img>
+                    </div>
+                    <div style="display: inline-block;">{{'FEATURE_TITLE_5' | translate}}</div>
+                </div>
+
+                <div style="font-weight: 600; font-size: 1.15em; margin-bottom: 15px; opacity: 0.25;">
+                    <div style="width: 45px; text-align: center; display: inline-block;">
+                        <img height="25px" src="https://image.flaticon.com/icons/svg/3039/3039381.svg" style="padding-right: 10px;"></img>
+                    </div>
+                    <div style="display: inline-block;">{{'FEATURE_HOSTING' | translate}}</div>
+                </div>
+
+                <div style="height: 20px"></div>
+                <div><b style="font-size: 2.4em; color: #335c9c;">{{'BASIC_PRICE' | translate}}.00</b></div>
+                <div style="font-size: 0.85em;">{{'BILLED_MONTHLY' | translate}}</div>
+                <div style="height: 15px"></div>
+                <a href="/{{'INICIAR' | translate}}"><button class="btn bg-base" style="max-width: 250px">{{'FREE_14_DAYS_TRIAL' | translate}}</button></a>
+            </div>
+            <!-- end pricing -->
+
+        </div>
+        <!-- end col-xs-12 -->
+
+        <div class="col-xs-12 col-sm-4" style="text-align: left; position: relative; padding-top: 35px; min-height: 940px;">
+
+            <div style="width: 100%; background-color: #fff; box-shadow: 0 2px 24px rgba(12,13,14,0.1); padding: 35px; border-radius: 5px;">
+                <p><b style="color: #2e4254; font-size: 2em;">{{'ALL_IN_ONE' | translate}}</b></p>
+                <div style="height: 20px"></div>
+                <p style="font-weight: 600; font-size: 1.2em;">{{'ALL_IN_ONE_TEXT' | translate}}</p>
+                <div style="height: 15px"></div>
+                <p style="font-weight: 600; font-size: 1.2em;">{{'247_SUPPORT' | translate}}</p>
+                <div style="height: 15px"></div>
+                <p style="font-weight: 600; font-size: 1.2em;">
+                    <img src="https://image.flaticon.com/icons/svg/3126/3126649.svg" height="30px" style="padding-right: 5px;" /> {{'ALL_IN_ONE_USERS_NUMBER' | translate}}
+                </p>
+                <div style="height: 15px"></div>
+                <p style="font-weight: 600; font-size: 1.2em;">{{'ALL_IN_ONE_NUMBER_OF_FEATURES' | translate}}</p>
+                <div style="height: 15px"></div>
+
+                <p style="font-weight: 600; font-size: 1.2em;">{{'ALL_IN_ONE_ADMIN_USERS' | translate}}</p>
+                <div style="height: 15px"></div>
+
+                <p><b style="color: #2e4254; font-size: 1.3em;">{{'ALL_IN_ONE_FEATURES' | translate}}</b></p>
+                <div style="height: 5px"></div>
+
+
+                <div style="font-weight: 600; font-size: 1.15em; margin-bottom: 15px;">
+                    <div style="width: 45px; text-align: center; display: inline-block;">
+                        <img height="25px" src="https://visualpharm.com/assets/811/Discussion%20Forum-595b40b65ba036ed117d396c.svg" style="padding-right: 10px;"></img>
+                    </div>
+                    <div style="display: inline-block;">{{'FEATURE_TITLE_1' | translate}}</div>
+                </div>
+
+                <div style="font-weight: 600; font-size: 1.15em; margin-bottom: 15px;">
+                    <div style="width: 45px; text-align: center; display: inline-block;">
+                        <img height="25px" src="https://visualpharm.com/assets/311/Graduation%20Cap-595b40b65ba036ed117d2d97.svg" style="padding-right: 10px;"></img>
+                    </div>
+                    <div style="display: inline-block;">{{'FEATURE_TITLE_2' | translate}}</div>
+                </div>
+
+                <div style="font-weight: 600; font-size: 1.15em; margin-bottom: 15px;">
+                    <div style="width: 45px; text-align: center; display: inline-block;">
+                        <img height="25px" src="https://image.flaticon.com/icons/svg/745/745205.svg" style="padding-right: 10px;"></img>
+                    </div>
+                    <div style="display: inline-block;">{{'FEATURE_TITLE_3' | translate}}</div>
+                </div>
+
+                <div style="font-weight: 600; font-size: 1.15em; margin-bottom: 15px;">
+                    <div style="width: 45px; text-align: center; display: inline-block;">
+                        <img height="25px" src="/img/ewallet.png" style="padding-right: 10px;"></img>
+                    </div>
+                    <div style="display: inline-block;">{{'FEATURE_TITLE_ONELINE_PAYMENTS' | translate}}</div>
+                </div>
+
+                <div style="font-weight: 600; font-size: 1.15em; margin-bottom: 15px;">
+                    <div style="width: 45px; text-align: center; display: inline-block;">
+                        <img height="25px" src="https://image.flaticon.com/icons/svg/3048/3048415.svg" style="padding-right: 10px;"></img>
+                    </div>
+                    <div style="display: inline-block;">{{'FEATURE_TITLE_5' | translate}}</div>
+                </div>
+
+                <div style="font-weight: 600; font-size: 1.15em; margin-bottom: 15px;">
+                    <div style="width: 45px; text-align: center; display: inline-block;">
+                        <img height="25px" src="https://image.flaticon.com/icons/svg/3039/3039381.svg" style="padding-right: 10px;"></img>
+                    </div>
+                    <div style="display: inline-block;">{{'FEATURE_HOSTING' | translate}}</div>
+                </div>
+
+                <div style="height: 20px"></div>
+                <div><b style="font-size: 2.4em; color: #335c9c;">{{'ALL_IN_ONE_PRICE' | translate}}.00</b></div>
+                <div style="font-size: 0.85em;">{{'BILLED_MONTHLY' | translate}}</div>
+                <div style="height: 15px"></div>
+                <a href="/{{'INICIAR' | translate}}"><button class="btn bg-base" style="max-width: 250px">{{'FREE_14_DAYS_TRIAL' | translate}}</button></a>
+            </div>
+            <!-- end pricing -->
+
+        </div>
+        <!-- end col-xs-12 -->
+
+        <div class="col-xs-12 col-sm-4" style="text-align: left; position: relative; padding-top: 35px; min-height: 964px;">
+
+            <div style="width: 100%; background-color: #fff; box-shadow: 0 2px 24px rgba(12,13,14,0.1); padding: 35px; border-radius: 5px;">
+                <p><b style="color: #2e4254; font-size: 2em;">{{'CUSTOM_APP' | translate}}</b></p>
+                <div style="height: 20px"></div>
+                <p style="font-weight: 600; font-size: 1.2em;">{{'CUSTOM_APP_TEXT' | translate}}</p>
+                <div style="height: 15px"></div>
+                <p style="font-weight: 600; font-size: 1.2em;">{{'247_SUPPORT' | translate}}</p>
+                <div style="height: 15px"></div>
+                <p style="font-weight: 600; font-size: 1.2em;">
+                    <img src="https://image.flaticon.com/icons/svg/3126/3126649.svg" height="30px" style="padding-right: 5px;" /> {{'CUSTOM_APP_USERS_NUMBER' | translate}}
+                </p>
+                <div style="height: 15px"></div>
+                <p style="font-weight: 600; font-size: 1.2em;">{{'CUSTOM_APP_NUMBER_OF_FEATURES' | translate}}</p>
+                <div style="height: 15px"></div>
+
+                <p style="font-weight: 600; font-size: 1.2em;">{{'CUSTOM_APP_ADMIN_USERS' | translate}}</p>
+                <div style="height: 15px"></div>
+
+                <p><b style="color: #2e4254; font-size: 1.3em;">{{'CUSTOM_APP_FEATURES' | translate}}</b></p>
+                <div style="height: 5px"></div>
+
+                <div style="font-weight: 600; font-size: 1.15em; margin-bottom: 15px;">
+                    <div style="width: 45px; text-align: center; display: inline-block;">
+                        <img height="25px" src="https://visualpharm.com/assets/811/Discussion%20Forum-595b40b65ba036ed117d396c.svg" style="padding-right: 10px;"></img>
+                    </div>
+                    <div style="display: inline-block;">{{'FEATURE_TITLE_1' | translate}}</div>
+                </div>
+
+                <div style="font-weight: 600; font-size: 1.15em; margin-bottom: 15px;">
+                    <div style="width: 45px; text-align: center; display: inline-block;">
+                        <img height="25px" src="https://visualpharm.com/assets/311/Graduation%20Cap-595b40b65ba036ed117d2d97.svg" style="padding-right: 10px;"></img>
+                    </div>
+                    <div style="display: inline-block;">{{'FEATURE_TITLE_2' | translate}}</div>
+                </div>
+
+                <div style="font-weight: 600; font-size: 1.15em; margin-bottom: 15px;">
+                    <div style="width: 45px; text-align: center; display: inline-block;">
+                        <img height="25px" src="https://image.flaticon.com/icons/svg/745/745205.svg" style="padding-right: 10px;"></img>
+                    </div>
+                    <div style="display: inline-block;">{{'FEATURE_TITLE_3' | translate}}</div>
+                </div>
+
+                <div style="font-weight: 600; font-size: 1.15em; margin-bottom: 15px;">
+                    <div style="width: 45px; text-align: center; display: inline-block;">
+                        <img height="25px" src="/img/ewallet.png" style="padding-right: 10px;"></img>
+                    </div>
+                    <div style="display: inline-block;">{{'FEATURE_TITLE_ONELINE_PAYMENTS' | translate}}</div>
+                </div>
+
+                <div style="font-weight: 600; font-size: 1.15em; margin-bottom: 15px;">
+                    <div style="width: 45px; text-align: center; display: inline-block;">
+                        <img height="25px" src="https://image.flaticon.com/icons/svg/3048/3048415.svg" style="padding-right: 10px;"></img>
+                    </div>
+                    <div style="display: inline-block;">{{'FEATURE_TITLE_5' | translate}}</div>
+                </div>
+
+                <div style="font-weight: 600; font-size: 1.15em; margin-bottom: 15px;">
+                    <div style="width: 45px; text-align: center; display: inline-block;">
+                        <img height="25px" src="https://image.flaticon.com/icons/svg/3039/3039381.svg" style="padding-right: 10px;"></img>
+                    </div>
+                    <div style="display: inline-block;">{{'FEATURE_HOSTING' | translate}}</div>
+                </div>
+
+                <div style="height: 20px"></div>
+                <div><span style="font-size: 1.4em; font-weight: bold; color: #30B39F;">{{'CONTACT_US' | translate}} at sales@colle.ge</span></div>
+                <div style="font-size: 0.85em;">{{'ONE_TIME_FEE' | translate}}</div>
+                <div style="height: 15px"></div>
+                <a href="/{{'INICIAR' | translate}}"><button class="btn bg-base" style="max-width: 250px">{{'FREE_14_DAYS_TRIAL' | translate}}</button></a>
+            </div>
+            <!-- end pricing -->
+
+        </div>
+        <!-- end col-xs-12 -->
+
+    </div>
+    <!-- end row -->
+
+    <div class="row whatis" style="margin-top: 135px; margin-bottom: 50px;">
+
+        <div class="col-xs-12" style="margin-bottom: 10px;">
+            <div class="whatsis-title" style="font-size: 2em;">{{'WHAT_IS_TITLE' | translate}}</div>
+            <p class="whatsis-description">{{'WHAT_IS_DESCRIPTION' | translate}}</p>
+        </div>
+
+    </div>
+    <!-- id="whatis" -->
+    <div class="row whatis" style="margin-bottom: 80px;">
+
+        <div class="col-xs-12 col-sm-6 features">
+
+            <div class="feature-title">
+                <img style="height: 60px !important;" src="https://visualpharm.com/assets/811/Discussion%20Forum-595b40b65ba036ed117d396c.svg" /><b>{{'FEATURE_TITLE_1' | translate}}</b>
+            </div>
+
+            <div class="feature-description">{{'FEATURE_DESCRIPTION_1' | translate}}</div>
+
+        </div>
+
+        <div class="col-xs-12 col-sm-6 features">
+
+            <div class="feature-title">
+                <img style="height: 60px !important;" src="https://visualpharm.com/assets/311/Graduation%20Cap-595b40b65ba036ed117d2d97.svg" /><b>{{'FEATURE_TITLE_2' | translate}}</b>
+            </div>
+
+            <div class="feature-description">{{'FEATURE_DESCRIPTION_2' | translate}}</div>
+
+        </div>
 
     </div>
     <!-- -->
 
-  </div>
-  <!-- -->
+    <div class="row whatis" style="margin-bottom: 80px;">
 
-  <div class="row" style="margin-bottom: 80px;">
+        <div class="col-xs-12 col-sm-6 features">
 
-    <div class="col-xs-12 col-sm-6" style="padding-top: 50px; text-align: center;">
+            <div class="feature-title">
+                <img style="height: 60px !important;" src="https://image.flaticon.com/icons/svg/745/745205.svg" /><b>{{'FEATURE_TITLE_3' | translate}}</b>
+            </div>
 
-      <img height="300px" src="https://lh3.googleusercontent.com/twEfvZt2u27z5jZpNhvV5xiQUW3rEBET00nArxZgcmPdkigZy3hkt0oJQv3kEGuFEK_5WUTGXjx5ctnYTwBvShcsEZtetCsJLa3yNBy0_imNau66zG8fK-j1oZwD3_7SDNinAghE" />
+            <div class="feature-description">{{'FEATURE_DESCRIPTION_3' | translate}}</div>
 
-    </div>
-    <!-- -->
+        </div>
 
-    <div class="col-xs-12 col-sm-6" style="padding-top: 50px; text-align: center;">
+        <div class="col-xs-12 col-sm-6 features">
 
-      <img height="500px" src="https://lh6.googleusercontent.com/hby3wtw5xg5VN8BDfgI8THYzdxn8rOOxMh72kbKTxA45abW2nP54Fc0BxpqjzVF-Bd2Hpymr16HVBIOlEbXFtYgtlJot-b-pwYG8Ey20tVxxf4niGod9K0lHUoChb3wno1RkLTtU" />
+            <div class="feature-title">
+                <img style="height: 60px !important;" src="/img/vr/room_board.png" /><b>{{'FEATURE_TITLE_4' | translate}}</b>
+            </div>
 
-    </div>
-    <!-- -->
+            <div class="feature-description">{{'FEATURE_DESCRIPTION_4' | translate}} </div>
 
-  </div>
-  <!-- -->
-
-  <div class="row" style="margin-bottom: 80px;">
-
-    <div class="col-xs-12" style="padding-top: 50px;">
-
-      <div class="header-section-two" style="text-align: center; padding-top: 30px; padding-bottom: 30px;">
-
-        <div class="header-support-section-two" style="font-size: 2.1em; font-weight: bold;">{{'WHO_USE_PLATFORM' | translate}}</div>
-
-      </div>
-
-      <div style="height: 20px"></div>
+        </div>
 
     </div>
     <!-- -->
 
-    <div class="col-xs-12 col-sm-4 client" style="padding-left: 30px; padding-right: 30px;">
+    <div class="row whatis" style="margin-bottom: 80px;">
 
-      <div class="picture" style="background-image: url('https://storage.googleapis.com/educationalcommunity-upload/images/1572071357/a39.jpg')"></div>
-      <div class="title">Tiago Camilo</div>
-      <div class="description" style="min-height: 250px;">{{'TIAGO_DESCRIPTION' | translate}}</div>
-      <div style="text-align: right;"><a href="/{{'INICIAR' | translate}}"><button class="btn btn-success" style="font-size: 1.15em; font-weight: bold;">{{'ACCESS' | translate}}</button></a></div>
+        <div class="col-xs-12 col-sm-6 features">
 
-    </div>
+            <div class="feature-title">
+                <img style="height: 60px !important;" src="https://image.flaticon.com/icons/svg/3048/3048415.svg" /><b>{{'FEATURE_TITLE_5' | translate}}</b>
+            </div>
 
-    <div class="col-xs-12 col-sm-4 client" style="padding-left: 30px; padding-right: 30px;">
+            <div class="feature-description">{{'FEATURE_DESCRIPTION_5' | translate}}</div>
 
-      <div class="picture" style="background-image: url('https://s3.criptofacil.com/wp-content/uploads/2019/08/blockchain-academy-anuncia-curso-sobre-desafios-tributarios-na-criptoeconomia.jpg')"></div>
-      <div class="title">Blockchain Academy</div>
-      <div class="description" style="min-height: 250px;">{{'BLOCKCHAIN_DESCRIPTION' | translate}}</div>
-      <div style="text-align: right;"><a href="/{{'INICIAR' | translate}}"><button class="btn btn-success" style="font-size: 1.15em; font-weight: bold;">{{'ACCESS' | translate}}</button></a></div>
+        </div>
 
-    </div>
+        <div class="col-xs-12 col-sm-6 features">
 
-    <div class="col-xs-12 col-sm-4 client" style="padding-left: 30px; padding-right: 30px;">
+            <div class="feature-title">
+                <img style="height: 60px !important;" src="https://image.flaticon.com/icons/svg/3039/3039381.svg" /><b>{{'FEATURE_TITLE_6' | translate}}</b>
+            </div>
 
-      <div class="picture" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/5/5b/Augusto_Cury%2C_escritor_%2828339139296%29.jpg')"></div>
-      <div class="title">Escola da Inteligência</div>
-      <div class="description" style="min-height: 250px;">{{'ESCOLA_DESCRIPTION' | translate}}</div>
-      <div style="text-align: right;"><a href="/{{'INICIAR' | translate}}"><button class="btn btn-success" style="font-size: 1.15em; font-weight: bold;">{{'ACCESS' | translate}}</button></a></div>
+            <div class="feature-description">{{'FEATURE_DESCRIPTION_6' | translate}}</div>
+
+        </div>
 
     </div>
+    <!-- END ROW -->
 
-  </div>
-  <!-- -->
+    <style>
+        .btn-coral {
+            background-color: #ee5748;
+            box-shadow: 0px 8px 15px rgba(238, 87, 72, 0.51);
+            transition: all 0.3s ease 0s;
+            cursor: pointer;
+        }
+    </style>
 
-  <div class="row" style="margin-bottom: 80px;">
+    <div class="row" style="margin-bottom: 80px;">
 
-    <div class="col-xs-6" style="padding-top: 30px; text-align: left; padding-left: 50px; padding-right: 50px;">
+        <div class="col-xs-12 col-sm-6" style="padding-top: 50px;">
 
-      <div style="height: 20px"></div>
+            <div class="header-section-two" style="text-align: left; padding-top: 30px; padding-bottom: 30px;">
 
-      <div style="font-size: 2.2em; padding-bottom: 30px; font-weight: bolder;">{{'DOUBTS_AGENT_ANSWER' | translate}}</div>
-      <div style="font-size: 1.3em;">{{'EACH_SECTOR_UNIQUE_OPPORTUNITY' | translate}}</br></br>{{'FOR_THIS_REASON_TEXT' | translate}}</div>
-      <div style="margin-top: 35px;"><button class="btn bg-base" style="max-width: 250px; font-size: 1em;">{{'CONTACT_US' | translate}}</button></div>
-      <div style="font-size: 1em; padding-top: 20px;">{{'DOUBTS_AGENT_ANSWER_NUMBER' | translate}} </div>
+                <div style="font-size: 1.2em; font-weight: bold;">{{'WHITELABEL_PLATFORM' | translate}}</div>
+                <div class="header-support-section-two" style="font-size: 2.3em; line-height: 1.3em; font-weight: bold;">{{'WHITELABEL_SUB' | translate}}</div>
+                <div style="height: 30px;"></div>
+                <div class="header-support-section-two" style="font-size: 1.2em; font-weight: bold;">{{'WHITELABEL_PRICE' | translate}}</div>
+                <div style="height: 10px;"></div>
+                <div class="header-support-section-two" style="font-size: 1.2em;">{{'WHITELABEL_TEXT' | translate}}</div>
+                <div style="height: 125px;"></div>
+                <button class="btn btn-coral" style="font-size: 1em;"><b>{{'WHITELABEL_CREATE' | translate}}</b></button>
 
-    </div>
-    <!-- -->
+            </div>
 
-    <div class="col-xs-6" style="padding-top: 30px; text-align: left; padding-left: 50px; padding-right: 50px;">
+            <div style="height: 20px"></div>
 
-      <div style="height: 20px"></div>
+        </div>
+        <!-- -->
 
-      <div style="font-size: 2.2em; padding-bottom: 30px; font-weight: bolder;">{{'MEET_SCHEDULE' | translate}}</div>
-      <div style="font-size: 1.3em;">{{'EACH_SECTOR_UNIQUE_OPPORTUNITY' | translate}}</br></br>{{'FOR_THIS_REASON_TEXT' | translate}}</div>
-      <div style="margin-top: 35px; text-align: right;"><button class="btn bg-base" style="max-width: 250px; font-size: 1em;">{{'SCHEDULE' | translate}}</button></div>
+        <div class="col-xs-12 col-sm-6" style="padding-top: 50px; text-align: center;">
 
-    </div>
-    <!-- -->
+            <img height="600px" src="https://slack-imgs.com/?c=1&o1=ro&url=https%3A%2F%2Flh5.googleusercontent.com%2FfwZHtDJDNwqpCO9t7qQ40BQftaZNjohuNBjrAzZYCxjGNFQccJexly6VUJDvWUcbpWvnAMYKOMxxoV_G48hgyV47PuKB2JeHDqtSjjBW6HDHjJ8IqFtmyqDlDANmTebfsdLI9_UP" />
 
-  </div>
-  <!-- END ROW -->
-
-  <div class="row" style="margin-bottom: 80px;">
-
-    <div class="col-xs-12" style="padding-top: 30px; text-align: center;">
-
-      <div style="height: 90px"></div>
-
-      <div style="font-size: 2.2em;">{{'START_TRIAL_TITLE_1' | translate}} <b style="color: #37b19e;">{{'START_TRIAL_TITLE_2' | translate}}</b></div>
-      <div style="margin-top: 35px;"><button class="btn bg-base" style="max-width: 250px; font-size: 1em; background-color: #37b19e !important;">{{'START_TRIAL_BUTTON' | translate}}</button></div>
+        </div>
+        <!-- -->
 
     </div>
     <!-- -->
 
-    <div>
+    <div class="row" style="margin-bottom: 80px;">
+
+        <div class="col-xs-12 col-sm-6" style="padding-top: 50px; text-align: center;">
+
+            <img height="300px" src="https://lh3.googleusercontent.com/twEfvZt2u27z5jZpNhvV5xiQUW3rEBET00nArxZgcmPdkigZy3hkt0oJQv3kEGuFEK_5WUTGXjx5ctnYTwBvShcsEZtetCsJLa3yNBy0_imNau66zG8fK-j1oZwD3_7SDNinAghE" />
+
+        </div>
+        <!-- -->
+
+        <div class="col-xs-12 col-sm-6" style="padding-top: 50px; text-align: center;">
+
+            <img height="500px" src="https://lh6.googleusercontent.com/hby3wtw5xg5VN8BDfgI8THYzdxn8rOOxMh72kbKTxA45abW2nP54Fc0BxpqjzVF-Bd2Hpymr16HVBIOlEbXFtYgtlJot-b-pwYG8Ey20tVxxf4niGod9K0lHUoChb3wno1RkLTtU" />
+
+        </div>
+        <!-- -->
 
     </div>
     <!-- -->
 
-  </div>
-  <!-- END ROW -->
+    <div class="row" style="margin-bottom: 80px;">
 
-  <div class="row">
+        <div class="col-xs-12" style="padding-top: 50px;">
 
-    <div class="col-xs-12" style="padding-top: 30px; text-align: center;">
+            <div class="header-section-two" style="text-align: center; padding-top: 30px; padding-bottom: 30px;">
 
-      <div style="height: 90px"></div>
+                <div class="header-support-section-two" style="font-size: 2.1em; font-weight: bold;">{{'WHO_USE_PLATFORM' | translate}}</div>
 
-      <!--img style="margin-top: 95px" height="45px" src="https://universida.de/img/universidade_icon.png" /-->
+            </div>
 
-      <div>
-        <img height="50px" style="padding-right: 5px;" src="img/universidade_icon.png" />
-        <img height="32px" style="margin-top: 4px; margin-left: 4px;" src="{{company_logo}}" />
-      </div>
+            <div style="height: 20px"></div>
+
+        </div>
+        <!-- -->
+
+        <div class="col-xs-12 col-sm-4 client" style="padding-left: 30px; padding-right: 30px;">
+
+            <div class="picture" style="background-image: url('https://storage.googleapis.com/educationalcommunity-upload/images/1572071357/a39.jpg')"></div>
+            <div class="title">Tiago Camilo</div>
+            <div class="description" style="min-height: 250px;">{{'TIAGO_DESCRIPTION' | translate}}</div>
+            <div style="text-align: right;"><a href="/{{'INICIAR' | translate}}"><button class="btn btn-success" style="font-size: 1.15em; font-weight: bold;">{{'ACCESS' | translate}}</button></a></div>
+
+        </div>
+
+        <div class="col-xs-12 col-sm-4 client" style="padding-left: 30px; padding-right: 30px;">
+
+            <div class="picture" style="background-image: url('https://s3.criptofacil.com/wp-content/uploads/2019/08/blockchain-academy-anuncia-curso-sobre-desafios-tributarios-na-criptoeconomia.jpg')"></div>
+            <div class="title">Blockchain Academy</div>
+            <div class="description" style="min-height: 250px;">{{'BLOCKCHAIN_DESCRIPTION' | translate}}</div>
+            <div style="text-align: right;"><a href="/{{'INICIAR' | translate}}"><button class="btn btn-success" style="font-size: 1.15em; font-weight: bold;">{{'ACCESS' | translate}}</button></a></div>
+
+        </div>
+
+        <div class="col-xs-12 col-sm-4 client" style="padding-left: 30px; padding-right: 30px;">
+
+            <div class="picture" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/5/5b/Augusto_Cury%2C_escritor_%2828339139296%29.jpg')"></div>
+            <div class="title">Escola da Inteligência</div>
+            <div class="description" style="min-height: 250px;">{{'ESCOLA_DESCRIPTION' | translate}}</div>
+            <div style="text-align: right;"><a href="/{{'INICIAR' | translate}}"><button class="btn btn-success" style="font-size: 1.15em; font-weight: bold;">{{'ACCESS' | translate}}</button></a></div>
+
+        </div>
 
     </div>
     <!-- -->
 
-    <div>
+    <div class="row" style="margin-bottom: 80px;">
+
+        <div class="col-xs-6" style="padding-top: 30px; text-align: left; padding-left: 50px; padding-right: 50px;">
+
+            <div style="height: 20px"></div>
+
+            <div style="font-size: 2.2em; padding-bottom: 30px; font-weight: bolder;">{{'DOUBTS_AGENT_ANSWER' | translate}}</div>
+            <div style="font-size: 1.3em;">{{'EACH_SECTOR_UNIQUE_OPPORTUNITY' | translate}}</br>
+                </br>{{'FOR_THIS_REASON_TEXT' | translate}}</div>
+            <div style="margin-top: 35px;"><button class="btn bg-base" style="max-width: 250px; font-size: 1em;">{{'CONTACT_US' | translate}}</button></div>
+            <div style="font-size: 1em; padding-top: 20px;">{{'DOUBTS_AGENT_ANSWER_NUMBER' | translate}} </div>
+
+        </div>
+        <!-- -->
+
+        <div class="col-xs-6" style="padding-top: 30px; text-align: left; padding-left: 50px; padding-right: 50px;">
+
+            <div style="height: 20px"></div>
+
+            <div style="font-size: 2.2em; padding-bottom: 30px; font-weight: bolder;">{{'MEET_SCHEDULE' | translate}}</div>
+            <div style="font-size: 1.3em;">{{'EACH_SECTOR_UNIQUE_OPPORTUNITY' | translate}}</br>
+                </br>{{'FOR_THIS_REASON_TEXT' | translate}}</div>
+            <div style="margin-top: 35px; text-align: right;"><button class="btn bg-base" style="max-width: 250px; font-size: 1em;">{{'SCHEDULE' | translate}}</button></div>
+
+        </div>
+        <!-- -->
 
     </div>
-    <!-- -->
+    <!-- END ROW -->
 
-  </div>
-  <!-- END ROW -->
+    <div class="row" style="margin-bottom: 80px;">
+
+        <div class="col-xs-12" style="padding-top: 30px; text-align: center;">
+
+            <div style="height: 90px"></div>
+
+            <div style="font-size: 2.2em;">{{'START_TRIAL_TITLE_1' | translate}} <b style="color: #37b19e;">{{'START_TRIAL_TITLE_2' | translate}}</b></div>
+            <div style="margin-top: 35px;"><button class="btn bg-base" style="max-width: 250px; font-size: 1em; background-color: #37b19e !important;">{{'START_TRIAL_BUTTON' | translate}}</button></div>
+
+        </div>
+        <!-- -->
+
+        <div>
+
+        </div>
+        <!-- -->
+
+    </div>
+    <!-- END ROW -->
+
+    <div class="row">
+
+        <div class="col-xs-12" style="padding-top: 30px; text-align: center;">
+
+            <div style="height: 90px"></div>
+
+            <!--img style="margin-top: 95px" height="45px" src="https://universida.de/img/universidade_icon.gif" /-->
+
+            <div>
+                <img height="50px" style="padding-right: 5px;" src="img/universidade_icon.gif" />
+                <img height="32px" style="margin-top: 4px; margin-left: 4px;" src="{{company_logo}}" />
+            </div>
+
+        </div>
+        <!-- -->
+
+        <div>
+
+        </div>
+        <!-- -->
+
+    </div>
+    <!-- END ROW -->
 
 </div>
 
 <style>
-
-  .footer-company-info {
-
-  }
-
-  .footer-company-info .copyrights {
-    font-size: 0.7em;
-    padding-top: 15px;
-  }
-
-  .footer-company-info .address-text {
-    padding-top: 5px;
-    font-size: 0.8em;
-  }
-
-  .footer-company-info .address-title {
-    padding-top: 20px;
-  }
-
+    .footer-company-info {}
+    
+    .footer-company-info .copyrights {
+        font-size: 0.7em;
+        padding-top: 15px;
+    }
+    
+    .footer-company-info .address-text {
+        padding-top: 5px;
+        font-size: 0.8em;
+    }
+    
+    .footer-company-info .address-title {
+        padding-top: 20px;
+    }
 </style>
 
 <div class="col-xs-12 hide-mobile" style="margin-top: 30px; border-top: 1px solid #2d425524; padding-top: 35px; margin-bottom: 50px; padding-bottom: 20px; line-height: 25px; font-size: 1em;">
 
-  <div class="col-xs-4">
-    <div><img height="28px" style="padding-right: 5px;" src="img/universidade_icon.png" /><img height="19px" style="margin-top: 4px; margin-left: 4px;" src="{{company_logo}}" /></div>
+    <div class="col-xs-4">
+        <div><img height="28px" style="padding-right: 5px;" src="img/universidade_icon.gif" /><img height="19px" style="margin-top: 4px; margin-left: 4px;" src="{{company_logo}}" /></div>
 
-    <div class="footer-company-info">
-      <div class="copyrights">{{'FOOTER_COPYRIGHT' | translate}}</div>
+        <div class="footer-company-info">
+            <div class="copyrights">{{'FOOTER_COPYRIGHT' | translate}}</div>
 
-      <div class="address-title"><b>{{'FOOTER_ADDRESS' | translate}}</b></div>
-      <div class="address-text">2700 Colorado Avenue, Los Angeles, CA, USA</div>
+            <div class="address-title"><b>{{'FOOTER_ADDRESS' | translate}}</b></div>
+            <div class="address-text">2700 Colorado Avenue, Los Angeles, CA, USA</div>
+        </div>
+
     </div>
+    <!-- end col-xs-4 -->
 
-  </div>
-  <!-- end col-xs-4 -->
-
-  <div class="col-xs-2" style="text-align: left;">
-    <div style="color: #2d4255; font-weight: bolder; font-size: 1em; margin-bottom: 30px;">{{'FOOTER_TITLE_1' | translate}}</div>
-    <div style="margin-right: 25px; margin-bottom: 20px; font-size: 0.9em;"><a style="color: #000;" href="/{{'ENSINAR' | translate}}">{{'FOOTER_T1_SUBTITLE_1' | translate}}</b></div>
+    <div class="col-xs-2" style="text-align: left;">
+        <div style="color: #2d4255; font-weight: bolder; font-size: 1em; margin-bottom: 30px;">{{'FOOTER_TITLE_1' | translate}}</div>
+        <div style="margin-right: 25px; margin-bottom: 20px; font-size: 0.9em;"><a style="color: #000;" href="/{{'ENSINAR' | translate}}">{{'FOOTER_T1_SUBTITLE_1' | translate}}</b></div>
     <!--
     <div style="margin-right: 25px; margin-bottom: 20px; font-size: 0.9em;"><a style="color: #000;" href="#">Escolas</b></div>
     <div style="margin-right: 25px; margin-bottom: 20px; font-size: 0.9em;"><a style="color: #000;" href="#">Ensino Superior</b></div>
@@ -679,241 +675,236 @@
   <div class="col-xs-2" style="text-align: left;">
     <div style="color: #2d4255; font-weight: bolder; font-size: 1em; margin-bottom: 30px;">{{'FOOTER_TITLE_2' | translate}}</div>
     <div style="display: inline-block; margin-right: 25px; font-size: 0.9em;"><a style="color: #000;" href="/{{'SOBRE' | translate}}">{{'FOOTER_T2_SUBTITLE_1' | translate}}</a></div>
-    <!--<div style="display: inline-block; margin-right: 25px;"><a href="#"><b>Para estudantes</b></a></div>-->
-  </div>
+        <!--<div style="display: inline-block; margin-right: 25px;"><a href="#"><b>Para estudantes</b></a></div>-->
+    </div>
 
-  <div class="col-xs-2" style="text-align: left;">
-    <div style="color: #2d4255; font-weight: bolder; font-size: 1em; margin-bottom: 30px;">{{'FOOTER_TITLE_3' | translate}}</div>
-    <div style="margin-bottom: 20px; margin-right: 25px; font-size: 0.9em;"><a style="color: #000;" href="/a/universidade/forum/category/id/5efadbb98c383600174f3b6d">{{'FOOTER_T3_SUBTITLE_1' | translate}}</a></div>
-    <div style="margin-bottom: 20px; margin-right: 25px; font-size: 0.9em;"><a style="color: #000;" href="/a/universidade/forum/category/id/5efadb8f8c383600174f3b6c">{{'FOOTER_T3_SUBTITLE_2' | translate}}</a></div>
-    <div style="margin-bottom: 20px; margin-right: 25px; font-size: 0.9em;"><a style="color: #000;" ng-click="downloadVRAndroid()">{{'FOOTER_T3_SUBTITLE_3' | translate}}</a></div>
-    <!--<div style="display: inline-block; margin-right: 25px;"><a href="#"><b>Para estudantes</b></a></div>-->
-  </div>
+    <div class="col-xs-2" style="text-align: left;">
+        <div style="color: #2d4255; font-weight: bolder; font-size: 1em; margin-bottom: 30px;">{{'FOOTER_TITLE_3' | translate}}</div>
+        <div style="margin-bottom: 20px; margin-right: 25px; font-size: 0.9em;"><a style="color: #000;" href="/a/universidade/forum/category/id/5efadbb98c383600174f3b6d">{{'FOOTER_T3_SUBTITLE_1' | translate}}</a></div>
+        <div style="margin-bottom: 20px; margin-right: 25px; font-size: 0.9em;"><a style="color: #000;" href="/a/universidade/forum/category/id/5efadb8f8c383600174f3b6c">{{'FOOTER_T3_SUBTITLE_2' | translate}}</a></div>
+        <div style="margin-bottom: 20px; margin-right: 25px; font-size: 0.9em;"><a style="color: #000;" ng-click="downloadVRAndroid()">{{'FOOTER_T3_SUBTITLE_3' | translate}}</a></div>
+        <!--<div style="display: inline-block; margin-right: 25px;"><a href="#"><b>Para estudantes</b></a></div>-->
+    </div>
 
-  <div class="col-xs-2" style="text-align: left;">
-    <div style="color: #2d4255; font-weight: bolder; font-size: 1em; margin-bottom: 30px;">{{'FOOTER_TITLE_4' | translate}}</div>
-    <div style="display: inline-block; margin-right: 25px; font-size: 0.9em;"><a style="color: #000;" href="/{{'SOBRE' | translate}}">{{'FOOTER_T4_SUBTITLE_1' | translate}}</a></div>
-    <!--<div style="display: inline-block; margin-right: 25px;"><a href="#"><b>Para estudantes</b></a></div>-->
-  </div>
+    <div class="col-xs-2" style="text-align: left;">
+        <div style="color: #2d4255; font-weight: bolder; font-size: 1em; margin-bottom: 30px;">{{'FOOTER_TITLE_4' | translate}}</div>
+        <div style="display: inline-block; margin-right: 25px; font-size: 0.9em;"><a style="color: #000;" href="/{{'SOBRE' | translate}}">{{'FOOTER_T4_SUBTITLE_1' | translate}}</a></div>
+        <!--<div style="display: inline-block; margin-right: 25px;"><a href="#"><b>Para estudantes</b></a></div>-->
+    </div>
 
 </div>
 
 <style>
-
-  .main-slide {
-    min-height: 65vh;
-    font-size: 1.5em;
-    padding-top: 15px;
-  }
-
-  .client {
-    padding-bottom: 20px;
-  }
-
-  .client .picture {
-    width: 100%;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    border-radius: 5px;
-    height: 150px;
-  }
-
-  .client .title {
-    font-size: 1.25em;
-    font-weight: bold;
-    padding-top: 15px;
-    padding-bottom: 10px;
-  }
-
-  .client .description {
-    font-size: 1.15em;
-  }
-
-  .team-member {
-    padding-bottom: 10px;
-  }
-
-  .team-member .job-title {
-    padding-bottom: 10px;
-  }
-
-  .team-member .description {
-    font-size: 1.1em; text-align: left;
-  }
-
-  .team-member .name {
-    font-size: 1.5em;
-    padding-top: 10px;
-    font-weight: bold;
-  }
-
-  .team-member img {
-    border-radius: 5px;
-  }
-
-  .header-support-section-two {
-    font-size: 1.6em;
-    color: #314354;
-    font-weight: 300;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-
-  .header-title-section-two {
-    font-size: 2.1em;
-    color: #314354;
-    font-weight: 700;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    line-height: 1.2em;
-  }
-
-  .value {
-    margin-bottom: 15px;
-  }
-
-  .value-title {
-    color: #314354;
-    font-weight: 700;
-    font-size: 2em;
-    line-height: 1.1em;
-  }
-
-  .value-title-support {
-    color: #314354;
-    font-weight: 300;
-    font-size: 1.3em;
-    text-transform: uppercase;
-  }
-
-  #univesidade-icon {
-    height: 145px;
-  }
-
-  #frame-video {
-    height: 450px;
-  }
-
-  @media screen and (max-width: 768px) {
     .main-slide {
-      min-height: 50vh;
-      font-size: 1.1em;
+        min-height: 65vh;
+        font-size: 1.5em;
+        padding-top: 15px;
     }
-    #frame-video {
-      height: 350px;
+    
+    .client {
+        padding-bottom: 20px;
     }
-    #univesidade-icon {
-      height: 75px;
+    
+    .client .picture {
+        width: 100%;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        border-radius: 5px;
+        height: 150px;
     }
+    
+    .client .title {
+        font-size: 1.25em;
+        font-weight: bold;
+        padding-top: 15px;
+        padding-bottom: 10px;
+    }
+    
+    .client .description {
+        font-size: 1.15em;
+    }
+    
+    .team-member {
+        padding-bottom: 10px;
+    }
+    
+    .team-member .job-title {
+        padding-bottom: 10px;
+    }
+    
+    .team-member .description {
+        font-size: 1.1em;
+        text-align: left;
+    }
+    
+    .team-member .name {
+        font-size: 1.5em;
+        padding-top: 10px;
+        font-weight: bold;
+    }
+    
+    .team-member img {
+        border-radius: 5px;
+    }
+    
+    .header-support-section-two {
+        font-size: 1.6em;
+        color: #314354;
+        font-weight: 300;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+    
     .header-title-section-two {
-      font-size: 1.55em;
+        font-size: 2.1em;
+        color: #314354;
+        font-weight: 700;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        line-height: 1.2em;
     }
-  }
-
+    
+    .value {
+        margin-bottom: 15px;
+    }
+    
+    .value-title {
+        color: #314354;
+        font-weight: 700;
+        font-size: 2em;
+        line-height: 1.1em;
+    }
+    
+    .value-title-support {
+        color: #314354;
+        font-weight: 300;
+        font-size: 1.3em;
+        text-transform: uppercase;
+    }
+    
+    #univesidade-icon {
+        height: 145px;
+    }
+    
+    #frame-video {
+        height: 450px;
+    }
+    
+    @media screen and (max-width: 768px) {
+        .main-slide {
+            min-height: 50vh;
+            font-size: 1.1em;
+        }
+        #frame-video {
+            height: 350px;
+        }
+        #univesidade-icon {
+            height: 75px;
+        }
+        .header-title-section-two {
+            font-size: 1.55em;
+        }
+    }
 </style>
 
 <!-- end container-fluid -->
 
 <style>
-
-  .whatsis-title {
-    font-weight: bold;
-    padding-bottom: 10px;
-  }
-
-  .whatsis-description {
-    font-size: 1.1em;
-  }
-
-  .whatis {
-    font-size: 1.5em;
-    margin-bottom: 20px;
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-
-  #rowlog {
-    padding-top: 65px;
-    padding-bottom: 65px;
-    text-align: center;
-  }
-
-  #whatis {
-    padding-left: 20%;
-    padding-right: 20%;
-  }
-
-  .bigbox-action {
-    min-height: 300px;
-    padding: 30px;
-  }
-
-  .bigbox-action .title {
-    font-weight: bold;
-    line-height: 1.15em;
-    font-size: 1.5em;
-    padding-bottom: 15px;
-    min-height: 130px;
-  }
-
-  .bigbox-action p {
-    margin-bottom: 25px;
-    min-height: 90px;
-  }
-
-  .bigbox-action .button {
-    padding: 10px;
-    text-align: center;
-    font-weight: bold;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-
-  .bigbox-action.signup .button {
-    color: #314354;
-    border: 1px solid #dedede;
-  }
-
-  .bigbox-action.signup .button {
-    color: #314354;
-    background-color: #fff;
-  }
-
-  .bigbox-action.signup .button:hover {
-    background-color: #dedede;
-  }
-
-  .bigbox-action.signup {
-
-  }
-
-  .bigbox-action.login {
-    background-color: #314354;
-    color: #fff;
-  }
-
-  .bigbox-action.login .button {
-    background-color: #fff;
-    color: #314354;
-  }
-
-  .features {
-    margin-bottom: 15px;
-  }
-
-  .feature-title  {
-    line-height: 25px;
-    padding-bottom: 30px;
-  }
-
-  .feature-title img {
-    height: 25px;
-    padding-right: 10px;
-  }
-
-  .feature-description {
-    font-size: 0.9em;
-  }
-
+    .whatsis-title {
+        font-weight: bold;
+        padding-bottom: 10px;
+    }
+    
+    .whatsis-description {
+        font-size: 1.1em;
+    }
+    
+    .whatis {
+        font-size: 1.5em;
+        margin-bottom: 20px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    
+    #rowlog {
+        padding-top: 65px;
+        padding-bottom: 65px;
+        text-align: center;
+    }
+    
+    #whatis {
+        padding-left: 20%;
+        padding-right: 20%;
+    }
+    
+    .bigbox-action {
+        min-height: 300px;
+        padding: 30px;
+    }
+    
+    .bigbox-action .title {
+        font-weight: bold;
+        line-height: 1.15em;
+        font-size: 1.5em;
+        padding-bottom: 15px;
+        min-height: 130px;
+    }
+    
+    .bigbox-action p {
+        margin-bottom: 25px;
+        min-height: 90px;
+    }
+    
+    .bigbox-action .button {
+        padding: 10px;
+        text-align: center;
+        font-weight: bold;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    
+    .bigbox-action.signup .button {
+        color: #314354;
+        border: 1px solid #dedede;
+    }
+    
+    .bigbox-action.signup .button {
+        color: #314354;
+        background-color: #fff;
+    }
+    
+    .bigbox-action.signup .button:hover {
+        background-color: #dedede;
+    }
+    
+    .bigbox-action.signup {}
+    
+    .bigbox-action.login {
+        background-color: #314354;
+        color: #fff;
+    }
+    
+    .bigbox-action.login .button {
+        background-color: #fff;
+        color: #314354;
+    }
+    
+    .features {
+        margin-bottom: 15px;
+    }
+    
+    .feature-title {
+        line-height: 25px;
+        padding-bottom: 30px;
+    }
+    
+    .feature-title img {
+        height: 25px;
+        padding-right: 10px;
+    }
+    
+    .feature-description {
+        font-size: 0.9em;
+    }
 </style>

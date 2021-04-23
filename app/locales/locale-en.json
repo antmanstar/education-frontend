@@ -778,7 +778,7 @@
 
     "DOMAIN_NAME": "Colle.ge",
     "DOMAIN_PLACEHOLDER": "colle.ge",
-    "DOMAIN_PLACEHOLDER_CAPS": "COLLE.GE",
+    "DOMAIN_PLACEHOLDER_CAPS": "Junior Fernandes BJJ",
     "META_DESCRIPTION": "College, the best platform to learn, teach, debate and share knowledge.",
     "META_SITENAME": "College",
 
@@ -1020,9 +1020,9 @@
     "NAME_FIELD_EMPTY": "Please fill up name field",
     "PASSWORD_NOT_MATCH": "Password not match.",
 
-    "WITHDRAW_BALANCE_MORE_THAN_AVAILABLE":"Withdraw amount is greater than available balance",
-    "ACCOUNT_NUMBER_ERROR":"Account number validation error",
-    "ADD_BANK":"Add bank",
+    "WITHDRAW_BALANCE_MORE_THAN_AVAILABLE": "Withdraw amount is greater than available balance",
+    "ACCOUNT_NUMBER_ERROR": "Account number validation error",
+    "ADD_BANK": "Add bank",
 
     "PLEASE_ENTER_CLASS_NAME": "Please enter class name.",
 
@@ -1128,7 +1128,7 @@
     "BUTTON_START_A_FREE_TRIAL": "Start a free trial",
     "BUTTON_START_A_FREE_TRIAL_TEXT": "Free for 14 days. No Credit Card required",
     "JOIN_AS_STUDENT": "Join as Student",
-    "GET_STARTED":"Get Started",
+    "GET_STARTED": "Get Started",
     "LANDING_HEADER_FEATURES": "Features",
     "LANDING_HEADER_PRICING": "Pricing",
     "LANDING_HEADER_DOWNLOAD": "Download",
