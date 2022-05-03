@@ -76,18 +76,18 @@ angular.module('netbase')
     var baseUrl = "https://educationalcommunity-timeline.herokuapp.com";
 
     return {
-      contactUs: function(data) {
-          let url = "/contactus";
+        contactUs: function(data) {
+            let url = "/contactus";
 
-          return $http({
-              method: 'POST',
-              data: data,
-              url: url,
-              headers: {
-                  'Content-Type': 'application/json'
-              }
-          });
-      },
+            return $http({
+                method: 'POST',
+                data: data,
+                url: url,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        },
     }
 }])
 
@@ -377,7 +377,7 @@ angular.module('netbase')
         },
 
         update: function(id, data) {
-            var url = '/id/' + id;
+            var url = '/id/' + id + "/privilege/99";
             return $http({
                 method: 'PUT',
                 data: data,
